@@ -22,6 +22,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -173,7 +174,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     public fed_service: FormMessageDisplayService,
-
+    private dateTimeProcessor: DateTimeProcessor
   ) {
 
 
@@ -1118,17 +1119,17 @@ console.log(post_Data.email);
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
-    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
   }
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
     const seldate = new Date(seldate2);
-    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
     const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
     const strtDt = new Date(strtDt2);
-    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
       return true;
     } else {
@@ -1240,9 +1241,6 @@ console.log(post_Data.email);
      }
     }
   }
-
-
-
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
       .subscribe((data: any) => {
@@ -1257,16 +1255,10 @@ console.log(post_Data.email);
     this.showSide = false;
   }
   deleteTempImage(img, index) {
-    console.log(img);
-    // this.image_list_popup.splice(index, 1);
-    //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
-    // console.log(idex);
     this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
     this.selectedImagelist.files.splice(img.id, 1);
     this.selectedImagelist.base64.splice(img.id, 1);
     this.selectedImagelist.caption.splice(img.id, 1);
-    console.log(this.image_list_popup);
-    console.log(this.selectedImagelist.files);
   }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
@@ -1278,51 +1270,23 @@ console.log(post_Data.email);
   }
 
   onButtonBeforeHook(event) {
-    console.log(event);
     if (!event || !event.button) {
       return;
     }
     if (event.button.type === ButtonType.DELETE) {
-
-      console.log(event.image.plain);
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
-      // this.deletemodelboxImage(event.image.plain);
       const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
-      console.log(idex);
       this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
       this.selectedImagelist.files.splice(idex, 1);
       this.selectedImagelist.base64.splice(idex, 1);
       this.selectedImagelist.caption.splice(idex, 1);
-      // this.image_list_popup.splice(idex, 1);
-
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
     }
 
   }
   deletemodelboxImage(name) {
-    console.log(name);
     const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
-    console.log(idex);
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
-    console.log(this.selectedImagelist.files);
-    // this.image_list_popup = [];
-    //   if (this.selectedImagelist.files.length > 0) {
-    //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-    //     const imgobj = new Image(i,
-    //         {
-    //             img: this.selectedImagelist.base64[i],
-    //             description: ''
-    //         });
-    //     this.image_list_popup.push(imgobj);
-    // }
-    // console.log(this.image_list_popup);
-
-    //   }
-    console.log(this.image_list_popup);
   }
   onButtonAfterHook() { }
 

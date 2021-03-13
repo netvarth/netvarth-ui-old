@@ -11,6 +11,7 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-myfavourites',
@@ -61,7 +62,8 @@ export class MyfavouritesComponent implements OnInit {
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor
   ) { }
 
   ngOnInit() {
@@ -246,13 +248,13 @@ export class MyfavouritesComponent implements OnInit {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
@@ -261,14 +263,14 @@ export class MyfavouritesComponent implements OnInit {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               }
             } else {

@@ -8,6 +8,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -58,7 +59,8 @@ export class InboxOuterComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
     private location: Location, private snackbarService: SnackbarService,
-    public shared_services: SharedServices) { }
+    public shared_services: SharedServices,
+    private dateTimeProcessor: DateTimeProcessor) { }
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -117,15 +119,15 @@ export class InboxOuterComponent implements OnInit {
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
-    const obtdate = new Date(pubDate.getFullYear() + '-' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '-' + this.shared_functions.addZero(pubDate.getDate()));
-    const obtshowdate = this.shared_functions.addZero(pubDate.getDate()) + '/' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-    const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
+    const obtshowdate = this.dateTimeProcessor.addZero(pubDate.getDate()) + '/' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.dateTimeProcessor.addZero(pubDate.getHours()) + ':' + this.dateTimeProcessor.addZero(pubDate.getMinutes());
     const today = new Date();
-    const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
+    const todaydate = new Date(today.getFullYear() + '-' + this.dateTimeProcessor.addZero((today.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(today.getDate()));
     if (obtdate.getTime() === todaydate.getTime()) {
-      retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     } else {
-      retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = obtshowdate + ' ' + this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     }
     return retdate;
   }

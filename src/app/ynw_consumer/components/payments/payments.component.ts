@@ -5,6 +5,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 
 
@@ -26,6 +27,7 @@ export class ConsumerPaymentsComponent implements OnInit {
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         public dateformat: DateFormatPipe,
+        private dateTimeProcessor: DateTimeProcessor,
         private shared_services: SharedServices) {
 
     }
@@ -55,7 +57,7 @@ export class ConsumerPaymentsComponent implements OnInit {
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
-                retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
+                retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
             }
             return retval;
             // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];

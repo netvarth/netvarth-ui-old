@@ -10,8 +10,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
-import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-pos-coupon',
@@ -70,8 +69,9 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     private sharedfunctionObj: SharedFunctions,
     private snackbarService: SnackbarService,
     private activatedRoute:ActivatedRoute,
-        private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService) {
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
     this.activatedRoute.queryParams
     .pipe(takeUntil(this.onDestroy$))

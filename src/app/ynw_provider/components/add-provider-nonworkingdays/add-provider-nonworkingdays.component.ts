@@ -3,12 +3,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-add-nonworkingdays',
@@ -44,8 +44,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
 
   }
@@ -93,15 +93,15 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     const date = new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
     if (moment(today_date).isSame(date_format)) { // if the selected date is today
-      const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
-      const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+      const curtime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(today_curtime);
+      const selstarttime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
         this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         return;
       }
     }
-    const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
-    const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
+    const Start_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+    const End_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
       this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       return;

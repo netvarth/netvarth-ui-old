@@ -20,6 +20,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -246,6 +247,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
+    private dateTimeProcessor: DateTimeProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -451,22 +453,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       console.log(this.bill_data.createdDate)
       this.billdate = this.bill_data.createdDate;
-      // const datearr = this.bill_data.createdDate.split(' ');
-      // const billdatearr = datearr[0].split('-');
-      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       console.log(this.billdate);
-      // this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
       this.billdate = this.bill_data.createdDate;
-      // this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
-      // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
-      // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
-      // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
-      // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     }
     const gethrs = this.today.getHours();
     const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-    // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
     let hour = 0;
     if (gethrs === 12) {
       hour = 12;
@@ -475,7 +467,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       hour = gethrs;
     }
-    this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
+    this.billtime = this.dateTimeProcessor.addZero(hour) + ':' + this.dateTimeProcessor.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
@@ -503,7 +495,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getPaymentSettings()
       .subscribe(
         (data: any) => {
-          // if (data.payUVerified || data.payTmVerified) {
           this.paymentOnline = data.onlinePayment;
         },
         () => {
@@ -518,7 +509,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.deliveryCharge = this.bill_data.deliveryCharges;
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
-          // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].privateNote) {
               this.discountPrivateNotes = true;
@@ -560,19 +550,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  // getJCMessages(jCoupon) {
-  //   const errMsgs = [];
-  //   Object.keys(jCoupon).forEach(key => {
-  //     const coupon = jCoupon[key];
-  //     for (const sysNote of coupon['systemNote']) {
-  //       if (errMsgs.indexOf(sysNote) === -1 && sysNote !== 'COUPON_APPLIED') {
-  //         errMsgs.push(sysNote);
-  //       }
-  //     }
-  //   });
-
-  //   return errMsgs;
-  // }
   getDomainSubdomainSettings() {
     const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
@@ -625,7 +602,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.coupons = [];
-            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -642,8 +618,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.discounts = [];
-            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            // reject(error);
           }
         );
     });
@@ -663,7 +637,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
         error => {
           this.items.push(null);
-          // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -703,7 +676,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   stringtoDate(dt, mod) {
     let dtsarr;
     if (dt) {
-      // const dts = new Date(dt);
       dtsarr = dt.split(' ');
       const dtarr = dtsarr[0].split('-');
       let retval = '';

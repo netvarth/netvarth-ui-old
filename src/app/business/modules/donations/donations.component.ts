@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -12,6 +11,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   'selector': 'app-donations',
@@ -81,9 +81,9 @@ export class DonationsComponent implements OnInit {
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private provider_shared_functions: ProviderSharedFuctions,
     private routerobj: Router, private dialog: MatDialog,
-    private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.onResize();
@@ -272,7 +272,7 @@ export class DonationsComponent implements OnInit {
     });
   }
   stringtoDate(dt, mod) {
-    return this.shared_functions.stringtoDate(dt, mod);
+    return this.dateTimeProcessor.stringtoDate(dt, mod);
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;

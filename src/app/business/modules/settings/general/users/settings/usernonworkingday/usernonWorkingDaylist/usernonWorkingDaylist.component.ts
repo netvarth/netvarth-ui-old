@@ -11,6 +11,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../../../../../../shared/pipes/date-format/date-format.pipe';
+import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-usernonworkingdaylist',
@@ -67,7 +68,8 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     private groupService: GroupStorageService,
     public dateformat: DateFormatPipe,
-        private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
@@ -187,7 +189,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
-    const tday = new Date(this.sharedfunctionObj.addZero(yyyy) + '-' + this.sharedfunctionObj.addZero(mm) + '-' + this.sharedfunctionObj.addZero(dd) + ' 00:00:00');
+    const tday = new Date(this.dateTimeProcessor.addZero(yyyy) + '-' + this.dateTimeProcessor.addZero(mm) + '-' + this.dateTimeProcessor.addZero(dd) + ' 00:00:00');
     if (pdate.getTime() < tday.getTime()) {
       return false;
     } else {

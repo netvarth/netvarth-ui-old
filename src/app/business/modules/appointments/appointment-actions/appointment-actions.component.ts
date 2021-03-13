@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../app.component';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
@@ -22,6 +21,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -90,14 +90,16 @@ export class AppointmentActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
-        private shared_functions: SharedFunctions, private provider_services: ProviderServices,
+        private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private wordProcessor: WordProcessor,
         private lStorageService: LocalStorageService,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
         private galleryService: GalleryService,
-        private provider_shared_functions: ProviderSharedFuctions, public shared_services: SharedServices,
+        private dateTimeProcessor: DateTimeProcessor,
+        private provider_shared_functions: ProviderSharedFuctions,
+        public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -209,7 +211,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.shared_functions.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     qrCodegeneration(valuetogenerate) {
         this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
@@ -602,11 +604,11 @@ export class AppointmentActionsComponent implements OnInit {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {

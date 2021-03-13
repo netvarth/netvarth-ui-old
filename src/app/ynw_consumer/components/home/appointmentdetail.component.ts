@@ -13,6 +13,7 @@ import { ActionPopupComponent } from './action-popup/action-popup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -68,7 +69,8 @@ export class ApptDetailComponent implements OnInit {
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -151,7 +153,7 @@ export class ApptDetailComponent implements OnInit {
   getSingleTime(slot) {
     if (slot) {
       const slots = slot.split('-');
-      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
   getCommunicationHistory() {

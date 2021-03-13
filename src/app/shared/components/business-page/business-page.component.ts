@@ -28,6 +28,7 @@ import { DomainConfigGenerator } from '../../services/domain-config-generator.se
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-business-page',
@@ -300,7 +301,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -832,7 +834,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                 this.appttime_arr[i]['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
               } else {
-                this.appttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                this.appttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
                   + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
               }
             }
@@ -878,23 +880,23 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   } else {
-                    this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
                       + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   }
                 } else {
-                  this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               } else {
                 this.waitlisttime_arr[i]['caption'] = 'Est Wait Time'; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
                   this.waitlisttime_arr[i]['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   } else {
-                    this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
                       + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   }
                 }
@@ -1971,7 +1973,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getTimeToDisplay(min) {
-    return this.sharedFunctionobj.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   getAvailibilityForCheckin(date, serviceTime) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1995,7 +1997,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (dtoday === date) {
       return ('Today' + ', ' + serviceTime);
     } else {
-      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+      return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
         + serviceTime);
     }
   }
@@ -2021,13 +2023,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (dtoday === date) {
       return ('Today' + ', ' + this.getSingleTime(time));
     } else {
-      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+      return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
         + this.getSingleTime(time));
     }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getAvailableSlot(slots) {
     let slotAvailable = '';

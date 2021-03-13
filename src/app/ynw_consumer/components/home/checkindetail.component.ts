@@ -13,6 +13,7 @@ import { ActionPopupComponent } from './action-popup/action-popup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-checkindetail',
@@ -71,7 +72,8 @@ export class CheckinDetailComponent implements OnInit {
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -279,6 +281,6 @@ export class CheckinDetailComponent implements OnInit {
       );
   }
   getTimeToDisplay(min) {
-    return this.shared_functions.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
 }

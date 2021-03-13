@@ -26,6 +26,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -348,6 +349,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -837,7 +839,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.dateTimeProcessor.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.dateTimeProcessor.transformToYMDFormat(servdate)) {
       this.filter.futurecheckin_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
@@ -1957,11 +1959,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
-        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
         // api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
-        api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
+        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
       // if (this.filter.futurecheckin_date != null && this.time_type === 2) {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);

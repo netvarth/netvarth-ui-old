@@ -10,6 +10,7 @@ import { projectConstants } from '../../../app.component';
 import { Router } from '@angular/router';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-nonworkingdays',
@@ -57,8 +58,8 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions,
     private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     private groupService: GroupStorageService) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
@@ -167,7 +168,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
-    const tday = new Date(this.sharedfunctionObj.addZero(yyyy) + '-' + this.sharedfunctionObj.addZero(mm) + '-' + this.sharedfunctionObj.addZero(dd) + ' 00:00:00');
+    const tday = new Date(this.dateTimeProcessor.addZero(yyyy) + '-' + this.dateTimeProcessor.addZero(mm) + '-' + this.dateTimeProcessor.addZero(dd) + ' 00:00:00');
     if (pdate.getTime() < tday.getTime()) {
       return false;
     } else {

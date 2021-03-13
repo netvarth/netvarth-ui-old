@@ -13,12 +13,25 @@
   display: none;
 }
 .previewContainer {
+  padding: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  /* background: #000; */
+  width: 100%;
+  max-width: 724px;
+ }
+/*.previewContainer {
   padding: 5px;
   margin-top: 15px;
   margin-bottom: 15px;
   border: 2px solid #000 !important;
   border-radius: 10px;
   background: #000;
+} */
+.previewContainer video {
+  /* border: 1px solid #000 !important;
+  border-radius: 10px; */
+  border-radius: 25px !important;
 }
 .local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1);

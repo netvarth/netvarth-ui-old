@@ -4,6 +4,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-consumer-payment-details',
@@ -19,7 +20,8 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         public locationobj: Location,
         private router: Router,
         public dateformat: DateFormatPipe,
-        private activated_route: ActivatedRoute) {
+        private activated_route: ActivatedRoute,
+        private dateTimeProcessor: DateTimeProcessor) {
 
         this.activated_route.params.subscribe(
             (qParams) => {
@@ -69,7 +71,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
-                retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
+                retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
             }
             return retval;
         } else {

@@ -15,6 +15,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-search-provider',
@@ -108,6 +109,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     private dialog: MatDialog) {
     this.api_loading = true;
     this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -310,19 +312,19 @@ export class SearchProviderComponent implements OnInit, OnChanges {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     user['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    user['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    user['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   user['estimatedtime_det']['time'] = user['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  user['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  user['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 user['estimatedtime_det']['nextAvailDate'] = user['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 user['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  user['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  user['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
                   user['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   user['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];

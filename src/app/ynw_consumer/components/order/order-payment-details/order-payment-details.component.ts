@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-order-payment-details',
@@ -21,6 +22,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
   refunds_cap = Messages.REFUNDS_CAP;
   constructor(public shared_functions: SharedFunctions,
       private router: Router,
+      private dateTimeProcessor: DateTimeProcessor,
       private shared_services: SharedServices) {
 
   }
@@ -49,7 +51,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
           } else if (mod === 'time') {
               retval = dtsarr[1] + ' ' + dtsarr[2];
               const slots = retval.split('-');
-              retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
+              retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
           }
           return retval;
           // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];

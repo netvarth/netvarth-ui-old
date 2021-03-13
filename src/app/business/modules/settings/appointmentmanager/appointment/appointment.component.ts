@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -242,6 +243,7 @@ export class AppointmentComponent implements OnInit {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -578,7 +580,7 @@ export class AppointmentComponent implements OnInit {
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
@@ -1447,17 +1449,17 @@ export class AppointmentComponent implements OnInit {
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -1869,7 +1871,7 @@ export class AppointmentComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     showOtherSection(value?) {
         if (value) {

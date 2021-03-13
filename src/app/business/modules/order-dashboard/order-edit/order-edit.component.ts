@@ -22,6 +22,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -157,7 +158,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.route.params.pipe(takeUntil(this.onDestroy$))
     .subscribe(
       params => {
@@ -776,17 +778,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
-    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
   }
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
     const seldate = new Date(seldate2);
-    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
     const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
     const strtDt = new Date(strtDt2);
-    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
       return true;
     } else {

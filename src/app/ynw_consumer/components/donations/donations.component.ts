@@ -3,6 +3,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-consumer-donations',
@@ -30,6 +31,7 @@ export class ConsumerDonationsComponent implements OnInit {
     // newDateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     constructor(public shared_functions: SharedFunctions,
+        private dateTimeProcessor: DateTimeProcessor,
         private shared_services: SharedServices) {
 
     }
@@ -37,7 +39,7 @@ export class ConsumerDonationsComponent implements OnInit {
         this.getDonations();
     }
     stringtoDate(dt, mod) {
-        return this.shared_functions.stringtoDate(dt, mod);
+        return this.dateTimeProcessor.stringtoDate(dt, mod);
     }
     getDonations() {
         const filter = {

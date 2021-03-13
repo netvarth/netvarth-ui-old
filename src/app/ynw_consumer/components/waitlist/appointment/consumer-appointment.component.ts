@@ -24,6 +24,7 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -226,6 +227,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
+        private dateTimeProcessor: DateTimeProcessor,
         @Inject(DOCUMENT) public document,
         public dialog: MatDialog) {
         this.route.queryParams.subscribe(
@@ -331,7 +333,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getProfile().then(
             () => {
@@ -887,17 +889,17 @@ export class ConsumerAppointmentComponent implements OnInit {
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -1265,7 +1267,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     getPic(user) {
         if (user.profilePicture) {

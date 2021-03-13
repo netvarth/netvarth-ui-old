@@ -12,6 +12,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { KeyValue } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -87,6 +88,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
       this.activateRoute.queryParams.subscribe(params => {
 this.qParams = params;
@@ -168,15 +170,15 @@ if (this.qParams.enquiry) {
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
-    const obtdate = new Date(pubDate.getFullYear() + '-' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '-' + this.shared_functions.addZero(pubDate.getDate()));
-    const obtshowdate = this.shared_functions.addZero(pubDate.getDate()) + '/' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-    const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
+    const obtshowdate = this.dateTimeProcessor.addZero(pubDate.getDate()) + '/' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.dateTimeProcessor.addZero(pubDate.getHours()) + ':' + this.dateTimeProcessor.addZero(pubDate.getMinutes());
     const today = new Date();
-    const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
+    const todaydate = new Date(today.getFullYear() + '-' + this.dateTimeProcessor.addZero((today.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(today.getDate()));
     if (obtdate.getTime() === todaydate.getTime()) {
-      retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     } else {
-      retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = obtshowdate + ' ' + this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     }
     return retdate;
   }

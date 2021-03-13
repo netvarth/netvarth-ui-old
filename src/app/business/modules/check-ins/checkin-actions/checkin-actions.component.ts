@@ -22,6 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -101,7 +102,7 @@ export class CheckinActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
-        private shared_functions: SharedFunctions, private provider_services: ProviderServices,
+        private provider_services: ProviderServices,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -111,6 +112,7 @@ export class CheckinActionsComponent implements OnInit {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -250,7 +252,7 @@ export class CheckinActionsComponent implements OnInit {
                         }
                         this.sel_queue_id = this.queuejson[selindx].id;
                         this.sel_queue_indx = selindx;
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
@@ -316,11 +318,11 @@ export class CheckinActionsComponent implements OnInit {
         const seldate1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -330,7 +332,7 @@ export class CheckinActionsComponent implements OnInit {
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
         this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];

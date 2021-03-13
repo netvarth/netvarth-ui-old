@@ -5,6 +5,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -35,7 +36,8 @@ export class ConfirmPageComponent implements OnInit {
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
@@ -86,7 +88,7 @@ export class ConfirmPageComponent implements OnInit {
       } else if (waitlist.appxWaitingTime === 0) {
         return 'Now';
       } else if (waitlist.appxWaitingTime !== 0) {
-        return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+        return this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
       }
     }
   }

@@ -11,6 +11,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -79,7 +80,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     private sharedfunctionObj: SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
@@ -228,7 +230,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();

@@ -21,6 +21,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -361,6 +362,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title) {
       this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
@@ -1091,10 +1093,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getAppointmentsPerSlot(appointments) {
     let date;
     if (this.time_type === 1) {
-      date = this.shared_functions.transformToYMDFormat(this.server_date);
+      date = this.dateTimeProcessor.transformToYMDFormat(this.server_date);
     }
     if (this.time_type === 2) {
-      date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      date = this.dateTimeProcessor.transformToYMDFormat(this.filter.future_appt_date);
     }
     if (this.selQIds && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
@@ -1347,7 +1349,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.dateTimeProcessor.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.dateTimeProcessor.transformToYMDFormat(servdate)) {
       this.filter.future_appt_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
@@ -1522,10 +1524,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
+        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
     }
     if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
@@ -1604,7 +1606,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
 
   apptClicked(type, time?) {

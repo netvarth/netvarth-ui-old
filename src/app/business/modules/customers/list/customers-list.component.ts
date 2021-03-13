@@ -15,6 +15,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -124,7 +125,8 @@ export class CustomersListComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private activated_route: ActivatedRoute,
-    private snackbarService: SnackbarService,) {
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor:DateTimeProcessor) {
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
         // this.addNewCustomertoGroup(qparams.customerId);
@@ -310,7 +312,7 @@ export class CustomersListComponent implements OnInit {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
     if (this.filter.date != null) {
-      api_filter['dob-eq'] = this.shared_functions.transformToYMDFormat(this.filter.date);
+      api_filter['dob-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.date);
     }
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;

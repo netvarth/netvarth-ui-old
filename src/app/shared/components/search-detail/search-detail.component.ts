@@ -21,6 +21,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
@@ -207,6 +208,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
+    private dateTimeProcessor: DateTimeProcessor,
     private dialog: MatDialog) {
     this.onResize();
   }
@@ -295,7 +297,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         const bdate = bconfig.cdate;
         const bdata = bconfig.bdata;
         const saveddate = new Date(bdate);
-        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           resolve(bdata);
@@ -833,8 +835,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       const curdatetime = new Date();
       const enddatetime = new Date();
       enddatetime.setMinutes(enddatetime.getMinutes() + 2); // adding 2 minutes to current time
-      const starttime = this.shared_functions.addZero(curdatetime.getHours()) + '' + this.shared_functions.addZero(curdatetime.getMinutes());
-      const endtime = this.shared_functions.addZero(enddatetime.getHours()) + '' + this.shared_functions.addZero(enddatetime.getMinutes());
+      const starttime = this.dateTimeProcessor.addZero(curdatetime.getHours()) + '' + this.dateTimeProcessor.addZero(curdatetime.getMinutes());
+      const endtime = this.dateTimeProcessor.addZero(enddatetime.getHours()) + '' + this.dateTimeProcessor.addZero(enddatetime.getMinutes());
       time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + ']';
     } else if (this.commonfilters === 'always_open1') { // case of opennow clicked
       time_qstr = time_qstr + ' ' + this.commonfilters + ':1 ';
@@ -1092,7 +1094,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   this.search_data.hits.hit[srchindx].fields['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 } else {
                   this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = false;
-                  this.search_data.hits.hit[srchindx].fields['appttime_det']['date'] = this.shared_functions.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                  this.search_data.hits.hit[srchindx].fields['appttime_det']['date'] = this.dateTimeProcessor.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
                     + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
@@ -1116,7 +1118,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   private getWaitingTime(provids) {
     if (provids.length > 0) {
@@ -1192,26 +1194,26 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['nextAvailDate'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   // this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
@@ -1614,8 +1616,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const curdatetime = new Date();
           const enddatetime = new Date();
           enddatetime.setMinutes(enddatetime.getMinutes() + projectConstants.OPEN_NOW_INTERVAL); // adding minutes from project constants file to current time
-          const starttime = this.shared_functions.addZero(curdatetime.getHours()) + '' + this.shared_functions.addZero(curdatetime.getMinutes());
-          const endtime = this.shared_functions.addZero(enddatetime.getHours()) + '' + this.shared_functions.addZero(enddatetime.getMinutes());
+          const starttime = this.dateTimeProcessor.addZero(curdatetime.getHours()) + '' + this.dateTimeProcessor.addZero(curdatetime.getMinutes());
+          const endtime = this.dateTimeProcessor.addZero(enddatetime.getHours()) + '' + this.dateTimeProcessor.addZero(enddatetime.getMinutes());
           time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + '] ';
           retstr += ' ' + time_qstr;
         } else {

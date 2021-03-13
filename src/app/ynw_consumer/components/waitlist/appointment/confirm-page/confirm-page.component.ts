@@ -5,6 +5,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -33,7 +34,8 @@ export class ConfirmPageComponent implements OnInit {
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
       params => {
@@ -63,7 +65,7 @@ export class ConfirmPageComponent implements OnInit {
   getSingleTime(slot) {
     if (slot) {
       const slots = slot.split('-');
-      return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
   updateEmail() {

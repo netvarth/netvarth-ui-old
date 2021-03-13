@@ -24,6 +24,7 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -197,6 +198,7 @@ export class ConsumerCheckinComponent implements OnInit {
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
+        private dateTimeProcessor: DateTimeProcessor,
         @Inject(DOCUMENT) public document
     ) {
         this.route.queryParams.subscribe(
@@ -300,7 +302,7 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getProfile().then(
             () => {
@@ -516,7 +518,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         }
                         this.sel_queue_id = this.queuejson[selindx].id;
                         this.sel_queue_indx = selindx;
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.providerConvertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.providerConvertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
@@ -554,7 +556,7 @@ export class ConsumerCheckinComponent implements OnInit {
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
         this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
@@ -935,17 +937,17 @@ export class ConsumerCheckinComponent implements OnInit {
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {

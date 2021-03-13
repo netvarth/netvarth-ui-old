@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -239,6 +240,7 @@ export class ProviderCheckinComponent implements OnInit {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -585,7 +587,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
@@ -854,7 +856,7 @@ export class ProviderCheckinComponent implements OnInit {
                         this.sel_queue_id = this.queuejson[selindx].id;
                         this.sel_queue_indx = selindx;
                         // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
@@ -929,7 +931,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_queue_indx !== -1) {
             this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
-            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
+            this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
             this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
             // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
@@ -945,7 +947,7 @@ export class ProviderCheckinComponent implements OnInit {
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
         this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
@@ -1141,6 +1143,8 @@ export class ProviderCheckinComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1506,17 +1510,17 @@ console.log(Object.keys(this.questionAnswers).length);
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {

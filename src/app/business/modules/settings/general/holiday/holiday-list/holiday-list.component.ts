@@ -11,6 +11,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { DateFormatPipe } from '../../../../../../shared/pipes/date-format/date-format.pipe';
+import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-holiday-list',
@@ -61,10 +62,10 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions,
     private groupService: GroupStorageService,
     public dateformat: DateFormatPipe,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
@@ -150,7 +151,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
-    const tday = new Date(this.sharedfunctionObj.addZero(yyyy) + '-' + this.sharedfunctionObj.addZero(mm) + '-' + this.sharedfunctionObj.addZero(dd) + ' 00:00:00');
+    const tday = new Date(this.dateTimeProcessor.addZero(yyyy) + '-' + this.dateTimeProcessor.addZero(mm) + '-' + this.dateTimeProcessor.addZero(dd) + ' 00:00:00');
     if (pdate.getTime() < tday.getTime()) {
       return false;
     } else {

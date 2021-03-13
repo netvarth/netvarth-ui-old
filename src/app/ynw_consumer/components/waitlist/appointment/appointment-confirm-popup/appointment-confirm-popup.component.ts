@@ -10,6 +10,7 @@ import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         public dateformat: DateFormatPipe,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
         this.service_det = data.service_details;
         this.waitlist_for = data.waitlist_for;
@@ -201,7 +203,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     addConsumeremail(){
         this.action = 'addEmail'

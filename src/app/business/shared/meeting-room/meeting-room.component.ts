@@ -148,18 +148,19 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Method to exit from a meeting
      */
     disconnect() {
-        if (this.twilioService.previewTracks) {
-            this.twilioService.previewTracks.forEach(localTrack => {
-                localTrack.stop();
-            });
-        }
-        if (this.twilioService.roomObj && this.twilioService.roomObj !== null) {
-            this.twilioService.roomObj.disconnect();
-            this.twilioService.roomObj = null;
+        // if (this.twilioService.previewTracks) {
+        //     this.twilioService.previewTracks.forEach(localTrack => {
+        //         localTrack.stop();
+        //     });
+        // }
+        // if (this.twilioService.activeRoom && this.twilioService.activeRoom !== null) {
+        //     this.twilioService.activeRoom.disconnect();
+        //     this.twilioService.activeRoom = null;
+        //     this._location.back();
+        // } else {
+            this.twilioService.disconnect();
             this._location.back();
-        } else {
-            this._location.back();
-        }
+        // }
     }
 
     /**

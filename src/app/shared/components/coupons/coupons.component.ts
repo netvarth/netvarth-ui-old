@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class CouponsComponent implements OnInit{
   ownCoupons: any = [] ;
 
   constructor(private shared_functions: SharedFunctions,
+    private dateTimeProcessor: DateTimeProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   ngOnInit() {
@@ -66,7 +68,7 @@ export class CouponsComponent implements OnInit{
   }
 
   formatDateDisplay(dateStr) {
-    return this.shared_functions.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
 
   toggle_adwordshowmore(i) {

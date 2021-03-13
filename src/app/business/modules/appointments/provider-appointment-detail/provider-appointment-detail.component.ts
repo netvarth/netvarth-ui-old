@@ -14,6 +14,7 @@ import { AppointmentActionsComponent } from '../appointment-actions/appointment-
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-appointment-detail',
   templateUrl: './provider-appointment-detail.component.html'
@@ -108,6 +109,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -346,7 +348,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           if (retcap) {
             return 'Date'; // this.minCaption;
           } else {
-            return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+            return this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           }
         }
       } else {
@@ -464,7 +466,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_Functionsobj.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {

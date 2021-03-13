@@ -29,6 +29,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GalleryImportComponent } from '../../../shared/modules/gallery/import/gallery-import.component';
 import { GalleryService } from '../../../shared/modules/gallery/galery-service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image,ButtonType } from '@ks89/angular-modal-gallery';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -242,6 +243,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private galleryService: GalleryService,  
+    private dateTimeProcessor: DateTimeProcessor,
     public _sanitizer: DomSanitizer) {
     this.onResize();
     this.activated_route.queryParams.subscribe(qparams => {
@@ -538,7 +540,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getWaitlist() {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
-    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
     const params = {
       'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
@@ -656,7 +658,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
           appx_ret.date = '';
-          appx_ret.time = this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+          appx_ret.time = this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           appx_ret.autoreq = true;
         }
       }
@@ -966,13 +968,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
@@ -981,14 +983,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               }
             } else {
@@ -1357,7 +1359,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           if (this.waitlists[i].estimated_timeinmins === 0) {
             this.waitlists[i].estimated_time = 'Now';
           } else {
-            this.waitlists[i].estimated_time = this.shared_functions.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
+            this.waitlists[i].estimated_time = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
           }
         }
       }
@@ -1541,7 +1543,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getMintuesToHour(time) {
-    return this.shared_functions.providerConvertMinutesToHourMinute(time);
+    return this.dateTimeProcessor.providerConvertMinutesToHourMinute(time);
   }
   statusOfLiveTrack(waitlist, i) {
     this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
@@ -1891,7 +1893,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getMeetingDetails(details, source) {
     const passData = {
@@ -1960,7 +1962,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   getTimeToDisplay(min) {
-    return this.shared_functions.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   viewprescription(checkin) {
     this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
@@ -1980,7 +1982,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_tdy_order = [];
     this.todayOrderslst = [];
     this.todayOrderslst_more = [];
-    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
     const params = {
       'orderDate-eq': this.tDate
     };

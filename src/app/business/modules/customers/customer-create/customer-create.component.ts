@@ -13,6 +13,7 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-customer-create',
@@ -136,7 +137,8 @@ export class CustomerCreateComponent implements OnInit {
     private router: Router,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService) {
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor) {
     // this.search_data = this.data.search_data;
     const customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
@@ -460,7 +462,7 @@ export class CustomerCreateComponent implements OnInit {
     this.disableButton = true;
     let datebirth;
     if (form_data.dob) {
-      datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+      datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
     if (this.action === 'add') {
       const post_data = {
@@ -972,7 +974,7 @@ export class CustomerCreateComponent implements OnInit {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;
