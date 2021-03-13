@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-jcoupon-details',
   templateUrl: './provider-jcoupon-details.component.html',
@@ -67,6 +68,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     private location: Location,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     private router: ActivatedRoute) { this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
@@ -106,7 +108,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.shared_functions.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   redirecToJaldeeBilling() {
     this.location.back();

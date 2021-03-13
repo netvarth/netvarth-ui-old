@@ -11,6 +11,8 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-pos-coupon',
@@ -217,7 +219,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
