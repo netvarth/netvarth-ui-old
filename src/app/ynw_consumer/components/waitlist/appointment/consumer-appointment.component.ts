@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -24,13 +24,15 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
+import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
-export class ConsumerAppointmentComponent implements OnInit {
+export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
+ 
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -211,6 +213,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     apiSuccess = '';
     questionAnswers;
     googleMapUrl;
+    private subs=new  SubSink();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -230,7 +233,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         @Inject(DOCUMENT) public document,
         public dialog: MatDialog) {
-        this.route.queryParams.subscribe(
+       this.subs.sink= this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
@@ -261,6 +264,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.getRescheduleApptDet();
                 }
             });
+    }
+    ngOnDestroy(): void {
+       this.subs.unsubscribe();
     }
     ngOnInit() {
         this.bookingForm = this.fb.group({
@@ -351,7 +357,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         );
     }
     getRescheduleApptDet() {
-        this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
+        this.subs.sink=this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (appt: any) => {
                 this.appointment = appt;
                 if (this.type === 'reschedule') {
@@ -371,7 +377,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getWaitlistMgr() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getWaitlistMgr()
+            _this.subs.sink= _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -386,7 +392,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getBussinessProfile()
+            _this.subs.sink==  _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -409,7 +415,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'lastName': this.customer_data.lastName
             }
         };
-        fn.subscribe(data => {
+        this.subs.sink= fn.subscribe(data => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -507,7 +513,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-            _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+            _this.subs.sink= _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
                 .subscribe((data: any) => {
                     const availables = data.filter(obj => obj.availableSlots);
                     const availDates = availables.map(function (a) { return a.date; });
@@ -521,7 +527,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid) {
-        this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
+        this.subs.sink= this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
                 this.freeSlots = [];
@@ -687,7 +693,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             'date': this.sel_checkindate,
             'schedule': this.apptTime['scheduleId']
         };
-        this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
+        this.subs.sink=this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(
                 () => {
                     this.apptdisable = false;
@@ -702,7 +708,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
     }
     addCheckInConsumer(post_Data) {
-        this.shared_services.addCustomerAppointment(this.account_id, post_Data)
+        this.subs.sink= this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
                 this.uuidList = [];
@@ -832,7 +838,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            fn.subscribe(() => {
+            this.subs.sink=fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
@@ -907,7 +913,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     getPartysizeDetails(domain, subdomain) {
-        this.shared_services.getPartysizeDetails(domain, subdomain)
+        this.subs.sink= this.shared_services.getPartysizeDetails(domain, subdomain)
             .subscribe(data => {
                 this.partysizejson = data;
                 this.partySize = false;
@@ -949,7 +955,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     getProviderDepart(id) {
-        this.shared_services.getProviderDept(id).
+        this.subs.sink=this.shared_services.getProviderDept(id).
             subscribe(data => {
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
@@ -968,7 +974,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
-        this.shared_services.getServicesforAppontmntByLocationId(locid)
+        this.subs.sink=this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = this.servicesjson;
@@ -1036,7 +1042,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
+        this.subs.sink=this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1111,7 +1117,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (modDateReq) {
             UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
         }
-        this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+        this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
             .subscribe(res => {
                 switch (section) {
                     case 'settings':
@@ -1468,7 +1474,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {
-            _this.shared_services.updateProfile(post_data, passtyp)
+            _this.subs.sink=  _this.shared_services.updateProfile(post_data, passtyp)
                 .subscribe(
                     () => {
                         _this.getProfile();
@@ -1517,7 +1523,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     addApptAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
-        this.shared_services.addApptAdvancePayment(param, post_Data)
+        this.subs.sink=this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
@@ -1543,7 +1549,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink= this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.pGateway = pData.paymentGateway;
                 if (this.pGateway === 'RAZORPAY') {
@@ -1631,7 +1637,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+        this.subs.sink=this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
             } else {

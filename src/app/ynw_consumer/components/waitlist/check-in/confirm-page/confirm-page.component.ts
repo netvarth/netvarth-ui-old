@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { DateTimeProcessor } from '../../../../../shared/services/datetime-proce
   templateUrl: './confirm-page.component.html',
   styleUrls: ['./confirm-page.component.css']
 })
-export class ConfirmPageComponent implements OnInit {
+export class ConfirmPageComponent implements OnInit ,OnDestroy{
   breadcrumbs = [
     {
       title: 'My Jaldee',
@@ -24,6 +25,7 @@ export class ConfirmPageComponent implements OnInit {
   ];
   infoParams;
   waitlist: any = [];
+  private subs=new SubSink();
   path = projectConstants.PATH;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
@@ -40,7 +42,7 @@ export class ConfirmPageComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor
   ) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.route.queryParams.subscribe(
+    this.subs.sink=this.route.queryParams.subscribe(
       params => {
         // this.lStorageService.setitemonLocalStorage('inPostInfo', true);
         this.infoParams = params;
@@ -51,14 +53,14 @@ export class ConfirmPageComponent implements OnInit {
           this.uuids = params.uuid;
           if (params.multiple) {
             for (const uuid of this.uuids) {
-              this.shared_services.getCheckinByConsumerUUID(uuid, params.account_id).subscribe(
+             this.subs.sink=this.shared_services.getCheckinByConsumerUUID(uuid, params.account_id).subscribe(
                 (waitlist: any) => {
                   this.waitlist.push(waitlist);
                   this.apiloading = false;
                 });
             }
           } else {
-            this.shared_services.getCheckinByConsumerUUID(this.uuids, params.account_id).subscribe(
+           this.subs.sink= this.shared_services.getCheckinByConsumerUUID(this.uuids, params.account_id).subscribe(
               (waitlist: any) => {
                 this.waitlist.push(waitlist);
                 this.apiloading = false;
@@ -70,6 +72,9 @@ export class ConfirmPageComponent implements OnInit {
 
   ngOnInit() {
   }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+   }
   okClick(waitlist) {
     if (waitlist.service.livetrack) {
       this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id } });

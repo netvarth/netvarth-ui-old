@@ -12,6 +12,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/pr
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-customer-details',
@@ -112,6 +113,7 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor:DateTimeProcessor,
         private groupService: GroupStorageService) {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
@@ -448,7 +450,7 @@ export class CustomerDetailComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.shared_functions.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     showHistory() {
         this.showMoreHistory = !this.showMoreHistory;

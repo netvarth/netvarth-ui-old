@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
@@ -12,7 +13,8 @@ import { DateTimeProcessor } from '../../../../../shared/services/datetime-proce
   templateUrl: './confirm-page.component.html',
   styleUrls: ['./confirm-page.component.css']
 })
-export class ConfirmPageComponent implements OnInit {
+export class ConfirmPageComponent implements OnInit,OnDestroy {
+
   breadcrumbs = [
     {
       title: 'My Jaldee',
@@ -31,17 +33,18 @@ export class ConfirmPageComponent implements OnInit {
   apiloading = false;
   provider_label;
   type = 'appt';
+  private subs=new SubSink();
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.route.queryParams.subscribe(
+    this.subs.sink=this.route.queryParams.subscribe(
       params => {
         this.infoParams = params;
         if (params.uuid && params.account_id) {
-          this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
+         this.subs.sink= this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
             (appt: any) => {
               this.appointment = appt;
               this.apiloading = false;
@@ -54,6 +57,9 @@ export class ConfirmPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
   okClick() {
     if (this.appointment.service.livetrack && this.type !== 'reschedule') {

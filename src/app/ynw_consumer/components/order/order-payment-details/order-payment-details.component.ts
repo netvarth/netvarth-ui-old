@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
   templateUrl: './order-payment-details.component.html',
   styleUrls: ['./order-payment-details.component.css']
 })
-export class OrderPaymentDetailsComponent implements OnInit {
+export class OrderPaymentDetailsComponent implements OnInit ,OnDestroy{
+   
   payments: any;
   breadcrumbs;
   date_cap = Messages.DATE_CAP;
@@ -20,6 +22,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
   status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
+  private subs=new SubSink();
   constructor(public shared_functions: SharedFunctions,
       private router: Router,
       private dateTimeProcessor: DateTimeProcessor,
@@ -38,6 +41,9 @@ export class OrderPaymentDetailsComponent implements OnInit {
       ];
       this.getPayments();
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+}
   stringtoDate(dt, mod) {
       let dtsarr;
       if (dt) {
@@ -60,7 +66,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
       }
   }
   getPayments() {
-      this.shared_services.getConsumerPayments().subscribe(
+     this.subs.sink= this.shared_services.getConsumerPayments().subscribe(
           (payments) => {
               this.payments = payments;
           }

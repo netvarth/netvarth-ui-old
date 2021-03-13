@@ -11,8 +11,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-pos-coupon',
@@ -62,7 +61,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   published_cap=Messages.PUBLISHED_CAP;
-  private onDestroy$: Subject<void> = new Subject<void>();
+  private subs=new SubSink();
 
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
@@ -75,8 +74,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
-    this.activatedRoute.queryParams
-    .pipe(takeUntil(this.onDestroy$))
+    this.subs.sink=this.activatedRoute.queryParams
     .subscribe(params=>{
       if(params.coupon_list==='own_coupon'){
         this.tabid=1;
@@ -103,13 +101,11 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     if (this.confirmremdialogRef) {
       this.confirmremdialogRef.close();
     }
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
+  this.subs.unsubscribe();
 
   }
   getCoupons() {
-    this.provider_servicesobj.getProviderCoupons()
-    .pipe(takeUntil(this.onDestroy$))
+    this.subs.sink=this.provider_servicesobj.getProviderCoupons()
       .subscribe(data => {
         this.coupon_list = data;
         this.query_executed = true;
@@ -126,8 +122,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     }
   }
   getJaldeeCoupons() {
-    this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
-    .pipe(takeUntil(this.onDestroy$))
+   this.subs.sink= this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
       .subscribe(data => {
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
@@ -175,7 +170,6 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
       }
     });
     this.confirmremdialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
     .subscribe(result => {
       if (result) {
         this.deleteCoupons(id);
@@ -183,8 +177,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     });
   }
   deleteCoupons(id) {
-    this.provider_servicesobj.deleteCoupon(id)
-    .pipe(takeUntil(this.onDestroy$))
+    this.subs.sink=this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
         () => {
           this.snackbarService.openSnackBar(Messages.COUPON_DELETED);
@@ -207,8 +200,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
 
   changecouponStatus(jcCoupon) {
     const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';
-    this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status)
-    .pipe(takeUntil(this.onDestroy$))
+  this.subs.sink= this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status)
     .subscribe(
       () => {
         this.getJaldeeCoupons();
