@@ -8,13 +8,31 @@ export let projectConstants: any = {};
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+/**
+ * Root class of Jaldee Application
+ */
 export class AppComponent implements OnInit {
+  
+  // not used
   title = 'app';
+
+  /**
+   * 
+   * @param globalService 
+   * @param lStorageService 
+   */
   constructor(
     private globalService: GlobalService,
     private lStorageService: LocalStorageService
   ) { }
 
+  /**
+   * Init Method
+   * if version is null or different this method clears local storage items from a list.
+   * sets the current version in the local storage
+   * @returns projectConstants which represents the constant variables used in jaldee UI
+   * 
+   */
   ngOnInit() {
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
