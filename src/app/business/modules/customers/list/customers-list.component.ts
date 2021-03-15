@@ -127,11 +127,11 @@ export class CustomersListComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private dateTimeProcessor:DateTimeProcessor) {
-    this.activated_route.queryParams.subscribe(qparams => {
-      if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
-        // this.addNewCustomertoGroup(qparams.customerId);
+      if (this.groupService.getitemFromGroupStorage('group')) {
+        this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
+      } else {
+        this.selectedGroup = 'all';
       }
-    });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
@@ -143,13 +143,13 @@ export class CustomersListComponent implements OnInit {
     this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
+        // this.addNewCustomertoGroup(qparams.customerId);
+      }
+    });
   }
   ngOnInit() {
-    if (this.groupService.getitemFromGroupStorage('group')) {
-      this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
-    } else {
-      this.selectedGroup = 'all';
-    }
     if (this.selectedGroup == 'all') {
       this.getCustomersList(true);
     } else {
@@ -803,8 +803,8 @@ export class CustomersListComponent implements OnInit {
       }
     });
     removeitemdialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
+        this.router.navigate(['provider', 'customers']);
         this.addCustomerToGroup(customerId);
       }
     });
