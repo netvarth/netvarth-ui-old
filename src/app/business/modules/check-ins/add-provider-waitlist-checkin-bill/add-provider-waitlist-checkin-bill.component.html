@@ -711,11 +711,15 @@
 											aria-hidden="true"></i>
 									</div>
 								</div>
-								<div class="hr_content" *ngFor="let coupon of bill_data.providerCoupon">
-									<div class="flx_1">{{coupon.name}}</div>
-									<div class="rupee-font">(-){{coupon.couponValue | currency:'&#8377;'}}
+								<div class="hr_content" *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
+									<div class="flx_1">{{coupon.key}} (Coupon)</div>
+									<div class="rupee-font">
+											<span (click)="showJCCouponNote(coupon)"
+											[class.couponAmt]="coupon.value.value === '0.0'"
+											style="margin-right: 5px">{{coupon.value.value |
+											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'"
-											(click)="removeProviderCoupon(coupon)" class="fa fa-window-close"
+											(click)="removeProviderCoupon(coupon.key)" class="fa fa-window-close"
 											aria-hidden="true"></i>
 									</div>
 								</div>

@@ -1209,14 +1209,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Remove Provider Coupons
    * @param coupon Coupon Info
    */
-  removeProviderCoupon(coupon) {
+  removeProviderCoupon(couponCode) {
     const action = 'removeProviderCoupons';
-    const couponIds = [];
-    couponIds.push(coupon.id);
-    const data = {};
-    data['id'] = this.bill_data.id;
-    data['couponIds'] = couponIds;
-    this.applyAction(action, this.bill_data.uuid, data);
+     let coupon: string;
+     coupon = '"' + couponCode + '"';
+    this.applyAction(action, this.bill_data.uuid, coupon);
   }
   hideWorkBench() {
     this.jCoupon = '';
