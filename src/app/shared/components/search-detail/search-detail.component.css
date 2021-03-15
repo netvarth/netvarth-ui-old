@@ -1180,4 +1180,16 @@ ul.bus-actions-horiz li {
   font-size: 1.4rem !important;
 }
 
+@media (max-width: 575px) {
+  .search-detail-component.content.search-details-list .search-form div {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .search-detail-component.content.search-details-list .search-form div {
+    font-size: 1.1rem !important;
+  }
+}
+
 /* (min-width: 576px) and */
