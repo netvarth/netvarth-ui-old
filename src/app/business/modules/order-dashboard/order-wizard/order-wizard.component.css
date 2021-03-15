@@ -3,9 +3,9 @@
     visibility: visible !important;
 }
 .orderItems .card{
-  min-width:300px!important;
-  max-height:250px!important;
-  min-height:250px!important;
+  min-width:250px!important;
+  /* max-height:250px!important; */
+  min-height:300px!important;
 }
 .add_qty {
     bottom: 0;
@@ -109,5 +109,10 @@
   background-size: cover !important;
   height:100px!important;
 
+}
+.strikeMe {
+  text-decoration: line-through !important;
+  color: #aaa !important;
+  font-size: 0.85rem !important;
 }
   

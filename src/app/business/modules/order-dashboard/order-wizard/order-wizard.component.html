@@ -187,7 +187,9 @@
                                       </a>
                                       <span class="font-size-lg">{{ item.item.shortDesc }}</span>
                                     </div>
-                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{ item.item.price }}</div>
+                                    <div class="strikeMe " *ngIf="item.item.showPromotionalPrice rupee-font">₹ {{ item.item.price | currency:'':''}}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price) |
+                                      currency:'':''}}</div>
                                     <!--end::Details-->
                                   </div>
                                 </div>

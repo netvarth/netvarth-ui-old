@@ -76,3 +76,8 @@ color: #0707eca1 !important;
   margin-bottom:8px!important;
   margin-right:2px!important;   
  }
+ .strikeMe {
+  text-decoration: line-through !important;
+  color: #aaa !important;
+  font-size: 0.85rem !important;
+}
