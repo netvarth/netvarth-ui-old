@@ -834,12 +834,17 @@ ul.bus-actions-horiz li {
   font-size: 13px;
 }
 
-.checkin-est .time-data,
+.checkin-est .time-data {
+  color: #1E4079 !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
 .checkin-est .persons-ahead,
 .people-ahead {
   color: #1E4079 !important;
   font-weight: 700 !important;
-  font-size: 16px !important;
+  font-size: 13px !important;
 }
 
 .wt-tme.notallowed {

@@ -668,6 +668,7 @@
                                             </div> -->
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
+                                                <div style="flex: 1 0 50% !important; max-width: 200px !important;">
                                                 <div class="checkin-est nrm"
                                                     *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' && search_result.fields['estimatedtime_det']['caption'] && search_result.fields['estimatedtime_det']['time']">
                                                     <span class="est-time"
@@ -693,6 +694,7 @@
                                                     <span
                                                         class="time-data">{{search_result.fields['appttime_det']['date']}}
                                                     </span>
+                                                </div>
                                                 </div>
                                                 <span (click)="providerDetClicked(search_result)"
                                                     class="checkin-btn srch_detail_btn book_{{search_result.fields.title}}">Book</span>
@@ -726,6 +728,7 @@
                                         </div> -->
                                         <div style="flex-grow:1"></div>
                                         <div class="bottom-actions-root">
+                                            <div style="flex: 1 0 50% !important; max-width: 200px !important;">
                                             <div class="checkin-est nrm"
                                                 *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
                                                 <span class="est-time"
@@ -751,6 +754,7 @@
                                                 <span
                                                     class="time-data">{{search_result.fields['appttime_det']['date']}}
                                                 </span>
+                                            </div>
                                             </div>
                                             <span (click)="providerDetClicked(search_result)"
                                                 class="checkin-btn srch_detail_btn bookserv_{{search_result.fields.title}}">Book service</span>
@@ -814,6 +818,7 @@
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root"
                                                 *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
+                                                <div style="flex: 1 0 50% !important; max-width: 200px !important;">
                                                 <div class="checkin-est nrm"
                                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
                                                     <span class="est-time"
@@ -837,6 +842,7 @@
                                                     <span class="est-time">Next Available Date</span>
                                                     <span
                                                         class="time-data">{{search_result.fields['estimatedtime_det']['cdate'] | date: dateFormat}}</span>
+                                                </div>
                                                 </div>
                                                 <span class="checkin-btn srch_detail_btn wl_{{search_result.fields.title}}" (click)="providerDetClicked(search_result)"
                                                     *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
@@ -871,6 +877,7 @@
                                             </div> -->
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
+                                                <div style="flex: 1 0 50% !important; max-width: 200px !important;">
                                                 <div class="checkin-est"
                                                     *ngIf="search_result.fields['appttime_det']['caption'] || search_result.fields['appttime_det']['date']">
                                                     <span
@@ -878,6 +885,7 @@
                                                     <span
                                                         class="time-data">{{search_result.fields['appttime_det']['date']}}
                                                     </span>
+                                                </div>
                                                 </div>
                                                 <span (click)="providerDetClicked(search_result)"
                                                     class="checkin-btn srch_detail_btn appt_{{search_result.fields.title}}">Appointment</span>
