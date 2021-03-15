@@ -159,6 +159,42 @@
     (click)="closeMorepopularoptions()"></div>
   <ng-container>
     <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
+      <div class="location-box">
+        <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
+          <mat-form-field class="search_location_class">
+            <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
+            <input type="text" class="txtCity" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
+              [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
+              (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
+    
+            <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
+              <div *ngIf="locationList">
+                <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname"
+                  (onSelectionChange)="setLocation(loc)">
+                  <div [innerHTML]="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location')">
+                  </div>
+                </mat-option>
+              </div>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="domain-box">
+        <div class="sa-dm">
+          <mat-form-field class="search_domain">
+            <div>
+              <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
+                <mat-option value="All">{{all_cap}}</mat-option>
+                <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
+                  {{ domain.displayName }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="search-box">
       <div class="sa-src">
         <mat-form-field floatLabel="never" class="search_keyword_class">
@@ -187,40 +223,7 @@
         </mat-form-field>
       </div>
       </div>
-      <div class="domain-box">
-      <div class="sa-dm">
-        <mat-form-field class="search_domain">
-          <div>
-            <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
-              <mat-option value="All">{{all_cap}}</mat-option>
-              <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
-                {{ domain.displayName }}
-              </mat-option>
-            </mat-select>
-          </div>
-        </mat-form-field>
-      </div>
-      </div>
-      <div class="location-box">
-      <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
-        <mat-form-field class="search_location_class">
-          <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
-          <input type="text" class="txtCity" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
-            [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
-            (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
-  
-          <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
-            <div *ngIf="locationList">
-              <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname"
-                (onSelectionChange)="setLocation(loc)">
-                <div [innerHTML]="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location')">
-                </div>
-              </mat-option>
-            </div>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-      </div>
+      
       <div class="button-box">
       <div class="sa-btn plr0i">
         <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1"
