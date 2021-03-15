@@ -359,6 +359,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
+        console.log(this.pSource);
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -372,6 +373,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.deptUsers = [];
       if (qparams.psource) {
         this.pSource = qparams.psource;
+        console.log(this.pSource);
         if (qparams.psource === 'business') {
           this.loading = true;
           this.showDepartments = false;
@@ -1309,7 +1311,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   goThroughLogin() {
     return new Promise((resolve) => {
       const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-      const qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      qrusr = JSON.parse(qrusr);
       if (qrusr && qrpw) {
         const data = {
           'countryCode': qrusr.countryCode,
@@ -2060,12 +2063,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        src: 'bp'
-      }
-    };
-    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     src: 'bp'
+    //   }
+    // };
+    this.routerobj.navigate([this.accountEncId, userId]);
   }
 
   cardClicked(actionObj) {

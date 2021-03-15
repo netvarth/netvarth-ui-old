@@ -597,6 +597,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     this._location.back();
   }
   handlelocationfind(val) {
+    this.locationFind = '';
     if (val === 'googlemap') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',

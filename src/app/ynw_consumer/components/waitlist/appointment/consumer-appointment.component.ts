@@ -1017,10 +1017,10 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
-                    if (type) {
-                        this.modal.nativeElement.click();
-                    }
                 }
+            }
+            if (type) {
+                this.modal.nativeElement.click();
             }
         }
     }
@@ -1529,7 +1529,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 this.paymentLength = Object.keys(this.paymentDetails).length;
             },
                 error => {
-                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
     payuPayment() {

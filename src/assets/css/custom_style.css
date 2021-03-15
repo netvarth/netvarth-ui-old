@@ -13976,6 +13976,7 @@ width: 40px !important;
   }
   .body-section {
     margin-top: 50px;
+    height: 75vh !important;
   }
 }
 .body-section {
@@ -14049,4 +14050,16 @@ width: 40px !important;
 .modal-backdrop {
   z-index: 0 !important;
   opacity: 0 !important;
+}
+.mgn-lt-auto {
+  margin-left: auto !important;
+}
+.wizardstyle {
+  margin: 0px !important;
+}
+.wizardstyle .body-section {
+  height: 93vh;
+}
+.wizardstyle app-footernew .main-footer {
+  margin-left: 0px !important;
 }

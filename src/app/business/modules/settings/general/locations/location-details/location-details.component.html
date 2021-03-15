@@ -291,7 +291,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <label class="option" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
-                  <input type="radio" (click)="handlelocationfind('googlemap')" name="locationradio" value="googlemap" checked="checked"/>
+                  <input type="radio" (click)="handlelocationfind('googlemap')" name="locationradio" value="googlemap" [checked]="locationFind === 'GOOGLEMAP'"/>
                   <span></span>
                 </span>
               </span>
@@ -311,7 +311,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <label class="option" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
-                  <input type="radio" (click)="handlelocationfind('autodetect')" name="locationradio" value="autodetect"/>
+                  <input type="radio" (click)="handlelocationfind('autodetect')" name="locationradio" value="autodetect" [checked]="locationFind === 'AUTODETECT'"/>
                   <span></span>
                 </span>
               </span>
@@ -332,7 +332,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <label class="option" style="border-color: grey; background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
-                  <input type="radio"  (click)="handlelocationfind('manual')" name="locationradio" value="manual"/>
+                  <input type="radio"  (click)="handlelocationfind('manual')" name="locationradio" value="manual" [checked]="locationFind === 'MANUAL'"/>
                   <span></span>
                 </span>
               </span>

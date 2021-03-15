@@ -199,7 +199,7 @@
       </div>
       <!--begin::Dropdown-->
       <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
-        [class.show]="action=='alert'">
+        [class.show]="action=='alert' && alertCnt > 0">
         <!--begin::Nav-->
         <ul class="navi navi-hover">
           <li class="navi-item" *ngFor="let alert of alerts">
@@ -210,7 +210,7 @@
                 *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
             </p>
           </li>
-          <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
+          <li class="footer"><a href="#" routerLink="alerts" (click)="actionPerformed('alert')">Go to Alerts</a></li>
         </ul>
         <!--end::Nav-->
       </div>
@@ -232,25 +232,25 @@
           <li class="header navi-item">
             <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
               style="color: red; width: 100%; text-align: left;">
-              Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
+              Your {{licenseDetails.accountLicense.displayName}} subscription plan will expire {{license_message}}.
               <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
-                  </b></span><span style="color: red"> to Upgrade License.</span></span>
+                  </b></span><span style="color: red"> to Upgrade your plan.</span></span>
             </p>
             <p style="width: 100%; text-align: left;"
               *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
-              Your current license is
-              <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span>
+              Your current subscription plan is
+              <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade your plan </span>
               for more features.
             </p>
           </li>
           <li class="upgrade-license"
             *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
-            <a (click)="upgradeMembership()">
-              <span class="link"> <b> Upgrade license </b></span>
+            <a (click)="actionPerformed('license');upgradeMembership()">
+              <span class="link"> <b> Upgrade your plan </b></span>
             </a>
           </li>
           <li class="footer">
-            <a class="pointer-cursor" routerLink="license">Go to license section</a>
+            <a class="pointer-cursor" routerLink="license" (click)="actionPerformed('license')">Go to subscription plan section</a>
           </li>
         </ul>
       </div>

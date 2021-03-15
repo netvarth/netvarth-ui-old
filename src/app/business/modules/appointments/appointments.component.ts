@@ -350,6 +350,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   maxday = new Date();
   endmaxday = new Date();
   statusChangeClicked = false;
+  selSchIdsForHistory: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -823,6 +824,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const q of this.activeSchedules) {
       qids.push(q.id);
     }
+    this.selSchIdsForHistory = qids;
     if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
@@ -1403,6 +1405,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.selSchIdsForHistory.length !== 0) {
+      Mfilter['schedule-eq'] = this.selSchIdsForHistory.toString();
+    }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {

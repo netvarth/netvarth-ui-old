@@ -1722,7 +1722,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="pay-section" *ngIf="sel_ser_det && sel_ser_det.isPrePayment">
+                                        <div class="pay-section" *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}

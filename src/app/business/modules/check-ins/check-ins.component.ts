@@ -182,7 +182,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   status_type = 'all';
   activeQs: any = [];
   tempActiveQs: any = [];
-  selQidsforHistory: any = [];
+  selQIdsForHistory: any = [];
   selQIds: any = [];
   selectedView: any;
   selectedUser: any;
@@ -1055,9 +1055,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     const qids = [];
+    console.log(this.activeQs);
     for (const q of this.activeQs) {
       qids.push(q.id);
     }
+    this.selQIdsForHistory = qids;
     if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
     } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
@@ -1501,9 +1503,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getHistoryWL() {
     this.loading = true;
     let Mfilter = this.setFilterForApi();
-    // if (this.selQIds.length !== 0) {
-    //   Mfilter['queue-eq'] = this.selQIds.toString();
-    // }
+    console.log(this.selQIdsForHistory);
+    console.log(this.activeQs);
+    if (this.selQIdsForHistory.length !== 0) {
+      Mfilter['queue-eq'] = this.selQIdsForHistory.toString();
+    }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {

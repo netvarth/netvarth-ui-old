@@ -460,8 +460,8 @@
                       </span>
                     </td>
                     <td *ngIf="!showCustomers">
-                      <button class="hide_th" mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
-                      <i class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
+                      <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
+                      <i *ngIf="customer.phoneNo || customer.email" class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
                     </td>
                     <td *ngIf="!showCustomers">
                       <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>

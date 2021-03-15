@@ -202,9 +202,13 @@ export class InboxOuterComponent implements OnInit {
     };
   }
   getUserName(user) {
+    const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
     const name = user.split(' ');
+    const pattern = userPattern.test(name[0]);
+    console.log(user + '=' + userPattern.test(user));
+    console.log(user + '=' + userPattern.test(name[0]));
     let nameShort = name[0].charAt(0);
-    if (name.length > 1) {
+    if (name.length > 1 && pattern) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
     return nameShort.toUpperCase();

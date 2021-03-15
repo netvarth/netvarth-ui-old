@@ -1360,7 +1360,7 @@ ngx-intl-tel-input input {
 }
 .galimg_outer {
   position: relative;
-  padding: 5px;
+  padding: 5px 10px 10px 5px;
 }
 .galul {
   margin: 0;
@@ -1439,4 +1439,22 @@ body.modal-open {
 }
 .col-xs-9 {
   width: 75% !important;
+}
+@media (max-width: 767.98px) {
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+      flex-direction: unset !important;
+  }
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title {
+    display: none !important;
+  }
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
+    width: auto !important;
+  }
+}
+.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
+}
+.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
+  display: none !important;
 }

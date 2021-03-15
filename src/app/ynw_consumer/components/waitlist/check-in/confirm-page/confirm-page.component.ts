@@ -7,6 +7,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -38,7 +39,7 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor,
+    private wordProcessor: WordProcessor, private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor
   ) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -81,6 +82,7 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     } else {
       this.router.navigate(['consumer']);
     }
+    this.lStorageService.setitemonLocalStorage('orderStat', false);
     // this.lStorageService.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {

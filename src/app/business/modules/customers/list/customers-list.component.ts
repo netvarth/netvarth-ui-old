@@ -145,7 +145,7 @@ export class CustomersListComponent implements OnInit {
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
-        // this.addNewCustomertoGroup(qparams.customerId);
+        this.addNewCustomertoGroup(qparams.customerId);
       }
     });
   }

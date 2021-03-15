@@ -7,6 +7,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -37,7 +38,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
-    private wordProcessor: WordProcessor,
+    private wordProcessor: WordProcessor, private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.subs.sink=this.route.queryParams.subscribe(
@@ -62,6 +63,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
     this.subs.unsubscribe();
   }
   okClick() {
+    this.lStorageService.setitemonLocalStorage('orderStat', false);
     if (this.appointment.service.livetrack && this.type !== 'reschedule') {
       this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
     } else {
