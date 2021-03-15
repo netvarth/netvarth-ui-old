@@ -591,6 +591,17 @@ export class CustomerCreateComponent implements OnInit {
                 }
               };
               this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+            }else if (this.source === 'order') {
+              const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  ph: form_data.mobile_number,
+                  checkinType: this.checkin_type,
+                  haveMobile: this.haveMobile,
+                  id: data,
+                  type: this.type
+                }
+              };
+              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
             } else {
               this.router.navigate(['provider', 'customers']);
             }

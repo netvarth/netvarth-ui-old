@@ -1,106 +1,184 @@
-
 <div *ngIf="api_loading">
-        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
 
 </div>
 <div *ngIf="!api_loading">
-<section class="">
-    
-       
-    <div class="card title-gb rounded-0">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Publish Coupon {{coupon.couponCode}}
-        </h5>
-    </div>
-</section>
-<section>
+    <section class="">
+
+
+        <div class="card title-gb rounded-0">
+            <h5 class="mgn-up-10">
+                <span class="fa fa-arrow-left pointer-cursor"
+                    (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                {{title}}
+            </h5>
+        </div>
+    </section>
+    <section>
 
 
 
         <div class="content loc-list">
             <div class="col-md-12 no-padding-small">
                 <div class="row">
-            <div class="card card-custom">
-                <div class="card-body p-0">
-                    <div class="copy locd">
-                    <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                        <div class="cl1">
-                            <div class="ot-it jcoupondetail" *ngIf="coupon">
-                                <h4>{{coupon.name | capitalizeFirst}}</h4>
-                                <div class="it-des">
-                                    {{coupon.description | capitalizeFirst}}
-                                </div>
-                                <div class="c-ot">
-                                    <div class="item">
-                                        <span class="ttle">Valid Through</span>
-                                        <span>{{coupon.couponRules.startDate | date: newDateFormat}} -
-                                            {{coupon.couponRules.endDate | date: newDateFormat}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="c-ot">
-                                    <div class="item">
-                                        <span class="ttle">{{disc_value}}</span>
-                                        <span class="rupee-font"> {{(coupon.calculationType=='Percentage')?
+                    <div class="card card-custom">
+                        <div class="card-body p-0">
+                            <div class="copy locd">
+                                <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                    <div class="cl1">
+                                        <div class="ot-it jcoupondetail" *ngIf="coupon">
+                                            <h4>{{coupon.name | capitalizeFirst}}</h4>
+                                            <div class="it-des">
+                                                {{coupon.description | capitalizeFirst}}
+                                            </div>
+                                            <div class="c-ot">
+                                                <div class="item">
+                                                    <span class="ttle">Valid Through</span>
+                                                    <span>{{coupon.couponRules.startDate | date: newDateFormat}} -
+                                                        {{coupon.couponRules.endDate | date: newDateFormat}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="c-ot">
+                                                <div class="item">
+                                                    <span class="ttle">{{disc_value}}</span>
+                                                    <span class="rupee-font"> {{(coupon.calculationType=='Percentage')?
                                             coupon.amount+'%':
-                                            (coupon.amount | currency:'&#8377;')}} <span *ngIf="coupon.maxDiscountValue">
-                                                (upto
-                                                {{(coupon.maxDiscountValue | currency:'&#8377;')}} Max)</span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="c-ot">
-                                    <div class="item">
-                                        <span class="ttle">Status</span>
-                                        <span>{{coupon.status}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="c-ot rules-cap">
-                                    <h6>{{rules_cap}}</h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      
-                                        <div class="c-ot">
-                                            <span class="ttle">
-                                                <i *ngIf="coupon.couponRules.firstCheckinOnly" class="fa fa-check"
-                                                    style="color: green"></i>
-                                                <i *ngIf="!coupon.couponRules.firstCheckinOnly" class="fa fa-times"
-                                                    style="color: red"></i>
-                                                First {{checkin_label| capitalizeFirst}} Only </span>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 no-padding">
-                                  
-                                        <div class="c-ot"
-                                            *ngIf="coupon.couponRules.maxProviderUseLimit">
-                                            <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
-                                                *ngIf="coupon.couponRules.maxProviderUseLimit">
-                                                <!-- {{usage_limit}} -->
-                                                <span class="ttle">{{pro_use_limit}}</span>
-                                                <span> {{coupon.couponRules.maxProviderUseLimit}}</span>
+                                            (coupon.amount | currency:'&#8377;')}} <span
+                                                            *ngIf="coupon.maxDiscountValue">
+                                                            (upto
+                                                            {{(coupon.maxDiscountValue | currency:'&#8377;')}}
+                                                            Max)</span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="c-ot"
-                                            *ngIf="coupon.couponRules.minBillAmount ">
-                                            <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
-                                                *ngIf="coupon.couponRules.minBillAmount">
-                                                <span class="ttle">Minimum Bill Amount</span>
-                                                <span class="rupee-font"> {{(coupon.couponRules.minBillAmount  | currency:'&#8377;')}}</span>
+                                            <div class="c-ot">
+                                                <div class="item">
+                                                    <span class="ttle">Status</span>
+                                                    <span>{{coupon.status}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="c-ot rules-cap">
+                                                <h6>{{rules_cap}}</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+
+                                                    <div class="c-ot">
+                                                        <span class="ttle">
+                                                            <i *ngIf="coupon.couponRules.firstCheckinOnly"
+                                                                class="fa fa-check" style="color: green"></i>
+                                                            <i *ngIf="!coupon.couponRules.firstCheckinOnly"
+                                                                class="fa fa-times" style="color: red"></i>
+                                                            First {{checkin_label| capitalizeFirst}} Only </span>
+                                                    </div>
+                                                    <div class="c-ot">
+                                                        <span class="ttle"
+                                                            *ngIf="coupon.couponRules.policies.services.length >0">
+                                                            <i class="fa fa-check" style="color: green"></i>Limit to
+                                                            {{coupon.couponRules.policies.services.length}} services
+                                                        </span>
+                                                        <span class="ttle"
+                                                            *ngIf="coupon.couponRules.policies.services.length==0">
+                                                            <i class="fa fa-times" style="color: red"></i>N.A 
+                                                            for services,if any </span>
+                                                    </div>
+                                                    <div class="c-ot">
+                                                            <span class="ttle"
+                                                                *ngIf="coupon.couponRules.policies.departments.length >0">
+                                                                <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                {{coupon.couponRules.policies.departments.length}} departments
+                                                            </span>
+                                                            <span class="ttle"
+                                                                *ngIf="coupon.couponRules.policies.departments.length==0">
+                                                                <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                for departments,if any </span>
+                                                        </div>
+                                                        <div class="c-ot">
+                                                                <span class="ttle"
+                                                                    *ngIf="coupon.couponRules.policies.users.length >0">
+                                                                    <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                    {{coupon.couponRules.policies.users.length}} users
+                                                                </span>
+                                                                <span class="ttle"
+                                                                    *ngIf="coupon.couponRules.policies.users.length==0">
+                                                                    <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                    for users,if any </span>
+                                                            </div>
+                                                            <div class="c-ot">
+                                                                    <span class="ttle"
+                                                                        *ngIf="coupon.couponRules.policies.consumerLabels.length >0">
+                                                                        <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                        {{coupon.couponRules.policies.consumerLabels.length}} labels
+                                                                    </span>
+                                                                    <span class="ttle"
+                                                                        *ngIf="coupon.couponRules.policies.consumerLabels.length==0">
+                                                                        <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                        for labels,if any </span>
+                                                                </div>
+                                                                <div class="c-ot">
+                                                                        <span class="ttle"
+                                                                            *ngIf="coupon.couponRules.policies.consumerGroups.length >0">
+                                                                            <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                            {{coupon.couponRules.policies.consumerGroups.length}} groups
+                                                                        </span>
+                                                                        <span class="ttle"
+                                                                            *ngIf="coupon.couponRules.policies.consumerGroups.length==0">
+                                                                            <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                            for groups,if any </span>
+                                                                    </div>
+                                                            <div class="c-ot">
+                                                                    <span class="ttle"
+                                                                        *ngIf="coupon.couponRules.policies.catalogues.length >0">
+                                                                        <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                        {{coupon.couponRules.policies.catalogues.length}} catalogs
+                                                                    </span>
+                                                                    <span class="ttle"
+                                                                        *ngIf="coupon.couponRules.policies.catalogues.length==0">
+                                                                        <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                        for catalogues,if any </span>
+                                                                </div>
+                                                                <div class="c-ot">
+                                                                        <span class="ttle"
+                                                                            *ngIf="coupon.couponRules.policies.items.length >0">
+                                                                            <i class="fa fa-check" style="color: green"></i>Limit to
+                                                                            {{coupon.couponRules.policies.items.length}} items
+                                                                        </span>
+                                                                        <span class="ttle"
+                                                                            *ngIf="coupon.couponRules.policies.items.length==0">
+                                                                            <i class="fa fa-times" style="color: red"></i>N.A 
+                                                                            for items,if any </span>
+                                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 no-padding">
+
+                                                    <div class="c-ot" *ngIf="coupon.couponRules.maxProviderUseLimit">
+                                                        <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
+                                                            *ngIf="coupon.couponRules.maxProviderUseLimit">
+                                                            <!-- {{usage_limit}} -->
+                                                            <span class="ttle">{{pro_use_limit}}</span>
+                                                            <span> {{coupon.couponRules.maxProviderUseLimit}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="c-ot" *ngIf="coupon.couponRules.minBillAmount ">
+                                                        <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
+                                                            *ngIf="coupon.couponRules.minBillAmount">
+                                                            <span class="ttle">Minimum Bill Amount</span>
+                                                            <span class="rupee-font">
+                                                                {{(coupon.couponRules.minBillAmount  | currency:'&#8377;')}}</span>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
                                             </div>
 
-                                        </div>
-                                  
-                                      
-                                    </div>
-                                </div>
 
-                              
-                              
-                                <!-- <div class="btm-ctrl">
+
+                                            <!-- <div class="btm-ctrl">
                                     <div class="ctrl enable-disable">
                                         <span class="ttle">Coupon Status :</span>
                                         <span
@@ -124,21 +202,25 @@
                                             (Limit Reached)</span>
                                     </div>
                                 </div> -->
-                                <div class="row" *ngIf="coupon.couponRules.published==false">
-                                  <button  class="btn btn-primary" (click)="publish();"> Publish</button>
+                                            <div class="row" *ngIf="coupon.couponRules.published==false">
+                                                <button class="btn btn-primary" (click)="publish();"> Publish</button>
+                                            </div>
+                                            <div class="row" *ngIf="coupon.couponRules.published ==true">
+                                                <p><b style="color:green">Coupon published From <span
+                                                            style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span>
+                                                        to <span
+                                                            style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="row" *ngIf="coupon.couponRules.published ==true">
-                                  <p><b style="color:green">Coupon  published From <span style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span> to <span style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b></p>
-                                  </div>
                             </div>
+
                         </div>
                     </div>
-                    </div>
-      
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-</section>
+    </section>
 </div>

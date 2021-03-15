@@ -24,6 +24,7 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
   checkin_label = '';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   api_loading=true;
+  title='';
   private subs = new SubSink();
   constructor(
     private wordProcessor: WordProcessor,
@@ -35,6 +36,11 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       this.couponId = params.id;
       this.getcouponDetails(this.couponId).then((data)=>{
        this.coupon=data;
+       if(this.coupon.couponRules.published){
+         this.title="Coupon " +this.coupon.couponCode +" Published";
+       }else{
+         this.title="Publish Coupon "+this.coupon.couponCode
+       }
        this.api_loading=false;
       });
     });

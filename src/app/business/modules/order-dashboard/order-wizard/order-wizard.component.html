@@ -109,7 +109,7 @@
                     </div>
 
                   </form>
-                  <!--end::Input-->
+                
                 </div>
 
         
@@ -133,6 +133,7 @@
                                   aria-hidden="true"></i> {{countryCode}} {{customer_data.phoneNo}}</div>
                                   <div *ngIf="customer_email"> <i class="fa fa-envelope"
                                       aria-hidden="true"></i> {{customer_email}}</div>
+                                      <button class="pull-left btn btn-sm btn-primary"[hidden]="customer_data.phoneNo&&customer_data.email" (click)="updateCustomer(customer_data.id);">Update</button>
                       </div>
                   </div>
                 </div>
@@ -411,7 +412,7 @@
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
                                   <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
-                                      <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                      <button type="button" class="btn btn-success px-2 py-1" (click)="addAddress();">
                                         Add Address </button>
                                     </div>
                                   </div>
@@ -589,7 +590,7 @@
                       (click)="confirm()">
                       Place Order
                     </button>
-                    <button [disabled]='disabledNextbtn' *ngIf="step == 2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]='disabledNextbtn' *ngIf="step==2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
                       (click)="gotoNext()">
                       Next
                     </button>

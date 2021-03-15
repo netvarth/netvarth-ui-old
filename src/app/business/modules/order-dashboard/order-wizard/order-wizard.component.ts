@@ -21,7 +21,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-// import { AddAddressComponent } from '../../../../shared/components/checkout/add-address/add-address.component';
+ 
 
 
 
@@ -162,6 +162,9 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
   customer_label: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  api_error=false;
+  api_error_msg='';
+  iscustomerEmailPhone=false;
 
 
   constructor(private fb: FormBuilder,
@@ -205,8 +208,21 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               this.show_customer = true;
             }
             this.jaldeeId = this.customer_data.jaldeeId;
-            this.disabledNextbtn = false;
-
+           
+              this.step = 2;
+              console.log(this.jaldeeId);
+              if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                this.countryCode = this.customer_data.countryCode;
+              } else {
+                this.countryCode = '+91';
+              }
+              if (this.customer_data.email && this.customer_data.email !== 'null') {
+                this.customer_email = this.customer_data.email;
+              } 
+             
+  
+            
+          
           }
         );
       }
@@ -379,6 +395,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             }
             this.disabledNextbtn = false;
             this.jaldeeId = this.customer_data.jaldeeId;
+            this.show_customer = true;
+            this.create_customer = false;
+            this.getDeliveryAddress();
+            this.formMode = data.type;
             this.step = 2;
             console.log(this.jaldeeId);
             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -388,21 +408,28 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             }
             if (this.customer_data.email && this.customer_data.email !== 'null') {
               this.customer_email = this.customer_data.email;
-            } else {
-              this.customer_email = '';
-            }
-            this.show_customer = true;
-            this.create_customer = false;
-            this.getDeliveryAddress();
-            this.formMode = data.type;
+            } 
+           
 
-          }
+          
+        }
 
         },
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
+  }
+  updateCustomer(id){
+    this.qParams={};
+    this.qParams['checkinType'] = 'WALK_IN_ORDER';
+    this.qParams['source'] = 'order';
+    this.qParams['action'] = 'edit';
+    this.qParams['id'] = id;
+    const navigationExtras: NavigationExtras = {
+      queryParams: this.qParams
+    };
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
   createNew() {
     this.qParams['checkinType'] = 'WALK_IN_ORDER';
@@ -607,7 +634,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.step = this.step - 1;
   }
   increment(item) {
-    this.addToCart(item);
+    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo)){
+      this.snackbarService.openSnackBar('Customer needs email and Phone # for taking order please update', { 'panelClass': 'snackbarerror' });
+    }else{
+      this.iscustomerEmailPhone=true;
+      this.addToCart(item);
+    }
+    
   }
 
   decrement(item) {
@@ -688,21 +721,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
 
   }
-  // addAddress() {
  
-  //     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
-  //         width: '50%',
-  //         panelClass: ['popup-class', 'commonpopupmainclass'],
-  //         disableClose: true,
-  //         data: {
-  //         }
-  //     });
-  //     this.addressDialogRef.afterClosed().subscribe(result => {
-  //         console.log("Refresh items")
-          
-  //     })
-  
-  // }
   getTotalItemPrice() {
     this.price = 0.0;
     for (const itemObj of this.orderList) {
@@ -969,7 +988,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               },
               'orderDate': this.sel_checkindate,
               'countryCode': this.customer_data.countrycode,
-              'phoneNumber': this.customer_data.phoneNumber,
+              'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
               'orderMode': 'WALKIN_ORDER',
               'orderNote': this.orderNote,
@@ -1000,7 +1019,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               'orderItem': this.getOrderItems(),
               'orderDate': this.sel_checkindate,
               'countryCode': this.customer_data.countrycode,
-              'phoneNumber': this.customer_data.phoneNumber,
+              'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
               'orderMode': 'WALKIN_ORDER',
               'orderNote': this.orderNote,
@@ -1015,7 +1034,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       }
     }
     if (this.choose_type === 'store') {
-      const contactNumber = this.customer_data.phoneNumber;
+      const contactNumber = this.customer_data.phoneNo;
       const contact_email = this.customer_data.email;
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
