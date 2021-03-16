@@ -524,6 +524,10 @@ isNumeric(evt) {
       form_data.couponRules.policies.services = this.services;
       this.couponBasedOnValue.push('ServiceBased');
     }
+    if(form_data.couponRules.maxDiscountValue){
+      const discountVal=Number(form_data.couponRules.maxDiscountValue).toFixed(2);
+      form_data.couponRules.maxDiscountValue=discountVal;
+    }
     if (form_data.couponRules.policies.isCatalogBased) {
       console.log('catalog base clciked');
       this.couponBasedOnValue.push('CatalogueBased');
