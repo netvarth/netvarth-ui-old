@@ -58,6 +58,7 @@ import { UsersListDialogComponent } from './shared/users-list-dialog/users-list-
 import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/consumer-group-dialog.component';
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
+import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
 @NgModule({
     declarations: [
@@ -91,7 +92,8 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         UsersListDialogComponent,
         ConsumerGroupDialogComponent,
         ItemListDialogComponent,
-        ConsumerLabelDialogComponent
+        ConsumerLabelDialogComponent,
+        EnquiryComponent
     ],
     imports: [
         BusinessRoutingModule,

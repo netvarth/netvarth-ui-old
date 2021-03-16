@@ -29,7 +29,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   inboxUnreadCnt;
   groupedMsgs: any = [];
   selectedUserMessages: any = [];
-  tempSelectedUserMessages: any = [];
   message = '';
   selectedCustomer = '';
   selectedMessage = {
@@ -75,10 +74,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   type = 'all';
   userHeight;
   msgHeight;
-  // @ViewChildren("userMsg") userMsg: QueryList<ElementRef>;
   scrollDone = false;
-  showEnquiry = false;
-  enquiries: any = [];
   qParams;
   constructor(
     private inbox_services: InboxServices,
@@ -90,18 +86,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
-      this.activateRoute.queryParams.subscribe(params => {
-this.qParams = params;
-console.log(this.qParams);
-if (this.qParams.enquiry) {
-  this.showEnquiry = true;
-}
-      });
-     }
-     ngOnChanges() {
-
-      console.log(this.qParams);
-     }
+    this.activateRoute.queryParams.subscribe(params => {
+      console.log(params);
+      if (params.customer && params.provider) {
+        this.selectedCustomer = params.customer + '=' + params.provider;
+      }
+      console.log(this.selectedCustomer);
+    });
+  }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     const cnow = new Date();
@@ -135,18 +127,27 @@ if (this.qParams.enquiry) {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    this.userHeight = screenHeight - 250;
-    this.msgHeight = screenHeight - 375;
+    if (this.screenWidth <= 991) {
+      this.userHeight = screenHeight - 320;
+      this.msgHeight = screenHeight - 438;
+    } else {
+      this.userHeight = screenHeight - 285;
+      this.msgHeight = screenHeight - 425;
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
     }
   }
-  readConsumerMessages(consumerId, messageId, providerId) {
+  readConsumerMessages(consumerId, messageId, providerId, enuiryMsgs?) {
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
       this.getInboxMessages();
+      console.log(enuiryMsgs);
+      if (enuiryMsgs.length > 0) {
+        this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
+      }
     });
   }
   getInboxUnreadCnt() {
@@ -196,14 +197,7 @@ if (this.qParams.enquiry) {
         data => {
           this.messages = data;
           this.scrollDone = true;
-          console.log(this.messages);
-          if (this.showEnquiry) {
-const inbox =  this.generateCustomInbox(this.messages);
-this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
-console.log(this.enquiries);
-          } else {
           this.setMessages();
-          }
           this.loading = false;
         },
         () => {
@@ -212,22 +206,14 @@ console.log(this.enquiries);
       );
   }
   setMessages() {
-    console.log(this.inboxList);
-    console.log(this.selectedUser);
-    console.log(this.messages)
     this.inboxList = this.generateCustomInbox(this.messages);
-    console.log(this.inboxList);
-    console.log(this.selectedUser.userType);
     if (this.userDet.accountType === 'BRANCH') {
       const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
       Object.keys(group).forEach(key => {
         const group2 = this.shared_functions.groupBy(group[key], 'accountName');
         group[key] = group2;
       });
-      console.log(group);
-      console.log(Object.keys(group));
       this.userWithMsgCount = Object.keys(group).length;
-      console.log(this.userWithMsgCount);
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
@@ -235,7 +221,6 @@ console.log(this.enquiries);
         } else {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
         }
-        console.log(this.groupedMsgs);
       } else {
         let arr = [];
         Object.keys(group).forEach(key => {
@@ -246,21 +231,26 @@ console.log(this.enquiries);
           });
         });
         this.groupedMsgs = arr;
-        console.log(this.groupedMsgs);
       }
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
-      console.log(this.groupedMsgs)
     }
-    console.log(this.selectedCustomer);
-    console.log(this.selectedUserMessages);
+    console.log(this.groupedMsgs);
     if (this.selectedCustomer !== '') {
-      this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
+      console.log(unreadMsgs);
+      const enuiryMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
+      console.log(enuiryMsgs);
+      if (unreadMsgs.length > 0) {
+        const ids = unreadMsgs.map(msg => msg.messageId);
+        const messageids = ids.toString();
+        this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId, enuiryMsgs);
+      }
       setTimeout(() => {
         this.scrollToElement();
       }, 100);
     }
-    console.log(this.selectedUserMessages);
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
@@ -310,8 +300,12 @@ console.log(this.enquiries);
         messagestatus: messageStatus,
         attachements: (message.attachements) ? message.attachements : [],
         messageId: message.messageId,
-        read: message.read
+        read: message.read,
+        msgType: message.messageType
       };
+      if (message.replyMessageId) {
+        inboxData['replyMsgId'] = message.replyMessageId;
+      }
       inboxList.push(inboxData);
     }
     return inboxList;
@@ -463,22 +457,20 @@ console.log(this.enquiries);
     this.selectedMessage.caption.splice(i, 1);
   }
   customerSelection(msgs) {
+    console.log(msgs);
     this.type = 'all';
     this.message = '';
-    console.log(msgs);
     this.clearImg();
     this.selectedCustomer = msgs.key;
-    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
+    console.log(this.selectedCustomer);
+    this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
     const unreadMsgs = msgs.value.filter(msg => !msg.read && msg.messagestatus === 'in');
-    console.log(unreadMsgs);
     if (unreadMsgs.length > 0) {
       const ids = unreadMsgs.map(msg => msg.messageId);
       const messageids = ids.toString();
-      console.log(unreadMsgs[0].accountId);
-      console.log(unreadMsgs[0].providerId);
       this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
     }
     setTimeout(() => {
@@ -503,7 +495,6 @@ console.log(this.enquiries);
       this.sendMessageCompleted = false;
       const dataToSend: FormData = new FormData();
       let post_data = {};
-      // dataToSend.append('message', this.message);
       post_data['msg'] = this.message;
       post_data['messageType'] = 'CHAT';
       const captions = {};
@@ -518,9 +509,8 @@ console.log(this.enquiries);
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
-	    dataToSend.append('message', blobpost_Data);
+      dataToSend.append('message', blobpost_Data);
       const filter = {};
-      console.log(this.selectedUserMessages);
       if (this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
       }
@@ -546,31 +536,18 @@ console.log(this.enquiries);
   }
   userSelection(user) {
     this.selectedUser = user;
-    console.log(this.selectedUser);
     this.selectedCustomer = '';
-    this.selectedUserMessages = this.tempSelectedUserMessages = [];
+    this.selectedUserMessages = [];
     this.setMessages();
   }
   changemsgDisplayType(type) {
     this.msgDisplay = type;
     this.selectedUser = this.userDet;
     this.selectedCustomer = '';
-    this.selectedUserMessages = this.tempSelectedUserMessages = [];
+    this.selectedUserMessages = [];
     if (type === 'all') {
       this.setMessages();
     }
-  }
-  getBusinessProfileLogo(user) {
-    this.provider_services.getUserBussinessProfile(user.id)
-      .subscribe(
-        (logodata: any) => {
-          const blogo = logodata.logo;
-          if (blogo[0]) {
-            return (blogo[0].url) ? blogo[0].url + '?' + this.cacheavoider : '';
-          } else {
-            return false;
-          }
-        });
   }
   goBack() {
     this.selectedUser = this.userDet;
@@ -583,25 +560,7 @@ console.log(this.enquiries);
       return '../../../assets/images/avatar5.png';
     }
   }
-  changeMsgType(type) {
-    this.type = type;
-    this.message = '';
-    console.log(this.tempSelectedUserMessages);
-    if (this.type === 'all') {
-      this.selectedUserMessages = this.tempSelectedUserMessages;
-    } else {
-      this.selectedUserMessages = this.getEnquiry();
-    }
-    console.log(this.selectedUserMessages);
-    setTimeout(() => {
-      this.scrollToElement();
-    }, 100);
-  }
-  getEnquiry() {
-    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
-    return msgs;
-  }
   getMsgType(msg) {
-return 'chat';
+    return 'chat';
   }
 }

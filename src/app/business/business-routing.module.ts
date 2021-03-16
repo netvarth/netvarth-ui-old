@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from '../shared/modules/change-password/chang
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
+import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
-      { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) }
+      { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
+      { path: 'enquiry', component: EnquiryComponent },
     ]
   }
 ];

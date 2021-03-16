@@ -176,29 +176,6 @@ textarea {
     margin-left: -5px !important;
     margin-top: -15px !important;
 }
-.view-btn {
-    padding: 5px 20px;
-    border: 2px solid #1e4079;
-    color: #1e4079;
-    font-weight: bold;
-}
-.enquiry-section {
-    padding: 20px;
-}
-.enq-box {
-    display: flex;
-    margin-bottom: 10px;
-}
-.enq-box div {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-.cont2, .cont3 {
-    width: 40%;
-}
-.cont4 {
-    width: 15%;
-}
 .minhgt-80 {
     min-height: 70vh;
 }
