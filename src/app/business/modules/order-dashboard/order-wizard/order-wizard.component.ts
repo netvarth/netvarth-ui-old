@@ -165,7 +165,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   api_error=false;
   api_error_msg='';
   iscustomerEmailPhone=false;
-
+  order_Mode;
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -186,7 +186,9 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(qparams => {
 
-
+      if (qparams.order_type) {
+        this.order_Mode = qparams.order_type;
+      }
       if (qparams.ph || qparams.id) {
         const filter = {};
         if (qparams.ph) {
@@ -989,7 +991,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               'countryCode': this.countryCode,
               'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
-              'orderMode': 'WALKIN_ORDER',
+              'orderMode': this.order_Mode,
               'orderNote': this.orderNote,
               'coupons': this.selected_coupons
             };
@@ -1020,7 +1022,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               'countryCode': this.countryCode,
               'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
-              'orderMode': 'WALKIN_ORDER',
+              'orderMode': this.order_Mode,
               'orderNote': this.orderNote,
               'coupons': this.selected_coupons
             };
@@ -1056,7 +1058,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.countryCode,
-            'orderMode': 'WALKIN_ORDER',
+            'orderMode': this.order_Mode,
             'phoneNumber': contactNumber,
             'email': contact_email,
         
@@ -1083,7 +1085,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
             'countryCode': this.countryCode,
-            'orderMode': 'WALKIN_ORDER',
+            'orderMode': this.order_Mode,
             'phoneNumber': contactNumber,
             'email': contact_email,
 

@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
@@ -669,8 +669,23 @@ export class OrderDashboardComponent implements OnInit {
     this.doSearch();
   }
 
-  newOrder() {
-    this.router.navigate(['provider', 'orders', 'order-wizard']);
+  newphoneInOrder(phnein) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        order_type: phnein,
+        
+      }
+    };
+    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
+  }
+  newwalkInOrder(walkin) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        order_type: walkin,
+        
+      }
+    };
+    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
   }
   searchCustomer() {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
