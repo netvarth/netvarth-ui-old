@@ -115,7 +115,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     return orderCount;
   }
   ngOnInit() {
-    const orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
+    const orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (orderList) {
       this.orderList = orderList;
     }

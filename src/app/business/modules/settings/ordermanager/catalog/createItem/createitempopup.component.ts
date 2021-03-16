@@ -16,7 +16,8 @@ import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-createitempopup',
-  templateUrl: './createitempopup.component.html'
+  templateUrl: './createitempopup.component.html',
+  styleUrls:['./createitempopup.component.css']
 })
 export class CreateItemPopupComponent implements OnInit,OnDestroy {
     amItemForm: FormGroup;

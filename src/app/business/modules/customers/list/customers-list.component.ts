@@ -798,7 +798,7 @@ export class CustomersListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to add this customer to ' + this.selectedGroup.groupName + '?',
+        'message': 'Do you want to add this ' + this.customer_label + ' to ' + this.selectedGroup.groupName + '?',
         'type': 'yes/no'
       }
     });

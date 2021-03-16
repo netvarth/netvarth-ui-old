@@ -7433,7 +7433,7 @@ input.jdn_ip {
   right: 0;
   position: absolute;
   z-index: 500;
-  margin-top: 50px;
+  margin-top: 65px;
   top: 0;
   width: 250px;
   transition: right .3s ease-in-out !important;
@@ -13977,6 +13977,9 @@ width: 40px !important;
   .body-section {
     margin-top: 50px;
     height: 75vh !important;
+  }
+  .filterSidebar {
+    margin-top: 105px !important;
   }
 }
 .body-section {

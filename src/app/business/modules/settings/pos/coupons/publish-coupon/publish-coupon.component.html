@@ -9,7 +9,7 @@
         <div class="card title-gb rounded-0">
             <h5 class="mgn-up-10">
                 <span class="fa fa-arrow-left pointer-cursor"
-                    (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                    (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {{title}}
             </h5>
         </div>
@@ -73,83 +73,7 @@
                                                                 class="fa fa-times" style="color: red"></i>
                                                             First {{checkin_label| capitalizeFirst}} Only </span>
                                                     </div>
-                                                    <div class="c-ot">
-                                                        <span class="ttle"
-                                                            *ngIf="coupon.couponRules.policies.services.length >0">
-                                                            <i class="fa fa-check" style="color: green"></i>Limit to
-                                                            {{coupon.couponRules.policies.services.length}} services
-                                                        </span>
-                                                        <span class="ttle"
-                                                            *ngIf="coupon.couponRules.policies.services.length==0">
-                                                            <i class="fa fa-times" style="color: red"></i>N.A 
-                                                            for services,if any </span>
-                                                    </div>
-                                                    <div class="c-ot">
-                                                            <span class="ttle"
-                                                                *ngIf="coupon.couponRules.policies.departments.length >0">
-                                                                <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                {{coupon.couponRules.policies.departments.length}} departments
-                                                            </span>
-                                                            <span class="ttle"
-                                                                *ngIf="coupon.couponRules.policies.departments.length==0">
-                                                                <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                for departments,if any </span>
-                                                        </div>
-                                                        <div class="c-ot">
-                                                                <span class="ttle"
-                                                                    *ngIf="coupon.couponRules.policies.users.length >0">
-                                                                    <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                    {{coupon.couponRules.policies.users.length}} users
-                                                                </span>
-                                                                <span class="ttle"
-                                                                    *ngIf="coupon.couponRules.policies.users.length==0">
-                                                                    <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                    for users,if any </span>
-                                                            </div>
-                                                            <div class="c-ot">
-                                                                    <span class="ttle"
-                                                                        *ngIf="coupon.couponRules.policies.consumerLabels.length >0">
-                                                                        <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                        {{coupon.couponRules.policies.consumerLabels.length}} labels
-                                                                    </span>
-                                                                    <span class="ttle"
-                                                                        *ngIf="coupon.couponRules.policies.consumerLabels.length==0">
-                                                                        <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                        for labels,if any </span>
-                                                                </div>
-                                                                <div class="c-ot">
-                                                                        <span class="ttle"
-                                                                            *ngIf="coupon.couponRules.policies.consumerGroups.length >0">
-                                                                            <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                            {{coupon.couponRules.policies.consumerGroups.length}} groups
-                                                                        </span>
-                                                                        <span class="ttle"
-                                                                            *ngIf="coupon.couponRules.policies.consumerGroups.length==0">
-                                                                            <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                            for groups,if any </span>
-                                                                    </div>
-                                                            <div class="c-ot">
-                                                                    <span class="ttle"
-                                                                        *ngIf="coupon.couponRules.policies.catalogues.length >0">
-                                                                        <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                        {{coupon.couponRules.policies.catalogues.length}} catalogs
-                                                                    </span>
-                                                                    <span class="ttle"
-                                                                        *ngIf="coupon.couponRules.policies.catalogues.length==0">
-                                                                        <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                        for catalogues,if any </span>
-                                                                </div>
-                                                                <div class="c-ot">
-                                                                        <span class="ttle"
-                                                                            *ngIf="coupon.couponRules.policies.items.length >0">
-                                                                            <i class="fa fa-check" style="color: green"></i>Limit to
-                                                                            {{coupon.couponRules.policies.items.length}} items
-                                                                        </span>
-                                                                        <span class="ttle"
-                                                                            *ngIf="coupon.couponRules.policies.items.length==0">
-                                                                            <i class="fa fa-times" style="color: red"></i>N.A 
-                                                                            for items,if any </span>
-                                                                    </div>
+
 
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 no-padding">
@@ -175,33 +99,74 @@
 
                                                 </div>
                                             </div>
+                                            <div class="c-ot rules-cap">
+                                                <h6>Applicable For</h6>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.services.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.services.length}} services
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.departments.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.departments.length}}
+                                                            departments
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.users.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.users.length}} users
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.consumerLabels.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.consumerLabels.length}} labels
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.consumerGroups.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.consumerGroups.length}} groups
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.catalogues.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.catalogues.length}} catalog
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="c-ot"
+                                                        *ngIf="coupon.couponRules.policies.items.length !=0">
+                                                        <span class="ttle">
+                                                            <i class="fa fa-check" style="color: green"></i>
+                                                            {{coupon.couponRules.policies.items.length}} items
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
 
-                                            <!-- <div class="btm-ctrl">
-                                    <div class="ctrl enable-disable">
-                                        <span class="ttle">Coupon Status :</span>
-                                        <span
-                                            *ngIf="coupon.couponRules.alwaysEnabled!=true && coupon.couponState!='EXPIRED' && coupon.couponState!='DISABLED_BY_JALDEE' && coupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
-                                            <mat-slide-toggle [checked]="coupon.couponState=='ENABLED'"
-                                                (change)="changecouponStatus(coupon)"></mat-slide-toggle>
-                                        </span>
-                                        <span class='blue-text' *ngIf="coupon.couponState=='NEW'"
-                                            style="padding-left: 5px">New - Available
-                                            for Use</span>
-                                        <span class='enabled'
-                                            *ngIf="coupon.couponState=='ENABLED'">{{enable_cap}}</span>
-                                        <span class='disabled'
-                                            *ngIf="coupon.couponState=='DISABLED'">{{disbale_cap}}</span>
-                                        <span class='red-text' *ngIf="coupon.couponState=='EXPIRED'">Expired</span>
-                                        <span class='disabled'
-                                            *ngIf="coupon.couponState=='DISABLED_BY_JALDEE'">Disabled
-                                            By Jaldee</span>
-                                        <span class='disabled'
-                                            *ngIf="coupon.couponState=='DISABLED_PROVIDER_LIMIT_REACHED'">Disabled
-                                            (Limit Reached)</span>
-                                    </div>
-                                </div> -->
                                             <div class="row" *ngIf="coupon.couponRules.published==false">
                                                 <button class="btn btn-primary" (click)="publish();"> Publish</button>
                                             </div>

@@ -22,7 +22,7 @@
           Quick Links
         </div>
         <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'" >
-          <mat-grid-tile (click)="newOrder()">
+          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')">
             <div class="flex-shrink-0 text-center" style="width: 40px;">
               <i class="flaticon2-plus icon-2x pitch_blu"></i>
               </div>
@@ -30,7 +30,7 @@
                <span> New order</span>
               </mat-grid-tile-footer>
           </mat-grid-tile>
-          <mat-grid-tile (click)="newOrder()">
+          <mat-grid-tile (click)="newphoneInOrder('PHONE_ORDER')">
             <div class="flex-shrink-0 text-center" style="width: 40px;">
               <i class="fas fa-phone-alt fa-2x pitch_blu"></i>
               </div>
