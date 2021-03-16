@@ -166,6 +166,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   api_error_msg='';
   iscustomerEmailPhone=false;
   order_Mode;
+  searchby = '';
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -250,6 +251,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.searchby = 'Search by '+ this.customer_label + ' id/email/phone number';
     this.createForm();
     this.getCatalog();
     this.gets3curl();
