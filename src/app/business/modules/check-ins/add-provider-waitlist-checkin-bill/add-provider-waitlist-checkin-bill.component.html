@@ -311,7 +311,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="font-weight-boldest font-size-md"
+										<tr class="font-weight-boldest font-size-md bdr_bt"
 											*ngFor="let service of bill_data.service; let i = index">
 											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}</td>
 											<td class="text-right pt-7"
@@ -461,7 +461,7 @@
 											</div>
 										</tr>
 										<tr *ngFor="let item of bill_data.items; let i = index"
-											class="font-weight-boldest border-bottom-0 font-size-lg">
+											class="font-weight-boldest border-bottom-0 font-size-lg bdr_bt">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
 											<td class="border-top-0 text-right py-4">{{item.quantity}}
 												<br><br>
@@ -632,9 +632,6 @@
 													Coupon</span>
 												<span *ngIf="jCouponsList.length>0 && showJCouponSection">Apply Jaldee
 													Coupon</span>
-												<span
-													*ngIf="showDiscountSection && discount_type.discType=='OnDemand'">Apply
-													On Demand Discount</span>
 											</h5>
 
 										</div>
@@ -658,7 +655,7 @@
 											</select>
 											<br>
 											<div *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">
-												<input type="number" matInput #billdiscvalue aria-label="Number"
+												<input class="form-control1" type="number" matInput #billdiscvalue aria-label="Number"
 													max="{{price_limit}}" min="0" matInput value="1" autocomplete="off"
 													size="3" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
 													[(ngModel)]="discAmount" [ngModelOptions]="{standalone: true}">
@@ -803,7 +800,7 @@
 									</div>
 								</div>
 							</div>
-							<hr>
+							<!-- <hr> -->
 							<!-- displaying notes section -->
 							<div class="col-lg-6" style="display: inline-grid;" *ngIf="bill_data && billNotesExists">
 								<mat-accordion class="example-headers-align" multi>
@@ -1228,7 +1225,7 @@
 							</div>
 						</div>
 
-						<div class="justify-content-center border-top py-2 px-2 py- px-md-0 col-12"
+						<div class="justify-content-center border-top py-2 px-2 py- px-md-0 col-12 bg_white"
 							*ngIf="!showPayWorkBench && !showRefundSection">
 							<div class="">
 								<div class="d-flex font-size-sm flex-wrap p-1 m-5">
@@ -1281,7 +1278,6 @@
 
 <!-- OLD Bill -->
 
-<!-- 
 <section class="">
 	<div class="content comn-cls">
 		<div class="col-md-12 no-padding-small">
@@ -2451,4 +2447,4 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-</section> -->
+</section>
