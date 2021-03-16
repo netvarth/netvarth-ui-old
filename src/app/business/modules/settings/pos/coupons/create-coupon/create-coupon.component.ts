@@ -115,7 +115,7 @@ export class CreateCouponComponent implements OnInit,OnDestroy {
     return this.sharedfunctionObj.isValid(evt);
 }
 isNumeric(evt) {
-  return this.sharedfunctionObj.isNumeric(evt);
+  return this.sharedfunctionObj.isNumber(evt);
 }
   createForm() {
     this.couponForm = this.formbuilder.group({
@@ -518,23 +518,31 @@ isNumeric(evt) {
 
     console.log(form_data);
     form_data.couponRules.validTimeRange = timeRangeObject;
-    if (form_data.couponRules.policies.isServiceBased) {
+    if (form_data.couponRules.policies.isServiceBased && !this.couponBasedOnValue.includes('ServiceBased')) {
       console.log('service base clciked');
       
-      form_data.couponRules.policies.services = this.services;
+     
       this.couponBasedOnValue.push('ServiceBased');
     }
     if(form_data.couponRules.maxDiscountValue){
       const discountVal=Number(form_data.couponRules.maxDiscountValue).toFixed(2);
       form_data.couponRules.maxDiscountValue=discountVal;
     }
-    if (form_data.couponRules.policies.isCatalogBased) {
+    if (form_data.couponRules.policies.isCatalogBased  && !this.couponBasedOnValue.includes('CatalogueBased')) {
       console.log('catalog base clciked');
       this.couponBasedOnValue.push('CatalogueBased');
 
     }
     console.log('base' + this.couponBasedOnValue);
+    if (form_data.couponRules.policies.isServiceBased) {
+      form_data.couponRules.policies.services = this.services;
+    }
+   
     if (form_data.couponRules.policies.isDepartment) {
+      form_data.couponRules.policies.departments = this.departments;
+
+    }
+    if (form_data.couponRules.policies.isServi) {
       form_data.couponRules.policies.departments = this.departments;
 
     }
