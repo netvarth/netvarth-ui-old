@@ -849,7 +849,13 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
-        dataToSend.append('message', this.consumerNote);
+        console.log('donation');
+        let post_data = {};
+        // dataToSend.append('message', this.consumerNote);
+        post_data['msg'] = this.consumerNote;
+        post_data['messageType'] = 'BOOKINGS';
+        const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+        dataToSend.append('message', blobpost_Data);
         // const captions = {};
        this.subs.sink= this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)

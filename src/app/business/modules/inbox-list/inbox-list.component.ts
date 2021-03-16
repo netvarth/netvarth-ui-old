@@ -502,7 +502,10 @@ console.log(this.enquiries);
     if (this.message) {
       this.sendMessageCompleted = false;
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', this.message);
+      let post_data = {};
+      // dataToSend.append('message', this.message);
+      post_data['msg'] = this.message;
+      post_data['messageType'] = 'CHAT';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -514,6 +517,8 @@ console.log(this.enquiries);
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+	    dataToSend.append('message', blobpost_Data);
       const filter = {};
       console.log(this.selectedUserMessages);
       if (this.selectedUserMessages[0].providerId !== 0) {
