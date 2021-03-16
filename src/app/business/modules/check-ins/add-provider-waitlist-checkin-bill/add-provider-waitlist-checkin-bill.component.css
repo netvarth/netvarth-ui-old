@@ -132,3 +132,52 @@
 .amount_Saved {
  color: limegreen;
 }
+.btn-temp-primary-light  {
+    color: #3699FF;
+    background-color: #E1F0FF;
+    border-color: transparent;
+    font-weight: 600 !important; 
+}
+.btn-temp-primary {
+    color: #FFFFFF;
+/* background-color: #3699FF;
+border-color: #3699FF; */
+background-color: #1dafe894;
+    border-color: #76ccef;
+font-weight: 600 !important;
+}
+.hand_symb {
+    cursor: pointer;
+}
+.fl_right {
+    float:right
+}
+.small_btn {
+    height: 30px;
+    line-height: 12px;
+    padding: 1px 20px;
+}
+.new_ht_calc {
+    height: calc(1rem + 1.3rem + 2px) !important;
+}
+.bill_sum {
+    line-height: 2;
+    color: #1e4079d1;
+}
+.adjust_respo {
+    display: flex;
+}
+@media only screen and (max-width: 550px) {
+    .full_wdth {
+        width: 100%;
+    }
+    .adjust_respo {
+        display: grid !important;
+    }
+}
+.table>tbody>tr>td {
+    line-height: 1 !important;
+}
+.bg_text_prim {
+    color: #1e4079 !important;
+}
