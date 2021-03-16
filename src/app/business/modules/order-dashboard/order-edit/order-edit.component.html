@@ -117,7 +117,7 @@
                                   <div class="copy width100">
                         <!--begin::Shopping Cart-->
                         
-                            <a href="javascript:;" class="addmoreitem"  (click)="gotoPrev()">Add More Items</a>
+                            <a href="javascript:;" class="addmoreitem" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'"  (click)="gotoPrev()">Add More Items</a>
                          
                         <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
                           <table class="table">
@@ -337,15 +337,13 @@
                                                 {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
                                               </span><br>
                                               <span>
-                                                {{orderDetails.homeDeliveryAddress.address}}
+                                                {{orderDetails.homeDeliveryAddress.address}}&nbsp;, {{orderDetails.homeDeliveryAddress.landMark }}
                                               </span><br>
-                                              <span>
-                                                {{orderDetails.homeDeliveryAddress.landMark }}
-                                              </span><br>
+                                            
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.city }} , {{orderDetails.homeDeliveryAddress.postalCode}}
                                               </span><br>
-                                            
+                                      
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.email}}
                                               </span><br>

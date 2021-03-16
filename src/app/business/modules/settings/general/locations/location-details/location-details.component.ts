@@ -610,7 +610,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         dialogrefd.afterClosed().subscribe(result => {
           this.locationFind = 'GOOGLEMAP';
         });
-        this.clearFormFields();
 
     } else if (val === 'autodetect') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -627,8 +626,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'AUTODETECT';
+            this.clearFormFields();
           }         });
-        this.clearFormFields();
     } else if(val === 'manual'){
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
@@ -644,9 +643,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'MANUAL';
+            this.clearFormFields();
           }
          });
-        this.clearFormFields();
 
     }
 }

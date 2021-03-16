@@ -181,3 +181,21 @@ font-weight: 600 !important;
 .bg_text_prim {
     color: #1e4079 !important;
 }
+.bdr_bt {
+    border-bottom: 1px solid #ebedf3 !important;
+}
+.bg_white {
+    background: white !important;
+}
+.top_n10 {
+    margin-top: -10px;
+    height: 30px !important;
+}
+.btn_adjust {
+    width: 40px;
+    text-align: center;
+    font-size: small;
+}
+.clr_ornge {
+    color: orange;
+}
