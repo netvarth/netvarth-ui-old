@@ -1,0 +1,88 @@
+.custom-login-form .mat-dialog-title {
+    text-align: left !important;
+    color: #ffffff !important;
+    height: 50px !important;
+    padding: 0px 20px !important;
+    font-weight: 700 !important;
+    background-color: #073B4C !important;
+}
+
+.custom-login-form .mat-dialog-title .title {
+    height: 50px !important;
+    line-height: 50px !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .mobile-no mat-label {
+    color: darkslategrey !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+::ng-deep .consumer-join-component.login-form.custom-login-form .cust-loginpge-color .mobile-no ngx-intl-tel-input.ng-invalid.ng-touched input {
+    /* box-shadow: inset 0 0 3px #c0392b !important; */
+    box-shadow: inset 0 0 2px red !important;
+}
+
+::ng-deep .consumer-join-component.login-form.custom-login-form .cust-loginpge-color .mobile-no ngx-intl-tel-input input:focus {
+    box-shadow: inset 0 0 3px #3498db !important;
+}
+
+::ng-deep .consumer-join-component.login-form.custom-login-form .cust-loginpge-color .mobile-no ngx-intl-tel-input input {
+    box-shadow: inset 0 0 3px #c7cace !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .mobile-no .sts-msg.error {
+    padding-left: 0 !important;
+    font-weight: 700 !important;
+    font-size: 0.725rem !important;
+    color: red !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .pwd mat-label {
+    color: darkslategrey !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .pwd input {
+    border: 1px solid #c7cace !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    box-shadow: inset 0 0 3px #c7cace !important;
+    height: 44px !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .pwd input:focus {
+    border-color: #3498db !important;
+    box-shadow: inset 0 0 3px #3498db !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .pwd .cust-logpg-fgtpwd {
+    color: #073B4C !important;
+    font-size: 0.825rem !important;
+    font-weight: 700 !important;
+    margin-top: 5px !important;
+}
+
+::ng-deep .consumer-join-component.login-form.custom-login-form .cust-loginpge-color .pwd .sts-msg.error {
+    padding-left: 0 !important;
+    font-weight: 700 !important;
+    font-size: 0.725rem !important;
+    color: red !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .login-button,
+.login-form.custom-login-form .cust-loginpge-color .continue-button {
+    margin: 0 !important;
+    background-color: #1E4079 !important;
+    border-radius: 4px !important;
+}
+
+.login-form.custom-login-form .cust-loginpge-color .login-button span,
+.login-form.custom-login-form .cust-loginpge-color .continue-button span {
+    vertical-align: baseline !important;
+}
