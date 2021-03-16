@@ -935,7 +935,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
-      this.timings_title="Delivery timings";
+      this.timings_title="Delivery Timings";
       this.storeChecked = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -983,11 +983,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               'timeSlot': {
                 'sTime': timeslot[0],
                 'eTime': timeslot[1]
-                // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-                // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+               
               },
               'orderDate': this.sel_checkindate,
-              'countryCode': this.customer_data.countrycode,
+              'countryCode': this.countryCode,
               'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
               'orderMode': 'WALKIN_ORDER',
@@ -1018,7 +1017,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               },
               'orderItem': this.getOrderItems(),
               'orderDate': this.sel_checkindate,
-              'countryCode': this.customer_data.countrycode,
+              'countryCode': this.countryCode,
               'phoneNumber': this.customer_data.phoneNo,
               'email': this.customer_data.email,
               'orderMode': 'WALKIN_ORDER',
@@ -1056,12 +1055,11 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               'eTime': timeslot[1]
             },
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
+            'countryCode': this.countryCode,
             'orderMode': 'WALKIN_ORDER',
             'phoneNumber': contactNumber,
             'email': contact_email,
-            // 'orderNote': this.orderNote,
-            // 'coupons': this.selected_coupons
+        
           };
           console.log(post_Data);
           this.confirmOrder(post_Data);
@@ -1084,14 +1082,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
+            'countryCode': this.countryCode,
             'orderMode': 'WALKIN_ORDER',
             'phoneNumber': contactNumber,
             'email': contact_email,
-            // 'orderNote': this.orderNote,
-            // 'coupons': this.selected_coupons
+
           };
-          console.log(post_Data);
+  
           this.confirmOrder(post_Data);
         }
         
