@@ -76,6 +76,12 @@ export class OrderDashboardComponent implements OnInit {
   allLabelSelected: any = [];
   displayLabeldialogRef;
   filterHeight;
+  ordertypeModes = [
+    { mode: 'WALKIN_ORDER', value: 'Walk in Order' },
+    { mode: 'PHONE_ORDER', value: 'Phone in Order' },
+    { mode: 'ONLINE_ORDER', value: 'Online Order' },
+  ];
+  allModeSelected = false;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -267,7 +273,7 @@ export class OrderDashboardComponent implements OnInit {
   doSearch() {
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
-      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.orderModes.length > 0 || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
+      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.filter.orderMode !== 'all' || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -289,8 +295,11 @@ export class OrderDashboardComponent implements OnInit {
     this.paymentStatuses = [];
     this.selectedLabels = [];
     this.allLabelSelected = [];
+    this.allModeSelected = false;
   }
-  setFilterDataCheckbox(type, value?) {
+  setFilterDataCheckbox(type, value?, event?) {
+    console.log(type);
+    console.log(value);
     if (type === 'homeDelivery' || 'storePickup') {
       this.historyOrdertype = type;
     }
@@ -301,11 +310,38 @@ export class OrderDashboardComponent implements OnInit {
         this.orderStatuses.push(value);
       }
     }
+    // if (type === 'orderMode') {
+    //   const indx = this.orderModes.indexOf(value);
+    //   this.orderModes = [];
+    //   if (indx === -1) {
+    //     this.orderModes.push(value);
+    //   }
+    // }
     if (type === 'orderMode') {
-      const indx = this.orderModes.indexOf(value);
-      this.orderModes = [];
-      if (indx === -1) {
-        this.orderModes.push(value);
+      if (value === 'all') {
+        this.orderModes = [];
+        this.allModeSelected = false;
+        if (event.checked) {
+          for (const odrMode of this.ordertypeModes) {
+            if (this.orderModes.indexOf(odrMode.mode) === -1) {
+              this.orderModes.push(odrMode.mode);
+            }
+          }
+          this.allModeSelected = true;
+        }
+      } else {
+        console.log(this.orderModes);
+        this.allModeSelected = false;
+        const indx = this.orderModes.indexOf(value);
+        if (indx === -1) {
+          this.orderModes.push(value);
+        } else {
+          this.orderModes.splice(indx, 1);
+        }
+      }
+      if (this.orderModes.length === this.ordertypeModes.length) {
+        this.filter['orderMode'] = 'all';
+        this.allModeSelected = true;
       }
     }
     if (type === 'payment') {
@@ -337,7 +373,9 @@ export class OrderDashboardComponent implements OnInit {
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
-    if (this.orderModes.length > 0) {
+    console.log(this.orderModes);
+    console.log(this.filter.orderMode);
+    if (this.orderModes.length > 0 ) {
       api_filter['orderMode-eq'] = this.orderModes.toString();
     }
     if (this.paymentStatuses.length > 0) {
@@ -361,6 +399,7 @@ export class OrderDashboardComponent implements OnInit {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
+    console.log(api_filter);
     return api_filter;
   }
   getDefaultCatalogStatus() {
