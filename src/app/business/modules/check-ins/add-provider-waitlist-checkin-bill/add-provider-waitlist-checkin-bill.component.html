@@ -313,11 +313,12 @@
 									<tbody>
 										<tr class="font-weight-boldest font-size-md bdr_bt"
 											*ngFor="let service of bill_data.service; let i = index">
-											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}</td>
+											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}
+											</td>
 											<td class="text-right pt-7"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-												{{service.quantity}}<br><br>
+												{{service.quantity}}<br>
 												<div *ngFor="let discount of service.discount">
 													<span
 														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
@@ -361,12 +362,12 @@
 												<span class="rupee-font">{{(service.quantity * service.price) |
 													currency:'&#8377;'}}</span>
 
-												<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu"
+												<button class="mb-1 top_n10" mat-icon-button [matMenuTriggerFor]="tdmenu"
 													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 													<mat-icon>more_horiz</mat-icon>
 												</button>
-												<mat-menu #tdmenu="matMenu">
+												<mat-menu #tdmenu="matMenu" >
 													<button mat-menu-item data-toggle="modal"
 														data-target="#exampleModalSizeDefault"
 														(click)="serviceDiscCoupSec(i)"
@@ -399,7 +400,7 @@
 												<span class="rupee-font">{{(service.quantity *
 													service.price) |
 													currency:'&#8377;'}}</span>
-												<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu"
+												<button class="mb-1 top_n10" mat-icon-button [matMenuTriggerFor]="tdmenu"
 													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
 												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 													<mat-icon>more_horiz</mat-icon>
@@ -462,9 +463,17 @@
 										</tr>
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg bdr_bt">
-											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
-											<td class="border-top-0 text-right py-4">{{item.quantity}}
+											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}
+												<br> <br>
+												<!-- Incase of discount name -->
+												<span *ngFor="let discount of item.discount"
+													class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
 												<br><br>
+												<span *ngIf="item.discount &&item.discount.length > 0"
+													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
+											</td>
+											<td class="border-top-0 text-right py-4">{{item.quantity}}
+												<!-- <br>
 												<div *ngFor="let discount of item.discount">
 													<span
 														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
@@ -475,15 +484,14 @@
 															(click)="removeItemDiscount(item.itemId, discount.id)"
 															class="fa fa-window-close" aria-hidden="true"></i>
 													</span>
-												</div>
+												</div> -->
 											</td>
 											<td class="border-top-0 text-right py-4"> <span class="rupee-font"> <sup
 														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-												<!-- <div *ngIf="bill_data.billStatus!='Settled' && pos"> -->
 												<button mat-icon-button [matMenuTriggerFor]="tdmenu"
-													*ngIf="bill_data.billStatus!='Settled' && pos">
+													*ngIf="bill_data.billStatus!='Settled' && pos" class="top_n10">
 													<mat-icon>more_horiz</mat-icon>
 												</button>
 												<mat-menu #tdmenu="matMenu">
@@ -504,15 +512,30 @@
 														Remove Item
 													</button>
 												</mat-menu>
-												<!-- </div> -->
 												<br>
-												<span *ngIf="item.discount &&item.discount.length > 0"
+												<!-- discount case -->
+												<span *ngFor="let discount of item.discount"
+													class="text-right font-size-xs font-weight-boldest">
+													<span class="rupee-font text-muted-dark">- {{discount.discountValue
+														|
+														currency:'&#8377;'}}</span> <i
+														(click)="removeItemDiscount(item.itemId, discount.id)"
+														class="fa fa-window-close btn_adjust" aria-hidden="true"></i>
+													<br><br>
+													<span *ngIf="item.discount &&item.discount.length > 0"
+														class="clr_ornge mr-10 text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate
+														| currency:'&#8377;'}}</span>
+												</span>
+
+
+												<!-- <span *ngIf="item.discount &&item.discount.length > 0"
 													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 												<br>
 												<span *ngIf="item.discount &&item.discount.length > 0"
 													class="text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate
-													| currency:'&#8377;'}}</span>
+													| currency:'&#8377;'}}</span> -->
 											</td>
+
 											<!-- Modal for Item level apply discount -->
 											<div class="modal fade" id="exampleModaItemDiscount" tabindex="-1"
 												role="dialog" aria-labelledby="exampleModalSizeDefault"
@@ -655,10 +678,11 @@
 											</select>
 											<br>
 											<div *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">
-												<input class="form-control1" type="number" matInput #billdiscvalue aria-label="Number"
-													max="{{price_limit}}" min="0" matInput value="1" autocomplete="off"
-													size="3" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
-													[(ngModel)]="discAmount" [ngModelOptions]="{standalone: true}">
+												<input class="form-control1" type="number" matInput #billdiscvalue
+													aria-label="Number" max="{{price_limit}}" min="0" matInput value="1"
+													autocomplete="off" size="3" (keypress)="isNumeric($event)"
+													(keyup)="isvalid($event)" [(ngModel)]="discAmount"
+													[ngModelOptions]="{standalone: true}">
 											</div>
 
 											<div *ngIf="showDiscountSection">
@@ -1278,7 +1302,7 @@
 
 <!-- OLD Bill -->
 
-<section class="">
+<!-- <section class="">
 	<div class="content comn-cls">
 		<div class="col-md-12 no-padding-small">
 			<div class="w-dta">
@@ -2447,4 +2471,4 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-</section>
+</section> -->
