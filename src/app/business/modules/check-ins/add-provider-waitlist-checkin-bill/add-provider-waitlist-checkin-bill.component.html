@@ -112,11 +112,12 @@
 					<!-- begin: Invoice body-->
 					<div class="row justify-content-center py-8 px-8 py-md-2 px-md-0">
 						<div class="col-12 mt-2 mb-2" style="display: flex;">
-							<div  class="col-10 adjust_respo">
-								<div class="form-group mr-0 ml-0 col-xs-12 col-md-4 col-sm-4 col-lg-4" *ngIf="showAddItemsec">
+							<div class="col-10 adjust_respo">
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-4 col-sm-4 col-lg-4"
+									*ngIf="showAddItemsec">
 									<div class="">
-										<input class="form-control1 new_ht_calc" type="text" #itemservicesearch aria-label="Number"
-											[formControl]="itemServiceSearch"
+										<input class="form-control1 new_ht_calc" type="text" #itemservicesearch
+											aria-label="Number" [formControl]="itemServiceSearch"
 											(keyup)="itemServiceManualAdd('',itemServiceSearch)"
 											[matAutocomplete]="auto">
 
@@ -146,13 +147,23 @@
 										</mat-autocomplete>
 									</div>
 								</div>
-								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2" *ngIf="showAddItemsec">
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2"
+									*ngIf="showAddItemsec">
 									<div class="">
-										<input class="form-control1 new_ht_calc" type="number" min="1" max="{{qty_limit}}"
-											aria-label="Number" value="1" size="3" id="mat-input-4" aria-invalid="false"
-											aria-required="false" (keypress)="isNumber($event)"
+										<input class="form-control1 new_ht_calc" type="number" min="1"
+											max="{{qty_limit}}" aria-label="Number" value="1" size="3" id="mat-input-4"
+											aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
 											(keyup)="isvalid($event)" [(ngModel)]="curSelItm.qty"
 											(blur)="blurQty($event.target.value, curSelItm)">
+									</div>
+								</div>
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2"
+									*ngIf="showAddItemsec">
+									<div class="">
+										<input class="form-control1 new_ht_calc" type="number" min="0" max="100000"
+											aria-label="Number" value="1" size="3" id="mat-input-4" aria-invalid="false"
+											aria-required="false" (keypress)="isNumber($event)"
+											(keyup)="isvalid($event)" [(ngModel)]="curSelItm.price">
 									</div>
 								</div>
 								<div style="display: flex;">
@@ -164,10 +175,11 @@
 											add_btn_cap}}</button>
 									</div>
 									<div class="form-group mr-0 pt-1 ml-0 col-3" *ngIf="showAddItemsec">
-										<button class="cs-btn bt2 ml-4 small_btn" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+										<button class="cs-btn bt2 ml-4 small_btn"
+											(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 									</div>
 								</div>
-								
+
 								<!-- <input type="text" #itemservicesearch
 										aria-label="Number"
 										[formControl]="itemServiceSearch"
@@ -614,12 +626,17 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-												<span *ngIf="discounts.length >0 && showDiscountSection">Apply Discount</span>
-												<span *ngIf="coupons.length >0 && showPCouponSection">Apply Coupon</span>
-												<span *ngIf="jCouponsList.length>0 && showJCouponSection">Apply Jaldee Coupon</span>
-												<span *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">Apply On Demand Discount</span>
+												<span *ngIf="discounts.length >0 && showDiscountSection">Apply
+													Discount</span>
+												<span *ngIf="coupons.length >0 && showPCouponSection">Apply
+													Coupon</span>
+												<span *ngIf="jCouponsList.length>0 && showJCouponSection">Apply Jaldee
+													Coupon</span>
+												<span
+													*ngIf="showDiscountSection && discount_type.discType=='OnDemand'">Apply
+													On Demand Discount</span>
 											</h5>
-											
+
 										</div>
 										<div class="modal-body">
 											<select *ngIf="discounts.length >0 && showDiscountSection"
@@ -743,7 +760,7 @@
 												<span *ngIf="showDisplaynoteSection">Add Display Note</span>
 												<span *ngIf="showPrivatenoteSection">Add Private Note</span>
 											</h5>
-											
+
 										</div>
 										<div class="modal-body">
 											<div class="form-group mt-2 mb-1" *ngIf="showDisplaynoteSection">
@@ -859,7 +876,7 @@
 								<div class="hr_content" *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
 									<div class="flx_1">{{coupon.key}} (Coupon)</div>
 									<div class="rupee-font">
-											<span (click)="showJCCouponNote(coupon)"
+										<span (click)="showJCCouponNote(coupon)"
 											[class.couponAmt]="coupon.value.value === '0.0'"
 											style="margin-right: 5px">{{coupon.value.value |
 											currency:'&#8377;'}}</span>
@@ -1157,7 +1174,7 @@
 									</div>
 								</div>
 								<div class="col-md-7 pt-md-10 pb-md-4">
-									<div 
+									<div
 										class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
 										<!--begin::Shape-->
 										<div class="position-absolute opacity-30 top-0 right-0"><span
@@ -1194,7 +1211,7 @@
 										<div class="font-weight-boldest font-size-h5">TOTAL AMOUNT</div>
 										<div class="text-right d-flex flex-column">
 											<span *ngIf="!showPayWorkBench"
-												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.netTotal
+												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue
 												| currency:'&#8377;'}}</span>
 
 											<span *ngIf="showPayWorkBench"
@@ -1217,34 +1234,34 @@
 								<div class="d-flex font-size-sm flex-wrap p-1 m-5">
 									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
 										<button type="button"
-										class="btn btn-light-success  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth"
-										*ngIf="bill_data.billStatus!='Settled'"
-										(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+											class="btn btn-light-success  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth"
+											*ngIf="bill_data.billStatus!='Settled'"
+											(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
 										<button type="button"
-										class="full_wdth btn btn-light-info  font-weight-bolder mr-3 my-1 lh-p8 fnt-p8"
-										 (click)="printMe()" *ngIf="bill_data.billStatus=='Settled'">Print</button>
+											class="full_wdth btn btn-light-info  font-weight-bolder mr-3 my-1 lh-p8 fnt-p8"
+											(click)="printMe()" *ngIf="bill_data.billStatus=='Settled'">Print</button>
 										<button type="button"
-										class="full_wdth btn btn-light-warning   font-weight-bolder ml-sm-auto my-1 lh-p8 mr-3 fnt-p8"
-										
-										(click)="emailBill()" *ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
+											class="full_wdth btn btn-light-warning   font-weight-bolder ml-sm-auto my-1 lh-p8 mr-3 fnt-p8"
+											(click)="emailBill()"
+											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
 									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;">
 										<button type="button"
-										class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
-										*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
-										(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
-									<button type="button"
-										class="full_wdth btn  btn-temp-primary-light  font-weight-bold ml-sm-auto my-1 lh-p8 mr-3 fnt-p8 "
-										*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
-										(click)="paymentlink()">SMS/Email link </button>
-									<button type="button"
-										class="full_wdth btn  btn-temp-primary-light  font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8"
-										*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
-										(click)="showPayment()">{{paybycashothers_cap}} </button>
+											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
+											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
+											(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
+										<button type="button"
+											class="full_wdth btn  btn-temp-primary-light  font-weight-bold ml-sm-auto my-1 lh-p8 mr-3 fnt-p8 "
+											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+											(click)="paymentlink()">SMS/Email link </button>
+										<button type="button"
+											class="full_wdth btn  btn-temp-primary-light  font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8"
+											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
+											(click)="showPayment()">{{paybycashothers_cap}} </button>
 									</div>
-								
-									
+
+
 								</div>
 							</div>
 						</div>

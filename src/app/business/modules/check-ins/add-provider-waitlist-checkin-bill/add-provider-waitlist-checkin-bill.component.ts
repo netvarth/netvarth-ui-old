@@ -226,7 +226,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountClicked = false;
   discountId_servie: any;
   discountid;
-  applydisc = false; 
+  applydisc = false;
   @ViewChild('closebutton') closebutton;
   @ViewChild('itemdiscountapply') itemdiscountapply;
   @ViewChild('itemserviceqtynew') itemserviceqtynew;
@@ -235,7 +235,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('closeDelivery') closeDelivery;
   discount_type: any = '';
 
-  
+
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -306,9 +306,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getProviderSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
-  selectChangeHandler(event:any) {
+  selectChangeHandler(event: any) {
     this.discountId_servie = event;
-}
+  }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
@@ -451,9 +451,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
-      console.log(this.bill_data.createdDate)
       this.billdate = this.bill_data.createdDate;
-      console.log(this.billdate);
     } else {
       this.billdate = this.bill_data.createdDate;
     }
@@ -759,6 +757,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     return itemId;
   }
+  getSelectedServicePrice(serviceName) {
+    let servicePrice = 0;
+    for (let i = 0; i < this.all_services.length; i++) {
+      if (this.all_services[i].name === serviceName) {
+        servicePrice = this.all_services[i].totalAmount;
+        break;
+      }
+    }
+    return servicePrice;
+  }
   getSelectedItemPrice(itemName) {
     let itemPrice = 0;
     for (let i = 0; i < this.items.length; i++) {
@@ -898,6 +906,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.curSelItm.indx = this.getSelectedServiceId(name);
       this.curSelItm.typ = 'Services';
       this.curSelItm.qty = 1;
+      this.curSelItm.price = this.getSelectedServicePrice(name);
     } else if (type === 'Items') {
       this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedItemId(name);
@@ -912,7 +921,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param uuid Bill Id
    * @param data Data to be sent as request body
    */
-  applyAction(action, uuid, data ,closecheck?) {
+  applyAction(action, uuid, data, closecheck?) {
     return new Promise<void>((resolve, reject) => {
       if (uuid) {
         this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
@@ -925,19 +934,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.curSelItm.qty = 1;
             this.getWaitlistBill();
             resolve();
-            if(closecheck === 'applyitemDisc'){
+            if (closecheck === 'applyitemDisc') {
               this.closeGroupDialogitem();
-            } else if(closecheck === 'closeJcDiscPc'){
+            } else if (closecheck === 'closeJcDiscPc') {
               this.closeGroupDialogcoupons();
-            } else if(closecheck === 'noteclose'){
+            } else if (closecheck === 'noteclose') {
               this.closeGroupnotesdialog();
-            } else if(closecheck === 'delivery'){
+            } else if (closecheck === 'delivery') {
               this.closeGroupdelivery();
             }
-             else {
+            else {
               this.closeGroupDialog();
             }
-           
+
           },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -964,7 +973,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Add/Adjust Service/Item to the Bill
    */
   addService_Item() {
-    console.log("hi");
     const type = this.curSelItm.typ;
     const itemId = this.curSelItm.indx;
     let action = this.actiontype;
@@ -982,6 +990,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       data['quantity'] = this.curSelItm.qty;
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
+      }
+      if (this.actiontype !== 'adjustService') {
+        data['price'] = this.curSelItm.price;
       }
     } else if (type === 'Items') {
       data['itemId'] = itemId;
@@ -1131,14 +1142,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['itemId'] = item.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
-    this.applyAction(action, this.bill_data.uuid, data , 'applyitemDisc' );
+    this.applyAction(action, this.bill_data.uuid, data, 'applyitemDisc');
   }
 
   addDisplaynote() {
     const action = 'addDisplayNotes';
     const data = {};
     data['displayNotes'] = this.billDisplayNote;
-    this.applyAction(action, this.bill_data.uuid, data ,'noteclose');
+    this.applyAction(action, this.bill_data.uuid, data, 'noteclose');
     this.displayNoteedit = true;
   }
 
@@ -1146,7 +1157,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const action = 'addPrivateNotes';
     const data = {};
     data['privateNotes'] = this.billPrivateNote;
-    this.applyAction(action, this.bill_data.uuid, data ,'noteclose');
+    this.applyAction(action, this.bill_data.uuid, data, 'noteclose');
     this.privateNoteedit = true;
   }
 
@@ -1176,7 +1187,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
     jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
     this.disableJCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon ,'closeJcDiscPc');
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
   }
   /**
    * Remove Jaldee Coupon
@@ -1211,8 +1222,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   removeProviderCoupon(couponCode) {
     const action = 'removeProviderCoupons';
-     let coupon: string;
-     coupon = '"' + couponCode + '"';
+    let coupon: string;
+    coupon = '"' + couponCode + '"';
     this.applyAction(action, this.bill_data.uuid, coupon);
   }
   hideWorkBench() {
@@ -1244,7 +1255,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   applyDeliveryCharge() {
     const data = { 'deliveryCharges': this.deliveryCharge };
-    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data ,'delivery');
+    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data, 'delivery');
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -1255,7 +1266,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discount['id'] = this.selOrderDiscount;
     // discount['id'] = this.selOrderDiscount.id;
     // applyOrderDiscount
-    console.log(this.discount_type);  
     if (this.discount_type.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
@@ -1277,7 +1287,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['discounts'] = discounts;
     this.disableDiscountbtn = true;
     if ((this.discount_type.discType === 'OnDemand' && discount['discValue']) || this.discount_type.discType !== 'OnDemand') {
-      this.applyAction(action, this.bill_data.uuid, data ,'closeJcDiscPc');
+      this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
     } else {
       this.disableDiscountbtn = false;
     }
@@ -1291,7 +1301,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // coupons.push(this.selOrderProviderCoupon.id);
     data['couponIds'] = coupons;
     this.disableCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data ,'closeJcDiscPc');
+    this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
   }
 
   initPayment(mode, amount, paynot) {
@@ -1345,6 +1355,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
+          this.paynot = '';
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
@@ -1721,7 +1732,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   refundPayment(mode) {
-    
+
     if (this.amounttoRefund) {
       const postData = {
         'refundAmount': this.amounttoRefund,
@@ -1777,7 +1788,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   sampleDiscount() {
-    console.log('clik');
     this.discountClicked = true;
   }
   closeGroupDialog() {
@@ -1786,14 +1796,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   closeGroupDialogitem() {
     this.itemdiscountapply.nativeElement.click();
   }
-  closeGroupDialogcoupons(){
+  closeGroupDialogcoupons() {
     this.closeJcDiscPc.nativeElement.click();
   }
-  closeGroupnotesdialog(){
-    console.log('hi');
+  closeGroupnotesdialog() {
     this.closenotesdialog.nativeElement.click();
   }
-  closeGroupdelivery(){
+  closeGroupdelivery() {
     this.closeDelivery.nativeElement.click();
   }
   applyRefund(payment) {
@@ -1811,7 +1820,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.applydisc = false;
   }
   onChange() {
-   const dsic_type  = this.discounts.filter(obj => obj.id ===  JSON.parse(this.selOrderDiscount));    
-   this.discount_type = dsic_type[0];
-}
+    const dsic_type = this.discounts.filter(obj => obj.id === JSON.parse(this.selOrderDiscount));
+    this.discount_type = dsic_type[0];
+  }
 }
