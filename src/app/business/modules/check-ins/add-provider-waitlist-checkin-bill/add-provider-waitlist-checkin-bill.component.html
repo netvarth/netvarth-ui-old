@@ -394,7 +394,7 @@
 													class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate
 													| currency:'&#8377;'}}</span>
 											</td>
-											<td class="text-right pt-7"
+											<td class="text-right pt-7 pr-0"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
 												<span class="rupee-font">{{(service.quantity *
@@ -486,7 +486,7 @@
 													</span>
 												</div> -->
 											</td>
-											<td class="border-top-0 text-right py-4"> <span class="rupee-font"> <sup
+											<td class="border-top-0 text-right py-4 pr-0"> <span class="rupee-font"> <sup
 														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
@@ -523,7 +523,7 @@
 														class="fa fa-window-close btn_adjust" aria-hidden="true"></i>
 													<br><br>
 													<span *ngIf="item.discount &&item.discount.length > 0"
-														class="clr_ornge mr-10 text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate
+														class="clr_ornge mr-11 text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate
 														| currency:'&#8377;'}}</span>
 												</span>
 
@@ -1302,7 +1302,7 @@
 
 <!-- OLD Bill -->
 
-<!-- <section class="">
+ <!-- <section class=""> 
 	<div class="content comn-cls">
 		<div class="col-md-12 no-padding-small">
 			<div class="w-dta">
@@ -2471,4 +2471,4 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-</section> -->
+</section>  -->

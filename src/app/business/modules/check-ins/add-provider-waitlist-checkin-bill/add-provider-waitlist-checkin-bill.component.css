@@ -189,10 +189,12 @@ font-weight: 600 !important;
 }
 .top_n10 {
     margin-top: -10px;
+    height: 30px !important;
 }
 .btn_adjust {
     width: 40px;
-    height: 20px;
+    text-align: center;
+    font-size: small;
 }
 .clr_ornge {
     color: orange;
