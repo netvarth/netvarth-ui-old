@@ -227,6 +227,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountId_servie: any;
   discountid;
   applydisc = false;
+  walkinConsumer_status = false;
   @ViewChild('closebutton') closebutton;
   @ViewChild('itemdiscountapply') itemdiscountapply;
   @ViewChild('itemserviceqtynew') itemserviceqtynew;
@@ -304,6 +305,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
     this.bill_load_complete = 1;
     this.getProviderSettings();
+    this.getJaldeeIntegrationSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   selectChangeHandler(event: any) {
@@ -1823,4 +1825,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const dsic_type = this.discounts.filter(obj => obj.id === JSON.parse(this.selOrderDiscount));
     this.discount_type = dsic_type[0];
   }
+  getJaldeeIntegrationSettings() {
+    this.provider_services.getJaldeeIntegrationSettings().subscribe(
+        (data: any) => {
+            this.walkinConsumer_status = data.walkinConsumerBecomesJdCons;
+        }
+    );
+}
 }

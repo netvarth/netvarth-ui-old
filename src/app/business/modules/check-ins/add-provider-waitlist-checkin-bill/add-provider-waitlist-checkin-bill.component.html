@@ -1249,7 +1249,7 @@
 									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
-											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
+											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"
 											(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
 										<button type="button"
 											class="full_wdth btn  btn-temp-primary-light  font-weight-bold ml-sm-auto my-1 lh-p8 mr-3 fnt-p8 "
