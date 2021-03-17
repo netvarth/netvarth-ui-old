@@ -314,11 +314,19 @@
 										<tr class="font-weight-boldest font-size-md bdr_bt"
 											*ngFor="let service of bill_data.service; let i = index">
 											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}
+											<br> <br>
+											<!-- Incase of discount name -->
+											<span *ngFor="let discount of service.discount"
+												class="text-right text-muted-dark font-size-xs ">{{discount.name}} <br></span>
+											<br><br>
+											<span *ngIf="service.discount && service.discount.length > 0"
+												class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 											</td>
 											<td class="text-right pt-7"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-												{{service.quantity}}<br>
+												{{service.quantity}}
+												<!-- <br>
 												<div *ngFor="let discount of service.discount">
 													<span
 														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
@@ -330,12 +338,13 @@
 															(click)="removeServiceDiscount(service.serviceId, discount.id)"
 															class="fa fa-window-close" aria-hidden="true"></i>
 													</span>
-												</div>
+												</div> -->
 											</td>
 											<td class="text-right pt-7"
 												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-												{{service.quantity}}<br><br>
+												{{service.quantity}}
+												<!-- <br><br>
 												<div *ngFor="let discount of service.discount">
 													<span
 														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
@@ -347,7 +356,7 @@
 															(click)="removeServiceDiscount(service.serviceId, discount.id)"
 															class="fa fa-window-close" aria-hidden="true"></i>
 													</span>
-												</div>
+												</div> -->
 											</td>
 
 											<td class="text-right pt-7" style="color: red;font-size: smaller;"
@@ -370,7 +379,7 @@
 												<mat-menu #tdmenu="matMenu" >
 													<button mat-menu-item data-toggle="modal"
 														data-target="#exampleModalSizeDefault"
-														(click)="serviceDiscCoupSec(i)"
+														(click)="serviceDiscCoupSec(i ,service)"
 														*ngIf="itemdiscounts.length > 0">
 														Apply Discount
 													</button>
@@ -387,12 +396,21 @@
 													</button>
 												</mat-menu>
 												<br>
+												<!-- discount case -->
+												<span *ngFor="let discount of service.discount" class="text-right font-size-xs font-weight-boldest">
+													<span class="rupee-font text-muted-dark">- {{discount.discountValue | currency:'&#8377;'}}</span> 
+													<i (click)="removeServiceDiscount(service.serviceId, discount.id)" class="fa fa-window-close btn_adjust" aria-hidden="true"></i> <br>
+												</span>
+												<br>
+												<span *ngIf="service.discount && service.discount.length > 0"
+													class="clr_ornge mr-11 text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
+												<!-- <br>
 												<span *ngIf="service.discount && service.discount.length > 0"
 													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 												<br>
 												<span *ngIf="service.discount && service.discount.length > 0"
 													class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate
-													| currency:'&#8377;'}}</span>
+													| currency:'&#8377;'}}</span> -->
 											</td>
 											<td class="text-right pt-7 pr-0"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
@@ -408,7 +426,7 @@
 												<mat-menu #tdmenu="matMenu">
 													<button mat-menu-item data-toggle="modal"
 														data-target="#exampleModalSizeDefault"
-														(click)="serviceDiscCoupSec(i)"
+														(click)="serviceDiscCoupSec(i , service)"
 														*ngIf="itemdiscounts.length > 0">
 														Apply Discount
 													</button>
@@ -425,12 +443,21 @@
 													</button>
 												</mat-menu>
 												<br>
+												<!-- discount case -->
+												<span *ngFor="let discount of service.discount" class="text-right font-size-xs font-weight-boldest">
+													<span class="rupee-font text-muted-dark">- {{discount.discountValue | currency:'&#8377;'}}</span> 
+													<i (click)="removeServiceDiscount(service.serviceId, discount.id)" class="fa fa-window-close btn_adjust" aria-hidden="true"></i> <br>
+												</span>
+												<br>
+												<span *ngIf="service.discount && service.discount.length > 0"
+													class="clr_ornge mr-11 text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
+												<!-- <br>
 												<span *ngIf="service.discount && service.discount.length > 0"
 													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 												<br>
 												<span *ngIf="service.discount && service.discount.length > 0"
 													class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate
-													| currency:'&#8377;'}}</span>
+													| currency:'&#8377;'}}</span> -->
 											</td>
 
 											<!-- Modal for Service level apply discount -->

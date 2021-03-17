@@ -235,6 +235,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('closenotesdialog') closenotesdialog;
   @ViewChild('closeDelivery') closeDelivery;
   discount_type: any = '';
+  selectedservice: any;
 
 
   constructor(
@@ -798,7 +799,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Service Discount/Coupon section
    * @param indx Index
    */
-  serviceDiscCoupSec(indx) {
+  serviceDiscCoupSec(indx , service?) {
+    console.log(indx);
+    console.log(service);
+    this.selectedservice = service;
     this.bill_data.service[indx].serviceDiscount = '';
     if (this.bill_data.service[indx]) {
       if (this.bill_data.service[indx].showservicedisccoup) {
@@ -1093,12 +1097,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
 
   applyServiceDiscount(service) {
+    console.log(service);
+    console.log(this.selectedservice);
     const action = 'addServiceLevelDiscount';
     const discountIds = [];
     discountIds.push(this.discountId_servie);
     // discountIds.push(service.serviceDiscount.id);
     const data = {};
-    data['serviceId'] = service.serviceId;
+    // data['serviceId'] = service.serviceId;
+    // data['discountIds'] = discountIds;
+    data['serviceId'] = this.selectedservice.serviceId;
     data['discountIds'] = discountIds;
     this.disableButton = true;
     this.applyAction(action, this.bill_data.uuid, data);
