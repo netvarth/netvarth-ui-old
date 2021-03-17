@@ -300,8 +300,8 @@ export class TeleServiceComponent implements OnInit {
                                 //     }
                                 //   };
                                 //   console.log(navigationExtras)
-                                alert(this.uuid);
-                                this.router.navigate(['meeting', 'provider' , this.uuid]);
+                                console.log(this.uuid);
+                                this.router.navigate(['meeting', 'provider' , this.uuid], { replaceUrl: true });
                             } else {
                                 this.getProviderWaitlstById();
                             }
@@ -336,7 +336,7 @@ export class TeleServiceComponent implements OnInit {
                                 //       type: usertype
                                 //     }
                                 //   };
-                                this.router.navigate(['meeting', 'provider' , this.uuid]);
+                                this.router.navigate(['meeting', 'provider' , this.uuid], { replaceUrl: true });
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
                                 //         this.router.navigate(['provider', 'video', videoId]);

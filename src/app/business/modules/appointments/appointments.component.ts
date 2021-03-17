@@ -488,20 +488,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_sidebar = false;
   }
   getDefaultViewSchedules(allSchedules) {
-    console.log(allSchedules);
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
-      console.log(allSchedules.length);
       for (let qIndex = 0; qIndex < allSchedules.length; qIndex++) {
-        console.log(allSchedules[qIndex]);
-        console.log(loggedUser.id);
         if (allSchedules[qIndex].provider && (allSchedules[qIndex].provider.id === loggedUser.id)) {
           userQs.push(allSchedules[qIndex]);
         }
       }
-      console.log(userQs);
       return userQs;
     } else {
       return allSchedules;
@@ -695,8 +689,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getSchedulesFromView(view, schedules) {
-    console.log(view);
-    console.log(schedules);
     const qs = [];
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < schedules.length; i++) {
@@ -708,11 +700,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < schedules.length; qIndex++) {
-          console.log(schedules[qIndex]);
-          console.log(loggedUser.id);
           if (schedules[qIndex].provider && (schedules[qIndex].provider.id === loggedUser.id)) {
             qs.push(schedules[qIndex]);
           }
@@ -2349,7 +2338,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
-        console.log(communications);
         this.image_list_popup_temp = [];
         this.image_list_popup = []; 
         let count = 0;
