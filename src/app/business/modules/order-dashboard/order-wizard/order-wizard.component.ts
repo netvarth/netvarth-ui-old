@@ -1228,10 +1228,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.canceldialogRef.afterClosed().pipe(takeUntil(this.onDestroy$)).subscribe(result => {
       console.log(result);
       if (result) {
+        this.added_address.splice(index, 1);
         this.provider_services.updateDeliveryaddress(this.customer_data.id,this.added_address).pipe(takeUntil(this.onDestroy$))
           .subscribe(
             data => {
-              this.added_address.splice(index, 1);
               if (data) {
                 this.getDeliveryAddress();
               }
