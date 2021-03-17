@@ -465,6 +465,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(msgs);
     this.type = 'all';
     this.message = '';
+    this.replyMsg = null;
     this.clearImg();
     this.selectedCustomer = msgs.key;
     console.log(this.selectedCustomer);

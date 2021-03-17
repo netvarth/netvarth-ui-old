@@ -13,16 +13,17 @@ import { Router } from '@angular/router';
 })
 export class EnquiryComponent implements OnInit {
 
+  messages: any = [];
+  enquiries: any = [];
+  users: any = [];
+  userDet: any = [];
+  loading = true;
   constructor(private shared_functions: SharedFunctions,
     private inbox_services: InboxServices,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router) { }
-  messages: any = [];
-  enquiries: any = [];
-  users: any = [];
-  userDet: any = [];
   ngOnInit(): void {
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userDet.accountType === 'BRANCH') {
@@ -52,6 +53,7 @@ export class EnquiryComponent implements OnInit {
           const inbox = this.generateCustomInbox(this.messages);
           this.enquiries = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
           console.log(this.enquiries);
+          this.loading = false;
         });
   }
   searchUserById(id) {
@@ -134,7 +136,7 @@ export class EnquiryComponent implements OnInit {
   }
   gotoInbox(msg) {
     console.log(msg);
-    this.router.navigate(['provider/inbox'], {queryParams: {customer: msg.accountName, provider: msg.providerName}});
+    this.router.navigate(['provider/inbox'], { queryParams: { customer: msg.accountName, provider: msg.providerName } });
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

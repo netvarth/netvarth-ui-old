@@ -9,9 +9,10 @@
     <div class="content comn-cls">
         <div class="col-md-12 no-padding-small">
             <div class="card p0">
-                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small">
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small" *ngIf="!loading">
                     <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)">
-                        <div class="user-name cont1">
+                        <div class="user-name">
                             {{getUser(enquiry.accountName)}}
                         </div>
                         <div class="cont2 mgn-lt-10">
