@@ -1353,7 +1353,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
-    this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+    if(checkin.uid) {
+      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+    } else {
+      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
+    }
+    
   }
   viewBill(checkin, type, event) {
     event.stopPropagation();

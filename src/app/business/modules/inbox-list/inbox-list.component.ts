@@ -237,7 +237,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
-    console.log(this.groupedMsgs);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (this.small_device_display) {

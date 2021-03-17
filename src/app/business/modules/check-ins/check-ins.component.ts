@@ -896,20 +896,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getDefaultViewQs(allQueues) {
-    console.log(allQueues);
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
-      console.log(allQueues.length);
       for (let qIndex = 0; qIndex < allQueues.length; qIndex++) {
-        console.log(allQueues[qIndex]);
-        console.log(loggedUser.id);
         if (allQueues[qIndex].provider && (allQueues[qIndex].provider.id === loggedUser.id)) {
           userQs.push(allQueues[qIndex]);
         }
       }
-      console.log(userQs);
       return userQs;
     } else {
       return allQueues;
@@ -978,8 +972,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         self.queues = queues;
         self.initViews(queues, '').then(
           (view) => {
-            console.log('view:');
-            console.log(view);
             self.initView(view, 'changeLocation');
           }
         );
@@ -988,7 +980,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
-    console.log(view);
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
@@ -999,11 +990,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < queues.length; qIndex++) {
-          console.log(queues[qIndex]);
-          console.log(loggedUser.id);
           if (queues[qIndex].provider && (queues[qIndex].provider.id === loggedUser.id)) {
             qs.push(queues[qIndex]);
           }
@@ -2537,17 +2525,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       queue: false,
       listeners: {
         onstart: () => {
-          console.log('Start utterance');
         },
         onend: () => {
-          console.log('End utterance');
           count++;
           if (count !== 3) {
             _this.playSound(checkin, count);
           }
         },
         onresume: () => {
-          console.log('Resume utterance');
         },
         onboundary: event => {
           console.log(
@@ -2559,13 +2544,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }).then(() => {
-      console.log('Success !');
     }).catch(e => {
       console.error('An error occurred :', e);
     });
   }
   callingWaitlist(checkin) {
-    console.log(checkin);
     if (checkin.showToken) {
       if (!checkin.callingStatus) {
         const speechSupported = this.lStorageService.getitemfromLocalStorage('speech');
@@ -2797,7 +2780,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.loadApiSwitch(result);
         }, error => {
           this.statusChangeClicked = false;
-          console.log('eer');
         }
       );
   }
@@ -2939,7 +2921,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
     this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
-        console.log(communications);
         this.image_list_popup_temp = [];
         this.image_list_popup = [];
         let count = 0;
@@ -3205,12 +3186,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           // 'splitSentences': false,
           listeners: {
             onvoiceschanged: voices => {
-              console.log('Voices changed', voices);
             }
           }
         })
         .then(data => {
-          console.log('Speech is ready', data);
           // _addVoicesList(data.voices);
           // _prepareSpeakButton(speech);
         })

@@ -1,5 +1,4 @@
 import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs';
 import * as Video from 'twilio-video';
 @Injectable()
 export class TwilioService {
@@ -7,7 +6,6 @@ export class TwilioService {
     localVideo: ElementRef;
     previewContainer: ElementRef;
     previewing: boolean;
-    // msgSubject = new BehaviorSubject('');
     microphone = true;
     video = true;
     preview = true;
@@ -15,8 +13,6 @@ export class TwilioService {
     participantsCount = 0;
     showParticipant = false;
     previewTrack;
-    // frontCamTrack;
-    // backCamTrack;
     camDeviceCount = 0;
     private renderer: Renderer2;
     cameraMode: string;
@@ -24,17 +20,9 @@ export class TwilioService {
     cam1Device: string;
     selectedVideoId: string;
     cam2Device: string;
-
-
-
     activeRoom;
-    // previewTracks;
-    // identity;
-    // roomName;
 
-
-    constructor(
-        public rendererFactory: RendererFactory2) {
+    constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
     /**
@@ -74,8 +62,8 @@ export class TwilioService {
         })
     }
     /**
- * Method for Preview Camera before entering to the meeting room
- */
+     * Method for Preview Camera before entering to the meeting room
+    */
     previewMedia() {
         const _this = this;
         _this.loadDevices().then(
@@ -88,16 +76,21 @@ export class TwilioService {
                     }).then(localTracks => {
                         _this.previewTracks = localTracks;
                         localTracks.forEach(localTrack => {
-                            _this.previewTrack = localTrack;
-                            const element = _this.previewTrack.attach();
-                            _this.renderer.addClass(element, 'rem-video');
-                            _this.renderer.appendChild(_this.previewContainer.nativeElement, element);
+                            _this.addPreviewTrackToDom(localTrack);
                         })
                     });
                 }
             }
         );
     }
+    
+    addPreviewTrackToDom (previewTrack) {
+        const _this = this;
+        const element = previewTrack.attach();
+        _this.renderer.addClass(element, 'rem-video');
+        _this.renderer.appendChild(_this.previewContainer.nativeElement, element);
+    }
+
     enableVideo() {
         this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
             videoTrack.track.enable();
@@ -146,8 +139,6 @@ export class TwilioService {
           }).then(function(localVideoTrack) {
             localParticipant.publishTrack(localVideoTrack);
             console.log(localParticipant.identity + ' added track: ' + localVideoTrack.kind);
-            // const previewContainer = document.getElementById('local-media');
-
             _this.attachTracks([localVideoTrack], _this.localVideo.nativeElement, _this.activeRoom);
           });
     }
@@ -157,16 +148,11 @@ export class TwilioService {
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
         }
-        // if (_this.previewTracks) {
-        //     _this.stopTracks(this.previewTracks);
-        // }
         Video.connect(accessToken, options).then(
             (room: any) => {
                 _this.preview = false;
                 _this.activeRoom = room;
-                console.log(_this.activeRoom);
                 if (!_this.previewing && options['video']) {
-                    // this.startLocalVideo();
                     if (!_this.localVideo.nativeElement.querySelector('video')) {
                         console.log("in connect method");
                          _this.attachParticipantTracks(room.localParticipant, _this.localVideo.nativeElement, room);
@@ -219,9 +205,7 @@ export class TwilioService {
     // Detach the Participant's Tracks from the DOM.
     detachParticipantTracks(participant, room, _this) {
         console.log("detachParticipantTracks");
-        var tracks = Array.from(participant.tracks.values()).map(function (
-            trackPublication
-        ) {
+        var tracks = Array.from(participant.tracks.values()).map(function (trackPublication) {
             return trackPublication['track'];
         });
         _this.detachTracks(tracks, room);
@@ -237,35 +221,19 @@ export class TwilioService {
     // Successfully connected!
     roomJoined(room) {
         const _this = this;
-        // navigator.mediaDevices.enumerateDevices().then(gotDevices);
-        // const select = document.getElementById('video-devices');
-        // select.addEventListener('change', updateVideoDevice);
-
-        // log("Joined as '" + identity + "'");
-        // document.getElementById('button-join').style.display = 'none';
-        // document.getElementById('button-leave').style.display = 'inline';
-
-        // Attach LocalParticipant's Tracks, if not already attached.
-        // var previewContainer = document.getElementById('localVideo');
-         
-        // this.renderer.addClass(element, 'rem-video');
-        // this.renderer.appendChild(this.localVideo.nativeElement, element);
-        
-        
-
         // Attach the Tracks of the Room's Participants.
         room.participants.forEach( (participant) => {
             console.log("Already in Room: '" + participant.identity + "'");           
             _this.attachParticipantTracks(participant, _this.remoteVideo.nativeElement, room);
-            this.participantsCount = room.participants.size;
-            alert('first:' + this.participantsCount);
+            _this.participantsCount = room.participants.size;
+            console.log('first:' + this.participantsCount);
         });
 
         // When a Participant joins the Room, log the event.
         room.on('participantConnected', function (participant) {
             console.log("Joining: '" + participant.identity + "'");
-            this.participantsCount = room.participants.size;
-            alert("connected:"+ room.participants.size);
+            _this.participantsCount = room.participants.size;
+            console.log("connected:"+ room.participants.size);
         });
 
         // When a Participant adds a Track, attach it to the DOM.
@@ -285,26 +253,37 @@ export class TwilioService {
         room.on('participantDisconnected', function (participant) {            
             console.log("Participant '" + participant.identity + "' left the room");
             _this.detachParticipantTracks(participant, room, _this);
-            this.participantsCount = room.participants.size;
-            alert("disConnected:"+ room.participants.size);
+            _this.participantsCount = room.participants.size;
+            console.log("disConnected:"+ room.participants.size);
         });
 
         // Once the LocalParticipant leaves the room, detach the Tracks
         // of all Participants, including that of the LocalParticipant.
         room.on('disconnected', function () {
             console.log('Left');
-            if (_this.previewTracks) {
-                _this.previewTracks.forEach(function (track) {
-                    track.stop();
-                });
-            }                        
-            _this.detachParticipantTracks(room.localParticipant, room, _this);
-            // room.participants.forEach(_this.detachParticipantTracks);
+            room.localParticipant.tracks.forEach(publication => {
+                const attachedElements = publication.track.detach();
+                attachedElements.forEach(element => element.remove());
+              });
+              const localElement = this.localVideo.nativeElement;
+              while (localElement.firstChild) {
+                  localElement.removeChild(localElement.firstChild);
+              }
+              const remoteElement = this.remoteVideo.nativeElement;
+              while (remoteElement.firstChild) {
+                  remoteElement.removeChild(remoteElement.firstChild);
+              }
+            // if (_this.previewTracks) {
+            //     _this.previewTracks.forEach(function (track) {
+            //         track.stop();
+            //     });
+            // }                        
+            // _this.detachParticipantTracks(room.localParticipant, room, _this);
+            _this.participantsCount = room.participants.size;
+            // if(room.participants && room.participants.size > 0) {
+            //     room.participants.forEach(_this.detachParticipantTracks);
+            // }
             _this.disconnect();
-            // _this.activeRoom = null;
-            //   document.getElementById('button-join').style.display = 'inline';
-            //   document.getElementById('button-leave').style.display = 'none';
-            //   select.removeEventListener('change', updateVideoDevice);
         });
     }
     disconnect() {
