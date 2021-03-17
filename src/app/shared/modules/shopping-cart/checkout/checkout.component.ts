@@ -649,12 +649,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.added_address.splice(index, 1);
         this.shared_services.updateConsumeraddress(this.added_address)
           .subscribe(
             data => {
+              this.added_address.splice(index, 1);
               if (data) {
-             
                 this.getaddress();
               }
               this.snackbarService.openSnackBar('Address deleted successfully');

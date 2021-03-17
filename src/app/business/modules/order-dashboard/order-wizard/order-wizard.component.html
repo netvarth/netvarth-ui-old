@@ -524,7 +524,7 @@
                           </span>
                           <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                         </div>
-                        <div>
+                        <div *ngIf="isfutureAvailableTime">
                           <span *ngIf="!isFuturedate">Today ,</span>
                           <span *ngIf="!isFuturedate">
                             {{nextAvailableTime}}
@@ -535,6 +535,9 @@
                             {{nextAvailableTime}}
                           </span>
                         </div>
+                        <div *ngIf="!isfutureAvailableTime" class="red">
+                            <span>No timings are available</span>
+                          </div>
 
                         <!-- Home Address -->
                         <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
@@ -552,6 +555,9 @@
                                     <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
                                     <div> +91 {{address.phoneNumber}}</div>
                                     <div> {{address.email}}</div>
+                                    <div (click)="deleteAddress(address, i)">
+                                        <i class="font-weight-bolder font-size-sm red icon-delete">
+                                        </i> </div>
                                   </div>
 
                                 </div>
@@ -745,7 +751,7 @@
               </div>
               <div>
 
-                <button [disabled]="placeOrderDisabled" *ngIf="step == 3" type="button"
+                <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button"
                   class="btn btn-success font-weight-bold text-uppercase px-9 py-1" (click)="confirm()">
                   Place Order
                 </button>

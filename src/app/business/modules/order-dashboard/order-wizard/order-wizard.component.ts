@@ -21,6 +21,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
  
 
 
@@ -595,7 +596,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     // });
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
+    console.log(queue);
     this.queue = queue;
   }
   onSubmit(form_data) {
@@ -1213,6 +1214,34 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(result => {
       this.getDeliveryAddress();
+    });
+  }
+  deleteAddress(address, index) {
+    this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to Delete this address?',
+      }
+    });
+    this.canceldialogRef.afterClosed().pipe(takeUntil(this.onDestroy$)).subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.provider_services.updateDeliveryaddress(this.customer_data.id,this.added_address).pipe(takeUntil(this.onDestroy$))
+          .subscribe(
+            data => {
+              this.added_address.splice(index, 1);
+              if (data) {
+                this.getDeliveryAddress();
+              }
+              this.snackbarService.openSnackBar('Address deleted successfully');
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
     });
   }
   checkCouponExists(couponCode) {
