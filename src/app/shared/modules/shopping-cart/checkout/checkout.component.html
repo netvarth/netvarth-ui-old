@@ -324,7 +324,7 @@
                                   <div class="price rupee-font">{{cartDetails.deliveryCharge | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="hr-line-pitch-blk mgn-up-20"></div>
-                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle" aria-hidden="true"></i>An advance of {{cartDetails.advanceAmount | currency:'&#8377;'}} required</span>
+                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}} </span>required</span>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
