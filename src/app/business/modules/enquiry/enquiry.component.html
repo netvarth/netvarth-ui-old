@@ -1,7 +1,7 @@
 <section class="">
     <div class="title-gb no-padding">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            Enquiry
+            Enquiry ({{enquiries.length}})
         </div>
     </div>
 </section>
@@ -9,27 +9,23 @@
     <div class="content comn-cls">
         <div class="col-md-12 no-padding-small">
             <div class="card p0">
-                <!--begin::Enquiry-->
-                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                    <div class="enq-box" *ngFor="let enquiry of enquiries">
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small">
+                    <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)">
                         <div class="user-name cont1">
                             {{getUser(enquiry.accountName)}}
                         </div>
-                        <div class="cont2 mgn-lt-5">
+                        <div class="cont2 mgn-lt-10">
                             {{enquiry.accountName}}
                         </div>
-                        <div class="cont3">
+                        <div class="cont3" *ngIf="userDet.accountType === 'BRANCH'">
                             {{enquiry.providerName}}
                         </div>
-                        <div class="cont3">
-                        {{formatDateDisplay(enquiry.timeStamp)}}
-                    </div>
-                        <div class="cont4" (click)="gotoInbox(enquiry)">
-                            <span class="view-btn">View</span>
+                        <div class="cont4">
+                            {{formatDateDisplay(enquiry.timeStamp)}}
                         </div>
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
                 </div>
-                <!--end::Enquiry-->
             </div>
         </div>
     </div>

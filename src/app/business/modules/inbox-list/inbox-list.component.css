@@ -163,19 +163,47 @@ textarea {
     height: 20px !important;
     width: 20px !important;
 }
-.reply-btn {
-    display: none;
-}
 .rounded:hover .reply-btn {
     display: inline-block !important;
 }
 .reply-btn {
-    background: transparent !important;
+    display: none;
     border: none !important;
     position: absolute !important;
-    margin-left: -5px !important;
-    margin-top: -15px !important;
+    margin-left: -15px !important;
+    margin-top: -10px !important;
+}
+.bg-light-primary .reply-btn {
+    background: #f9e2a7 !important;
+}
+.bg-light-success .reply-btn {
+    background: #C9F7F5 !important
 }
 .minhgt-80 {
     min-height: 70vh;
+}
+.fa-times {
+    float: right;
+    color: black !important;
+    margin: auto;
+}
+.reply-section {
+    display: flex;
+    margin-bottom: 10px;
+}
+.reply-section .reply-msg {
+    padding: 10px;
+    background: #eeeeeecf;
+    width: 100%;
+    color: #999999 !important;
+    font-size: .9rem;
+    margin-right: 10px;
+}
+.replymsg {
+    background: #cccc;
+    padding: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 50px;
 }

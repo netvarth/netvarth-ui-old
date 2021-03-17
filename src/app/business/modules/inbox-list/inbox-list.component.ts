@@ -76,6 +76,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgHeight;
   scrollDone = false;
   qParams;
+  replyMsg;
+  @ViewChild('reply') replyFrame: ElementRef;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -129,10 +131,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const screenHeight = window.innerHeight;
     if (this.screenWidth <= 991) {
       this.userHeight = screenHeight - 320;
-      this.msgHeight = screenHeight - 438;
+      this.msgHeight = screenHeight - 421;
     } else {
       this.userHeight = screenHeight - 285;
-      this.msgHeight = screenHeight - 425;
+      this.msgHeight = screenHeight - 405;
     }
   }
   ngOnDestroy() {
@@ -238,6 +240,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.groupedMsgs);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      if (this.small_device_display) {
+        this.showChat = true;
+      }
       const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
       console.log(unreadMsgs);
       const enuiryMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
@@ -497,6 +502,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       let post_data = {};
       post_data['msg'] = this.message;
       post_data['messageType'] = 'CHAT';
+      if (this.replyMsg) {
+      post_data['replyMessageId'] = this.replyMsg.messageId;
+      }
+      console.log(post_data);
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -519,7 +528,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.scrollDone = false;
-            this.message = '';
+            this.message = ''; 
+            this.replyMsg = null;
             this.getInboxMessages();
             this.clearImg();
             this.sendMessageCompleted = true;
@@ -538,6 +548,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedUser = user;
     this.selectedCustomer = '';
     this.selectedUserMessages = [];
+    this.replyMsg = null;
     this.setMessages();
   }
   changemsgDisplayType(type) {
@@ -545,6 +556,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedUser = this.userDet;
     this.selectedCustomer = '';
     this.selectedUserMessages = [];
+    this.replyMsg = null;
     if (type === 'all') {
       this.setMessages();
     }
@@ -562,5 +574,23 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getMsgType(msg) {
     return 'chat';
+  }
+  replytoMsg(msg) {
+this.replyMsg = msg;
+console.log(this.replyMsg);
+setTimeout(() => {
+var height = this.replyFrame.nativeElement.offsetHeight;
+console.log(height);
+}, 100);
+  }
+  closeReply() {
+    this.replyMsg = null;
+  }
+  getReplyMsgbyId(msgId) {
+    console.log(msgId);
+    console.log(this.messages);
+const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
+console.log(replyMsg);
+return replyMsg[0].msg;
   }
 }

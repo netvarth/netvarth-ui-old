@@ -124,12 +124,12 @@
                                                     class="d-flex flex-column mb-5 align-items-start">
                                                     <div class="d-flex align-items-center">
                                                         <div>
-
-                                                            <span
-                                                                class="text-muted font-size-sm">{{getMsgType(msg)}}</span>
-
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+
+                                                                <span
+                                                                    class="greenc font-size-sm">{{getMsgType(msg)}}</span>
+    
                                                         </div>
                                                     </div>
                                                     <div
@@ -140,12 +140,13 @@
                                                             aria-label="Example icon-button with a menu">
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                         </button>
-                                                        <mat-menu #menu="matMenu">
+                                                        <mat-menu #menu="matMenu" (click)="replytoMsg(msg)">
                                                             <button mat-menu-item>
                                                                 <span>Reply</span>
                                                             </button>
                                                         </mat-menu>
-
+                                                        
+                                                        <div class="replymsg" *ngIf="msg.replyMsgId">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
                                                         <div [innerHTML]="msg.msg | nl2br"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
@@ -165,6 +166,10 @@
                                                     class="d-flex flex-column mb-5 align-items-end">
                                                     <div class="d-flex align-items-center">
                                                         <div>
+
+                                                            <span
+                                                                class="greenc font-size-sm">{{getMsgType(msg)}}</span>
+
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                                         </div>
@@ -178,11 +183,12 @@
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                         </button>
                                                         <mat-menu #menu="matMenu">
-                                                            <button mat-menu-item>
+                                                            <button mat-menu-item (click)="replytoMsg(msg)">
                                                                 <span>Reply</span>
                                                             </button>
                                                         </mat-menu>
 
+                                                        <div class="replymsg" *ngIf="msg.replyMsgId">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
                                                         <div [innerHTML]="msg.msg | nl2br"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
@@ -205,7 +211,13 @@
                                         </div>
                                     </div>
                                     <div class="card-footer align-items-center">
-                                        <div class="d-flex align-items-center justify-content-between mt-5">
+
+<div class="reply-section" *ngIf="replyMsg" #reply>
+   <div class="reply-msg"> {{replyMsg.msg}}</div>
+    <i class="fa fa-times" aria-hidden="true" (click)="closeReply()"></i>
+</div>
+
+                                        <div class="d-flex align-items-center justify-content-between">
                                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                                                 class="form-control border-0 p-0" placeholder="Type a message *"
                                                 [(ngModel)]="message"></textarea>

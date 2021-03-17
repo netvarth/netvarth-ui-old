@@ -10,27 +10,46 @@
 }
 .enq-box {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 0 0px 0px 0 rgb(0 0 0/20%),0 0px 10px 0 rgb(0 0 0/19%);
+    cursor: pointer;
 }
 .enq-box div {
     margin-top: auto;
     margin-bottom: auto;
 }
+.cont1 {
+    width: 50px;
+}
 .cont2, .cont3 {
     width: 40%;
 }
 .cont4 {
-    width: 15%;
+    width: 25%;
 }
 .user-name {
     border-radius: 50%;
-    width: 100%;
     color: #FFFFFF;
     background-color: #1e4079;
     max-width: 100px;
-    padding: 15px 10px;
-    width: 50px;
-    height: 50px;
+    padding: 12px 10px;
+    width: 45px;
+    height: 45px;
     text-align: center;
-    max-height: 50px;
+    max-height: 45px;
+}
+.fa-arrow-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 2rem;
+    color: #1e4079;
+    display: none;
+    right: 20px;
+    position: absolute;
+    padding: 5px 20px;
+}
+.enq-box:hover .fa-arrow-right{
+    display: inline-block !important;
+    background: white;
 }
