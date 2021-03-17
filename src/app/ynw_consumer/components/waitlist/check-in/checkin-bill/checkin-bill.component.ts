@@ -91,7 +91,9 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     showPaidlist = false;
     showJCouponSection = false;
     jCoupon = '';
-    couponList: any = [];
+    couponList : any={
+        JC:[],OWN:[]
+      };
     refund_value;
     discountDisplayNotes = false;
     billNoteExists = false;
@@ -111,6 +113,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     provider_label = '';
+    api_loading=true;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
     retval;
     s3url;
@@ -240,6 +243,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                 data => {
                     this.checkin = data;
                     this.getCouponList();
+                    this.getProviderCouponList();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
@@ -298,6 +302,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             .subscribe(
                 data => {
                     this.bill_data = data;
+                    this.api_loading=false;
                     for (let i = 0; i < this.bill_data.discount.length; i++) {
                         if (this.bill_data.discount[i].displayNote) {
                             this.discountDisplayNotes = true;
@@ -725,14 +730,31 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                 s3Url => {
                     this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
                         .subscribe(res => {
-                            this.couponList = res;
+                            this.couponList.JC = res;
+                        });
+                });
+    }
+    getProviderCouponList() {
+        const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        this.sharedfunctionObj.getS3Url()
+            .then(
+                s3Url => {
+                    this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
+                        .subscribe(res => {
+                            this.couponList.OWN = res;
                         });
                 });
     }
     checkCouponValid(couponCode) {
         let found = false;
-        for (let couponIndex = 0; couponIndex < this.couponList.length; couponIndex++) {
-            if (this.couponList[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+        for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {
+            if (this.couponList.JC[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+                found = true;
+                break;
+            }
+        }
+        for (let couponIndex = 0; couponIndex < this.couponList.OWN.length; couponIndex++) {
+            if (this.couponList.OWN[couponIndex].couponCode.trim() === couponCode.trim()) {
                 found = true;
                 break;
             }

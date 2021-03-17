@@ -732,12 +732,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
+    if(this.step === 2){
+      this.step = this.step + 1;
+    } else {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
       this.location.back();
     }
   }
+}
 
   changeTime() {
     this.action = 'timeChange';
