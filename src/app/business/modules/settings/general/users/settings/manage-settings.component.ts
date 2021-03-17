@@ -263,6 +263,11 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {
     this.cdref.detectChanges();
   }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {

@@ -202,6 +202,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
     }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   doLogout() {
     this.shared_functions.doLogout()

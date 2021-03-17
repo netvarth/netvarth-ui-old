@@ -118,7 +118,11 @@ export class BusinessComponent implements OnInit {
   handleScrollhide(ev) {
     this.outerscroller = ev;
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.getBusinessProfile();
     this.getLicenseMetaData();
