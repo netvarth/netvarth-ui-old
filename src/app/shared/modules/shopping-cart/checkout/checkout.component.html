@@ -72,7 +72,7 @@
                           (click)="changeTime()" >Change
                             </a></span>
                     </div>
-                    <div>
+                    <div *ngIf="isfutureAvailableTime">
                         <h4>
                             <span *ngIf="!isFuturedate">Today, </span>
                             <span *ngIf="!isFuturedate">
@@ -86,6 +86,10 @@
 
                         </h4>
                     </div>
+                    <div *ngIf="!isfutureAvailableTime" class="red">
+                        <span>No timings are available</span>
+                      </div>
+                    
                   </div>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
@@ -336,7 +340,7 @@
 
                         </div>
                       </div>
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 </div>
@@ -420,7 +424,7 @@
 
 
                     <div *ngIf="selectedImagelist.files.length > 0">
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 <!-- <div class="cr1">

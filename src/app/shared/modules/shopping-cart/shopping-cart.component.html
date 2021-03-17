@@ -130,7 +130,7 @@
                       Date/Time
                       <div class="fl-right"><a (click)="changeTime()">Change</a></div>
                     </div>
-                    <div class="order-label mgn-bt-10">
+                    <div *ngIf="isfutureAvailableTime" class="order-label mgn-bt-10">
                       <span *ngIf="!isFuturedate">Today, </span>
                       <span *ngIf="!isFuturedate">
                         {{nextAvailableTime}}
@@ -141,6 +141,9 @@
                         {{nextAvailableTime}}
                       </span>
                     </div>
+                    <div *ngIf="!isfutureAvailableTime" class="red">
+                        <span>No timings are available</span>
+                      </div>
                   </div>
                   <div class="order-label mt-2" *ngIf="(s3CouponsList.JC.length > 0||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                     *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
@@ -170,7 +173,7 @@
                     <div class="flex1">SUB TOTAL</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
-                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Confirm Order</button>
+                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime" class="confm_btn">Confirm Order</button>
                 </div>
               </div>
             </div>
