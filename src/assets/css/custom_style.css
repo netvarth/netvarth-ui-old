@@ -14067,3 +14067,12 @@ width: 40px !important;
 .cont-outer {
     padding-bottom: 20px;
 }
+.booking-img {
+    content: url(../images/bookingwindow.png);
+    width: 300px;
+    margin: auto;
+}
+.wizard-nav {
+  justify-content: center;
+  display: flex;
+}

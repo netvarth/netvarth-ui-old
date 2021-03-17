@@ -847,11 +847,11 @@ ul.bus-actions li a.lnk {
   background-color: #fff !important;
   border: 1px solid #ccc !important;
   border-radius: 20px !important;
-  min-width: 108px !important;
+  min-width: 80px !important;
   padding: 15px !important;
 }
 .c-checkin-new .slotdiv {
-  max-height: 40vh !important;
+  max-height: 175px !important;
   overflow: auto;
   margin-top: 0px !important;
 
@@ -878,11 +878,11 @@ ul.bus-actions li a.lnk {
   border-radius: 20px !important;
 }
 
-@media (min-width:992px) {
+/* @media (min-width:992px) {
 .c-checkin-new .check-new-group {
   min-height: 400px;
 }
-}
+} */
 
 .pre-instr {
   font-size: 0.75rem !important;
@@ -1400,7 +1400,7 @@ body.modal-open {
   font-size: .8rem;
  }
  .success-section {
-  background: #00cc96 !important;
+   background: #00cc96 !important;
  }
  .width-60 {
   width: 60% !important;
@@ -1412,11 +1412,13 @@ body.modal-open {
   border-radius: 50%;
   color: white;
   background-color: #aaaa;
-  max-width: 100px;
-  padding: 10px;
-  width: 40px;
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
   margin: auto;
-  max-height: 40px;
+  text-align: center;
+  height: 50px;
+  align-items: center;
  }
  .wizard-title {
    color: #aaaa !important;
@@ -1444,11 +1446,25 @@ body.modal-open {
   .wizard.wizard-1 .wizard-nav .wizard-steps {
       flex-direction: unset !important;
   }
-  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title {
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title, .booking-img {
     display: none !important;
   }
   .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
     width: auto !important;
+  }
+}
+@media (min-width: 768px) {
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+    display: block !important;
+  }
+  .wizard-label {
+    display: flex;
+  }
+  .wizard-arrow {
+    display: none !important;
+  }
+  .wizard-mgn-30 {
+    margin-bottom: 30px;
   }
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
@@ -1457,4 +1473,8 @@ body.modal-open {
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
   display: none !important;
+}
+.right-part {
+  min-height: 650px;
+  border-left: 1px solid #EBEDF3 !important;
 }
