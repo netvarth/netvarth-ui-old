@@ -1,0 +1,131 @@
+.ynw-common-form.otp_scr .cust-loginpge-color .otp-field mat-label {
+    color: darkslategrey !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .otp-field input {
+    border: 1px solid #c7cace !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    box-shadow: inset 0 0 3px #c7cace !important;
+    height: 44px !important;
+    padding: 10px !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .otp-field input:focus {
+    border-color: #3498db !important;
+    box-shadow: inset 0 0 3px #3498db !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .otp-field input.ng-invalid.ng-touched {
+    /* box-shadow: inset 0 0 3px #c0392b !important; */
+    border-color: #c0392b !important;
+    box-shadow: inset 0 0 2px red !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .verify-button {
+    color: #ffffff !important;
+    margin: 0 !important;
+    background-color: #1E4079 !important;
+    border-radius: 4px !important;
+    vertical-align: baseline !important;
+    opacity: 1 !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .verify-button:disabled {
+    opacity: 0.7 !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .t-and-c {
+    margin: 5px 0 20px !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .t-and-c span {
+    color: darkslategrey !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .t-and-c span a {
+    color: #073B4C !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .resendouter .resend-main {
+    color: #073B4C !important;
+    font-weight: 700 !important;
+    margin-bottom: 5px !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .resendouter .resend-to-email {
+    color: #073B4C !important;
+    font-weight: 700 !important;
+    margin-bottom: 5px !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .resend-counter {
+    color: darkslategrey !important;
+    font-weight: 500 !important;
+    margin-bottom: 5px !important;
+}
+
+.ynw-common-form.otp_scr .cust-loginpge-color .resend-counter .counter {
+    font-weight: 700 !important;
+}
+
+.cust-loginpge-color.email-otp {
+    margin: 20px 0 !important;
+}
+
+.cust-loginpge-color.email-otp .email-field mat-label {
+    color: darkslategrey !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+.cust-loginpge-color.email-otp .email-field input {
+    border: 1px solid #c7cace !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    box-shadow: inset 0 0 3px #c7cace !important;
+    height: 44px !important;
+    padding: 10px !important;
+    width: 100% !important;
+}
+
+.cust-loginpge-color.email-otp .email-field input:focus {
+    border-color: #3498db !important;
+    box-shadow: inset 0 0 3px #3498db !important;
+}
+
+.cust-loginpge-color.email-otp .email-field input.ng-invalid.ng-touched {
+    /* box-shadow: inset 0 0 3px #c0392b !important; */
+    border-color: #c0392b !important;
+    box-shadow: inset 0 0 2px red !important;
+}
+
+::ng-deep .cust-loginpge-color.email-otp .email-field .sts-msg.error {
+    padding-left: 0 !important;
+    font-weight: 700 !important;
+    font-size: 0.725rem !important;
+    color: red !important;
+}
+
+.cust-loginpge-color.email-otp .cancel-button,
+.cust-loginpge-color.email-otp .resend-button {
+    width: 49% !important;
+    color: white !important;
+    margin: 0 !important;
+    background-color: #1E4079 !important;
+    border-radius: 4px !important;
+    vertical-align: baseline !important;
+    opacity: 1 !important;
+}
+
+.cust-loginpge-color.email-otp .resend-button:disabled {
+    opacity: 0.7 !important;
+}
