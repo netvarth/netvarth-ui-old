@@ -2,7 +2,7 @@
     <app-menu></app-menu>
     <div id="kt_header" class="header header-fixed" [class.wizardstyle]="iswiz" [class.mgn-lt-70]="smallMenuSection">
         <app-header></app-header>
-        <div class="body-section" [class.loading-style]="apiloading" (click)="showMenu()">
+        <div class="body-section" [ngStyle]="{'height.px': bodyHeight}" [class.loading-style]="apiloading" (click)="showMenu()">
             <router-outlet *ngIf="!apiloading"></router-outlet>
             <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
         </div>

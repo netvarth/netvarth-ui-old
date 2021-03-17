@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, RouterEvent, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
 import { ProviderServices } from '../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -31,6 +31,8 @@ export class BusinessComponent implements OnInit {
   profile: any = [];
   iswiz = false;
   smallMenuSection = false;
+  screenWidth;
+  bodyHeight;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -118,12 +120,24 @@ export class BusinessComponent implements OnInit {
   handleScrollhide(ev) {
     this.outerscroller = ev;
   }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    if (this.screenWidth <= 991) {
+      this.bodyHeight = screenHeight - 160;
+    } else {
+      this.bodyHeight = screenHeight - 120;
+    }
+    console.log(this.bodyHeight);
+  }
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
   ngOnInit() {
+    this.onResize();
     this.getBusinessProfile();
     this.getLicenseMetaData();
     this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');

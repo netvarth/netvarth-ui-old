@@ -90,15 +90,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
-      this.activateRoute.queryParams.subscribe(params => {
-this.qParams = params;
-if (this.qParams.enquiry) {
-  this.showEnquiry = true;
-}
-      });
-     }
-     ngOnChanges() {
-     }
+    this.activateRoute.queryParams.subscribe(params => {
+      this.qParams = params;
+      if (this.qParams.enquiry) {
+        this.showEnquiry = true;
+      }
+    });
+  }
+  ngOnChanges() {
+  }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     const cnow = new Date();
@@ -126,14 +126,27 @@ if (this.qParams.enquiry) {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    this.userHeight = screenHeight - 250;
-    this.msgHeight = screenHeight - 375;
+    if (this.screenWidth <= 991) {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 303;
+      } else {
+        this.userHeight = screenHeight - 234;
+      }
+      this.msgHeight = screenHeight - 425;
+    } else {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 330;
+      } else {
+        this.userHeight = screenHeight - 208;
+      }
+      this.msgHeight = screenHeight - 374;
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -194,10 +207,10 @@ if (this.qParams.enquiry) {
           this.messages = data;
           this.scrollDone = true;
           if (this.showEnquiry) {
-const inbox =  this.generateCustomInbox(this.messages);
-this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
+            const inbox = this.generateCustomInbox(this.messages);
+            this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
           } else {
-          this.setMessages();
+            this.setMessages();
           }
           this.loading = false;
         },
@@ -570,6 +583,6 @@ this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
     return msgs;
   }
   getMsgType(msg) {
-return 'chat';
+    return 'chat';
   }
 }
