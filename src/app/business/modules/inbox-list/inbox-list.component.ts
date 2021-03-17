@@ -141,7 +141,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.msgHeight = screenHeight - 425;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
-        this.userHeight = screenHeight - 360;
+        this.userHeight = screenHeight - 340;
+        console.log(this.userHeight);
       } else {
         this.userHeight = screenHeight - 208;
       }
