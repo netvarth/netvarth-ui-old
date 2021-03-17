@@ -16,81 +16,87 @@
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding">       
-                            <div class="wizard-nav" *ngIf="type != 'reschedule'">
-                                <div class="wizard-steps p-8 p-lg-10">
-                                    <div class="wizard-step tab-selected" data-wizard-type="step">
-                                        <div class="wizard-label">
-                                            <div class="step-icon">1</div>
-                                            <h3 class="wizard-title">Booking Window</h3>
+                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding">
+                                        <div class="wizard-nav" *ngIf="type != 'reschedule'">
+                                            <div class="wizard-steps p-8 p-lg-10">
+                                                <div class="wizard-step tab-selected" data-wizard-type="step">
+                                                    <div class="wizard-label">
+                                                        <div class="step-icon">1</div>
+                                                        <h3 class="wizard-title">Booking Window</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="wizard-step" data-wizard-type="step"
+                                                    [class.tab-selected]="bookStep>=2"
+                                                    *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                                    <div class="wizard-label">
+                                                        <div class="step-icon">2</div>
+                                                        <h3 class="wizard-title">More Info</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="wizard-step" data-wizard-type="step"
+                                                    [class.tab-selected]="bookStep==3">
+                                                    <div class="wizard-label">
+                                                        <div class="step-icon">{{(questionnaireList.labels &&
+                                                            questionnaireList.labels.length > 0) ? 3 : 2}}</div>
+                                                        <h3 class="wizard-title">Confirm</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow last">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span class="svg-icon svg-icon-xl wizard-arrow">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                                viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3"
-                                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                        x="11" y="5" width="2" height="14" rx="1" />
-                                                    <path
-                                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                        fill="#000000" fill-rule="nonzero"
-                                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                </g>
-                                            </svg>
-                                        </span>
                                     </div>
-                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2"
-                                        *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
-                                        <div class="wizard-label">
-                                            <div class="step-icon">2</div>
-                                            <h3 class="wizard-title">More Info</h3>
-                                        </div>
-                                        <span class="svg-icon svg-icon-xl wizard-arrow">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                                viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3"
-                                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                        x="11" y="5" width="2" height="14" rx="1" />
-                                                    <path
-                                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                        fill="#000000" fill-rule="nonzero"
-                                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                </g>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
-                                        <div class="wizard-label">
-                                            <div class="step-icon">{{(questionnaireList.labels &&
-                                                questionnaireList.labels.length > 0) ? 3 : 2}}</div>
-                                            <h3 class="wizard-title">Confirm</h3>
-                                        </div>
-                                        <span class="svg-icon svg-icon-xl wizard-arrow last">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                                viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <rect fill="#000000" opacity="0.3"
-                                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                        x="11" y="5" width="2" height="14" rx="1" />
-                                                    <path
-                                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                        fill="#000000" fill-rule="nonzero"
-                                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                </g>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                                    </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part" data-wizard-type="step-content" data-wizard-state="current"
+                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
                                         <div class="panel-body no-padding">
                                             <div
@@ -340,14 +346,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
-                                        <button type="button"
-                                            class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                            (click)="goToStep('next')"
-                                            [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
-                                            Next
-                                        </button>
-                                </div>
+                                            <div
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
+                                                <button type="button"
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
+                                                    Next
+                                                </button>
+                                            </div>
                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
@@ -765,7 +772,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part" data-wizard-type="step-content" data-wizard-state="current"
+                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="mgn-bt-20 quest-head mgn-up-10">
                                             Please provide us with a little more information complete your booking
@@ -776,7 +784,8 @@
                                             [serviceId]="sel_ser" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part" data-wizard-type="step-content" data-wizard-state="current"
+                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your appointment details</div>
                                         <table class="bookdetails">
@@ -857,7 +866,8 @@
                                                 <span>{{getSingleTime(apptTime['time'])}}</span>
                                             </div>
                                         </div>
-                                        <div class="pay-section" *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
+                                        <div class="pay-section"
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
@@ -880,25 +890,25 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between border-top pt-10">
-                                        <div class="mr-2">
-                                            <button type="button"
-                                                class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                                (click)="goToStep('prev')">
-                                                Previous
-                                            </button>
+                                            <div class="mr-2">
+                                                <button type="button"
+                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('prev')">
+                                                    Previous
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button" (click)="saveCheckin('appt')"
+                                                    class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+                                                    <ng-container
+                                                        *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        Pay</ng-container>
+                                                    <ng-container
+                                                        *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                        Confirm</ng-container>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <button type="button" (click)="saveCheckin('appt')"
-                                                class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-                                                <ng-container
-                                                    *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    Pay</ng-container>
-                                                <ng-container
-                                                    *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                    Confirm</ng-container>
-                                            </button>
-                                        </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
