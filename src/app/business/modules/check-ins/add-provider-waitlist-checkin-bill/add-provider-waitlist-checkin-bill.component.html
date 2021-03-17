@@ -245,7 +245,7 @@
 
 								<!-- <button mat-button [matMenuTriggerFor]="topmenu"> -->
 								<!-- <mat-icon>more_vert</mat-icon> -->
-								<div class="symbol fl_right symbol-40 symbol-light-success mr-5 hand_symb"
+								<div class="symbol fl_right symbol-40 symbol-light-success mr-5 hand_symb" 	*ngIf="!showAddItemsec && showAddItemMenuSection"
 									[matMenuTriggerFor]="topmenu">
 									<span class="symbol-label"> <span class="svg-icon svg-icon-lg svg-icon-success"><svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -1198,7 +1198,7 @@
 									<div
 										class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
 									
-										<div class="font-weight-boldest font-size-h5">TOTAL AMOUNT</div>
+										<div class="font-weight-boldest font-size-h5">Amount Due</div>
 										<div class="text-right d-flex flex-column">
 											<span *ngIf="!showPayWorkBench"
 												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue
