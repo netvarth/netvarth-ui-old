@@ -242,9 +242,10 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                             
                        
                     });
-                    this.getItems();
-                    this.getProviderLocations();
+                    
                 }
+                this.getItems();
+                this.getProviderLocations();
             
             });
         this.createForm();

@@ -235,6 +235,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('closenotesdialog') closenotesdialog;
   @ViewChild('closeDelivery') closeDelivery;
   discount_type: any = '';
+  selectedservice: any;
+  selectedItem: any;
 
 
   constructor(
@@ -783,7 +785,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Item Discount/Coupon Section
    * @param indx Index
    */
-  itemDiscCoupSec(indx) {
+  itemDiscCoupSec(indx ,item?) {
+    console.log(item);
+    this.selectedItem = item
     this.bill_data.items[indx].itemDiscount = '';
     if (this.bill_data.items[indx]) {
       if (this.bill_data.items[indx].showitemdisccoup) {
@@ -798,7 +802,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Service Discount/Coupon section
    * @param indx Index
    */
-  serviceDiscCoupSec(indx) {
+  serviceDiscCoupSec(indx , service?) {
+    this.selectedservice = service;
     this.bill_data.service[indx].serviceDiscount = '';
     if (this.bill_data.service[indx]) {
       if (this.bill_data.service[indx].showservicedisccoup) {
@@ -1098,7 +1103,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discountIds.push(this.discountId_servie);
     // discountIds.push(service.serviceDiscount.id);
     const data = {};
-    data['serviceId'] = service.serviceId;
+    // data['serviceId'] = service.serviceId;
+    // data['discountIds'] = discountIds;
+    data['serviceId'] = this.selectedservice.serviceId;
     data['discountIds'] = discountIds;
     this.disableButton = true;
     this.applyAction(action, this.bill_data.uuid, data);
@@ -1141,7 +1148,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discountIds.push(this.discountId_servie);
     // discountIds.push(item.itemDiscount.id);
     const data = {};
-    data['itemId'] = item.itemId;
+    // data['itemId'] = item.itemId;
+      data['itemId'] = this.selectedItem.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
     this.applyAction(action, this.bill_data.uuid, data, 'applyitemDisc');

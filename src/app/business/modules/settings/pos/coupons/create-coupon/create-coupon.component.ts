@@ -7,7 +7,7 @@ import { TimewindowPopupComponent } from '../../../ordermanager/catalog/timewind
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
-import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+ import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { ServiceListDialogComponent } from '../../../../../shared/service-list-dialog/service-list-dialog.component';
 import { ItemListDialogComponent } from '../../../../../shared/item-list-dialog/item-list-dialog.component';
 import { DepartmentListDialogComponent } from '../../../../../shared/department-list-dialog/department-list-dialog.component';
@@ -17,7 +17,9 @@ import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-lab
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import * as moment from 'moment';
 import { SubSink } from 'subsink';
+
 
 
 @Component({
@@ -26,7 +28,7 @@ import { SubSink } from 'subsink';
   styleUrls: ['./create-coupon.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-3.css']
 
 })
-export class CreateCouponComponent implements OnInit,OnDestroy {
+export class CreateCouponComponent implements OnInit, OnDestroy {
   consumerLabeldialogRef: any;
   services: any = [];
   items: any = [];
@@ -70,24 +72,28 @@ export class CreateCouponComponent implements OnInit,OnDestroy {
   couponId: any;
   action: any;
   couponDetails: any;
-  coupon_title='Create Coupon'
+  coupon_title = 'Create Coupon'
   calculationType: any;
-  published=false;
+  published = false;
   private subscriptions = new SubSink();
+  weekdayError=false;
+  startDaterequired=false;
+  endDaterequired=false;
+  minbillamountError=false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService,
+     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     public dialog: MatDialog, ) {
-    this.subscriptions.sink=this.activated_route.params.subscribe(params => {
+    this.subscriptions.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
     });
-    this.subscriptions.sink=this.activated_route.queryParams.subscribe(qparams => {
+    this.subscriptions.sink = this.activated_route.queryParams.subscribe(qparams => {
       this.action = qparams.action;
     });
     this.timewindow_list = [];
@@ -96,39 +102,31 @@ export class CreateCouponComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
 
-
-    this.getItems();
-    this.getCustomerLabels();
-    this.getCustomerGroups();
-    this.getCatalogs();
+     this.getCatalogs();
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.active_user.type === 'BRANCH') {
-      this.getUsers();
-      this.getDepartments();
-    }
-
+  
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
-}
-isNumeric(evt) {
-  return this.sharedfunctionObj.isNumber(evt);
-}
+  }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumber(evt);
+  }
   createForm() {
     this.couponForm = this.formbuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       couponCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: [''],
-      calculationType: ['',[Validators.required]],
-      amount: ['',[Validators.required]],
+      calculationType: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
       couponRules: this.formbuilder.group({
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
         firstCheckinOnly: [''],
-        minBillAmount: ['',[Validators.required]],
+        minBillAmount: ['', [Validators.required]],
         maxDiscountValue: [''],
         isproviderAcceptCoupon: [''],
         maxProviderUseLimit: [''],
@@ -156,7 +154,7 @@ isNumeric(evt) {
       couponBasedOn: [[]]
     });
     if (this.action === 'edit') {
-        this.coupon_title='Edit Coupon';
+      this.coupon_title = 'Edit Coupon';
       this.getCouponById(this.couponId).then(
         (result) => {
           this.updateForm(result);
@@ -167,10 +165,10 @@ isNumeric(evt) {
   }
   updateForm(coupon) {
     this.couponDetails = coupon;
-    if(coupon.calculationType==='Fixed'){
-      this.calculationType='Fixed';
-    }else{
-      this.calculationType='Percentage';
+    if (coupon.calculationType === 'Fixed') {
+      this.calculationType = 'Fixed';
+    } else {
+      this.calculationType = 'Percentage';
     }
     this.couponForm.patchValue({
       name: coupon.name,
@@ -237,10 +235,10 @@ isNumeric(evt) {
         this.selallweekdays = false;
       }
     }
-  if(coupon.couponRules.published){
-    this.published=true;
-   this.couponForm.disable();
-  }
+    if (coupon.couponRules.published) {
+      this.published = true;
+      this.couponForm.disable();
+    }
 
   }
 
@@ -254,7 +252,7 @@ isNumeric(evt) {
     return ret;
   }
   handleCalculationType(event) {
-    this.calculationType=event.value;
+    this.calculationType = event.value;
     console.log(this.calculationType);
 
   }
@@ -264,7 +262,7 @@ isNumeric(evt) {
   getCouponById(couponId) {
     const _this = this;
     return new Promise((resolve) => {
-     _this. subscriptions.sink=_this.provider_services.getProviderCoupons(couponId).subscribe(
+      _this.subscriptions.sink = _this.provider_services.getProviderCoupons(couponId).subscribe(
         (result: any) => {
 
           resolve(result);
@@ -301,7 +299,49 @@ isNumeric(evt) {
     this.char_count = this.max_char_count - this.couponForm.get('description').value.length;
   }
   gotoNext() {
-    this.step = this.step + 1;
+    this.startDaterequired=false;
+    this.endDaterequired=false;
+    this.weekdayError=false;
+    this.minbillamountError=false;
+    if (this.step == 1) {
+      let nameControl = this.couponForm.get('name');
+      nameControl.markAsTouched();
+      let codeControl = this.couponForm.get('couponCode');
+      codeControl.markAsTouched();
+      let amountControl = this.couponForm.get('amount');
+      amountControl.markAsTouched();
+      let calmodeControl = this.couponForm.get('calculationType');
+      calmodeControl.markAsTouched();
+
+      if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
+        this.step = this.step + 1;
+      } else {
+        return;
+      }
+    }else if(this.step==2){
+      const startDateVal=this.couponForm.get('couponRules').get('startDate').value;
+      const endDateVal=this.couponForm.get('couponRules').get('endDate').value;
+      const minbillamountval=this.couponForm.get('couponRules').get('minBillAmount').value;
+    if(startDateVal==null||startDateVal==undefined ||startDateVal==''){
+      this.startDaterequired=true;
+    }
+    if(endDateVal==null||endDateVal==undefined||endDateVal=='' ){
+      this.endDaterequired=true;
+    }
+    if(minbillamountval==null||minbillamountval==''||minbillamountval==undefined){
+      this.minbillamountError=true;
+    }
+     if(this.selday_arr.length==0){
+       this.weekdayError=true;
+     }
+     if(this.couponForm.get)
+     if(this.startDaterequired==false &&this.endDaterequired===false && this.weekdayError===false){
+       this.step=this.step+1;
+     }
+    }
+    // this.step = this.step + 1;
+
+
   }
   // wizard
   gotoPrevious() {
@@ -310,27 +350,35 @@ isNumeric(evt) {
   resetApiErrors() {
   }
   compareDate(dateValue, startOrend) {
-    const UserDate = dateValue;
     this.startdateError = false;
     this.enddateError = false;
-    const ToDate = new Date().toString();
-    const l = ToDate.split(' ').splice(0, 4).join(' ');
-    const sDate = this.couponForm.get('startDate').value;
-    const sDate1 = new Date(sDate).toString();
-    const l2 = sDate1.split(' ').splice(0, 4).join(' ');
+    const sDate = this.couponForm.get('couponRules').get('startDate').value;
+    const eDate = this.couponForm.get('couponRules').get('endDate').value;
     if (startOrend === 0) {
-      if (new Date(UserDate) < new Date(l)) {
+      this.startDaterequired=false;
+      if (moment(new Date(sDate)).isSame(moment(), 'day')) {
+        return this.startdateError = false;
+      } else if (moment(new Date(sDate)).isBefore(new Date())) {
         return this.startdateError = true;
       }
-      return this.startdateError = false;
-    } else if (startOrend === 1 && dateValue) {
-      if (new Date(UserDate) < new Date(l2)) {
-        return this.enddateError = true;
+      else if (eDate!=null && moment(new Date(sDate)).isAfter(new Date(eDate))) {
+        return this.startdateError = true;
+      } else {
+        return this.startdateError = false;
       }
-      return this.enddateError = false;
+
+    } else if (startOrend === 1) {
+      this.endDaterequired=false;
+      if (new Date(sDate) > new Date(eDate)) {
+        return this.enddateError = true;
+      } else {
+        return this.enddateError = false;
+      }
+
     }
   }
   handleDaychange(index) {
+    this.weekdayError=false;
     const selindx = this.selday_arr.indexOf(index);
     if (selindx === -1) {
       this.selday_arr.push(index);
@@ -344,64 +392,16 @@ isNumeric(evt) {
     }
 
   }
-  getDepartments() {
 
-    this.subscriptions.sink=this.provider_services.getDepartments()
-      .subscribe(
-        data => {
-          this.deptObj = data;
-          this.department_list = this.deptObj.departments;
 
-        },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-        }
-      );
-  }
-
-  getItems() {
-    this.provider_services.getProviderItems()
-      .subscribe(data => {
-        this.item_list = data;
-
-      });
-  }
-  getCustomerLabels() {
-
-    this.subscriptions.sink=this.provider_services.getLabelList()
-      .subscribe(
-        (data: any) => {
-          this.customer_label_list = data;
-        },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-        }
-      );
-  }
-  getCustomerGroups() {
-
-    this.provider_services.getCustomerGroup().subscribe((data: any) => {
-      this.customer_group_list = data;
-
-    });
-  }
   getCatalogs() {
-   this.subscriptions.sink= this.provider_services.getProviderCatalogs()
+    this.subscriptions.sink = this.provider_services.getProviderCatalogs()
       .subscribe(data => {
         this.catalog_list = data;
 
       });
   }
-  getUsers() {
-    this.subscriptions.sink=this.provider_services.getUsers().subscribe(
-      (data: any) => {
-        this.user_list = data;
-      },
 
-      (error: any) => {
-        this.wordProcessor.apiErrorAutoHide(this, error);
-      });
-  }
   openServiceDialog() {
     this.servicedialogRef = this.dialog.open(ServiceListDialogComponent, {
       width: '50%',
@@ -505,6 +505,9 @@ isNumeric(evt) {
   onSubmit() {
 
     const form_data = this.couponForm.value;
+    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased ) {
+      this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
+    }else{
     const timeRangeObject = [{
       'recurringType': 'Weekly',
       'repeatIntervals': this.selday_arr,
@@ -516,36 +519,29 @@ isNumeric(evt) {
       },
     }];
 
-    console.log(form_data);
+
     form_data.couponRules.validTimeRange = timeRangeObject;
     if (form_data.couponRules.policies.isServiceBased && !this.couponBasedOnValue.includes('ServiceBased')) {
-      console.log('service base clciked');
-      
-     
       this.couponBasedOnValue.push('ServiceBased');
     }
-    if(form_data.couponRules.maxDiscountValue){
-      const discountVal=Number(form_data.couponRules.maxDiscountValue).toFixed(2);
-      form_data.couponRules.maxDiscountValue=discountVal;
+    if (form_data.couponRules.maxDiscountValue) {
+      const discountVal = Number(form_data.couponRules.maxDiscountValue).toFixed(2);
+      form_data.couponRules.maxDiscountValue = discountVal;
     }
-    if (form_data.couponRules.policies.isCatalogBased  && !this.couponBasedOnValue.includes('CatalogueBased')) {
-      console.log('catalog base clciked');
+    if (form_data.couponRules.policies.isCatalogBased && !this.couponBasedOnValue.includes('CatalogueBased')) {
       this.couponBasedOnValue.push('CatalogueBased');
 
     }
-    console.log('base' + this.couponBasedOnValue);
+   
     if (form_data.couponRules.policies.isServiceBased) {
       form_data.couponRules.policies.services = this.services;
     }
-   
+
     if (form_data.couponRules.policies.isDepartment) {
       form_data.couponRules.policies.departments = this.departments;
 
     }
-    if (form_data.couponRules.policies.isServi) {
-      form_data.couponRules.policies.departments = this.departments;
-
-    }
+  
     if (form_data.couponRules.policies.isUser) {
       form_data.couponRules.policies.users = this.users;
 
@@ -571,46 +567,44 @@ isNumeric(evt) {
     delete form_data.couponRules.policies.isCustomerLabel;
     delete form_data.couponRules.policies.isServiceBased;
     delete form_data.couponRules.policies.isCatalogBased;
-    console.log(form_data);
     if (this.action === 'edit') {
       this.updateCoupon(form_data);
     } else {
       this.createCoupon(form_data);
     }
   }
+  }
 
   createCoupon(data) {
-   this.subscriptions.sink= this.provider_services.createCoupon(data)
+    this.subscriptions.sink = this.provider_services.createCoupon(data)
       .subscribe(result => {
-        console.log('createdSuccessfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_CREATED'));
         this.redirecToCoupon();
       },
-      error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
       );
   }
   updateCoupon(data) {
     data.id = this.couponDetails.id;
-   this.subscriptions.sink= this.provider_services.updateCoupon(data)
+    this.subscriptions.sink = this.provider_services.updateCoupon(data)
       .subscribe(result => {
-        console.log('updated Successfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_UPDATED'));
         this.redirecToCoupon();
-      },error => {
+      }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
-  );
+      );
   }
   redirecToCoupon() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-         coupon_list:'own_coupon'
-         
+        coupon_list: 'own_coupon'
+
       }
-  };
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon'],navigationExtras);
+    };
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon'], navigationExtras);
   }
 }
 

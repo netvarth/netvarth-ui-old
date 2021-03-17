@@ -313,7 +313,7 @@
                               </div>
                               <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
-                            <div>
+                            <div *ngIf="isfutureAvailableTime">
                               <span *ngIf="!isFuturedate">Today ,</span>
                               <span *ngIf="!isFuturedate">
                                 {{nextAvailableTime}}
@@ -324,6 +324,9 @@
                                 {{nextAvailableTime}}
                               </span>
                             </div>
+                            <div *ngIf="!isfutureAvailableTime" class="red">
+                                <span>No timings are available</span>
+                              </div>
 
                             <!-- Home Address -->
                             <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
@@ -491,6 +494,28 @@
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                                  Choose Date
+                                                </div> -->
+                                            <div class="col-md-8 col-xs-12 col-sm-10 ">
+                                              <div class="lnk ">Choose Date</div>
+                                              <div class="pull-left brd-round brd-light mgn-up-10">
+                                                <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
+                                                <span
+                                                  class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
+                                                <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
+                                                <!-- </div>-->
+                                                <span class="datepicker">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                  <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                                  <input class="" style="visibility: hidden; width:1px" type="text"
+                                                    [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                                    (dateChange)="handleFutureDateChange($event)">
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
                                       <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                           Choose Date
@@ -517,11 +542,11 @@
                                             <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
                                               <div class="lnk ">{{timings_title}} </div>
                                               <mat-chip-list class="">
-                                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                                                (click)="handleQueueSelection(queue, i)">
+                                                <mat-chip *ngFor="let queu of nextAvailableTimeQueue, let i= index"
+                                                (click)="handleQueueSelection(queu, i)">
                                                 <!-- [selected]="queue(i) === nextAvailableTime"> -->
-                                                    {{queue['sTime'] + ' - ' +
-                                                    queue['eTime']}}
+                                                    {{queu['sTime'] + ' - ' +
+                                                    queu['eTime']}}
                                                 </mat-chip>
                                             </mat-chip-list>
                                             </div>
@@ -672,7 +697,7 @@
                   </div> -->
                   <div>
 
-                    <button [disabled]="placeOrderDisabled" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
                       Update Order
                     </button>

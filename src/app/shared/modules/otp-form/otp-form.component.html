@@ -38,32 +38,37 @@
       </div>
     </mat-dialog-actions>
     <!-- consumer login section new -->
-    <div class="cust-loginpge-color" *ngIf="consumerlogin">
-      <p class="col-form-label col-md-12 no-padding mgn-up-20" for="otp"><b>{{otp_mobile}}</b></p>
+    <div class="cust-loginpge-color" *ngIf="consumerlogin" style="margin: 20px 0;">
+      <!-- <p class="col-form-label col-md-12 no-padding mgn-up-20" for="otp"><b>{{otp_mobile}}</b></p> -->
       <div class="mat-dialog-content">
-        <div class="form-group">
-          <mat-form-field>
-            <input class="cust-loginpge-wdth" matInput placeholder="Enter OTP Received"
+        <div class="form-group otp-field">
+          <!-- <mat-form-field> -->
+            <mat-label>{{otp_mobile}}</mat-label>
+
+            <!-- <input class="cust-loginpge-wdth" matInput placeholder="Enter OTP Received"
+              [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
+              maxlength="5"> -->
+            <input class="cust-loginpge-wdth" placeholder="Enter OTP Received"
               [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
               maxlength="5">
-          </mat-form-field>
+          <!-- </mat-form-field> -->
         </div>
       </div>
-      <div class="mat-dialog-actions">
-        <button type="submit" mat-button class="cust-logpg-submt no-margin"
+      <div class="mat-dialog-actions" style="padding: 0 !important;">
+        <button type="submit" mat-button class="cust-logpg-submt no-margin verify-button"
           [disabled]="buttonclicked || !otp_form.valid">verify</button>
-        <div class="mgn-bt-10" *ngIf="type=='signup'">
+        <div class="mgn-bt-10 t-and-c" *ngIf="type=='signup'">
           <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
               [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
         </div>
         <div class="resendouter" style="text-align: center !important;" *ngIf="resetCounterVal==0">
-          <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+          <span class="resend-main" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
               *ngIf="type=='change_email'">
               Email</ng-container></span>
-          <span (click)="setResendViaEmail()" mat-button>{{resend_otp_email}}</span>
+          <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>{{resend_otp_email}}</span>
         </div>
-        <div class="counter-outer" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
-          {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
+        <div class="counter-outer resend-counter" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
+          {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}} {{seconds_cap}}</span>
         </div>
       </div>
     </div>
@@ -72,7 +77,8 @@
 </ng-container>
 
 <ng-container *ngIf="showOTPEmailContainer">
-  <div [ngClass]="{'cust-loginpge-color':consumerlogin}">
+  <div [ngClass]="{'cust-loginpge-color':consumerlogin, 
+                   'email-otp':consumerlogin}">
     <!-- <h1> &nbsp;</h1> -->
     <form [formGroup]="email_form" novalidate *ngIf="email_otp_req"
       (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)" (keyup)="doResetApiErrors()">
@@ -90,11 +96,14 @@
       </mat-dialog-content>
 
       <mat-dialog-content *ngIf="consumerlogin">
-        <div class="form-group">
-          <mat-form-field>
-            <input type="email" [formControl]="email_form.controls['otp_email']" matInput
-              placeholder="Enter your email id" autocomplete="off" />
-          </mat-form-field>
+        <div class="form-group email-field">
+          <!-- <mat-form-field> -->
+            <mat-label>Enter your e-mail id</mat-label>
+            <!-- <input type="email" [formControl]="email_form.controls['otp_email']" matInput
+              placeholder="Enter your email id" autocomplete="off" /> -->
+            <input type="email" [formControl]="email_form.controls['otp_email']" 
+              autocomplete="off" />
+          <!-- </mat-form-field> -->
 
           <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
             errorMsg="Please enter a valid email.">
@@ -102,10 +111,17 @@
         </div>
       </mat-dialog-content>
 
-      <mat-dialog-actions>
+      <mat-dialog-actions *ngIf="!consumerlogin">
         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
           <button type="button" class="cs-btn bt2 otpbtn" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
           <button mat-button [disabled]="!email_form.valid" class="cs-btn bt1">{{resend_btn_cap}}</button>
+        </div>
+      </mat-dialog-actions>
+
+      <mat-dialog-actions style="padding: 0 !important;" *ngIf="consumerlogin">
+        <div class="col-md-12" style="padding: 0 !important; display: flex !important; justify-content: space-between !important;">
+          <button type="button" class="cs-btn bt2 otpbtn cancel-button" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+          <button mat-button [disabled]="!email_form.valid" class="cs-btn bt1 resend-button">{{resend_btn_cap}}</button>
         </div>
       </mat-dialog-actions>
     </form>

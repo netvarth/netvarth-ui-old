@@ -1,18 +1,20 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-consumer-label-dialog',
   templateUrl: './consumer-label-dialog.component.html',
   styleUrls: ['./consumer-label-dialog.component.css']
 })
-export class ConsumerLabelDialogComponent implements OnInit {
+export class ConsumerLabelDialogComponent implements OnInit,OnDestroy{
 
 loading=true;
   former_chosen_consumerLables: any = [];
   consumer_labels: any = [];
   selectedLabels: any = [];
+  subscription: Subscription;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerLabelDialogComponent>,
@@ -27,10 +29,12 @@ loading=true;
     this.getConsumerLabels();
 
   }
-
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+     }
   getConsumerLabels() {
 
-    this.provider_services.getLabelList()
+   this.subscription= this.provider_services.getLabelList()
     .subscribe(
       (data: any) => {
         this.consumer_labels = data;

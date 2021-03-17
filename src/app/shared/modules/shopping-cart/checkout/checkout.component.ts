@@ -654,7 +654,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               if (data) {
-             
                 this.getaddress();
               }
               this.snackbarService.openSnackBar('Address deleted successfully');

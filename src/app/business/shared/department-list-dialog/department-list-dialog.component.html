@@ -1,6 +1,6 @@
 
     <h1 class="mat-dialog-title">  Departments
-      <button  mat-dialog-close  tabindex="-1" style="float:right;">
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
@@ -10,7 +10,7 @@
 
       <mat-selection-list #departments [(ngModel)]="selectedDepartments" (ngModelChange)="onDepartmentChange($event)" >
 
-        <mat-list-option *ngFor=" let department of department_list" [value] ="department" [selected]="isSelected(department)">
+        <mat-list-option checkboxPosition="before" *ngFor=" let department of department_list" [value] ="department" [selected]="isSelected(department)">
 
           {{department.name}}
 
