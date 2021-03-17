@@ -246,6 +246,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   bprofileLoaded = false;
   showIncompleteButton = true;
   ordermanagertooltip = 'Ordermanager';
+  apptmnttooltip = 'Appointment manager';
+  genetaltooltip = 'Generl features';
+  paymenttooltip = 'Payment settings';
+  donationtooltip = 'Donation manager';
+  notificationtooltip = 'Notification settings';
+  miscellaneuostooltip = 'Miscellaneous';
+  customerstooltip = '';
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
