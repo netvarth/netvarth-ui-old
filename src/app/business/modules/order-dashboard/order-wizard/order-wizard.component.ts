@@ -960,11 +960,19 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.placeOrderDisabled = true;
     console.log(this.nextAvailableTime);
     const timeslot = this.nextAvailableTime.split(' - ');
+    if(this.orderType!=='SHOPPINGLIST'){
+      if(this.getOrderItems().length===0){
+        this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
+        this.placeOrderDisabled=false;
+        return; 
+      }
+    }
     if (this.choose_type === 'home') {
       console.log(this.added_address);
       if (this.added_address === null || this.added_address.length === 0) {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        this.placeOrderDisabled=false;
         return;
       } else {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
@@ -1092,7 +1100,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             'email': contact_email,
 
           };
-  
+    console.log(post_Data);
           this.confirmOrder(post_Data);
         }
         
