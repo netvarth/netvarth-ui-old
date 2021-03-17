@@ -543,28 +543,28 @@
                         <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                           <div>
                             <div [hidden]="added_address.length==0"
-                              class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4"
+                              class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card"
                               *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
                               [ngClass]="{'highlight': selectedRowIndex == i}">
-                              <div class="card card-custom gutter-b rounded-0 card-stretch p-2"
+                              <div class=" card-custom gutter-b rounded-0 card-stretch p-2"
                                 style="line-height:none">
                                 <div class="card-body text-left pl-5 p-0 font-addrss">
                                   <div class="adrs-data">
+                                      <div class="pull-right"(click)="deleteAddress(address, i)">
+                                          <i class="font-weight-bolder font-size-sm red icon-delete">
+                                          </i> </div>
                                     <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
                                     <div>{{address.address}}</div>
                                     <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
                                     <div> +91 {{address.phoneNumber}}</div>
                                     <div> {{address.email}}</div>
-                                    <div (click)="deleteAddress(address, i)">
-                                        <i class="font-weight-bolder font-size-sm red icon-delete">
-                                        </i> </div>
                                   </div>
 
                                 </div>
                               </div>
                             </div>
-                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
-                              <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                            <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card ">
+                              <div class="card-custom gutter-b rounded-0 card-stretch p-2">
                                 <div class="card-body text-center p-0">
                                   <button type="button" class="btn btn-success px-2 py-1" (click)="addAddress();">
                                     Add Address </button>
