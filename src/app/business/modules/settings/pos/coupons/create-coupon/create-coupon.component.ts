@@ -79,6 +79,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   weekdayError=false;
   startDaterequired=false;
   endDaterequired=false;
+  minbillamountError=false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -301,6 +302,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.startDaterequired=false;
     this.endDaterequired=false;
     this.weekdayError=false;
+    this.minbillamountError=false;
     if (this.step == 1) {
       let nameControl = this.couponForm.get('name');
       nameControl.markAsTouched();
@@ -319,15 +321,20 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }else if(this.step==2){
       const startDateVal=this.couponForm.get('couponRules').get('startDate').value;
       const endDateVal=this.couponForm.get('couponRules').get('endDate').value;
+      const minbillamountval=this.couponForm.get('couponRules').get('minBillAmount').value;
     if(startDateVal==null||startDateVal==undefined ||startDateVal==''){
       this.startDaterequired=true;
     }
     if(endDateVal==null||endDateVal==undefined||endDateVal=='' ){
       this.endDaterequired=true;
     }
+    if(minbillamountval==null||minbillamountval==''||minbillamountval==undefined){
+      this.minbillamountError=true;
+    }
      if(this.selday_arr.length==0){
        this.weekdayError=true;
      }
+     if(this.couponForm.get)
      if(this.startDaterequired==false &&this.endDaterequired===false && this.weekdayError===false){
        this.step=this.step+1;
      }
@@ -498,6 +505,9 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     const form_data = this.couponForm.value;
+    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased ) {
+      this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
+    }else{
     const timeRangeObject = [{
       'recurringType': 'Weekly',
       'repeatIntervals': this.selday_arr,
@@ -522,7 +532,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       this.couponBasedOnValue.push('CatalogueBased');
 
     }
-
+   
     if (form_data.couponRules.policies.isServiceBased) {
       form_data.couponRules.policies.services = this.services;
     }
@@ -531,10 +541,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       form_data.couponRules.policies.departments = this.departments;
 
     }
-    if (form_data.couponRules.policies.isServi) {
-      form_data.couponRules.policies.departments = this.departments;
-
-    }
+  
     if (form_data.couponRules.policies.isUser) {
       form_data.couponRules.policies.users = this.users;
 
@@ -565,6 +572,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     } else {
       this.createCoupon(form_data);
     }
+  }
   }
 
   createCoupon(data) {

@@ -223,9 +223,9 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                       <div class="col-xl-6">
-                        <!--begin::Input-->
+                       
                         <div class="form-group">
                           <label>Available timewindow(s)</label>&nbsp;
                           
@@ -236,7 +236,7 @@
                             Currently no timewindows are added&nbsp;
                             <button type="button" (click)="showTimewindow()" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
                               Add</button> 
-                            <!-- <a class="pointlist" (click)="showTimewindow()">Add</a> -->
+                        
                           </div>
                           <div *ngIf="timewindow_list.length > 0">
                             <ul *ngFor="let window of timewindow_list;let i = index">
@@ -249,9 +249,9 @@
                             </ul>
                           </div>
                         </div>
-                        <!--end::Input-->
+                       
                       </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
@@ -290,8 +290,12 @@
                           <label class="rupee-font">Minimum Bill Amount(₹)</label>
                           <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="minBillAmount"
                             placeholder="Enter minimum bill amount" formControlName="minBillAmount" />
-                        </div>
+                            <app-field-error-display [displayError]=minbillamountError
+                            errorMsg="Please enter value">
+                        </app-field-error-display>
                       </div>
+                          </div>
+                      
                       <div class="col-xl-6 col-lg-6 col-md-6" [hidden]="this.couponForm.get('calculationType').value=='Fixed'">
                         <div class="form-group">
                           <label class="rupee-font">Maximum Discount value (₹)</label>
