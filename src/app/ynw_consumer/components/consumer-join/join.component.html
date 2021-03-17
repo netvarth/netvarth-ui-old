@@ -1,14 +1,20 @@
 <!-- join Section starts -->
-<form [formGroup]="loginForm" class="login-form custom-login-form" novalidate (ngSubmit)="loginForm.valid &&
+<form [formGroup]="loginForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)">
-    <div class="mat-dialog-title" style="text-align: center;color: #3c8dbc !important; height: 40px !important;"><button
-            mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"><i class="fa fa-window-close"
-                aria-hidden="true"></i></button></div>
+    <div class="mat-dialog-title"><!--  style="text-align: center;color: #3c8dbc !important; height: 40px !important;"> -->
+        <div class="title" *ngIf="step==1 && !phoneExists">Log-In/Sign-Up</div>
+        <div class="title" *ngIf="step==1 && phoneExists">Log-In</div>
+        <div class="title" *ngIf="step==2">Forgot Password ?</div>
+        <div class="title" *ngIf="step==3 || step==4 || step==6 || step==7">Sign-Up</div>
+        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
     <!-- step 1 for mobile number entering  -->
     <div *ngIf="step==1" class="cust-loginpge-color">
         <div class="mat-dialog-content">
 
-            <div class="form-group">
+            <div class="form-group mobile-no">
                 <mat-label for="phone">Enter your Mobile Number</mat-label>
                 <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                     [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -64,27 +70,29 @@ onSubmit(loginForm.value)">
                 </app-field-error-display>
             </div> -->
             <!-- Signin Password -->
-            <div class="form-group" *ngIf="phoneExists">
+            <div class="form-group pwd" *ngIf="phoneExists">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">Password</mat-label>
 
                 <input type="password" class="form-control" id="password" formControlName="password" autocomplete="off"
                     (keyup)="handlekeyup($event)">
                 <!-- </mat-form-field> -->
-                <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
-                    errorMsg="Password is required">
-                </app-field-error-display>
+                <div style="display: flex; justify-content: space-between;">
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
+                        errorMsg="Password is required">
+                    </app-field-error-display>
+                    <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
+                </div>
             </div>
         </div>
         <div class="mat-dialog-actions">
-            <button class="cust-logpg-submt mgn-up-20" *ngIf="!phoneExists" type="submit" mat-button
+            <button class="cust-logpg-submt mgn-up-20 continue-button" *ngIf="!phoneExists" type="submit" mat-button
                 [disabled]="api_loading" (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
                 <span *ngIf="!api_loading">Continue</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
             </button>
-            <button class="cust-logpg-submt" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
+            <button class="cust-logpg-submt login-button" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
                 (click)="onSubmit(loginForm.value)">
                 <span *ngIf="!api_loading">Login</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
@@ -103,12 +111,12 @@ onSubmit(loginForm.value)">
 
 
     <!-- step 3 for otp -->
-    <div *ngIf="step==3" class="cust-loginpge-color">
+    <div *ngIf="step==3" class="cust-loginpge-color" style="overflow: auto !important;">
         <div class="mat-dialog-content">
-            <div class="mgn-bt-20">
+            <!-- <div class="mgn-bt-20">
                 <span class="fa fa-arrow-left pointer-cursor" (click)="cancelForgotPassword()"></span>
-            </div>
-            <div class="form-group" *ngIf="!resendViaEmail">
+            </div> -->
+            <div class="form-group fname" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">First Name *</mat-label>
 
@@ -122,7 +130,7 @@ onSubmit(loginForm.value)">
             })">
                 </app-field-error-display>
             </div>
-            <div class="form-group" *ngIf="!resendViaEmail">
+            <div class="form-group lname" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">Last Name *</mat-label>
 
@@ -137,7 +145,7 @@ onSubmit(loginForm.value)">
                 </app-field-error-display>
             </div>
 
-            <div class="form-group" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
+            <div class="form-group email" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">Email *</mat-label>
 
@@ -157,8 +165,14 @@ onSubmit(loginForm.value)">
                     (resendOTPEmail)="resendOTPEmail($event)">
                 </app-otp-form>
             </div> -->
-            <div class="">
-                <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
+            <div class="" style="display: flex !important; justify-content: space-between !important;">
+                <div class="mgn-bt-20 go-back" (click)="cancelForgotPassword()">
+                    <span>
+                        <i class="fa fa-chevron-left pointer-cursor"></i>
+                        Back
+                    </span>
+                </div>
+                <button class="cust-logpg-submt signup-button" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
                     <span *ngIf="!api_loading">Sign up</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
