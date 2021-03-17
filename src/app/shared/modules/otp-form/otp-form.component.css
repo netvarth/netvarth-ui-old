@@ -129,3 +129,7 @@
 .cust-loginpge-color.email-otp .resend-button:disabled {
     opacity: 0.7 !important;
 }
+
+.ynw-common-form.otp_scr .cust-loginpge-color .verify-button.margin-bottom-20 {
+    margin-bottom: 20px !important;
+}

@@ -216,11 +216,11 @@ onSubmit(loginForm.value)">
     <!-- step 7 for password cancel option -->
     <div class="example-container cust-loginpge-color" *ngIf="step==7">
         <mat-dialog-content class="pwd_cancel_scr">
-            <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
+            <p class="col-form-label no-padding" for="otp">{{close_message}}</p>
         </mat-dialog-content>
-        <mat-dialog-actions class="cust-logpge-txt-align">
-            <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
-            <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
+        <mat-dialog-actions class="cust-logpge-txt-align" style="display: flex !important; justify-content: space-between !important;">
+            <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2 cancel-button">{{cancel_btn_cap}}</button>
+            <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete ok-button">{{ok_btn_cap}}</button>
         </mat-dialog-actions>
     </div>
 </form>
