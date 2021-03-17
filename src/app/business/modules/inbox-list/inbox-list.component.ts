@@ -141,11 +141,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.msgHeight = screenHeight - 425;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
-        this.userHeight = screenHeight - 330;
+        this.userHeight = screenHeight - 360;
       } else {
         this.userHeight = screenHeight - 208;
       }
-      this.msgHeight = screenHeight - 374;
+      this.msgHeight = screenHeight - 410;
     }
   }
   ngOnDestroy() {

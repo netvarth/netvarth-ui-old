@@ -129,7 +129,6 @@ export class BusinessComponent implements OnInit {
     } else {
       this.bodyHeight = screenHeight - 120;
     }
-    console.log(this.bodyHeight);
   }
   ngOnDestroy() {
     if (this.subscription) {
