@@ -1,6 +1,6 @@
 
     <h1 class="mat-dialog-title">  Consumer Labels
-      <button  mat-dialog-close  tabindex="-1" style="float:right;">
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
@@ -9,7 +9,7 @@
       <!-- <div *ngIf="consumer_labels.length>0"> -->
       <mat-selection-list #labels [(ngModel)]="selectedLabels" (ngModelChange)="onLabelChange($event)" >
 
-        <mat-list-option *ngFor=" let label of consumer_labels" [value] ="label" [selected]="isSelected(label)">
+        <mat-list-option checkboxPosition="before" *ngFor=" let label of consumer_labels" [value] ="label" [selected]="isSelected(label)">
 
           {{label.displayName}}
 

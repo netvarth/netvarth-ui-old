@@ -1,18 +1,21 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+
 
 @Component({
   selector: 'app-consumer-group-dialog',
   templateUrl: './consumer-group-dialog.component.html',
   styleUrls: ['./consumer-group-dialog.component.css']
 })
-export class ConsumerGroupDialogComponent implements OnInit {
+export class ConsumerGroupDialogComponent implements OnInit,OnDestroy {
 
   loading=true;
   former_chosen_consumerGrps: any = [];
   consumer_group: any = [];
   selectedGroups: any = [];
+  subscription:Subscription;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerGroupDialogComponent>,
@@ -27,10 +30,12 @@ export class ConsumerGroupDialogComponent implements OnInit {
     this.getConsumerGroups();
 
   }
-
+ ngOnDestroy(){
+this.subscription.unsubscribe();
+ }
   getConsumerGroups() {
 
-    this.provider_services.getCustomerGroup().subscribe((data: any) => {
+    this.subscription=this.provider_services.getCustomerGroup().subscribe((data: any) => {
       this.consumer_group = data;
       console.log(this.consumer_group.length);
       this.loading =false;

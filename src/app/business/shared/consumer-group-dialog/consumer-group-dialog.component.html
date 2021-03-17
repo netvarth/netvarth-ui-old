@@ -1,6 +1,6 @@
 
     <h1 class="mat-dialog-title">  Consumer Groups
-      <button  mat-dialog-close  tabindex="-1" style="float:right;">
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
@@ -9,7 +9,7 @@
      <div> 
       <mat-selection-list #groups [(ngModel)]="selectedGroups" (ngModelChange)="onGroupChange($event)" >
 
-        <mat-list-option *ngFor=" let group of consumer_group" [value] ="group" [selected]="isSelected(group)">
+        <mat-list-option checkboxPosition="before" *ngFor=" let group of consumer_group" [value] ="group" [selected]="isSelected(group)">
 
           {{group.groupName}}
 

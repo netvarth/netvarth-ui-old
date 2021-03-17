@@ -1,18 +1,20 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-item-list-dialog',
   templateUrl: './item-list-dialog.component.html',
   styleUrls: ['./item-list-dialog.component.css']
 })
-export class ItemListDialogComponent implements OnInit {
+export class ItemListDialogComponent implements OnInit,OnDestroy {
 
   former_chosen_items: any = [];
   item_list: any = [];
   selectedItems: any = [];
   loading=true;
+  subscription:Subscription;
   constructor(public dialogRef: MatDialogRef<ItemListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
@@ -27,7 +29,7 @@ export class ItemListDialogComponent implements OnInit {
   }
 
   getItems() {
-    this.provider_services.getProviderItems()
+  this.subscription=  this.provider_services.getProviderItems()
       .subscribe(data => {
         this.item_list = data;
         this.loading=false;
@@ -36,6 +38,9 @@ export class ItemListDialogComponent implements OnInit {
   }
   close() {
     this.dialogRef.close();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   onItemChange(event) {
     console.log(event);
