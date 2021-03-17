@@ -57,7 +57,7 @@ export class ForgotPasswordComponent {
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
-  phoneError: string;
+  phoneError: string; 
   constructor(
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

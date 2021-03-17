@@ -19,7 +19,7 @@ import { SubSink } from 'subsink';
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.css']
+  styleUrls: ['./join.component.css'] 
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;

@@ -111,12 +111,12 @@ onSubmit(loginForm.value)">
 
 
     <!-- step 3 for otp -->
-    <div *ngIf="step==3" class="cust-loginpge-color">
+    <div *ngIf="step==3" class="cust-loginpge-color" style="overflow: auto !important;">
         <div class="mat-dialog-content">
-            <div class="mgn-bt-20">
+            <!-- <div class="mgn-bt-20">
                 <span class="fa fa-arrow-left pointer-cursor" (click)="cancelForgotPassword()"></span>
-            </div>
-            <div class="form-group" *ngIf="!resendViaEmail">
+            </div> -->
+            <div class="form-group fname" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">First Name *</mat-label>
 
@@ -130,7 +130,7 @@ onSubmit(loginForm.value)">
             })">
                 </app-field-error-display>
             </div>
-            <div class="form-group" *ngIf="!resendViaEmail">
+            <div class="form-group lname" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">Last Name *</mat-label>
 
@@ -145,7 +145,7 @@ onSubmit(loginForm.value)">
                 </app-field-error-display>
             </div>
 
-            <div class="form-group" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
+            <div class="form-group email" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
                 <!-- <mat-form-field> -->
                 <mat-label for="password">Email *</mat-label>
 
@@ -165,8 +165,14 @@ onSubmit(loginForm.value)">
                     (resendOTPEmail)="resendOTPEmail($event)">
                 </app-otp-form>
             </div> -->
-            <div class="">
-                <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
+            <div class="" style="display: flex !important; justify-content: space-between !important;">
+                <div class="mgn-bt-20 go-back" (click)="cancelForgotPassword()">
+                    <span>
+                        <i class="fa fa-chevron-left pointer-cursor"></i>
+                        Back
+                    </span>
+                </div>
+                <button class="cust-logpg-submt signup-button" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
                     <span *ngIf="!api_loading">Sign up</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
