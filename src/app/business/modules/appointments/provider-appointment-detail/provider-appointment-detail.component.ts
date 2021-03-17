@@ -128,7 +128,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
-    console.log(this.check_in_statuses);
     this.getPos();
     this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');

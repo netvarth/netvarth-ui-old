@@ -142,7 +142,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     connect(tokenObj) {
         console.log(tokenObj.tokenId);
-        this.twilioService.cameraMode = 'user';
+        // this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
             
             name: tokenObj.roomName,
@@ -194,11 +194,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Method to switch from and back cameras
      */
     switchCamera() {
-        if (this.twilioService.cameraMode === 'user') {
-            this.twilioService.switchCamera('environment');
-        } else {
-            this.twilioService.switchCamera('user');
-        }
+        this.twilioService.switchCamera();
     }
     /**
      * Method to enter to a room. which will invoke the connect method

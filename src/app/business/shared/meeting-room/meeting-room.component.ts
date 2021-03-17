@@ -101,48 +101,49 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         const _this = this;
         _this.meetService.isConsumerReady(_this.uuid)
             .subscribe(data => {
-            //    this.result = data;
-            //    console.log(this.result)            
-               if(data){
-                   _this.loading = false;
-                   _this.meetObj = data;
-                   _this.consumerReady = true;
-                   console.log(this.meetObj);
-                   _this.status = 'Ready..'
-                if (_this.cronHandle) {
-                    _this.cronHandle.unsubscribe();  
-                }                               
-               } else {
-                   _this.loading = false;
+                //    this.result = data;
+                //    console.log(this.result)            
+                if (data) {
+                    _this.loading = false;
+                    _this.meetObj = data;
+                    _this.consumerReady = true;
+                    console.log(this.meetObj);
+                    _this.status = 'Ready..';
+                    if (_this.cronHandle) {
+                        _this.cronHandle.unsubscribe();
+                    }
+                } else {
+                    _this.loading = false;
                     _this.consumerReady = false;
                     _this.meetObj = null;
                     _this.status = 'Waiting for the consumer...'
-               }
-        },  error => {
-            _this.loading = false;
-            _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-            _this.cronHandle.unsubscribe();
-            setTimeout(() => {
-                _this._location.back();
-            }, 3000);
-        });
+                }
+            }, error => {
+                _this.loading = false;
+                _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                _this.cronHandle.unsubscribe();
+                setTimeout(() => {
+                    _this._location.back();
+                }, 3000);
+            });
     }
 
     /**
      * executes after the view initialization
      */
     ngAfterViewInit() {
+        console.log("ngAfterViewInit");
         this.twilioService.previewContainer = this.previewContainer;
-        this.twilioService.previewMedia();  
+        this.twilioService.previewMedia();
     }
     /**
      * invokes when the page destroys
      */
-    ngOnDestroy() { 
+    ngOnDestroy() {
         if (this.cronHandle) {
             this.cronHandle.unsubscribe();
         }
-        this.disconnect(); 
+        this.disconnect();
     }
     /**
      * Method to exit from a meeting
@@ -158,8 +159,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         //     this.twilioService.activeRoom = null;
         //     this._location.back();
         // } else {
-            this.twilioService.disconnect();
-            this._location.back();
+        this.twilioService.disconnect();
+        this._location.back();
         // }
     }
 
@@ -193,7 +194,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     connect(tokenObj) {
         console.log(tokenObj.tokenId);
-        this.twilioService.cameraMode = 'user';
+        // this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
             audio: true,
@@ -240,14 +241,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     startVideo() {
         this.twilioService.enableVideo();
     }
-/**
- * Method to switch both from and back cameras
- */
+    /**
+     * Method to switch both from and back cameras
+     */
     switchCamera() {
-        if (this.twilioService.cameraMode === 'user') {
-            this.twilioService.switchCamera('environment');
-        } else {
-            this.twilioService.switchCamera('user');
-        }
+        this.twilioService.switchCamera();
+        // // if (this.twilioService.cameraMode === 'user') {
+        //     this.twilioService.switchCamera('environment');
+        // } else {
+        //     this.twilioService.switchCamera('user');
+        // }
     }
 }
