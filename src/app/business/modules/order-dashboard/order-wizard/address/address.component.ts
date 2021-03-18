@@ -27,12 +27,12 @@ export class AddressComponent implements OnInit {
   api_success = null;
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
-    public dialogRef: MatDialogRef<AddressComponent>,
+    private dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices,
+    private provider_services: ProviderServices,
     private snackbarService: SnackbarService
   ) {
     this.address_title = 'Add New Address';

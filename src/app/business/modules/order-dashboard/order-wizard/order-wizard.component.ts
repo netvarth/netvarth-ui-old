@@ -22,6 +22,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
  
 
 
@@ -168,6 +169,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   iscustomerEmailPhone=false;
   order_Mode;
   searchby = '';
+  contactDialogRef: MatDialogRef<ContactInfoComponent, any>;
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -639,15 +641,35 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.step = this.step - 1;
   }
   increment(item) {
-    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo)){
-      this.snackbarService.openSnackBar('Customer needs email and Phone # for taking order please update', { 'panelClass': 'snackbarerror' });
+    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo ||this.customer_data.phoneNo.includes('*'))){
+     this.collectContactInfo();
     }else{
       this.iscustomerEmailPhone=true;
       this.addToCart(item);
     }
     
   }
+  collectContactInfo() {
+    this.contactDialogRef = this.dialog.open(ContactInfoComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        phone: this.customer_data.phoneNo,
+        email: this.customer_data.email
+       
 
+      }
+    });
+    this.contactDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
+      if(result){
+        this.customer_data.phoneNo=result.phone;
+        this.customer_data.email=result.email;
+      }
+    });
+  }
   decrement(item) {
     this.removeFromCart(item);
   }

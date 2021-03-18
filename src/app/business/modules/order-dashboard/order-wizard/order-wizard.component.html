@@ -140,9 +140,7 @@
                             {{countryCode}} {{customer_data.phoneNo}}</div>
                           <div *ngIf="customer_email"> <i class="fa fa-envelope" aria-hidden="true"></i>
                             {{customer_email}}</div>
-                          <button class="pull-left btn btn-sm btn-primary"
-                            [hidden]="customer_data.phoneNo&&customer_data.email"
-                            (click)="updateCustomer(customer_data.id);">Update</button>
+                         
                         </div>
                       </div>
                     </div>

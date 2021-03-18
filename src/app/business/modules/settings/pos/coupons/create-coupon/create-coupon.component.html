@@ -334,9 +334,9 @@
                                 (click)="openServiceDialog()">Services</button>
 
                             </div>
-                            <p *ngIf="services.length>0">
+                            <a href="javascript:void(0);" *ngIf="services.length>0" (click)="openServiceDialog()">
                               {{ services.length }} Services Selected
-                            </p>
+                            </a>
                           </div>
                         </div>
 
@@ -360,9 +360,9 @@
                                   (click)="openDepartmentDialog()">Departments</button>
 
                               </div>
-                              <p *ngIf="departments.length>0">
+                              <a href="javascript:void(0);" *ngIf="departments.length>0" (click)="openDepartmentDialog()">
                                 {{ departments.length }} Departments Selected
-                              </p>
+                              </a>
                             </div>
                           </div>
 
@@ -386,9 +386,9 @@
                                     (click)="openUserDialog()">Users</button>
 
                                 </div>
-                                <p *ngIf="users.length>0">
+                                <a href="javascript:void(0);" *ngIf="users.length>0"   (click)="openUserDialog()">
                                   {{ users.length }} Users Selected
-                                </p>
+                                </a>
                               </div>
                             </div>
 
@@ -414,9 +414,9 @@
                                     (click)="openCustomerLabelDialog()">Consumer Labels</button>
 
                                 </div>
-                                <p *ngIf="customer_labels.length>0">
+                                <a href="javascript:void(0);" *ngIf="customer_labels.length>0" (click)="openCustomerLabelDialog()">
                                   {{ customer_labels.length }} Labels Selected
-                                </p>
+                                </a>
                               </div>
                             </div>
 
@@ -444,9 +444,9 @@
                                   (click)="openCustomerGroupDialog()">Consumer Groups</button>
 
                               </div>
-                              <p *ngIf="customer_groups.length>0">
+                              <a href="javascript:void(0);" *ngIf="customer_groups.length>0"   (click)="openCustomerGroupDialog()">
                                 {{ customer_groups.length }} Groups Selected
-                              </p>
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -505,9 +505,9 @@
                                 (click)="openItemDialog()">Items</button>
 
                             </div>
-                            <p *ngIf="items.length>0">
+                            <a href="javascript:void(0);" *ngIf="items.length>0"  (click)="openItemDialog()">
                               {{ items.length }} Items Selected
-                            </p>
+                            </a>
                           </div>
                         </div>
                       </div>
