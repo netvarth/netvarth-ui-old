@@ -398,7 +398,9 @@
                                 (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
                                 width="50" height="50" id="catalog-image1"
                                 class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
-                        <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
+                                <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
+                                    {{activeCatalog.catalogDesc}}</p>
+                                <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
                     </div>
                     <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 catalog-icons no-padding-small disp-flex">
                         <div class="mgn-rt-10 disp-flex"
