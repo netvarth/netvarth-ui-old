@@ -181,13 +181,18 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngFor="let coupon of bill_data.providerCoupon">
+                                                                                    *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
-                                                                                            {{coupon.name}}
+                                                                                            {{coupon.key}}
                                                                                         </div>
-                                                                                        <div class="price rupee-font">(-){{coupon.couponValue |
-                                                currency:'&#8377; '}}</div>
+                                                                                        <div class="price rupee-font">
+                                                                                            <span>(-)</span>
+                                                                                            <span
+                                                                                                (click)="showJCCouponNote(coupon)"
+                                                                                                [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
+																		currency:'&#8377; '}}</span>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
