@@ -81,3 +81,8 @@ color: #0707eca1 !important;
   color: #aaa !important;
   font-size: 0.85rem !important;
 }
+.orderItems .card{
+  min-width: 350px !important;
+  min-height: 400px !important;
+  max-width: 350px !important;
+  }
