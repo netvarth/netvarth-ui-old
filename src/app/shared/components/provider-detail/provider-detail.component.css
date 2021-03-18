@@ -979,9 +979,9 @@ ul.details.badges li {
 /* cover foto */
 
 .bus-page .cvr-ht {
-  height: 300px;
+  height: 312px;
   background-repeat: no-repeat;
-  background-size: 100% 300px;
+  background-size: 100% 312px;
 }
 
 @media(max-width: 575px) {
