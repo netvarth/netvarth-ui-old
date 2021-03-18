@@ -369,9 +369,18 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
     } else if (startOrend === 1) {
       this.endDaterequired=false;
-      if (new Date(sDate) > new Date(eDate)) {
+      console.log(moment(sDate));
+      console.log(moment(eDate));
+      if (sDate!=null && moment(new Date(sDate)).isSame(moment(), 'day')) {
+        return this.startdateError = false;
+      }
+      if (moment(new Date(sDate)).isAfter( new Date(eDate))) {
+        return this.startdateError = true;
+      } 
+      if (moment(new Date(eDate)).isBefore( new Date(sDate))) {
+        console.log('greater');
         return this.enddateError = true;
-      } else {
+      }else {
         return this.enddateError = false;
       }
 
