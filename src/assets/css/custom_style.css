@@ -14078,3 +14078,13 @@ width: 40px !important;
   width: 300px;
   margin: auto;
 }
+.inbox-nullimg {
+    content: url(../images/inbox.png);
+    margin-left: auto;
+    margin-right: auto;
+}
+.inbox-nullimg-user {
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
+}

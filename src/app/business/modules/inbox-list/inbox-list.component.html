@@ -134,8 +134,14 @@
                             <!--end::Aside-->
                             <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
                                 *ngIf="selectedCustomer == '' && !small_device_display">
-                                <div class="inbox-img" [ngStyle]="{'height.vh': 40}"></div>
+                                <ng-container *ngIf="msgDisplay=='user' && selectedUser.userType !== 'PROVIDER'">
+                                <div class="inbox-nullimg" [ngStyle]="{'height.vh': 40}"></div>
+                                <div class="null-text">Select a provider to start messaging</div>
+                            </ng-container>
+                            <ng-container *ngIf="msgDisplay=='all'">
+                                <div class="inbox-nullimg-user" [ngStyle]="{'height.vh': 40}"></div>
                                 <div class="null-text">Select a chat to start messaging</div>
+                            </ng-container>
                             </div>
                             <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"

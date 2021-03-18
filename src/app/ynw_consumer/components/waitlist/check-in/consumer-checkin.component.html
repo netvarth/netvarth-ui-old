@@ -852,7 +852,7 @@
                                     <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
-                                        <div class="confirm-head mgn-up-20">Confirm your token details</div>
+                                        <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ? 'token': 'check-in' }} details</div>
                                         <table class="bookdetails">
                                             <tbody>
                                                 <tr *ngIf="!sel_ser_det.provider">
