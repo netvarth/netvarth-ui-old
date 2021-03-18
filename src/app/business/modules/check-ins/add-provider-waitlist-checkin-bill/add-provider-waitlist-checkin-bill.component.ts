@@ -1416,8 +1416,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
   }
 
-  confirmSettleBill() {
-    if (this.amountpay > 0 || this.bill_data.amountDue < 0) {
+  confirmSettleBill(amount) {
+    if (amount.amountDue > 0 || this.bill_data.amountDue < 0) {
       let msg = '';
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';

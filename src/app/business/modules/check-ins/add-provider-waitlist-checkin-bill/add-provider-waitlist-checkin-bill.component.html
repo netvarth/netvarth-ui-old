@@ -1236,11 +1236,14 @@
 									<div
 										class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
 									
-										<div class="font-weight-boldest font-size-h5">Amount Due</div>
+										<div *ngIf="bill_data.amountDue >= 0" class="font-weight-boldest font-size-h5">Amount Due</div>
+										<div  *ngIf="bill_data.amountDue < 0" class="font-weight-boldest font-size-h5">Refund</div>
 										<div class="text-right d-flex flex-column">
-											<span *ngIf="!showPayWorkBench"
+											<span *ngIf="!showPayWorkBench && bill_data.amountDue >= 0"
 												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue
 												| currency:'&#8377;'}}</span>
+											<span *ngIf="!showPayWorkBench && bill_data.amountDue < 0"
+												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{refund_value | currency:'&#8377;'}}</span>
 
 											<span *ngIf="showPayWorkBench"
 												class="font-size-sm line-height-sm rupee-font">&#8377;
@@ -1264,7 +1267,7 @@
 										<button type="button"
 											class="btn btn-light-success  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth"
 											*ngIf="bill_data.billStatus!='Settled'"
-											(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+											(click)="confirmSettleBill(bill_data)">{{settle_bill_cap}}</button>
 										<button type="button"
 											class="full_wdth btn btn-light-info  font-weight-bolder mr-3 my-1 lh-p8 fnt-p8"
 											(click)="printMe()" *ngIf="bill_data.billStatus=='Settled'">Print</button>
