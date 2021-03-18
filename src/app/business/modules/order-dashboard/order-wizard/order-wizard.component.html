@@ -225,7 +225,7 @@
                                 </div>
                                   <div>
                                     <span class="strikeMe rupee-font font-weight-bolder " *ngIf="item.item.showPromotionalPrice" > {{ item.item.price  | currency:'&#8377;'}}&nbsp;&nbsp;</span> 
-                                   <span class="font-size-h6 text-muted font-weight-bolder rupee-font  ">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price)  }}</span>
+                                   <span class="font-size-h6 text-muted font-weight-bolder rupee-font  "> {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price)  | currency:'&#8377;' }}</span>
                                   </div>
                 
                               
