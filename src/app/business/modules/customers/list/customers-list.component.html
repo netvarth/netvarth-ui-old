@@ -201,8 +201,8 @@
           <div class="tab-content">
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                <thead *ngIf="customers.length > 0">
+              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center" *ngIf="customers.length > 0">
+                <thead>
                   <tr class="text-left text-uppercase">
                     <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
                       <span class="text-dark-75">
@@ -316,10 +316,12 @@
               </table>
               <div class="no-customer"
                 *ngIf="!apiloading && customers.length === 0 && !filterapplied && selectedGroup == 'all'">
+                <div>
                 You don't have any {{customer_label}}s
                 <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create {{customer_label
                   |
                   capitalizeFirst}}</button>
+                </div>
               </div>
               <div
                 *ngIf="(!apiloading && customers.length === 0 && filterapplied) || (!apiloading && customers.length === 0 && selectedGroup !== 'all')">

@@ -753,10 +753,6 @@ ul.bus-actions li a.lnk {
   font-weight: 700 !important;
   /* text-transform: uppercase !important; */
 }
-
-.c-checkin-new .lnk.action {
-  font-size: 0.8rem !important;
-}
 .c-checkin-new .btns .lnk.action{
   font-size: 0.8rem !important;
   color: #3c8dbc !important;
@@ -779,7 +775,7 @@ ul.bus-actions li a.lnk {
   font-size: 0.9rem !important;
 }
 .c-checkin-new .phonevallabel, .c-checkin-new .emailvallabel {
-  font-size:0.75rem !important;
+  font-size:0.85rem !important;
 }
 .c-checkin-new .card-title.serv-time {
   /* line-height: 40px !important; */
@@ -1188,7 +1184,7 @@ height: 150px !important;
     margin-bottom: 5px;
     color: #919090;
     font-style: italic;
-    font-size: 0.75rem !important;
+    font-size: 0.85rem !important;
    }
    .contact-section .wtsapaud-icon{
     width: 25px !important;
@@ -1460,6 +1456,13 @@ body.modal-open {
   .wizard-mgn-30 {
     margin-bottom: 30px;
   }
+  .wizard-nav {
+    margin-top: 50px;
+  }
+  .right-part {
+    min-height: 650px;
+    border-left: 1px solid #EBEDF3 !important;
+  }
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
   margin-left: 1.5rem !important;
@@ -1467,8 +1470,4 @@ body.modal-open {
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
   display: none !important;
-}
-.right-part {
-  min-height: 650px;
-  border-left: 1px solid #EBEDF3 !important;
 }

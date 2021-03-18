@@ -14066,8 +14066,9 @@ width: 40px !important;
 }
 .booking-img {
     content: url(../images/bookingwindow.png);
-    width: 300px;
+    width: 500px;
     margin: auto;
+    margin-top: 50px;
 }
 .wizard-nav {
   justify-content: center;

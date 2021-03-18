@@ -142,13 +142,13 @@
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                 </div>
-                                                                <h6 class="card-title service">
+                                                                <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class="mgn-bt-15"
+                                                                <div class=""
                                                                     style="font-size: 1rem; float: left;"
                                                                     *ngIf="sel_ser_det.price && type != 'reschedule'">
-                                                                    <p class="module-nomargin line-clamp"
+                                                                    <p class="module-nomargin line-clamp no-margin"
                                                                         *ngIf="sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
@@ -156,8 +156,7 @@
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
                                                                 <div class="">
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="callingmode mgn-lt-10 mgn-up-10"
+                                                                    <div class="callingmode mgn-lt-10"
                                                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'reschedule'">
                                                                         <div class="mgn-bt-10 mgn-up-5">
                                                                             <div class=""
@@ -233,7 +232,7 @@
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="card-body no-padding">
-                                                                    <h6 class="card-title service">
+                                                                    <h6 class="card-title service mgn-bt-10">
                                                                         {{waitlist_for[0].firstName |
                                                                         capitalizeFirst}}
                                                                         {{waitlist_for[0].lastName |
