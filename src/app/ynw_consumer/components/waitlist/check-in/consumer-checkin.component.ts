@@ -357,10 +357,14 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         this.subs.sink= this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
-                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
-                        this.consumerNoteAndFileSave(this.rescheduleUserId);
+                    if (this.selectedMessage.files.length > 0) {
+                        const uid = [];
+                        uid.push(this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(uid);
                     }
+                    setTimeout(() => {
                     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
+                    }, 500);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -708,10 +712,12 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         this.uuidList.push(retData[key]);
                     }
                 });
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(this.uuidList);
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(this.uuidList[0]);
                 } else {
-
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment();
                     } else {
@@ -721,11 +727,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         } else {
                             multiple = false;
                         }
+                        setTimeout(() => {
                         this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                    }
+                    }, 500);
                 }
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList);
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -1081,6 +1086,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
+        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1091,9 +1097,11 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
         for (const uuid of uuids) {
+            console.log(uuid);
             this.subs.sink=this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
                 .subscribe(
                     () => {
+                        console.log(true);
                     },
                     error => {
                         this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1702,7 +1710,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     getAttachLength() {
         let length = this.selectedMessage.files.length;
-        if (this.type == 'waitlistreschedule') {
+        if (this.type == 'waitlistreschedule' && this.waitlist && this.waitlist.attchment && this.waitlist.attchment[0] && this.waitlist.attchment[0].thumbPath) {
             length = length + this.waitlist.attchment.length;
         }
         return length;
