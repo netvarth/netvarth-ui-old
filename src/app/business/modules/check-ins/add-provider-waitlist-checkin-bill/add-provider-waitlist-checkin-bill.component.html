@@ -684,7 +684,7 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-												<span *ngIf="discounts.length >0 && showDiscountSection">Apply
+												<span *ngIf="discounts.length >0 && showDiscountSection">Apply Order 
 													Discount</span>
 												<span *ngIf="coupons.length >0 && showPCouponSection">Apply
 													Coupon</span>
@@ -1016,8 +1016,11 @@
 																				</ng-container>
 																			</span>
 																		</td>
-																		<td class="fnt-p7 pr-0 pt-4  text-center">
-																			{{payment.paymentGateway}}</td>
+																		<!-- <td class="fnt-p7 pr-0 pt-4  text-center">
+																			{{payment.paymentGateway}}</td> -->
+																		<td *ngIf="payment.paymentGateway" class="fnt-p7 pr-0 pt-4  text-center">{{payment.paymentGateway}}</td>
+																		<td  *ngIf="!payment.paymentGateway" class="fnt-p7 pr-0 pt-4  text-center">Nill</td>
+		
 																		<td class="fnt-p7 pr-0 pt-4  text-center">
 																			<span class="date">{{payment.paymentOn |
 																				date:'mediumDate'}}</span> <br>
