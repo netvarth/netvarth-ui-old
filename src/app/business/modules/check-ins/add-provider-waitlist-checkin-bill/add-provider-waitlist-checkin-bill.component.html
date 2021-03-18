@@ -368,7 +368,11 @@
 											<td class="text-right pt-7"
 												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 											                     ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-												<span class="rupee-font">{{(service.quantity * service.price) |
+												<span class="rupee-font">
+														<sup
+														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+														*ngIf="service.GSTpercentage > 0">Tax</sup>
+														{{(service.quantity * service.price) |
 													currency:'&#8377;'}}</span>
 
 												<button class="mb-1 top_n10" mat-icon-button [matMenuTriggerFor]="tdmenu"
@@ -415,7 +419,11 @@
 											<td class="text-right pt-7 pr-0"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-												<span class="rupee-font">{{(service.quantity *
+												<span class="rupee-font">
+														<sup
+														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+														*ngIf="service.GSTpercentage > 0">Tax</sup>
+														{{(service.quantity *
 													service.price) |
 													currency:'&#8377;'}}</span>
 												<button class="mb-1 top_n10" mat-icon-button [matMenuTriggerFor]="tdmenu"
@@ -1025,7 +1033,7 @@
 																		<td class="fnt-p7 pr-0 pt-4  text-center">
 																			<button type="button"
 																				class="btn btn-primary btn-square lh-p4  font-weight-bold font-size-xs"
-																				*ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'"
+																				*ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && !payment.fullyRefunded && payment.paymentPurpose == 'prePayment'"
 																				(click)="applyRefund(payment)">Refund</button>
 																		</td>
 																	</tr>
@@ -1131,10 +1139,10 @@
 								<!-- end -->
 
 
-								<div class="hr_content" *ngIf="bill_data.amountDue >= 0">
+								<!-- <div class="hr_content" *ngIf="bill_data.amountDue >= 0">
 									<div class="flx_1">Amount Due</div>
 									<div class="rupee-font">{{bill_data.amountDue | currency:'&#8377;'}}</div>
-								</div>
+								</div> -->
 								<div class="hr_content" *ngIf="bill_data.amountDue < 0">
 									<div class="flx_1">Refund</div>
 									<div class="rupee-font">{{refund_value | currency:'&#8377;'}}</div>
