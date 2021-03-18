@@ -100,6 +100,7 @@ export class BusinessComponent implements OnInit {
           this.smallMenuSection = message.value;
           break;
       }
+      this.onResize();
     });
   }
   private _navigationInterceptor(event: RouterEvent): void {
@@ -124,10 +125,14 @@ export class BusinessComponent implements OnInit {
   onResize() {
     this.screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-    if (this.screenWidth <= 991) {
-      this.bodyHeight = screenHeight - 160;
+    if (this.iswiz) {
+      this.bodyHeight = screenHeight - 50;
     } else {
-      this.bodyHeight = screenHeight - 120;
+      if (this.screenWidth <= 991) {
+        this.bodyHeight = screenHeight - 160;
+      } else {
+        this.bodyHeight = screenHeight - 120;
+      }
     }
   }
   ngOnDestroy() {
@@ -136,7 +141,6 @@ export class BusinessComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.onResize();
     this.getBusinessProfile();
     this.getLicenseMetaData();
     this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');

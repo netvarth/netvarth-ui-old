@@ -127,8 +127,12 @@ textarea {
     width: 20px !important;
 }
 .minhgt-80 {
-    min-height: 70vh;
+    min-height: 80vh;
 }
 .panel {
     margin-bottom: 0px !important;
+}
+.no-msg-section {
+    margin: auto;
+    text-align: center;
 }

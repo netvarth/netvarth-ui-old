@@ -150,7 +150,7 @@
 <div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-black" *ngIf="!iswiz">
   <!--begin::Logo-->
   <a class="img-section" (click)="gotoActiveHome()">
-    <img alt="Logo" src="assets/images/jaldee-businesslogo.png"/>
+    <img alt="Logo" src="assets/images/jaldee-businesslogo.png" />
   </a>
   <!--end::Logo-->
   <!--begin::Toolbar-->
@@ -250,7 +250,8 @@
             </a>
           </li>
           <li class="footer">
-            <a class="pointer-cursor" routerLink="license" (click)="actionPerformed('license')">Go to subscription plan section</a>
+            <a class="pointer-cursor" routerLink="license" (click)="actionPerformed('license')">Go to subscription plan
+              section</a>
           </li>
         </ul>
       </div>
@@ -258,7 +259,8 @@
     <div class="dropdown pointer-cursor" (click)="userPopup()">
       <div id="kt_quick_user_toggle" class="topbar-item">
         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2">
-          <span class="bname font-weight-bolder font-size-base d-none d-md-inline mr-3">{{bname}}</span><span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
+          <span class="bname font-weight-bolder font-size-base d-none d-md-inline mr-3">{{bname}}</span><span
+            class="symbol symbol-lg-35 symbol-25 symbol-light-success">
             <span class="symbol-label font-size-h5 font-weight-bold">{{getUserFirstLetter()}}</span></span>
         </div>
       </div>
@@ -303,15 +305,6 @@
           {{bsubsector}}
         </div>
         <div class="navi mt-2">
-          <!-- <span class="navi-item">
-            <span class="navi-link p-0 pb-2">
-              <span class="navi-icon mr-1">
-                <span class="svg-icon svg-icon-lg svg-icon-primary">
-                  <i class="fa fa-mobile" aria-hidden="true"></i>
-                </span> </span>
-              <span class="navi-text text-muted"> {{phoneNumber}}</span>
-            </span>
-          </span> -->
           <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" (click)="doLogout()">Sign Out</a>
         </div>
       </div>

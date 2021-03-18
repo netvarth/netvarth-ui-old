@@ -80,6 +80,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showEnquiry = false;
   enquiries: any = [];
   qParams;
+  customer_label;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -101,6 +102,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -121,7 +123,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
       );
     this.loading = true;
-    this.onResize();
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -141,8 +142,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.msgHeight = screenHeight - 425;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
-        this.userHeight = screenHeight - 340;
-        console.log(this.userHeight);
+        this.userHeight = screenHeight - 264;
       } else {
         this.userHeight = screenHeight - 208;
       }
@@ -229,6 +229,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         group[key] = group2;
       });
       this.userWithMsgCount = Object.keys(group).length;
+      this.onResize();
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
@@ -585,5 +586,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getMsgType(msg) {
     return 'chat';
+  }
+  gotoCustomers() {
+    this.router.navigate(['/provider/customers']);
   }
 }

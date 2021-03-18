@@ -33,8 +33,11 @@
                             </div>
                         </div>
                         <!--end::Enquiry-->
-                        <div class="d-flex flex-row minhgt-80" *ngIf="!showEnquiry && messages.length==0">
-                            No messages
+                        <div class="d-flex flex-row minhgt-60" *ngIf="!showEnquiry && messages.length==0">
+                            <div class="no-msg-section">
+                                <div class="nomsg-img mgn-bt-20"></div>
+                                Start messaging to {{customer_label}}s <a class="underline" (click)="gotoCustomers()"> Go to patients </a>
+                            </div>
                         </div>
                         <!--begin::Chat-->
                         <div class="d-flex flex-row" *ngIf="!showEnquiry && messages.length>0">

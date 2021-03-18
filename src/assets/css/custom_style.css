@@ -14058,9 +14058,6 @@ width: 40px !important;
 .wizardstyle {
   margin: 0px !important;
 }
-.wizardstyle .body-section {
-  height: 93vh;
-}
 .wizardstyle app-footernew .main-footer {
   margin-left: 0px !important;
 }
@@ -14075,4 +14072,9 @@ width: 40px !important;
 .wizard-nav {
   justify-content: center;
   display: flex;
+}
+.nomsg-img {
+  content: url(../images/Nomsgs.svg);
+  width: 300px;
+  margin: auto;
 }

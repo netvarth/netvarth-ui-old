@@ -199,6 +199,10 @@ textarea {
 .cont4 {
     width: 15%;
 }
-.minhgt-80 {
-    min-height: 70vh;
+.minhgt-60 {
+    min-height: 60vh;
+}
+.no-msg-section {
+    margin: auto;
+    text-align: center;
 }
