@@ -505,9 +505,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     const form_data = this.couponForm.value;
-    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased ) {
-      this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
-    }else{
+   if(this.checkpoliciesEntered(form_data)){
+  
     const timeRangeObject = [{
       'recurringType': 'Weekly',
       'repeatIntervals': this.selday_arr,
@@ -567,12 +566,14 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     delete form_data.couponRules.policies.isCustomerLabel;
     delete form_data.couponRules.policies.isServiceBased;
     delete form_data.couponRules.policies.isCatalogBased;
+  
     if (this.action === 'edit') {
       this.updateCoupon(form_data);
     } else {
       this.createCoupon(form_data);
     }
   }
+
   }
 
   createCoupon(data) {
@@ -605,6 +606,25 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['provider', 'settings', 'pos', 'coupon'], navigationExtras);
+  }
+  checkpoliciesEntered(form_data){
+    let policiesEntered=true;
+    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased ) {
+      this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
+       policiesEntered=false;
+    }
+    if (form_data.couponRules.policies.isServiceBased ) {
+      if(this.services.length===0&& this.departments.length===0 && this.users.length==0)
+      this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
+       policiesEntered=false;
+    }
+    if (form_data.couponRules.policies.isCatalogBased) {
+      let catalog=form_data.couponRules.policies.catalogues.value; 
+      if(catalog==''||catalog==undefined ||catalog==null)
+      this.snackbarService.openSnackBar('Please choose the catalog', { 'panelClass': 'snackbarerror' });
+       policiesEntered=false;
+    }
+    return policiesEntered;
   }
 }
 

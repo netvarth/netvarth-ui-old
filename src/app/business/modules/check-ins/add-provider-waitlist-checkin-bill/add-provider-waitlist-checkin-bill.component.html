@@ -703,7 +703,7 @@
 											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control"
 												[(ngModel)]="selOrderProviderCoupon">
 												<option *ngFor="let coupon of coupons; let i = index"
-													[value]="coupon.id">{{coupon.name}}</option>
+													[value]="coupon.couponCode">{{coupon.name}}</option>
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
 												class="form-control" [(ngModel)]="selOrderProviderjCoupon">
@@ -759,7 +759,7 @@
 												class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
 												*ngIf="jCouponsList.length >0 && showJCouponSection"
 												[disabled]="selOrderProviderjCoupon==='' || disableJCouponbtn"
-												(click)="applyJCoupon(selOrderProviderjCoupon)">{{apply_cap}}</button>
+												(click)="applyJCoupon()">{{apply_cap}}</button>
 											<button type="button"
 												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
 												data-dismiss="modal" #closeJcDiscPc

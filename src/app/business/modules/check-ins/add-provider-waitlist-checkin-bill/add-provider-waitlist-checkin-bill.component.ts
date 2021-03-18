@@ -1187,18 +1187,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
-  /**
-   * Apply Jaldee Coupon
-   * @param jCoupon Coupon Code
-   */
-  applyJCoupon(jCoupon) {
-    const action = 'addJaldeeCoupons';
-    let jaldeeCoupon: string;
-    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
-    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
-    this.disableJCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
-  }
+ 
   /**
    * Remove Jaldee Coupon
    * @param jCouponCode Coupon Code
@@ -1304,14 +1293,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyOrderCoupon() {
     const action = 'addProviderCoupons';
-    const data = {};
-    data['id'] = this.bill_data.id;
-    const coupons = [];
-    coupons.push(this.selOrderProviderCoupon);
-    // coupons.push(this.selOrderProviderCoupon.id);
-    data['couponIds'] = coupons;
+   let couponCode:string;
+   couponCode = '"' + this.selOrderProviderCoupon + '"';
     this.disableCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
+    this.applyAction(action, this.bill_data.uuid, couponCode, 'closeJcDiscPc');
+  }
+   /**
+   * Apply Jaldee Coupon
+   * @param jCoupon Coupon Code
+   */
+  applyJCoupon() {
+    const action = 'addJaldeeCoupons';
+    let jaldeeCoupon: string;
+    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
+    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
+    this.disableJCouponbtn = true;
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
   }
 
   initPayment(mode, amount, paynot) {
