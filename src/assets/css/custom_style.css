@@ -14079,12 +14079,18 @@ width: 40px !important;
   margin: auto;
 }
 .inbox-nullimg {
-    content: url(../images/inbox.png);
-    margin-left: auto;
-    margin-right: auto;
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
 }
 .inbox-nullimg-user {
   content: url(../images/inbox.png);
   margin-left: auto;
   margin-right: auto;
+}
+.normal-btn {
+  background: #1e4079;
+  color: white;
+  line-height: 26px !important;
+  border-radius: 5px !important;
 }

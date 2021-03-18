@@ -176,7 +176,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
-      this.bname = bdetails.bn || '';
+      this.bname = bdetails.bn || 'User';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';

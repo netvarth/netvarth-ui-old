@@ -27,7 +27,7 @@
                     <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                       <div class="card card-custom">
                         <div class="card-body">
-                          <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 80}">
+                          <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 75}">
                             <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder"
                               (click)="providerSelection(user)"
                               class="d-flex align-items-center justify-content-between pointer-cursor pad-5"
@@ -64,9 +64,6 @@
                       <div class="card card-custom">
                         <div class="card-header align-items-center px-4 py-3">
                           <div class="text-center flex-grow-1">
-                            <div class="text-right flex-grow-1">
-                              <i (click)="showChatSection()" class="fa fa-times pointer-cursor d-md-none"></i>
-                            </div>
                             <div class="text-dark-75 font-weight-bold font-size-h5">
                               {{selectedProvider}}</div>
                           </div>

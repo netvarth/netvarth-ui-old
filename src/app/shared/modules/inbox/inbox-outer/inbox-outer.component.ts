@@ -100,7 +100,11 @@ export class InboxOuterComponent implements OnInit {
       );
   }
   goBack() {
-    this.location.back();
+    if (this.small_device_display && this.showChat) {
+      this.showChat = false;
+    } else {
+      this.location.back();
+    }
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

@@ -36,7 +36,8 @@
                         <div class="d-flex flex-row minhgt-60" *ngIf="!showEnquiry && messages.length==0">
                             <div class="no-msg-section">
                                 <div class="nomsg-img mgn-bt-20"></div>
-                                Start messaging to {{customer_label}}s <a class="underline" (click)="gotoCustomers()"> Go to patients </a>
+                                Start messaging to {{customer_label}}s 
+                                <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10" (click)="gotoCustomers()"> Go to patients </button>
                             </div>
                         </div>
                         <!--begin::Chat-->

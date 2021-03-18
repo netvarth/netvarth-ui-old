@@ -311,8 +311,7 @@
                                                                             (change)="filesSelected($event, 'close')"><i
                                                                             class="fa fa-paperclip mgn-rt-5"
                                                                             aria-hidden="true"></i>Upload
-                                                                        File<span
-                                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='reschedule' && appointment.attchment && appointment.attchment.length > 0)">&nbsp;({{getAttachLength()}})</span>
+                                                                        File<span *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
                                                                     </a></mat-chip>
                                                             </mat-chip-list>
                                                         </div>
@@ -347,7 +346,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
+                                            <div *ngIf="type != 'reschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
                                                 <button type="button"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
