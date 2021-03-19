@@ -1363,7 +1363,10 @@ body { font-size: 1rem !important}
     }
 }
 
-.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls {
+.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .publishcls
+  {
     position: relative;
     border: none;
     background: transparent;
@@ -1373,7 +1376,9 @@ body { font-size: 1rem !important}
     cursor: pointer;
 }
 
-.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls:before, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before {
+.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls:before,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .publishcls:before {
     font-family: "custom-ynw" !important;
     content: "\78";
     position: absolute;

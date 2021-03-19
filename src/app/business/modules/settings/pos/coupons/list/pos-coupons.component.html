@@ -181,7 +181,7 @@
                                                                     <button type="button" (click)="editCoupons(coupon)"
                                                                         mat-menu-item>
                                                                         <i class="icon-edit"></i>
-                                                                        {{edit_btn}}
+                                                                        {{coupon.couponRules.published? 'View':'Edit'}}
                                                                     </button>
                                                                     <button type="button" (click)="publish(coupon)"
                                                                     mat-menu-item>
@@ -198,7 +198,7 @@
                                                             <span class="mbt-mobile-show">
                                                                 <button class="editcls" type="button"
                                                                     (click)="editCoupons(coupon)">{{edit_btn}}</button>
-                                                                    <button class="icon-sent" type="button"
+                                                                    <button class="publishcls" type="button"
                                                                     (click)="publish(coupon)">{{publish_btn}}</button>
                                                                 <button class="deletecls" type="button"
                                                                     (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>
