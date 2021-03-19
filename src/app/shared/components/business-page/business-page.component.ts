@@ -354,7 +354,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
