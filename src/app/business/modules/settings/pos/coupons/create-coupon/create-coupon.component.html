@@ -60,7 +60,7 @@
             <!--end: Wizard Nav-->
 
             <!--begin: Wizard Body-->
-            <div class="row justify-content-center py-10 px-8 py-lg-12 px-lg-10">
+            <div class="row  py-10 px-8 py-lg-12 px-lg-10">
               <div class="col-xl-12 col-xxl-7">
                 <!--begin: Wizard Form-->
                 <form [formGroup]="couponForm" novalidate (ngSubmit)="onSubmit()" (keyup)="resetApiErrors()"
@@ -79,7 +79,7 @@
                             [errorMsgs]="fed_service.getErrorMessage(couponForm,'name',
           {
           'required' : 'Enter your  coupon name',
-          'maxlength' : 'Coupon Name can contain only ' + maxChars + ' characters'
+          'maxlength' : 'Coupon name can contain only ' + maxChars + ' characters'
           })">
                           </app-field-error-display>
                         </div>
@@ -110,12 +110,17 @@
                             <mat-radio-button value="Fixed">Fixed</mat-radio-button>&nbsp;&nbsp;
                             <mat-radio-button value="Percentage">Percentage</mat-radio-button>
                           </mat-radio-group>
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'calculationType')"  [errorMsgs]="fed_service.getErrorMessage(couponForm,'calculationType',
+                            {
+                              'required' : 'Please choose calculation type.'
+                             
+                            })"></app-field-error-display>
                         </div>
                         <!--end::Input-->
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-xl-6 ml-5">
+                      <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
                           <label>Coupon Amount</label>
@@ -123,15 +128,15 @@
                           <span *ngIf="calculationType == 'Percentage'" class='rupee'>(%)</span>
                           <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"  (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="amount"
                             placeholder="Coupon Amount" formControlName="amount" />
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'amount')"  [errorMsgs]="fed_service.getErrorMessage(couponForm,'amount',
+                            {
+                              'required' : 'Please enter the amount.',
+                              'pattern' : 'Please enter valid amount',
+                              'maxlength' : 'Amount can have only ' + maxNumbers + ' digits'
+                            })">
+      </app-field-error-display>
                         </div>
-                        <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'amount')"
-                        errorMsg="" [errorMsgs]="fed_service.getErrorMessage(couponForm,'amount',
-                                            {
-                                              'required' : 'Please enter the amount.',
-                                              'pattern' : 'Please enter valid amount',
-                                              'maxlength' : 'Amount can have only ' + maxNumbers + ' digits'
-                                            })">
-                      </app-field-error-display>
+                      
                         <!--end::Input-->
                       </div>
                     </div>
@@ -172,9 +177,16 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>Start Date <span>(Valid From)</span></label>
-                            <input class="form-control1 picker" type="date" (dateChange)="compareDate($event.value,0)"
+                            <input #startDate class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate($event.value,0)"
                               placeholder="Valid From" formControlName="startDate" />
                           </div>
+                          <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
+                          errorMsg="Please choose Start Date">
+                      </app-field-error-display>
+                        
+                             <app-field-error-display style="color: #f24949 !important;"  [displayError]=startdateError
+                                        errorMsg="Please choose valid start Date">
+                                    </app-field-error-display> 
                         </div>
                         <!--end::Input-->
                       </div>
@@ -183,9 +195,15 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>End Date <span>(Valid To)</span></label>
-                            <input class="form-control1 picker" type="date" (dateChange)="compareDate($event.value,1)"
+                            <input class="form-control1 picker" [min]="mxDate" type="date" (change)="compareDate($event.value,1)"
                               placeholder="Valid To" formControlName="endDate" />
                           </div>
+                          <app-field-error-display [displayError]=endDaterequired
+                          errorMsg="Please choose End Date">
+                      </app-field-error-display>
+                          <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display>
                         </div>
                         <!--end::Input-->
                       </div>
@@ -193,18 +211,21 @@
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
-                          <label>Applicable Days</label>
-                          <div *ngFor="let wday of weekdays; index as i">
-                            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychange(i)"
+                          <label>Applicable Days</label><br>
+                          <span *ngFor="let wday of weekdays; index as i">
+                            <mat-checkbox  *ngIf="i>0" (change)="handleDaychange(i)"
                               [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
-                            </mat-checkbox>
-                          </div>
+                            </mat-checkbox>&nbsp;&nbsp;
+                          </span>
+                          <app-field-error-display [displayError]=weekdayError
+                          errorMsg="Please select atleast one day">
+                      </app-field-error-display>
                         </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                       <div class="col-xl-6">
-                        <!--begin::Input-->
+                       
                         <div class="form-group">
                           <label>Available timewindow(s)</label>&nbsp;
                           
@@ -215,7 +236,7 @@
                             Currently no timewindows are added&nbsp;
                             <button type="button" (click)="showTimewindow()" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
                               Add</button> 
-                            <!-- <a class="pointlist" (click)="showTimewindow()">Add</a> -->
+                        
                           </div>
                           <div *ngIf="timewindow_list.length > 0">
                             <ul *ngFor="let window of timewindow_list;let i = index">
@@ -228,9 +249,9 @@
                             </ul>
                           </div>
                         </div>
-                        <!--end::Input-->
+                       
                       </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
@@ -269,8 +290,12 @@
                           <label class="rupee-font">Minimum Bill Amount(₹)</label>
                           <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="minBillAmount"
                             placeholder="Enter minimum bill amount" formControlName="minBillAmount" />
-                        </div>
+                            <app-field-error-display [displayError]=minbillamountError
+                            errorMsg="Please enter value">
+                        </app-field-error-display>
                       </div>
+                          </div>
+                      
                       <div class="col-xl-6 col-lg-6 col-md-6" [hidden]="this.couponForm.get('calculationType').value=='Fixed'">
                         <div class="form-group">
                           <label class="rupee-font">Maximum Discount value (₹)</label>
@@ -309,9 +334,9 @@
                                 (click)="openServiceDialog()">Services</button>
 
                             </div>
-                            <p *ngIf="services.length>0">
+                            <a href="javascript:void(0);" *ngIf="services.length>0" (click)="openServiceDialog()">
                               {{ services.length }} Services Selected
-                            </p>
+                            </a>
                           </div>
                         </div>
 
@@ -335,9 +360,9 @@
                                   (click)="openDepartmentDialog()">Departments</button>
 
                               </div>
-                              <p *ngIf="departments.length>0">
+                              <a href="javascript:void(0);" *ngIf="departments.length>0" (click)="openDepartmentDialog()">
                                 {{ departments.length }} Departments Selected
-                              </p>
+                              </a>
                             </div>
                           </div>
 
@@ -361,9 +386,9 @@
                                     (click)="openUserDialog()">Users</button>
 
                                 </div>
-                                <p *ngIf="users.length>0">
+                                <a href="javascript:void(0);" *ngIf="users.length>0"   (click)="openUserDialog()">
                                   {{ users.length }} Users Selected
-                                </p>
+                                </a>
                               </div>
                             </div>
 
@@ -389,9 +414,9 @@
                                     (click)="openCustomerLabelDialog()">Consumer Labels</button>
 
                                 </div>
-                                <p *ngIf="customer_labels.length>0">
+                                <a href="javascript:void(0);" *ngIf="customer_labels.length>0" (click)="openCustomerLabelDialog()">
                                   {{ customer_labels.length }} Labels Selected
-                                </p>
+                                </a>
                               </div>
                             </div>
 
@@ -419,9 +444,9 @@
                                   (click)="openCustomerGroupDialog()">Consumer Groups</button>
 
                               </div>
-                              <p *ngIf="customer_groups.length>0">
+                              <a href="javascript:void(0);" *ngIf="customer_groups.length>0"   (click)="openCustomerGroupDialog()">
                                 {{ customer_groups.length }} Groups Selected
-                              </p>
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -480,9 +505,9 @@
                                 (click)="openItemDialog()">Items</button>
 
                             </div>
-                            <p *ngIf="items.length>0">
+                            <a href="javascript:void(0);" *ngIf="items.length>0"  (click)="openItemDialog()">
                               {{ items.length }} Items Selected
-                            </p>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -523,7 +548,7 @@
                     </div>
                     <div>
                       <button type="button" *ngIf="step == 3" 
-                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="!couponForm.valid ||published">
+                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="couponForm.invalid ||published">
                         Submit
                       </button>
                       <button type="button" *ngIf="step == 1 || step == 2"

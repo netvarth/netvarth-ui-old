@@ -354,12 +354,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
-        console.log(this.pSource);
+     
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -373,7 +373,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.deptUsers = [];
       if (qparams.psource) {
         this.pSource = qparams.psource;
-        console.log(this.pSource);
         if (qparams.psource === 'business') {
           this.loading = true;
           this.showDepartments = false;
@@ -421,7 +420,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           resolve(id);
         },
         error => {
-          console.error(error);
+         
           resolve(encId);
         }
       );
@@ -909,7 +908,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-    console.log(loc);
+ 
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
     this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
@@ -1236,7 +1235,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   openCatalogImageModalRow(image: Image) {
-    console.log(image);
+
     const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
     this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -2072,7 +2071,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cardClicked(actionObj) {
-    console.log(actionObj);
+
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2315,7 +2314,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   getCatalogs(locationId) {
     const account_Id = this.provider_bussiness_id;
     this.shared_services.setaccountId(account_Id);
-    console.log(locationId);
     this.orderItems = [];
     const orderItems = [];
     if (this.orderstatus && this.userId == null) {
@@ -2334,7 +2332,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.catalogimage_list_popup.push(imgobj);
           }
           this.catlogArry();
-          console.log(this.activeCatalog);
+         
 
           this.advance_amount = this.activeCatalog.advanceAmount;
           if (this.activeCatalog.pickUp) {
@@ -2371,7 +2369,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }
           this.orderItems = orderItems;
-          console.log(this.orderItems);
+         
         }
       );
     }
@@ -2510,10 +2508,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
-    //this.router.navigate(['consumer', 'order', 'item-details']);
   }
   increment(item) {
-    console.log(item);
     this.addToCart(item);
   }
 
@@ -2521,8 +2517,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.removeFromCart(item);
   }
   getItemQty(itemObj) {
-    console.log(this.counter++);
-    console.log(this.orderList);
     let qty = 0;
     if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.item.itemId)) {
       qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
@@ -2530,8 +2524,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     return qty;
   }
   catlogArry() {
-    // this.catlog = itemjson;
-    // this.catalogItem = catalog.default.catalogItem;
+
     if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     }
@@ -2576,7 +2569,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
     if (this.userType === 'consumer') {
       let blogoUrl;
       if (this.businessjson.logo) {
@@ -2589,7 +2581,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     } else if (this.userType === '') {

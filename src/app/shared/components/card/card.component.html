@@ -41,8 +41,8 @@
             <!-- </div>
         <div class="card-content"> -->
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6> -->
-            <!-- <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
-            <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6> -->
+            <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
+            <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6> 
             <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                 <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount|
                     currency:'':''}}</span>
@@ -106,7 +106,7 @@
                 <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
-            <div>
+            <div style="height: 22px !important;">
                 <div *ngIf="!service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
             </div>
             <div class="col-md-12 no-padding">
@@ -118,7 +118,7 @@
                         <div *ngIf="service.showPromotionalPrice">
                             <!-- <div class="amount-label">RETAIL PRICE</div> -->
                             <div class="amount-value strikeMe">
-                                <i class="fa fa-inr"></i>{{service.price | currency:'':''}}
+                                <i class="fa fa-inr"></i> {{service.price | currency:'':''}}
                             </div>
                         </div>
                         <div>

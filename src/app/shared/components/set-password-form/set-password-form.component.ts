@@ -9,7 +9,8 @@ import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-sp-form',
-  templateUrl: './set-password-form.component.html'
+  templateUrl: './set-password-form.component.html',
+  styleUrls: ['./set-password-form.component.css']
 })
 export class SetPasswordFormComponent implements OnInit {
 

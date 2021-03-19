@@ -284,11 +284,11 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
     </div> -->
 
 
-    <div class="card-body" style="padding-bottom: .5rem; padding-top: .5rem;" *ngIf="action !== 'view'">
+    <div class="card-body" style="padding-bottom: .5rem; padding-top: .5rem;" *ngIf="action !== 'view' && !api_loading">
       <div class="form-group m-0">
         <div class="row">
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('googlemap')" name="locationradio" value="googlemap" [checked]="locationFind === 'GOOGLEMAP'"/>
@@ -308,7 +308,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('autodetect')" name="locationradio" value="autodetect" [checked]="locationFind === 'AUTODETECT'"/>
@@ -329,7 +329,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey; background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey; background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio"  (click)="handlelocationfind('manual')" name="locationradio" value="manual" [checked]="locationFind === 'MANUAL'"/>
@@ -354,7 +354,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
     </div>
 
 <!--begin::Section-->
-<div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view'">
+<div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view' && !api_loading">
   <div class="card">
       <div class="card-body">
         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&

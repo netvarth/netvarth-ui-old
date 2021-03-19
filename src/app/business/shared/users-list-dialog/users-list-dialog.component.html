@@ -1,6 +1,6 @@
 
     <h1 class="mat-dialog-title">  Users
-      <button  mat-dialog-close  tabindex="-1" style="float:right;">
+      <button  mat-dialog-close  tabindex="-1"class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
@@ -10,7 +10,7 @@
 
       <mat-selection-list #users  [(ngModel)]="selectedUsers" (ngModelChange)="onUserChange($event)" >
 
-        <mat-list-option *ngFor=" let user of user_list" [value] ="user" [selected]="isSelected(user)">
+        <mat-list-option checkboxPosition="before" *ngFor=" let user of user_list" [value] ="user" [selected]="isSelected(user)">
 
           {{user_list.name}}
 

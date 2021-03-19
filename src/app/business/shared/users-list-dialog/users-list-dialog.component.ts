@@ -1,19 +1,21 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-users-list-dialog',
   templateUrl: './users-list-dialog.component.html',
   styleUrls: ['./users-list-dialog.component.css']
 })
-export class UsersListDialogComponent implements OnInit {
+export class UsersListDialogComponent implements OnInit,OnDestroy {
 
   user_list: any;
   former_chosen_users: any = [];
 
   selectedUsers: any = [];
 loading=true;
+subscription:Subscription;
   constructor(public dialogRef: MatDialogRef<UsersListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
@@ -28,9 +30,12 @@ loading=true;
     this.getUsers();
 
   }
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 
   getUsers() {
-    this.provider_services.getUsers().subscribe(
+   this.subscription= this.provider_services.getUsers().subscribe(
       (data: any) => {
         this.user_list = data;
         this.loading=false;

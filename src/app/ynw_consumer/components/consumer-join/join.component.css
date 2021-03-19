@@ -150,4 +150,33 @@
     justify-content: center !important;
     font-size: 0.875rem !important;
 }
+
+.login-form.custom-login-form .example-container.cust-loginpge-color .pwd_cancel_scr {
+    padding: 15px !important;
+}
+
+.login-form.custom-login-form .example-container.cust-loginpge-color .pwd_cancel_scr p {
+    margin: 0 !important;
+    text-align: center;
+    color: darkslategrey;
+    font-weight: 700;
+}
+
+.login-form.custom-login-form .example-container.cust-loginpge-color .cancel-button {
+    width: 49% !important;
+    color: white !important;
+    margin: 0 !important;
+    background-color: #1E4079 !important;
+    border-radius: 4px !important;
+    vertical-align: baseline !important;
+}
+
+.login-form.custom-login-form .example-container.cust-loginpge-color .ok-button {
+    width: 49% !important;
+    color: white !important;
+    margin: 0 !important;
+    background-color: #1E4079 !important;
+    border-radius: 4px !important;
+    vertical-align: baseline !important;
+}
  

@@ -354,7 +354,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.userId) {
@@ -424,7 +424,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           resolve(id);
         },
         error => {
-          console.error(error);
           resolve(encId);
         }
       );
@@ -1341,12 +1340,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   openImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   openCatalogImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
     this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -2237,10 +2234,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
-    console.log(account_Id);
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
-    //const orderItems = [];
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
@@ -2426,7 +2421,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   }
   itemDetails(item) {
-    console.log(JSON.stringify(item));
     let blogoUrl;
     if (this.businessjson.logo) {
       blogoUrl = this.businessjson.logo.url;

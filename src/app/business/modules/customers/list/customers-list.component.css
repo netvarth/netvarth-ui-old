@@ -136,3 +136,10 @@
  .pad-lt-0 {
    padding-left: 0px !important;
  }
+ .no-customer {
+  height: 200px;
+  display: flex;
+ }
+ .no-customer div {
+  margin: auto;
+ }

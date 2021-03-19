@@ -70,7 +70,7 @@ export class InboxOuterComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
@@ -100,7 +100,11 @@ export class InboxOuterComponent implements OnInit {
       );
   }
   goBack() {
-    this.location.back();
+    if (this.small_device_display && this.showChat) {
+      this.showChat = false;
+    } else {
+      this.location.back();
+    }
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

@@ -80,6 +80,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showEnquiry = false;
   enquiries: any = [];
   qParams;
+  customer_label;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -90,17 +91,18 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
-      this.activateRoute.queryParams.subscribe(params => {
-this.qParams = params;
-if (this.qParams.enquiry) {
-  this.showEnquiry = true;
-}
-      });
-     }
-     ngOnChanges() {
-     }
+    this.activateRoute.queryParams.subscribe(params => {
+      this.qParams = params;
+      if (this.qParams.enquiry) {
+        this.showEnquiry = true;
+      }
+    });
+  }
+  ngOnChanges() {
+  }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -121,19 +123,31 @@ if (this.qParams.enquiry) {
         }
       );
     this.loading = true;
-    this.onResize();
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    this.userHeight = screenHeight - 250;
-    this.msgHeight = screenHeight - 375;
+    if (this.screenWidth <= 991) {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 303;
+      } else {
+        this.userHeight = screenHeight - 234;
+      }
+      this.msgHeight = screenHeight - 425;
+    } else {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 264;
+      } else {
+        this.userHeight = screenHeight - 208;
+      }
+      this.msgHeight = screenHeight - 410;
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -194,10 +208,10 @@ if (this.qParams.enquiry) {
           this.messages = data;
           this.scrollDone = true;
           if (this.showEnquiry) {
-const inbox =  this.generateCustomInbox(this.messages);
-this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
+            const inbox = this.generateCustomInbox(this.messages);
+            this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
           } else {
-          this.setMessages();
+            this.setMessages();
           }
           this.loading = false;
         },
@@ -236,6 +250,7 @@ this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
+    this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       setTimeout(() => {
@@ -282,7 +297,7 @@ this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName) ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -334,11 +349,9 @@ this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
       caption: []
     };
   }
-  getUser(user, type?) {
-    if (!type) {
-      user = user.split('=');
-      user = user[0];
-    }
+  getUserShort(user) {
+    user = user.split('=');
+    user = user[0];
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
@@ -570,6 +583,9 @@ this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
     return msgs;
   }
   getMsgType(msg) {
-return 'chat';
+    return 'chat';
+  }
+  gotoCustomers() {
+    this.router.navigate(['/provider/customers']);
   }
 }

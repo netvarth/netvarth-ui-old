@@ -21,6 +21,8 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
  
 
 
@@ -167,6 +169,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   iscustomerEmailPhone=false;
   order_Mode;
   searchby = '';
+  contactDialogRef: MatDialogRef<ContactInfoComponent, any>;
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -336,6 +339,12 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
 
 
   searchCustomer(form_data) {
+    this.image_list_popup = [];
+    this.selectedImagelist = {
+      files: [],
+      base64: [],
+      caption: []
+    };
     this.qParams = {};
     let mode = 'id';
     this.form_data = null;
@@ -595,7 +604,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     // });
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
+    console.log(queue);
     this.queue = queue;
   }
   onSubmit(form_data) {
@@ -638,15 +647,35 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.step = this.step - 1;
   }
   increment(item) {
-    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo)){
-      this.snackbarService.openSnackBar('Customer needs email and Phone # for taking order please update', { 'panelClass': 'snackbarerror' });
+    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo ||this.customer_data.phoneNo.includes('*'))){
+     this.collectContactInfo();
     }else{
       this.iscustomerEmailPhone=true;
       this.addToCart(item);
     }
     
   }
+  collectContactInfo() {
+    this.contactDialogRef = this.dialog.open(ContactInfoComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        phone: this.customer_data.phoneNo,
+        email: this.customer_data.email
+       
 
+      }
+    });
+    this.contactDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
+      if(result){
+        this.customer_data.phoneNo=result.phone;
+        this.customer_data.email=result.email;
+      }
+    });
+  }
   decrement(item) {
     this.removeFromCart(item);
   }
@@ -960,11 +989,19 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.placeOrderDisabled = true;
     console.log(this.nextAvailableTime);
     const timeslot = this.nextAvailableTime.split(' - ');
+    if(this.orderType!=='SHOPPINGLIST'){
+      if(this.getOrderItems().length===0){
+        this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
+        this.placeOrderDisabled=false;
+        return; 
+      }
+    }
     if (this.choose_type === 'home') {
       console.log(this.added_address);
       if (this.added_address === null || this.added_address.length === 0) {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        this.placeOrderDisabled=false;
         return;
       } else {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
@@ -1037,10 +1074,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       }
     }
     if (this.choose_type === 'store') {
+      console.log('inisde' +this.orderType);
+      
       const contactNumber = this.customer_data.phoneNo;
       const contact_email = this.customer_data.email;
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
+      }
         if(this.orderType === 'SHOPPINGLIST'){
           const post_Data = {
             'storePickup': true,
@@ -1068,6 +1108,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           console.log(post_Data);
           this.confirmOrder(post_Data);
         }else {
+          console.log('progress');
+          
           const post_Data = {
             'storePickup': true,
             'catalog': {
@@ -1092,17 +1134,18 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             'email': contact_email,
 
           };
-  
+    console.log(post_Data);
           this.confirmOrder(post_Data);
         }
         
         //  }
-      }
+      
     }
 
   }
   getOrderItems() {
-
+    console.log('orderitems');
+    
     this.orderSummary = [];
     this.orders.forEach(item => {
       let consumerNote = '';
@@ -1205,6 +1248,34 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(result => {
       this.getDeliveryAddress();
+    });
+  }
+  deleteAddress(address, index) {
+    this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to Delete this address?',
+      }
+    });
+    this.canceldialogRef.afterClosed().pipe(takeUntil(this.onDestroy$)).subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.added_address.splice(index, 1);
+        this.provider_services.updateDeliveryaddress(this.customer_data.id,this.added_address).pipe(takeUntil(this.onDestroy$))
+          .subscribe(
+            data => {
+              if (data) {
+                this.getDeliveryAddress();
+              }
+              this.snackbarService.openSnackBar('Address deleted successfully');
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
     });
   }
   checkCouponExists(couponCode) {

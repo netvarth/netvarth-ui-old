@@ -150,7 +150,7 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="bus-actions bus-actions-horiz no-padding">
-                                <li *ngIf=" s3CouponList.JC!=undefined && s3CouponList.JC.length>0||s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
+                                <li *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0||s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 )&& isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                         class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                         (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
                                 <li *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0 "><i class="fa fa-tag blue"></i><span
@@ -398,7 +398,9 @@
                                 (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
                                 width="50" height="50" id="catalog-image1"
                                 class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
-                        <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
+                                <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
+                                    {{activeCatalog.catalogDesc}}</p>
+                                <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
                     </div>
                     <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 catalog-icons no-padding-small disp-flex">
                         <div class="mgn-rt-10 disp-flex"

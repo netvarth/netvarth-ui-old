@@ -350,6 +350,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     if (this.dynamicdialogRef) {
       this.dynamicdialogRef.close();
     }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()

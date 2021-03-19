@@ -242,9 +242,10 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                             
                        
                     });
-                    this.getItems();
-                    this.getProviderLocations();
+                    
                 }
+                this.getItems();
+                this.getProviderLocations();
             
             });
         this.createForm();
@@ -273,13 +274,21 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     gotoNext() {
+        if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
+            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (this.payAdvance === 'FIXED' && this.step === 3) {
+            if (this.amForm.get('advancePayment').value === '') {
+                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+        }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 3;
-        } else {
-            this.step = this.step + 1;
-        }
+        } 
         
-        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+        if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
@@ -287,6 +296,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.selectedItems();
             }
             
+        }else {
+            this.step = this.step + 1;
         }
     }
     gotoPrev() {
@@ -942,16 +953,16 @@ console.log('hi submit');
             homeendDate = '';
         }
         
-        if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
-            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        if (this.payAdvance === 'FIXED') {
-            if (form_data.advancePayment === '') {
-                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-        }
+        // if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
+        //     this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // if (this.payAdvance === 'FIXED') {
+        //     if (form_data.advancePayment === '') {
+        //         this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+        //         return;
+        //     }
+        // }
         const postdata = {
             'catalogName': form_data.catalogName,
             'catalogDesc': form_data.catalogDesc,
@@ -1588,6 +1599,8 @@ console.log('hi submit');
         if(additems.length == 0){
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
+        }else{
+            this.step=this.step +1;
         }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);

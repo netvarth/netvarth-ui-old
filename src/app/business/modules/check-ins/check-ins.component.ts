@@ -1492,6 +1492,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.selQIds.length !== 0) {
     //   Mfilter['queue-eq'] = this.selQIds.toString();
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+      const qids = this.activeQs.map(q => q.id);
+      Mfilter['queue-eq'] = qids.toString();
+    }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
@@ -1724,6 +1728,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.filter.waitlist_status === 'all' && this.firstTime) {
       Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+      const qids = this.activeQs.map(q => q.id);
+      Mfilter['queue-eq'] = qids.toString();
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
@@ -2535,17 +2543,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         onresume: () => {
         },
         onboundary: event => {
-          console.log(
-            event.name +
-            ' boundary reached after ' +
-            event.elapsedTime +
-            ' milliseconds.'
-          );
         }
       }
     }).then(() => {
     }).catch(e => {
-      console.error('An error occurred :', e);
     });
   }
   callingWaitlist(checkin) {
@@ -2918,36 +2919,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAttachmentGallery(checkin) {
-    // this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
     this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
         this.image_list_popup_temp = [];
         this.image_list_popup = [];
         let count = 0;
-        // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-        //   if (communications[comIndex].attachements) {
-        //     for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-        //       const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
-        //       let imagePath = thumbPath;
-        //       const description = communications[comIndex].attachements[attachIndex].s3path;
-        //       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-        //       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-        //         console.log(comIndex);
-        //         imagePath = communications[comIndex].attachements[attachIndex].s3path;
-        //       }
-        //       const imgobj = new Image(
-        //         count,
-        //         { // modal
-        //           img: imagePath,
-        //           description: description
-        //         },
-        //       );
-        //       console.log(imgobj);
-        //       this.image_list_popup_temp.push(imgobj);
-        //       count++;
-        //     }
-        //   }
-        // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
            let imagePath = thumbPath;
@@ -3194,7 +3170,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           // _prepareSpeakButton(speech);
         })
         .catch(e => {
-          console.error('An error occured while initializing : ', e);
         });
     }
   }

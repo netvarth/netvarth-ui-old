@@ -118,6 +118,7 @@ export class ProviderCheckinComponent implements OnInit {
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+    dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;

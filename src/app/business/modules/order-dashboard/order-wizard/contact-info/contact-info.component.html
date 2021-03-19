@@ -1,0 +1,62 @@
+<form class="form" [formGroup]="contantInfo" novalidate (ngSubmit)="contantInfo.valid && onSubmit(contantInfo.value)">
+
+    <h1 class="mat-dialog-title">Email and Phone #
+        <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="close()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+    <div class="container">
+    <mat-dialog-content>
+        
+            <div class="row">
+                <div class="form-group ">
+                    <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label>Mobile #</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text1"><i
+                                    style="font-style: normal;font-size: small;">+91</i></span></div>
+                        <input type="text" class="form-control" (keypress)="isNumeric($event)" id="phone"
+                            placeholder="Mobile Number" formControlName="phone" autocomplete="off" maxlength=10 />
+                    </div>
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(contantInfo,'phone')" [errorMsgs]="fed_service.getErrorMessage(contantInfo,'phone',
+{
+'required' : 'Mobile number is required',
+'minlength' : 'Enter a 10 digit mobile number',
+'maxlength' : 'Enter a 10 digit mobile number',
+'pattern' : 'Only numbers are allowed'
+})">
+                    </app-field-error-display>
+
+                </div>
+
+                </div>
+
+            </div>
+          <div class="row">
+                <div class="form-group  ">
+                    <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                </div>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(contantInfo,'email')" [errorMsgs]="fed_service.getErrorMessage(contantInfo,'email',
+                {
+                  'required' : 'Email is required',
+                  'pattern' : 'Please enter valid email'
+                })">
+</app-field-error-display>
+                </div>
+               
+            </div>
+           
+     
+    </mat-dialog-content>
+</div>
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+            <button type="button" class="cs-btn bt2 " (click)="close()"> Cancel</button>
+            <button type="submit" mat-button class="cs-btn bt1 style-button"
+                [disabled]="!contantInfo.valid ">Ok</button>
+        </div>
+    </mat-dialog-actions>
+
+</form>

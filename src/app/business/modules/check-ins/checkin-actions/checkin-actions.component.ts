@@ -101,6 +101,7 @@ export class CheckinActionsComponent implements OnInit {
     checkinsByLabel: any = [];
     labelsforRemove: any = [];
     showApply = false;
+    buttonClicked = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -192,6 +193,8 @@ export class CheckinActionsComponent implements OnInit {
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+            } else {
+                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.checkin.consumer.jaldeeId + '</td></tr>';
             }
             if (this.checkin.service && this.checkin.service.deptName) {
                 checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
@@ -466,9 +469,10 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
-        // if (action === 'CANCEL') {
-        //     this.dialogRef.close();
-        // }
+        if (action !== 'CANCEL') {
+            // this.dialogRef.close();
+            this.buttonClicked = true;
+        }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -476,8 +480,11 @@ export class CheckinActionsComponent implements OnInit {
             .then(
                 result => {
                     this.dialogRef.close('reload');
-                }
-            );
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
     }
     getDisplayboardCount() {
         let layout_list: any = [];

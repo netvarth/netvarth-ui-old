@@ -697,10 +697,12 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
             .subscribe(
                 () => {
                     this.apptdisable = false;
-                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                    if (this.selectedMessage.files.length > 0) {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
-                    this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
+                    setTimeout(() => {
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
+                    }, 500);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -720,17 +722,19 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                         this.uuidList.push(retData[key]);
                     }
                 });
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(this.uuidList);
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(this.uuidList[0]);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment();
                     } else {
+                        setTimeout(() => {
                         this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
-                    }
+                    }, 500);
                 }
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList);
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -1033,6 +1037,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
+        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1045,6 +1050,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         this.subs.sink=this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
+                    console.log(true);
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1604,7 +1610,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     getAttachLength() {
         let length = this.selectedMessage.files.length;
-        if (this.type == 'waitlistreschedule' && this.appointment.attchment) {
+        if (this.type == 'waitlistreschedule' && this.appointment && this.appointment.attchment && this.appointment.attchment[0] && this.appointment.attchment[0].thumbPath) {
             length = length + this.appointment.attchment.length;
         }
         return length;

@@ -779,7 +779,7 @@ ul.bus-actions li a.lnk {
   font-size: 0.9rem !important;
 }
 .c-checkin-new .phonevallabel, .c-checkin-new .emailvallabel {
-  font-size:0.75rem !important;
+  font-size:0.85rem !important;
 }
 .c-checkin-new .card-title.serv-time {
   /* line-height: 40px !important; */
@@ -847,11 +847,11 @@ ul.bus-actions li a.lnk {
   background-color: #fff !important;
   border: 1px solid #ccc !important;
   border-radius: 20px !important;
-  min-width: 108px !important;
+  min-width: 80px !important;
   padding: 15px !important;
 }
 .c-checkin-new .slotdiv {
-  max-height: 40vh !important;
+  max-height: 175px !important;
   overflow: auto;
   margin-top: 0px !important;
 
@@ -878,11 +878,11 @@ ul.bus-actions li a.lnk {
   border-radius: 20px !important;
 }
 
-@media (min-width:992px) {
+/* @media (min-width:992px) {
 .c-checkin-new .check-new-group {
   min-height: 400px;
 }
-}
+} */
 
 .pre-instr {
   font-size: 0.75rem !important;
@@ -1188,7 +1188,7 @@ height: 150px !important;
     margin-bottom: 5px;
     color: #919090;
     font-style: italic;
-    font-size: 0.75rem !important;
+    font-size: 0.85rem !important;
    }
    .contact-section .wtsapaud-icon{
     width: 25px !important;
@@ -1299,16 +1299,10 @@ ngx-intl-tel-input input {
 }
 .containerAppt {
   font-size: 1.7rem;
-  width: 60%;
   margin: auto;
   color: darkblue !important;
   font-weight: bold;
   box-shadow: 1px 1px 0px #cac8c880, 2px 2px 0px #cac8c880, 3px 3px 0px #cac8c880, 4px 4px 0px #cac8c880, 5px 5px 0px #cac8c880, 6px 6px 0px #cac8c880 !important;
-}
-@media (max-width: 765px) {
-  .containerAppt {
-    width: 100%;
-  }
 }
 .selected-payment {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
@@ -1400,7 +1394,7 @@ body.modal-open {
   font-size: .8rem;
  }
  .success-section {
-  background: #00cc96 !important;
+   background: #00cc96 !important;
  }
  .width-60 {
   width: 60% !important;
@@ -1412,11 +1406,13 @@ body.modal-open {
   border-radius: 50%;
   color: white;
   background-color: #aaaa;
-  max-width: 100px;
-  padding: 10px;
-  width: 40px;
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
   margin: auto;
-  max-height: 40px;
+  text-align: center;
+  height: 50px;
+  align-items: center;
  }
  .wizard-title {
    color: #aaaa !important;
@@ -1444,11 +1440,32 @@ body.modal-open {
   .wizard.wizard-1 .wizard-nav .wizard-steps {
       flex-direction: unset !important;
   }
-  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title {
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title, .booking-img {
     display: none !important;
   }
   .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
     width: auto !important;
+  }
+}
+@media (min-width: 768px) {
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+    display: block !important;
+  }
+  .wizard-label {
+    display: flex;
+  }
+  .wizard-arrow {
+    display: none !important;
+  }
+  .wizard-mgn-30 {
+    margin-bottom: 30px;
+  }
+  .wizard-nav {
+    margin-top: 50px;
+  }
+  .right-part {
+    min-height: 650px;
+    border-left: 1px solid #EBEDF3 !important;
   }
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
