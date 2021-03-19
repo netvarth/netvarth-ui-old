@@ -9,6 +9,7 @@ import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -55,6 +56,8 @@ export class InboxOuterComponent implements OnInit {
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
   scrollDone = false;
+  cronHandle: Subscription;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -66,6 +69,14 @@ export class InboxOuterComponent implements OnInit {
     this.loading = true;
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.getInboxMessages();
+    });
+  }
+  ngOnDestroy() {
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -86,6 +97,12 @@ export class InboxOuterComponent implements OnInit {
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
+            if (unreadMsgs.length > 0) {
+              const ids = unreadMsgs.map(msg => msg.messageId);
+              const messageids = ids.toString();
+              this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
+            }
             setTimeout(() => {
               this.scrollToElement();
             }, 100);
@@ -160,6 +177,7 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
+
     });
   }
   sendMessage() {

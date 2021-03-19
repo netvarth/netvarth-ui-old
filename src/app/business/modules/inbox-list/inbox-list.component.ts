@@ -1,5 +1,5 @@
 
-import { Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
@@ -81,6 +81,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   enquiries: any = [];
   qParams;
   customer_label;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -123,6 +124,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
       );
     this.loading = true;
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.getInboxMessages();
+    });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -253,6 +257,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
+      if (unreadMsgs.length > 0) {
+        const ids = unreadMsgs.map(msg => msg.messageId);
+        const messageids = ids.toString();
+        this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
+      }
       setTimeout(() => {
         this.scrollToElement();
       }, 100);
@@ -392,10 +402,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     //   setTimeout(() => {
     //     this.userMsg.toArray().forEach(element => {
     //       if (element.nativeElement.innerHTML.trim() === this.selectedCustomer.trim()) {
-    //         console.log(element.nativeElement);
 
     // var height = element.nativeElement.offsetHeight;
-    // console.log(height);
     //     window.scroll({
     //         top: height,
     //         left: 0,

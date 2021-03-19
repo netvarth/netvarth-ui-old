@@ -19,7 +19,8 @@
                                     <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding">
                                         <div class="wizard-nav" *ngIf="type != 'reschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
-                                                <div class="wizard-step tab-selected wizard-mgn-30" data-wizard-type="step">
+                                                <div class="wizard-step tab-selected wizard-mgn-30"
+                                                    data-wizard-type="step">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">1</div>
                                                         <h3 class="wizard-title mgn-lt-15">Booking Window</h3>
@@ -145,8 +146,7 @@
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class=""
-                                                                    style="font-size: 1rem; float: left;"
+                                                                <div class="" style="font-size: 1rem;"
                                                                     *ngIf="sel_ser_det.price && type != 'reschedule'">
                                                                     <p class="module-nomargin line-clamp no-margin"
                                                                         *ngIf="sel_ser_det.description && !showmoreSpec"
@@ -248,7 +248,7 @@
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
-                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                         <span class="mgn-lt-10 phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
@@ -312,7 +312,8 @@
                                                                             (change)="filesSelected($event, 'close')"><i
                                                                             class="fa fa-paperclip mgn-rt-5"
                                                                             aria-hidden="true"></i>Upload
-                                                                        File<span *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
+                                                                        File<span
+                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
                                                                     </a></mat-chip>
                                                             </mat-chip-list>
                                                         </div>
@@ -631,7 +632,7 @@
                                                                             <div class="consumer_appt mgn-bt-10 brd-bt">
                                                                                 <p class="m0 mgn-lt-10 mgn-up-10">
                                                                                     <i class="fa phon-icon"
-                                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                                     Phone#:
                                                                                     <b>{{countryCode}}
                                                                                         {{selected_phone}}</b>
@@ -892,7 +893,8 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
                                             <div class="mr-2">
                                                 <button type="button"
                                                     class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"

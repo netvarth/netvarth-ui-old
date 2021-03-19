@@ -206,7 +206,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     ) {
        this.subs.sink= this.route.queryParams.subscribe(
             params => {
-                console.log(params);
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -492,7 +491,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
-        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         this.serviceCost = this.sel_ser_det.price;
     }
@@ -742,15 +740,12 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 });
     }
     submitQuestionnaire(uuid) {
-
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.subs.sink=this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
@@ -1072,7 +1067,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
@@ -1354,7 +1349,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                     break;
                 }
             }
-            console.log(JSON.stringify(this.selected_coupons));
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -1423,6 +1417,8 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     applyPromocode() {
         this.action = 'coupons';
+        this.selected_coupon = '';
+        this.clearCouponErrors();
     }
     handleDepartment(dept) {
         this.servicesjson = this.serviceslist;
@@ -1441,8 +1437,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         this.action = 'service';
     }
     getUserName(id) {
-        console.log(id);
-        console.log(this.users);
         let selectedUser = '';
         for (let i = 0; i < this.users.length; i++) {
             if (this.users[i].id === id) {
@@ -1450,7 +1444,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 break;
             }
         }
-        console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {
@@ -1625,7 +1618,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
-        console.log(this.questionAnswers);
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
@@ -1727,13 +1719,11 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     getQuestionAnswers(event) {
-        console.log(event);
         this.questionAnswers = event;
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.subs.sink= this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-            console.log(data);
             this.questionnaireList = data;
         });
     }
