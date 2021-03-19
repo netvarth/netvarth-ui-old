@@ -4,8 +4,8 @@
 .dropdown:hover {
     background: #F3F6F9 !important;
 }
-.bg-black {
-    background: black !important;
+.bg-whiite {
+    background: white !important;
 }
 @media (max-width: 991px) {
     .topbar-mobile-on {
@@ -84,4 +84,10 @@
 .img-section img {
     width: 120px;
     height: 47px;
+}
+.img-section {
+    margin: auto;
+}
+.topbar {
+    border-top: 1px solid #dddd;
 }

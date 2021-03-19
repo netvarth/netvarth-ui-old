@@ -297,7 +297,9 @@
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                             <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                        </ng-container>
+                                                                        </ng-container> 
+                                                                        <i class="fa phon-icon mgn-lt-10"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                         <span class="mgn-lt-10 phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
@@ -475,7 +477,10 @@
                                                                         </h5>
                                                                     </div>
                                                                     <div class="consumer_appt mgn-bt-10 brd-bt">
-                                                                        <p class="m0 mgn-lt-10 mgn-up-10">Phone#:
+                                                                        <p class="m0 mgn-lt-10 mgn-up-10">
+                                                                            <i class="fa phon-icon"
+                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                            Phone#:
                                                                             <b>{{countryCode}}
                                                                                 {{selected_phone}}</b>
                                                                         </p>

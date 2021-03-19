@@ -1,168 +1,13 @@
-<!-- <header class="main-header jaldee-header">
-  <a (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
-    <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
-    <span class="logo-lg"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"></span>
-  </a>
-  <nav class="navbar navbar-static-top" role="navigation">
-    <a (click)="gotoActiveHome()" class="visible-xs logo-mini-app pointer-cursor pull-left">
-      <img src="./assets/images/home/logo-business.png" alt="Jaldee" />
-    </a>
-    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" *ngIf="!iswiz">
-      <span class="sr-only">Toggle navigation</span>
-    </a>
-
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP' && sessionStorage">
-          <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-arrow-left"></i>
-          </a>
-        </li>
-        <li *ngIf="!iswiz">
-          <a (click)="helpClicked()">
-            <i class="fa contact-help-icon"></i>
-            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
-            <ng-template #text4>
-              <div>
-                We offer free support and we are always ready to help.<br>
-                <br>
-                Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
-                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
-
-              </div>
-            </ng-template>
-          </a>
-        </li>
-        <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
-          <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-envelope-o"></i>
-            <span class="label label-success"
-              *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
-          </a>
-        </li>
-        <li [matTooltip]="'Alerts'" class="dropdown notifications-menu" *ngIf="!iswiz">
-          <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
-          </a>
-          <ul class="dropdown-menu" *ngIf="alertCnt > 0">
-            <li>
-              <ul class="menu">
-                <li *ngFor="let alert of alerts">
-                  <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
-                    [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
-                    class="justify-alert">
-                    {{alert.text}} <i class="fa fa-thumbs-o-up alert-ack" [matTooltip]="'Acknowledge'"
-                      *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
-                  </p>
-                </li>
-              </ul>
-            </li>
-            <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
-          </ul>
-        </li>
-        <li [matTooltip]="'Subscription Plan'" class="dropdown tasks-menu" *ngIf="!iswiz">
-          <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="icon-license"></i>
-          </a>
-          <ul class="dropdown-menu"
-            *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
-            <li class="header">
-              <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
-                style="color: red; width: 100%; text-align: left;">
-                Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
-                <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
-                    </b></span><span style="color: red"> to Upgrade License.</span></span>
-              </p>
-              <p style="width: 100%; text-align: left;"
-                *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
-                Your current license is
-                <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span>
-                for more features.
-              </p>
-            </li>
-            <li
-              *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
-              <ul class="menu pointer-cursor">
-                <li>
-                  <a (click)="upgradeMembership()">
-                    <h3 style="align-content: center">
-                      <span class="link"> <b> Upgrade license </b></span>
-                    </h3>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer">
-              <a class="pointer-cursor" routerLink="license">Go to license section</a>
-            </li>
-          </ul>
-        </li>
-        <li class="dropdown user user-menu">
-          <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
-            <span class="fa-stack">
-              <i class="fa fa-circle fa-stack-2x text-success"
-                *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
-              <i class="fa fa-circle fa-stack-2x  text-failure"
-                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
-              <i class="fa fa-user fa-stack-1x fa-inverse"></i>
-            </span>
-            <span class="hidden-xs mgn-lt-3" *ngIf="bname">
-              {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }}
-            </span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="user-header " style="height: 179px !important;">
-              <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
-
-              <p class="pointer-cursor" (click)="gotoProfile()">
-                <ng-container *ngIf="bname"> {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }} </ng-container>
-                <small>{{bsector}} ({{bsubsector}})</small>
-              </p>
-              <p><small>
-                  <a routerLink="settings/q-manager/queues" class="white"
-                    *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)">
-                    <span class="white bold">I am available now</span>
-                  </a>
-                  <a routerLink="settings/q-manager/queues" class="white"
-                    *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange">
-                    <span class="white bold"> I am not available now </span>
-                  </a>
-                </small>
-              </p>
-            </li>
-            <li class="user-footer">
-              <div class="pull-left" *ngIf="!iswiz">
-                <a (click)="redirectto('bprofile')" class="btn btn-default btn-flat pointer-cursor btst">My Account</a>
-              </div>
-              <div class="pull-right">
-                <a (click)="doLogout()" class="btn btn-default btn-flat pointer-cursor btst">Sign out</a>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header> -->
-
-<!--begin::Header Mobile-->
-<div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-black" *ngIf="!iswiz">
-  <!--begin::Logo-->
+<div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-whiite" *ngIf="!iswiz">
   <a class="img-section" (click)="gotoActiveHome()">
     <img alt="Logo" src="assets/images/jaldee-businesslogo.png" />
   </a>
-  <!--end::Logo-->
-  <!--begin::Toolbar-->
   <div class="d-flex align-items-center">
-    <!--begin::Header Menu Mobile Toggle-->
     <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle" (click)="showMenu()">
       <span></span>
     </button>
   </div>
-  <!--end::Toolbar-->
 </div>
-<!--end::Header Mobile-->
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
   <div class="topbar topbar-mobile-on">
     <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'">
@@ -197,10 +42,8 @@
           <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
         </div>
       </div>
-      <!--begin::Dropdown-->
       <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
         [class.show]="action=='alert' && alertCnt > 0">
-        <!--begin::Nav-->
         <ul class="navi navi-hover">
           <li class="navi-item" *ngFor="let alert of alerts">
             <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
@@ -212,9 +55,7 @@
           </li>
           <li class="footer"><a href="#" routerLink="alerts" (click)="actionPerformed('alert')">Go to Alerts</a></li>
         </ul>
-        <!--end::Nav-->
       </div>
-      <!--end::Dropdown-->
     </div>
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
@@ -223,10 +64,8 @@
           <i class="icon-license"></i>
         </div>
       </div>
-      <!--begin::Dropdown-->
       <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
         [class.show]="action=='license'">
-        <!--begin::Nav-->
         <ul class="navi navi-hover"
           *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
           <li class="header navi-item">
@@ -267,27 +106,19 @@
     </div>
   </div>
 </div>
-<!-- offcanvas-on -->
-<!-- begin::User Panel-->
 <div id="kt_quick_user" class="offcanvas offcanvas-right p-10" [class.offcanvas-on]="showUserSection">
-  <!--begin::Header-->
   <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
     <h3 class="font-weight-bold m-0">
       User Profile
-      <!-- <small class="text-muted font-size-sm ml-2">12 messages</small> -->
     </h3>
     <a (click)="userPopup()" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
       <i class="ki ki-close icon-xs text-muted"></i>
     </a>
   </div>
-  <!--end::Header-->
-  <!--begin::Content-->
   <div class="offcanvas-content pr-5 mr-n5">
-    <!--begin::Header-->
     <div class="d-flex align-items-center mt-5">
       <div class="symbol symbol-100 mr-5">
         <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
-          <!-- <img [src]="blogo" class="img-circle pointer-cursor" alt=""> -->
         </div>
         <i class="symbol-badge bg-success"
           *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
@@ -309,7 +140,6 @@
         </div>
       </div>
     </div>
-    <!--end::Header-->
     <div class="separator separator-dashed mt-8 mb-5"></div>
     <div class="navi navi-spacer-x-0 p-0">
       <a (click)="userPopup();gotoProfile()" class="navi-item">
@@ -317,8 +147,7 @@
           <div class="symbol symbol-40 bg-light mr-3">
             <div class="symbol-label">
               <span class="svg-icon svg-icon-md svg-icon-success">
-                <!--begin::Svg Icon | path:assets/media/svg/icons/General/Notification2.svg--><svg
-                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                   height="24px" viewBox="0 0 24 24" version="1.1">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <rect x="0" y="0" width="24" height="24"></rect>
@@ -328,7 +157,6 @@
                     <circle fill="#000000" opacity="0.3" cx="18.5" cy="5.5" r="2.5"></circle>
                   </g>
                 </svg>
-                <!--end::Svg Icon-->
               </span>
             </div>
           </div>
@@ -363,7 +191,5 @@
       </a>
     </div>
   </div>
-  <!--end::Content-->
 </div>
 <div class="offcanvas-overlay" *ngIf="showUserSection"></div>
-<!-- end::User Panel-->
