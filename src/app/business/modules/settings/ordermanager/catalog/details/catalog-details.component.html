@@ -333,7 +333,7 @@
                         <!--begin::Input-->
                         <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                           <div *ngIf="!seletedCatalogItems">
-                            <h6>Add items to your Catalog</h6>
+                            <h6>Select items to your Catalog</h6>
                             <!-- <a class="link underline pointer-cursor"><u>Add items</u></a>&nbsp;
                             <a class="link underline pointer-cursor"
                               (click)="showCreateItemPopup()"><u>Create items</u></a> -->
@@ -366,7 +366,7 @@
                           <button mat-menu-item (click)="editCatalogItem(item)">
                             <i class="icon-edit"></i>Edit</button>
                           <button mat-menu-item (click)="deleteCatalogItem(item)">
-                            <i class="icon-delete"></i>Delete</button>
+                            <i class="icon-delete"></i>Remove</button>
                         </mat-menu>
                         <div class="card card-custom card-shadowless itemselected"   >
                           <div class="card-body p-0">

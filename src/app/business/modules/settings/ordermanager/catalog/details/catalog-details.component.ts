@@ -276,11 +276,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     gotoNext() {
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 3;
-        } else {
-            this.step = this.step + 1;
-        }
+        } 
         
-        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+        if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
@@ -288,6 +286,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.selectedItems();
             }
             
+        }else {
+            this.step = this.step + 1;
         }
     }
     gotoPrev() {
@@ -1589,6 +1589,8 @@ console.log('hi submit');
         if(additems.length == 0){
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
+        }else{
+            this.step=this.step +1;
         }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
