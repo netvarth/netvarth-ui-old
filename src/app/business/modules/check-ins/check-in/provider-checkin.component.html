@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.dob">
                   <div><b>DOB</b></div>
-                  <div>{{customer_data.dob}}</div>
+                  <div>{{customer_data.dob | date: dobFormat}}</div>
                 </div>
               </div>
               <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
