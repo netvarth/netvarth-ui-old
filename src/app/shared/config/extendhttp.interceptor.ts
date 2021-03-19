@@ -272,6 +272,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Pragma', 'no-cache'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('SameSite', 'None'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
