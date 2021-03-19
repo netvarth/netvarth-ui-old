@@ -8,7 +8,7 @@
     <div *ngIf="!loading && user_list.length>0">
     <mat-dialog-content>
 
-      <mat-selection-list #users  [(ngModel)]="selectedUsers" (ngModelChange)="onUserChange($event)" >
+      <mat-selection-list #users  [disabled]="mode==='view'" [(ngModel)]="selectedUsers" (ngModelChange)="onUserChange($event)" >
 
         <mat-list-option checkboxPosition="before" *ngFor=" let user of user_list" [value] ="user" [selected]="isSelected(user)">
 
@@ -22,7 +22,7 @@
     <mat-dialog-actions>
         <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
       <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
-      <button  mat-button class="cs-btn bt1 style-button" type="button" (click)="onConfirm(users.selectedOptions)" >Confirm</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button"  [disabled]="mode==='view'"  (click)="onConfirm(users.selectedOptions)" >Confirm</button>
     </div>
     </mat-dialog-actions>
     </div>

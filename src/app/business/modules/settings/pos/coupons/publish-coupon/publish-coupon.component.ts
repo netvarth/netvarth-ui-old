@@ -7,6 +7,12 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { MatDialog } from '@angular/material/dialog';
 import { PublishDialogComponent } from './publish-dialog/publish-dialog.component';
 import { SubSink } from 'subsink';
+import { ServiceListDialogComponent } from '../../../../../shared/service-list-dialog/service-list-dialog.component';
+import { ItemListDialogComponent } from '../../../../../shared/item-list-dialog/item-list-dialog.component';
+import { DepartmentListDialogComponent } from '../../../../../shared/department-list-dialog/department-list-dialog.component';
+import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-group-dialog/consumer-group-dialog.component';
+import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
+import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
 
 
 @Component({
@@ -26,6 +32,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
   api_loading=true;
   title='';
   private subs = new SubSink();
+  userdialogRef: any;
+  consumerLabeldialogRef: any;
+  consumerGroupdialogRef: any;
+  departmentdialogRef: any;
+  itemdialogRef: any;
+  servicedialogRef: any;
   constructor(
     private wordProcessor: WordProcessor,
     private router: Router,
@@ -92,6 +104,99 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
     });
    
     
+  }
+  openServiceDialog() {
+    this.servicedialogRef = this.dialog.open(ServiceListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'services':  this.coupon.couponRules.policies.services,
+        'mode':'view'
+      }
+
+    });
+    this.servicedialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+  openItemDialog() {
+    this.itemdialogRef = this.dialog.open(ItemListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'items': this.coupon.couponRules.policies.items,
+        'mode':'view'
+      }
+
+    });
+    this.itemdialogRef.afterClosed().subscribe(result => {
+     
+    });
+
+  }
+  openDepartmentDialog() {
+    this.departmentdialogRef = this.dialog.open(DepartmentListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'departments': this.coupon.couponRules.policies.departments,
+        'mode':'view'
+      }
+
+    });
+    this.departmentdialogRef.afterClosed().subscribe(result => {
+     
+    });
+  }
+  openCustomerGroupDialog() {
+    this.consumerGroupdialogRef = this.dialog.open(ConsumerGroupDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'groups': this.coupon.couponRules.policies.consumerGroups,
+        'mode':'view'
+      }
+
+    });
+    this.consumerGroupdialogRef.afterClosed().subscribe(result => {
+     
+    });
+
+  }
+  openCustomerLabelDialog() {
+    this.consumerLabeldialogRef = this.dialog.open(ConsumerLabelDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'labels': this.coupon.couponRules.policies.consumerLabels,
+        'mode':'view'
+      }
+
+    });
+    this.consumerLabeldialogRef.afterClosed().subscribe(result => {
+     
+    });
+
+  }
+  openUserDialog() {
+    this.userdialogRef = this.dialog.open(UsersListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'users': this.coupon.couponRules.policies.users,
+        'mode':'view'
+      }
+
+    });
+    this.userdialogRef.afterClosed().subscribe(result => {
+     
+    });
   }
 
 }

@@ -109,7 +109,7 @@
                                                         *ngIf="coupon.couponRules.policies.services.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.services.length}} services
+                                                            <a href="javascript:" (click)="openServiceDialog();">{{coupon.couponRules.policies.services.length}} services</a> 
                                                         </span>
 
                                                     </div>
@@ -117,7 +117,7 @@
                                                         *ngIf="coupon.couponRules.policies.departments.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.departments.length}}
+                                                            <a href="javascript:" (click)="openDepartmentDialog();">{{coupon.couponRules.policies.departments.length}}</a> 
                                                             departments
                                                         </span>
 
@@ -126,7 +126,7 @@
                                                         *ngIf="coupon.couponRules.policies.users.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.users.length}} users
+                                                            <a href="javascript:" (click)="openUserDialog();">{{coupon.couponRules.policies.users.length}} users</a> 
                                                         </span>
 
                                                     </div>
@@ -134,7 +134,7 @@
                                                         *ngIf="coupon.couponRules.policies.consumerLabels.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.consumerLabels.length}} labels
+                                                            <a href="javascript:" (click)="openCustomerLabelDialog();">{{coupon.couponRules.policies.consumerLabels.length}} labels</a>
                                                         </span>
 
                                                     </div>
@@ -142,7 +142,7 @@
                                                         *ngIf="coupon.couponRules.policies.consumerGroups.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.consumerGroups.length}} groups
+                                                            <a href="javascript:" (click)="openCustomerGroupDialog();"> {{coupon.couponRules.policies.consumerGroups.length}} groups</a>
                                                         </span>
 
                                                     </div>
@@ -158,7 +158,7 @@
                                                         *ngIf="coupon.couponRules.policies.items.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.items.length}} items
+                                                            <a href="javascript:" (click)="openItemDialog();"> {{coupon.couponRules.policies.items.length}} items</a>
                                                         </span>
 
                                                     </div>
