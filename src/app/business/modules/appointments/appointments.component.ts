@@ -364,7 +364,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title) {
-      this.titleService.setTitle('Jaldee Business - Appointments');
+    this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -1238,6 +1238,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+      const qids = this.activeSchedules.map(q => q.id);
+      Mfilter['schedule-eq'] = qids.toString();
+    }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1392,6 +1396,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+      const qids = this.activeSchedules.map(q => q.id);
+      Mfilter['schedule-eq'] = qids.toString();
+    }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -2339,7 +2347,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
         this.image_list_popup_temp = [];
-        this.image_list_popup = []; 
+        this.image_list_popup = [];
         let count = 0;
         // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
         //   if (communications[comIndex].attachements) {
@@ -2364,22 +2372,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         //   }
         // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-             const thumbPath = communications[comIndex].thumbPath;
-              let imagePath = thumbPath;
-              const description = communications[comIndex].s3path;
-              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                imagePath = communications[comIndex].s3path;
-              }
-              const imgobj = new Image(
-                count,
-                { // modal
-                  img: imagePath,
-                  description: description
-                },
-              );
-              this.image_list_popup_temp.push(imgobj);
-              count++;
+          const thumbPath = communications[comIndex].thumbPath;
+          let imagePath = thumbPath;
+          const description = communications[comIndex].s3path;
+          const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+          if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            imagePath = communications[comIndex].s3path;
+          }
+          const imgobj = new Image(
+            count,
+            { // modal
+              img: imagePath,
+              description: description
+            },
+          );
+          this.image_list_popup_temp.push(imgobj);
+          count++;
         }
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
@@ -2718,4 +2726,3 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.apptStatuses.toString();
   }
 }
-
