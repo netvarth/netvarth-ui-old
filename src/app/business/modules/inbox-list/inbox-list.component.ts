@@ -229,7 +229,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         group[key] = group2;
       });
       this.userWithMsgCount = Object.keys(group).length;
-      this.onResize();
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
@@ -251,6 +250,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
+    this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       setTimeout(() => {
