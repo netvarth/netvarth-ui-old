@@ -345,6 +345,8 @@
                                                         </ng-container>
                                                         <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
                                                             Online Order</ng-container>
+                                                            <ng-container *ngIf="visit.orderMode === 'PHONE_ORDER'">
+                                                                    Phone in Order</ng-container>
                                                     </td>
                                                     <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
                                                             {{visit.totalAmountPaid |
@@ -406,6 +408,8 @@
                                                         </ng-container>
                                                         <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
                                                             Online Order</ng-container>
+                                                            <ng-container *ngIf="visit.orderMode === 'PHONE_ORDER'">
+                                                                    Phone in Order</ng-container>
                                                     </td>
                                                     <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
                                                             {{visit.totalAmountPaid |
@@ -601,6 +605,8 @@
                                                     </ng-container>
                                                     <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
                                                         Online Order</ng-container>
+                                                        <ng-container *ngIf="visit.orderMode === 'PHONE_ORDER'">
+                                                            Phone in Order</ng-container>
                                                 </td>
                                                 <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
                                                         {{visit.totalAmountPaid |
