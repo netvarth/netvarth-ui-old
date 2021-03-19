@@ -32,7 +32,7 @@ export class BusinessComponent implements OnInit {
   iswiz = false;
   smallMenuSection = false;
   screenWidth;
-  bodyHeight;
+  bodyHeight = 700;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,

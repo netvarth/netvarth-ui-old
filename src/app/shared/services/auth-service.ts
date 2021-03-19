@@ -36,9 +36,9 @@ export class AuthService {
     goThroughBusinessLogin() {
         return new Promise((resolve) => {
             const bPwd = this.lStorageService.getitemfromLocalStorage('bpwd');
-            const bUser = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+            let bUser = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-
+            bUser = JSON.parse(bUser);
             if (bUser && bPwd || (isProvider && isProvider === 'true')) {
                 const data = {
                     'countryCode': bUser.countryCode,
