@@ -801,7 +801,7 @@ button.fxmenu {
 
 .card.booking-card.items .ribbon-new {
     /* width: 100px; */
-    width: fit-content;
+    /* width: fit-content; */
     height: 30px;
     line-height: 30px;
     padding-left: 16px;

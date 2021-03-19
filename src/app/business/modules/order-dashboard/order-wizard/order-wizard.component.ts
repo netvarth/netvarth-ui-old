@@ -339,6 +339,12 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
 
 
   searchCustomer(form_data) {
+    this.image_list_popup = [];
+    this.selectedImagelist = {
+      files: [],
+      base64: [],
+      caption: []
+    };
     this.qParams = {};
     let mode = 'id';
     this.form_data = null;

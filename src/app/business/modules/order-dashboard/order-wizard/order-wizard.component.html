@@ -255,10 +255,10 @@
                           <div class="col-xs-12 col-sm-12  col-md-12 col-xl-6 col-lg-6 mb-3">
                           <div class="card" >
                               <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
-                                  <span *ngIf="!image_list_popup " (click)="uploadShoppingList()">
+                                  <span *ngIf="!image_list_popup || image_list_popup.length ==0" (click)="uploadShoppingList()">
                                     <a class="uploadshoppinglist-btn">Upload Shopping List</a>
                                   </span>
-                                  <div *ngIf="image_list_popup ">
+                                  <div *ngIf="image_list_popup && image_list_popup.length > 0">
                                     <ul class="shoppinglist-gal">
                                       <ng-container *ngFor="let file of image_list_popup;let i = index">
                                         <li *ngIf="i<2" class="shoppinglist-li">

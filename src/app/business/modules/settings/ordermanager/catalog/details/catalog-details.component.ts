@@ -274,6 +274,16 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     gotoNext() {
+        if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
+            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (this.payAdvance === 'FIXED' && this.step === 3) {
+            if (this.amForm.get('advancePayment').value === '') {
+                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+        }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 3;
         } 
@@ -943,16 +953,16 @@ console.log('hi submit');
             homeendDate = '';
         }
         
-        if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
-            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        if (this.payAdvance === 'FIXED') {
-            if (form_data.advancePayment === '') {
-                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-        }
+        // if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
+        //     this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // if (this.payAdvance === 'FIXED') {
+        //     if (form_data.advancePayment === '') {
+        //         this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+        //         return;
+        //     }
+        // }
         const postdata = {
             'catalogName': form_data.catalogName,
             'catalogDesc': form_data.catalogDesc,
