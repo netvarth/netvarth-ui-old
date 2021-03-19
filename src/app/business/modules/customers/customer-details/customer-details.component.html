@@ -384,9 +384,11 @@
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of futureordervisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 2)">
                                                 <ng-container >
-                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
+                                                        <td *ngIf="visit.storePickup"  class="consumer-dash consumer-appthistory"> <i class ="storepickup-icon"  [matTooltip]="'Store Pickup'" aria-hidden="true"></i> </td>
+                                                        <td  *ngIf="visit.homeDelivery"  class="consumer-dash consumer-appthistory"> <i class="delivery-icon"  [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
+                                                    <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
                                                         
-                                                    </td>
+                                                    </td> -->
                                                     <td> {{visit.orderDate | date: newDateFormat}}
                                                         <div *ngIf="visit.orderNumber">Order#
                                                             {{visit.orderNumber}} </div>
@@ -577,9 +579,11 @@
                                         <tr class="pointer-cursor cellhover" *ngFor="let visit of ordervisitDetails.historyOrders"
                                             (click)="gotoCustomerDetail(visit, 3)">
                                             <ng-container >
-                                                <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
+                                                    <td *ngIf="visit.storePickup"  class="consumer-dash consumer-appthistory"> <i class ="storepickup-icon"  [matTooltip]="'Store Pickup'" aria-hidden="true"></i> </td>
+                                                    <td  *ngIf="visit.homeDelivery"  class="consumer-dash consumer-appthistory"> <i class="delivery-icon"  [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
+                                                <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
                                                     
-                                                </td>
+                                                </td> -->
                                                 <td> {{visit.orderDate | date: newDateFormat}}
                                                     <div *ngIf="visit.orderNumber">Order#
                                                         {{visit.orderNumber}} </div> 
