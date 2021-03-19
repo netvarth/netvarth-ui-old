@@ -70,7 +70,7 @@
               <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                 <div class="or-style">OR</div>
                 <a class="underline" (click)="createNew()" *ngIf="source !== 'waitlist-block'"> Create a new
-                  {{customer_label}} and get {{(showtoken) ? 'token' : 'checkin'}} </a>
+                  {{customer_label}} and get {{(showtoken) ? 'token' : 'check-in'}} </a>
                 <a class="underline" (click)="createNew()" *ngIf="source === 'waitlist-block'"> Create a new
                   {{customer_label}} </a>
                 <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">New
@@ -340,7 +340,7 @@
                           <div class="queue-head">
                             <ng-container *ngIf="isFuturedate">
                               <span class="checkin-footer-date">
-                                <strong>{{nextavailableCaption}}
+                                <strong>{{nextavailableCaption}}:
                                   <span class="queue-avail-date">{{sel_checkindate | date: newDateFormat}},
                                     {{sel_queue_servicetime}}
                                   </span>
