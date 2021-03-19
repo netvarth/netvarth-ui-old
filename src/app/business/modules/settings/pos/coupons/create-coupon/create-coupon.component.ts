@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+// import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -7,7 +7,7 @@ import { TimewindowPopupComponent } from '../../../ordermanager/catalog/timewind
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
- import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { ServiceListDialogComponent } from '../../../../../shared/service-list-dialog/service-list-dialog.component';
 import { ItemListDialogComponent } from '../../../../../shared/item-list-dialog/item-list-dialog.component';
 import { DepartmentListDialogComponent } from '../../../../../shared/department-list-dialog/department-list-dialog.component';
@@ -19,6 +19,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { SubSink } from 'subsink';
+import { DOCUMENT } from '@angular/common';
 
 
 
@@ -76,21 +77,22 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   calculationType: any;
   published = false;
   private subscriptions = new SubSink();
-  weekdayError=false;
-  startDaterequired=false;
-  endDaterequired=false;
-  minbillamountError=false;
+  weekdayError = false;
+  startDaterequired = false;
+  endDaterequired = false;
+  minbillamountError = false;
   mxDate: Date;
-  @ViewChild('startDate') startDate: ElementRef;
+
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
-     private groupService: GroupStorageService,
+    private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
+    @Inject(DOCUMENT) public document,
     public dialog: MatDialog, ) {
     this.subscriptions.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
@@ -104,10 +106,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-     this.getCatalogs();
-     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
+    this.getCatalogs();
+    this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-  
+
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -256,7 +258,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
   handleCalculationType(event) {
     this.calculationType = event.value;
- 
+
 
   }
   handleBaseChange(event) {
@@ -302,48 +304,55 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.char_count = this.max_char_count - this.couponForm.get('description').value.length;
   }
   gotoNext() {
-    this.startDaterequired=false;
-    this.endDaterequired=false;
-    this.weekdayError=false;
-    this.minbillamountError=false;
-    if (this.step == 1) {
-      let nameControl = this.couponForm.get('name');
-      nameControl.markAsTouched();
-      let codeControl = this.couponForm.get('couponCode');
-      codeControl.markAsTouched();
-      let amountControl = this.couponForm.get('amount');
-      amountControl.markAsTouched();
-      let calmodeControl = this.couponForm.get('calculationType');
-      calmodeControl.markAsTouched();
+    this.startDaterequired = false;
+    this.endDaterequired = false;
+    this.weekdayError = false;
+    this.minbillamountError = false;
+    if (this.action === 'edit' && this.couponDetails.couponRules.published) {
+      this.step = this.step + 1;
+    } else {
+      if (this.step == 1) {
+        let nameControl = this.couponForm.get('name');
+        nameControl.markAsTouched();
+        let codeControl = this.couponForm.get('couponCode');
+        codeControl.markAsTouched();
+        let amountControl = this.couponForm.get('amount');
+        amountControl.markAsTouched();
+        let calmodeControl = this.couponForm.get('calculationType');
+        calmodeControl.markAsTouched();
 
-      if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
-        this.step = this.step + 1;
-        this.startDate.nativeElement.focus();
-      } else {
-        return;
+        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
+          this.step = this.step + 1;
+          let elem = this.document.getElementById("start");
+          if (typeof elem !== null && elem !== 'undefined' && elem !== null) {
+            elem.focus();
+          }
+
+
+        }
+      } else if (this.step == 2) {
+        const startDateVal = this.couponForm.get('couponRules').get('startDate').value;
+        const endDateVal = this.couponForm.get('couponRules').get('endDate').value;
+        const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
+        if (startDateVal == null || startDateVal == undefined || startDateVal == '') {
+          this.startDaterequired = true;
+        }
+        if (endDateVal == null || endDateVal == undefined || endDateVal == '') {
+          this.endDaterequired = true;
+        }
+        if (minbillamountval == null || minbillamountval == '' || minbillamountval == undefined) {
+          this.minbillamountError = true;
+        }
+        if (this.selday_arr.length == 0) {
+          this.weekdayError = true;
+        }
+
+        if (this.startDaterequired == false && this.endDaterequired === false && this.weekdayError === false) {
+          this.step = this.step + 1;
+        }
       }
-    }else if(this.step==2){
-      const startDateVal=this.couponForm.get('couponRules').get('startDate').value;
-      const endDateVal=this.couponForm.get('couponRules').get('endDate').value;
-      const minbillamountval=this.couponForm.get('couponRules').get('minBillAmount').value;
-    if(startDateVal==null||startDateVal==undefined ||startDateVal==''){
-      this.startDaterequired=true;
     }
-    if(endDateVal==null||endDateVal==undefined||endDateVal=='' ){
-      this.endDaterequired=true;
-    }
-    if(minbillamountval==null||minbillamountval==''||minbillamountval==undefined){
-      this.minbillamountError=true;
-    }
-     if(this.selday_arr.length==0){
-       this.weekdayError=true;
-     }
-     if(this.couponForm.get)
-     if(this.startDaterequired==false &&this.endDaterequired===false && this.weekdayError===false){
-       this.step=this.step+1;
-     }
-    }
-    // this.step = this.step + 1;
+
 
 
   }
@@ -353,43 +362,59 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
   resetApiErrors() {
   }
-  compareDate(dateValue, startOrend) {
+  checkSameDay(date) {
+    if (moment(new Date(date)).isSame(moment(), 'day')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  checkDayBeforeToday(date) {
+    if (moment(new Date(date)).isBefore(new Date(), 'day')) {
+      return true;
+    }
+    else { return false; }
+  }
+  checkDayisBeforeEndDate(sDate, eDate) {
+    if (moment(new Date(sDate),'day').isBefore(new Date(eDate),'day')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  compareDate( startOrend) {
     this.startdateError = false;
     this.enddateError = false;
     const sDate = this.couponForm.get('couponRules').get('startDate').value;
     const eDate = this.couponForm.get('couponRules').get('endDate').value;
     if (startOrend === 0) {
-      this.startDaterequired=false;
-      if (moment(new Date(sDate)).isSame(moment(), 'day')) {
-        return this.startdateError = false;
-      } else if (moment(new Date(sDate)).isBefore(new Date())) {
+      this.startDaterequired = false;
+      if (!this.checkSameDay(sDate)) {
         return this.startdateError = true;
       }
-      else if (eDate!=null && moment(new Date(sDate)).isAfter(new Date(eDate))) {
+      if (this.checkDayBeforeToday(sDate)) {
         return this.startdateError = true;
-      } else {
-        return this.startdateError = false;
       }
+     
 
     } else if (startOrend === 1) {
-      this.endDaterequired=false;
+      this.endDaterequired = false;
 
-      if (sDate!=null && moment(new Date(sDate)).isSame(moment(), 'day')) {
-        return this.startdateError = false;
-      }
-      if (moment(new Date(sDate)).isAfter( new Date(eDate))) {
-        return this.startdateError = true;
-      } 
-      if (moment(new Date(eDate)).isBefore( new Date(sDate))) {
+      if (!this.checkSameDay(eDate)) {
         return this.enddateError = true;
-      }else {
-        return this.enddateError = false;
       }
+      if (this.checkDayBeforeToday(eDate)) {
+        return this.enddateError = true;
+      }
+      if(this.checkDayisBeforeEndDate(sDate,eDate)){
+        return this.enddateError=true;
+      }
+     
 
     }
   }
   handleDaychange(index) {
-    this.weekdayError=false;
+    this.weekdayError = false;
     const selindx = this.selday_arr.indexOf(index);
     if (selindx === -1) {
       this.selday_arr.push(index);
@@ -516,73 +541,73 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     const form_data = this.couponForm.value;
-   if(this.checkpoliciesEntered(form_data)){
-    const timeRangeObject = [{
-      'recurringType': 'Weekly',
-      'repeatIntervals': this.selday_arr,
-      'timeSlots': this.timewindow_list,
-      'startDate': form_data.couponRules.startDate,
-      'terminator': {
-        'endDate': form_data.couponRules.endDate,
-        'noOfOccurance': ''
-      },
-    }];
+    if (this.checkpoliciesEntered(form_data)) {
+      const timeRangeObject = [{
+        'recurringType': 'Weekly',
+        'repeatIntervals': this.selday_arr,
+        'timeSlots': this.timewindow_list,
+        'startDate': form_data.couponRules.startDate,
+        'terminator': {
+          'endDate': form_data.couponRules.endDate,
+          'noOfOccurance': ''
+        },
+      }];
 
 
-    form_data.couponRules.validTimeRange = timeRangeObject;
-    if (form_data.couponRules.policies.isServiceBased && !this.couponBasedOnValue.includes('ServiceBased')) {
-      this.couponBasedOnValue.push('ServiceBased');
-    }
-    if (form_data.couponRules.maxDiscountValue) {
-      const discountVal = Number(form_data.couponRules.maxDiscountValue).toFixed(2);
-      form_data.couponRules.maxDiscountValue = discountVal;
-    }
-    if (form_data.couponRules.policies.isCatalogBased && !this.couponBasedOnValue.includes('CatalogueBased')) {
-      this.couponBasedOnValue.push('CatalogueBased');
+      form_data.couponRules.validTimeRange = timeRangeObject;
+      if (form_data.couponRules.policies.isServiceBased && !this.couponBasedOnValue.includes('ServiceBased')) {
+        this.couponBasedOnValue.push('ServiceBased');
+      }
+      if (form_data.couponRules.maxDiscountValue) {
+        const discountVal = Number(form_data.couponRules.maxDiscountValue).toFixed(2);
+        form_data.couponRules.maxDiscountValue = discountVal;
+      }
+      if (form_data.couponRules.policies.isCatalogBased && !this.couponBasedOnValue.includes('CatalogueBased')) {
+        this.couponBasedOnValue.push('CatalogueBased');
 
-    }
-   
-    if (form_data.couponRules.policies.isServiceBased) {
-      form_data.couponRules.policies.services = this.services;
-    }
+      }
 
-    if (form_data.couponRules.policies.isDepartment) {
-      form_data.couponRules.policies.departments = this.departments;
+      if (form_data.couponRules.policies.isServiceBased) {
+        form_data.couponRules.policies.services = this.services;
+      }
 
-    }
-  
-    if (form_data.couponRules.policies.isUser) {
-      form_data.couponRules.policies.users = this.users;
+      if (form_data.couponRules.policies.isDepartment) {
+        form_data.couponRules.policies.departments = this.departments;
 
-    }
+      }
 
-    if (form_data.couponRules.policies.isItem) {
-      form_data.couponRules.policies.items = this.items;
+      if (form_data.couponRules.policies.isUser) {
+        form_data.couponRules.policies.users = this.users;
 
-    }
-    if (form_data.couponRules.policies.isCustomerGroup) {
-      form_data.couponRules.policies.customerGroup = this.customer_groups;
+      }
 
-    }
-    if (form_data.couponRules.policies.isCustomerLabel) {
-      form_data.couponRules.policies.customerLabel = this.customer_labels;
+      if (form_data.couponRules.policies.isItem) {
+        form_data.couponRules.policies.items = this.items;
 
+      }
+      if (form_data.couponRules.policies.isCustomerGroup) {
+        form_data.couponRules.policies.customerGroup = this.customer_groups;
+
+      }
+      if (form_data.couponRules.policies.isCustomerLabel) {
+        form_data.couponRules.policies.customerLabel = this.customer_labels;
+
+      }
+      form_data.couponBasedOn = this.couponBasedOnValue;
+      delete form_data.couponRules.policies.isDepartment;
+      delete form_data.couponRules.policies.isUser;
+      delete form_data.couponRules.policies.isItem;
+      delete form_data.couponRules.policies.isCustomerGroup;
+      delete form_data.couponRules.policies.isCustomerLabel;
+      delete form_data.couponRules.policies.isServiceBased;
+      delete form_data.couponRules.policies.isCatalogBased;
+
+      if (this.action === 'edit') {
+        this.updateCoupon(form_data);
+      } else {
+        this.createCoupon(form_data);
+      }
     }
-    form_data.couponBasedOn = this.couponBasedOnValue;
-    delete form_data.couponRules.policies.isDepartment;
-    delete form_data.couponRules.policies.isUser;
-    delete form_data.couponRules.policies.isItem;
-    delete form_data.couponRules.policies.isCustomerGroup;
-    delete form_data.couponRules.policies.isCustomerLabel;
-    delete form_data.couponRules.policies.isServiceBased;
-    delete form_data.couponRules.policies.isCatalogBased;
-  
-    if (this.action === 'edit') {
-      this.updateCoupon(form_data);
-    } else {
-      this.createCoupon(form_data);
-    }
-  }
 
   }
 
@@ -617,25 +642,25 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['provider', 'settings', 'pos', 'coupon'], navigationExtras);
   }
-  checkpoliciesEntered(form_data){
-    let policiesEntered=true;
-    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased ) {
+  checkpoliciesEntered(form_data) {
+    let policiesEntered = true;
+    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased) {
       this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
-       policiesEntered=false;
+      policiesEntered = false;
     }
-    if (form_data.couponRules.policies.isServiceBased ) {
-      if(this.services.length===0&& this.departments.length===0 && this.users.length==0){
-      this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
-       policiesEntered=false;
+    if (form_data.couponRules.policies.isServiceBased) {
+      if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0) {
+        this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
+        policiesEntered = false;
       }
     }
     if (form_data.couponRules.policies.isCatalogBased) {
-      let catalog=form_data.couponRules.policies.catalogues;
-      if(catalog==''||catalog==undefined ||catalog==null){
-      this.snackbarService.openSnackBar('Please choose the catalog', { 'panelClass': 'snackbarerror' });
-       policiesEntered=false;
+      let catalog = form_data.couponRules.policies.catalogues;
+      if (catalog == '' || catalog == undefined || catalog == null) {
+        this.snackbarService.openSnackBar('Please choose the catalog', { 'panelClass': 'snackbarerror' });
+        policiesEntered = false;
+      }
     }
-  }
 
     return policiesEntered;
   }

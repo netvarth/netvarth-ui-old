@@ -16,12 +16,13 @@ export class UsersListDialogComponent implements OnInit,OnDestroy {
   selectedUsers: any = [];
 loading=true;
 subscription:Subscription;
+  mode: any;
   constructor(public dialogRef: MatDialogRef<UsersListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private provider_services: ProviderServices) {
     this.former_chosen_users = this.data.users;
-
+    this.mode=this.data.mode;
 
 
   }

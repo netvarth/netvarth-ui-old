@@ -15,13 +15,14 @@ loading=true;
   consumer_labels: any = [];
   selectedLabels: any = [];
   subscription: Subscription;
+  mode: any;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerLabelDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private provider_services: ProviderServices) {
-
+      this.mode=this.data.mode;
   }
 
   ngOnInit(): void {
