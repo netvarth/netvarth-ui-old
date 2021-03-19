@@ -177,7 +177,7 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>Start Date <span>(Valid From)</span></label>
-                            <input class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate($event.value,0)"
+                            <input #startDate class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate($event.value,0)"
                               placeholder="Valid From" formControlName="startDate" />
                           </div>
                           <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -81,6 +81,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   endDaterequired=false;
   minbillamountError=false;
   mxDate: Date;
+  @ViewChild('startDate') startDate: ElementRef;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -317,6 +318,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
       if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
         this.step = this.step + 1;
+        this.startDate.nativeElement.focus();
       } else {
         return;
       }

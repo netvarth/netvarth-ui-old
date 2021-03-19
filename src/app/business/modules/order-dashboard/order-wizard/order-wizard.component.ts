@@ -1068,10 +1068,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       }
     }
     if (this.choose_type === 'store') {
+      console.log('inisde' +this.orderType);
+      
       const contactNumber = this.customer_data.phoneNo;
       const contact_email = this.customer_data.email;
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
+      }
         if(this.orderType === 'SHOPPINGLIST'){
           const post_Data = {
             'storePickup': true,
@@ -1099,6 +1102,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           console.log(post_Data);
           this.confirmOrder(post_Data);
         }else {
+          console.log('progress');
+          
           const post_Data = {
             'storePickup': true,
             'catalog': {
@@ -1128,12 +1133,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         }
         
         //  }
-      }
+      
     }
 
   }
   getOrderItems() {
-
+    console.log('orderitems');
+    
     this.orderSummary = [];
     this.orders.forEach(item => {
       let consumerNote = '';
