@@ -32,17 +32,4 @@ export class S3UrlProcessor {
         path = path + '/' + listOfUrlTypes;
         return this.servicemeta.httpGet(path);
     }
-
-    /**
-     * Method which returns S3 json data
-     * @param s3Url Presigned Url to fetch the data eg. https://presigned1/services..
-     * @returns returns s3 json data. eg. returns service.json from s3
-     */
-    getDataFromS3Url (s3Url, UTCstring) {
-        let path = s3Url;
-        if (UTCstring !== null) {
-            path = path + '?modifiedDate=' + UTCstring;
-        }
-        return this.servicemeta.httpGet(path);
-    }
 }
