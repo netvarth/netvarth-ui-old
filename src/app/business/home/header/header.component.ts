@@ -95,8 +95,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.alertCnt = message.alertCnt;
           // this.getAlertCount();
           break;
-        case 'unreadCount':
+        case 'messageCount':
           this.inboxUnreadCnt = message.unreadCount;
+          this.inboxCntFetched = message.messageFetched;
           break;
         case 'showmenu':
           this.showMenuSection = message.value;
