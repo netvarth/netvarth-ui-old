@@ -119,6 +119,8 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.getLabel();
     this.getDefaultCatalogStatus();
     this.doSearch();
+    this.getProviderTodayOrdersCount();
+    this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
     this.subs.sink= observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
@@ -435,7 +437,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       this.getProviderTodayOrdersCount();
     }
     if (this.selectedTab === 2) {
-      this.getProviderFutureOrders();
+      this.getProviderFutureOrders(); 
       this.getProviderFutureOrdersCount();
     }
   }
