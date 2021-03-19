@@ -4,8 +4,8 @@
 .dropdown:hover {
     background: #F3F6F9 !important;
 }
-.bg-whiite {
-    background: white !important;
+.bg-black {
+    background: black !important;
 }
 @media (max-width: 991px) {
     .topbar-mobile-on {
@@ -81,13 +81,6 @@
     text-align: center !important;
     padding: 10px !important;
 }
-.img-section img {
+.img-section img {    
     width: 120px;
-    height: 47px;
-}
-.img-section {
-    margin: auto;
-}
-.topbar {
-    border-top: 1px solid #dddd !important;
 }

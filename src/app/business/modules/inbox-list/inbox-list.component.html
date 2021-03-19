@@ -19,7 +19,7 @@
                         <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="showEnquiry">
                             <div class="enq-box" *ngFor="let enquiry of enquiries">
                                 <div class="user-name cont1">
-                                    {{getUser(enquiry.accountName)}}
+                                    {{getUserShort(enquiry.accountName)}}
                                 </div>
                                 <div class="cont2 mgn-lt-5">
                                     {{enquiry.accountName}}
@@ -76,7 +76,7 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50 mr-3">
                                                             <div class="user-name">
-                                                                {{getUser(user.key)}}
+                                                                {{getUserShort(user.key)}}
                                                                 <!--   <div class="display-none" #userMsg> {{user.key}} </div>-->
                                                             </div>
                                                         </div>

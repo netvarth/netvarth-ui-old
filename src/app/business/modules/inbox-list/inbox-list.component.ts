@@ -297,7 +297,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName) ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -349,11 +349,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       caption: []
     };
   }
-  getUser(user, type?) {
-    if (!type) {
-      user = user.split('=');
-      user = user[0];
-    }
+  getUserShort(user) {
+    user = user.split('=');
+    user = user[0];
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
