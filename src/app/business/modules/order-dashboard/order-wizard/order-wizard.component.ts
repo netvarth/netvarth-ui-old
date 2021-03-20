@@ -514,7 +514,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
-            this.timings_title="Pickup Timings";
+            this.timings_title=" Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -975,7 +975,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       this.store_pickup = true;
       this.choose_type = 'store';
       this.storeChecked = true;
-      this.timings_title="Pickup Timings";
+      this.timings_title=" Store Pickup Timings";
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);

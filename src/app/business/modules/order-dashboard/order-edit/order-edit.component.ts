@@ -454,7 +454,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
-            this.timings_title="Pickup Timings";
+            this.timings_title="Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -835,7 +835,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
-      this.timings_title="Pickup Timings";
+      this.timings_title="Store Pickup Timings";
       this.storeChecked = true;
       if (this.orderDetails.storePickup) {
         this.sel_checkindate = this.orderDetails.orderDate;
