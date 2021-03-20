@@ -1507,7 +1507,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
-  imageSelect(input, type) {
+  imageSelect(input, type?) {
     this.success_error = null;
     this.error_list = [];
     if (input.files && input.files[0]) {

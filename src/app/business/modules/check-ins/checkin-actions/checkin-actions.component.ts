@@ -10,7 +10,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { NavigationExtras, Router } from '@angular/router';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../apply-label/apply-label.component';
-declare let cordova: any;
 import { SharedServices } from '../../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -24,6 +23,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+declare let cordova: any;
 
 
 @Component({
