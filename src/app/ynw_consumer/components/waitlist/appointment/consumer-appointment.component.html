@@ -104,7 +104,7 @@
                                             <div
                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt mgn-lt-10">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
                                                         *ngIf="this.selectedUserParam && selectedUser">
                                                         <div class="col-sm-3 col-xs-4 col-md-4 ">
@@ -185,7 +185,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0 mgn-lt-10">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
@@ -215,7 +215,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group pad-rt-0">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group pad-rt-0 mgn-lt-10">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
@@ -349,7 +349,7 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="type != 'reschedule'"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
                                                 <button type="button"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"
@@ -788,7 +788,7 @@
                                             [serviceId]="sel_ser" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your appointment details</div>
