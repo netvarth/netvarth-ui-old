@@ -104,7 +104,7 @@
                                             <div
                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt mgn-lt-10">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
                                                         *ngIf="this.selectedUserParam && selectedUser">
                                                         <div class="col-sm-2 col-xs-3 col-md-4 ">
@@ -184,7 +184,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0 mgn-lt-10">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                         *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                                         <div
@@ -198,20 +198,11 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                             <h6 class="card-title serv-time border-style">
                                                                 <span *ngIf="!isFuturedate">Today, </span>
-                                                                <span *ngIf="!isFuturedate">
-                                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
-                                                                    + '
-                                                                    - ' +
-                                                                    queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
-                                                                </span>
-                                                                <span *ngIf="isFuturedate">{{sel_checkindate | date:
+                                                                <span *ngIf="isFuturedate">{{selectedDate | date:
                                                                     newDateFormat}},
                                                                 </span>
-                                                                <span *ngIf="isFuturedate">
-                                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
-                                                                    + '
-                                                                    - ' +
-                                                                    queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                                <span>
+                                                                    {{selectedQTime}}
                                                                 </span>
                                                             </h6>
                                                         </div>
@@ -221,29 +212,26 @@
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                             <h6 class="card-title serv-time">
-                                                                <span *ngIf="sel_queue_personaahead <= 0">0
+                                                                <span *ngIf="personsAhead <= 0">0
                                                                     People</span>
-                                                                <span *ngIf="sel_queue_personaahead == 1">1<span>
+                                                                <span *ngIf="personsAhead == 1">1<span>
                                                                         Person</span></span>
-                                                                <span
-                                                                    *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+                                                                <span *ngIf="personsAhead > 1">{{personsAhead}}<span>
                                                                         People</span></span>
                                                                 <span *ngIf="calc_mode=='NoCalc'">
                                                                     <span *ngIf="!isFuturedate">
                                                                     </span>
                                                                 </span>
-                                                                <span
-                                                                    *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                                                                <span *ngIf="serviceTime=='' && calc_mode!='NoCalc'">
                                                                     <span class="color-grey">\</span>
-                                                                    <span>{{sel_queue_waitingmins}}</span>
+                                                                    <span>{{waitingTime}}</span>
                                                                 </span>
-                                                                <span
-                                                                    *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
+                                                                <span *ngIf="serviceTime!='' && calc_mode!='NoCalc'">
                                                                     <ng-container *ngIf="isFuturedate">
                                                                     </ng-container>
                                                                     <ng-container *ngIf="!isFuturedate">
                                                                         <span><span class="color-grey"> \
-                                                                            </span>{{sel_queue_servicetime}}</span>
+                                                                            </span>{{serviceTime}}</span>
                                                                     </ng-container>
                                                                 </span>
                                                             </h6>
@@ -259,7 +247,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group mgn-lt-10">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
@@ -415,7 +403,7 @@
                                                     <div class="modal-content">
                                                         <div class="close-btn">
                                                             <button type="button" class="close" aria-label="Close"
-                                                                data-dismiss="modal">
+                                                                data-dismiss="modal" (click)="popupClosed()">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -934,34 +922,30 @@
                                             <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
                                             <div class="mgn-bt-5">
                                                 <span *ngIf="!isFuturedate">Today, </span>
-                                                <span *ngIf="isFuturedate">{{sel_checkindate | date:
+                                                <span *ngIf="isFuturedate">{{selectedDate | date:
                                                     newDateFormat}},
                                                 </span>
                                                 <span>
-                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
-                                                    + '
-                                                    - ' +
-                                                    queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                    {{selectedQTime}}
                                                 </span>
                                             </div>
                                             <div class="no-mgn-bt bold"> Waiting in line</div>
                                             <div class="mgn-bt-10 pad-bt-10">
-                                                <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
-                                                <span *ngIf="sel_queue_personaahead == 1">1<span>
+                                                <span *ngIf="personsAhead <= 0">0 People</span>
+                                                <span *ngIf="personsAhead == 1">1<span>
                                                         Person</span></span>
-                                                <span
-                                                    *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+                                                <span *ngIf="personsAhead > 1">{{personsAhead}}<span>
                                                         People</span>
                                                 </span>
-                                                <span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                                                <span *ngIf="serviceTime=='' && calc_mode!='NoCalc'">
                                                     <span class="color-grey">\</span>
-                                                    <span>{{sel_queue_waitingmins}}</span>
+                                                    <span>{{waitingTime}}</span>
 
                                                 </span>
-                                                <span *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
+                                                <span *ngIf="serviceTime!='' && calc_mode!='NoCalc'">
                                                     <ng-container *ngIf="!isFuturedate">
                                                         <span><span class="color-grey"> \
-                                                            </span>{{sel_queue_servicetime}}</span>
+                                                            </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
                                             </div>

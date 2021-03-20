@@ -1414,7 +1414,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        caption: 'Enquiry',
+        // caption: 'Enquiry',
         user_id: provid,
         source: 'consumer-common',
         type: 'send',

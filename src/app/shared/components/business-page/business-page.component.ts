@@ -1392,7 +1392,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        caption: 'Enquiry',
+        // caption: 'Enquiry',
         user_id: provid,
         userId: this.userId,
         source: 'consumer-common',

@@ -135,6 +135,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     activeWt;
     searchForm: FormGroup;
     apptTime = '';
+    selectedApptTime = '';
     allSlots: any = [];
     availableSlots: any = [];
     data;
@@ -213,6 +214,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     apiSuccess = '';
     questionAnswers;
     googleMapUrl;
+    selectedDate;
     private subs = new SubSink();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -245,7 +247,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.futureAppt = params.futureAppt;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = params.sel_date;
+                this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
                 if (params.dept) {
@@ -334,7 +336,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 const serverdate = moment(server).format();
                 const servdate = new Date(serverdate);
                 const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
             }
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -367,7 +369,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
-                this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
+                this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.appointment.appmtDate;
                 this.sel_ser = this.appointment.service.id;
                 this.holdselectedTime = this.appointment.appmtTime;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -526,7 +528,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
-    getAvailableSlotByLocationandService(locid, servid, pdate, accountid) {
+    getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
@@ -552,6 +554,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = false;
+                }
+                if (type) {
+                    this.selectedApptTime = this.apptTime;
                 }
                 this.api_loading1 = false;
             });
@@ -579,10 +584,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    checkFutureorToday() {
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -590,7 +598,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             this.isFuturedate = false;
         }
-        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     handleApptClicked() {
         this.apptdisable = true;
@@ -644,9 +651,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         const post_Data = {
             'schedule': {
-                'id': this.apptTime['scheduleId']
+                'id': this.selectedApptTime['scheduleId']
             },
-            'appmtDate': this.sel_checkindate,
+            'appmtDate': this.selectedDate,
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
@@ -687,9 +694,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.apptdisable = true;
         const post_Data = {
             'uid': this.rescheduleUserId,
-            'time': this.apptTime['time'],
-            'date': this.sel_checkindate,
-            'schedule': this.apptTime['scheduleId']
+            'time': this.selectedApptTime['time'],
+            'date': this.selectedDate,
+            'schedule': this.selectedApptTime['scheduleId']
         };
         this.subs.sink = this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(
@@ -746,7 +753,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     handleOneMemberSelect(id, firstName, lastName) {
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
@@ -754,7 +761,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
         } else {
             let exists = false;
             let existindx = -1;
@@ -768,7 +775,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime['time'] });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.selectedApptTime['time'] });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -883,17 +890,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.sel_checkindate = ndate;
             this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
@@ -990,7 +986,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
-                    this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id);
+                    this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id, 'init');
                     if (this.type != 'reschedule') {
                         this.getConsumerQuestionnaire();
                     }
@@ -1056,7 +1052,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        this.waitlist_for[0].apptTime = this.apptTime['time'];
+        // this.waitlist_for[0].apptTime = this.apptTime['time'];
     }
     getProfile() {
         const _this = this;
@@ -1300,7 +1296,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     goBack(type?) {
         if (type) {
-            this.location.back();
+            if (this.bookStep === 1) {
+                this.location.back();
+            } else {
+                this.bookStep = 1;
+            }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
@@ -1382,7 +1382,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.apptTime['time'] === this.holdselectedTime) {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
             return true;
         } else {
             return false;
@@ -1613,6 +1613,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
+        if (this.action === 'slotChange') {
+            this.selectedDate = this.sel_checkindate;
+            this.checkFutureorToday();
+            this.selectedApptTime = this.apptTime;
+            this.waitlist_for[0].apptTime = this.apptTime['time'];
+        }
         if (this.action === 'members') {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
@@ -1623,7 +1629,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.applyCoupons();
         }
     }
-
+    popupClosed() {
+        this.sel_checkindate = this.selectedDate;
+        this.checkFutureorToday();
+        this.apptTime = this.selectedApptTime;
+        this.waitlist_for[0].apptTime = this.apptTime['time'];
+    }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
     }
