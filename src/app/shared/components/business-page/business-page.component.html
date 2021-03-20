@@ -1,6 +1,6 @@
 <section class="content bus-page">
     <div class="container">
-        <div class="row pad-bt-10">
+        <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
                 <div class="panel-heading top-row" *ngIf="pSource && pSource == 'bp'">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -14,18 +14,18 @@
                 <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3">
-                        <div class="badge-smalldv  visible-xs">
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
+                        <div class="badge-smalldv  visible-xs visible-sm">
+                            <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                     class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                            <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
                                     class="img_sizenew" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                            <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
                                     class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
-                                class="img-circle img-responsive pointer-cursor" [ngClass]="{'cvr-dp-bdr': bgCover}"
+                                class="img-circle img-responsive cvr-dp pointer-cursor" [ngClass]="{'cvr-dp-bdr': bgCover}"
                                 (click)="galleryExists && openImageModalRow(image_list_popup[0])">
                         </div>
                         <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">
@@ -37,18 +37,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 mgn-bt-10 no-padding bus-title-content"
+                    <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="businessjson">
-                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding">
-                            <div class="no-padding"
-                                [ngClass]="{'col-md-9 col-sm-9':(businessjson.verifyLevel == 'BASIC' ||
+                        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
+                            <div class="no-padding right-padding-md-15"
+                                [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
-                                <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
+                                <h3 class="business-name" *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
                                 </h3>
-                                <h3 class="font_user_size" *ngIf="businessjson.businessUserName">
+                                <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
                                     {{businessjson.businessUserName | capitalizeFirst}}
                                 </h3>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
+                                <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
@@ -62,7 +62,7 @@
                                             2).join(',').length)}}</a>
                                     </h6>
                                 </div>
-                                <div class="question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
+                                <div class="about question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
                                     *ngIf="bNameStart!='' || bNameEnd!=''">
                                     <div class="question-outer">
                                         <ng-container>
@@ -81,13 +81,13 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1" class="question-header mgn-up-5">
+                                <div *ngIf="specializationslist.length == 1" class="specialization-header question-header mgn-up-5">
                                     Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1" class="question-header mgn-up-5">
+                                <div *ngIf="specializationslist.length > 1" class="specialization-header question-header mgn-up-5">
                                     Specializations
                                 </div>
-                                <div class="question-value1">
+                                <div class="specialization-value question-value1">
                                     <ul class="comma-list"> 
                                         <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
@@ -100,8 +100,121 @@
                                             (click)="showSpec()">less</li> -->
                                     </ul>
                                 </div>
+
+                                <div class="showmoresec" *ngIf="showMore">
+                                    <div class="" *ngIf="showMore">
+                                        <div class="">
+                                            <div class="question-main-outer" *ngIf="!userId">
+                                                <div class="question-header">Area of Specialization</div>
+                                                <div class="question-value1">{{businessjson.serviceSubSector.displayName |
+                                                    capitalizeFirst}}</div>
+                                            </div>
+                                            <div class="question-main-outer"
+                                                *ngFor="let vfield of virtualfieldsCombinedjson">
+                                                <div class="question-outer" *ngIf="vfield.value">
+                                                    <ng-container>
+                                                        <div class="question-header">{{vfield.displayName}}</div>
+                                                        <div class="question-value1" *ngIf="vfield.type!= 'object'"
+                                                            [innerHTML]="wordProcessor.firstToUpper(vfield.value) | nl2br">
+                                                        </div>
+                                                        <div class="question-valuearr" *ngIf="vfield.type== 'object'">
+                                                            <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
+                                                                <li class="vfield-row" *ngIf="vals.length">
+                                                                    <span *ngFor="let field of vals; let i=index"
+                                                                        class="morevalspan">
+                                                                        {{field}}<span *ngIf="i <= (vals.length-2)">, </span>
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="question-main-outer"
+                                                *ngIf="socialMedialist.length>0">
+                                                <div class="question-header">Social Media Links and Listing Sites</div>
+                                                <div class="question-value1">
+                                                    <ul class="details socialmedia m0 no-padding">
+                                                        <li *ngFor="let soc of socialMedialist"><a rel="noopener" [href]="soc.value"
+                                                            target="_blank"><i [class]="getSocialdet(soc.resource, 'iconClass')"
+                                                            [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
+                                                (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
+                                                selectedLocation?.locationVirtualFields?.docambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.veterinaryemergencyservices=='true' || selectedLocation?.locationVirtualFields?.firstaid=='true'
+                                                || selectedLocation?.locationVirtualFields?.deliveryoptions=='true'">
+                                                <div class="question-header">Amenities</div>
+                                                <div class="question-value1">
+                                                    <ul class="details badges m0 no-padding">
+                                                        <ng-container *ngIf="selectedLocation">
+                                                            <li *ngIf="selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none'"
+                                                                [matTooltip]="'Parking Type: ' + selectedLocation.parkingType">
+                                                                <span class="icon-parking"></span>
+                                                            </li>
+                                                            <li
+                                                                *ngIf="selectedLocation.open24hours && selectedLocation.open24hours==1">
+                                                                <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span>
+                                                            </li>
+                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.traumacentre=='true'"
+                                                                [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
+                                                            </li>
+                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.docambulance=='true'"
+                                                                [matTooltip]="'Ambulance Services'"><span
+                                                                class="icon-ambulance"></span>
+                                                            </li>
+                                                            <li [matTooltip]="'Emergency Services'" *ngIf="selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                                                selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
+                                                                selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
+                                                                selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
+                                                                selectedLocation?.locationVirtualFields?.veterinaryemergencyservices=='true'">
+                                                                <span class="icon-emergency"></span>
+                                                            </li>
+                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.firstaid=='true'"
+                                                                [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
+                                                            </li>
+                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.deliveryoptions=='true'"
+                                                                [matTooltip]="'Delivery'"><span class="fa delivery-amenity"></span>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="question-main-outer"
+                                                *ngIf="phonelist.length > 0 || emaillist.length > 0">
+                                                <div class="question-header">Contact Details</div>
+                                                <div class="question-value1">
+                                                    <ul class="details m0 no-padding">
+                                                        <li class="m0" *ngIf="phonelist.length > 0">
+                                                            <span style="display: block !important; font-weight: 700 !important;" 
+                                                                *ngFor="let phone of phonelist">
+                                                                <span class="glyphicon glyphicon-user one" style="width:20px"
+                                                                [matTooltip]="phone.label | capitalizeFirst">
+                                                            </span>{{businessjson.countryCode}} {{phone.instance}}</span>
+                                                        </li>
+                                                        <li class="m0" *ngIf="emaillist.length > 0">
+                                                            <span style="display: block !important; font-weight: 700 !important;" 
+                                                                *ngFor="let email of emaillist"><span
+                                                                class="glyphicon glyphicon-envelope one" style="width:20px"
+                                                                [matTooltip]="email.label | capitalizeFirst"></span>{{email.instance}}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-sm-3 visible-sm">
+                            <!-- <div class="col-sm-3 visible-sm">
                                 <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                         class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                                 <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
@@ -109,16 +222,16 @@
                                         alt="Basic Plus"></span>
                                 <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                        <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                             <div class="verify hidden-xs hidden-sm">
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                                <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                         class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                                <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
                                         class="img_sizenew" src="./assets/images/BasicPlsOrg.png"
                                         alt="Basic Plus"></span>
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                                <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
                             <ul class="bus-actions no-padding mgn-up-10 visible-md visible-lg"
@@ -128,53 +241,56 @@
                                         {{add_to_fav_cap}}
                                     </a>
                                 </li> -->
-                                <li>
+                                <li class="message">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
                                             {{send_msgs_cap}}
                                         </span>
                                     </a>
                                 </li>
-                                <li>
+                                <li class="share">
                                     <a class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
-                                            share
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            Share
                                         </span>
                                     </a>
                                 </li>
-                                <li class="more_less centeralign pull-right" *ngIf="!showMore"><a
+                                <li class="more_less more-less-button centeralign pull-right" *ngIf="!showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="more_less centeralign pull-right" *ngIf="showMore"><a
+                                <li class="more_less more-less-button centeralign pull-right" *ngIf="showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                            <ul class="bus-actions bus-actions-horiz no-padding">
+                            <ul class="coupons bus-actions bus-actions-horiz no-padding">
                                 <li *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0||s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 )&& isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                         class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                         (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
-                                <li *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0 "><i class="fa fa-tag blue"></i><span
+                                <li *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0 "><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{coupon}}</span></li>
                             </ul>
-                            </div>
-                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm">
+                        </div>
+                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
                             <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
                                     </a>
                                 </li> -->
-                                <li class="centeralign">
+                                <li class="small-devices-message centeralign">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
                                             {{send_msgs_cap}}
                                         </span>
                                     </a>
                                 </li>
-                                <li class="more_less centeralign" *ngIf="!showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="more_less centeralign" *ngIf="showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
 
                             </ul>
@@ -185,7 +301,7 @@
                         [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
                         [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec"
+                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec"
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
@@ -294,7 +410,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
