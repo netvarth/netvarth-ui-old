@@ -511,7 +511,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Location Name</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="locname" autocomplete="off" readonly maxlength="50"/>
+              formControlName="locname" autocomplete="off"  maxlength="50"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
             'required' : 'Please enter the location name',
@@ -525,7 +525,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <!--begin::Input-->
             <div class="form-group">
               <label>Full address</label>
-              <textarea type="text" readonly class="form-control1 form-control-solid form-control-lg"
+              <textarea type="text"  class="form-control1 form-control-solid form-control-lg"
               formControlName="locaddress" row="4"></textarea>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
             {
@@ -543,7 +543,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Latitude</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclattitude" readonly autocomplete="off"/>
+              formControlName="loclattitude"  autocomplete="off"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
                     {
                     'required' : 'Please enter the latitude',
@@ -558,7 +558,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Longitude</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclongitude" readonly autocomplete="off"/>
+              formControlName="loclongitude"  autocomplete="off"/>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
                     {
                     'required' : 'Please enter the longitude',

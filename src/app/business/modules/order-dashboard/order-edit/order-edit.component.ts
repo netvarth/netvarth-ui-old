@@ -15,7 +15,6 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -23,6 +22,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { AddressComponent } from '../order-wizard/address/address.component';
 
 
 @Component({
@@ -454,7 +454,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
-            this.timings_title="Pickup Timings";
+            this.timings_title="Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -835,7 +835,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
-      this.timings_title="Pickup Timings";
+      this.timings_title="Store Pickup Timings";
       this.storeChecked = true;
       if (this.orderDetails.storePickup) {
         this.sel_checkindate = this.orderDetails.orderDate;
@@ -1016,7 +1016,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   EditAddress(selectedAddress) {
     console.log(selectedAddress);
 
-    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
