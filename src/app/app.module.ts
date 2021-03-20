@@ -71,7 +71,6 @@ import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
-import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -91,7 +90,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
-    AddAddressComponent,
     MeetingRoomComponent,
     CommunicationComponent
   ],
@@ -103,8 +101,7 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ConsumerPaymentmodeComponent,
-    AddAddressComponent
+    ConsumerPaymentmodeComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

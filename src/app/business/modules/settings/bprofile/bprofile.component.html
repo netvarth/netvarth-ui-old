@@ -33,7 +33,7 @@
                     <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover-small">
                       <span class="fa propic-cam-icon mgn-top-m3"></span>
                     </span>
-                   <mat-menu #menu="matMenu">
+                    <mat-menu #menu="matMenu">
                       <button mat-menu-item  (click)="changeProPic('cover')">
                         <i class="fa fa-upload"></i>
                         Upload Photo
@@ -49,10 +49,12 @@
                     <div class="basic-i">
                       <div class="bi-l mgn-center mgn-up-100" *ngIf="blogo">
                         <div class="pro-pic pro-pic-bdr" [class.yes]="profimg_exists">
-                           <div class="pro-pic-img">
+                          <div class="pro-pic-img">
                             <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                            <div class="camera-outline custId-cursor" data-toggle="modal"
-                              data-target="#exampleModalSizeLg" style="overflow: visible !important;" (click)="clearModalData()"> 
+                            <input #logofile type="file" accept="image/*" style="display:none;"
+                              (change)="imageSelect(logofile,'blogo')">
+                            <div class="camera-outline custId-cursor" (click)="logofile.click()"
+                              style="overflow: visible !important;">
                               <i class="fa propic-cam-icon" aria-hidden="true"></i>
                             </div>
                           </div>
@@ -202,14 +204,15 @@
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{wndw_path}}{{bProfile.accEncUid}}
                                 </div>
                                 <div class="mgn-up-10">
-                                     <div class="trackSlide bprof-icons share-ico">
+                                  <div class="disp-flex smal-device-wt">
+                                    <div class="trackSlide bprof-icons share-ico">
                                       <share-buttons [theme]="'circles-dark'"
                                         [include]="['facebook','whatsapp','email','telegram','copy']" [url]="shareLink"
                                         [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('accQR')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>
@@ -241,7 +244,7 @@
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('custQR')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>

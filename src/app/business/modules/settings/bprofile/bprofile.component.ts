@@ -1507,12 +1507,75 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
+  imageSelect(input, type) {
+    this.success_error = null;
+    this.error_list = [];
+    if (input.files && input.files[0]) {
+      for (const file of input.files) {
+        this.success_error = this.shared_functions.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
 
-  imageSelect(event: any): void {
-    this.loadSymbol = true;
-    this.imageChangedEvent = event;
-    console.log(this.imageChangedEvent);
+          if (type === 'cover') {
+            this.item_pic1.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic1.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          } else {
+            this.item_pic.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          }
+          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+            // generating the data to be submitted to change the logo
+            const submit_data: FormData = new FormData();
+            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+            const propertiesDet = {
+              'caption': 'Logo'
+            };
+            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+            submit_data.append('properties', blobPropdata);
+            if (type === 'cover') {
+              this.uploadCoverPic(submit_data);
+            } else {
+              this.uploadLogo(submit_data);
+            }
+          }
+        } else {
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+      }
+    }
   }
+  uploadCoverPic(passdata) {
+    this.provider_services.uploadCoverFoto(passdata).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.snackbarService.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+          this.getCoverPhoto();
+        }
+      });
+  }
+  // imageSelect(event: any): void {
+  //   this.loadSymbol = true;
+  //   this.imageChangedEvent = event;
+  //   console.log(this.imageChangedEvent);
+  // }
   clearModalData(source?) {
     this.imageChangedEvent = '';
     console.log(this.imageChangedEvent);
