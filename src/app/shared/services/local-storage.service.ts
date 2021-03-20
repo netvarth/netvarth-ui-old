@@ -55,15 +55,21 @@ export class LocalStorageService {
     /**
      * Method to clear the local storage items except the ones contained in 'dont_delete_localstorage'
      */
-    public clearLocalstorage() {
-        // if (isPlatformBrowser(this.platformId)) {
-            this.removeitemfromLocalStorage('ynw-credentials');
-            for (let index = 0; index < localStorage.length; index++) {
-                if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-                    localStorage.removeItem(localStorage.key(index));
-                    index = index - 1; // manage index after remove
-                }
-            }
-        // }
-    }
+     public clearLocalstorage() {
+        this.removeitemfromLocalStorage('ynw-credentials');
+        const uniqueId = localStorage.getItem('mUniqueId');
+        const devicename = localStorage.getItem('deviceName');
+        for (let index = 0; index < localStorage.length; index++) {
+          if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
+            localStorage.removeItem(localStorage.key(index));
+            index = index - 1; // manage index after remove
+          }
+        }
+        if (uniqueId) {
+          localStorage.setItem('mUniqueId', uniqueId);
+        }
+        if (devicename) {
+          localStorage.setItem('deviceName', devicename);
+        }
+      }
 }

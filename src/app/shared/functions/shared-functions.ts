@@ -240,23 +240,6 @@ export class SharedFunctions {
     this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
   }
 
-  public clearLocalstorage() {
-    this.lStorageService.removeitemfromLocalStorage('ynw-credentials');
-    const uniqueId = localStorage.getItem('mUniqueId');
-    const devicename = localStorage.getItem('deviceName');
-    for (let index = 0; index < localStorage.length; index++) {
-      if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-        localStorage.removeItem(localStorage.key(index));
-        index = index - 1; // manage index after remove
-      }
-    }
-    if (uniqueId) {
-      localStorage.setItem('mUniqueId', uniqueId);
-    }
-    if (devicename) {
-      localStorage.setItem('deviceName', devicename);
-    }
-  }
   public checkLogin() {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;

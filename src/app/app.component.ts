@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { SharedFunctions } from './shared/functions/shared-functions';
 export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
    */
   constructor(
     private globalService: GlobalService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private shared_functions: SharedFunctions
   ) { }
 
   /**

@@ -14,7 +14,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
-import { HeaderModule } from './shared/modules/header/header.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
@@ -31,7 +30,6 @@ import { FormMessageDisplayModule } from './shared/modules/form-message-display/
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import 'hammerjs';
 import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -40,15 +38,14 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
+import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { GlobalService } from './shared/services/global-service';
-import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
@@ -56,25 +53,25 @@ import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
+import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
-import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
-import { CookieProcessor } from './shared/services/cookie-processor.service';
-import { ErrorMessagingService } from './shared/services/error-message.service';
-import { GroupStorageService } from './shared/services/group-storage.service';
-import { LocalStorageService } from './shared/services/local-storage.service';
 import { SessionStorageService } from './shared/services/session-storage.service';
-import { SnackbarService } from './shared/services/snackbar.service';
+import { CookieProcessor } from './shared/services/cookie-processor.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { GroupStorageService } from './shared/services/group-storage.service';
 import { WordProcessor } from './shared/services/word-processor.service';
-import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
-import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { SnackbarService } from './shared/services/snackbar.service';
+import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
-import { TwilioService } from './shared/services/twilio-service';
+import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
+import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -94,8 +91,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
-    LiveChatComponent,
-    JaldeeVideoComponent,
     AddAddressComponent,
     MeetingRoomComponent,
     CommunicationComponent
@@ -159,7 +154,6 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     SharedServices,
-    GlobalFunctions,
     GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
