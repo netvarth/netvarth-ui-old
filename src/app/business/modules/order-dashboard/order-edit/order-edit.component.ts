@@ -8,7 +8,6 @@ import { projectConstants } from '../../../../app.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -937,32 +936,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
-  }
-  addNotes(item, index) {
-    this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: item
-
-    });
-    this.addItemNotesdialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      if (result) {
-        this.orderList.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-        this.orders.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-      }
-      // console.log(this.orderList);
-    });
   }
   deleteNotes(item, index) {
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
