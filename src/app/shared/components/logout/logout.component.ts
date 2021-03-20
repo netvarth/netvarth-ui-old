@@ -11,4 +11,3 @@ export class LogoutComponent {
     this.shared_functions.logout();
   }
 }
-
