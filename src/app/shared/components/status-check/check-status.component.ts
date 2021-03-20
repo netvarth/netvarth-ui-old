@@ -262,6 +262,7 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
+          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
@@ -335,6 +336,7 @@ export class CheckYourStatusComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.statusInfo = data;
+          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           this.foundDetails = true;
@@ -429,5 +431,14 @@ export class CheckYourStatusComponent implements OnInit {
     this.shared_services.getStoreContact(accountId).subscribe(data => {
       this.storeContactInfo = data;
     });
+  }
+  isuser(user){
+    console.log(user)
+   const firstname = user.filter(obj => obj.firstName);
+   console.log(firstname);
+   if(firstname.length > 0){
+   return true
+   } 
+   return false
   }
 }
