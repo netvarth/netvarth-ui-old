@@ -1048,24 +1048,29 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+      console.log(this.selQIds);
     } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
+      console.log(this.selQIds);
     } else {
       if (this.time_type !== 1) {
         this.selQIds = this.getActiveQIdsFromView(view);
         this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
+        console.log(this.selQIds);
       } else {
         this.selQIds = [];
         // if (activeQ && activeQ.id) {
         //   this.selQIds.push(activeQ.id);
         if (qids && qids.length > 0) {
           this.selQIds = qids;
+          console.log(this.selQIds);
           this.groupService.setitemToGroupStorage('selQ', this.selQIds);
         } else {
           this.loading = false;
         }
       }
+      console.log(this.selQIds);
     }
     setTimeout(() => {
       this.qloading = false;
@@ -1380,8 +1385,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const Mfilter = this.setFilterForApi();
     if (this.groupService.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
+      console.log(this.selQIds);
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
+      console.log(this.selQIds);
     }
     if (this.selQIds && this.selQIds.length > 0) {
       Mfilter['queue-eq'] = this.selQIds;
@@ -2904,6 +2911,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   this.selQIds.push(this.activeQs[0].id);
       // }
       this.selQIds = qids;
+      console.log(this.selQIds);
     }
     setTimeout(() => {
       this.qloading = false;
