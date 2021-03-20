@@ -207,7 +207,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
             'sTime': timeslot[0],
             'eTime': timeslot[1]
           },
-          'orderDate': this.orderDetails.orderDate,
+          'orderDate':  this.sel_checkindate,
           'countryCode': this.orderDetails.countryCode,
           'phoneNumber': this.orderDetails.phoneNumber,
           'email': this.orderDetails.email
@@ -226,7 +226,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           'sTime': timeslot[0],
           'eTime': timeslot[1]
         },
-        'orderDate': this.orderDetails.orderDate,
+        'orderDate': this.sel_checkindate,
         'countryCode': this.orderDetails.countryCode,
         'phoneNumber': this.orderDetails.phoneNumber,
         'email': this.orderDetails.email
@@ -249,7 +249,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'sTime': timeslot[0],
         'eTime': timeslot[1]
       },
-      'orderDate': this.orderDetails.orderDate,
+      'orderDate':  this.sel_checkindate,
       'countryCode': this.orderDetails.countryCode,
       'phoneNumber': this.orderDetails.phoneNumber,
       'email': this.orderDetails.email
