@@ -9,6 +9,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { S3UrlProcessor } from '../../../../services/s3-url-processor.service';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
@@ -99,6 +100,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer,
+    private s3Processor: S3UrlProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.checkin = this.data.checkin || null;
@@ -343,10 +345,10 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
           this.clearJCoupon();
           resolve();
         },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            reject(error);
-          });
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          reject(error);
+        });
     });
   }
   /**
@@ -584,15 +586,24 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
   getCouponList() {
-    const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    this.sharedfunctionObj.getS3Url()
-      .then(
-        s3Url => {
-          this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-            .subscribe(res => {
-              this.couponList = res;
-            });
-        });
+    // const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+    // this.sharedfunctionObj.getS3Url()
+    //   .then(
+    //     s3Url => {
+
+    this.s3Processor.getPresignedUrls(this.checkin.providerAccount.uniqueId,
+      null, 'coupon').subscribe(
+        (result) => {
+          this.couponList = result;
+        }
+      );
+
+
+    // this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+    //   .subscribe(res => {
+    //     this.couponList = res;
+    //   });
+    // });
   }
   checkCouponValid(couponCode) {
     let found = false;

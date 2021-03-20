@@ -13,6 +13,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 
 @Component({
   selector: 'app-myfavourites',
@@ -65,13 +66,14 @@ private subs=new SubSink();
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor
   ) { }
 
   ngOnInit() {
     this.setSystemDate();
     this.getFavouriteProvider();
-    this.gets3curl();
+    // this.gets3curl();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
   }
   ngOnDestroy(): void {
@@ -136,23 +138,29 @@ private subs=new SubSink();
       this.open_fav_div = open_fav_div;
     }, 500);
   }
-  gets3curl() {
-    this.shared_functions.getS3Url('provider')
-      .then(
-        res => {
-          this.s3url = res;
-          this.getFavouriteProvider();
-        },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-        }
-      );
-  }
+  // gets3curl() {
+  //   this.shared_functions.getS3Url('provider')
+  //     .then(
+  //       res => {
+  //         this.s3url = res;
+  //         this.getFavouriteProvider();
+  //       },
+  //       error => {
+  //         this.wordProcessor.apiErrorAutoHide(this, error);
+  //       }
+  //     );
+  // }
   setWaitlistTimeDetailsProvider(provider, k) {
-    if (this.s3url) {
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
-    }
+    // if (this.s3url) {
+      this.subs.sink = this.s3Processor.getPresignedUrls(provider.uniqueId,null, 'settings,terminologies').subscribe(
+          (accountS3s) => {
+            this.processS3s('settings', accountS3s['settings'], k);
+            this.processS3s('terminologies', accountS3s['terminologies'], k);
+          });
+
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
+    // }
     const locarr = [];
     let i = 0;
     for (const loc of provider.locations) {
@@ -162,32 +170,46 @@ private subs=new SubSink();
     this.getWaitingTime(locarr, k);
     this.getApptTime(locarr, k);
   }
-
-  getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
-    let UTCstring = null;
-    if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
+  processS3s(type, result, index) {
+    if (type === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
       return false;
     }
-    if (modDateReq) {
-      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    switch (type) {
+      case 'settings': {
+        this.fav_providers[index]['settings'] = result;
+        break;
+      }
+      case 'terminologies': {
+        this.terminologiesJson = result;
+        break;
+      }
     }
-    this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'settings': {
-            this.fav_providers[index]['settings'] = res;
-            break;
-          }
-          case 'terminologies': {
-            this.terminologiesJson = res;
-            break;
-          }
-        }
-      },
-        error => {
-        }
-      );
   }
+  // getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
+  //   let UTCstring = null;
+  //   if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
+  //     return false;
+  //   }
+  //   if (modDateReq) {
+  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   }
+  //   this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       switch (section) {
+  //         case 'settings': {
+  //           this.fav_providers[index]['settings'] = res;
+  //           break;
+  //         }
+  //         case 'terminologies': {
+  //           this.terminologiesJson = res;
+  //           break;
+  //         }
+  //       }
+  //     },
+  //       error => {
+  //       }
+  //     );
+  // }
 
   getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {

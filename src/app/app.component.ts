@@ -34,14 +34,18 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
     if (pVersion && pVersion !== cVersion) {
       this.lStorageService.clearLocalstorage();
+      this.lStorageService.removeitemfromLocalStorage('config');
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     } else {
       this.lStorageService.setitemonLocalStorage('version', cVersion);
+    }
+    projectConstants = this.globalService.getGlobalConstants();
+    if (!this.lStorageService.getitemfromLocalStorage('config')) {
+      this.lStorageService.setitemonLocalStorage('config', projectConstants);
     }
   }
 }

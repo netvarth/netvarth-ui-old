@@ -18,6 +18,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 
 @Component({
   selector: 'app-order-bill',
@@ -118,6 +119,8 @@ export class OrderBillComponent implements OnInit,OnDestroy {
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   billTitle='Bill';
 private subs=new SubSink();
+    provider_id: any;
+    terminologiesjson: any;
   constructor(
     //   private consumer_services: ConsumerServices,
       public consumer_checkin_history_service: CheckInHistoryServices,
@@ -134,7 +137,8 @@ private subs=new SubSink();
       public prefillmodel: RazorpayprefillModel,
       public winRef: WindowRefService,
       private cdRef: ChangeDetectorRef,
-      private location: Location
+      private location: Location,
+      private s3Processor: S3UrlProcessor
   ) {
      this.subs.sink= this.activated_route.queryParams.subscribe(
           params => {
@@ -187,16 +191,49 @@ private subs=new SubSink();
           .subscribe(
               data => {
                   this.checkin = data;
+                  this.provider_id = this.checkin.providerAccount.uniqueId;
+                this.gets3curl();
                   if(this.checkIn_type==='order' && this.checkin.amountDue ==0 &&  this.checkin.orderStatus != 'Cancelled'){
                       this.billTitle="Receipt";
                   }
                   console.log(this.checkin);
-                  this.getCouponList();
+                //   this.getCouponList();
                   this.getWaitlistBill();
                   this.getPrePaymentDetails();
                   this.getPaymentModes();
               });
   }
+  processS3s(type, result) {
+    switch (type) {
+        case 'terminologies': {
+            this.terminologiesjson = result;
+            this.wordProcessor.setTerminologies(this.terminologiesjson);
+            break;
+        }
+        case 'coupon': {
+            this.couponList.JC = result;
+            break;
+        }
+        case 'providerCoupon': {
+            this.couponList.OWN = result;
+            break;
+        }
+    }
+}
+  gets3curl() {
+    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
+        (accountS3s) => {              
+          this.processS3s('terminologies', accountS3s['terminologies']);
+          this.processS3s('coupon', accountS3s['coupon']);
+          this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+        });
+    // this.retval = this.sharedfunctionObj.getS3Url()
+    //     .then(
+    //         res => {
+    //             this.s3url = res;
+    //             this.getbusinessprofiledetails_json('terminologies', true);
+    //         });
+}
   getBillDateandTime() {
       if (this.bill_data.hasOwnProperty('createdDate')) {
           const datearr = this.bill_data.createdDate.split(' ');
@@ -663,28 +700,28 @@ private subs=new SubSink();
   cashPayment() {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
-  getCouponList() {
-      const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-      this.sharedfunctionObj.getS3Url()
-          .then(
-              s3Url => {
-                 this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-                      .subscribe(res => {
-                          this.couponList.JC = res;
-                      });
-              });
-  }
-  getproviderCouponList() {
-    const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    this.sharedfunctionObj.getS3Url()
-        .then(
-            s3Url => {
-               this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-                    .subscribe(res => {
-                        this.couponList.OWN = res;
-                    });
-            });
-}
+//   getCouponList() {
+//       const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+//       this.sharedfunctionObj.getS3Url()
+//           .then(
+//               s3Url => {
+//                  this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+//                       .subscribe(res => {
+//                           this.couponList.JC = res;
+//                       });
+//               });
+//   }
+//   getproviderCouponList() {
+//     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+//     this.sharedfunctionObj.getS3Url()
+//         .then(
+//             s3Url => {
+//                this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+//                     .subscribe(res => {
+//                         this.couponList.OWN = res;
+//                     });
+//             });
+// }
   checkCouponValid(couponCode) {
       let found = false;
       for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {

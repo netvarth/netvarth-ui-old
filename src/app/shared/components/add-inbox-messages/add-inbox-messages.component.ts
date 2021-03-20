@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -70,7 +71,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private s3Processor: S3UrlProcessor
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
@@ -107,15 +109,23 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.gets3curl()
-        .then(
-          () => {
-            this.setLabel();
-          },
-          () => {
-            this.setLabel();
-          }
-        );
+      this.s3Processor.getPresignedUrls(this.data.user_id, null, 'terminologies').subscribe(
+        (accountS3s) => {
+          this.terminologies = accountS3s['terminologies'];
+        }, () => { },
+        () => {
+          this.setLabel();
+        });
+
+      // this.gets3curl()
+      //   .then(
+      //     () => {
+      //       this.setLabel();
+      //     },
+      //     () => {
+      //       this.setLabel();
+      //     }
+      //   );
     } else {
       this.setLabel();
     }
@@ -129,28 +139,28 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
   }
-  gets3curl() {
-    return new Promise<void>((resolve, reject) => {
-      this.sharedfunctionObj.getS3Url('provider')
-        .then(
-          res => {
-            let UTCstring = null;
-            UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-            this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
-              .subscribe(termi => {
-                this.terminologies = termi;
-                resolve();
-              },
-                () => {
-                  reject();
-                });
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-  }
+  // gets3curl() {
+  //   return new Promise<void>((resolve, reject) => {
+  //     this.sharedfunctionObj.getS3Url('provider')
+  //       .then(
+  //         res => {
+  //           let UTCstring = null;
+  //           UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+  //           this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
+  //             .subscribe(termi => {
+  //               this.terminologies = termi;
+  //               resolve();
+  //             },
+  //               () => {
+  //                 reject();
+  //               });
+  //         },
+  //         () => {
+  //           reject();
+  //         }
+  //       );
+  //   });
+  // }
   setLabel() {
     this.api_loading = false;
     let provider_label = this.receiver_name;
