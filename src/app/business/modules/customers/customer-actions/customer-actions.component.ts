@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -98,8 +98,12 @@ export class CustomerActionsComponent implements OnInit {
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
     }
     editCustomer() {
-        this.dialogRef.close('edit');
-    }
+        this.closeDialog();
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'edit', id: this.customerDetails[0].id }
+        };
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
+      }
     closeDialog() {
         this.dialogRef.close();
     }

@@ -5,17 +5,7 @@
       </button>
     </h1>
     <mat-dialog-content>
-      <div class="form-group">
-        <mat-form-field>
-          <input matInput type="number" min="1" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control" placeholder="Maximum quantity" formControlName="maxquantity">
-        </mat-form-field>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'maxquantity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'maxquantity',
-  {
-  'required' : 'Please enter maximum quantity',
-  'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
-  })">
-        </app-field-error-display>
-      </div>
+
   
       <div class="form-group">
         <mat-form-field>
@@ -25,6 +15,17 @@
   {
   'required' : 'Please enter the minimum quantity.',
   'maxlength' : 'Duration can have only ' + maxNumbers + ' digits'
+  })">
+        </app-field-error-display>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="number" min="1" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control" placeholder="Maximum quantity" formControlName="maxquantity">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'maxquantity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'maxquantity',
+  {
+  'required' : 'Please enter maximum quantity',
+  'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
   })">
         </app-field-error-display>
       </div>

@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-checkin-details-send',
@@ -58,10 +58,10 @@ export class CheckinDetailsSendComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
         private provider_servicesobj: ProviderServices,
-        private shared_functions: SharedFunctions,
         private dialog: MatDialog,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
@@ -159,7 +159,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     }
     getSingleTime(slot) {
       const slots = slot.split('-');
-      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     sendMessage() {
       if (this.chekintype === 'Waitlist') {

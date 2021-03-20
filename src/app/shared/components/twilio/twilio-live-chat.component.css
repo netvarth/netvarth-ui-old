@@ -1,6 +1,39 @@
+.video-container, .local, .remote, .local-zeroPs {
+  background: #000 !important;
+}
+@media screen and (min-width: 992px) {
+.videocontainer, .previewDiv {
+  /* width: 100% !important; */
+  /* height: 90vh; */
+  display: flex;
+  align-items: center;
+}
+}
+.videocontainer .hide{
+  display: none;
+}
+.previewContainer {
+  padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: 2px solid #000 !important;
+  border-radius: 10px;
+  background: #000;
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1);
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+.full-height {
+  height: 100vh;
+}
 .remote {
-  /* background: orange; */
-  height: 95vh;
+  /* height: 99.7vh; */
   width: 100%;
   text-align: center;
   background: #000 !important;
@@ -9,7 +42,6 @@
   display: none;
 }
 .local {
-  /* background: green; */
   width: 100px;
   height: 100px;
   position: absolute;
@@ -18,7 +50,7 @@
   margin-right: 10px;
 }
 .local-zeroPs {
-  height: 95vh;
+  /* height: 99.7vh; */
   width:100%;
   text-align: center;
 }
@@ -44,7 +76,30 @@
 .icons {
   width: 100%;
   position: absolute;
-  bottom: 70px;
+  bottom: 0px;
   text-align: center;
   font-size: 1.30rem;
+  background-color: #fff !important;
 }
+
+.join-vid-btn button.disabled {
+  background: #ddd !important;
+}
+.main-header .logo img {
+  padding: 0 !important;
+  height:54px !important;
+}
+.main-header .logo {
+  text-align: left !important;
+  padding: 0 !important;
+}
+header {
+  padding: 5px !important;
+  background-color: #Fff !important;
+}
+
+.rem-video {
+  width: 100% !important;
+  height: 100% !important;
+}
+

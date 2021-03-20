@@ -1,0 +1,302 @@
+.modal-title.service-detail-title {
+    display: flex;
+    align-items: stretch;
+    padding: 10px !important;
+    background: transparent!important;
+    color: #222223!important;
+    font-size: 1rem !important;
+    font-weight: 600;
+    margin: 0;
+    position: relative;
+    letter-spacing: normal;
+}
+
+.modal-title.service-detail-title .name {
+    display: flex;
+    align-items: stretch;
+}
+
+.modal-title.service-detail-title .name .dispvalue {
+    display: flex;
+    align-items: stretch;
+    font-size: 1.4rem;
+    color: #073B4C;
+}
+
+.modal-title.service-detail-title .name .dispvalue span {
+    height: 32px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .wtsapaud-icon {
+    width: 35px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .wtsapvid-icon {
+    width: 40px;
+    margin-right: 8px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .donation-service {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .physical-service {
+    width: 50px;
+    margin-right: 8px;
+    margin-top: -12px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .zoom-icon {
+    width: 38px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .meet-icon {
+    width: 28px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .phon-icon {
+    width: 28px;
+}
+
+.modal-header.service-detail-header button {
+    height: 53px !important;
+    display: flex;
+    align-items: center;
+    right: 20px!important;
+    width: 24px!important;
+    color: black !important;
+    position: absolute;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    justify-content: center;
+    z-index: 121;
+    opacity: 1 !important;
+}
+
+.modal-header.service-detail-header button span {
+    display: flex;
+    font-size: 2.2rem;
+    color: red;
+}
+
+.service-detail-content.service-popup-content {
+    padding: 10px !important;
+    margin: 0;
+    overflow: auto;
+    display: block;
+    max-height: 65vh;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer {
+    margin: 10px !important;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal {
+    width: 120px !important;
+    margin: 0;
+    padding: 0;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal li:last-child {
+    margin-bottom: 0;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal li {
+    list-style: none;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal li .galbx{
+    width: 120px !important;
+    height: 120px !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal li .galbx .overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-weight: 600;
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .img-outer .gal li .galbx img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer1.line {
+    margin-bottom: 10px !important;
+    display: block !important;
+    width: 100%;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer1.line .description {
+    color: #073B4C;
+    text-align: center;
+    font-size: 1.125rem !important;
+    font-weight: 600;
+    width: 100%;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration .duration{
+    display: inline-block;
+    border-radius: 40px;
+    background-color: #F1B51C;
+    padding: 10px 15px;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration .duration span{
+    font-weight: 700 !important;
+    font-size: 1.2rem;
+    color: #073B4C;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer3 {
+    margin: 10px 0 !important;
+    width: 100%;
+    display: flex;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration span {
+    font-weight: 700 !important;
+    color: #073B4C;
+    font-size: 1.125rem;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration .data-label {
+    display: flex;
+    align-items: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration .data-value {
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
+    background-color: #F1B51C;
+    padding: 5px 12px;
+    display: flex;
+    align-items: center; */
+    margin: 0 8px;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4 {
+    margin: 0 0 10px !important;
+    width: 100%;
+    display: flex;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment > span,
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax > span {
+    font-weight: 700 !important;
+    font-size: 1.125rem;
+    color: #073B4C;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment > .data-label,
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax > .data-label {
+    display: flex;
+    align-items: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment > .data-value,
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax > .data-value {
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
+    background-color: #F1B51C;
+    padding: 5px 12px; */
+    margin: 0 8px;
+    /* display: flex;
+    align-items: center; */
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .mgn-bt-5 {
+    margin: 10px 0 !important;
+    color: red;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation {
+    margin: 0 0 10px !important;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration span {
+    font-weight: 700 !important;
+    font-size: 1.125rem;
+    color: #073B4C;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration > .data-label {
+    display: flex;
+    align-items: center;
+}
+
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration > .data-value {
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
+    background-color: #F1B51C;
+    padding: 5px 12px; */
+    margin: 0 5px;
+    /* display: flex;
+    align-items: center; */
+}

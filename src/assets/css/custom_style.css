@@ -1910,7 +1910,7 @@ sup {
 
 @media only screen and (max-width: 640px) {
   th, td, tr {
-    font-size: .833rem !important;
+    font-size: .833rem;
   }
 }
 
@@ -2521,7 +2521,7 @@ sup {
 
 body {
   position: static !important;
-  overflow-y: auto !important
+  /* overflow-y: auto !important */
 }
 
 .example-full-width .rupee {
@@ -5737,7 +5737,7 @@ li.separator.setsplit {
 
 .alert-ack {
   float: right;
-  margin-top: 5px;
+  /* margin-top: 5px; */
   color: #41c389;
   cursor: pointer;
 }
@@ -6480,7 +6480,7 @@ li.separator.setsplit {
 }
 
 .bg-blue {
-  background-color: #3c8dbc !important;
+  background-color: #1e4079 !important
 }
 
 .direct-chat-info {
@@ -7433,7 +7433,7 @@ input.jdn_ip {
   right: 0;
   position: absolute;
   z-index: 500;
-  margin-top: 50px;
+  margin-top: 65px;
   top: 0;
   width: 250px;
   transition: right .3s ease-in-out !important;
@@ -9234,7 +9234,7 @@ owl-carousel .bt3.active {
 }
 
 .widget-user-2 .widget-user-header, .widget-user-2 .widget-user-header {
-  padding: 10px !important;
+  /* padding: 10px !important; */
 }
 
 .settings_info {
@@ -12034,7 +12034,11 @@ img.busN-logo {
 .wtsap-cal {
   width: 36px;
 }
-
+.wtsapvid-icon.wtsap-cal {
+  width: 28px;
+  margin-bottom: -3px;
+  margin-top: 10px;
+}
 .ph-cal {
   width: 25px;
 }
@@ -12749,63 +12753,6 @@ input[type=number]::-webkit-outer-spin-button {
   min-width: 448px;
   overflow: hidden;
   position: relative;
-}
-.full-height {
-  width: 100% !important;
-  background: black;
-  /* display: table-cell;
-  vertical-align: middle; */
-  height:100vh;
-}
-/* @media (min-width:768px) {
-  .full-height {
-
-  }
-} */
-.videocontainer .hide{
-  display: none;
-}
-.previewContainer {
-  padding: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 2px solid #000 !important;
-  border-radius: 20px;
-  background: #000;
-}
-
-@media (min-width: 575px) {
-  .videohgt {
-    min-height: 400px;
-  }
-  }
-@media (max-width: 575px) {
-  .previewContainer, .videohgt {
-    min-height: 400px;
-  }
-  .previewContainer video {
-    height: 380px;
-  }
-  }
-@media (max-width: 320px) {
-  .previewContainer, .videohgt {
-  min-height: 310px;
-}
-.previewContainer video {
-  height: 290px;
-}
-}
-.previewContainer video {
-  width:100%;
-}
-.local video, .local-zeroPs video, .previewContainer video {
-  transform: scaleX(-1);
-}
-.videocontainer .join-vid-btn button {
-  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
-  padding: 5px 20px;
-  border-radius: 20px;
-  color: #fff;
 }
 .customer-note {
   font-weight: bold !important;
@@ -13867,6 +13814,10 @@ color: #fff !important;
   user-select: none;
   margin-left: 25px;
 }
+.createCustomer .form-group .pickerouter .mat-datepicker-toggle button svg{
+width: 40px !important;
+}
+
 .font-small {
   font-size: small;
 }
@@ -13889,4 +13840,258 @@ color: #fff !important;
   .bt2 {
       padding: 10px !important;
   }
+}
+.video_blinking {
+  animation: videocallBlinking 1s infinite;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@keyframes videocallBlinking {
+  0% {
+    color: green;
+  }
+  49% {
+    color: green;
+  }
+  50% {
+    color: transparent;
+  }
+  99% {
+    color: green;
+  }
+  100% {
+    color: green;
+  }
+}
+.customersList .pagination>li>span {
+  background: #1e4079 !important;
+  color: white !important;
+  border-radius: 5px !important;
+}
+.customersList .pagination>.disabled>span {
+  background-color: #ddd !important;
+}
+
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+  width: 10vw !important;
+}
+
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+  height: 10vw !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 12.5vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 12.5vw !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 15vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 15vw !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 17.5vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 17.5vw !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 20vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 20vw !important;
+  }
+}
+
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+  margin-top: 10px;
+}
+
+.item-details-component .section-title {
+  padding: 0 15px;
+  margin: 25px 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.item-details-component .section-title .h-rule {
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+  margin-left: 15px;
+}
+.infotext textarea {
+  width: 100%;
+  resize: none;
+}
+.addressedit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: blue;
+  float: right;
+  text-decoration: underline;
+}
+.quest-head {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+.question {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+.quest-answ-box {
+  margin-bottom: 20px;
+}
+.header-fixed {
+  margin-left: 265px;
+  display: block;    
+  height: 65px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 97;
+}
+@media (max-width: 991px) {
+  .header-fixed {
+    margin-left: 0px !important;
+  }
+  .body-section {
+    margin-top: 50px;
+  }
+  .filterSidebar {
+    margin-top: 105px !important;
+  }
+}
+.body-section {
+  overflow-y: auto;
+  background: #f0efef;
+  overflow-x: hidden;
+}
+.mgn-lt-70 {
+  margin-left: 70px !important;
+}
+.progress-bar {
+  background: #1e4079 !important;
+}
+.pro-settings-list .widget-user-header {
+  padding: 2rem 2.25rem !important;
+  background: white !important;
+  color: black !important;
+  height: 120px !important;
+}
+.pro-settings-list .widget-user-header h4 {
+  text-decoration: none !important;
+ }
+.pro-settings-list .box-footer {
+  padding: 0 1.5rem !important;
+}
+.pro-settings-list .widget-user-header .head-hint {
+  font-size: 0.8rem !important;
+  color: #B5B5C3 !important;
+  font-weight: 500 !important;
+  margin-top: 5px !important;
+}
+.pro-settings-list .widget-user-header h4{
+  font-size: 20px !important;
+}
+.pro-settings-list .box {
+  box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 5%) !important;
+}
+/* 
+.videocontainer .hide{
+  display: none;
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1);
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+
+@media only screen and (max-width: 575px) {
+  .video_small {
+    display: none !important;
+  }
+}
+.local-zeroPs video{
+  height: 99vh !important;
+} 
+.remote video {
+  height: 100% !important;
+}
+.local video {
+  width: 100px;
+  height: auto;
+} */
+.previewContainer video {
+  border-radius: 25px !important;
+}
+.modal-backdrop {
+  z-index: 0 !important;
+  opacity: 0 !important;
+}
+.mgn-lt-auto {
+  margin-left: auto !important;
+}
+.wizardstyle {
+  margin: 0px !important;
+}
+.wizardstyle app-footernew .main-footer {
+  margin-left: 0px !important;
+}
+.cont-outer {
+    padding-bottom: 20px;
+}
+.booking-img {
+    content: url(../images/bookingwindow.png);
+    width: 400px;
+    margin: auto;
+    margin-top: 50px;
+}
+.wizard-nav {
+  justify-content: center;
+  display: flex;
+}
+.nomsg-img {
+  content: url(../images/Nomsgs.svg);
+  width: 300px;
+  margin: auto;
+}
+.inbox-nullimg {
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
+}
+.inbox-nullimg-user {
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
+}
+.normal-btn {
+  background: #1e4079;
+  color: white;
+  line-height: 26px !important;
+  border-radius: 5px !important;
 }

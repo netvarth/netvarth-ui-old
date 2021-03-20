@@ -1,0 +1,574 @@
+<section class="">
+  <div class="card title-gb rounded-0">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     {{coupon_title}} 
+    </h5>
+  </div>
+</section>
+<section>
+  
+
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+      <div class="card card-custom">
+        <div class="card-body p-0">
+          <!--begin: Wizard-->
+          <div class="wizard wizard-3">
+            <!--begin: Wizard Nav-->
+            <div class="wizard-nav">
+              <div class="wizard-steps px-8 py-8 px-lg-15 py-lg-3">
+                <!--begin::Wizard Step 1 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step>=1">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span>1.</span> Basic Info
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+                </div>
+                <!--end::Wizard Step 1 Nav-->
+
+                <!--begin::Wizard Step 2 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step>=2">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span>2.</span> Rules & Validity
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+                </div>
+                <!--end::Wizard Step 2 Nav-->
+
+                <!--begin::Wizard Step 3 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step==3">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span>3.</span> Applicable For
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+                </div>
+                <!--end::Wizard Step 3 Nav-->
+
+
+
+              </div>
+            </div>
+            <!--end: Wizard Nav-->
+
+            <!--begin: Wizard Body-->
+            <div class="row  py-10 px-8 py-lg-12 px-lg-10">
+              <div class="col-xl-12 col-xxl-7">
+                <!--begin: Wizard Form-->
+                <form [formGroup]="couponForm" novalidate (ngSubmit)="onSubmit()" (keyup)="resetApiErrors()"
+                  class="form">
+                  <!--begin: Wizard Step 1-->
+                  <div class="pb-5" *ngIf="step == 1">
+                    <h4 class="mb-10 font-weight-bold text-dark">Basic Info</h4>
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <label>Coupon Name</label>
+                          <input type="text" class="form-control1 form-control-solid form-control-lg" id="name"
+                            placeholder="Coupon Name*" formControlName="name" maxlength="50" />
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'name')"
+                            [errorMsgs]="fed_service.getErrorMessage(couponForm,'name',
+          {
+          'required' : 'Enter your  coupon name',
+          'maxlength' : 'Coupon name can contain only ' + maxChars + ' characters'
+          })">
+                          </app-field-error-display>
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                      <div class="col-xl-6">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <label>Coupon Code</label>
+                          <input type="text" class="form-control1 form-control-solid form-control-lg" id="couponCode"
+                            placeholder="Coupon Code*" formControlName="couponCode" maxlength="50" />
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'couponCode')" [errorMsgs]="fed_service.getErrorMessage(couponForm,'couponCode',
+      {
+      'required' : 'Enter your coupon code',
+      'maxlength' : 'Coupon code can contain only ' + maxChars + ' characters'
+      })">
+                        </app-field-error-display>
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <label>Calculation Type&nbsp;&nbsp;</label>
+                          <mat-radio-group formControlName="calculationType" (change)="handleCalculationType($event)">
+                            <mat-radio-button value="Fixed">Fixed</mat-radio-button>&nbsp;&nbsp;
+                            <mat-radio-button value="Percentage">Percentage</mat-radio-button>
+                          </mat-radio-group>
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'calculationType')"  [errorMsgs]="fed_service.getErrorMessage(couponForm,'calculationType',
+                            {
+                              'required' : 'Please choose calculation type.'
+                             
+                            })"></app-field-error-display>
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <label>Coupon Amount</label>
+                          <span *ngIf="calculationType == 'Fixed'" class="rupee-font">(₹)</span>
+                          <span *ngIf="calculationType == 'Percentage'" class='rupee'>(%)</span>
+                          <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"  (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="amount"
+                            placeholder="Coupon Amount" formControlName="amount" />
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'amount')"  [errorMsgs]="fed_service.getErrorMessage(couponForm,'amount',
+                            {
+                              'required' : 'Please enter the amount.',
+                              'pattern' : 'Please enter valid amount',
+                              'maxlength' : 'Amount can have only ' + maxNumbers + ' digits'
+                            })">
+      </app-field-error-display>
+                        </div>
+                      
+                        <!--end::Input-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <label>Coupon Description</label>
+                          <textarea type="text" class="form-control1 form-control-solid form-control-lg"
+                            id="description" placeholder="Enter coupon description" formControlName="description"
+                            (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                            maxlength="500"></textarea>
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'description')"
+                            [errorMsgs]="fed_service.getErrorMessage(couponForm,'description',
+                            {
+                            'required' : 'Enter coupon description.',
+                            'maxlength' : 'Coupon description can contain only ' + maxCharslong + ' characters'
+                            })">
+                          </app-field-error-display>
+                          <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters
+                            remaining</span>
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                  <!--end: Wizard Step 1-->
+
+                  <!--begin: Wizard Step 2-->
+                  <div class="pb-5" *ngIf="step == 2" formGroupName="couponRules">
+                    <h4 class="mb-10 font-weight-bold text-dark">Set Rules for this coupon</h4>
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <div class="input-group date">
+                            <label>Start Date <span>(Valid From)</span></label>
+                            <input #start class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate(0)"
+                              placeholder="Valid From" id="start" formControlName="startDate" />
+                          </div>
+                          <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
+                          errorMsg="Please choose Start Date">
+                      </app-field-error-display>
+                        
+                             <app-field-error-display style="color: #f24949 !important;"  [displayError]=startdateError
+                                        errorMsg="Please choose valid start Date">
+                                    </app-field-error-display> 
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                      <div class="col-xl-6">
+                        <!--begin::Input-->
+                        <div class="form-group">
+                          <div class="input-group date">
+                            <label>End Date <span>(Valid To)</span></label>
+                            <input class="form-control1 picker" [min]="mxDate" type="date" (change)="compareDate(1)"
+                              placeholder="Valid To" formControlName="endDate" />
+                          </div>
+                          <app-field-error-display [displayError]=endDaterequired
+                          errorMsg="Please choose End Date">
+                      </app-field-error-display>
+                          <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display>
+                        </div>
+                        <!--end::Input-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group">
+                          <label>Applicable Days</label><br>
+                          <span *ngFor="let wday of weekdays; index as i">
+                            <mat-checkbox  *ngIf="i>0" (change)="handleDaychange(i)"
+                              [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
+                            </mat-checkbox>&nbsp;&nbsp;
+                          </span>
+                          <app-field-error-display [displayError]=weekdayError
+                          errorMsg="Please select atleast one day">
+                      </app-field-error-display>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-xl-6">
+                       
+                        <div class="form-group">
+                          <label>Available timewindow(s)</label>&nbsp;
+                          
+                          <a class="pointlist" *ngIf="timewindow_list.length > 0" (click)="showTimewindow()">
+                            <i class="fa fa-plus" style="color:blue" aria-hidden="true"></i>
+                          </a>
+                          <div *ngIf="timewindow_list.length == 0">
+                            Currently no timewindows are added&nbsp;
+                            <button type="button" (click)="showTimewindow()" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
+                              Add</button> 
+                        
+                          </div>
+                          <div *ngIf="timewindow_list.length > 0">
+                            <ul *ngFor="let window of timewindow_list;let i = index">
+                              <li>
+                                {{window.sTime}} - {{window.eTime}}&nbsp;
+                                <a class="pointlist" (click)="deletetimeslot(i)">
+                                  <i class="fa fa-trash" style="color: red;" aria-hidden="true"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                       
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group">
+                          <mat-checkbox class="example-margin" formControlName="firstCheckinOnly">Limit coupon
+                            for first booking only
+                          </mat-checkbox>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+
+                        <div class="form-group">
+                          <mat-checkbox class="example-margin" formControlName="isproviderAcceptCoupon"> Limit # coupons
+                            provider can accept
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row"
+                      [hidden]="this.couponForm.get('couponRules').get('isproviderAcceptCoupon').value==false">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                        <label>Max Coupons #</label>
+                        <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="maxProviderUseLimit"
+                          placeholder="Max coupon apply limit" formControlName="maxProviderUseLimit" />
+                      </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="form-group">
+                          <label class="rupee-font">Minimum Bill Amount(₹)</label>
+                          <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="minBillAmount"
+                            placeholder="Enter minimum bill amount" formControlName="minBillAmount" />
+                            <app-field-error-display [displayError]=minbillamountError
+                            errorMsg="Please enter value">
+                        </app-field-error-display>
+                      </div>
+                          </div>
+                      
+                      <div class="col-xl-6 col-lg-6 col-md-6" [hidden]="this.couponForm.get('calculationType').value=='Fixed'">
+                        <div class="form-group">
+                          <label class="rupee-font">Maximum Discount value (₹)</label>
+                          <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000"  (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg"
+                            id="maxDiscountValue" placeholder="Enter discount value" formControlName="maxDiscountValue"
+                            />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--end: Wizard Step 2-->
+
+                  <!--begin: Wizard Step 3-->
+                  <div class="pb-5" *ngIf="step==3">
+
+                    <h4 class="mb-10 font-weight-bold text-dark">Apply this coupon to</h4>
+                    <div formGroupName="couponRules">
+                      <div formGroupName="policies">
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <mat-checkbox class="example-margin" formControlName="isServiceBased">Limit coupon to
+                                services
+                              </mat-checkbox>
+                            </div>
+                          </div>
+
+
+
+                        </div>
+                        <div class="row"
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <button mat-raised-button class="dialogbtn" type="button"
+                                (click)="openServiceDialog()">Services</button>
+
+                            </div>
+                            <a href="javascript:void(0);" *ngIf="services.length>0" (click)="openServiceDialog()">
+                              {{ services.length }} Services Selected
+                            </a>
+                          </div>
+                        </div>
+
+
+                        <div
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || active_user.type!=='BRANCH'">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <mat-checkbox class="example-margin" formControlName="isDepartment">Limit coupon to
+                                  department specific
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row"
+                            [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || this.couponForm.get('couponRules').get('policies').get('isDepartment').value==false">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <button mat-raised-button class="dialogbtn" type="button"
+                                  (click)="openDepartmentDialog()">Departments</button>
+
+                              </div>
+                              <a href="javascript:void(0);" *ngIf="departments.length>0" (click)="openDepartmentDialog()">
+                                {{ departments.length }} Departments Selected
+                              </a>
+                            </div>
+                          </div>
+
+
+                        </div>
+                        <div
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false  || active_user.type!=='BRANCH'">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <mat-checkbox class="example-margin" formControlName="isUser">Limit coupon to user
+                                  specific
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                            <div class="row"
+                              [hidden]="this.couponForm.get('couponRules').get('policies').get('isUser').value==false">
+                              <div class="col-xl-12">
+                                <div class="form-group">
+                                  <button mat-raised-button type="button" class="dialogbtn"
+                                    (click)="openUserDialog()">Users</button>
+
+                                </div>
+                                <a href="javascript:void(0);" *ngIf="users.length>0"   (click)="openUserDialog()">
+                                  {{ users.length }} Users Selected
+                                </a>
+                              </div>
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <div
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <mat-checkbox class="example-margin" formControlName="isCustomerLabel">Limit coupon to
+                                  consumer labels
+                                </mat-checkbox>
+                              </div>
+                            </div>
+
+                            <div class="row"
+                              [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value==false">
+                              <div class="col-xl-12">
+                                <div class="form-group">
+                                  <button mat-raised-button type="button" class="dialogbtn"
+                                    (click)="openCustomerLabelDialog()">Consumer Labels</button>
+
+                                </div>
+                                <a href="javascript:void(0);" *ngIf="customer_labels.length>0" (click)="openCustomerLabelDialog()">
+                                  {{ customer_labels.length }} Labels Selected
+                                </a>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <mat-checkbox class="example-margin" formControlName="isCustomerGroup">Limit coupon to
+                                  consumer groups
+                                </mat-checkbox>
+                              </div>
+                            </div>
+
+
+
+                          </div>
+                          <div class="row"
+                            [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value==false">
+                            <div class="col-xl-12">
+                              <div class="form-group">
+                                <button mat-raised-button type="button" class="dialogbtn"
+                                  (click)="openCustomerGroupDialog()">Consumer Groups</button>
+
+                              </div>
+                              <a href="javascript:void(0);" *ngIf="customer_groups.length>0"   (click)="openCustomerGroupDialog()">
+                                {{ customer_groups.length }} Groups Selected
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <mat-checkbox class="example-margin" formControlName="isCatalogBased">Limit coupon to
+                                catalog
+                              </mat-checkbox>
+                            </div>
+                          </div>
+
+
+
+                        </div>
+
+                        <div class="row"
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value==false">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <mat-form-field appearance="fill">
+                                <label>Catalog</label>
+                                <mat-select placeholder="Catalogue" formControlName="catalogues" [multiple]="true">
+                                  <mat-option *ngFor=" let catalog of catalog_list" [value]="catalog.id">
+                                    {{catalog.catalogName}}
+                                  </mat-option>
+
+                                </mat-select>
+                              </mat-form-field>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <mat-checkbox class="example-margin" formControlName="isItem">Limit coupon to
+                                items
+                              </mat-checkbox>
+                            </div>
+
+                          </div>
+
+
+
+                        </div>
+                        <div class="row"
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isItem').value==false">
+                          <div class="col-xl-12">
+                            <div class="form-group">
+                              <button mat-raised-button type="button" class="dialogbtn"
+                                (click)="openItemDialog()">Items</button>
+
+                            </div>
+                            <a href="javascript:void(0);" *ngIf="items.length>0"  (click)="openItemDialog()">
+                              {{ items.length }} Items Selected
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <div class="form-group">
+                          <mat-form-field appearance="fill">
+                            <label>Booking Channel</label>
+                            <mat-select placeholder="Booking channels" formControlName="bookingChannel" [multiple]="true">
+                              <mat-option *ngFor=" let mode of bookingMode" [value]="mode.value">
+                                {{mode.displayName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--end: Wizard Step 3-->
+
+
+
+
+                  <!--begin: Wizard Actions-->
+                  <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                    <div class="mr-2">
+                      <button type="button" *ngIf="step == 2 || step == 3"
+                        class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                        (click)="gotoPrevious()">
+                        Previous
+                      </button>
+                    </div>
+                    <div>
+                      <button type="button" *ngIf="step == 3" 
+                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="couponForm.invalid ||published">
+                        Submit
+                      </button>
+                      <button type="button" *ngIf="step == 1 || step == 2"
+                        class="btn btn-primary font-weight-bold text-uppercase px-9 py-4" (click)="gotoNext()">
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                  <!--end: Wizard Actions-->
+                </form>
+                <!--end: Wizard Form-->
+              </div>
+            </div>
+            <!--end: Wizard Body-->
+          </div>
+          <!--end: Wizard-->
+        </div>
+      </div>
+    </div>
+    <!--end::Container-->
+  </div>
+  <!--end::Entry-->
+</section>

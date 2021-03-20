@@ -146,7 +146,21 @@
                                                                                                 [value]="service.id"
                                                                                                 [checked]="services_list[i].checked === true"
                                                                                                 (change)="handleServicechecbox(i)">
-                                                                                                {{service.name | capitalizeFirst}}
+                                                                                                <span class="itm">
+                                                                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                                                                            class="fa meet-icon"></i>
+                                                                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                                                                            class="fa zoom-icon"></i>
+                                                                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                                                                            class="fa phon-icon"></i>
+                                                                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                                                                                            class="fa wtsapaud-icon"></i>
+                                                                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                                                                                            class="fa wtsapvid-icon"></i>
+                                                
+                                                                                                        {{service.name | capitalizeFirst}}
+                                                                                                    </span>
+                                                                                                <!-- {{service.name | capitalizeFirst}} -->
                                                                                         </mat-checkbox>
                                                                                 </div>
                                                                         </section>

@@ -1,0 +1,15 @@
+.content.see-pages .outer-card .card .form-group .form-control {
+    width: 50% !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .content.see-pages .outer-card .card .form-group .form-control {
+        width: 50% !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .content.see-pages .outer-card .card .form-group .form-control {
+        width: 50% !important;
+    }
+}

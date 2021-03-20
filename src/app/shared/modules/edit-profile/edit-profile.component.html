@@ -18,10 +18,15 @@
                         <div class="innercard">
                             <div class="leftcard">
                                 <div class="form-group">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="first_name"
                                             placeholder="First Name" formControlName="first_name" autocomplete="off">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div class="">
+                                        <label class="form-control-label" >First Name</label>
+                                        <input type="text" class="form-control is-invalid" id="first_name"
+                                        placeholder="First Name" formControlName="first_name" autocomplete="off"/>
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
@@ -36,10 +41,15 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="last_name"
                                             placeholder="Last Name" formControlName="last_name" autocomplete="off">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div class="">
+                                        <label class="form-control-label" >Last Name</label>
+                                        <input type="text" class="form-control is-invalid" id="last_name"
+                                        placeholder="Last Name" formControlName="last_name" autocomplete="off"/>
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
@@ -54,25 +64,40 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="email"
                                             formControlName="email" placeholder="Email(user@xyz.com)" autocomplete="off"
                                             (keyup)="showConfrmEmail($event)" onpaste="return false;"
                                             oncopy="return false" oncut="return false" ondrag="return false"
                                             ondrop="return false">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div class="">
+                                        <label class="form-control-label" >Email</label>
+                                        <input type="text" class="form-control is-invalid" id="email"
+                                        formControlName="email" placeholder="Email(user@xyz.com)" autocomplete="off"
+                                        (keyup)="showConfrmEmail($event)" onpaste="return false;"
+                                        oncopy="return false" oncut="return false" ondrag="return false"
+                                        ondrop="return false"/>
+                                    </div>
                                     <app-field-error-display [displayError]="true"
                                         *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
                                         [errorMsg]="emailerror">
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group" *ngIf="confrmshow">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="email1"
                                             formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
                                             autocomplete="off" onpaste="return false;" oncopy="return false"
                                             oncut="return false" ondrag="return false" ondrop="return false">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div class="">
+                                        <label class="form-control-label" >Re-enter Email</label>
+                                        <input type="text" class="form-control is-invalid" id="email1"
+                                        formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                        autocomplete="off" onpaste="return false;" oncopy="return false"
+                                        oncut="return false" ondrag="return false" ondrop="return false"/>
+                                    </div>
                                     <app-field-error-display [displayError]="true"
                                         *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
                                         [errorMsg]="email1error">

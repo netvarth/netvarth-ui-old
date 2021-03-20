@@ -10,6 +10,7 @@ import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-home',
@@ -52,6 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private _scrollToService: ScrollToService,
     private lStorageService: LocalStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title,
     private metaService: Meta
   ) {
@@ -232,7 +234,7 @@ ngAfterViewInit() {
       const bdata = bconfig.bdata;
       const saveddate = new Date(bdate);
       if (bconfig.bdata) {
-        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;

@@ -158,7 +158,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!provider_label) {
       provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
     }
-    if (!consumer_label) {
+    if (!consumer_label || (consumer_label && consumer_label.trim() === '')) {
+      console.log(this.terminologies);
       consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
     }
     switch (this.source) {

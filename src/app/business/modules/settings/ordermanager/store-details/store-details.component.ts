@@ -1,16 +1,17 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, HostListener , OnDestroy} from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router,NavigationExtras } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../../src/app/ynw_provider/services/provider-services.service';
+import { SubSink } from 'subsink';
 @Component({
   selector: 'app-store-details',
   templateUrl: './store-details.component.html',
   styleUrls: ['./store-details.component.css']
 })
-export class StoreDetailsComponent implements OnInit {
+export class StoreDetailsComponent implements OnInit, OnDestroy {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   amForm: FormGroup;
   small_device_display = false;
@@ -28,6 +29,7 @@ export class StoreDetailsComponent implements OnInit {
   alternateEmail: any;
   whatsappNo: any;
   info_list: any;
+  private subscriptions = new SubSink();
   constructor(
     private routerobj: Router,
     private router: Router,
@@ -42,6 +44,7 @@ export class StoreDetailsComponent implements OnInit {
     this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
   }
   ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -57,7 +60,7 @@ export class StoreDetailsComponent implements OnInit {
     }
   }
   getInfo() {
-    this.provider_services.getContactInfo()
+    this.subscriptions.sink = this.provider_services.getContactInfo()
       .subscribe(data => {
         this.info_list = data;
 

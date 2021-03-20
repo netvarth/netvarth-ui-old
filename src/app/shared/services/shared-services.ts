@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { LocalStorageService } from './local-storage.service';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
 @Injectable()
@@ -8,7 +9,7 @@ export class SharedServices {
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
-  constructor(private servicemeta: ServiceMeta) {
+  constructor(private servicemeta: ServiceMeta, private lStorageService: LocalStorageService) {
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
@@ -841,13 +842,13 @@ export class SharedServices {
   }
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('s3Url')) {
-        resolve(localStorage.getItem('s3Url'));
+      if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+        resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
       } else {
         this.gets3url(src)
           .subscribe(
             data => {
-              localStorage.setItem('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data.toString());
               resolve(data);
             },
             error => {
@@ -928,6 +929,9 @@ export class SharedServices {
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
   }
+  CreateWalkinOrder(accountid, postData) {
+    return this.servicemeta.httpPost('provider/orders/', postData);
+  }
   // CreateConsumerOrderlist(accountid, dataappend) {
   //   return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
   // }
@@ -942,6 +946,10 @@ export class SharedServices {
   }
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
+  }
+  getVideoList(countrycode,phonenumber) {
+    const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
+    return this.servicemeta.httpGet(url);
   }
   addProviderWaitlistAttachment(uuid, body) {
     const url = 'provider/waitlist/' + uuid + '/attachment';
@@ -970,5 +978,45 @@ export class SharedServices {
 getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);
+}
+addWaitlistAdvancePayment(param, body) {
+  const url = 'consumer/waitlist/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
+}
+addApptAdvancePayment(param, body) {
+  const url = 'consumer/appointment/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
+}
+getConsumerQuestionnaire(serviceId, consumerId, accountId) {
+  const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
+  return this.servicemeta.httpGet(url);
+}
+submitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/waitlist/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
+submitConsumerApptQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
+resubmitConsumerQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
+submitProviderApptQuestionnaire(body, uuid) {
+  const url = 'provider/appointment/questionnaire/' + uuid;
+  return this.servicemeta.httpPost(url, body);
+}
+resubmitProviderQuestionnaire(body, uuid) {
+  const url = 'provider/questionnaire/resubmit/' + uuid;
+  return this.servicemeta.httpPost(url, body);
+}
+submitProviderWaitlistQuestionnaire(body, uuid) {
+  const url = 'provider/waitlist/questionnaire/' + uuid;
+  return this.servicemeta.httpPost(url, body);
+}
+getProviderQuestionnaire(serviceId, consumerId, channel) {
+  const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
+  return this.servicemeta.httpGet(url);
 }
 }

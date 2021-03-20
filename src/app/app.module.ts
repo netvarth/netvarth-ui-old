@@ -48,7 +48,6 @@ import { SetPasswwordModule } from './shared/components/set-password-form/set-pa
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { GlobalService } from './shared/services/global-service';
-import { GlobalFunctions } from './shared/functions/global-functions';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
@@ -70,6 +69,9 @@ import { WordProcessor } from './shared/services/word-processor.service';
 import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { AuthService } from './shared/services/auth-service';
+import { TwilioService } from './shared/services/twilio-service';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
@@ -93,7 +95,9 @@ export function init_app(globalService: GlobalService) {
     ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
     LiveChatComponent,
+    JaldeeVideoComponent,
     AddAddressComponent,
+    MeetingRoomComponent,
     CommunicationComponent
   ],
   entryComponents: [
@@ -171,6 +175,7 @@ export function init_app(globalService: GlobalService) {
     DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
+    MeetService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
@@ -189,4 +194,5 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 

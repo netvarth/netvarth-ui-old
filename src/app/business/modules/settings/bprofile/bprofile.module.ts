@@ -24,6 +24,7 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AboutMeComponent } from './aboutme/aboutme.component';
 import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
 import { SocialMediaComponent } from './social-media/social-media.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { SocialMediaComponent } from './social-media/social-media.component';
         ProPicPopupModule,
         NgxQRCodeModule,
         ShareButtonsModule,
-        ShareIconsModule
+        ShareIconsModule,
+        ImageCropperModule
     ],
     declarations: [
         BProfileComponent,

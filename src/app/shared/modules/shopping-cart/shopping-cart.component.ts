@@ -13,6 +13,7 @@ import { ConfirmBoxComponent } from '../../components/confirm-box/confirm-box.co
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -26,7 +27,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
-  isfutureAvailableTime: boolean;
+  isfutureAvailableTime = false;
   selectedQeTime: any;
   order_date: any;
   selectedQsTime: any;
@@ -73,7 +74,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
   couponvalid = true;
   api_cp_error = null;
-  s3CouponsList: any = [];
+  s3CouponsList: any = {
+    JC:[],OWN:[]
+  };
   selected_coupons: any = [];
   couponsList: any = [];
   selected_coupon;
@@ -89,6 +92,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   canceldialogRef: any;
   nextAvailableTimeQueue: any = [];
   queue;
+  store_availables: any;
+  home_availables: any;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -97,7 +102,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     public sharedFunctionobj: SharedFunctions,
     private snackbarService: SnackbarService,
-    private lStorageService: LocalStorageService) {
+    private lStorageService: LocalStorageService,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
@@ -290,6 +296,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         res => {
           this.s3url = res;
           this.getbusinessprofiledetails_json('coupon', true);
+          this.getprovidercoupondetails_json('providerCoupon', true);
           this.api_loading1 = false;
         },
         () => {
@@ -321,17 +328,30 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.couponvalid = false;
       let found = false;
-      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
-          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
-          this.couponsList.push(couponInfo);
-          found = true;
-          this.selected_coupon = '';
-          break;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
+        if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+            this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+            couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+            couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
+            this.couponsList.push(couponInfo);
+            found = true;
+            this.selected_coupon = '';
+            break;
         }
-      }
+    }
+    for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+        if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
+            this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+            couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+            if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+                couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+            }
+            this.couponsList.push(couponInfo);
+            found = true;
+            this.selected_coupon = '';
+            break;
+        }
+    }
       if (found) {
         this.couponvalid = true;
         this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -362,9 +382,26 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
-        this.s3CouponsList = res;
-        console.log(this.s3CouponsList);
-        if (this.s3CouponsList.length > 0) {
+        this.s3CouponsList.JC = res;
+        console.log(this.s3CouponsList.JC);
+        if (this.s3CouponsList.JC.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
+  }
+  getprovidercoupondetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList.OWN = res;
+        console.log(this.s3CouponsList.OWN);
+        if (this.s3CouponsList.OWN.length > 0) {
           this.showCouponWB = true;
         }
       },
@@ -547,17 +584,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
-    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
   }
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
     const seldate = new Date(seldate2);
-    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
     const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
     const strtDt = new Date(strtDt2);
-    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
       return true;
     } else {
@@ -621,8 +658,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-        const availables = data.filter(obj => obj.isAvailable);
-        const availDates = availables.map(function (a) { return a.date; });
+        this.store_availables  = data.filter(obj => obj.isAvailable);
+        this.getAvailabilityByDate(this.sel_checkindate);
+        const availDates = this.store_availables .map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -633,8 +671,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-        const availables = data.filter(obj => obj.isAvailable);
-        const availDates = availables.map(function (a) { return a.date; });
+        this.home_availables = data.filter(obj => obj.isAvailable);
+        this.getAvailabilityByDate(this.sel_checkindate);
+        const availDates =  this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -648,38 +687,108 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
+  // getAvailabilityByDate(date) {
+  //   this.sel_checkindate = date;
+  //   const cday = new Date(this.sel_checkindate);
+  //   const currentday = (cday.getDay() + 1);
+  //   if (this.choose_type === 'store') {
+  //     const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
+
+  //     if (storeIntervals.includes(currentday)) {
+  //       this.isfutureAvailableTime = true;
+  //       this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+  //       // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+  //       console.log(this.nextAvailableTimeQueue);
+  //       this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+  //       this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+  //     } else {
+  //       this.isfutureAvailableTime = false;
+  //     }
+
+  //   } else {
+  //     const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
+  //     if (homeIntervals.includes(currentday)) {
+  //       this.isfutureAvailableTime = true;
+  //       this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+  //       // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+  //       console.log(this.nextAvailableTimeQueue);
+  //       this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+  //       this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+  //     } else {
+  //       this.isfutureAvailableTime = false;
+  //     }
+  //   }
+  // }
+
   getAvailabilityByDate(date) {
+    console.log(date);
+    console.log(this.storeAvailableDates);
+    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
+    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
-
-      if (storeIntervals.includes(currentday)) {
+      const last_date = moment().add(30, 'days');
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
-        console.log(this.nextAvailableTimeQueue);
-        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
-      } else {
+        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        console.log('greater than 30');
+      } 
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
+        console.log('less than 30'); 
+        console.log(this.store_availables);
+        const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(availability.length > 0){
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
+          } else{
+            this.isfutureAvailableTime = false;
+          }
+        }     
+      else {
         this.isfutureAvailableTime = false;
       }
-
-    } else {
+    }  
+    else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
-      if (homeIntervals.includes(currentday)) {
+      const last_date = moment().add(30, 'days');
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      console.log(homeIntervals);
+      console.log(JSON.stringify(homeIntervals));
+      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
-        console.log(this.nextAvailableTimeQueue);
-        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        console.log('greater than 30');
+      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+        console.log(this.home_availables);
+        const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(availability.length > 0){
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
       }
     }
+    else {        
+       this.isfutureAvailableTime = false;
+     }
+    }
   }
+
+
 
   itemDetails(item) {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);

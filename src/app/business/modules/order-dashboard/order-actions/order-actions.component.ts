@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { NavigationExtras, Router } from '@angular/router';
-import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -37,23 +35,26 @@ export class OrderActionsComponent implements OnInit {
   action = '';
   providerLabels: any = [];
   labelMap;
+  timeType = '';
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private providerservice: ProviderServices,
-    private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
-    private lStorageService:LocalStorageService) { }
+) { }
 
   ngOnInit() {
     this.loading = true;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
+    if(this.data.type){
+      this.timeType = this.data.type;
+    }
+    console.log(this.timeType);
     console.log(this.orderDetails);
     console.log(this.orderDetails.orderStatus);
     if (this.orderDetails.length > 1) {
@@ -78,6 +79,12 @@ export class OrderActionsComponent implements OnInit {
     this.dialogRef.close();
     this.router.navigate(['provider', 'orders', this.orderDetails.uid]);
   }
+  orderEdit() {
+    this.dialogRef.close();
+     this.router.navigate(['provider', 'orders', 'edit', this.orderDetails.uid ]);
+
+
+  }
   gotoBill() {
     this.provider_services.getWaitlistBill(this.orderDetails.uid)
       .subscribe(
@@ -90,82 +97,7 @@ export class OrderActionsComponent implements OnInit {
         }
       );
   }
-  orderEdit() {
-    this.lStorageService.removeitemfromLocalStorage('order');
-    console.log(this.orderDetails);
-    const cuser = this.groupService.getitemFromGroupStorage('accountId');
-    const location = this.groupService.getitemFromGroupStorage('location');
-    const ynwbp = this.groupService.getitemFromGroupStorage('ynwbp');
-    const businessObject = {
-      'bname': ynwbp.bn,
-      'blocation': location,
-      'logo': ''
-    };
-    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    this.loading = true;
-    this.orderList = [];
-    this.image_list_popup = [];
-    this.providerservice.getProviderOrderById(this.orderDetails.uid).subscribe(data => {
-      this.orderDetails = data;
-      if (this.orderDetails && this.orderDetails.orderItem) {
-        console.log(this.orderDetails.orderItem);
-        for (const item of this.orderDetails.orderItem) {
-          const itemqty: number = item.quantity;
-          for (let i = 0; i <= itemqty; i++) {
-            const itemObj = {
-              'itemId': item.id,
-              'displayName': item.name,
-              'price': item.price,
-              'itemImages': item.itemImages
 
-            };
-            console.log(itemObj);
-            this.orderList.push({'type': 'item', 'item': itemObj});
-            console.log(this.orderList);
-         }
-
-        }
-      }
-      console.log(JSON.stringify(this.orderList));
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      // if (this.orderDetails && this.orderDetails.shoppingList) {
-      //   this.imagelist = this.orderDetails.shoppingList;
-      //   for (let i = 0; i < this.imagelist.length; i++) {
-      //     const imgobj = new Image(
-      //       i,
-      //       { // modal
-      //           img: this.imagelist[i].s3path,
-      //           description: ''
-      //       });
-      //   this.image_list_popup.push(imgobj);
-      //   }
-      // }
-      this.loading = false;
-    });
-    if (this.orderDetails.storePickup) {
-      this.choose_type = 'store';
-    }
-    if(this.orderDetails.homeDelivery) {
-      this.choose_type = 'home';
-    }
-     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        account_id: cuser,
-        choosetype:  this.choose_type,
-        uid : this.orderDetails.uid
-      }
-    };
-    const chosenDateTime = {
-      delivery_type: this.choose_type,
-      // catlog_id: this.activeCatalog.id,
-     nextAvailableTime: this.orderDetails.timeSlot['sTime'] + ' - ' +  this.orderDetails.timeSlot['eTime'],
-      order_date: this.orderDetails.orderDate,
-    };
-    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-    this.router.navigate(['provider', 'orders', 'edit' ], navigationExtras);
-    this.dialogRef.close();
-
-  }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
       this.pos = data['enablepos'];
@@ -177,10 +109,7 @@ export class OrderActionsComponent implements OnInit {
   }
   gotoCustomerDetails() {
     this.dialogRef.close();
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id], navigationExtras);
+    this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id]);
   }
   changeOrderStatus(status) {
     this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {

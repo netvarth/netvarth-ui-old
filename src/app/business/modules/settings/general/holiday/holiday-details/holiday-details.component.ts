@@ -9,6 +9,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import * as moment from 'moment';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-holiday-details',
@@ -56,13 +57,10 @@ export class HolidayDetailsComponent implements OnInit {
 
   breadcrumbs = this.breadcrumbs_init;
   customer_label;
-  //   coupon_id;
   holiday_id;
   action;
   holiday: any;
-  //  halyday_name : any;
-  //    data: any;
-selectedDate;
+  selectedDate;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -71,7 +69,8 @@ selectedDate;
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     {
       this.activated_route.params.subscribe(
@@ -98,20 +97,7 @@ selectedDate;
                     (item) => {
                       this.holiday = item;
                       this.selectedDate = this.holiday.startDay;
-                      //  this.halyday_name = this.holiday.name;
                       if (this.action === 'edit') {
-
-
-                        // const breadcrumbs = [];
-                        // this.breadcrumbs_init.map((e) => {
-                        //   breadcrumbs.push(e);
-                        // });
-                        // breadcrumbs.push({
-                        //   title: this.halyday_name
-                        // });
-                        // this.breadcrumbs = breadcrumbs;
-
-
                         this.createForm();
                       }
                     }
@@ -124,30 +110,23 @@ selectedDate;
         }
       );
     }
-
   }
 
   ngOnInit() { }
 
-
   createForm() {
-
     this.amForm = this.fb.group({
-
       selectdate: [{ value: '', disabled: (this.action === 'edit') ? true : false }, Validators.compose([Validators.required])],
       reason: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDesc)])],
       starttime: [{ hour: 9, minute: 0 }, Validators.compose([Validators.required])],
       endtime: [{ hour: 18, minute: 0 }, Validators.compose([Validators.required])]
     });
-    // }
-
     if (this.action === 'edit') {
       this.updateForm();
       this.datepicker_disabled = 'disabled';
     }
     this.api_loading1 = false;
   }
-
 
   updateForm() {
     this.amForm.setValue({
@@ -159,8 +138,6 @@ selectedDate;
       'endtime': { hour: parseInt(moment(this.holiday.nonWorkingHours.eTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.holiday.nonWorkingHours.eTime, ['h:mm A']).format('mm')) }
     });
   }
-
-
 
   getholiday(holidayid) {
     const _this = this;
@@ -196,26 +173,22 @@ selectedDate;
     const date = new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
     if (moment(today_date).isSame(date_format)) { // if the selected date is today
-      const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
-      const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+      const curtime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(today_curtime);
+      const selstarttime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
-        // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         this.snackbarService.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
         return;
       }
     }
-    const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
-    const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
+    const Start_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+    const End_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
-     // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       this.snackbarService.openSnackBar(Messages.HOLIDAY_ETIME, { 'panelClass': 'snackbarerror' });
       return;
     }
-
     const curdate = new Date();
     curdate.setHours(form_data.starttime.hour);
     curdate.setMinutes(form_data.starttime.minute);
-
     const enddate = new Date();
     enddate.setHours(form_data.endtime.hour);
     enddate.setMinutes(form_data.endtime.minute);
@@ -250,15 +223,12 @@ selectedDate;
     this.provider_services.addHoliday(post_data)
       .subscribe(
         () => {
-          // this.api_success = this.wordProcessor.getProjectMesssages('ITEM_CREATED');
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_CREATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'general', 'holidays']);
-
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -290,6 +260,6 @@ selectedDate;
     return this.shared_functions.isNumeric(evt);
   }
   redirecToGeneral() {
-    this.router.navigate(['provider', 'settings' , 'general' , 'holidays' ]);
+    this.router.navigate(['provider', 'settings', 'general', 'holidays']);
   }
 }

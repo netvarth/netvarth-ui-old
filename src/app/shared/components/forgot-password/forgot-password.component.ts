@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../services/word-processor.service';
 
 export class ForgotPasswordModel {
@@ -22,6 +22,7 @@ export class ForgotPasswordModel {
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.css']
   // styleUrls: ['./home.component.scss']
 })
 
@@ -53,11 +54,10 @@ export class ForgotPasswordComponent {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
-  phoneError: string;
+  phoneError: string; 
   constructor(
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

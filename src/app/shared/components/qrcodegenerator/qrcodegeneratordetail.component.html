@@ -1,0 +1,47 @@
+<h1 class="mat-dialog-title">Jaldee QR Code
+  <button  mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
+  <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId1>
+              <!-- <div>
+                  <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
+              </div> -->
+      <div>
+          <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
+          </ngx-qrcode>
+      </div>
+      <div class="coupon-outer">
+          <button class="btn btn-info jld-lnk-btn">
+              <a class="ngx-qr-btn" [href]="qrCodePath" download>
+              <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+          </button>
+                  <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                  &nbsp;&nbsp;&nbsp;
+                  <button (click)="closeOnlineQR()">close</button> -->
+      </div>
+      <div class="jld-link-pad">
+       <div>Jaldee Link - <span class="jld-lnk-font" ><span>{{wpath}}{{accuid}}</span></span></div>
+       <br>
+       <div style="padding-right: 20%;">
+           Jaldee Provider ID - <span class="jld-lnk-font" >{{accuid}}</span>
+       </div>
+       <div class="mgn-up-20" >
+        <label>Share Jaldee Link</label>
+        <!-- <div style="display:flex;padding-left: 150px;">
+        <i class="fa fa-copy custId-cursor  font-lrge " style="font-size:40px;"
+        (click)="copyInputMessage(accuid)" [matTooltip]="'Copy link'"></i> -->
+        <share-buttons [theme]="'circles-dark'" 
+        [include]="['facebook','whatsapp','email','telegram','copy']"
+        [url]="shareLink"
+        [autoSetMeta]="true"
+        [image]="qrCodePath"
+        [showIcon]="true"
+        [showText]="true"
+       ></share-buttons>
+        </div>
+       </div>
+      </div>
+      <!-- </div> -->
+</mat-dialog-content>

@@ -8,6 +8,7 @@ import { projectConstants } from '../../../../../app.component';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         public router: Router) { }
 
     ngOnInit() {
@@ -150,7 +152,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
             );
     }
     getAppxTime(waitlist) {
-        return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
+        return this.dateTimeProcessor.providerConvertMinutesToHourMinute(waitlist);
     }
     redirecToDonation() {
         this.router.navigate(['provider', 'settings' , 'donationmanager']);

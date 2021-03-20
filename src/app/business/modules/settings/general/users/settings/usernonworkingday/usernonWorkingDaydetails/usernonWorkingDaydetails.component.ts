@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-usernonworkingdaydetails',
@@ -73,7 +74,8 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
@@ -218,16 +220,16 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
     const date = new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
     if (moment(today_date).isSame(date_format)) { // if the selected date is today
-      const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
-      const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+      const curtime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(today_curtime);
+      const selstarttime = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
         // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         this.snackbarService.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
         return;
       }
     }
-    const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
-    const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
+    const Start_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
+    const End_time = this.dateTimeProcessor.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
       // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       this.snackbarService.openSnackBar(Messages.HOLIDAY_ETIME, { 'panelClass': 'snackbarerror' });

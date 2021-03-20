@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -117,6 +118,7 @@ export class ProviderCheckinComponent implements OnInit {
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+    dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;
@@ -225,6 +227,10 @@ export class ProviderCheckinComponent implements OnInit {
     countryCode;
     checkin_label;
     provider_label = '';
+    showQuestionnaire = false;
+    questionnaireList: any = [];
+    channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -235,6 +241,7 @@ export class ProviderCheckinComponent implements OnInit {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -259,6 +266,7 @@ export class ProviderCheckinComponent implements OnInit {
                 } else {
                     this.chekin_title = 'Walk-ins';
                 }
+                this.channel = (this.checkinType === 'PHONE_CHECKIN') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.calmode) {
                 this.calculationMode = qparams.calmode;
@@ -412,10 +420,11 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.qParams['thirdParty'] = this.thirdParty;
         this.qParams['type'] = type;
+        this.qParams['id'] = 'add';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/add'], navigationExtras);
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
     selectMode(type) {
         this.selectedMode = type;
@@ -579,7 +588,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
@@ -798,6 +807,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(this.sel_ser);
+        this.getProviderQuestionnaire();
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -846,7 +857,7 @@ export class ProviderCheckinComponent implements OnInit {
                         this.sel_queue_id = this.queuejson[selindx].id;
                         this.sel_queue_indx = selindx;
                         // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
@@ -921,7 +932,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_queue_indx !== -1) {
             this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
-            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
+            this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
             this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
             // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
@@ -937,7 +948,7 @@ export class ProviderCheckinComponent implements OnInit {
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
         this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
@@ -1063,6 +1074,7 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     saveCheckin() {
+        console.log(this.waitlist_for);
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
@@ -1094,6 +1106,9 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
         // }
+        if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+            this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+        }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -1129,6 +1144,8 @@ export class ProviderCheckinComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1152,7 +1169,11 @@ export class ProviderCheckinComponent implements OnInit {
             post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
                 if (this.thirdParty === '') {
+                    if (this.waitlist_for.length === 0) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
+                    } else {
                     this.addCheckInProvider(post_Data);
+                    }
                 } else {
                     this.addWaitlistBlock(post_Data);
                 }
@@ -1183,17 +1204,22 @@ export class ProviderCheckinComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                this.submitQuestionnaire(retUuid);
+                } else {
+                    this.router.navigate(['provider', 'check-ins']);
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
+                }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
                 }
-                if (this.settingsjson.showTokenId) {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-                } else {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
-                }
                 this.showCheckin = false;
                 this.searchForm.reset();
-                this.router.navigate(['provider', 'check-ins']);
+                // this.router.navigate(['provider', 'check-ins']);
 
             },
                 error => {
@@ -1202,6 +1228,31 @@ export class ProviderCheckinComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+console.log(this.questionAnswers);
+console.log(Object.keys(this.questionAnswers).length);
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+        if (this.settingsjson.showTokenId) {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+        } else {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+        }
+        this.router.navigate(['provider', 'check-ins']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1260,11 +1311,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
+        this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
         } else {
             let exists = false;
             let existindx = -1;
@@ -1459,17 +1511,17 @@ export class ProviderCheckinComponent implements OnInit {
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -1543,7 +1595,7 @@ export class ProviderCheckinComponent implements OnInit {
     handleDeptSelction(obj) {
         this.users = [];
         this.queuejson = [];
-        this.api_error = '';
+        this.api_error = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
@@ -1946,4 +1998,18 @@ export class ProviderCheckinComponent implements OnInit {
             return this.customer_data.jaldeeId;
         }
     }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+console.log(Object.keys(this.questionAnswers).length);
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
+    }
+    getProviderQuestionnaire() {
+        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        //   console.log(data);
+        //   this.questionnaireList = data;
+        // });
+      }
 }

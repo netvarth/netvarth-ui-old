@@ -457,6 +457,8 @@ export class ProviderSharedFuctions {
     let ynwcustid;
     let custid = [];
     let name;
+    let phone;
+    let email;
     if (customerlist.length > 1 || source === 'donation-list') {
       type = 'multiple';
       for (const custlst of customerlist) {
@@ -469,7 +471,11 @@ export class ProviderSharedFuctions {
     } else if (customerlist.length === 1 && source !== 'donation-list') {
       type = 'single';
       custid = customerlist[0].id || null;
-      name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
+      const fname = (customerlist[0].firstName) ? customerlist[0].firstName : '';
+      const lname = (customerlist[0].lastName) ? customerlist[0].lastName : '';
+      name = fname + ' ' + lname;
+      phone = customerlist[0].phoneNo;
+      email = customerlist[0].email;
     }
     if (type === 'single') {
       ynwcustid = custid;
@@ -488,7 +494,9 @@ export class ProviderSharedFuctions {
           source: source,
           type: 'send',
           terminologies: terminologies,
-          name: name
+          name: name,
+          email: email,
+          phone: phone,
         }
       });
 

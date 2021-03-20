@@ -8,7 +8,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
@@ -88,7 +88,6 @@ export class SignUpComponent implements OnInit {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   countrySelected = 'in';
   PhoneNumberFormat = PhoneNumberFormat;

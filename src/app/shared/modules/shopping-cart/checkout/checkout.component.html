@@ -72,7 +72,7 @@
                           (click)="changeTime()" >Change
                             </a></span>
                     </div>
-                    <div>
+                    <div *ngIf="isfutureAvailableTime">
                         <h4>
                             <span *ngIf="!isFuturedate">Today, </span>
                             <span *ngIf="!isFuturedate">
@@ -86,6 +86,10 @@
 
                         </h4>
                     </div>
+                    <div *ngIf="!isfutureAvailableTime" class="red">
+                        <span>No timings are available</span>
+                      </div>
+                    
                   </div>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
@@ -148,12 +152,28 @@
                         <label for="youridhere" class="static-value">+91</label>
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
                         </div>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'phone')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'phone',
+                        {
+                          'required' : 'Mobile number is required',
+                          'minlength' : 'Enter a 10 digit mobile number',
+                          'maxlength' : 'Enter a 10 digit mobile number',
+                          'pattern' : 'Only numbers are allowed'
+                        })">
+</app-field-error-display>
                       </div>
+                
+                   
 
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="email">
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
                       </div>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'email')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'email',
+                      {
+                        'required' : 'Email is required',
+                        'pattern' : 'Please enter valid email'
+                      })">
+</app-field-error-display>
                       <!-- <mat-form-field class="example-full-width">
                        <mat-label>Contact Email</mat-label>
                         <input matInput placeholder="Enter your email" value=""formControlName="email">
@@ -304,7 +324,7 @@
                                   <div class="price rupee-font">{{cartDetails.deliveryCharge | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="hr-line-pitch-blk mgn-up-20"></div>
-                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle" aria-hidden="true"></i>An advance of {{cartDetails.advanceAmount | currency:'&#8377;'}} required</span>
+                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}} </span>required</span>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
@@ -320,7 +340,7 @@
 
                         </div>
                       </div>
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 </div>
@@ -395,7 +415,7 @@
                     <!-- <div (click)="filed.click()">
                         <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist
                       </div> --><br>
-                      <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                      <div class="order-label" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                         *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                       <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                            Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
@@ -404,7 +424,7 @@
 
 
                     <div *ngIf="selectedImagelist.files.length > 0">
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 <!-- <div class="cr1">
@@ -506,7 +526,7 @@
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'home'">Delivery
                           Timings  </div>
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'store'">Store
+                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'store'">Pickup
                             Timings  </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
                           <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">

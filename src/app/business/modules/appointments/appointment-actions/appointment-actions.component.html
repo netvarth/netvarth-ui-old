@@ -39,7 +39,7 @@
                 <div class="icon-text">Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('Started')">
+        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="!buttonClicked && changeWaitlistStatus('Started')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Start Service</div>
@@ -64,26 +64,26 @@
             </div>
 
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">
+        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="!buttonClicked && changeWaitlistStatus('Cancelled')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel appointment</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
+        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="!buttonClicked && changeWaitlistStatus('Arrived')">
             <div class="action-box-sub">
                 <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
-            (click)="changeWaitlistStatus('Completed')">
+            (click)="!buttonClicked && changeWaitlistStatus('Completed')">
             <div class="action-box-sub">
                 <span class="complete-icon"></span>
                 <div class="icon-text">Complete</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="changeWaitlistStatus('Confirmed')">
+        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="!buttonClicked && changeWaitlistStatus('Confirmed')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Status change</div>

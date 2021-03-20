@@ -1,0 +1,32 @@
+
+    <h1 class="mat-dialog-title">  Consumer Groups
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <div *ngIf="consumer_group.length>0">
+    <mat-dialog-content>
+     <div> 
+      <mat-selection-list #groups [disabled]="mode==='view'"  [(ngModel)]="selectedGroups" (ngModelChange)="onGroupChange($event)" >
+
+        <mat-list-option checkboxPosition="before" *ngFor=" let group of consumer_group" [value] ="group" [selected]="isSelected(group)">
+
+          {{group.groupName}}
+
+        </mat-list-option>
+
+      </mat-selection-list>
+      </div> 
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button"  [disabled]="mode==='view'"  type="button" (click)="onConfirm(groups.selectedOptions)" >Confirm</button>
+    </div>
+    </mat-dialog-actions>
+  </div>
+  <div *ngIf="consumer_group.length==0">
+    <p class="ml-5">No Groups Found</p>
+  </div>

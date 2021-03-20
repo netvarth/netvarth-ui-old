@@ -25,11 +25,19 @@
     <form  [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
     onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         class="ynw-common-form-nm">
-        <div class="form-group">
-            <mat-form-field>
+        <div class="form-group" style="margin-top: 15px;">
+            <!-- <mat-form-field>
                     <input matInput type="text" class="form-control" id="name" placeholder="{{name_mand_cap}}" formControlName="name"
                         autocomplete="off">
-                    </mat-form-field>  
+                    </mat-form-field> -->
+                    <div class="">
+                      <label class="form-control-label">
+                        Name 
+                        <span style="color:red;">*</span>
+                      </label>
+                      <input type="text" class="form-control" id="name" placeholder="Enter the name of the coupon" formControlName="name"
+                      autocomplete="off"/>
+                    </div>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'name',
     {
       'required' : 'Please enter the coupon name.',
@@ -38,20 +46,35 @@
       </app-field-error-display>
         </div>
         <div class="form-group">
-                <label class="col-form-label" for="calculationType">{{type_mand_cap}}</label>
+                <label class="col-form-label" for="calculationType">
+                  Type 
+                  <span style="color: red">*</span>
+                </label>
                 <mat-radio-group formControlName="calculationType">
                   <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">{{fixed_cap}}</mat-radio-button>&nbsp;&nbsp;&nbsp;
                   <mat-radio-button value="Percentage" (click)="handleTypechange('Percentage')">{{percentage_cap}}</mat-radio-button>
                 </mat-radio-group>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')" errorMsg="Please enter your coupon type.">
                 </app-field-error-display>
-                <mat-form-field class="example-full-width">
+                <!-- <mat-form-field class="example-full-width">
                   <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> 
                     <span class="price rupee-font"> &#8377; </span> &nbsp;</span>
                   <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
                     <input matInput type="text" class="form-control cupn-price" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
                       id="coupValue" [placeholder]="valueCaption" formControlName="coupValue" autocomplete="off">
-                </mat-form-field>
+                </mat-form-field> -->
+                <div class="example-full-width" style="margin-top: 15px;">
+                  <label class="form-control-label">Value ( 
+                      <span *ngIf="curtype == 'Fixed'" class=''> 
+                        <i class="fa fa-inr"> </i>
+                      </span>
+                      <span *ngIf="curtype == 'Percentage'" class=''> % </span>
+                    ) 
+                    <span style="color:red;">*</span>
+                  </label>
+                    <input type="text" class="form-control cupn-price" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                      id="coupValue" [placeholder]="valueCaption" formControlName="coupValue" autocomplete="off">
+                </div>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'coupValue')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'coupValue',
              {
                'required' : valueCaption,
@@ -61,10 +84,18 @@
                 </app-field-error-display>
               </div>
               <div class="form-group">
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                       <input matInput type="text" class="form-control" id="description" placeholder="{{description_mand_cap}}"
                         formControlName="description" autocomplete="off">
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <div class="">
+                      <label class="form-control-label">
+                        Description 
+                        <span style="color:red;">*</span>
+                      </label>
+                      <input type="text" class="form-control" id="description" placeholder="Enter Description"
+                        formControlName="description" autocomplete="off">
+                    </div>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsgs]="fed_service.getErrorMessage(amForm,'description',
                   {
                     'required' : 'Please enter the description.',

@@ -39,11 +39,13 @@ export const Messages = {
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
+  'COUPON_PUBLISHED': 'Coupon published successfully',
   'COUPON_UPDATED': 'Coupon updated successfully',
   'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
   'COUPON_DELETED': 'Coupon deleted successfully',
   'COUPON_LISTEMPTY': 'No Coupons found',
   'APPLIED_INBILLTIME': ' Coupon will be applied on the final bill',
+
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
@@ -126,7 +128,7 @@ export const Messages = {
   'SERVICE_ADDED2': 'Please add this service to the relevant Queues by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
-  'SERVICE_PRE_PAY_ERROR': 'Enable [customer] self pay button under payment settings to collect prepayment for this service.',
+  'SERVICE_PRE_PAY_ERROR': 'Payments cannot be collected as your payment setting is disabled now. To accept payments, go to Settings —> Jaldee Pay and enable the Jaldee Pay mode.',
   'SERVICE_TAX_ZERO_ERROR': 'Tax settings need to be completed for tax to be applicable',
   'WAITLIST_LOCATION_CREATED': 'Location created successfully',
   'WAITLIST_LOCATION_UPDATED': 'Location updated successfully',
@@ -261,7 +263,7 @@ export const Messages = {
   'FAVORITE_TOOLTIP': 'Your favourite providers',
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
-  'COUPON_TOOPTIP': 'Click here to see coupons offered by Jaldee',
+  'COUPON_TOOPTIP': 'Click here to see coupons offered',
   'JDN_TOOPTIP': 'Get discounts right away !',
   'REF_TOOPTIP': 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
@@ -272,6 +274,7 @@ export const Messages = {
   'SCHEDULENAME_TOOLTIP': 'Click here to edit the Schedule',
 
   'ADD_BUTTON': 'Click to create an instant queue',
+  'ADD_DEPT': 'Click to create an Department',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
@@ -295,6 +298,7 @@ export const Messages = {
   'CANCEL_BTN': 'Cancel',
   'UPDATE_BTN': 'Update',
   'EDIT_BTN': 'Edit',
+  'PUBLISH_BTN':'Publish',
   'DELETE_BTN': 'Delete',
   'SEND_BTN': 'Send',
   'OK_BTN': 'Ok',
@@ -664,6 +668,7 @@ export const Messages = {
   'QTY_CAP': 'Qty',
   'DISCOUNT_CAP': 'Discount',
   'COUPON_CAP': 'Coupon',
+  'PUBLISHED_CAP': 'Published',
   'SUB_TOT_CAP': 'Sub Total',
   'GROSS_AMNT_CAP': 'Gross Amount',
   'TAX_CAP': 'Tax',
@@ -1447,7 +1452,7 @@ export const Messages = {
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO': 'if not found, enter the [customer] details ',
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE': 'for creating a [customer] base.',
   'FRM_LEVEL_ADJ_DELAY_MSG': 'Manage the delay for the below shown working hour selected from the dashboard and notify the checked in [customer]s about the delay.',
-  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE': 'Are you running late? Inform your upcoming patients about any delay.',
+  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE': 'Are you running late? Inform your upcoming [customer]s about any delay.',
 
   'CHECKED_IN_LABEL': 'Checked in',
   'VERIFIED_LEVEL': 'Your verified level',

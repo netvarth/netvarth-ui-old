@@ -8,6 +8,8 @@ import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.c
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { TwilioService } from './shared/services/twilio-service';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
@@ -24,7 +26,10 @@ const routes: Routes = [
         // canActivate: [AuthGuardProvider]
     },
     // { path: 'client', component: LiveChatClientComponent},
-    {path: 'video/:id',  component: LiveChatComponent},
+    // {path: 'video/:id',  component: LiveChatComponent},
+    {path: 'meeting/provider/:id', component: MeetingRoomComponent},
+    {path: 'meeting/:phonenumber/:id', component: LiveChatComponent},
+    {path: 'meeting/:phonenumber',  component: JaldeeVideoComponent},    
     { path: 'maintenance', component: MaintenanceComponent }
 ];
 

@@ -1,9 +1,9 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -26,9 +26,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     personsAheadText = '';
     itemQty = 0;
     actions: string;
-    constructor(private sharedFunctons: SharedFunctions,
+    constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -59,6 +60,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 this.buttonCaption = 'Get Appointment';
+                console.log(this.service);
                 break;
             case 'donation':
                 this.service = this.item.item;
@@ -137,7 +139,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
     }
     getTimeToDisplay(min) {
-        return this.sharedFunctons.convertMinutesToHourMinute(min);
+        return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
     getAvailibilityForCheckin(date, serviceTime) {
         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -161,7 +163,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (dtoday === date) {
             return ('Today' + ', ' + serviceTime);
         } else {
-            return (this.sharedFunctons.formatDate(date, { 'rettype': 'monthname' }) + ', '
+            return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
                 + serviceTime);
         }
     }
@@ -187,13 +189,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (dtoday === date) {
             return ('Today' + ', ' + this.getSingleTime(time));
         } else {
-            return (this.sharedFunctons.formatDate(date, { 'rettype': 'monthname' }) + ', '
+            return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
                 + this.getSingleTime(time));
         }
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctons.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     getAvailableSlot(slots) {
         let slotAvailable = '';
@@ -224,4 +226,32 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return '../../../../assets/images/order/Items.svg';
         }
     }
+    getServiceType(){
+        if(this.service.serviceType && this.service.serviceType == 'physicalService') {
+            return 'Physical Service';
+        } 
+        else if (this.service.serviceType && this.service.serviceType == 'virtualService'){
+            return 'Virtual Service';
+        }        
+        else {
+            /* if(this.service.virtualServiceType == 'videoService') {
+                return this.service.virtualCallingModes[0].callingMode + " " + "Video";
+            }
+            else if(this.service.virtualServiceType == 'audioService') {
+                return this.service.virtualCallingModes[0].callingMode + " " + "Audio";
+            } */
+            return ' ';
+        }
+    }
+    /* openCard(id, event){
+        event.stopPropagation();
+        var cardElement = document.getElementById(id);
+        if(cardElement.classList.contains('expand')){
+            cardElement.classList.remove("expand");
+        }
+        else{
+            cardElement.classList.add("expand");
+        }
+        return;
+    } */
 }
