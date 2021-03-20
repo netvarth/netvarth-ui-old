@@ -14,8 +14,9 @@ export class SharedServices {
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }
-  getUIConfig(s3Url) {
-    return this.servicemeta.httpGet(s3Url);
+  getUIConfig(s3Url: any, UTCstring) {
+    const url = s3Url + '/UIConfig/config.json?modifiedDate=' + UTCstring;
+    return this.servicemeta.httpGet(url);
   }
   adminLogin(body, type) {
     return this.servicemeta.httpPost(type + '/login', body);

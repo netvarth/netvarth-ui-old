@@ -18,7 +18,6 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
-import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.service';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
@@ -117,7 +116,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     api_loading=true;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
     retval;
-    // s3url;
+    s3url;
     terminologiesjson;
     provider_id;
     private subs=new SubSink();
@@ -136,8 +135,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
-        private location: Location,
-        private s3Processor: S3UrlProcessor
+        private location: Location
     ) {
         this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
@@ -197,54 +195,29 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
 
-    processS3s(type, result) {
-        switch (type) {
-            case 'terminologies': {
-                this.terminologiesjson = result;
-                this.wordProcessor.setTerminologies(this.terminologiesjson);
-                break;
-            }
-            case 'coupon': {
-                this.couponList.JC = result;
-                break;
-            }
-            case 'providerCoupon': {
-                this.couponList.OWN = result;
-                break;
-            }
-        }
-    }
-
-
     gets3curl() {
-        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
-            (accountS3s) => {              
-              this.processS3s('terminologies', accountS3s['terminologies']);
-              this.processS3s('coupon', accountS3s['coupon']);
-              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            });
-        // this.retval = this.sharedfunctionObj.getS3Url()
-        //     .then(
-        //         res => {
-        //             this.s3url = res;
-        //             this.getbusinessprofiledetails_json('terminologies', true);
-        //         });
+        this.retval = this.sharedfunctionObj.getS3Url()
+            .then(
+                res => {
+                    this.s3url = res;
+                    this.getbusinessprofiledetails_json('terminologies', true);
+                });
     }
-    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    //     let UTCstring = null;
-    //     if (modDateReq) {
-    //         UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     }
-    //    this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-    //         .subscribe(res => {
-    //             switch (section) {
-    //                 case 'terminologies': {
-    //                     this.terminologiesjson = res;
-    //                     break;
-    //                 }
-    //             }
-    //         });
-    // }
+    getbusinessprofiledetails_json(section, modDateReq: boolean) {
+        let UTCstring = null;
+        if (modDateReq) {
+            UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        }
+       this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+            .subscribe(res => {
+                switch (section) {
+                    case 'terminologies': {
+                        this.terminologiesjson = res;
+                        break;
+                    }
+                }
+            });
+    }
     getTerminologyTerm(term) {
         const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
         if (this.terminologiesjson) {
@@ -269,16 +242,15 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             .subscribe(
                 data => {
                     this.checkin = data;
-                    this.provider_id = this.checkin.providerAccount.uniqueId;
-                    // this.getCouponList();
-                    // this.getProviderCouponList();
-                    this.gets3curl();
+                    this.getCouponList();
+                    this.getProviderCouponList();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
-                    this.getPaymentModes();                    
-                    // if (this.provider_label === 'provider') {
-                    //     this.gets3curl();
-                    // }
+                    this.getPaymentModes();
+                    this.provider_id = this.checkin.providerAccount.uniqueId;
+                    if (this.provider_label === 'provider') {
+                        this.gets3curl();
+                    }
                 });
     }
     getBillDateandTime() {
@@ -751,28 +723,28 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     cashPayment() {
         this.snackbarService.openSnackBar('Visit ' + this.getTerminologyTerm('provider') + ' to pay by cash');
     }
-    // getCouponList() {
-    //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     this.sharedfunctionObj.getS3Url()
-    //         .then(
-    //             s3Url => {
-    //                 this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-    //                     .subscribe(res => {
-    //                         this.couponList.JC = res;
-    //                     });
-    //             });
-    // }
-    // getProviderCouponList() {
-    //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     this.sharedfunctionObj.getS3Url()
-    //         .then(
-    //             s3Url => {
-    //                 this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
-    //                     .subscribe(res => {
-    //                         this.couponList.OWN = res;
-    //                     });
-    //             });
-    // }
+    getCouponList() {
+        const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        this.sharedfunctionObj.getS3Url()
+            .then(
+                s3Url => {
+                    this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+                        .subscribe(res => {
+                            this.couponList.JC = res;
+                        });
+                });
+    }
+    getProviderCouponList() {
+        const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        this.sharedfunctionObj.getS3Url()
+            .then(
+                s3Url => {
+                    this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
+                        .subscribe(res => {
+                            this.couponList.OWN = res;
+                        });
+                });
+    }
     checkCouponValid(couponCode) {
         let found = false;
         for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {

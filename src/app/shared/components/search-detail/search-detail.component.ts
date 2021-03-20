@@ -22,7 +22,6 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
@@ -77,7 +76,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
   one_person_ahead = Messages.ONE_PERSON_AHEAD;
   jaldee_coupon = Messages.JALDEE_COUPON;
-  coupon = Messages.COUPONS_CAP;
+  coupon=Messages.COUPONS_CAP;
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   get_token_cap = Messages.GET_FIRST_TOKEN;
   nextAvailDate;
@@ -210,7 +209,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor,
     private dialog: MatDialog) {
     this.onResize();
   }
@@ -2061,95 +2059,53 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.btn_clicked = false;
       }
     } else {
-      // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-      // this.shared_functions.getS3Url('provider')
-      //   .then(
-      //     res => {
-      // const s3url = res;
-      this.s3Processor.getPresignedUrls(s3id,
-        null, 'services').subscribe(
-          (accountS3s) => {
-            let servicesList: any = [];
-            servicesList = accountS3s['services'];
-  
-            if (origin === 'serviceClick' || origin === 'donation') {
-              for (let i = 0; i < servicesList.length; i++) {
-                if (servicesList[i].departmentId) {
-                  for (let j = 0; j < servicesList[i].services.length; j++) {
-                    if (servicesList[i].services[j].name === name) {
-                      selected_service = servicesList[i].services[j];
-                      break;
+      const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+      this.shared_functions.getS3Url('provider')
+        .then(
+          res => {
+            const s3url = res;
+            this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
+              .subscribe(services => {
+                let servicesList: any = [];
+                servicesList = services;
+
+                if (origin === 'serviceClick' || origin === 'donation') {
+                  for (let i = 0; i < servicesList.length; i++) {
+                    if (servicesList[i].departmentId) {
+                      for (let j = 0; j < servicesList[i].services.length; j++) {
+                        if (servicesList[i].services[j].name === name) {
+                          selected_service = servicesList[i].services[j];
+                          break;
+                        }
+                      }
+                    } else {
+                      if (servicesList[i].name === name) {
+                        selected_service = servicesList[i];
+                        break;
+                      }
                     }
                   }
+                }
+                if (origin === 'deptServiceClick') {
+                  for (let i = 0; i < servicesList.length; i++) {
+                    for (let j = 0; j < servicesList[i].services.length; j++) {
+                      if (servicesList[i].services[j].name === name) {
+                        selected_service = servicesList[i].services[j];
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (selected_service !== null) {
+                  this.showServiceDetail(selected_service, busname);
                 } else {
-                  if (servicesList[i].name === name) {
-                    selected_service = servicesList[i];
-                    break;
-                  }
+                  this.btn_clicked = false;
                 }
-              }
-            }
-            if (origin === 'deptServiceClick') {
-              for (let i = 0; i < servicesList.length; i++) {
-                for (let j = 0; j < servicesList[i].services.length; j++) {
-                  if (servicesList[i].services[j].name === name) {
-                    selected_service = servicesList[i].services[j];
-                    break;
-                  }
-                }
-              }
-            }
-            if (selected_service !== null) {
-              this.showServiceDetail(selected_service, busname);
-            } else {
-              this.btn_clicked = false;
-            }
-          },error => {
-            this.btn_clicked = false;
-          }
-        );
-      // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
-      //   .subscribe(services => {
-      //     let servicesList: any = [];
-      //     servicesList = services;
-
-      //     if (origin === 'serviceClick' || origin === 'donation') {
-      //       for (let i = 0; i < servicesList.length; i++) {
-      //         if (servicesList[i].departmentId) {
-      //           for (let j = 0; j < servicesList[i].services.length; j++) {
-      //             if (servicesList[i].services[j].name === name) {
-      //               selected_service = servicesList[i].services[j];
-      //               break;
-      //             }
-      //           }
-      //         } else {
-      //           if (servicesList[i].name === name) {
-      //             selected_service = servicesList[i];
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     }
-      //     if (origin === 'deptServiceClick') {
-      //       for (let i = 0; i < servicesList.length; i++) {
-      //         for (let j = 0; j < servicesList[i].services.length; j++) {
-      //           if (servicesList[i].services[j].name === name) {
-      //             selected_service = servicesList[i].services[j];
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     }
-      //     if (selected_service !== null) {
-      //       this.showServiceDetail(selected_service, busname);
-      //     } else {
-      //       this.btn_clicked = false;
-      //     }
-      //   },
-      //     error => {
-      //       this.btn_clicked = false;
-      //     });
-      // });
+              },
+                error => {
+                  this.btn_clicked = false;
+                });
+          });
     }
   }
   // departmentClicked(deptName, searchData) {
@@ -2198,24 +2154,53 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   openCoupons(obj, type?) {
-    const couponObject: any = {};
+    const couponObject:any={};
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
-
-
     // const busname = obj.fields.title;
-    // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    // this.shared_functions.getS3Url('provider')
-    //   .then(
-    //     res => {
-    //       const s3url = res;
-
-    this.s3Processor.getPresignedUrls(s3id,
-      null, 'coupon,providerCoupon').subscribe(
-        (accountS3s) => {
-          couponObject.JC = accountS3s['coupon'];
-          couponObject.OWN = accountS3s['providerCoupon'];
-
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          const arr = [
+            new Promise((resolve, reject) => {
+              let jc_coupons:any=[];
+              if(obj.fields.coupon_enabled && obj.fields.coupon_enabled!==0){
+                this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+                .subscribe(couponsList => {
+                  jc_coupons=couponsList;
+                //  couponArray.splice(0,0, {'JC':jc_coupons});
+                  resolve(jc_coupons);
+                },error=>{
+                  reject();
+                });
+              }else{
+                resolve(jc_coupons);
+              }
+            }),
+            new Promise((resolve, reject) => {
+              let own_coupons:any=[];
+              if(obj.fields.provider_coupon_enabled &&obj.fields.provider_coupon_enabled!==0){
+                this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
+                .subscribe(couponsList => {
+                  own_coupons=couponsList;
+                  //couponArray.splice(0,1,{'OWN':own_coupons});
+                  resolve(own_coupons);
+                },
+                error=>{
+                  reject();
+                });
+              }else{
+               resolve(own_coupons);
+              }
+            })
+         ];
+         Promise.all([arr[0], arr[1]]).then((resp) => {
+          couponObject.JC=resp[0];
+          couponObject.OWN=resp[1];
+           
+     
           this.coupondialogRef = this.dialog.open(CouponsComponent, {
             width: '60%',
             panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
@@ -2228,121 +2213,49 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.coupondialogRef.afterClosed().subscribe(result => {
             this.btn_clicked = false;
           });
+       });
 
-        });
-
-    // const arr = [
-    //   new Promise((resolve, reject) => {
-    //     let jc_coupons:any=[];
-    //     if(obj.fields.coupon_enabled && obj.fields.coupon_enabled!==0){
-
-
-
-
-    // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-    // .subscribe(couponsList => {
-    //   jc_coupons=couponsList;
-    // //  couponArray.splice(0,0, {'JC':jc_coupons});
-
-
-    // } else{
-    //   resolve(jc_coupons);
-    // }
-    // }),
-    //     new Promise((resolve, reject) => {
-    //       let own_coupons:any=[];
-    //       if(obj.fields.provider_coupon_enabled &&obj.fields.provider_coupon_enabled!==0){
-    //         this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
-    //         .subscribe(couponsList => {
-    //           own_coupons=couponsList;
-    //           //couponArray.splice(0,1,{'OWN':own_coupons});
-    //           resolve(own_coupons);
-    //         },
-    //         error=>{
-    //           reject();
-    //         });
-    //       }else{
-    //        resolve(own_coupons);
-    //       }
-    //     })
-    //  ];
-    //  Promise.all([arr[0], arr[1]]).then((resp) => {
-    //   couponObject.JC=resp[0];
-    //   couponObject.OWN=resp[1];
-
-
-    // this.coupondialogRef = this.dialog.open(CouponsComponent, {
-    //   width: '60%',
-    //   panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-    //   disableClose: true,
-    //   data: {
-    //     couponsList: couponObject,
-    //     type: type
-    //   }
-    // });
-    // this.coupondialogRef.afterClosed().subscribe(result => {
-    //   this.btn_clicked = false;
-    // });
-    //  });
-
-    //   this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-    //     .subscribe(couponsList => {
-    //       this.coupondialogRef = this.dialog.open(CouponsComponent, {
-    //         width: '60%',
-    //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-    //         disableClose: true,
-    //         data: {
-    //           couponsList: couponsList,
-    //           type: type
-    //         }
-    //       });
-    //       this.coupondialogRef.afterClosed().subscribe(result => {
-    //         this.btn_clicked = false;
-    //       });
-    //     }, error => {
-    //       this.btn_clicked = false;
-    //     });
-    // });
-    // });
-  }
+        //   this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+        //     .subscribe(couponsList => {
+        //       this.coupondialogRef = this.dialog.open(CouponsComponent, {
+        //         width: '60%',
+        //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        //         disableClose: true,
+        //         data: {
+        //           couponsList: couponsList,
+        //           type: type
+        //         }
+        //       });
+        //       this.coupondialogRef.afterClosed().subscribe(result => {
+        //         this.btn_clicked = false;
+        //       });
+        //     }, error => {
+        //       this.btn_clicked = false;
+        //     });
+        // });
+  });
+}
   openJdn(obj) {
     const s3id = obj.fields.unique_id;
-    // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    // this.shared_functions.getS3Url('provider')
-    //   .then(
-    //     res => {
-    //       const s3url = res;
-
-    this.s3Processor.getPresignedUrls(s3id,
-      null, 'jaldeediscount').subscribe(
-        (accountS3s) => {
-          this.jdndialogRef = this.dialog.open(JdnComponent, {
-            width: '60%',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-            disableClose: true,
-            data: {
-              jdnList: accountS3s['jaldeediscount']
-            }
-          });
-          this.jdndialogRef.afterClosed().subscribe(result => {
-          });
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
+            .subscribe(jdnList => {
+              this.jdndialogRef = this.dialog.open(JdnComponent, {
+                width: '60%',
+                panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+                disableClose: true,
+                data: {
+                  jdnList: jdnList
+                }
+              });
+              this.jdndialogRef.afterClosed().subscribe(result => {
+              });
+            });
         });
-
-
-    // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
-    //   .subscribe(jdnList => {
-      //   this.jdndialogRef = this.dialog.open(JdnComponent, {
-      //     width: '60%',
-      //     panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      //     disableClose: true,
-      //     data: {
-      //       jdnList: jdnList
-      //     }
-      //   });
-      //   this.jdndialogRef.afterClosed().subscribe(result => {
-      //   });
-      // });
-    // });
   }
   payClicked(search_result) {
     this.current_provider = search_result;

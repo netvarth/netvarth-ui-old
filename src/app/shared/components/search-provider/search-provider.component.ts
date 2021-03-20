@@ -16,7 +16,6 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 
 @Component({
   selector: 'app-search-provider',
@@ -111,7 +110,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor,
     private dialog: MatDialog) {
     this.api_loading = true;
     this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -204,68 +202,36 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         this.showService = true;
         this.api_loading = false;
       } else {
-        
-        // this.gets3curl().then(
-          // () => {
-            let userS3List = "providerBusinessProfile,providerservices,providerApptServices";
+        this.gets3curl().then(
+          () => {
             for (let i = 0; i < this.usersList.length; i++) {
               const waitTimearr = [];
               const apptTimearr = [];
-              
-              
-              this.s3Processor.getPresignedUrls(this.businessjson.uniqueId,
-                this.usersList[i], userS3List).subscribe(
-                  (userS3s) => {
-                    this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
-                    this.processS3s('providerservices', userS3s['providerservices']);
-                    this.processS3s('providerApptServices', userS3s['providerApptServices']);
-                    // this.api_loading1 = false;
-                  }
-                );
-              
-
-              // this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
-              // this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
-              // this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
-              
+              this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
+              this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
+              this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
               apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
               waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
               this.getUserWaitingTime(waitTimearr, this.usersList[i]);
               this.getUserApptTime(apptTimearr, this.usersList[i]);
             }
-          // });
-
+          });
       }
 
     }
   }
-  processS3s(type, result) {
-    switch (type) {
-      case 'providerBusinessProfile': {
-        
-        break;
-      }
-      case 'providerservices': {
-        
-        break;
-      }
-      case 'providerApptServices': {
-        
-        break;
-      }
-    }
-  }
-  // gets3curl() {
-  //   return new Promise<void>((resolve) => {
-  //     this.retval = this.shared_functions.getS3Url('provider')
-  //       .then(
-  //         res => {
-  //           this.s3url = res;
-  //           resolve();
-  //         });
-  //   });
 
-  // }
+  gets3curl() {
+    return new Promise<void>((resolve) => {
+      this.retval = this.shared_functions.getS3Url('provider')
+        .then(
+          res => {
+            this.s3url = res;
+            resolve();
+          });
+    });
+
+  }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
@@ -643,90 +609,90 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         });
     }
   }
-  // getUserbusinessprofiledetails_json(section, user, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_service.getUserbusinessprofiledetails_json(this.businessjson.uniqueId, user.id, this.s3url, section, UTCstring)
-  //     .subscribe((res: any) => {
-  //       switch (section) {
-  //         case 'providerBusinessProfile': {
-  //           user['bProfile'] = res;
-  //           user['ratingenabledCnt'] = this.businessjson.avgRating || 0;
-  //           if (user['ratingenabledCnt'] > 0) {
-  //             user['ratingenabledCnt'] = this.shared_functions.ratingRounding(user['ratingenabledCnt']);
-  //           }
-  //           const ratingenabledInt = parseInt(user['ratingenabledCnt'].toString(), 10);
-  //           if (ratingenabledInt < user['ratingenabledCnt']) {
-  //             user['ratingenabledHalf'] = true;
-  //             user['ratingenabledCnt'] = ratingenabledInt;
-  //             user['ratingdisabledCnt'] = 5 - (ratingenabledInt + 1);
-  //           } else {
-  //             user['ratingdisabledCnt'] = 5 - ratingenabledInt;
-  //           }
-  //           user['ratingenabledArr'] = [];
-  //           user['ratingdisabledArr'] = [];
-  //           for (let i = 0; i < user['ratingenabledCnt']; i++) {
-  //             user['ratingenabledArr'].push(i);
-  //           }
-  //           for (let i = 0; i < user['ratingdisabledCnt']; i++) {
-  //             user['ratingdisabledArr'].push(i);
-  //           }
-  //           const subDom = this.subDomainList.filter(subdomain => subdomain.id === res.userSubdomain);
-  //           user['bProfile']['userSubSector'] = subDom[0];
-  //           this.api_loading = false;
-  //           break;
-  //         }
-  //         case 'providerApptServices': {
-  //           user['apptServices'] = [];
-  //           if (this.settingsjson.filterByDept) {
-  //             for (const dept of res) {
-  //               if (dept.services && dept.services.length > 0) {
-  //                 for (const serv of dept.services) {
-  //                   if (user['apptServices'].indexOf(serv) === -1) {
-  //                     user['apptServices'].push(serv);
-  //                   }
-  //                 }
-  //               }
-  //             }
-  //           } else {
-  //             user['apptServices'] = res;
-  //           }
-  //           break;
-  //         }
-  //         case 'providerservices': {
-  //           user['wtlstservices'] = [];
-  //           if (this.settingsjson.filterByDept) {
-  //             for (const dept of res) {
-  //               if (dept.services && dept.services.length > 0) {
-  //                 for (const serv of dept.services) {
-  //                   if (user['wtlstservices'].indexOf(serv) === -1) {
-  //                     user['wtlstservices'].push(serv);
-  //                   }
-  //                 }
-  //               }
-  //             }
-  //           } else {
-  //             user['wtlstservices'] = res;
-  //           }
-  //           if (user['apptServices'] && user['apptServices'].length > 0) {
-  //             setTimeout(() => {
-  //               const ids = new Set(user['wtlstservices'].map(d => d.id));
-  //               const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
-  //               user['wtlstservices'] = merged;
-  //             });
-  //           }
-  //           break;
-  //         }
-  //       }
-  //     },
-  //       () => {
-  //         if (section === 'providerBusinessProfile') {
-  //           this.api_loading = false;
-  //         }
-  //       });
-  // }
+  getUserbusinessprofiledetails_json(section, user, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    }
+    this.shared_service.getUserbusinessprofiledetails_json(this.businessjson.uniqueId, user.id, this.s3url, section, UTCstring)
+      .subscribe((res: any) => {
+        switch (section) {
+          case 'providerBusinessProfile': {
+            user['bProfile'] = res;
+            user['ratingenabledCnt'] = this.businessjson.avgRating || 0;
+            if (user['ratingenabledCnt'] > 0) {
+              user['ratingenabledCnt'] = this.shared_functions.ratingRounding(user['ratingenabledCnt']);
+            }
+            const ratingenabledInt = parseInt(user['ratingenabledCnt'].toString(), 10);
+            if (ratingenabledInt < user['ratingenabledCnt']) {
+              user['ratingenabledHalf'] = true;
+              user['ratingenabledCnt'] = ratingenabledInt;
+              user['ratingdisabledCnt'] = 5 - (ratingenabledInt + 1);
+            } else {
+              user['ratingdisabledCnt'] = 5 - ratingenabledInt;
+            }
+            user['ratingenabledArr'] = [];
+            user['ratingdisabledArr'] = [];
+            for (let i = 0; i < user['ratingenabledCnt']; i++) {
+              user['ratingenabledArr'].push(i);
+            }
+            for (let i = 0; i < user['ratingdisabledCnt']; i++) {
+              user['ratingdisabledArr'].push(i);
+            }
+            const subDom = this.subDomainList.filter(subdomain => subdomain.id === res.userSubdomain);
+            user['bProfile']['userSubSector'] = subDom[0];
+            this.api_loading = false;
+            break;
+          }
+          case 'providerApptServices': {
+            user['apptServices'] = [];
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  for (const serv of dept.services) {
+                    if (user['apptServices'].indexOf(serv) === -1) {
+                      user['apptServices'].push(serv);
+                    }
+                  }
+                }
+              }
+            } else {
+              user['apptServices'] = res;
+            }
+            break;
+          }
+          case 'providerservices': {
+            user['wtlstservices'] = [];
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  for (const serv of dept.services) {
+                    if (user['wtlstservices'].indexOf(serv) === -1) {
+                      user['wtlstservices'].push(serv);
+                    }
+                  }
+                }
+              }
+            } else {
+              user['wtlstservices'] = res;
+            }
+            if (user['apptServices'] && user['apptServices'].length > 0) {
+              setTimeout(() => {
+                const ids = new Set(user['wtlstservices'].map(d => d.id));
+                const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
+                user['wtlstservices'] = merged;
+              });
+            }
+            break;
+          }
+        }
+      },
+        () => {
+          if (section === 'providerBusinessProfile') {
+            this.api_loading = false;
+          }
+        });
+  }
 
   doLogin(origin?, passParam?) {
     const is_test_account = true;

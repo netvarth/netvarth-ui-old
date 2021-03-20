@@ -105,7 +105,6 @@ import { DateTimeProcessor } from './shared/services/datetime-processor.service'
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
-import { S3UrlProcessor } from './shared/services/s3-url-processor.service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -242,7 +241,6 @@ export function init_app(globalService: GlobalService) {
     SnackbarService,
     GroupStorageService,
     MeetService,
-    S3UrlProcessor,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

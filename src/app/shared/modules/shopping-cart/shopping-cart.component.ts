@@ -14,7 +14,6 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -83,7 +82,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   selected_coupon;
   showCouponWB: boolean;
   provider_id: any;
-  // s3url;
+  s3url;
   api_loading1 = true;
   retval;
   tooltipcls = '';
@@ -104,8 +103,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     public sharedFunctionobj: SharedFunctions,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor) {
+    private dateTimeProcessor: DateTimeProcessor) {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
@@ -126,6 +124,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.fetchCatalog();
 
   }
+
+
+
 
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
@@ -288,52 +289,21 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.couponvalid = true;
     this.api_cp_error = null;
   }
-
   gets3curl() {
     this.api_loading1 = true;
-        let accountS3List = 'coupon,providerCoupon';
-        this.s3Processor.getPresignedUrls(this.provider_id,
-            null, accountS3List).subscribe(
-                (accountS3s) => {
-                    this.processS3s('coupon', accountS3s['coupon']);
-                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                    this.api_loading1 = false;
-                }
-            );
-    // this.api_loading1 = true;
-    // this.retval = this.sharedFunctionobj.getS3Url()
-    //   .then(
-    //     res => {
-    //       this.s3url = res;
-    //       this.getbusinessprofiledetails_json('coupon', true);
-    //       this.getprovidercoupondetails_json('providerCoupon', true);
-    //       this.api_loading1 = false;
-    //     },
-    //     () => {
-    //       this.api_loading1 = false;
-    //     }
-    //   );
+    this.retval = this.sharedFunctionobj.getS3Url()
+      .then(
+        res => {
+          this.s3url = res;
+          this.getbusinessprofiledetails_json('coupon', true);
+          this.getprovidercoupondetails_json('providerCoupon', true);
+          this.api_loading1 = false;
+        },
+        () => {
+          this.api_loading1 = false;
+        }
+      );
   }
-  processS3s(type, result) {
-    switch (type) {
-        case 'coupon': {
-          this.s3CouponsList.JC = result;
-          console.log(this.s3CouponsList.JC);
-          if (this.s3CouponsList.JC.length > 0) {
-            this.showCouponWB = true;
-          }
-            break;
-        }
-        case 'providerCoupon': {
-          this.s3CouponsList.OWN = result;
-          console.log(this.s3CouponsList.OWN);
-          if (this.s3CouponsList.OWN.length > 0) {
-            this.showCouponWB = true;
-          }
-            break;
-        }
-      }
-    }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
       this.couponsList[i].showme = false;
@@ -405,40 +375,40 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   applyPromocode() {
     this.action = 'coupons';
   }
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.JC = res;
-  //       console.log(this.s3CouponsList.JC);
-  //       if (this.s3CouponsList.JC.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
-  // getprovidercoupondetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.OWN = res;
-  //       console.log(this.s3CouponsList.OWN);
-  //       if (this.s3CouponsList.OWN.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList.JC = res;
+        console.log(this.s3CouponsList.JC);
+        if (this.s3CouponsList.JC.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
+  }
+  getprovidercoupondetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList.OWN = res;
+        console.log(this.s3CouponsList.OWN);
+        if (this.s3CouponsList.OWN.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
+  }
   removeFromCart(itemObj) {
     const item = itemObj.item;
     for (const i in this.orderList) {
