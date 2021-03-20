@@ -14,6 +14,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -100,8 +101,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private activated_route: ActivatedRoute,
     private locationobj: Location,
     private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -226,13 +228,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           // this.getWaitlistNotes();
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-            }
+          }
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
-             this.spName = this.waitlist_data.provider.businessName;
-             this.spfname = this.waitlist_data.provider.firstName;
-             this.splname = this.waitlist_data.provider.lastName;
+            this.spName = this.waitlist_data.provider.businessName;
+            this.spfname = this.waitlist_data.provider.firstName;
+            this.splname = this.waitlist_data.provider.lastName;
           }
         },
         error => {
@@ -359,7 +361,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     const locId = this.groupService.getitemFromGroupStorage('loc_id');
     // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
     // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-    const nextTimeDt = this.shared_Functionsobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
+    const nextTimeDt = this.dateTimeProcessor.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const filter = {};
     this.availableSlots = [];
     filter['queue-eq'] = _this.groupService.getitemFromGroupStorage('pdq');
@@ -379,7 +381,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
             const endTimeStr = moment(slots[i], ['HH:mm A']).format('HH:mm A').toString();
-            const endDTime = this.shared_Functionsobj.getDateFromTimeString(endTimeStr);
+            const endDTime = this.dateTimeProcessor.getDateFromTimeString(endTimeStr);
             if (nextTimeDt <= endDTime) {
               this.availableSlots.push(slots[i]);
             }
@@ -427,7 +429,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             return 'Date'; // this.minCaption;
             // }
           } else {
-            return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+            return this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           }
         }
       } else {

@@ -7,7 +7,7 @@ import { ReturnPaymentComponent } from './shared/components/return-payment/retur
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { TwilioService } from './shared/services/twilio-service';
-import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
@@ -24,7 +24,8 @@ const routes: Routes = [
         // canActivate: [AuthGuardProvider]
     },
     // { path: 'client', component: LiveChatClientComponent},
-    {path: 'video/:id',  component: LiveChatComponent},
+    // {path: 'video/:id',  component: LiveChatComponent},
+    {path: 'meeting/provider/:id', component: MeetingRoomComponent}, 
     { path: 'maintenance', component: MaintenanceComponent }
 ];
 

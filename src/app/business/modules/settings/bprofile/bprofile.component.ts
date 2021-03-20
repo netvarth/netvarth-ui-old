@@ -26,12 +26,16 @@ import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/c
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageTransform } from './pro-pic-popup/interfaces/index';
+// import '../../../../../assets/plugins/custom/uppy/uppy.bundle.js';
+// import '../../../../../assets/js/pages/crud/file-upload/uppy.js';
 declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 
@@ -190,6 +194,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
+  @ViewChild('closebutton') closebutton;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
   show_cover_options = false;
@@ -200,6 +205,16 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   clogo: ArrayBuffer;
   cvrimg_exists = false;
   cacheavoider_cover: string;
+  imageChangedEvent: any;
+  fileToReturn: any;
+  croppedImage: any;
+  canvasRotation = 0;
+  transform: ImageTransform = {};
+  scale = 1;
+  loadSymbol = false;
+  api_success: string;
+  imgType = false;
+  spinner_load = false;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -404,13 +419,13 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private fb: FormBuilder, private galleryService: GalleryService,
     private dialog: MatDialog, private angular_meta: Meta,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
     private qservice: QuestionService,
-    private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
@@ -1354,79 +1369,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
-  imageSelect(input, type) {
-    this.success_error = null;
-    this.error_list = [];
-    if (input.files && input.files[0]) {
-      for (const file of input.files) {
-        this.success_error = this.shared_functions.imageValidation(file);
-        if (this.success_error === true) {
-          const reader = new FileReader();
 
-          if (type === 'cover') {
-            this.item_pic1.files = input.files[0];
-            this.selitem_pic = input.files[0];
-            const fileobj = input.files[0];
-            reader.onload = (e) => {
-              this.item_pic1.base64 = e.target['result'];
-            };
-            reader.readAsDataURL(fileobj);
-          } else {
-            this.item_pic.files = input.files[0];
-            this.selitem_pic = input.files[0];
-            const fileobj = input.files[0];
-            reader.onload = (e) => {
-              this.item_pic.base64 = e.target['result'];
-            };
-            reader.readAsDataURL(fileobj);
-          }
-          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-            // generating the data to be submitted to change the logo
-            const submit_data: FormData = new FormData();
-            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-            const propertiesDet = {
-              'caption': 'Logo'
-            };
-            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-            submit_data.append('properties', blobPropdata);
-            if (type === 'cover') {
-              this.uploadCoverPic(submit_data);
-            } else {
-              this.uploadLogo(submit_data);
-            }
-          }
-        } else {
-          this.error_list.push(this.success_error);
-          if (this.error_list[0].type) {
-            this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 5mb';
-          }
-          // this.error_msg = 'Please upload images with size < 5mb';
-          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
-        }
-      }
-    }
-  }
-  uploadLogo(passdata) {
-    this.provider_services.uploadLogo(passdata)
-      .subscribe(
-        data => {
-          this.provider_datastorage.updateProfilePicWeightage(true);
-          this.snackbarService.openSnackBar('Profile image uploaded successfully', { 'panelclass': 'snackbarerror' });
-          //   this.data.logoExist  = true;
-        });
-  }
-  uploadCoverPic(passdata) {
-    this.provider_services.uploadCoverFoto(passdata).subscribe(
-      data => {
-        console.log(data);
-        if (data) {
-          this.snackbarService.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
-          this.getCoverPhoto();
-        }
-      });
-  }
   // Social Media
   handleSocialmedia(key?) {
     this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
@@ -1564,6 +1507,234 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
+  imageSelect(input, type?) {
+    this.success_error = null;
+    this.error_list = [];
+    if (input.files && input.files[0]) {
+      for (const file of input.files) {
+        this.success_error = this.shared_functions.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
+
+          if (type === 'cover') {
+            this.item_pic1.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic1.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          } else {
+            this.item_pic.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          }
+          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+            // generating the data to be submitted to change the logo
+            const submit_data: FormData = new FormData();
+            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+            const propertiesDet = {
+              'caption': 'Logo'
+            };
+            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+            submit_data.append('properties', blobPropdata);
+            if (type === 'cover') {
+              this.uploadCoverPic(submit_data);
+            } else {
+              this.uploadLogo(submit_data);
+            }
+          }
+        } else {
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+      }
+    }
+  }
+  uploadCoverPic(passdata) {
+    this.provider_services.uploadCoverFoto(passdata).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.snackbarService.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+          this.getCoverPhoto();
+        }
+      });
+  }
+  // imageSelect(event: any): void {
+  //   this.loadSymbol = true;
+  //   this.imageChangedEvent = event;
+  //   console.log(this.imageChangedEvent);
+  // }
+  clearModalData(source?) {
+    this.imageChangedEvent = '';
+    console.log(this.imageChangedEvent);
+    if (source) {
+      this.imgType = true;
+    }
+    console.log(this.imgType);
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    console.log('hi');
+    this.loadSymbol = false;
+    this.fileToReturn = '';
+    this.croppedImage = event.base64; // preview
+    this.fileToReturn = this.base64ToFile(
+      event.base64,
+      this.imageChangedEvent.target.files[0].name,
+    );
+    return this.fileToReturn;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  base64ToFile(imgdata, filename) {
+    const arr = imgdata.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+
+
+  // Save pro pic and cover pic
+  saveImages() {
+    this.spinner_load = true;
+    const file = this.fileToReturn;
+    this.success_error = null;
+    this.error_list = [];
+    this.error_msg = '';
+    if (file) {
+        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        if (this.success_error === true) {
+            const reader = new FileReader();
+            this.item_pic.files = file;
+            this.selitem_pic = file;
+            const fileobj = file;
+            reader.onload = (e) => {
+                this.item_pic.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+            if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+                // generating the data to be submitted to change the logo
+                const submit_data: FormData = new FormData();
+                submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                const propertiesDet = {
+                    'caption': 'Logo'
+                };
+                const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                submit_data.append('properties', blobPropdata);
+                if (this.imgType) {
+                    console.log('cover');
+                } else {
+                    // if (this.data.userId) {
+                    //     this.uploadUserLogo(submit_data);
+                    // } else {
+                    //     this.uploadLogo(submit_data);
+                    // }
+                    console.log('propic');
+                    this.uploadLogo(submit_data);
+                }
+            }
+        } else {
+            this.error_list.push(this.success_error);
+            if (this.error_list[0].type) {
+                this.error_msg = 'Selected image type not supported';
+            } else if (this.error_list[0].size) {
+                this.error_msg = 'Please upload images with size less than 15mb';
+            }
+            this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+    } else {
+        this.error_msg = 'Selected image type not supported';
+        this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+    }
+}
+
+uploadLogo(passdata) {
+    this.provider_services.uploadLogo(passdata)
+        .subscribe(
+            data => {
+                this.blogo = [];
+                this.blogo[0] = data;
+                const today = new Date();
+                const tday = today.toString().replace(/\s/g, '');
+                const blogo = this.blogo[0].url + '?' + tday;
+                this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+                    || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
+                const pdata = { 'ttype': 'updateuserdetails' };
+                this.provider_datastorage.updateProfilePicWeightage(true);
+                this.sharedfunctionobj.sendMessage(pdata);
+                this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                this.spinner_load = false;
+                setTimeout(() => {
+                  this.closeGroupDialog();
+                }, 2000);
+            },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+        );
+}
+closeGroupDialog() {
+  this.closebutton.nativeElement.click();
+  this.api_success = '';
+}
+
+rotateLeft() {
+        this.canvasRotation--;
+        this.flipAfterRotate();
+    }
+    rotateRight() {
+        this.canvasRotation++;
+        this.flipAfterRotate();
+    }
+    zoomOut() {
+        this.scale -= .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    zoomIn() {
+        this.scale += .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    private flipAfterRotate() {
+      const flippedH = this.transform.flipH;
+      const flippedV = this.transform.flipV;
+      this.transform = {
+          ...this.transform,
+          flipH: flippedV,
+          flipV: flippedH
+      };
+  }
+
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     setTimeout(() => {

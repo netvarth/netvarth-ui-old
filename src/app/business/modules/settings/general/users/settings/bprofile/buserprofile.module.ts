@@ -22,6 +22,7 @@ import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/add
 import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.module';
 import { AboutmeComponent } from './aboutme/aboutme.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
         DynamicFormModule,
         GalleryModule,
         NgxQRCodeModule,
-        ProPicPopupModule
+        ProPicPopupModule,
+        ImageCropperModule
     ],
     declarations: [
         BuserProfileComponent,

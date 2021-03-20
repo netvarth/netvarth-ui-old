@@ -1,0 +1,16 @@
+.mbt{
+    position: absolute!important;
+     right: 0!important; 
+     top: 0!important;
+    }
+  .galbx{
+    position: relative!important;
+  }
+  .itemimglist{
+  list-style: none!important;
+  width: 80%!important;
+  }
+  .itemimg{
+    width: 100%;
+    height: 100%;
+  } 

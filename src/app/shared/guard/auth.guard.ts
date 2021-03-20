@@ -7,11 +7,11 @@ import { LocalStorageService } from '../services/local-storage.service';
 @Injectable()
 export class AuthGuardConsumer implements CanActivate {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private lStorageService: LocalStorageService) { }
 
   canActivate() {
-    if (localStorage.getItem('ynw-credentials')
-      && localStorage.getItem('isBusinessOwner') === 'false') {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
+      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
       return true;
     }
 
@@ -23,11 +23,11 @@ export class AuthGuardConsumer implements CanActivate {
 @Injectable()
 export class AuthGuardProvider implements CanActivate {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private lStorageService: LocalStorageService) { }
 
   canActivate() {
-    if (localStorage.getItem('ynw-credentials')
-      && localStorage.getItem('isBusinessOwner') === 'true') {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
+      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
       return true;
     }
 
@@ -38,9 +38,9 @@ export class AuthGuardProvider implements CanActivate {
 
 @Injectable()
 export class AuthGuardLogin implements CanActivate {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private lStorageService: LocalStorageService) { }
   canActivate() {
-    if (localStorage.getItem('ynw-credentials')) {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
       return true;
     }
     this.router.navigate(['/logout']);
@@ -52,17 +52,17 @@ export class AuthGuardLogin implements CanActivate {
 @Injectable()
 export class AuthGuardHome implements CanActivate {
   constructor(private router: Router, private groupService: GroupStorageService, 
-    private LStorageService: LocalStorageService) {}
+    private lStorageService: LocalStorageService) {}
   canActivate() {
     let credentials = null;
     let userType = null;
-    if (localStorage.getItem('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user') ) {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user') ) {
       credentials = this.groupService.getitemFromGroupStorage('ynw-user');
       userType = credentials['userType'];
-      if (this.LStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true' || userType === 3) {
+      if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true' || userType === 3) {
         this.router.navigate(['/provider/check-ins/']);
         return false;
-      } else if (this.LStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
+      } else if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
         this.router.navigate(['/consumer']);
         return false;
       }
@@ -73,15 +73,15 @@ export class AuthGuardHome implements CanActivate {
 
 @Injectable()
 export class AuthGuardProviderHome implements CanActivate {
-  constructor(private router: Router, private groupService: GroupStorageService) { }
+  constructor(private router: Router, private groupService: GroupStorageService, private lStorageService: LocalStorageService) { }
   canActivate() {
-    if (localStorage.getItem('ynw-credentials')
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
       && this.groupService.getitemFromGroupStorage('ynw-user')) {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (user.accStatus === 'ACTIVE') {
         return true;
       } else {
-        if (localStorage.getItem('new_provider')) {
+        if (this.lStorageService.getitemfromLocalStorage('new_provider')) {
           // this.router.navigate(['/provider/tour']); // commented to make the bwizard work
           this.router.navigate(['/provider/bwizard']);
         } else {
@@ -97,9 +97,9 @@ export class AuthGuardProviderHome implements CanActivate {
 }
 @Injectable()
 export class AuthGuardNewProviderHome implements CanActivate {
-  constructor() { }
+  constructor(private lStorageService: LocalStorageService) { }
   canActivate() {
-    if (localStorage.getItem('new_provider')) {
+    if (this.lStorageService.getitemfromLocalStorage('new_provider')) {
       return true;
     } else {
       return false;

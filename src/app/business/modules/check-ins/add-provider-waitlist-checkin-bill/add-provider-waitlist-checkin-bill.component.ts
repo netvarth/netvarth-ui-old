@@ -20,6 +20,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -29,7 +30,7 @@ declare let cordova: any;
 @Component({
   selector: 'app-provider-waitlist-checkin-bill',
   templateUrl: './add-provider-waitlist-checkin-bill.component.html',
-  styleUrls: ['./add-provider-waitlist-checkin-bill.component.css']
+  styleUrls: ['../../../../../assets/css/style.bundle.css', './add-provider-waitlist-checkin-bill.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
@@ -222,6 +223,24 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedPayment;
   showDeliveryChargeSection = false;
   deliveryCharge = 0;
+  discountClicked = false;
+  discountId_servie: any;
+  discountid;
+  applydisc = false;
+  walkinConsumer_status = false;
+  @ViewChild('closebutton') closebutton;
+  @ViewChild('itemdiscountapply') itemdiscountapply;
+  @ViewChild('itemserviceqtynew') itemserviceqtynew;
+  @ViewChild('closeJcDiscPc') closeJcDiscPc;
+  @ViewChild('closenotesdialog') closenotesdialog;
+  @ViewChild('closeDelivery') closeDelivery;
+  discount_type: any = '';
+  selectedservice: any;
+  selectedItem: any;
+  refund_show;
+  btn_hide = false;
+
+
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -233,6 +252,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
+    private dateTimeProcessor: DateTimeProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -289,7 +309,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
     this.bill_load_complete = 1;
     this.getProviderSettings();
+    this.getJaldeeIntegrationSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+  }
+  selectChangeHandler(event: any) {
+    this.discountId_servie = event;
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -413,7 +437,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
-          this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer !== 0 ? true : false;
+          this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
             this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
@@ -433,24 +457,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
-      console.log(this.bill_data.createdDate)
       this.billdate = this.bill_data.createdDate;
-      // const datearr = this.bill_data.createdDate.split(' ');
-      // const billdatearr = datearr[0].split('-');
-      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-      console.log(this.billdate);
-      // this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
       this.billdate = this.bill_data.createdDate;
-      // this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
-      // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
-      // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
-      // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
-      // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     }
     const gethrs = this.today.getHours();
     const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-    // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
     let hour = 0;
     if (gethrs === 12) {
       hour = 12;
@@ -459,7 +471,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       hour = gethrs;
     }
-    this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
+    this.billtime = this.dateTimeProcessor.addZero(hour) + ':' + this.dateTimeProcessor.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
@@ -487,7 +499,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getPaymentSettings()
       .subscribe(
         (data: any) => {
-          // if (data.payUVerified || data.payTmVerified) {
           this.paymentOnline = data.onlinePayment;
         },
         () => {
@@ -502,7 +513,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.deliveryCharge = this.bill_data.deliveryCharges;
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
-          // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].privateNote) {
               this.discountPrivateNotes = true;
@@ -544,19 +554,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  // getJCMessages(jCoupon) {
-  //   const errMsgs = [];
-  //   Object.keys(jCoupon).forEach(key => {
-  //     const coupon = jCoupon[key];
-  //     for (const sysNote of coupon['systemNote']) {
-  //       if (errMsgs.indexOf(sysNote) === -1 && sysNote !== 'COUPON_APPLIED') {
-  //         errMsgs.push(sysNote);
-  //       }
-  //     }
-  //   });
-
-  //   return errMsgs;
-  // }
   getDomainSubdomainSettings() {
     const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
@@ -609,7 +606,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.coupons = [];
-            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -626,8 +622,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.discounts = [];
-            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            // reject(error);
           }
         );
     });
@@ -647,7 +641,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
         error => {
           this.items.push(null);
-          // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -664,6 +657,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.pre_payment_log = data;
+             this.refund_show = this.pre_payment_log.filter(obj => (obj.refundableAmount > 0) && (obj.status === 'SUCCESS') && (!obj.fullyRefunded) && (obj.paymentPurpose == 'prePayment'));
             resolve();
           },
           error => {
@@ -687,7 +681,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   stringtoDate(dt, mod) {
     let dtsarr;
     if (dt) {
-      // const dts = new Date(dt);
       dtsarr = dt.split(' ');
       const dtarr = dtsarr[0].split('-');
       let retval = '';
@@ -771,6 +764,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     return itemId;
   }
+  getSelectedServicePrice(serviceName) {
+    let servicePrice = 0;
+    for (let i = 0; i < this.all_services.length; i++) {
+      if (this.all_services[i].name === serviceName) {
+        servicePrice = this.all_services[i].totalAmount;
+        break;
+      }
+    }
+    return servicePrice;
+  }
   getSelectedItemPrice(itemName) {
     let itemPrice = 0;
     for (let i = 0; i < this.items.length; i++) {
@@ -785,7 +788,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Item Discount/Coupon Section
    * @param indx Index
    */
-  itemDiscCoupSec(indx) {
+  itemDiscCoupSec(indx ,item?) {
+    this.selectedItem = item
     this.bill_data.items[indx].itemDiscount = '';
     if (this.bill_data.items[indx]) {
       if (this.bill_data.items[indx].showitemdisccoup) {
@@ -800,7 +804,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Service Discount/Coupon section
    * @param indx Index
    */
-  serviceDiscCoupSec(indx) {
+  serviceDiscCoupSec(indx , service?) {
+    this.selectedservice = service;
     this.bill_data.service[indx].serviceDiscount = '';
     if (this.bill_data.service[indx]) {
       if (this.bill_data.service[indx].showservicedisccoup) {
@@ -910,6 +915,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.curSelItm.indx = this.getSelectedServiceId(name);
       this.curSelItm.typ = 'Services';
       this.curSelItm.qty = 1;
+      this.curSelItm.price = this.getSelectedServicePrice(name);
     } else if (type === 'Items') {
       this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedItemId(name);
@@ -924,7 +930,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param uuid Bill Id
    * @param data Data to be sent as request body
    */
-  applyAction(action, uuid, data) {
+  applyAction(action, uuid, data, closecheck?) {
     return new Promise<void>((resolve, reject) => {
       if (uuid) {
         this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
@@ -937,6 +943,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.curSelItm.qty = 1;
             this.getWaitlistBill();
             resolve();
+            if (closecheck === 'applyitemDisc') {
+              this.closeGroupDialogitem();
+            } else if (closecheck === 'closeJcDiscPc') {
+              this.closeGroupDialogcoupons();
+            } else if (closecheck === 'noteclose') {
+              this.closeGroupnotesdialog();
+            } else if (closecheck === 'delivery') {
+              this.closeGroupdelivery();
+            }
+            else {
+              this.closeGroupDialog();
+            }
+
           },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -981,6 +1000,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
+      if (this.actiontype !== 'adjustService') {
+        data['price'] = this.curSelItm.price;
+      }
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
@@ -995,6 +1017,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
         (billInfo => {
           this.bill_data = billInfo;
+          this.itemserviceqtynew.nativeElement.click();
           this.hideAddItem();
           this.getWaitlistBill();
         }, error => {
@@ -1026,7 +1049,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showDeliveryChargeSection = false;
-    this.showAddItemsec = true;
+    // this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);
@@ -1074,12 +1097,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Apply Service Level Discount
    * @param service Service Details
    */
+
+
   applyServiceDiscount(service) {
     const action = 'addServiceLevelDiscount';
     const discountIds = [];
-    discountIds.push(service.serviceDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(service.serviceDiscount.id);
     const data = {};
-    data['serviceId'] = service.serviceId;
+    // data['serviceId'] = service.serviceId;
+    // data['discountIds'] = discountIds;
+    data['serviceId'] = this.selectedservice.serviceId;
     data['discountIds'] = discountIds;
     this.disableButton = true;
     this.applyAction(action, this.bill_data.uuid, data);
@@ -1119,19 +1147,21 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applyItemDiscount(item) {
     const action = 'addItemLevelDiscount';
     const discountIds = [];
-    discountIds.push(item.itemDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(item.itemDiscount.id);
     const data = {};
-    data['itemId'] = item.itemId;
+    // data['itemId'] = item.itemId;
+      data['itemId'] = this.selectedItem.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data, 'applyitemDisc');
   }
 
   addDisplaynote() {
     const action = 'addDisplayNotes';
     const data = {};
     data['displayNotes'] = this.billDisplayNote;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data, 'noteclose');
     this.displayNoteedit = true;
   }
 
@@ -1139,7 +1169,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const action = 'addPrivateNotes';
     const data = {};
     data['privateNotes'] = this.billPrivateNote;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data, 'noteclose');
     this.privateNoteedit = true;
   }
 
@@ -1159,17 +1189,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
-  /**
-   * Apply Jaldee Coupon
-   * @param jCoupon Coupon Code
-   */
-  applyJCoupon(jCoupon) {
-    const action = 'addJaldeeCoupons';
-    let jaldeeCoupon: string;
-    jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';
-    this.disableJCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
-  }
+ 
   /**
    * Remove Jaldee Coupon
    * @param jCouponCode Coupon Code
@@ -1201,14 +1221,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Remove Provider Coupons
    * @param coupon Coupon Info
    */
-  removeProviderCoupon(coupon) {
+  removeProviderCoupon(couponCode) {
     const action = 'removeProviderCoupons';
-    const couponIds = [];
-    couponIds.push(coupon.id);
-    const data = {};
-    data['id'] = this.bill_data.id;
-    data['couponIds'] = couponIds;
-    this.applyAction(action, this.bill_data.uuid, data);
+    let coupon: string;
+    coupon = '"' + couponCode + '"';
+    this.applyAction(action, this.bill_data.uuid, coupon);
   }
   hideWorkBench() {
     this.jCoupon = '';
@@ -1239,7 +1256,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   applyDeliveryCharge() {
     const data = { 'deliveryCharges': this.deliveryCharge };
-    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data);
+    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data, 'delivery');
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -1247,8 +1264,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['id'] = this.bill_data.id;
     const discounts = [];
     const discount = {};
-    discount['id'] = this.selOrderDiscount.id;
-    if (this.selOrderDiscount.discType === 'OnDemand') {
+    discount['id'] = this.selOrderDiscount;
+    // discount['id'] = this.selOrderDiscount.id;
+    // applyOrderDiscount
+    if (this.discount_type.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
       //   this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
@@ -1268,21 +1287,30 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discounts.push(discount);
     data['discounts'] = discounts;
     this.disableDiscountbtn = true;
-    if ((this.selOrderDiscount.discType === 'OnDemand' && discount['discValue']) || this.selOrderDiscount.discType !== 'OnDemand') {
-      this.applyAction(action, this.bill_data.uuid, data);
+    if ((this.discount_type.discType === 'OnDemand' && discount['discValue']) || this.discount_type.discType !== 'OnDemand') {
+      this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
     } else {
       this.disableDiscountbtn = false;
     }
   }
   applyOrderCoupon() {
     const action = 'addProviderCoupons';
-    const data = {};
-    data['id'] = this.bill_data.id;
-    const coupons = [];
-    coupons.push(this.selOrderProviderCoupon.id);
-    data['couponIds'] = coupons;
+   let couponCode:string;
+   couponCode = '"' + this.selOrderProviderCoupon + '"';
     this.disableCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, couponCode, 'closeJcDiscPc');
+  }
+   /**
+   * Apply Jaldee Coupon
+   * @param jCoupon Coupon Code
+   */
+  applyJCoupon() {
+    const action = 'addJaldeeCoupons';
+    let jaldeeCoupon: string;
+    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
+    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
+    this.disableJCouponbtn = true;
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
   }
 
   initPayment(mode, amount, paynot) {
@@ -1336,6 +1364,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
+          this.paynot = '';
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
@@ -1389,8 +1418,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
   }
 
-  confirmSettleBill() {
-    if (this.amountpay > 0 || this.bill_data.amountDue < 0) {
+  confirmSettleBill(amount) {
+    if (amount.amountDue > 0 || this.bill_data.amountDue < 0) {
       let msg = '';
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
@@ -1713,11 +1742,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   refundPayment(mode) {
+
     if (this.amounttoRefund) {
       const postData = {
         'refundAmount': this.amounttoRefund,
         'refundBy': mode,
-        'paymentRefId': this.selectedPayment.paymentRefId
+        'paymentRefId': this.selectedPayment.paymentRefId,
+        'purpose': 'prePayment'
       };
       if (mode === 'online') {
         postData['paymentId'] = this.selectedPayment.transactionId;
@@ -1734,6 +1765,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       });
       canceldialogRef.afterClosed().subscribe(result => {
+        this.applydisc = false;
         status = result;
         if (status === 1) {
           this.provider_services.paymentRefund(postData)
@@ -1762,6 +1794,57 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       this.selectedPayment = [];
       this.showRefundSection = false;
+    }
+  }
+
+  sampleDiscount() {
+    this.discountClicked = true;
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+  }
+  closeGroupDialogitem() {
+    this.itemdiscountapply.nativeElement.click();
+  }
+  closeGroupDialogcoupons() {
+    this.closeJcDiscPc.nativeElement.click();
+  }
+  closeGroupnotesdialog() {
+    this.closenotesdialog.nativeElement.click();
+  }
+  closeGroupdelivery() {
+    this.closeDelivery.nativeElement.click();
+  }
+  applyRefund(payment) {
+    this.applydisc = true;
+    if (payment) {
+      this.selectedPayment = payment;
+      this.amounttoRefund = payment.refundableAmount;
+      // this.showRefundSection = true;
+    } else {
+      this.selectedPayment = [];
+      // this.showRefundSection = false;
+    }
+  }
+  revokeRefund() {
+    this.applydisc = false;
+  }
+  onChange() {
+    const dsic_type = this.discounts.filter(obj => obj.id === JSON.parse(this.selOrderDiscount));
+    this.discount_type = dsic_type[0];
+  }
+  getJaldeeIntegrationSettings() {
+    this.provider_services.getJaldeeIntegrationSettings().subscribe(
+        (data: any) => {
+            this.walkinConsumer_status = data.walkinConsumerBecomesJdCons;
+        }
+    );
+}
+  refundBtnShow(value) {
+    if (value === 'refund') {
+      this.btn_hide = true;
+    } else {
+      this.btn_hide = false;
     }
   }
 }

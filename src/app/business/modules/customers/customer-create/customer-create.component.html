@@ -1,0 +1,229 @@
+<!-- <section
+    *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && !viewCustomer && !loading">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
+
+<section class=""
+*ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
+    <div class="card title-gb rounded-0">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customerName}}
+
+        </h5>
+    </div>
+</section>
+
+<section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customer_label | capitalizeFirst}} details
+            <!-- <span class="customer-action-btn pointer-cursor" (click)="showCustomerAction()">Actions</span> -->
+        </h5>
+    </div>
+</section>
+<section *ngIf="customerAction === 'inbox'">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="goBackfromAction()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Communication history
+        </h5>
+    </div>
+</section>
+<section *ngIf="showMoreHistory && customerAction === ''">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            History
+        </h5>
+    </div>
+</section>
+<section class=""
+    *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block' || source === 'waitlist-block' || source === 'clist'">
+    <div class="card title-gb rounded-0">
+        <h5 class="mgn-up-10">
+            <!-- <button type="button" class="btn default profile-back" (click)="onCancel()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Create {{customer_label}} -->
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Create {{customer_label}}
+
+        </h5>
+    </div>
+</section>
+<section class="createCustomer">
+    <div class="content loc-list p-checkin pad-20 col-lg-8">
+        <div class="card card-custom gutter-b example example-compact rounded-0 p-0">
+            <div class="card-header">
+                <h3 class="card-title">
+                       
+                </h3>
+                <div class="card-toolbar">
+                    <div class="example-tools justify-content-center pointer-cursor" (click)="findCustomer()">
+                        Find {{customer_label | capitalizeFirst}}
+                        <div class="mr-4 flex-shrink-0 text-center" style="width: 40px;">
+                            <i class="text-dark-50 flaticon2-search"></i>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <!--begin::Form-->
+			<form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+            onSubmit(amForm.value)" (keyup)="resetApiErrors()"  class="form" id="customer_creation">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-lg-6" *ngIf="haveMobile">
+                            <label>Mobile</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text1"><i style="font-style: normal;font-size: small;">+91</i></span></div>
+                                <input type="text" class="form-control" (keypress)="isNumeric($event)" id="mobile_number"
+                                placeholder="{{mobile_cap}} " formControlName="mobile_number"
+                                autocomplete="off" maxlength=10/>
+                            </div>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
+          {
+            'required' : 'Mobile number is required',
+            'minlength' : 'Enter a 10 digit mobile number',
+            'maxlength' : 'Enter a 10 digit mobile number',
+            'pattern' : 'Only numbers are allowed'
+          })">
+                                    </app-field-error-display>
+                        </div>
+                        <div class="col-lg-6" *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
+                            <label>{{customerPlaceholder | capitalizeFirst}}</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="customer_id"
+                                placeholder="{{customerPlaceholder | capitalizeFirst}}"
+                                formControlName="customer_id" autocomplete="off"
+                                (blur)="onFieldBlur('customer_id')"/>
+                                <div class="input-group-append"></div>
+                            </div>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'customer_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'customer_id',
+    {
+      'required' : 'Please enter ' + customer_label + ' id'
+    })">
+                                    </app-field-error-display>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>First Name</label>
+                            <input type="email" name="first_name" class="form-control" id="first_name"
+                            placeholder="{{f_name_cap}}" formControlName="first_name" autocomplete="off"
+                            (blur)="onFieldBlur('first_name')"/>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+    {
+      'required' : 'Please enter first name',
+      'pattern' : 'Only letters are allowed'
+    })">
+                                    </app-field-error-display>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <label>Last Name</label>
+                            <input type="email" class="form-control" id="last_name"
+                            placeholder="{{l_name_cap}}" formControlName="last_name" autocomplete="off"
+                            (blur)="onFieldBlur('last_name')"/>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+    {
+      'required' : 'Please enter last name',
+      'pattern' : 'Only letters are allowed'
+    })">
+                                    </app-field-error-display>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" class="form-control" id="email_id"
+                                placeholder="Email(user@xyz.com)" formControlName="email_id"
+                                autocomplete="off"/>
+                            </div>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'email_id')"
+                                        errorMsg="Please enter valid email.">
+                                    </app-field-error-display>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Date of birth</label>
+                            <div class="input-group">
+                                <input class="form-control" type="date"  id="dob"
+                                formControlName="dob" [max]="tday" [min]="minday"/>
+                            </div>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                        errorMsg="Please select the date of birth.">
+                                    </app-field-error-display>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Address</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <textarea type="text" class="form-control" id="address" placeholder="Address"
+                                formControlName="address"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- <label>Gender</label>
+                            <div class="radio-inline">
+                                <label class="radio radio-solid">
+                                    <input type="radio" name="example_2" checked="checked" value="2"/>
+                                    <span></span>
+                                    Male
+                                </label>
+                                <label class="radio radio-solid">
+                                    <input type="radio" name="example_2" value="2"/>
+                                    <span></span>
+                                    Female
+                                </label>
+                                <label class="radio radio-solid">
+                                    <input type="radio" name="example_2" value="2"/>
+                                    <span></span>
+                                    Others
+                                </label>
+                                
+                            </div> -->
+                            <label class="col-form-label" for="gender">{{gender_cap}}</label>
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="female">
+                                    {{female_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="others">Others
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                                errorMsg="Please select the gender.">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button (click)="onCancel()" type="reset" class="btn btn-secondary" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
+                            <button type="submit" [disabled]="!amForm.valid || disableButton" class="btn btn-primary mr-2">{{save_btn}}</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    
+ 
+</section>

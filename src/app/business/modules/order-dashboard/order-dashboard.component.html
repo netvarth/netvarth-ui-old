@@ -5,7 +5,7 @@
   <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
-        <div>Total orders</div>
+        <!-- <div>Total orders</div>
         <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
@@ -17,13 +17,42 @@
             <div> Future</div>
             <div class="order-count red"> {{futureOrdersCount}}</div>
           </div>
+        </div> -->
+        <div class="quik_link">
+          Quick Links
         </div>
+        <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'" >
+          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')">
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="flaticon2-plus icon-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+               <span> New order</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+          <mat-grid-tile (click)="newphoneInOrder('PHONE_ORDER')">
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="fas fa-phone-alt fa-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+                <span>New Phone-In</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+          <mat-grid-tile (click)="searchCustomer()">
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="fas fa-user-plus fa-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+                <span>Add {{ customer_label }}</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+        </mat-grid-list>
       </div>
     </div>
   </div>
   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
-      <mat-tab label="Active Orders ({{todayOrdersCount}})">
+      <mat-tab label="Today ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
@@ -99,6 +128,22 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div>
+                        <label class="filterHeaders">Order booking mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of ordertypeModes">
+                          <mat-checkbox [checked]="orderModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('orderMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
                       <div *ngIf="providerLabels.length > 0">
                         <label class="filterHeaders">Labels</label>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -142,7 +187,7 @@
             </div>
           </div>
           <div *ngIf="orders.length == 0">
-            No active orders
+            No orders for today
           </div>
           <ng-container *ngIf="orders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
@@ -167,7 +212,6 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
@@ -175,7 +219,16 @@
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>
+                    currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
+                          </span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
@@ -272,6 +325,22 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div>
+                        <label class="filterHeaders">Order booking mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of ordertypeModes">
+                          <mat-checkbox [checked]="orderModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('orderMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
                       <div *ngIf="providerLabels.length > 0">
                         <label class="filterHeaders">Labels</label>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -348,7 +417,16 @@
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>
+                    currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
+                          </span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
@@ -444,6 +522,22 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div>
+                        <label class="filterHeaders">Order booking mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of ordertypeModes">
+                          <mat-checkbox [checked]="orderModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('orderMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
                       <div *ngIf="providerLabels.length > 0">
                         <label class="filterHeaders">Labels</label>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -512,6 +606,7 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                
 
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
@@ -520,8 +615,17 @@
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+                    currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
+                          </span>
+                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order,'history')"> Actions</span>
                 </div>
               </div>
             </div>

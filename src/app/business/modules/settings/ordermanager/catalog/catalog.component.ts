@@ -11,6 +11,7 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-catalog',
@@ -58,6 +59,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     isCheckin;
     active_user;
     order = 'status';
+    private subscriptions = new SubSink();
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
@@ -81,6 +83,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnDestroy() {
+        this.subscriptions.unsubscribe();
         if (this.additemdialogRef) {
             this.additemdialogRef.close();
         }
@@ -94,6 +97,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.removeitemdialogRef.close();
         }
     }
+    
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
@@ -101,7 +105,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     getCatalog() {
-        this.provider_servicesobj.getProviderCatalogs()
+        this.subscriptions.sink = this.provider_servicesobj.getProviderCatalogs()
             .subscribe(data => {
                 this.catalog_list = data;
                 this.query_executed = true;
@@ -126,7 +130,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     dochangeStatus(catalog) {
         if (catalog.catalogStatus === 'ACTIVE') {
             const stat = 'INACTIVE';
-            this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
+            this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
                     this.snackbarService.openSnackBar( catalog.catalogName + ' disabled successfully');
@@ -137,7 +141,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             );
         } else {
             const stat = 'ACTIVE';
-            this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
+            this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
                     this.snackbarService.openSnackBar( catalog.catalogName + ' enabled successfully');
@@ -149,7 +153,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         }
     }
     changeStatus(catalogid) {
-        this.provider_servicesobj.enableItem(catalogid)
+        this.subscriptions.sink = this.provider_servicesobj.enableItem(catalogid)
             .subscribe(
                 () => {
                     this.getCatalog();
@@ -190,7 +194,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     deleteItem(id) {
-        this.provider_servicesobj.deleteItem(id)
+        this.subscriptions.sink = this.provider_servicesobj.deleteItem(id)
             .subscribe(
                 () => {
                     this.getCatalog();

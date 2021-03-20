@@ -14,7 +14,8 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 
 @Component({
   selector: 'app-statements',
-  templateUrl: './statements.component.html'
+  templateUrl: './statements.component.html',
+  styleUrls: ['./statements.component.css']
 })
 
 export class StatementsComponent implements OnInit {

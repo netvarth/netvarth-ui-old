@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-consumer-note',
@@ -21,7 +22,8 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInConsumerNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public sharedfunctionObj: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
 
   ) {
     console.log(data);
@@ -40,12 +42,9 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if (!this.checkin.consumerNote) {
-    //   this.dialogRef.close();
-    // }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.sharedfunctionObj.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
 }

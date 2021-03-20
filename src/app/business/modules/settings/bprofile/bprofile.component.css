@@ -207,3 +207,53 @@
     border: 1px solid red !important;
     color: red !important;
 }
+.fade {
+    opacity: 4 !important;
+}
+.uppy-DashboardTab-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 90px;
+}
+.uppy-DashboardTab {
+    width: fit-content;
+}
+.button_center {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+.modal-header {
+    padding: 1rem 1.75rem  !important;
+}
+.modal-footer {
+    padding: 0 !important;
+}
+.ln-ht-1 {
+    line-height: 1 !important;
+}
+.ip_hide {
+    display: none !important;
+}
+.mat-progress-bar {
+    height: 10px !important;
+}
+.mat-progress-bar-fill::after {
+    background-color: #667588 !important;
+}
+.mat-progress-bar-buffer {
+    background-color: #f9e2a7 !important;
+}
+.wdth_full {
+    width: 100%  !important;
+}
+.btn_disable {
+    background: #8080806e !important;
+    border: none !important;
+    pointer-events: none !important;
+}
+.fa-cloud-download {
+    font-family: 'FontAwesome' !important;
+}

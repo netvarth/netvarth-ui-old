@@ -21,6 +21,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 declare let cordova: any;
 @Component({
   selector: 'app-appointments',
@@ -45,7 +46,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   change_status = Messages.CHANGE_STATUS_CAP;
   add_note_cap = Messages.ADD_NOTE_CAP;
   available_cap = Messages.PRO_AVAILABLE_CAP;
-  no_service_cap = Messages.NO_QUEUE_MSG;
+  no_service_cap = Messages.NO_SCHEDULE_MSG;
   adjust_delay = Messages.ADJUST_DELAY_CAP;
   first_name = Messages.FIRST_NAME_CAP;
   last_name = Messages.LAST_NAME_CAP;
@@ -362,8 +363,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title) {
-      this.titleService.setTitle('Jaldee Business - Appointments');
+    this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -487,20 +489,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_sidebar = false;
   }
   getDefaultViewSchedules(allSchedules) {
-    console.log(allSchedules);
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
-      console.log(allSchedules.length);
       for (let qIndex = 0; qIndex < allSchedules.length; qIndex++) {
-        console.log(allSchedules[qIndex]);
-        console.log(loggedUser.id);
         if (allSchedules[qIndex].provider && (allSchedules[qIndex].provider.id === loggedUser.id)) {
           userQs.push(allSchedules[qIndex]);
         }
       }
-      console.log(userQs);
       return userQs;
     } else {
       return allSchedules;
@@ -707,11 +703,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < schedules.length; qIndex++) {
-          console.log(schedules[qIndex]);
-          console.log(loggedUser.id);
           if (schedules[qIndex].provider && (schedules[qIndex].provider.id === loggedUser.id)) {
             qs.push(schedules[qIndex]);
           }
@@ -1092,10 +1085,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getAppointmentsPerSlot(appointments) {
     let date;
     if (this.time_type === 1) {
-      date = this.shared_functions.transformToYMDFormat(this.server_date);
+      date = this.dateTimeProcessor.transformToYMDFormat(this.server_date);
     }
     if (this.time_type === 2) {
-      date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      date = this.dateTimeProcessor.transformToYMDFormat(this.filter.future_appt_date);
     }
     if (this.selQIds && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
@@ -1248,6 +1241,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+      const qids = this.activeSchedules.map(q => q.id);
+      Mfilter['schedule-eq'] = qids.toString();
+    }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1348,7 +1345,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.dateTimeProcessor.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.dateTimeProcessor.transformToYMDFormat(servdate)) {
       this.filter.future_appt_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
@@ -1402,6 +1399,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+      const qids = this.activeSchedules.map(q => q.id);
+      Mfilter['schedule-eq'] = qids.toString();
+    }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1523,10 +1524,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
+        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
     }
     if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
@@ -1605,7 +1606,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
 
   apptClicked(type, time?) {
@@ -2145,6 +2146,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             });
       });
   }
+
   onChangeLocationSelect(event) {
     const value = event;
     this.resetFields();
@@ -2348,9 +2350,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
-        console.log(communications);
         this.image_list_popup_temp = [];
-        this.image_list_popup = []; 
+        this.image_list_popup = [];
         let count = 0;
         // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
         //   if (communications[comIndex].attachements) {
@@ -2375,22 +2376,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         //   }
         // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-             const thumbPath = communications[comIndex].thumbPath;
-              let imagePath = thumbPath;
-              const description = communications[comIndex].s3path;
-              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                imagePath = communications[comIndex].s3path;
-              }
-              const imgobj = new Image(
-                count,
-                { // modal
-                  img: imagePath,
-                  description: description
-                },
-              );
-              this.image_list_popup_temp.push(imgobj);
-              count++;
+          const thumbPath = communications[comIndex].thumbPath;
+          let imagePath = thumbPath;
+          const description = communications[comIndex].s3path;
+          const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+          if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            imagePath = communications[comIndex].s3path;
+          }
+          const imgobj = new Image(
+            count,
+            { // modal
+              img: imagePath,
+              description: description
+            },
+          );
+          this.image_list_popup_temp.push(imgobj);
+          count++;
         }
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
@@ -2584,10 +2585,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonAfterHook() { }
   gotoCustomerDetails(appt) {
     if (appt.apptStatus !== 'blocked') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: { action: 'view' }
-      };
-      this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id], navigationExtras);
+      this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
     }
   }
   stopprop(event) {
@@ -2732,4 +2730,3 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.apptStatuses.toString();
   }
 }
-

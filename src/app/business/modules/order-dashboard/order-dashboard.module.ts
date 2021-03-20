@@ -15,6 +15,13 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
 import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
+import { OrderWizardComponent } from './order-wizard/order-wizard.component';
+import { AddressComponent } from './order-wizard/address/address.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CustomerModule } from '../customer/customer.module';
+import { ContactInfoComponent } from './order-wizard/contact-info/contact-info.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +30,18 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
     OrderActionsComponent,
     OrderEditComponent,
     OrderItemsComponent,
-    DisplaylabelpopupComponent
+    DisplaylabelpopupComponent,
+    OrderWizardComponent,
+    AddressComponent,
+    ContactInfoComponent
+
 
   ],
   entryComponents: [
     OrderActionsComponent,
     OrderItemsComponent,
-    DisplaylabelpopupComponent
+    DisplaylabelpopupComponent,
+    AddressComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +53,17 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
     CapitalizeFirstPipeModule,
     CardModule,
     Nl2BrPipeModule,
-    ModalGalleryModule
+    ModalGalleryModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    CustomerModule
+
+
+
+
+
+
   ],
   exports: [
     OrderDashboardComponent

@@ -64,6 +64,67 @@
                       </div>
                     </div>
                   </div>
+                  <!-- Open popup upload -->
+                  <div class="modal fade" id="exampleModalSizeLg" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Upload Profile Photo</h5>
+                        </div>
+                        <div class="modal-body">
+                          <!-- Before Img selection -->
+                          <div class="uppy-Dashboard-AddFiles-list" *ngIf="!imageChangedEvent">
+                            <div class="button_center">
+                              <div class="uppy-DashboardTab">
+                                <button type="button" class="uppy-DashboardTab-btn" (click)="imgSel.click()">
+                                  <svg aria-hidden="true" focusable="false" width="32" height="32" viewBox="0 0 32 32">
+                                    <g fill="none" fill-rule="evenodd">
+                                      <rect width="32" height="32" rx="16" fill="#2275D7"></rect>
+                                      <path
+                                        d="M21.973 21.152H9.863l-1.108-5.087h14.464l-1.246 5.087zM9.935 11.37h3.958l.886 1.444a.673.673 0 0 0 .585.316h6.506v1.37H9.935v-3.13zm14.898 3.44a.793.793 0 0 0-.616-.31h-.978v-2.126c0-.379-.275-.613-.653-.613H15.75l-.886-1.445a.673.673 0 0 0-.585-.316H9.232c-.378 0-.667.209-.667.587V14.5h-.782a.793.793 0 0 0-.61.303.795.795 0 0 0-.155.663l1.45 6.633c.078.36.396.618.764.618h13.354c.36 0 .674-.246.76-.595l1.631-6.636a.795.795 0 0 0-.144-.675z"
+                                        fill="#FFF"></path>
+                                    </g>
+                                  </svg>
+                                  <div class="uppy-DashboardTab-name">My Device</div>
+                                </button>
+                              </div>
+                              <input type="file" name="image_src" id="image_src" accept="image/*" #imgSel
+                                (change)="imageSelect($event)" class="ip_hide">
+                            </div>
+                          </div>
+
+                          <!-- After Img selection cropper -->
+                          <div>
+                            <mat-progress-bar *ngIf="loadSymbol" mode="indeterminate" class="mt-10"></mat-progress-bar>
+                            <!-- cropper for pro pic -->
+                            <image-cropper *ngIf="!imgType" [imageChangedEvent]="imageChangedEvent" [roundCropper]="true" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" [containWithinAspectRatio]="true"
+                            [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
+                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                            (loadImageFailed)="loadImageFailed()"></image-cropper>
+                            <div class="crop-img-div" *ngIf="imageChangedEvent && imageChangedEvent.target.files">
+                              <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;Left</i>
+                              <i class="fa fa-repeat custId-cursor pad-left-20" aria-hidden="true" (click)="rotateRight()">&nbsp;Right</i>
+                              <i class="fa fa-search-plus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomIn()">&nbsp;Zoom+</i>
+                              <i class="fa fa-search-minus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomOut()">&nbsp;Zoom-</i>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-square ln-ht-1 btn-light-primary font-weight-bold"
+                            data-dismiss="modal" #closebutton>Close</button>
+                          <button [class.btn_disable]="api_success" type="button" class="btn ln-ht-1 btn-square btn-primary font-weight-bold" (click)="saveImages()">{{spinner_load ? 'Uploading': 'save'}}
+                            <i *ngIf="spinner_load" class="fas fa-spinner fa-spin" style="font-family: 'FontAwesome';"></i>
+                          </button>
+                          <app-form-success-display class="wdth_full" [displayMsg]="true"  *ngIf="api_success" successMsg="{{api_success}}">
+                          </app-form-success-display>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
 
                   <!-- Progress Bar -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-50">
@@ -84,7 +145,8 @@
                       </div>
                       <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
-                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -94,7 +156,8 @@
                     <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About Us</span><span
                         class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
-                      <span [ngClass]="{'no_abt_us':!aboutmefilled }" class="cs-btn bt3" (click)="gotoAboutMe()">About Us</span>
+                      <span [ngClass]="{'no_abt_us':!aboutmefilled }" class="cs-btn bt3" (click)="gotoAboutMe()">About
+                        Us</span>
                     </div>
                     <div class="busns-name">
                       {{bProfile.businessName}}
@@ -145,8 +208,8 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                     <share-buttons [theme]="'circles-dark'"
-                                        [include]="['facebook','whatsapp','email','copy']" [url]="shareLink"
+                                      <share-buttons [theme]="'circles-dark'"
+                                        [include]="['facebook','whatsapp','email','telegram','copy']" [url]="shareLink"
                                         [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
@@ -167,8 +230,8 @@
                               #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
-                                </ngx-qrcode>
+                                (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
+                              </ngx-qrcode>
                               </div>
                               <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12 no-padding-small">
                                 <div class="mgn-up-10 prof-url">
@@ -177,8 +240,8 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                       <share-buttons [theme]="'circles-dark'"
-                                        [include]="['facebook','whatsapp','email','copy']" [url]="shareLink"
+                                      <share-buttons [theme]="'circles-dark'"
+                                        [include]="['facebook','whatsapp','email','telegram','copy']" [url]="shareLink"
                                         [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
@@ -344,11 +407,11 @@
         </div>
         <!--Additional Info-->
         <div class="row">
-          <div class="content w-manager settings comn-cls lic-page">
-            <div class="col-md-12 0no-padding-small">
+          <div class="copy one col-xs-12 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xs-12 0no-padding-small">
               <div class="w-dta">
                 <div class="row">
-                  <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                  <div class="copy one col-a col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
                     <div class="card p0 w-dta active add-extra">
                       <mat-accordion class="mgn-up-5">
                         <mat-expansion-panel [expanded]="true">

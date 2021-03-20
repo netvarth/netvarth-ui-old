@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
+
 @Component({
   selector: 'app-order-items',
   templateUrl: './order-items.component.html',
@@ -17,7 +18,7 @@ export class OrderItemsComponent implements OnInit {
   itemCount: any;
   orderList: any = [];
   loading = true;
-
+ 
 
   constructor(public dialogRef: MatDialogRef<OrderItemsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,16 +26,17 @@ export class OrderItemsComponent implements OnInit {
     private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService,
+    private lStorageService: LocalStorageService
   ) { }
 
   ngOnInit() {
     const cuser = this.groupService.getitemFromGroupStorage('accountId');
     this.account_id = cuser;
-    this.orderList = JSON.parse(localStorage.getItem('order'));
+    this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     console.log(this.orderList);
     this.fetchCatalog();
   }
+ 
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
@@ -108,8 +110,7 @@ export class OrderItemsComponent implements OnInit {
     console.log(item);
     console.log(itemObj);
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    // this.getTotalItemAndPrice();
-    // this.getItemQty(item);   
+   
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
@@ -126,18 +127,6 @@ export class OrderItemsComponent implements OnInit {
       }
     }
   }
-
-  // getItemQty(itemObj) {
-  //   let qty = 0;
-  //   if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
-  //     qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
-  //   }
-  //   console.log(qty);
-  //   return qty;
-  
-  // }
-     
-
 
 
 }

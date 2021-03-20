@@ -15,6 +15,7 @@ export class TeleServiceConfirmBoxComponent implements OnInit {
   serviceMode ;
   constructor(public dialogRef: MatDialogRef<TeleServiceConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+      console.log(JSON.stringify(data));
       this.serviceMode = data.serviceDetail.virtualServiceType;
       console.log(this.serviceMode)
      }

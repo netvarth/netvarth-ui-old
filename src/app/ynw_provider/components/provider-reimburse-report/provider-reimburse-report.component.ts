@@ -5,12 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html'
@@ -87,9 +87,10 @@ export class ProviderReimburseReportComponent implements OnInit {
   statusMultiCtrl: any = [];
   constructor(private dialog: MatDialog, private router: Router,
     public dateformat: DateFormatPipe,
-    private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices,
+    private provider_servicesobj: ProviderServices,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService) {
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor) {
   }
 
   ngOnInit() {
@@ -195,10 +196,10 @@ export class ProviderReimburseReportComponent implements OnInit {
       api_filter['status-eq'] = this.statusMultiCtrl.toString();
     }
     if (this.filter.from_date != null) {
-      api_filter['reportFromDate-ge'] = this.sharedfunctionObj.transformToYMDFormat(this.filter.from_date);
+      api_filter['reportFromDate-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.from_date);
     }
     if (this.filter.to_date != null) {
-      api_filter['reportEndDate-le'] = this.sharedfunctionObj.transformToYMDFormat(this.filter.to_date);
+      api_filter['reportEndDate-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.to_date);
     }
     return api_filter;
   }
@@ -323,7 +324,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    * @param dateStr Date String
    */
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   /**
    * Reload APIs

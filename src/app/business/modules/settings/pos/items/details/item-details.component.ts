@@ -54,6 +54,7 @@ export class ItemDetailsComponent implements OnInit {
     maxChars = projectConstantsLocal.VALIDATOR_MAX50;
     maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
     maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
+    maxNumberslabl = projectConstantsLocal.VALIDATOR_MAX15_DEPT_CDE;
     max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
     api_loading = true;
     disableButton = false;
@@ -280,7 +281,7 @@ export class ItemDetailsComponent implements OnInit {
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
-                customlabel: []
+                customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])]
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
             this.amForm.get('promotionallabel').setValue('ONSALE');
@@ -288,8 +289,8 @@ export class ItemDetailsComponent implements OnInit {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
                 itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
@@ -301,7 +302,7 @@ export class ItemDetailsComponent implements OnInit {
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
-                customlabel: []
+                customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])]
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
         }
@@ -457,7 +458,7 @@ export class ItemDetailsComponent implements OnInit {
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
-                'itemNameInLocal': form_data.itemNameInLocal,
+                'itemNameInLocal' :form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
@@ -488,7 +489,7 @@ export class ItemDetailsComponent implements OnInit {
         } else if (this.action === 'edit') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
-                'itemNameInLocal': form_data.itemNameInLocal,
+                'itemNameInLocal' :form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec || '',

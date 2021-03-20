@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
@@ -8,22 +8,40 @@ import { projectConstants } from '../../../../app.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-// import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { AddressComponent } from '../order-wizard/address/address.component';
 
 
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
-  styleUrls: ['./order-edit.component.css']
+  styleUrls: ['./order-edit.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
+
 })
-export class OrderEditComponent implements OnInit, OnDestroy  {
+export class OrderEditComponent implements OnInit, OnDestroy {
+  emailId: string;
+  disableSave: boolean;
+  queue: any;
+  accountId: any;
+  placeOrderDisabled: boolean;
+  orderSummary: any[];
+  selectedRowIndex: any;
+  customer_email: any;
+  customer_phoneNumber: any;
+  added_address: any = [];
+  customerId: any;
   orderCount: number;
   disabledConfirmbtn = false;
   isfutureAvailableTime: boolean;
@@ -59,8 +77,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   todaydate;
   ddate;
   hold_sel_checkindate;
+  totaltax = 0;
   // choose_type = 'store';
   choose_type;
+  timings_title:string;
   advance_amount: any;
   account_id: any;
   storeChecked = true;
@@ -77,10 +97,13 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   s3CouponsList: any = [];
   selected_coupons: any = [];
   couponsList: any = [];
+  step = 3;
   selected_coupon;
   showCouponWB: boolean;
+  showCoupon = false;
   provider_id: any;
   s3url;
+  loading = true;
   api_loading1 = true;
   retval;
   tooltipcls = '';
@@ -89,14 +112,41 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   storeContact: any;
   canceldialogRef: any;
   sel_checdate: any;
-  orderItems: any[];
+  catalogItems: any[];
   itemCount: any;
   uid: any;
   orderDetails: any = [];
   addressDialogRef: any;
   selectedAddress: string;
   storeaddress: string;
+  disabledNextbtn = false;
+  amForm: FormGroup;
+  nextAvailableTimeQueue: any;
+  image_list_popup: Image[];
+  imagelist: any = [];
+  orderNumber:any;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  @ViewChild('closeModal') private closeModal: ElementRef;
+  @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
+    private fb: FormBuilder,
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
@@ -104,50 +154,298 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     private dialog: MatDialog,
         public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
+    private groupService: GroupStorageService,
+    public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
-    this.route.queryParams.subscribe(
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor) {
+    this.route.params.pipe(takeUntil(this.onDestroy$))
+    .subscribe(
       params => {
-        console.log(params);
-        this.sel_checdate = params.order_date;
-        this.account_id = params.account_id;
-        this.provider_id = params.unique_id;
-        this.choose_type = params.choosetype;
-        this.uid = params.uid;
-        this.getOrderDetails(this.uid);
+        this.account_id = this.groupService.getitemFromGroupStorage('accountId');
+        this.uid = params.id;
+        // this.getOrderDetails(this.uid);
       });
 
   }
 
   ngOnInit() {
-    this.gets3curl();
     this.fetchCatalog();
+    this.amForm = this.fb.group({
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      firstName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      lastName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+
+      address: ['', Validators.compose([Validators.required])],
+      city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      landMark: ['', Validators.compose([Validators.required])],
+      countryCode: ['+91'],
+    });
 
   }
-
-  ngOnDestroy() {
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
-  getOrderDetails(uid) {
-      this.providerservice.getProviderOrderById(uid).subscribe(data => {
-      this.orderDetails = data;
-      console.log(this.orderDetails);
+
+  confirm() {
+    this.placeOrderDisabled = true;
+    const timeslot = this.nextAvailableTime.split(' - ');
+    if (this.choose_type === 'home') {
+      if (this.selectedAddress === '' ) {
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        return;
+      } else {
+        const post_Data = {
+          'homeDelivery': true,
+          'homeDeliveryAddress': this.selectedAddress,
+          'uid': this.orderDetails.uid,
+          'timeSlot': {
+            'sTime': timeslot[0],
+            'eTime': timeslot[1]
+          },
+          'orderDate': this.orderDetails.orderDate,
+          'countryCode': this.orderDetails.countryCode,
+          'phoneNumber': this.orderDetails.phoneNumber,
+          'email': this.orderDetails.email
+
+        };
+        console.log(post_Data);
+        this.confirmOrder(post_Data);
+
+      }
+    }
+    if (this.choose_type === 'store') {
+      const post_Data = {
+        'storePickup': true,
+        'uid': this.orderDetails.uid,
+        'timeSlot': {
+          'sTime': timeslot[0],
+          'eTime': timeslot[1]
+        },
+        'orderDate': this.orderDetails.orderDate,
+        'countryCode': this.orderDetails.countryCode,
+        'phoneNumber': this.orderDetails.phoneNumber,
+        'email': this.orderDetails.email
+      };
+      console.log(post_Data);
+      this.confirmOrder(post_Data);
+    }
+  }
+
+
+  onSubmit(form_data) {
+    console.log(JSON.stringify(form_data));
+    const timeslot = this.nextAvailableTime.split(' - ');
+    this.selectedAddress = form_data;
+    const post_data = {
+      'homeDelivery': true,
+      'homeDeliveryAddress': this.selectedAddress,
+      'uid': this.orderDetails.uid,
+      'timeSlot': {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+      },
+      'orderDate': this.orderDetails.orderDate,
+      'countryCode': this.orderDetails.countryCode,
+      'phoneNumber': this.orderDetails.phoneNumber,
+      'email': this.orderDetails.email
+
+    };
+    console.log(post_data);
+    this.closeModal.nativeElement.click();
+
+    this.providerservice.updateProviderOrders(post_data)
+    .pipe(takeUntil(this.onDestroy$))
+      .subscribe(
+        data => {
+          this.disableSave = false;
+          this.closeModal.nativeElement.click();
+          this.getOrderDetails(this.uid);
+        },
+        error => {
+          this.disableSave = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+  // goBack() {
+  //   this.router.navigate(['providers', 'orders']);
+  // }
+  editAddress() {
+    this.amForm.setValue({
+      'phoneNumber': this.orderDetails.homeDeliveryAddress.phoneNumber || null,
+      'firstName': this.orderDetails.homeDeliveryAddress.firstName || null,
+      'lastName': this.orderDetails.homeDeliveryAddress.lastName || null,
+      'email': this.orderDetails.homeDeliveryAddress.email || null,
+      'address': this.orderDetails.homeDeliveryAddress.address || null,
+      'city': this.orderDetails.homeDeliveryAddress.city || null,
+      'postalCode': this.orderDetails.homeDeliveryAddress.postalCode || null,
+      'landMark': this.orderDetails.homeDeliveryAddress.landMark || null,
+      'countryCode': '+91',
+    });
+
+  }
+  getOrderItems() {
+
+    this.orderSummary = [];
+    this.orders.forEach(item => {
+      let consumerNote = '';
+      const itemId = item.item.itemId;
+      const qty = this.getItemQty(item);
+      if (item.consumerNote) {
+        consumerNote = item.consumerNote;
+      }
+
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+    });
+    return this.orderSummary;
+  }
+
+  confirmOrder(post_data) {
+    console.log(post_data);
+    this.providerservice.updateOrder(post_data)
+    .pipe(takeUntil(this.onDestroy$))
+      .subscribe(data => {
+        if(this.orderDetails && this.orderDetails.orderItem){
+        this.updateOrderItems().then(res => {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Your Order updated successfully');
+          this.orderList = [];
+          this.router.navigate(['provider', 'orders']);
+        });
+      } else {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Your Order updated successfully');
+          this.router.navigate(['provider', 'orders']);
+      }
+      },
+        error => {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+
+      );
+  }
+  updateOrderItems() {
+    const items = this.getOrderItems();
+    const orderId = this.orderDetails.uid;
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.providerservice.updateOrderItems(orderId, items)
+        .subscribe(data => {
+          resolve(data);
+        },
+          error => {
+            reject();
+          }
+        );
     });
   }
+  gotoNext() {
+    if (this.step === 2) {
+      if (this.orders.length === 0) {
+        this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
+        return false;
+      } else {
+        this.step = this.step + 1;
+      }
+    } else {
+      this.step = this.step + 1;
+    }
+
+  }
+  gotoPrev() {
+    this.step = this.step - 1;
+  }
+
+
+  // fetch orderdetails using order id
+  getOrderDetails(uid) {
+    this.orderList = [];
+    this.providerservice.getProviderOrderById(uid)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
+      this.orderDetails = data;
+      this.orderNumber = this.orderDetails.orderNumber;
+      this.customerId = this.orderDetails.orderFor.id;
+      if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
+        for (const item of this.orderDetails.orderItem) {
+          const itemqty: number = item.quantity;
+          const itemId = item.id;
+          const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
+          const itemObject = orderItem.item;
+          for (let i = 0; i < itemqty; i++) {
+            this.orderList.push({ 'item': itemObject });
+          }
+
+        }
+        this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
+      this.orderCount = this.orders.length;
+      }  
+      if (this.orderDetails && this.orderDetails.shoppingList) {
+        this.image_list_popup = [];
+        this.imagelist = this.orderDetails.shoppingList;
+        for (let i = 0; i < this.imagelist.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+              img: this.imagelist[i].s3path,
+              description: this.imagelist[i].caption || ''
+            });
+          this.image_list_popup.push(imgobj);
+        }
+      }
+
+      if (this.orderDetails.storePickup) {
+        this.choose_type = 'store';
+        this.store_pickup = true;
+      }
+      if (this.orderDetails.homeDelivery) {
+        this.choose_type = 'home';
+        this.home_delivery = true;
+        this.selectedRowIndex = 'i';
+      }
+      if (this.orderDetails.orderFor) {
+        this.customerId = this.orderDetails.orderFor.id;
+        this.getDeliveryAddress();
+      }
+      
+
+
+      this.sel_checkindate = this.orderDetails.orderDate;
+      this.getAvailabilityByDate(this.sel_checkindate);
+      this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      this.loading = false;
+    });
+  }
+
+
+  goBackToSummary(selectesTimeslot, queue) {
+    const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
+    this.nextAvailableTime = selectqueue;
+    this.datepickerModal.nativeElement.click();
+
+  }
+  handleQueueSelection(queue, index) {
+    this.queue = queue;
+  }
+  // Fetch catalog of this account using accountId
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
-      this.orderItems = [];
-      const orderItems = [];
+      this.catalogItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item , 'showpric': showpric});
+        this.catalogItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(orderItems);
       }
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
@@ -155,6 +453,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
+            this.timings_title="Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -165,6 +464,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
             if (!this.store_pickup) {
               this.choose_type = 'home';
+              this.timings_title="Delivery Timings";
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -172,15 +472,12 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
           }
         }
         this.advance_amount = this.catalog_details.advanceAmount;
+        this.getOrderAvailableDatesForPickup();
+        this.getOrderAvailableDatesForHome();
+        this.getOrderDetails(this.uid);
+
       }
-      this.getOrderAvailableDatesForPickup();
-      this.getOrderAvailableDatesForHome();
-      this.fillDateFromLocalStorage();
-      this.orderList = JSON.parse(localStorage.getItem('order'));
-      console.log(this.orderList);
-      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      this.orderCount = this.orders.length;
-      this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
+
       this.showfuturediv = false;
       this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -213,28 +510,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
     });
   }
-  fillDateFromLocalStorage() {
-    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
-    console.log(this, this.chosenDateDetails);
-    if (this.chosenDateDetails !== null) {
-      this.delivery_type = this.chosenDateDetails.delivery_type;
-      this.choose_type = this.delivery_type;
-      if (this.delivery_type === 'store') {
-        this.store_pickup = true;
-        this.choose_type = 'store';
-        this.storeChecked = true;
-      } else if (this.delivery_type === 'home') {
-        this.home_delivery = true;
-        this.choose_type = 'home';
-        this.storeChecked = false;
-      }
-      this.sel_checkindate = this.chosenDateDetails.order_date;
-      this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-    } else {
-      this.storeChecked = true;
-    }
 
-  }
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -250,14 +526,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     });
 
 
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
-
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
+    console.log(qty);
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
@@ -283,6 +555,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
+    this.orders = [...new Map(this.orderList.map(orderItem => [orderItem.item['itemId'], orderItem])).values()];
 
   }
   checkCouponExists(couponCode) {
@@ -295,88 +568,16 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     }
     return found;
   }
-  clearCouponErrors() {
-    this.couponvalid = true;
-    this.api_cp_error = null;
-  }
-  gets3curl() {
-    this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
-          this.api_loading1 = false;
-        }
-      );
-  }
-  toggleterms(i) {
-    if (this.couponsList[i].showme) {
-      this.couponsList[i].showme = false;
-    } else {
-      this.couponsList[i].showme = true;
-    }
-  }
 
-  applyCoupons(jCoupon) {
-    this.api_cp_error = null;
-    this.couponvalid = true;
-    const couponInfo = {
-      'couponCode': '',
-      'instructions': ''
-    };
-    if (jCoupon) {
-      const jaldeeCoupn = jCoupon.trim();
-      if (this.checkCouponExists(jaldeeCoupn)) {
-        this.api_cp_error = 'Coupon already applied';
-        this.couponvalid = false;
-        return false;
-      }
-      this.couponvalid = false;
-      let found = false;
-      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
-          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
-          this.couponsList.push(couponInfo);
-          found = true;
-          this.selected_coupon = '';
-          break;
-        }
-      }
-      if (found) {
-        this.couponvalid = true;
-        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
-        this.action = '';
-      } else {
-        this.api_cp_error = 'Coupon invalid';
-      }
-    } else {
-      this.api_cp_error = 'Enter a Coupon';
-    }
-  }
-  removeJCoupon(i) {
-    this.selected_coupons.splice(i, 1);
-    this.couponsList.splice(i, 1);
-  }
-  removeCoupons() {
-    this.selected_coupons = [];
-    this.couponsList = [];
-    this.coupon_status = null;
-  }
-  applyPromocode() {
-    this.action = 'coupons';
-  }
+
+
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
     let UTCstring = null;
     if (modDateReq) {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(res => {
         this.s3CouponsList = res;
         if (this.s3CouponsList.length > 0) {
@@ -426,7 +627,6 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
   }
   getTotalItemPrice() {
-    console.log(this.orderList);
     this.price = 0;
     for (const itemObj of this.orderList) {
       let item_price = itemObj.item.price;
@@ -437,12 +637,33 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     }
     return this.price.toFixed(2);
   }
+  getTotalItemTax(taxValue) {
+    this.totaltax = 0;
+    for (const itemObj of this.orderList) {
+      let taxprice = 0;
+      if (itemObj.item.taxable) {
+        if (itemObj.item.showPromotionalPrice) {
+          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+        } else {
+          taxprice = itemObj.item.price * (taxValue / 100);
+        }
+      } else {
+        taxprice = 0;
+
+      }
+      this.totaltax = this.totaltax + taxprice;
+
+    }
+    return this.totaltax.toFixed(2);
+
+
+  }
   getDeliveryCharge() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge;
+    return deliveryCharge.toFixed(2);
   }
   getSubTotal() {
     let subtotal = 0;
@@ -455,25 +676,50 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     subtotal = subtotal + this.price + deliveryCharge;
     return subtotal.toFixed(2);
   }
-  confirmOrder() {
-    if (this.checkMinimumQuantityofItems()) {
 
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
-
-      const chosenDateTime = {
-        delivery_type: this.choose_type,
-        catlog_id: this.catalog_details.id,
-        nextAvailableTime: this.nextAvailableTime,
-        order_date: this.sel_checkindate,
-        advance_amount: this.catalog_details.advance_amount,
-        account_id: this.account_id
-
-      };
-      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      // this.router.navigate(['order', 'shoppingcart', 'checkout']);
+  getSuborderTotal() {
+    let subtotal = 0;
+    let deliveryCharge = 0;
+      if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+        deliveryCharge = this.orderDetails.deliveryCharge;
+      }
+    subtotal = subtotal + this.orderDetails.bill.netTotal + deliveryCharge;
+    return subtotal.toFixed(2);
+  }
+  getDeliveryAddress() {
+    if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
+      this.orderAddress();
     }
+    
+  }
+  highlight(index, address) {
+    console.log('user_address');
+    this.selectedRowIndex = index;
+    this.customer_phoneNumber = address.phoneNumber;
+    this.customer_email = address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
 
   }
+  orderAddress() {
+    this.selectedRowIndex = 'i';
+    this.selectedAddress = this.orderDetails.homeDeliveryAddress;
+
+  }
+  
+
+  getItemImg(item) {
+    if (item.itemImages) {
+      const img = item.itemImages.filter(image => image.displayImage);
+      if (img[0]) {
+        return img[0].url;
+      } else {
+        return '../../../../../assets/images/order/Items.svg';
+      }
+    } else {
+      return '../../../../assets/images/order/Items.svg';
+    }
+  }
+
   checkMinimumQuantityofItems() {
     let all_itemsSet = true;
     this.orders.forEach(item => {
@@ -485,17 +731,17 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     return all_itemsSet;
   }
   goBack() {
+    if(this.step === 2){
+      this.step = this.step + 1;
+    } else {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.location.back();
     }
   }
-  goBackCart(selectedTimeslot) {
-    this.nextAvailableTime = selectedTimeslot;
-    this.action = '';
-  }
+}
+
   changeTime() {
     this.action = 'timeChange';
     this.getAvailabilityByDate(this.sel_checkindate);
@@ -535,17 +781,17 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
-    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
   }
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
     const seldate = new Date(seldate2);
-    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
     const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
     const strtDt = new Date(strtDt2);
-    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
       return true;
     } else {
@@ -580,21 +826,36 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
   }
+  toggleCoupon() {
+    this.showCoupon = !this.showCoupon;
+  }
   changeType(event) {
     this.choose_type = event.value;
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
+      this.timings_title="Store Pickup Timings";
       this.storeChecked = true;
-      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-      this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      if (this.orderDetails.storePickup) {
+        this.sel_checkindate = this.orderDetails.orderDate;
+        this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      } else {
+        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      }
       this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
+      this.timings_title="Delivery Timings";
       this.storeChecked = false;
-      this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-      this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      if (this.orderDetails.homeDelivery) {
+        this.sel_checkindate = this.orderDetails.orderDate;
+        this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      } else {
+        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      }
       this.getAvailabilityByDate(this.sel_checkindate);
     }
 
@@ -608,6 +869,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -620,6 +882,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -645,7 +908,9 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -654,7 +919,9 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -670,109 +937,59 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
   }
-  addNotes(item, index) {
-    // this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: item
-
-    // });
-    // this.addItemNotesdialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.orderList.map((Item, i) => {
-    //       if (Item.item.itemId === item.item.itemId) {
-    //         Item['consumerNote'] = result;
-    //       }
-    //     });
-    //     this.orders.map((Item, i) => {
-    //       if (Item.item.itemId === item.item.itemId) {
-    //         Item['consumerNote'] = result;
-    //       }
-    //     });
-    //   }
-    //   // console.log(this.orderList);
-    // });
-  }
   deleteNotes(item, index) {
-    console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-         'message': 'Do you want to Delete this Note?',
-     }
-     });
-  this.canceldialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      console.log(this.orderList);
-      this.orderList.map((Item, i) => {
-        if (Item.item.itemId === item.item.itemId) {
-          console.log(Item.consumerNote);
-          Item['consumerNote'] = Item.consumerNote.splice;
-        }
-      });
-      // this.orders.map((Item, i) => {
-      //   if (Item.item.itemId === item.item.itemId) {
-      //     Item['consumerNote'] = Item.consumerNote.splice;
-      //   }
-      // });
-      console.log(this.orderList);
-
-    }
-  });
+        'message': 'Do you want to Delete this Note?',
+      }
+    });
+    this.canceldialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
+      if (result) {
+        this.orderList.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            Item['consumerNote'] = Item.consumerNote.splice;
+          }
+        });
+       
+      }
+    });
   }
   sidebar() {
     this.showSide = !this.showSide;
   }
- 
-  // resetDateTime() {
-  //   this.action = '';
-  //   this.fetchCatalog();
-  // }
+
+
 
   closeNav() {
     this.showSide = false;
   }
   addItems() {
-  const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
+    const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
 
-    }
-  });
-  additemsdialogRef.afterClosed().subscribe(data => {
+      }
+    });
+    additemsdialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
 
-  });
-}
-
-addAddress() {
-  this.addressDialogRef = this.dialog.open(AddAddressComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
-    disableClose: true,
-    data: {
-      source: 'provider',
-      type: 'Add'
-
-    }
-  });
-  this.addressDialogRef.afterClosed().subscribe(result => {
-    console.log(result);
-    this.storeaddress = result;
-    this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
-    console.log(this.selectedAddress);
-  });
-}
+    });
+  }
 
 
-EditAddress(selectedAddress) {
-  console.log(selectedAddress);
 
-   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+  EditAddress(selectedAddress) {
+    console.log(selectedAddress);
+
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -782,13 +999,22 @@ EditAddress(selectedAddress) {
         update_address: this.storeaddress
       }
     });
-    this.addressDialogRef.afterClosed().subscribe(result => {
-      // this.getaddress();
-      console.log(result);
+    this.addressDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       this.storeaddress = result;
-      this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
-      console.log(this.selectedAddress);
+      this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
+      
     });
   }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+
 
 }
+

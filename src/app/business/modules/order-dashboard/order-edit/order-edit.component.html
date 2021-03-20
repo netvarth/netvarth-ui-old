@@ -1,294 +1,725 @@
-<!-- <p>order-edit works!</p>
- -->
+<section class="">
+  <div class="card title-gb rounded-0">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit Order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
+    </h5>
+  </div>
+</section>
+<section>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  <div class="d-flex flex-column-fluid mt-4" *ngIf="!loading">
+    <div class="container">
+      <div class="card card-custom rounded-0 p-0">
+        <div class="card-body p-0 rounded-0">
+          <!--begin::Wizard-->
+          <div class="wizard wizard-1">
+            <!--begin::Wizard Nav-->
+            <div class="wizard-nav border-bottom">
 
- <section class="container no-padding cons-donate no-padding-small shop-cart">
-    <div class="content  p0 loc-list p-checkin ynw-common-form-nm">
-      <div class="col-md-12 no-padding-small">
-        <div class="panel panel-default">
-          <!-- <div class="panel-heading top-row ">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-              <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
             </div>
-          </div> -->
-          <div class="panel-body no-padding">
-            <div class="bg-grey">
-              <div class="card title-gb m0">
-                <h5 class="mgn-up-10">
-                  <a class="back-btn" (click)="goBack()">
-                    <i class="fa fa-arrow-left"></i>
-                  </a>
-                  <span class=" mgn-lt-10 amount">Order</span>
-                </h5>
-              </div>
-              <!-- revamped section -->
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="action==''">
-                <div class="col-sm-7 col-md-7 col-lg-7 col-xs-12 pad-10">
-                  <div class="card col-xs-12">
-                    <div *ngIf="orderCount === 0">Your cart is empty</div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2 no-padding-small"
-                      *ngFor="let item of orders;  let i = index">
-                      <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding disp-flex">
-                        <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img"
-                          *ngIf="item.item.itemImages"
-                          [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
-                        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
-                          <div class="itm-nme"> {{item.item.displayName}}</div>
-                          <div  class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+            <!--end::Wizard Nav-->
+
+            <!--begin::Wizard Body-->
+            <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
+              <div class="col-lg-12">
+                <!--begin::Wizard Form-->
+
+
+
+                <!--begin::Wizard Step 2-->
+                <div class="pb-5" *ngIf="step == 2">
+                  <!--begin::Layout-->
+                  <div class="flex-row-fluid">
+                    <!--begin::Card-->
+                    <div class="">
+
+
+                      <!--end::Engage Widget 15-->
+                      <!--begin::Section-->
+                      <div class="mb-2">
+                        <!--begin::Products-->
+                        <div class="row">
+                          <!--begin::Product-->
+                          <div class="card-body p-0"  >
+                            <ng-container *ngFor="let item of catalogItems">
+                              <div class="col-md-4 col-xxl-4 col-lg-12 orderItems">
+                                <!--begin::Card-->
+                                <div class="card card-custom card-shadowless">
+                                  <div class="card-body p-0">
+                                    <!--begin::Image-->
+                                    <div class="overlay">
+                                      <div class="add_qty" >
+                                        <td class="text-center align-middle">
+                                          <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                            <i class="ki ki-minus icon-xs"></i>
+                                          </a>
+                                          <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
+                                          <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
+                                            <i class="ki ki-plus icon-xs"></i>
+                                          </a>
+                                        </td>
+                                      </div>
+                                      <div class="overlay-wrapper rounded bg-light text-center">
+                                        <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px" />
+                                      </div>
+                                    </div>
+                                    <!--end::Image-->
+
+                                    <!--begin::Details-->
+                                    <div class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                      <a href="#" class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{ item.item.displayName }}
+                                      </a>
+                                      <span class="font-size-lg">{{ item.item.shortDesc }}</span>
+                                    </div>
+                                    <div class="strikeMe " *ngIf="item.item.showPromotionalPrice rupee-font">₹ {{ item.item.price | currency:'':''}}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price) |
+                                      currency:'':''}}</div>
+                                    <!--end::Details-->
+                                  </div>
+                                </div>
+                                <!--end::Card-->
+                              </div>
+                            </ng-container>
+                            <!--end::Product-->
                           </div>
-                          <div>
-                             <span class="add_nte" (click)="addNotes(item,i)">
-                                 {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                             </span> &nbsp; 
-                             <span class="add_nte" (click)="deleteNotes(item,i)">
-                                <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                             </span>
-                          </div>                    
-  
+
+                          
+                          <!--end::Products-->
+                        </div>
+                        <!--end::Section-->
+                      </div>
+                    </div>
+                    <!--end::Card-->
+                  </div>
+                  <!--end::Layout-->
+                </div>
+                <!--end::Wizard Step 2-->
+
+                <!--begin::Wizard Step 3-->
+                <div class="pb-5" *ngIf="step == 3">
+                  <div class="flex-row-fluid">
+
+                    <!--begin::Section-->
+                    <div>
+                      <!--begin::Header-->
+                      <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                        <h3 class="card-title align-items-start flex-column">
+                          <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
+                          </span>
+                        </h3>
+                      </div>
+                      <!--end::Header-->
+
+                      <div class="card-body p-0 ">
+                         
+                          <div class="w-dta" >
+                              <div class="row">
+                                  <div class="copy width100">
+                        <!--begin::Shopping Cart-->
+                        
+                            <a href="javascript:;" class="addmoreitem" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'"  (click)="gotoPrev()">Add More Items</a>
+                         
+                        <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
+                          <table class="table">
+                            <!--begin::Cart Header-->
+                            <thead>
+                              <tr>
+                                <th>Product</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-right rupee-font">Price (₹)</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <!--end::Cart Header-->
+
+                            <tbody>
+                              <!--begin::Cart Content-->
+                              <tr *ngFor="let item of orders">
+                                <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
+                                  <!--begin::Symbol-->
+                                  <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                    <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                    </div>
+                                  </div>
+                                  <!--end::Symbol-->
+                                  <a class="text-dark text-hover-primary">{{ item.item.displayName }}
+                                  </a>
+                                </td>
+                                <td  data-title="Qty" class="text-center align-middle">
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                    <i class="ki ki-minus icon-xs"></i>
+                                  </a>
+                                  <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
+                                    <i class="ki ki-plus icon-xs"></i>
+                                  </a>
+                                </td>
+                                <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{ getItemPrice(item) }}
+                                </td>
+                                <td data-title="" class="text-right align-middle"  (click)="removeItemFromCart(item)">
+                                  <i class="font-weight-bolder font-size-sm red icon-delete">
+                                  </i>
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
                         </div>
                         
+                      <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'" >
+                        <table class="table">
+                          <!--begin::Cart Header-->
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th class="text-center">Qty</th>
+                              <th class="text-right rupee-font">Price (₹)</th>
+                            </tr>
+                          </thead>
+                          <!--end::Cart Header-->
+
+                          <tbody>
+                            <!--begin::Cart Content-->
+                            <tr *ngFor="let item of orderDetails.orderItem">
+                              <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
+                                <!--begin::Symbol-->
+                                <!-- <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                  <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                  </div>
+                                </div> -->
+                                <!--end::Symbol-->
+                                <a class="text-dark text-hover-primary">{{item.name}}
+                                </a>
+                              </td>
+                              <td data-title="Qty" class="text-center align-middle">
+                               
+                                <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
+                                
+                              </td>
+                              <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{item.totalPrice}}
+                              </td>
+                              
+                            </tr>
+
+                          </tbody>
+                        </table>
                       </div>
-  
-                      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
-                        <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
-                          class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
-                        </div>
-                        <div *ngIf="getItemQty(item) >= 2"
-                          (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
-                        </div>
-                        <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
-                        </div>
-                        <div [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item)"
-                          class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
-                        </div>
                       </div>
-                      <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">
-                        <a> <i class="fa fa-sticky-note-o" aria-hidden="true">
-                          Add Notes</i></a>
-                      </div> -->
+                              </div></div>
+                      <div   *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
                     </div>
-                    <button class="confm_btn" (click)="addItems()">Add More Items</button>
-                  </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
                 </div>
-  
-                <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
-                  <div [class.opacty]="showSide" class="card col-xs-12">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey">
-                      <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
-                        Delivery Type
-                      </div>
-                      <div class="order-label mgn-bt-10">
-                        <div *ngIf="home_delivery && store_pickup">
-                          <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
-                            <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                              Store pick up
-                            </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <mat-radio-button [value]="'home'" [checked]="!storeChecked">
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+       ></ks-modal-gallery>
+    </div>
+                        
+                    </div> 
+
+                    <div  *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+     ></ks-modal-gallery>
+
+
+    </div>
+                        
+                    </div> 
+                    <!-- </ng-container> -->
+                        <!-- begin: Invoice footer-->
+                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
+                          <div class="col-md-10 ln-ht-2" >
+                            <div class="text-muted">DELIVERY TYPE</div>
+                            <ng-container *ngIf="home_delivery && store_pickup">
+                              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
+                                <mat-radio-button [value]="'store'" [checked]="storeChecked">
+                                  Store pick up
+                                </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-radio-button [value]="'home'" [checked]="!storeChecked">
+                                  Home delivery
+                                </mat-radio-button>
+                              </mat-radio-group>
+                            </ng-container>
+                            <div *ngIf="store_pickup && !home_delivery">
+                              Store Pickup
+                            </div>
+                            <div *ngIf="home_delivery && !store_pickup">
                               Home delivery
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-                        <div *ngIf="store_pickup && !home_delivery">
-                          store pickup
-                        </div>
-                        <div *ngIf="home_delivery && !store_pickup">
-                          home delivery
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey">
-                      <div class="oder-sumary-txt">
-                        Date/Time
-                        <div class="fl-right"><a (click)="changeTime()">Change</a></div>
-                      </div>
-                      <div class="order-label mgn-bt-10">
-                        <span *ngIf="!isFuturedate">Today, </span>
-                        <span *ngIf="!isFuturedate">
-                          {{nextAvailableTime}}
-                        </span>
-                        <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                        </span>
-                        <span *ngIf="isFuturedate">
-                          {{nextAvailableTime}}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey" *ngIf="!storeChecked">
-                        <div class="oder-sumary-txt"  *ngIf="orderDetails.homeDeliveryAddress" >
-                             Address
-                        </div>
-                        <!-- <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div> -->
-                        <div *ngIf="orderDetails.homeDeliveryAddress"> 
-                            <span class="address" [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
-                        </div>
-                      <div class="oder-sumary-txt" *ngIf="!orderDetails.homeDeliveryAddress"  (click)="addAddress()">
-                        Add Address
-                      </div>                     
-                      <div *ngIf="storeaddress"> 
-                          <span class="address" [innerHTML]="this.storeaddress | nl2br"></span>
-                          <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(storeaddress)">Change</a></div>
-
-                      </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
-                      <div class="oder-sumary-txt">Order Summary</div>
-                      <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
-                        *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
-                      <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                        Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
-                    </div> -->
-                      <div class="order-label">
-                        <div class="flex1">Item Total</div>
-                        <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
-                      </div>
-                      <ng-container *ngIf="orders.length!==0">
-                      <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
-                        <div class="flex1">Delivery Charge</div>
-                        <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
-                      </div>
-                    </ng-container>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
-                      <div class="flex1">SUB TOTAL</div>
-                      <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
-                    </div>
-                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Update Order</button>
-                  </div>
-                </div>
-              </div>
-  
-  
-              <!-- Change date -->
-              <div class="panel-body no-padding">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                  <div class="card p0">
-                    <div class="copy locd">
-  
-  
-                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                        *ngIf="action=='timeChange'">
-                        <!-- <p>shiva Reddy</p> -->
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                            Choose
-                            Date</div>
-                          <div class="pull-left brd-round brd-light mgn-up-20">
-                            <!-- <div class="icon-minus pull-left" [class.disable]="disableMinus()" -->
-                            <div class="icon-minus pull-left" (click)="calculateDate(-1)">
                             </div>
-  
-                            <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                            <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
-                          </div>
-                          <div class="pickerouter caldiv pull-left mgn-up-20">
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                            <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
-                              [min]="minDate" [max]="maxDate" [value]="ddate"
-                              (dateChange)="handleFutureDateChange($event)">
-  
-                          </div>
-  
-                        </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
-                            Timings</div>
-                          <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                            <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">
-                              <p>{{futureAvailableTime}}</p>
-                            </div>
-                            <div *ngIf="!isfutureAvailableTime">
-                              <p>No timings are available</p>
-                            </div>
-                            <!-- <mat-chip-list>
-                              <mat-chip>
-                                09:00 AM - 10:00 PM
-  
-                              </mat-chip>
-                            </mat-chip-list> -->
-  
-                          </div>
-  
-                        </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                          <button (click)="goBackCart(futureAvailableTime)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
-                            type="button">Ok</button>
-                            <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
-                            type="button">Cancel</button> -->
-                        </div>
-                      </div>
-                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
-                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Apply promocode</div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" *ngIf="showCouponWB">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                              <i class="icon-bell"></i>{{applied_inbilltime}}
-                            </div>
-                            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
-                              <div class="input-group">
-                                <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
-                                  placeholder="Enter coupon code" type="text" class="form-control"
-                                  [(ngModel)]="selected_coupon">
-                                <span class="input-group-btn">
-                                  <button class="btn bt3 btn-default coupon-apply-btn"
-                                    (click)="applyCoupons(selected_coupon)" type="button">Add</button>
-                                </span>
+                            <div class="text-muted">DATE/TIME
+                              <div class="fl-right">
+                                <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#datePickerModal">
+                                  Change </button>
                               </div>
+                              <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
-  
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;"
-                              *ngIf="api_cp_error !== null">
-                              {{api_cp_error}}</div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-  
+                            <div *ngIf="isfutureAvailableTime">
+                              <span *ngIf="!isFuturedate">Today ,</span>
+                              <span *ngIf="!isFuturedate">
+                                {{nextAvailableTime}}
+                              </span>
+                              <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
+                              </span>
+                              <span *ngIf="isFuturedate">
+                                {{nextAvailableTime}}
+                              </span>
                             </div>
-                          </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                            *ngIf="couponsList && couponsList.length>0">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                              *ngFor="let coupon of couponsList let i=index">
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                  {{coupon.couponCode}} </div>
-                                <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                  <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                      class="pointer-cursor lnk read-more-checkin">Read
-                                      T & C </a></span>
-                                  <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                        (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'Remove Coupon'"></i></a></span>
+                            <div *ngIf="!isfutureAvailableTime" class="red">
+                                <span>No timings are available</span>
+                              </div>
+
+                            <!-- Home Address -->
+                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                              <div>
+                                <div  class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card " *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
+                                    <div class="card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
+                                        <div class="card-body text-left pl-5 p-0 font-addrss">
+                                          <div class="adrs-data mgn-up-minus-20">
+                                            <div *ngIf="orderDetails.homeDeliveryAddress">
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
+                                              </span><br>
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.address}}&nbsp;, {{orderDetails.homeDeliveryAddress.landMark }}
+                                              </span><br>
+                                            
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.city }} , {{orderDetails.homeDeliveryAddress.postalCode}}
+                                              </span><br>
+                                      
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.email}}
+                                              </span><br>
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
+                                              </span><br>
+                                            </div>
+                                            <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                              Edit</a>
+                                          </div>
+                                          
+                                        </div>
+                                      </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress || orderDetails.homeDeliveryAddress==null">
+                                  <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
+                                    <div class="card-body text-center p-0">
+                                      <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                        Add New </button>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                *ngIf="coupon.showme">
-                                {{coupon.instructions}}
+                            </ng-container>
+                            <!-- Add Address Modal  -->
+                            <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
+                              aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <form class="form" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+
+                                      <div class="">
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
+                                              <span class="input-group-text countrycode" style="margin-top:auto;">+91</span>
+
+                                              <input type="text" class="form-control" placeholder="Phone number*" formControlName="phoneNumber">
+
+                                            </div>
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
+                                                                                                                        {
+                                                                                                                          'required' : 'Mobile number is required',
+                                                                                                                          'minlength' : 'Enter a 10 digit mobile number',
+                                                                                                                          'maxlength' : 'Enter a 10 digit mobile number',
+                                                                                                                          'pattern' : 'Only numbers are allowed'
+                                                                                                                        })">
+                                            </app-field-error-display>
+
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="First name*" formControlName="firstName">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
+                                                                                        {
+                                                                                          'required' : 'First name is required',
+                                                                                          'pattern' : 'Only alphabets are allowed'
+                                                                                        })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <div class="input-group">
+                                              <input type="text" class="form-control" placeholder="Last name*" formControlName="lastName">
+                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
+                                                                                            {
+                                                                                              'required' : 'Last name is required',
+                                                                                              'pattern' : 'Only alphabets are allowed'
+                                                                                            })">
+                                              </app-field-error-display>
+                                            </div>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <div class="input-group">
+                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
+                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
+                                                                                            {
+                                                                                              'required' : 'Email is required',
+                                                                                              'pattern' : 'Please enter valid email'
+                                                                                            })">
+                                              </app-field-error-display>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Address*" formControlName="address">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+                                                                                    {
+                                                                                      'required' : 'Please enter city name',
+                                                                                      'pattern' : 'Only alphabets are allowed'
+                                                                                    })">
+                                            </app-field-error-display>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="City*" formControlName="city">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+                                                                                      {
+                                                                                        'required' : 'Please enter city name',
+                                                                                        'pattern' : 'Only alphabets are allowed'
+                                                                                      })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP*" formControlName="postalCode">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
+                                                                                          {
+                                                                                            'required' : 'Please enter Postal Code ',
+                                                                                            'minlength' : 'Enter a 6 digit Postal Code',
+                                                                                            'maxlength' : 'Enter a 6 digit Postal Code',
+                                                                                            'pattern' : 'Only numbers are allowed'
+                                                                                          })">
+                                            </app-field-error-display>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Landmark*" formControlName="landMark">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
+                                                                                            {
+                                                                                              'required' : 'Please enter landmark'
+                                                                                            })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                      <button type="submit" [disabled]="!amForm.valid" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                    </div>
+                                  </div>
+                                </form>
                               </div>
                             </div>
+
+                            <!--Change Date picker  -->
+                            <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog" aria-labelledby="datePickerModal" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                                  Choose Date
+                                                </div> -->
+                                            <div class="col-md-8 col-xs-12 col-sm-10 ">
+                                              <div class="lnk ">Choose Date</div>
+                                              <div class="pull-left brd-round brd-light mgn-up-10">
+                                                <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
+                                                <span
+                                                  class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
+                                                <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
+                                                <!-- </div>-->
+                                                <span class="datepicker">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                  <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                                  <input class="" style="visibility: hidden; width:1px" type="text"
+                                                    [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                                    (dateChange)="handleFutureDateChange($event)">
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                          Choose Date
+                                        </div>
+                                        <div class="pull-left brd-round brd-light mgn-up-20">
+                                          <div class="icon-minus pull-left" (click)="calculateDate(-1)">
+                                          </div>
+
+                                          <div class="pull-left chkindt">{{ sel_checkindate | date: dateFormat }}</div>
+                                          <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
+                                        </div>
+                                        <div class="pickerouter caldiv pull-left mgn-up-20">
+                                          <mat-datepicker-toggle matSuffix [for]="picker">
+                                          </mat-datepicker-toggle>
+                                          <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                          <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                            [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                                        </div>
+                                      </div> -->
+                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
+
+                                            <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
+                                              <div class="lnk ">{{timings_title}} </div>
+                                              <mat-chip-list class="">
+                                                <mat-chip *ngFor="let queu of nextAvailableTimeQueue, let i= index"
+                                                (click)="handleQueueSelection(queu, i)">
+                                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                                    {{queu['sTime'] + ' - ' +
+                                                    queu['eTime']}}
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                            </div>
+                                            <div  *ngIf="!isfutureAvailableTime">
+                                                <div class="lnk ">{{timings_title}} </div>
+                                                <p>No timings are available</p>
+                                              </div>
+                                          <!-- </div> -->
+                                        </div>
+                                                                      
+
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button #closeDatepickerModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                    <button type="button" [disabled]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+
+
+
+                          </div>
+
+                        </div>
+                        <!-- end: Invoice footer-->
+                        <!-- Total summary -->
+                           <!-- Coupon start -->
+                        <!-- <div>
+
+                              <div class="form-group row mt-5">
+
+                              <div class="col-md-3 d-flex align-items-center">
+                                  <a href="javascript:;" style="color:blueviolet" (click)="toggleCoupon();">Apply promo code</a>
+
+                              </div>
+                              <div class="col-md-7" *ngIf="showCoupon" >
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
+                                  <i class="icon-bell"></i>{{applied_inbilltime}}
+                                </div>
+                                <div class="input-group w-100">
+                                  <input type="text" class="form-control" [(ngModel)]="selected_coupon" placeholder="Voucher Code">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-secondary line-height-sm" (click)="applyCoupons(selected_coupon)" type="button">Apply</button>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;" *ngIf="api_cp_error !== null">
+                                {{api_cp_error}}</div>
+                              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
+
+                              </div>
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
+                              *ngIf="couponsList && couponsList.length>0">
+                              <label style="color:blue">Coupon Applied</label>
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                *ngFor="let coupon of couponsList let i=index">
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
+                                  <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
+                                    {{coupon.couponCode}} </div>
+                                  <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
+                                    <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
+                                        class="pointer-cursor lnk read-more-checkin">Read
+                                        T & C </a></span>
+                                    <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
+                                          (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
+                                          [matTooltip]="'Remove Coupon'"></i></a></span>
+                                  </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
+                                  *ngIf="coupon.showme">
+                                  {{coupon.instructions}}
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+
+
+                        </div> -->
+                         <!-- Coupon end -->
+ <!-- Total summary -->
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
+                          <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                          <div class="d-flex justify-content-between mb-3">
+                            <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
+                            <span class="text-right price rupee-font">{{getTotalItemPrice() | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
+                            <span class="mr-15 font-weight-bold">Tax</span>
+                            <span class="text-right price rupee-font"> {{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                            <span class="text-right price rupee-font">{{ getDeliveryCharge() | currency:'&#8377;'}}</span>
+                          </div>
+
+                          <div class="d-flex justify-content-between">
+                            <span class="mr-15 font-weight-bold">Total Price</span>
+                            <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
-  
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer" *ngIf="coupon_status">
-                          <div class="form-group">
-                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
-                              applied
-                              successfully</span>
-                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
-                              valid</span>
+
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                          <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                          <div class="d-flex justify-content-between mb-3">
+                            <span class="mr-15 font-weight-bold">Price </span>
+                            <span class="text-right price rupee-font"> {{orderDetails.cartAmount | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.netTaxAmount">
+                            <span class="mr-15 font-weight-bold">Tax</span>
+                            <span class="text-right price rupee-font"> {{orderDetails.bill.netTaxAmount | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3"  *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                            <span class="text-right price rupee-font">{{orderDetails.deliveryCharge | currency:'&#8377;'}}</span>
+                          </div>
+
+                          <div class="d-flex justify-content-between" *ngIf="orderDetails.bill">
+                            <span class="mr-15 font-weight-bold">Total Price</span>
+                            <span class="text-right price rupee-font"> {{getSuborderTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
+
+
+
+
+                        <!--end::Shopping Cart-->
                       </div>
                     </div>
+                    <!--end::Section-->
                   </div>
                 </div>
+                <!--end::Wizard Step 3-->
+
+                <!--begin::Wizard Actions-->
+                <div class="d-flex justify-content-between border-top mt-2 py-5">
+                  <!-- <div class="mr-2" *ngIf="step == 2 || step == 3">
+                    <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoPrev()">
+                      Previous
+                    </button>
+                  </div> -->
+                  <div>
+
+                    <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                      (click)="confirm()">
+                      Update Order
+                    </button>
+                    <button [disabled]='disabledNextbtn' *ngIf="step == 1 || step == 2" type="button" class="pull-right btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                      (click)="gotoNext()">
+                      Next
+                    </button>
+                  </div>
+                </div>
+                <!--end::Wizard Actions-->
+                <!-- </form> -->
+                <!--end::Wizard Form-->
               </div>
-  
-  
             </div>
+            <!--end::Wizard Body-->
           </div>
+          <!--end::Wizard-->
         </div>
+        <!--end::Wizard-->
       </div>
-      <div class="clearfix"></div>
     </div>
-  </section>
-  
+  </div>
+
+</section>
+

@@ -49,8 +49,15 @@ import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/co
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
-import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.component';
+import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistupload/shoppinglistupload.component';
+import { InboxListModule } from './modules/inbox-list/inbox-list.module';
+import { ServiceListDialogComponent } from './shared/service-list-dialog/service-list-dialog.component';
+import { DepartmentListDialogComponent } from './shared/department-list-dialog/department-list-dialog.component';
+import { UsersListDialogComponent } from './shared/users-list-dialog/users-list-dialog.component';
+import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/consumer-group-dialog.component';
+import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
+import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 
 @NgModule({
     declarations: [
@@ -77,8 +84,14 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        InboxListComponent,
-        HelpPopUpComponent
+        HelpPopUpComponent,
+        ShoppinglistuploadComponent,
+        ServiceListDialogComponent,
+        DepartmentListDialogComponent,
+        UsersListDialogComponent,
+        ConsumerGroupDialogComponent,
+        ItemListDialogComponent,
+        ConsumerLabelDialogComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -96,7 +109,8 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
-        JoyrideModule.forChild()
+        JoyrideModule.forChild(),
+        InboxListModule
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,
@@ -110,7 +124,8 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        HelpPopUpComponent
+        HelpPopUpComponent,
+        ShoppinglistuploadComponent
     ],
     providers: [
         AuthGuardProviderHome,

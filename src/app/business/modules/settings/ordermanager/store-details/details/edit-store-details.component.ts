@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Messages } from '../../../../../../../../src/app/shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../src/app/ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 @Component({
     selector: 'app-edit-store-details',
     templateUrl: './edit-store-details.component.html'
 })
-export class EditStoreDetailsComponent implements OnInit {
+export class EditStoreDetailsComponent implements OnInit , OnDestroy{
     api_loading = true;
     data: any;
     firstName;
@@ -25,6 +26,7 @@ export class EditStoreDetailsComponent implements OnInit {
     alternatePhone: any;
     alternateEmail;
     whatsappNo: any;
+    private subscriptions = new SubSink();
     constructor(
         public activateroute: ActivatedRoute,
         private route: ActivatedRoute,
@@ -33,7 +35,7 @@ export class EditStoreDetailsComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private provider_services: ProviderServices,
     ) {
-        this.route.queryParams.subscribe(params => {
+        this.subscriptions.sink = this.route.queryParams.subscribe(params => {
             if (this.router.getCurrentNavigation().extras.state) {
                 this.data = this.router.getCurrentNavigation().extras.state.contact_info;
                 this.api_loading = false;
@@ -55,7 +57,9 @@ export class EditStoreDetailsComponent implements OnInit {
             this.whatsappNo = this.data.whatsappNo;
         }
     }
-
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+      }
     onSubmit() {
         console.log('submit');
         const data = {
@@ -86,7 +90,7 @@ export class EditStoreDetailsComponent implements OnInit {
         console.log(data);
         this.resetApiErrors();
         this.api_loading = true;
-        this.provider_services.editContactInfo(data)
+        this.subscriptions.sink = this.provider_services.editContactInfo(data)
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CONTACT_INFO_UPDATED'));

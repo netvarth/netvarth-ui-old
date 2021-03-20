@@ -9,11 +9,18 @@ import { MaterialModule } from '../../../../../shared/modules/common/material.mo
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { CreateCouponComponent } from './create-coupon/create-coupon.component';
+import { PublishCouponComponent } from './publish-coupon/publish-coupon.component';
+import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { PublishDialogComponent } from './publish-coupon/publish-dialog/publish-dialog.component';
 
 @NgModule({
     declarations: [
         PosCouponsComponent,
-        PosCouponDetailComponent
+        PosCouponDetailComponent,
+        CreateCouponComponent,
+        PublishCouponComponent,
+        PublishDialogComponent
     ],
     imports: [
         CouponsRoutingModule,
@@ -24,8 +31,12 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
         GalleryModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CapitalizeFirstPipeModule
     ],
+    entryComponents: [
+        PublishDialogComponent,
+        ],
     exports: [PosCouponsComponent]
 })
 export class CouponsModule {}

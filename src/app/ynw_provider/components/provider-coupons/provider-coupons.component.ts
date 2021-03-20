@@ -10,6 +10,8 @@ import { projectConstants } from '../../../app.component';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -21,7 +23,9 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.CUPN_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;
+  couponCode_cap=Messages.COUPON_CODE_CAP;
   edit_btn = Messages.EDIT_BTN;
+  publish_btn=Messages.PUBLISH_BTN;
   delete_btn = Messages.DELETE_BTN;
   reports_cap = Messages.REIMBUSE_REPORT_CAP;
   valid_from_cap = Messages.VALID_FROM_CAP;
@@ -35,6 +39,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   disable_cap = Messages.DISABLE_CAP;
   jcoupon_states = projectConstants.JCOUPON_STATES;
   upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   coupon_list: any = [];
   jaldeeCoupons: any = [];
   query_executed = false;
@@ -74,7 +80,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     private sharedfunctionObj: SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
@@ -185,6 +192,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       }
     });
   }
+  publish(coupon){
+
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon', coupon.id,'publish']);
+  }
   deleteCoupons(id) {
     this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
@@ -219,7 +230,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();

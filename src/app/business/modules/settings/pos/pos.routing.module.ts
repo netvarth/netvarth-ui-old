@@ -6,6 +6,7 @@ import { ProviderCouponsComponent } from '../../../../ynw_provider/components/pr
 import { ProviderReimburseReportComponent } from '../../../../ynw_provider/components/provider-reimburse-report/provider-reimburse-report.component';
 import { ViewReportComponent } from '../../../../ynw_provider/components/view-report/view-report.component';
 import { ProviderJcouponDetailsComponent } from '../../../../ynw_provider/components/provider-jcoupon-details/provider-jcoupon-details.component';
+// import { PublishCouponComponent } from './coupons/publish-coupon/publish-coupon.component';
 // import { ProviderItemsComponent } from '../../../ynw_provider/components/provider-items/provider-items.component';
 // import { ProviderItemsDetailsComponent } from '../../../ynw_provider/components/provider-items-details/provider-items-details.component';
 // import { ProvidertaxSettingsComponent } from '../../../ynw_provider/components/provider-tax-settings/provider-tax-settings.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
                 path: 'report/:id',
                 component: ViewReportComponent
             }
+           
         ]
     },
     {

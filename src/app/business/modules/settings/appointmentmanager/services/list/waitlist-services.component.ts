@@ -10,6 +10,7 @@ import { ShowMessageComponent } from '../../../../show-messages/show-messages.co
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -66,7 +67,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public router: Router,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService
+        private groupService: GroupStorageService,
+        private dateTimeProcessor: DateTimeProcessor
         ) { }
 
     ngOnInit() {
@@ -216,7 +218,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             );
     }
     getAppxTime(waitlist) {
-        return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
+        return this.dateTimeProcessor.providerConvertMinutesToHourMinute(waitlist);
     }
 
     getServiceCount() {

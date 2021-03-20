@@ -64,6 +64,7 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      console.log(this.qrCodePath);
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },
