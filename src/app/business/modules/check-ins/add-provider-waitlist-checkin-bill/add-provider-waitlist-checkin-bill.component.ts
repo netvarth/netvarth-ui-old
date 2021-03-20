@@ -237,6 +237,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discount_type: any = '';
   selectedservice: any;
   selectedItem: any;
+  refund_show;
+  btn_hide = false;
 
 
   constructor(
@@ -655,6 +657,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.pre_payment_log = data;
+             this.refund_show = this.pre_payment_log.filter(obj => (obj.refundableAmount > 0) && (obj.status === 'SUCCESS') && (!obj.fullyRefunded) && (obj.paymentPurpose == 'prePayment'));
             resolve();
           },
           error => {
@@ -786,7 +789,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param indx Index
    */
   itemDiscCoupSec(indx ,item?) {
-    console.log(item);
     this.selectedItem = item
     this.bill_data.items[indx].itemDiscount = '';
     if (this.bill_data.items[indx]) {
@@ -1837,4 +1839,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
     );
 }
+  refundBtnShow(value) {
+    if (value === 'refund') {
+      this.btn_hide = true;
+    } else {
+      this.btn_hide = false;
+    }
+  }
 }
