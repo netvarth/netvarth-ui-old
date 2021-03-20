@@ -207,6 +207,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     addCatalogItems: any = [];
     editcataItemdialogRef: any;
     removeitemdialogRef: any;
+    addItems:any=[];
     private subscriptions = new SubSink();
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
@@ -288,7 +289,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.step = 3;
         } 
         
-        if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+        if (this.step === 2) {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
@@ -1053,14 +1054,16 @@ console.log('hi submit');
 
         };
         if (this.action === 'add') {
-            // postdata['catalogItem'] = this.seletedCatalogItems;
+           if(form_data.orderType==='SHOPPINGCART'){
             postdata['catalogItem'] = this.catalogItemsSelected;
+           }
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
-            // postdata['catalogItem'] = this.catalogItems;
-            //postdata['catalogItem'] = this.seletedCatalogItems;
-           // const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+          console.log(form_data.orderType);
+          console.log(this.catalogItemsSelected);
+           if(form_data.orderType==='SHOPPINGCART'){
             postdata['catalogItem'] = this.catalogSelectedItemsadd;
+           }
             console.log(postdata);
             this.editCatalog(postdata);
         }
@@ -1568,11 +1571,13 @@ console.log('hi submit');
         }
         console.log(this.catalogItemsSelected);
         this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
-        //     const navigationExtras: NavigationExtras = {
-        //       queryParams: { action: 'add',
-        //                       isFrom: true }
-        // };
-        //     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
+        if(this.catalogItemsSelected.length==0){
+            this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
+            return;
+        }else{
+            this.step=this.step +1; 
+        }
+       
     }
     selectedaddItems() {
         this.catalogSelectedItemsadd = [];
@@ -1594,9 +1599,9 @@ console.log('hi submit');
                 this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
             }
         }
-        const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
-        console.log(additems);
-        if(additems.length == 0){
+      this.addItems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+        console.log(this.addItems);
+        if(this.addItems.length == 0){
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
         }else{
@@ -1691,7 +1696,6 @@ console.log('hi submit');
                     this.disableButton = false;
                     this.showPromotionalPrice = false;
                     this.showCustomlabel = false;
-                    // this.amForm.reset();
                     this.haveMainImg = false;
                     this.mainImage = false;
                     this.closeGroupDialog();

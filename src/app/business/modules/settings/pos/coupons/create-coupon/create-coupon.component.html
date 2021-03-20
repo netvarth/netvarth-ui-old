@@ -177,8 +177,8 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>Start Date <span>(Valid From)</span></label>
-                            <input #startDate class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate($event.value,0)"
-                              placeholder="Valid From" formControlName="startDate" />
+                            <input #start class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate(0)"
+                              placeholder="Valid From" id="start" formControlName="startDate" />
                           </div>
                           <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
                           errorMsg="Please choose Start Date">
@@ -195,7 +195,7 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>End Date <span>(Valid To)</span></label>
-                            <input class="form-control1 picker" [min]="mxDate" type="date" (change)="compareDate($event.value,1)"
+                            <input class="form-control1 picker" [min]="mxDate" type="date" (change)="compareDate(1)"
                               placeholder="Valid To" formControlName="endDate" />
                           </div>
                           <app-field-error-display [displayError]=endDaterequired

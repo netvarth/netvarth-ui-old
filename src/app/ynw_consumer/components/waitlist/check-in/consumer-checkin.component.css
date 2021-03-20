@@ -1463,6 +1463,12 @@ body.modal-open {
     min-height: 650px;
     border-left: 1px solid #EBEDF3 !important;
   }
+  .containerAppt {
+    width: 80%;
+  }
+  .check-new-group {
+    margin-left: 10px;
+  }
 }
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
   margin-left: 1.5rem !important;

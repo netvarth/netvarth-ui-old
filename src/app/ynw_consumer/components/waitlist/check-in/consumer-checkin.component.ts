@@ -56,12 +56,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     sel_ser_det: any = [];
     prepaymentAmount = 0;
     sel_queue_id;
+    queueId;
     sel_queue_waitingmins;
+    waitingTime;
     sel_queue_servicetime = '';
+    serviceTime;
     sel_queue_name;
     sel_queue_timecaption;
     sel_queue_indx;
     sel_queue_personaahead = 0;
+    personsAhead;
     calc_mode;
     multipleMembers_allowed = false;
     partySize = false;
@@ -74,6 +78,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     holdenterd_partySize = 0;
     sel_checkindate;
     hold_sel_checkindate;
+    selectedDate;
     account_id;
     retval;
     futuredate_allowed = false;
@@ -184,6 +189,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     questionAnswers;
     googleMapUrl;
     private subs = new SubSink();
+    selectedQTime;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -208,7 +214,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     ) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
-                console.log(params);
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -218,7 +223,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.change_date = params.cur;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = params.sel_date;
+                this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
                 if (params.dept) {
@@ -302,7 +307,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 const serverdate = moment(server).format();
                 const servdate = new Date(serverdate);
                 const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
             }
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -344,7 +349,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 this.sel_loc = this.waitlist.queue.location.id;
                 this.selectedService = this.waitlist.service.id;
-                this.sel_checkindate = this.hold_sel_checkindate = this.waitlist.date;
+                this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.waitlist.date;
                 this.sel_ser = this.waitlist.service.id;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
@@ -353,8 +358,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     rescheduleWaitlist() {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
-            'date': this.sel_checkindate,
-            'queue': this.sel_queue_id
+            'date': this.selectedDate,
+            'queue': this.queueId
         };
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
@@ -494,7 +499,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
-        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         this.serviceCost = this.sel_ser_det.price;
     }
@@ -514,7 +518,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
-    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
@@ -547,6 +551,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.sel_queue_name = '';
                         this.sel_queue_timecaption = '';
                         this.sel_queue_personaahead = 0;
+                    }
+                    if (type) {
+                        this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+                        this.personsAhead = this.sel_queue_personaahead;
+                        this.waitingTime = this.sel_queue_waitingmins;
+                        this.serviceTime = this.sel_queue_servicetime;
+                        this.queueId = this.sel_queue_id;
                     }
                 });
         }
@@ -591,10 +602,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    checkFutureorToday() {
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -602,7 +616,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.isFuturedate = false;
         }
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     handleCheckinClicked() {
         let error = '';
@@ -654,9 +667,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const post_Data = {
             'queue': {
-                'id': this.sel_queue_id
+                'id': this.queueId
             },
-            'date': this.sel_checkindate,
+            'date': this.selectedDate,
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
@@ -744,15 +757,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 });
     }
     submitQuestionnaire(uuid) {
-
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
@@ -936,17 +946,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.sel_checkindate = ndate;
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
@@ -1046,7 +1045,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
-                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id, 'init');
                     this.getConsumerQuestionnaire();
                 }
                 this.api_loading1 = false;
@@ -1074,7 +1073,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
@@ -1088,7 +1087,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
-        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1099,11 +1097,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
         for (const uuid of uuids) {
-            console.log(uuid);
             this.subs.sink = this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
                 .subscribe(
                     () => {
-                        console.log(true);
                     },
                     error => {
                         this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1449,7 +1445,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     break;
                 }
             }
-            console.log(JSON.stringify(this.selected_coupons));
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -1495,7 +1490,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     goBack(type?) {
         if (type) {
-            this.location.back();
+            if (this.bookStep === 1) {
+                this.location.back();
+            } else {
+                this.bookStep = 1;
+            }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
@@ -1518,6 +1517,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     applyPromocode() {
         this.action = 'coupons';
+        this.selected_coupon = '';
+        this.clearCouponErrors();
     }
     handleDepartment(dept) {
         this.servicesjson = this.serviceslist;
@@ -1536,8 +1537,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.action = 'service';
     }
     getUserName(id) {
-        console.log(id);
-        console.log(this.users);
         let selectedUser = '';
         for (let i = 0; i < this.users.length; i++) {
             if (this.users[i].id === id) {
@@ -1545,7 +1544,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 break;
             }
         }
-        console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {
@@ -1720,7 +1718,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
-        console.log(this.questionAnswers);
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
@@ -1811,6 +1808,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
+        if (this.action === 'timeChange') {
+            this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+            this.selectedDate = this.sel_checkindate;
+            this.checkFutureorToday();
+            this.personsAhead = this.sel_queue_personaahead;
+            this.waitingTime = this.sel_queue_waitingmins;
+            this.serviceTime = this.sel_queue_servicetime;
+            this.queueId = this.sel_queue_id;
+        }
         if (this.action === 'members') {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
@@ -1821,14 +1827,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.applyCoupons();
         }
     }
+    popupClosed() {
+        this.sel_checkindate = this.selectedDate;
+        this.checkFutureorToday();
+        this.sel_queue_personaahead = this.personsAhead;
+        this.sel_queue_waitingmins = this.waitingTime;
+        this.sel_queue_servicetime = this.serviceTime;
+        this.sel_queue_id = this.queueId;
+        const que = this.queuejson.filter(q => q.id === this.queueId);
+        this.sel_queue_indx = this.queuejson.indexOf(que[0]);
+    }
     getQuestionAnswers(event) {
-        console.log(event);
         this.questionAnswers = event;
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-            console.log(data);
             this.questionnaireList = data;
         });
     }

@@ -15,11 +15,12 @@ export class ServiceListDialogComponent implements OnInit,OnDestroy {
   selectedServices: any = [];
 loading=true;
 subscription:Subscription;
+  mode: any;
   constructor(public dialogRef: MatDialogRef<ServiceListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private provider_services: ProviderServices) {
-
+      this.mode=this.data.mode;
   }
 
   ngOnInit(): void {

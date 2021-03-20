@@ -45,7 +45,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   change_status = Messages.CHANGE_STATUS_CAP;
   add_note_cap = Messages.ADD_NOTE_CAP;
   available_cap = Messages.PRO_AVAILABLE_CAP;
-  no_service_cap = Messages.NO_QUEUE_MSG;
+  no_service_cap = Messages.NO_SCHEDULE_MSG;
   adjust_delay = Messages.ADJUST_DELAY_CAP;
   first_name = Messages.FIRST_NAME_CAP;
   last_name = Messages.LAST_NAME_CAP;

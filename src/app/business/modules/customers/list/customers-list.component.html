@@ -213,9 +213,9 @@
                         {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
                         : customer_label + 's'}} selected </div>
                     </th>
-                    <th class="hide_th" style="min-width: 100px">Id</th>
+                    <th class="hide_th" style="min-width: 50px">Id</th>
                     <th class="hide_th" style="min-width: 100px">Phone</th>
-                    <th class="hide_th" style="min-width: 10px">DOB</th>
+                    <!-- <th class="hide_th" style="min-width: 10px">DOB</th> -->
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 10px"></th>
@@ -252,11 +252,11 @@
                         {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
-                    <td class="hide_th">
+                    <!-- <td class="hide_th">
                       <span class="text-dark-75 d-block" *ngIf="customer.dob">
                         {{customer.dob | date : dateFormat}}
                       </span>
-                    </td>
+                    </td> -->
                     <td *ngIf="!showCustomers">
                       <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button
                         (click)="CustomersInboxMessage(customer)">Message</button>

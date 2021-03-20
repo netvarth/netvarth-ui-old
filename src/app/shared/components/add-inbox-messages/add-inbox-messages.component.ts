@@ -169,8 +169,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       provider_label = (this.terminologies && this.terminologies['provider']) ? this.terminologies['provider'] : 'provider';
     }
     if (!consumer_label || (consumer_label && consumer_label.trim() === '')) {
-      console.log(this.terminologies);
       consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+      if ((this.source === 'provider-waitlist' || this.source === 'provider-waitlist-inbox' || this.source === 'customer-list' || this.source === 'donation-list') && this.data.typeOfMsg && this.data.typeOfMsg === 'multiple' && this.data.uuid && this.data.uuid.length > 1) {
+        consumer_label = consumer_label + 's';
+      }
     }
     switch (this.source) {
       case 'provider-waitlist': this.message_label = 'Message to ' + consumer_label; break;

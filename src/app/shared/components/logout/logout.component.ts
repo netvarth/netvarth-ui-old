@@ -9,7 +9,5 @@ import { SharedFunctions } from '../../functions/shared-functions';
 export class LogoutComponent {
   constructor(private shared_functions: SharedFunctions) {
     this.shared_functions.logout();
-    // this.router.navigate(['/home']);
   }
 }
-

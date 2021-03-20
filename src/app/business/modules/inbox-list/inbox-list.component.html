@@ -36,8 +36,9 @@
                         <div class="d-flex flex-row minhgt-60" *ngIf="!showEnquiry && messages.length==0">
                             <div class="no-msg-section">
                                 <div class="nomsg-img mgn-bt-20"></div>
-                                Start messaging to {{customer_label}}s 
-                                <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10" (click)="gotoCustomers()"> Go to patients </button>
+                                Start messaging to {{customer_label}}s
+                                <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10"
+                                    (click)="gotoCustomers()"> Go to patients </button>
                             </div>
                         </div>
                         <!--begin::Chat-->
@@ -135,14 +136,15 @@
                             <!--end::Aside-->
                             <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
                                 *ngIf="selectedCustomer == '' && !small_device_display">
-                                <ng-container *ngIf="msgDisplay=='user' && selectedUser.userType !== 'PROVIDER'; else elseBlock">
-                                <div class="inbox-nullimg-user" [ngStyle]="{'height.vh': 40}"></div>
-                                <div class="null-text">Select a chat to start messaging</div>
-                            </ng-container>
-                            <ng-template #elseBlock>
-                                <div class="inbox-nullimg" [ngStyle]="{'height.vh': 40}"></div>
-                                <div class="null-text">Select a chat to start messaging</div>
-                            </ng-template>
+                                <ng-container
+                                    *ngIf="msgDisplay=='user' && selectedUser.userType !== 'PROVIDER'; else elseBlock">
+                                    <div class="inbox-nullimg-user" [ngStyle]="{'height.vh': 40}"></div>
+                                    <div class="null-text">Select a chat to start messaging</div>
+                                </ng-container>
+                                <ng-template #elseBlock>
+                                    <div class="inbox-nullimg" [ngStyle]="{'height.vh': 40}"></div>
+                                    <div class="null-text">Select a chat to start messaging</div>
+                                </ng-template>
                             </div>
                             <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"

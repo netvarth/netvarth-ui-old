@@ -16,13 +16,14 @@ export class ConsumerGroupDialogComponent implements OnInit,OnDestroy {
   consumer_group: any = [];
   selectedGroups: any = [];
   subscription:Subscription;
+  mode: any;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerGroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private provider_services: ProviderServices) {
-
+      this.mode=this.data.mode;
   }
 
   ngOnInit(): void {

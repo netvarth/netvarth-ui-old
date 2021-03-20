@@ -209,8 +209,8 @@
                               <!--begin::Image-->
                               <div class="overlay">
 
-                                <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
-                                  [ngStyle]="{ 'background-image': 'url(' + getItemImg(item.item) + ')'}">
+                                <div class="overlay-wrapper rounded bg-light text-center bg_item_img" 
+                                  ><img  [src]="getItemImg(item.item)" style="width: 50%;height: 100%;" alt="Profile Pic">
                                 </div>
                               </div>
                           
@@ -646,63 +646,7 @@
                       </div>
 
                     </div>
-                    <!-- end: Invoice footer-->
-                    <!-- Coupon  start-->
 
-                    <!-- <div>
-
-                              <div class="form-group row mt-5">
-
-                              <div class="col-md-3 d-flex align-items-center">
-                                  <a class="btn btn-primary"  (click)="toggleCoupon();">Apply promo code</a>
-
-                              </div>
-                              <div class="col-md-7" *ngIf="showCoupon" >
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                                  <i class="icon-bell"></i>{{applied_inbilltime}}
-                                </div>
-                                <div class="input-group w-100">
-                                  <input type="text" class="form-control" [(ngModel)]="selected_coupon" placeholder="Voucher Code">
-                                  <div class="input-group-append">
-                                    <button class="btn btn-secondary line-height-sm" (click)="applyCoupons(selected_coupon)" type="button">Apply</button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;" *ngIf="api_cp_error !== null">
-                                {{api_cp_error}}</div>
-                              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-
-                              </div>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                              *ngIf="couponsList && couponsList.length>0">
-                              <label style="color:blue">Coupon Applied</label>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                *ngFor="let coupon of couponsList let i=index">
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                  <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                    {{coupon.couponCode}} </div>
-                                  <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                    <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                        class="pointer-cursor lnk read-more-checkin">Read
-                                        T & C </a></span>
-                                    <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                          (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                          [matTooltip]="'Remove Coupon'"></i></a></span>
-                                  </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                  *ngIf="coupon.showme">
-                                  {{coupon.instructions}}
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-
-
-                        </div> -->
-
-                    <!-- Coupon  end-->
                     <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderType !== 'SHOPPINGLIST'">
                       <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 

@@ -16,10 +16,11 @@
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding">
+                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding">
                                         <div class="wizard-nav" *ngIf="type != 'reschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
-                                                <div class="wizard-step tab-selected wizard-mgn-30" data-wizard-type="step">
+                                                <div class="wizard-step tab-selected wizard-mgn-30"
+                                                    data-wizard-type="step">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">1</div>
                                                         <h3 class="wizard-title mgn-lt-15">Booking Window</h3>
@@ -96,7 +97,7 @@
                                         </div>
                                         <div class="booking-img"></div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
                                         <div class="panel-body no-padding">
@@ -145,8 +146,7 @@
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class=""
-                                                                    style="font-size: 1rem; float: left;"
+                                                                <div class="" style="font-size: 1rem;"
                                                                     *ngIf="sel_ser_det.price && type != 'reschedule'">
                                                                     <p class="module-nomargin line-clamp no-margin"
                                                                         *ngIf="sel_ser_det.description && !showmoreSpec"
@@ -197,14 +197,14 @@
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
-                                                            <h6 class="card-title serv-time" *ngIf="apptTime">
+                                                            <h6 class="card-title serv-time" *ngIf="selectedApptTime">
                                                                 <span *ngIf="!isFuturedate">Today,
                                                                 </span><span
-                                                                    *ngIf="!isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
+                                                                    *ngIf="!isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                                 <span *ngIf="isFuturedate" style="display: block;">
-                                                                    {{sel_checkindate | date:
+                                                                    {{selectedDate | date:
                                                                     newDateFormat}}</span><span
-                                                                    *ngIf="isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
+                                                                    *ngIf="isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                             </h6>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
@@ -248,7 +248,7 @@
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
-                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                         <span class="mgn-lt-10 phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
@@ -312,7 +312,8 @@
                                                                             (change)="filesSelected($event, 'close')"><i
                                                                             class="fa fa-paperclip mgn-rt-5"
                                                                             aria-hidden="true"></i>Upload
-                                                                        File<span *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
+                                                                        File<span
+                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
                                                                     </a></mat-chip>
                                                             </mat-chip-list>
                                                         </div>
@@ -348,7 +349,7 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="type != 'reschedule'"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
                                                 <button type="button"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"
@@ -362,7 +363,7 @@
                                                     <div class="modal-content">
                                                         <div class="close-btn">
                                                             <button type="button" class="close" aria-label="Close"
-                                                                data-dismiss="modal">
+                                                                data-dismiss="modal" (click)="popupClosed()">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -631,7 +632,7 @@
                                                                             <div class="consumer_appt mgn-bt-10 brd-bt">
                                                                                 <p class="m0 mgn-lt-10 mgn-up-10">
                                                                                     <i class="fa phon-icon"
-                                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                                     Phone#:
                                                                                     <b>{{countryCode}}
                                                                                         {{selected_phone}}</b>
@@ -787,7 +788,7 @@
                                             [serviceId]="sel_ser" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your appointment details</div>
@@ -860,13 +861,13 @@
                                         </table>
                                         <div class="containerAppt textcenter">
                                             <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div>
-                                            <div class="mgn-bt-10 pad-bt-10" *ngIf="apptTime">
+                                            <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
                                                 <span *ngIf="!isFuturedate">Today,
                                                 </span>
                                                 <span *ngIf="isFuturedate">
-                                                    {{sel_checkindate | date:
+                                                    {{selectedDate | date:
                                                     newDateFormat}}, </span>
-                                                <span>{{getSingleTime(apptTime['time'])}}</span>
+                                                <span>{{getSingleTime(selectedApptTime['time'])}}</span>
                                             </div>
                                         </div>
                                         <div class="pay-section"
@@ -892,7 +893,8 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
                                             <div class="mr-2">
                                                 <button type="button"
                                                     class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
