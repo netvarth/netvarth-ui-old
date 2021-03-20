@@ -289,7 +289,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.step = 3;
         } 
         
-        if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+        if (this.step === 2) {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
@@ -1062,7 +1062,7 @@ console.log('hi submit');
           console.log(form_data.orderType);
           console.log(this.catalogItemsSelected);
            if(form_data.orderType==='SHOPPINGCART'){
-            postdata['catalogItem'] = this.catalogItemsSelected;
+            postdata['catalogItem'] = this.catalogSelectedItemsadd;
            }
             console.log(postdata);
             this.editCatalog(postdata);
@@ -1696,7 +1696,6 @@ console.log('hi submit');
                     this.disableButton = false;
                     this.showPromotionalPrice = false;
                     this.showCustomlabel = false;
-                    // this.amForm.reset();
                     this.haveMainImg = false;
                     this.mainImage = false;
                     this.closeGroupDialog();
