@@ -548,14 +548,17 @@
                                 style="line-height:none">
                                 <div class="card-body text-left pl-5 p-0 font-addrss">
                                   <div class="adrs-data">
-                                      <div class="pull-right"(click)="deleteAddress(address, i)">
-                                          <i class="font-weight-bolder font-size-sm red icon-delete">
+                                      <div class="pull-right">
+                                        <i class="font-weight-bolder font-size-sm blue icon-edit"  (click)="updateAddress(address,i)">
+                                        </i>&nbsp; <i class="font-weight-bolder font-size-sm red icon-delete" (click)="deleteAddress(address, i)">
                                           </i> </div>
                                     <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
                                     <div>{{address.address}}</div>
                                     <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
                                     <div> +91 {{address.phoneNumber}}</div>
                                     <div> {{address.email}}</div>
+                                    <!-- <a  class="addressedit"  (click)="updateAddress(address,i);" >
+                                      Edit</a> -->
                                   </div>
 
                                 </div>
