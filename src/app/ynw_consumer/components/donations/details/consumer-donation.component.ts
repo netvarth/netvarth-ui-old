@@ -23,13 +23,14 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
     styleUrls: ['./consumer-donation.component.css']
 })
-export class ConsumerDonationComponent implements OnInit,OnDestroy {
-   
+export class ConsumerDonationComponent implements OnInit, OnDestroy {
+
 
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -186,7 +187,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     provider_id: any;
     isfirstCheckinOffer: any;
     s3CouponsList: any = [];
- 
+
     showCouponWB: boolean;
     change_date: any;
     liveTrack = false;
@@ -234,8 +235,9 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
-        private location: Location) {
-        this.subs.sink=this.route.queryParams.subscribe(
+        private location: Location,
+        private s3Processor: S3UrlProcessor) {
+        this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
@@ -302,7 +304,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-           _this.subs.sink= _this.provider_services.getWaitlistMgr()
+            _this.subs.sink = _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -317,7 +319,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-          _this.subs.sink= _this.provider_services.getBussinessProfile()
+            _this.subs.sink = _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -330,9 +332,9 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     }
     getFamilyMembers() {
         this.api_loading1 = true;
-    
+
         let self_obj;
-        
+
         self_obj = {
             'userProfile': {
                 'id': this.customer_data.id,
@@ -340,7 +342,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
                 'lastName': this.customer_data.lastName
             }
         };
-        this.subs.sink=this.shared_services.getConsumerFamilyMembers().subscribe((data:any) => {
+        this.subs.sink = this.shared_services.getConsumerFamilyMembers().subscribe((data: any) => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -521,7 +523,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     }
     addDonationConsumer(post_Data, paymentWay) {
         this.api_loading = true;
-        this.subs.sink=this.shared_services.addCustomerDonation(post_Data, this.account_id)
+        this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
                 const payInfo = {
@@ -536,7 +538,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
                 this.lStorageService.setitemonLocalStorage('uuid', data['uid']);
                 this.lStorageService.setitemonLocalStorage('acid', this.account_id);
                 this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
-                this.subs.sink=this.shared_services.consumerPayment(payInfo)
+                this.subs.sink = this.shared_services.consumerPayment(payInfo)
                     .subscribe((pData: any) => {
                         this.checkIn_type = 'donations';
                         this.origin = 'consumer';
@@ -587,10 +589,10 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
         const stat = this.validateEmail(this.payEmail);
         const stat1 = this.validateEmail(this.payEmail1);
         if (this.payEmail === '' || !stat) {
-                this.emailerror = 'Please enter a valid email.';
+            this.emailerror = 'Please enter a valid email.';
         }
         if (this.payEmail1 === '' || !stat1) {
-                this.email1error = 'Please enter a valid email.';
+            this.email1error = 'Please enter a valid email.';
         }
         // return new Promise((resolve) => {
         if (stat && stat1) {
@@ -605,7 +607,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
                 };
                 passtyp = 'consumer';
                 if (this.payEmail) {
-                    this.subs.sink=this.shared_services.updateProfile(post_data, passtyp)
+                    this.subs.sink = this.shared_services.updateProfile(post_data, passtyp)
                         .subscribe(
                             () => {
                                 this.getProfile();
@@ -781,7 +783,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            this.subs.sink=fn.subscribe(() => {
+            this.subs.sink = fn.subscribe(() => {
                 this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
@@ -831,7 +833,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     getServicebyLocationId(locid) {
         this.api_loading1 = true;
         this.resetApi();
-        this.subs.sink=this.shared_services.getConsumerDonationServices(this.account_id)
+        this.subs.sink = this.shared_services.getConsumerDonationServices(this.account_id)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;
@@ -851,7 +853,7 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
         // const captions = {};
-       this.subs.sink= this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+        this.subs.sink = this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
             .subscribe(
                 () => {
@@ -881,62 +883,123 @@ export class ConsumerDonationComponent implements OnInit,OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        this.retval = this.sharedFunctionobj.getS3Url()
-            .then(
-                res => {
-                    this.s3url = res;
-                    this.getbusinessprofiledetails_json('businessProfile', true);
-                    this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('coupon', true);
-                    if (!this.terminologiesjson) {
-                        this.getbusinessprofiledetails_json('terminologies', true);
-                    } else {
-                        if (this.terminologiesjson.length === 0) {
-                            this.getbusinessprofiledetails_json('terminologies', true);
-                        } else {
-                            // this.datastorage.set('terminologies', this.terminologiesjson);
-                            this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        }
-                    }
-                    this.api_loading1 = false;
-                },
-                () => {
+        let accountS3List = 'settings,terminologies,businessProfile';
+        this.s3Processor.getPresignedUrls(this.provider_id,
+            null, accountS3List).subscribe(
+                (accountS3s) => {
+                    this.processS3s('settings', accountS3s['settings']);
+                    this.processS3s('terminologies', accountS3s['terminologies']);
+                    this.processS3s('businessProfile', accountS3s['businessProfile']);
                     this.api_loading1 = false;
                 }
             );
     }
-    // gets the various json files based on the value of "section" parameter
-    getbusinessprofiledetails_json(section, modDateReq: boolean) {
-        let UTCstring = null;
-        if (modDateReq) {
-            UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    processS3s(type, result) {
+        switch (type) {
+            case 'settings': {
+                this.settingsjson = result;
+                break;
+            }
+            case 'terminologies': {
+                this.terminologiesjson = result;
+                this.wordProcessor.setTerminologies(this.terminologiesjson);
+                break;
+            }
+            case 'businessProfile': {
+                this.businessjson = result;
+                break;
+            }
+            // case 'coupon': {
+            //     this.s3CouponsList.JC = result;
+            //     if (this.s3CouponsList.JC.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     this.s3CouponsList.OWN = result;
+            //     if (this.s3CouponsList.OWN.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'departmentProviders': {
+            //     let deptProviders: any = [];
+            //     deptProviders = result;
+            //     if (!this.filterDepart) {
+            //         this.users = deptProviders;
+            //     } else {
+            //         deptProviders.forEach(depts => {
+            //             if (depts.users.length > 0) {
+            //                 this.users = this.users.concat(depts.users);
+            //             }
+            //         });
+            //     }
+            //     if (this.selectedUserParam) {
+            //         this.setUserDetails(this.selectedUserParam);
+            //     }
+            //     break;
+            // }
         }
-        this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-            .subscribe(res => {
-                switch (section) {
-                    case 'settings':
-                        this.settingsjson = res;
-                        break;
-                    case 'terminologies':
-                        this.terminologiesjson = res;
-                        // this.datastorage.set('terminologies', this.terminologiesjson);
-                        this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        break;
-                    case 'businessProfile':
-                        this.businessjson = res;
-                        break;
-                    case 'coupon':
-                        this.s3CouponsList = res;
-                        if (this.s3CouponsList.length > 0) {
-                            this.showCouponWB = true;
-                        }
-                        break;
-                }
-            },
-                () => {
-                }
-            );
     }
+    // gets3curl() {
+    //     this.api_loading1 = true;
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
+    // gets the various json files based on the value of "section" parameter
+    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    //     let UTCstring = null;
+    //     if (modDateReq) {
+    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    //     }
+    //     this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    //         .subscribe(res => {
+    //             switch (section) {
+    //                 case 'settings':
+    //                     this.settingsjson = res;
+    //                     break;
+    //                 case 'terminologies':
+    //                     this.terminologiesjson = res;
+    //                     // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     break;
+    //                 case 'businessProfile':
+    //                     this.businessjson = res;
+    //                     break;
+    //                 case 'coupon':
+    //                     this.s3CouponsList = res;
+    //                     if (this.s3CouponsList.length > 0) {
+    //                         this.showCouponWB = true;
+    //                     }
+    //                     break;
+    //             }
+    //         },
+    //             () => {
+    //             }
+    //         );
+    // }
     toggleNotes() {
         this.notes = !this.notes;
     }

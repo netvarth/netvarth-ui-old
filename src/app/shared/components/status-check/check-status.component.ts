@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
@@ -10,6 +9,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
@@ -50,11 +50,11 @@ export class CheckYourStatusComponent implements OnInit {
   terminologiesjson: ArrayBuffer;
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
-    private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor) {
     this.activated_route.params.subscribe(
       qparams => {
         // this.type = qparams.type;
@@ -113,28 +113,34 @@ export class CheckYourStatusComponent implements OnInit {
     }
   }
   gets3curl() {
-    this.retval = this.shared_functions.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('terminologies', true);
-        });
-  }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'terminologies': {
-            this.terminologiesjson = res;
-            break;
-          }
+    this.s3Processor.getPresignedUrls(this.provider_id,
+      null, 'terminologies').subscribe(
+        (result) => {
+          this.terminologiesjson = result;
         }
-      });
+      );
+    // this.retval = this.shared_functions.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+    //       this.getbusinessprofiledetails_json('terminologies', true);
+    //     });
   }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       switch (section) {
+  //         case 'terminologies': {
+  //           this.terminologiesjson = res;
+  //           break;
+  //         }
+  //       }
+  //     });
+  // }
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {

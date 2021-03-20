@@ -23,6 +23,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   totaltax = 0;
   provider_id: any;
-  s3url;
+  // s3url;
   retval: Promise<void>;
   api_loading1: boolean;
   coupon_status = null;
@@ -151,7 +152,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   couponvalid = true;
   api_cp_error = null;
   s3CouponsList: any = {
-    JC:[],OWN:[]
+    JC: [], OWN: []
   };
   selected_coupons: any = [];
   couponsList: any = [];
@@ -174,7 +175,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     public fed_service: FormMessageDisplayService,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor
   ) {
 
 
@@ -307,10 +309,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.home_delivery = true;
           this.storeChecked = false;
           this.getOrderAvailableDatesForHome();
-          
+
         }
       }
-     
+
     });
     this.getStoreContact();
 
@@ -394,53 +396,85 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   gets3curl() {
     this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.getprovidercoupondetails_json('providerCoupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
+    let accountS3List = 'coupon,providerCoupon';
+    this.s3Processor.getPresignedUrls(this.provider_id,
+      null, accountS3List).subscribe(
+        (accountS3s) => {
+          this.processS3s('coupon', accountS3s['coupon']);
+          this.processS3s('providerCoupon', accountS3s['providerCoupon']);
           this.api_loading1 = false;
         }
       );
   }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.JC = res;
+  processS3s(type, result) {
+    switch (type) {
+      case 'coupon': {
+        this.s3CouponsList.JC = result;
         console.log(this.s3CouponsList.JC);
         if (this.s3CouponsList.JC.length > 0) {
           this.showCouponWB = true;
         }
-      },
-        () => {
-        }
-      );
-  }
-  getprovidercoupondetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.OWN = res;
+        break;
+      }
+      case 'providerCoupon': {
+        this.s3CouponsList.OWN = result;
         console.log(this.s3CouponsList.OWN);
         if (this.s3CouponsList.OWN.length > 0) {
           this.showCouponWB = true;
         }
-      },
-        () => {
-        }
-      );
+        break;
+      }
+    }
   }
+  // gets3curl() {
+  //   this.api_loading1 = true;
+  //   this.retval = this.sharedFunctionobj.getS3Url()
+  //     .then(
+  //       res => {
+  //         this.s3url = res;
+  //         this.getbusinessprofiledetails_json('coupon', true);
+  //         this.getprovidercoupondetails_json('providerCoupon', true);
+  //         this.api_loading1 = false;
+  //       },
+  //       () => {
+  //         this.api_loading1 = false;
+  //       }
+  //     );
+  // }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.JC = res;
+  //       console.log(this.s3CouponsList.JC);
+  //       if (this.s3CouponsList.JC.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
+  // getprovidercoupondetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.OWN = res;
+  //       console.log(this.s3CouponsList.OWN);
+  //       if (this.s3CouponsList.OWN.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
@@ -474,28 +508,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       let found = false;
       for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
         if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
-            couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
-            couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
-    for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+      }
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
         if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
-            couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
-            if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
-                couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
-            }
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+          couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+          if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+            couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+          }
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
+      }
       if (found) {
         this.couponvalid = true;
         this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -582,7 +616,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     return qty;
   }
- 
+
   getaddress() {
     console.log('hi');
     this.shared_services.getConsumeraddress()
@@ -749,7 +783,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-     
+
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
@@ -786,7 +820,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-      
+
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -825,9 +859,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   doLogin(origin?, passParam?) {
- 
+
     const is_test_account = true;
-  
+
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
@@ -847,14 +881,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.isLoggedIn()) {
           this.nextbtn.nativeElement.click();
         }
-   
+
       } else if (result === 'showsignup') {
-       
+
       }
     });
   }
   confirmOrder(post_Data) {
-console.log(post_Data.email);
+    console.log(post_Data.email);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -945,7 +979,7 @@ console.log(post_Data.email);
           };
           console.log('prepaymentAmount' + prepayAmount);
           if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 console.log(res);
                 this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
@@ -1064,8 +1098,8 @@ console.log(post_Data.email);
     console.log(this.account_id);
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-         this.home_availables = data.filter(obj => obj.isAvailable);
-         this.getAvailabilityByDate(this.sel_checkindate);
+        this.home_availables = data.filter(obj => obj.isAvailable);
+        this.getAvailabilityByDate(this.sel_checkindate);
         console.log(this.home_availables);
         const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -1184,60 +1218,60 @@ console.log(post_Data.email);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } 
-      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
-        console.log('less than 30'); 
+      }
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
+        console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-          } else{
-            this.isfutureAvailableTime = false;
-          }
-        }     
+        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
       else {
         this.isfutureAvailableTime = false;
       }
-    }  
+    }
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
       console.log(homeIntervals);
       console.log(JSON.stringify(homeIntervals));
-      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
+      if (homeIntervals.includes(currentday) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+      } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
         console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-      } else {
+        const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
+      else {
         this.isfutureAvailableTime = false;
       }
-    }
-    else {        
-       this.isfutureAvailableTime = false;
-     }
     }
   }
   getStoreContact() {

@@ -1867,6 +1867,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
+    console.log(CouponList)
     for (let index = 0; index < CouponList.JC.length; index++) {
       if (CouponList.JC[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;

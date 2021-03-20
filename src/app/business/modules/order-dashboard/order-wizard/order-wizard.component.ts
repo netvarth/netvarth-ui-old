@@ -23,6 +23,7 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
  
 
 
@@ -184,7 +185,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor) {
 
     this.activated_route.queryParams
     .pipe(takeUntil(this.onDestroy$))
@@ -225,10 +227,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               if (this.customer_data.email && this.customer_data.email !== 'null') {
                 this.customer_email = this.customer_data.email;
               } 
-             
-  
-            
-          
           }
         );
       }
@@ -267,17 +265,28 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   gets3curl() {
     this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
-          this.api_loading1 = false;
+    
+    this.s3Processor.getPresignedUrls(this.accountId, null, 'coupon').subscribe(
+      (accountS3s) => {
+        this.s3CouponsList = accountS3s['coupon'];
+        if (this.s3CouponsList.length > 0) {
+          this.showCouponWB = true;
         }
-      );
+      }, () => { },
+      () => {
+      });
+
+    // this.retval = this.sharedFunctionobj.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+    //       this.getbusinessprofiledetails_json('coupon', true);
+    //       this.api_loading1 = false;
+    //     },
+    //     () => {
+    //       this.api_loading1 = false;
+    //     }
+    //   );
   }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
@@ -298,24 +307,24 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   toggleCoupon() {
     this.showCoupon = !this.showCoupon;
   }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
-    .pipe(takeUntil(this.onDestroy$))
-      .subscribe(res => {
-        this.s3CouponsList = res;
-        console.log(this.s3CouponsList);
-        if (this.s3CouponsList.length > 0) {
-          this.showCouponWB = true;
-        }
-      },
-        () => {
-        }
-      );
-  }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
+  //   .pipe(takeUntil(this.onDestroy$))
+  //     .subscribe(res => {
+  //       this.s3CouponsList = res;
+  //       console.log(this.s3CouponsList);
+  //       if (this.s3CouponsList.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]

@@ -26,13 +26,14 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
-export class ConsumerCheckinComponent implements OnInit,OnDestroy {
-  
+export class ConsumerCheckinComponent implements OnInit, OnDestroy {
+
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -118,8 +119,8 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     availableSlots: any = [];
     data;
     provider_id: any;
-    s3CouponsList: any={
-        JC:[],OWN:[]
+    s3CouponsList: any = {
+        JC: [], OWN: []
     };
     showCouponWB: boolean;
     change_date: any;
@@ -182,7 +183,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     questionnaireList: any = [];
     questionAnswers;
     googleMapUrl;
-    private subs=new SubSink();
+    private subs = new SubSink();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -201,10 +202,11 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
-        private dateTimeProcessor:DateTimeProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
+        private s3Processor: S3UrlProcessor,
         @Inject(DOCUMENT) public document
     ) {
-       this.subs.sink= this.route.queryParams.subscribe(
+        this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 console.log(params);
                 this.sel_loc = params.loc_id;
@@ -323,10 +325,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         );
     }
     ngOnDestroy(): void {
-       this.subs.unsubscribe();
+        this.subs.unsubscribe();
     }
     getRescheduleWaitlistDet() {
-        this.subs.sink= this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
+        this.subs.sink = this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (waitlst: any) => {
                 this.waitlist = waitlst;
                 if (this.type === 'waitlistreschedule') {
@@ -354,7 +356,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             'date': this.sel_checkindate,
             'queue': this.sel_queue_id
         };
-        this.subs.sink= this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
+        this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
                     if (this.selectedMessage.files.length > 0) {
@@ -363,7 +365,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         this.consumerNoteAndFileSave(uid);
                     }
                     setTimeout(() => {
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
+                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
                     }, 500);
                 },
                 error => {
@@ -373,7 +375,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-            _this.subs.sink= _this.provider_services.getWaitlistMgr()
+            _this.subs.sink = _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -388,7 +390,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.subs.sink= _this.provider_services.getBussinessProfile()
+            _this.subs.sink = _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -411,7 +413,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 'lastName': this.customer_data.lastName
             }
         };
-        this.subs.sink=fn.subscribe(data => {
+        this.subs.sink = fn.subscribe(data => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -499,7 +501,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-            _this.subs.sink= _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+            _this.subs.sink = _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
                 .subscribe((data: any) => {
                     const availables = data.filter(obj => obj.isAvailable);
                     const availDates = availables.map(function (a) { return a.date; });
@@ -515,7 +517,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
-            this.subs.sink= this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+            this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
                     this.queueQryExecuted = true;
@@ -700,7 +702,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     addCheckInConsumer(postData) {
-        this.subs.sink= this.shared_services.addCheckin(this.account_id, postData)
+        this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 const retData = data;
                 this.uuidList = [];
@@ -728,9 +730,9 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                             multiple = false;
                         }
                         setTimeout(() => {
-                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                    }, 500);
-                }
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                        }, 500);
+                    }
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -753,7 +755,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.subs.sink=this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
 
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
@@ -895,7 +897,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            this.subs.sink=fn.subscribe(() => {
+            this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
@@ -966,7 +968,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     getPartysizeDetails(domain, subdomain) {
-        this.subs.sink=this.shared_services.getPartysizeDetails(domain, subdomain)
+        this.subs.sink = this.shared_services.getPartysizeDetails(domain, subdomain)
             .subscribe(data => {
                 this.partysizejson = data;
                 this.partySize = false;
@@ -1011,7 +1013,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     getProviderDepart(id) {
-        this.subs.sink= this.shared_services.getProviderDept(id).
+        this.subs.sink = this.shared_services.getProviderDept(id).
             subscribe(data => {
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
@@ -1030,7 +1032,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
-        this.subs.sink=this.shared_services.getServicesByLocationId(locid)
+        this.subs.sink = this.shared_services.getServicesByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = this.servicesjson;
@@ -1098,7 +1100,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         dataToSend.append('captions', blobPropdata);
         for (const uuid of uuids) {
             console.log(uuid);
-            this.subs.sink=this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
+            this.subs.sink = this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
                 .subscribe(
                     () => {
                         console.log(true);
@@ -1127,7 +1129,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
         this.apptTime = '';
         if (!future) {
-            _this.subs.sink= _this.provider_services.getTodayWaitlist(filter).subscribe(
+            _this.subs.sink = _this.provider_services.getTodayWaitlist(filter).subscribe(
                 (waitlist: any) => {
                     for (let i = 0; i < waitlist.length; i++) {
                         if (waitlist[i]['appointmentTime']) {
@@ -1141,7 +1143,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             );
         } else {
             filter['date-eq'] = _this.sel_checkindate;
-            _this.subs.sink=_this.provider_services.getFutureWaitlist(filter).subscribe(
+            _this.subs.sink = _this.provider_services.getFutureWaitlist(filter).subscribe(
                 (waitlist: any) => {
                     for (let i = 0; i < waitlist.length; i++) {
                         if (waitlist[i]['appointmentTime']) {
@@ -1190,111 +1192,204 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                     });
         });
     }
+
+
     gets3curl() {
-        this.api_loading1 = true;
-        this.retval = this.sharedFunctionobj.getS3Url()
-            .then(
-                res => {
-                    this.s3url = res;
-                    this.getbusinessprofiledetails_json('businessProfile', true);
-                    this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('coupon', true);
-                    this.getbusinessprofiledetails_json('providerCoupon', true);
-                    if (!this.terminologiesjson) {
-                        this.getbusinessprofiledetails_json('terminologies', true);
-                    } else {
-                        if (this.terminologiesjson.length === 0) {
-                            this.getbusinessprofiledetails_json('terminologies', true);
-                        } else {
-                            this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        }
-                    }
-                    this.api_loading1 = false;
-                },
-                () => {
-                    this.api_loading1 = false;
+
+        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+        this.s3Processor.getPresignedUrls(this.provider_id,
+            null, accountS3List).subscribe(
+                (accountS3s) => {
+                    this.processS3s('settings', accountS3s['settings']);
+                    this.processS3s('terminologies', accountS3s['terminologies']);
+                    this.processS3s('coupon', accountS3s['coupon']);
+                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                    this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+                    this.processS3s('businessProfile', accountS3s['businessProfile']);                    
                 }
             );
     }
-    // gets the various json files based on the value of "section" parameter
-    getbusinessprofiledetails_json(section, modDateReq: boolean) {
-        let UTCstring = null;
-        if (modDateReq) {
-            UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+
+    processS3s(type, result) {
+        switch (type) {
+            case 'settings': {
+                this.settingsjson = result;
+                this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+                break;
+            }
+            case 'terminologies': {
+                this.terminologiesjson = result;
+                this.wordProcessor.setTerminologies(this.terminologiesjson);
+                break;
+            }
+            case 'businessProfile': {
+                this.businessjson = result;
+                this.accountType = this.businessjson.accountType;
+                if (this.accountType === 'BRANCH') {
+                    // this.getbusinessprofiledetails_json('departmentProviders', true);
+                    this.getProviderDepart(this.businessjson.id);
+                }
+                this.domain = this.businessjson.serviceSector.domain;
+                if (this.domain === 'foodJoints') {
+                    this.note_placeholder = 'Item No Item Name Item Quantity';
+                    this.note_cap = 'Add Note / Delivery address';
+                } else {
+                    this.note_placeholder = '';
+                    this.note_cap = 'Add Note';
+                }
+                this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+                break;
+            }
+            case 'coupon': {
+                if (result != undefined) {
+                    this.s3CouponsList.JC = result;
+                } else {
+                    this.s3CouponsList.JC = [];
+                }
+
+                if (this.s3CouponsList.JC.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'providerCoupon': {
+                if (result != undefined) {
+                    this.s3CouponsList.OWN = result;
+                } else {
+                    this.s3CouponsList.OWN = [];
+                }
+
+                if (this.s3CouponsList.OWN.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'departmentProviders': {
+                let deptProviders: any = [];
+                deptProviders = result;
+                if (!this.filterDepart) {
+                    this.users = deptProviders;
+                } else {
+                    deptProviders.forEach(depts => {
+                        if (depts.users.length > 0) {
+                            this.users = this.users.concat(depts.users);
+                        }
+                    });
+                }
+                if (this.selectedUserParam) {
+                    this.setUserDetails(this.selectedUserParam);
+                }
+                break;
+            }
         }
-        this.subs.sink= this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-            .subscribe(res => {
-                switch (section) {
-                    case 'settings':
-                        this.settingsjson = res;
-                        this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-                        break;
-                    case 'terminologies':
-                        this.terminologiesjson = res;
-                        this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        break;
-                    case 'businessProfile':
-                        this.businessjson = res;
-                        this.accountType = this.businessjson.accountType;
-                        if (this.accountType === 'BRANCH') {
-                            this.getbusinessprofiledetails_json('departmentProviders', true);
-                            this.getProviderDepart(this.businessjson.id);
-                        }
-                        this.domain = this.businessjson.serviceSector.domain;
-                        if (this.domain === 'foodJoints') {
-                            this.note_placeholder = 'Item No Item Name Item Quantity';
-                            this.note_cap = 'Add Note / Delivery address';
-                        } else {
-                            this.note_placeholder = '';
-                            this.note_cap = 'Add Note';
-                        }
-                        this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
-                        break;
-                    case 'coupon':
-                        if (res != undefined) {
-                            this.s3CouponsList.JC = res;
-                        } else {
-                            this.s3CouponsList.JC = [];
-                        }
-
-                        if (this.s3CouponsList.JC.length > 0) {
-                            this.showCouponWB = true;
-                        }
-                        break;
-                    case 'providerCoupon':
-                        if (res != undefined) {
-                            this.s3CouponsList.OWN = res;
-                        } else {
-                            this.s3CouponsList.OWN = [];
-                        }
-
-                        if (this.s3CouponsList.OWN.length > 0) {
-                            this.showCouponWB = true;
-                        }
-                        break
-                    case 'departmentProviders': {
-                        let deptProviders: any = [];
-                        deptProviders = res;
-                        if (!this.filterDepart) {
-                            this.users = deptProviders;
-                        } else {
-                            deptProviders.forEach(depts => {
-                                if (depts.users.length > 0) {
-                                    this.users = this.users.concat(depts.users);
-                                }
-                            });
-                        }
-                        if (this.selectedUserParam) {
-                            this.setUserDetails(this.selectedUserParam);
-                        }
-                        break;
-                    }
-                }
-            },
-                () => {
-                }
-            );
     }
+
+
+    // gets3curl() {
+    //     this.api_loading1 = true;
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 this.getbusinessprofiledetails_json('providerCoupon', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
+    // gets the various json files based on the value of "section" parameter
+    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    //     let UTCstring = null;
+    //     if (modDateReq) {
+    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    //     }
+    //     this.subs.sink = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    //         .subscribe(res => {
+    //             switch (section) {
+    //                 case 'settings':
+    //                     this.settingsjson = res;
+    //                     this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+    //                     break;
+    //                 case 'terminologies':
+    //                     this.terminologiesjson = res;
+    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     break;
+    //                 case 'businessProfile':
+    //                     this.businessjson = res;
+    //                     this.accountType = this.businessjson.accountType;
+    //                     if (this.accountType === 'BRANCH') {
+    //                         this.getbusinessprofiledetails_json('departmentProviders', true);
+    //                         this.getProviderDepart(this.businessjson.id);
+    //                     }
+    //                     this.domain = this.businessjson.serviceSector.domain;
+    //                     if (this.domain === 'foodJoints') {
+    //                         this.note_placeholder = 'Item No Item Name Item Quantity';
+    //                         this.note_cap = 'Add Note / Delivery address';
+    //                     } else {
+    //                         this.note_placeholder = '';
+    //                         this.note_cap = 'Add Note';
+    //                     }
+    //                     this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+    //                     break;
+    //                 case 'coupon':
+    //                     if (res != undefined) {
+    //                         this.s3CouponsList.JC = res;
+    //                     } else {
+    //                         this.s3CouponsList.JC = [];
+    //                     }
+
+    //                     if (this.s3CouponsList.JC.length > 0) {
+    //                         this.showCouponWB = true;
+    //                     }
+    //                     break;
+    //                 case 'providerCoupon':
+    //                     if (res != undefined) {
+    //                         this.s3CouponsList.OWN = res;
+    //                     } else {
+    //                         this.s3CouponsList.OWN = [];
+    //                     }
+
+    //                     if (this.s3CouponsList.OWN.length > 0) {
+    //                         this.showCouponWB = true;
+    //                     }
+    //                     break
+    //                 case 'departmentProviders': {
+    //                     let deptProviders: any = [];
+    //                     deptProviders = res;
+    //                     if (!this.filterDepart) {
+    //                         this.users = deptProviders;
+    //                     } else {
+    //                         deptProviders.forEach(depts => {
+    //                             if (depts.users.length > 0) {
+    //                                 this.users = this.users.concat(depts.users);
+    //                             }
+    //                         });
+    //                     }
+    //                     if (this.selectedUserParam) {
+    //                         this.setUserDetails(this.selectedUserParam);
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //         },
+    //             () => {
+    //             }
+    //         );
+    // }
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
@@ -1572,7 +1667,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {
-            _this.subs.sink=_this.shared_services.updateProfile(post_data, passtyp)
+            _this.subs.sink = _this.shared_services.updateProfile(post_data, passtyp)
                 .subscribe(
                     () => {
                         _this.getProfile();
@@ -1629,7 +1724,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
-        this.subs.sink=this.shared_services.addWaitlistAdvancePayment(param, post_Data)
+        this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
@@ -1655,7 +1750,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink= this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.pGateway = pData.paymentGateway;
                 if (this.pGateway === 'RAZORPAY') {
@@ -1732,7 +1827,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
-        this.subs.sink= this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
+        this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             console.log(data);
             this.questionnaireList = data;
         });

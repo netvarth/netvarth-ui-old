@@ -26,6 +26,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -231,6 +232,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         private dateTimeProcessor: DateTimeProcessor,
+        private s3Processor: S3UrlProcessor,
         @Inject(DOCUMENT) public document,
         public dialog: MatDialog) {
        this.subs.sink= this.route.queryParams.subscribe(
@@ -1091,32 +1093,116 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        this.retval = this.sharedFunctionobj.getS3Url()
-            .then(
-                res => {
-                    this.s3url = res;
-                    this.getbusinessprofiledetails_json('businessProfile', true);
-                    this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('departmentProviders', true);
-                    this.getbusinessprofiledetails_json('coupon', true);
-                    this.getbusinessprofiledetails_json('providerCoupon', true);
-                    this.getbusinessprofiledetails_json('appointmentsettings', true);
-                    if (!this.terminologiesjson) {
-                        this.getbusinessprofiledetails_json('terminologies', true);
-                    } else {
-                        if (this.terminologiesjson.length === 0) {
-                            this.getbusinessprofiledetails_json('terminologies', true);
-                        } else {
-                            this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        }
-                    }
-                    this.api_loading1 = false;
-                },
-                () => {
-                    this.api_loading1 = false;
+        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+        this.s3Processor.getPresignedUrls(this.provider_id,
+            null, accountS3List).subscribe(
+                (accountS3s) => {
+                    this.processS3s('settings', accountS3s['settings']);
+                    this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+                    this.processS3s('terminologies', accountS3s['terminologies']);
+                    this.processS3s('coupon', accountS3s['coupon']);
+                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                    this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+                    this.processS3s('businessProfile', accountS3s['businessProfile']);          
+                    this.api_loading1 = false;          
                 }
             );
     }
+    processS3s(type, result) {
+        switch (type) {
+            case 'settings': {
+                this.settingsjson = result;
+                this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+                break;
+            }
+            case 'appointmentsettings': {
+                this.appointmentSettings = result;
+                break;
+            }
+            case 'terminologies': {
+                this.terminologiesjson = result;
+                this.wordProcessor.setTerminologies(this.terminologiesjson);
+                break;
+            }
+            case 'businessProfile': {
+                this.businessjson = result;
+                this.accountType = this.businessjson.accountType;
+                if (this.accountType === 'BRANCH') {
+                    this.getProviderDepart(this.businessjson.id);
+                }
+                this.domain = this.businessjson.serviceSector.domain;
+                if (this.domain === 'foodJoints') {
+                    this.note_placeholder = 'Item No Item Name Item Quantity';
+                    this.note_cap = 'Add Note / Delivery address';
+                } else {
+                    this.note_placeholder = '';
+                    this.note_cap = 'Add Note';
+                }
+                this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+                break;
+            }
+            case 'coupon': {
+                this.s3CouponsList.JC = result;
+                if (this.s3CouponsList.JC.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'providerCoupon': {
+                this.s3CouponsList.OWN = result;
+                if (this.s3CouponsList.OWN.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'departmentProviders': {
+                let deptProviders: any = [];
+                deptProviders = result;
+                if (!this.filterDepart) {
+                    this.users = deptProviders;
+                } else {
+                    deptProviders.forEach(depts => {
+                        if (depts.users.length > 0) {
+                            this.users = this.users.concat(depts.users);
+                        }
+                    });
+                }
+                if (this.selectedUserParam) {
+                    this.setUserDetails(this.selectedUserParam);
+                }
+                break;
+            }
+        }
+    }
+
+    // gets3curl() {
+        
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('departmentProviders', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 this.getbusinessprofiledetails_json('providerCoupon', true);
+    //                 this.getbusinessprofiledetails_json('appointmentsettings', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
     // gets the various json files based on the value of "section" parameter
     getbusinessprofiledetails_json(section, modDateReq: boolean) {
         let UTCstring = null;

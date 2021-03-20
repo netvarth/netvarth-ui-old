@@ -14,6 +14,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { ConsumerServices } from '../../../services/consumer-services.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 import { SubSink } from 'subsink';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -84,7 +85,8 @@ buttons: [
     private snackbarService: SnackbarService,
     @Inject(DOCUMENT) public document,
     private consumer_services: ConsumerServices,
-    private sharedServices: SharedServices
+    private sharedServices: SharedServices,
+    private s3Processor: S3UrlProcessor
   ) {
     this.subs.sink=this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -156,28 +158,32 @@ buttons: [
   }
 
   gets3curl() {
-    this.retval = this.shared_functions.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('terminologies', true);
-        });
-  }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    }
-    this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'terminologies': {
-            this.terminologiesjson = res;
-            break;
-          }
-        }
+    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies').subscribe(
+      (accountS3s) => {   
+        this.terminologiesjson = accountS3s['terminologies'];
       });
+    // this.retval = this.shared_functions.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+        //   this.getbusinessprofiledetails_json('terminologies', true);
+        // });
   }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   }
+  //   this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       switch (section) {
+  //         case 'terminologies': {
+  //           this.terminologiesjson = res;
+  //           break;
+  //         }
+  //       }
+  //     });
+  // }
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {
