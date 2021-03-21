@@ -30,6 +30,7 @@ import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 
 @Component({
@@ -286,6 +287,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   qrdialogRef: any;
   wndw_path = projectConstants.PATH;
   elementType: 'url' | 'canvas' | 'img' = 'url';
+  private subscriptions = new SubSink();
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -445,6 +447,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.extChecindialogRef) {
       this.extChecindialogRef.close();
     }
+    this.subscriptions.unsubscribe();
   }
 
   getSocialdet(key, field) {
@@ -472,40 +475,89 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
-      accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders' //gallery
+      accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders' //gallery
     }
 
-    this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subscriptions.sink = this.s3Processor.getPresignedUrls(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
 
           if (this.userId) {
-            this.processS3s('settings', accountS3s['settings']);
-            this.processS3s('terminologies', accountS3s['terminologies']);
-            this.processS3s('coupon', accountS3s['coupon']);
-            this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            this.processS3s('location', accountS3s['location']);
-            
+            if (accountS3s['settings']) {
+              this.processS3s('settings', accountS3s['settings']);
+            }
+            if (accountS3s['terminologies']) {
+              this.processS3s('terminologies', accountS3s['terminologies']);
+            }
+            if (accountS3s['coupon']) {
+              this.processS3s('coupon', accountS3s['coupon']);
+            }
+            if (accountS3s['location']) {
+              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            }
+            if (accountS3s['location']) {
+              this.processS3s('location', accountS3s['location']);
+            }
+            // this.processS3s('settings', accountS3s['settings']);
+            // this.processS3s('terminologies', accountS3s['terminologies']);
+            // this.processS3s('coupon', accountS3s['coupon']);
+            // this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            // this.processS3s('location', accountS3s['location']);
+
             this.s3Processor.getPresignedUrls(this.provider_id, this.userId, userS3List).subscribe(
               (userS3s) => {
-                this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
-                this.processS3s('providerVirtualFields', userS3s['providerVirtualFields']);
-                this.processS3s('providerservices', userS3s['providerservices']);
-                this.processS3s('providerApptServices', userS3s['providerApptServices']);
+                if (userS3s['providerBusinessProfile']) {
+                  this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
+                }
+                if (userS3s['providerVirtualFields']) {
+                  this.processS3s('providerVirtualFields', userS3s['providerVirtualFields']);
+                }
+                if (userS3s['providerservices']) {
+                  this.processS3s('providerservices', userS3s['providerservices']);
+                }
+                if (userS3s['providerApptServices']) {
+                  this.processS3s('providerApptServices', userS3s['providerApptServices']);
+                }
               }
             );
           } else {
-            this.processS3s('settings', accountS3s['settings']);
-            this.processS3s('terminologies', accountS3s['terminologies']);
-            this.processS3s('coupon', accountS3s['coupon']);
-            this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            this.processS3s('location', accountS3s['location']);
-            this.processS3s('businessProfile', accountS3s['businessProfile']);
-            this.processS3s('virtualFields', accountS3s['virtualFields']);
-            this.processS3s('services', accountS3s['services']);
-            this.processS3s('apptServices', accountS3s['apptServices']);
-            this.processS3s('donationServices', accountS3s['donationServices']);
-            this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+            if (accountS3s['settings']) {
+              this.processS3s('settings', accountS3s['settings']);
+            }
+            if (accountS3s['terminologies']) {
+              this.processS3s('terminologies', accountS3s['terminologies']);
+            }
+            if (accountS3s['businessProfile']) {
+              this.processS3s('businessProfile', accountS3s['businessProfile']);
+            }
+            if (accountS3s['location']) {
+              this.processS3s('location', accountS3s['location']);
+            }
+            if (accountS3s['virtualFields']) {
+              this.processS3s('virtualFields', accountS3s['virtualFields']);
+            }
+            if (accountS3s['services']) {
+              this.processS3s('services', accountS3s['services']);
+            }
+            if (accountS3s['apptServices']) {
+              this.processS3s('apptServices', accountS3s['apptServices']);
+            }
+            if (accountS3s['donationServices']) {
+              this.processS3s('donationServices', accountS3s['donationServices']);
+            }
+            if (accountS3s['departmentProviders']) {
+              this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+            }
+            // this.processS3s('terminologies', accountS3s['terminologies']);
+            // this.processS3s('coupon', accountS3s['coupon']);
+            // this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            // this.processS3s('location', accountS3s['location']);
+            // this.processS3s('businessProfile', accountS3s['businessProfile']);
+            // this.processS3s('virtualFields', accountS3s['virtualFields']);
+            // this.processS3s('services', accountS3s['services']);
+            // this.processS3s('apptServices', accountS3s['apptServices']);
+            // this.processS3s('donationServices', accountS3s['donationServices']);
+            // this.processS3s('departmentProviders', accountS3s['departmentProviders']);
 
             if (accountS3s['gallery']) {
               this.processS3s('gallery', accountS3s['gallery']);
@@ -517,8 +569,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       );
   }
 
-  processS3s(type, result) {
-
+  processS3s(type, res) {
+    let result = JSON.parse(res);
     switch (type) {
       case 'settings': {
         this.setAccountSettings(result);

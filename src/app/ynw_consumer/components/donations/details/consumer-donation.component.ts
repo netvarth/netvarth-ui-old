@@ -22,8 +22,8 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-import { SubSink } from 'subsink';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
@@ -884,17 +884,24 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     gets3curl() {
         this.api_loading1 = true;
         let accountS3List = 'settings,terminologies,businessProfile';
-        this.s3Processor.getPresignedUrls(this.provider_id,
+        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
-                    this.processS3s('settings', accountS3s['settings']);
-                    this.processS3s('terminologies', accountS3s['terminologies']);
-                    this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    if(accountS3s['settings']) {
+                        this.processS3s('settings', accountS3s['settings']);
+                    }
+                    if(accountS3s['terminologies']) {
+                        this.processS3s('terminologies', accountS3s['terminologies']);
+                    }
+                    if(accountS3s['businessProfile']) {
+                        this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    }
                     this.api_loading1 = false;
                 }
             );
     }
-    processS3s(type, result) {
+    processS3s(type, res) {
+        let result = JSON.parse(res);
         switch (type) {
             case 'settings': {
                 this.settingsjson = result;

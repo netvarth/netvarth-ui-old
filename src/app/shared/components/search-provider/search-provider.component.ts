@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
@@ -17,13 +17,14 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-search-provider',
   templateUrl: './search-provider.component.html',
   styleUrls: ['./search-provider.component.css'],
 })
-export class SearchProviderComponent implements OnInit, OnChanges {
+export class SearchProviderComponent implements OnInit, OnChanges, OnDestroy {
   userType: any;
   provider_id;
   selectedDepartment: any;
@@ -104,6 +105,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   @Input() selectedDeptOrUser;
   @Input() fiterByDept;
   futureAllowed = true;
+  private subs = new SubSink();
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
@@ -130,6 +132,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
   ngOnChanges() {
     if (this.psource) {
@@ -204,53 +209,120 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         this.showService = true;
         this.api_loading = false;
       } else {
-        
-        // this.gets3curl().then(
-          // () => {
-            let userS3List = "providerBusinessProfile,providerservices,providerApptServices";
-            for (let i = 0; i < this.usersList.length; i++) {
-              const waitTimearr = [];
-              const apptTimearr = [];
-              
-              
-              this.s3Processor.getPresignedUrls(this.businessjson.uniqueId,
-                this.usersList[i], userS3List).subscribe(
-                  (userS3s) => {
-                    this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
-                    this.processS3s('providerservices', userS3s['providerservices']);
-                    this.processS3s('providerApptServices', userS3s['providerApptServices']);
-                    // this.api_loading1 = false;
-                  }
-                );
-              
 
-              // this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
-              // this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
-              // this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
-              
-              apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
-              waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
-              this.getUserWaitingTime(waitTimearr, this.usersList[i]);
-              this.getUserApptTime(apptTimearr, this.usersList[i]);
-            }
-          // });
+        // this.gets3curl().then(
+        // () => {
+        let userS3List = "providerBusinessProfile,providerservices,providerApptServices";
+        for (let i = 0; i < this.usersList.length; i++) {
+          const waitTimearr = [];
+          const apptTimearr = [];
+
+
+          this.subs.sink = this.s3Processor.getPresignedUrls(this.businessjson.uniqueId,
+            this.usersList[i], userS3List).subscribe(
+              (userS3s) => {
+                this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile'], this.usersList[i]);
+                this.processS3s('providerservices', userS3s['providerservices'], this.usersList[i]);
+                this.processS3s('providerApptServices', userS3s['providerApptServices'], this.usersList[i]);
+                // this.api_loading1 = false;
+              }
+            );
+
+
+          // this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
+          // this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
+          // this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
+
+          apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
+          waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
+          this.getUserWaitingTime(waitTimearr, this.usersList[i]);
+          this.getUserApptTime(apptTimearr, this.usersList[i]);
+        }
+        // });
 
       }
 
     }
   }
-  processS3s(type, result) {
+  setProviderBusinessProfile(res, user) {
+    user['bProfile'] = res;
+    user['ratingenabledCnt'] = this.businessjson.avgRating || 0;
+    if (user['ratingenabledCnt'] > 0) {
+      user['ratingenabledCnt'] = this.shared_functions.ratingRounding(user['ratingenabledCnt']);
+    }
+    const ratingenabledInt = parseInt(user['ratingenabledCnt'].toString(), 10);
+    if (ratingenabledInt < user['ratingenabledCnt']) {
+      user['ratingenabledHalf'] = true;
+      user['ratingenabledCnt'] = ratingenabledInt;
+      user['ratingdisabledCnt'] = 5 - (ratingenabledInt + 1);
+    } else {
+      user['ratingdisabledCnt'] = 5 - ratingenabledInt;
+    }
+    user['ratingenabledArr'] = [];
+    user['ratingdisabledArr'] = [];
+    for (let i = 0; i < user['ratingenabledCnt']; i++) {
+      user['ratingenabledArr'].push(i);
+    }
+    for (let i = 0; i < user['ratingdisabledCnt']; i++) {
+      user['ratingdisabledArr'].push(i);
+    }
+    const subDom = this.subDomainList.filter(subdomain => subdomain.id === res.userSubdomain);
+    user['bProfile']['userSubSector'] = subDom[0];
+    this.api_loading = false;
+  }
+  setUserServices(res, user) {
+    user['wtlstservices'] = [];
+    if (this.settingsjson.filterByDept) {
+      for (const dept of res) {
+        if (dept.services && dept.services.length > 0) {
+          for (const serv of dept.services) {
+            if (user['wtlstservices'].indexOf(serv) === -1) {
+              user['wtlstservices'].push(serv);
+            }
+          }
+        }
+      }
+    } else {
+      user['wtlstservices'] = res;
+    }
+    if (user['apptServices'] && user['apptServices'].length > 0) {
+      setTimeout(() => {
+        const ids = new Set(user['wtlstservices'].map(d => d.id));
+        const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
+        user['wtlstservices'] = merged;
+      });
+    }
+  }
+  setUserApptServices(res, user) {
+    user['apptServices'] = [];
+    if (this.settingsjson.filterByDept) {
+      for (const dept of res) {
+        if (dept.services && dept.services.length > 0) {
+          for (const serv of dept.services) {
+            if (user['apptServices'].indexOf(serv) === -1) {
+              user['apptServices'].push(serv);
+            }
+          }
+        }
+      }
+    } else {
+      user['apptServices'] = res;
+    }
+  }
+  processS3s(type, res, user) {
+    let result = JSON.parse(res);
+    console.log(result);
     switch (type) {
       case 'providerBusinessProfile': {
-        
+        this.setProviderBusinessProfile(result, user);
         break;
       }
       case 'providerservices': {
-        
+        this.setUserServices(result, user);
         break;
       }
       case 'providerApptServices': {
-        
+        this.setUserApptServices(result, user);
         break;
       }
     }

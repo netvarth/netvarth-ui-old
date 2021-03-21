@@ -15,6 +15,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -95,6 +96,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   queue;
   store_availables: any;
   home_availables: any;
+  private subs = new SubSink();
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -129,6 +131,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.subs.unsubscribe();
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
@@ -292,7 +295,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   gets3curl() {
     this.api_loading1 = true;
         let accountS3List = 'coupon,providerCoupon';
-        this.s3Processor.getPresignedUrls(this.provider_id,
+        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
                     this.processS3s('coupon', accountS3s['coupon']);

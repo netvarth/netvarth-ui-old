@@ -11,9 +11,9 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-myfavourites',
@@ -77,7 +77,7 @@ private subs=new SubSink();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
   }
   ngOnDestroy(): void {
-    // this.subs.unsubscribe();
+    this.subs.unsubscribe();
   }
 
   // Get system date
@@ -154,8 +154,12 @@ private subs=new SubSink();
     // if (this.s3url) {
       this.subs.sink = this.s3Processor.getPresignedUrls(provider.uniqueId,null, 'settings,terminologies').subscribe(
           (accountS3s) => {
-            this.processS3s('settings', accountS3s['settings'], k);
-            this.processS3s('terminologies', accountS3s['terminologies'], k);
+            if (accountS3s['settings']) {
+              this.processS3s('settings', accountS3s['settings'], k);
+            }
+            if (accountS3s['terminologies']) {
+              this.processS3s('terminologies', accountS3s['terminologies'], k);
+            }
           });
 
       // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
@@ -170,7 +174,8 @@ private subs=new SubSink();
     this.getWaitingTime(locarr, k);
     this.getApptTime(locarr, k);
   }
-  processS3s(type, result, index) {
+  processS3s(type, res, index) {
+    let result = JSON.parse(res);
     if (type === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
       return false;
     }

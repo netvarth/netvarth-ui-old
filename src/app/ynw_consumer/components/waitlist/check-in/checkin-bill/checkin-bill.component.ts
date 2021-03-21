@@ -17,8 +17,8 @@ import { RazorpayService } from '../../../../../shared/services/razorpay.service
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { SubSink } from 'subsink';
 import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../../../node_modules/subsink';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
@@ -197,7 +197,8 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
 
-    processS3s(type, result) {
+    processS3s(type, res) {
+        let result = JSON.parse(res);
         switch (type) {
             case 'terminologies': {
                 this.terminologiesjson = result;
@@ -218,10 +219,16 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
 
     gets3curl() {
         this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
-            (accountS3s) => {              
-              this.processS3s('terminologies', accountS3s['terminologies']);
-              this.processS3s('coupon', accountS3s['coupon']);
-              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            (accountS3s) => {            
+                if(accountS3s['terminologies']) {
+                    this.processS3s('terminologies', accountS3s['terminologies']);
+                }
+                if(accountS3s['coupon']) {
+                    this.processS3s('coupon', accountS3s['coupon']);
+                }
+                if(accountS3s['providerCoupon']) {
+                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                }
             });
         // this.retval = this.sharedfunctionObj.getS3Url()
         //     .then(

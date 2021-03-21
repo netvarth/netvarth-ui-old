@@ -13,8 +13,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { ConsumerServices } from '../../../services/consumer-services.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
-import { SubSink } from 'subsink';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-order-detail',
@@ -160,7 +160,9 @@ buttons: [
   gets3curl() {
     this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies').subscribe(
       (accountS3s) => {   
-        this.terminologiesjson = accountS3s['terminologies'];
+        if (accountS3s['terminologies']){
+          this.terminologiesjson = JSON.parse(accountS3s['terminologies']);
+        }
       });
     // this.retval = this.shared_functions.getS3Url()
     //   .then(

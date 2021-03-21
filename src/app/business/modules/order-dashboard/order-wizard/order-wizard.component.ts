@@ -24,6 +24,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
  
 
 
@@ -172,6 +173,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   searchby = '';
   contactDialogRef: MatDialogRef<ContactInfoComponent, any>;
   catalogExpired=false;
+  private subs = new SubSink();
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -268,15 +270,18 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   public ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
+    this.subs.unsubscribe();
   }
   gets3curl() {
     this.api_loading1 = true;
     
-    this.s3Processor.getPresignedUrls(this.accountId, null, 'coupon').subscribe(
+    this.subs.sink = this.s3Processor.getPresignedUrls(this.accountId, null, 'coupon').subscribe(
       (accountS3s) => {
-        this.s3CouponsList = accountS3s['coupon'];
-        if (this.s3CouponsList.length > 0) {
-          this.showCouponWB = true;
+        if (accountS3s['coupon']) {
+          this.s3CouponsList = JSON.parse(accountS3s['coupon']);
+          if (this.s3CouponsList.length > 0) {
+            this.showCouponWB = true;
+          }
         }
       }, () => { },
       () => {

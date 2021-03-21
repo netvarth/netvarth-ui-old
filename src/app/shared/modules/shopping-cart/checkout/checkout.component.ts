@@ -24,6 +24,7 @@ import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
 
 
 @Component({
@@ -163,6 +164,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('firstStep', { read: ElementRef }) private nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
+  private subs = new SubSink();
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -397,16 +399,21 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   gets3curl() {
     this.api_loading1 = true;
     let accountS3List = 'coupon,providerCoupon';
-    this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
+          if (accountS3s['coupon']) {
           this.processS3s('coupon', accountS3s['coupon']);
+        }
+        if (accountS3s['providerCoupon']) {
           this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+        }
           this.api_loading1 = false;
         }
       );
   }
-  processS3s(type, result) {
+  processS3s(type, res) {
+    let result = JSON.parse(res);
     switch (type) {
       case 'coupon': {
         this.s3CouponsList.JC = result;
@@ -477,6 +484,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.subs.unsubscribe();
   }
 
   applyPromocode() {

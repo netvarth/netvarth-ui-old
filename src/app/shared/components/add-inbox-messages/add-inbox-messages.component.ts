@@ -14,6 +14,7 @@ import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -59,6 +60,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   addondialogRef: any;
   is_noSMS = false;
   userId;
+  private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -109,9 +111,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.s3Processor.getPresignedUrls(this.data.user_id, null, 'terminologies').subscribe(
+      this.subs.sink =  this.s3Processor.getPresignedUrls(this.data.user_id, null, 'terminologies').subscribe(
         (accountS3s) => {
-          this.terminologies = accountS3s['terminologies'];
+          if (accountS3s['terminologies']) {
+            this.terminologies = JSON.parse(accountS3s['terminologies']);
+          }
         }, () => { },
         () => {
           this.setLabel();
@@ -138,6 +142,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
+    this.subs.unsubscribe();
   }
   // gets3curl() {
   //   return new Promise<void>((resolve, reject) => {

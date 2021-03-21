@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../app.component';
@@ -10,12 +10,13 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
   styleUrls: ['./check-status.component.css']
 })
-export class CheckYourStatusComponent implements OnInit {
+export class CheckYourStatusComponent implements OnInit, OnDestroy {
   api_loading: boolean;
   // checkinDetails: any = [];
   type = '';
@@ -48,6 +49,7 @@ export class CheckYourStatusComponent implements OnInit {
   retval;
   provider_id;
   terminologiesjson: ArrayBuffer;
+  private subs = new SubSink();
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
     private snackbarService: SnackbarService,
@@ -94,6 +96,9 @@ export class CheckYourStatusComponent implements OnInit {
         );
     });
   }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
   ngOnInit() {
     console.log(this.check_in_statuses);
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -113,10 +118,12 @@ export class CheckYourStatusComponent implements OnInit {
     }
   }
   gets3curl() {
-    this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
       null, 'terminologies').subscribe(
-        (result) => {
-          this.terminologiesjson = result;
+        (accountS3s) => {
+          if (accountS3s['terminologies']) {
+            this.terminologiesjson = JSON.parse(accountS3s['terminologies']);
+          }
         }
       );
     // this.retval = this.shared_functions.getS3Url()
