@@ -286,7 +286,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             }
         }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            console.log('inside');
             this.step = 3;
+            return;
         } 
         
         if (this.step === 2) {
@@ -1576,6 +1578,7 @@ console.log('hi submit');
             return;
         }else{
             this.step=this.step +1; 
+            return;
         }
        
     }
@@ -1606,6 +1609,7 @@ console.log('hi submit');
             return;
         }else{
             this.step=this.step +1;
+            return;
         }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
