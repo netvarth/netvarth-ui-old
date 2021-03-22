@@ -31,11 +31,13 @@
             <label>Publish To</label>
             <input class="form-control1 picker" type="date" (dateChange)="compareDate(1)"
               placeholder="Publish To" formControlName="publishedTo" />
+              
           </div>
           <app-field-error-display [displayError]=enddateError
-            errorMsg="Please enter date greater or equal to published from Date">
-          </app-field-error-display>
-        </div>
+              errorMsg="Please enter date greater or equal to published from Date">
+            </app-field-error-display>
+          </div>
+        
       </div>
 
     </div>

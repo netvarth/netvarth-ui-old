@@ -26,9 +26,8 @@ export class PublishDialogComponent implements OnInit {
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   private subscriptions = new SubSink();
   publishFromrequired=false;
-  startdateError: boolean;
-  enddateError: boolean;
-  startDaterequired: boolean;
+  startdateError=false;
+  enddateError=false;
 
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
@@ -83,26 +82,42 @@ compareDate( startOrend) {
   const sDate = this.publishForm.get('couponRules').get('publishedFrom').value;
   const eDate = this.publishForm.get('couponRules').get('publishedTo').value;
   if (startOrend === 0) {
-
-    if (!this.checkSameDay(sDate)) {
-      return this.startdateError = true;
-    }
-    if (this.checkDayBeforeToday(sDate)) {
-      return this.startdateError = true;
+    this.checkStartDateValid(sDate);
+    if(eDate!==null && eDate!==undefined && eDate!=='' ){
+      this.checkEndDateValid(eDate);
+      if(!this.checkDayisBeforeEndDate(sDate,eDate)){
+        return this.enddateError=true;
+      }
     }
 
   } else if (startOrend === 1) {
-    if (!this.checkSameDay(eDate)) {
-      return this.enddateError = true;
+    if(sDate!==null &&sDate!==undefined &&sDate!==''){
+      this.checkStartDateValid(sDate);
+      if(!this.checkDayisBeforeEndDate(sDate,eDate)){
+        return this.enddateError=true;
+      }
+     
     }
-    if (this.checkDayBeforeToday(eDate)) {
-      return this.enddateError = true;
-    }
-    if(this.checkDayisBeforeEndDate(sDate,eDate)){
-      return this.enddateError=true;
-    }
-   
+     this.checkEndDateValid(eDate);
+  
+    
 
+  }
+}
+checkStartDateValid(sDate){
+  if (this.checkSameDay(sDate)) {
+    return this.startdateError = false;
+  }
+  if (this.checkDayBeforeToday(sDate)) {
+    return this.startdateError = true;
+  }
+}
+checkEndDateValid(eDate){
+  if (this.checkSameDay(eDate)) {
+    return this.enddateError = false;
+  }
+  if (this.checkDayBeforeToday(eDate)) {
+    return this.enddateError = true;
   }
 }
   onSubmit(){

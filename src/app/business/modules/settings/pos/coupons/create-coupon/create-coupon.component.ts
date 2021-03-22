@@ -82,6 +82,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   endDaterequired = false;
   minbillamountError = false;
   mxDate: Date;
+  hideSubmitbtn=false;
 
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -161,8 +162,12 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     if (this.action === 'edit') {
       this.coupon_title = 'Edit Coupon';
       this.getCouponById(this.couponId).then(
-        (result) => {
-          this.updateForm(result);
+        (couponDetails:any) => {
+          if(couponDetails.couponRules.published){
+            this.coupon_title='View Coupon';
+            this.hideSubmitbtn=true;
+          }
+          this.updateForm(couponDetails);
         }
       );
     }
@@ -389,28 +394,43 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     const eDate = this.couponForm.get('couponRules').get('endDate').value;
     if (startOrend === 0) {
       this.startDaterequired = false;
-      if (!this.checkSameDay(sDate)) {
-        return this.startdateError = true;
+      this.checkStartDateValid(sDate);
+      if(eDate!==null && eDate!==undefined && eDate!=='' ){
+        this.checkEndDateValid(eDate);
+        if(!this.checkDayisBeforeEndDate(sDate,eDate)){
+          return this.enddateError=true;
+        }
       }
-      if (this.checkDayBeforeToday(sDate)) {
-        return this.startdateError = true;
-      }
-     
 
     } else if (startOrend === 1) {
       this.endDaterequired = false;
+      if(sDate!==null &&sDate!==undefined &&sDate!==''){
+        this.checkStartDateValid(sDate);
+        if(!this.checkDayisBeforeEndDate(sDate,eDate)){
+          return this.enddateError=true;
+        }
+       
+      }
+       this.checkEndDateValid(eDate);
+    
+      
 
-      if (!this.checkSameDay(eDate)) {
-        return this.enddateError = true;
-      }
-      if (this.checkDayBeforeToday(eDate)) {
-        return this.enddateError = true;
-      }
-      if(this.checkDayisBeforeEndDate(sDate,eDate)){
-        return this.enddateError=true;
-      }
-     
-
+    }
+  }
+  checkStartDateValid(sDate){
+    if (this.checkSameDay(sDate)) {
+      return this.startdateError = false;
+    }
+    if (this.checkDayBeforeToday(sDate)) {
+      return this.startdateError = true;
+    }
+  }
+  checkEndDateValid(eDate){
+    if (this.checkSameDay(eDate)) {
+      return this.enddateError = false;
+    }
+    if (this.checkDayBeforeToday(eDate)) {
+      return this.enddateError = true;
     }
   }
   handleDaychange(index) {
