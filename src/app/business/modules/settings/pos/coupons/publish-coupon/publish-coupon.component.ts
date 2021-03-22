@@ -15,22 +15,23 @@ import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-lab
 import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
 
 
+
 @Component({
   selector: 'app-publish-coupon',
   templateUrl: './publish-coupon.component.html',
   styleUrls: ['./publish-coupon.component.css']
 })
-export class PublishCouponComponent implements OnInit,OnDestroy {
+export class PublishCouponComponent implements OnInit, OnDestroy {
 
   couponId: any;
   coupon: any;
   rules_cap = Messages.COUPON_RULES_CAP;
   disc_value = Messages.COUP_DISC_VALUE;
-  pro_use_limit=Messages.MAX_PRO_USE_LIMIT;
+  pro_use_limit = Messages.MAX_PRO_USE_LIMIT;
   checkin_label = '';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  api_loading=true;
-  title='';
+  api_loading = true;
+  title = '';
   private subs = new SubSink();
   userdialogRef: any;
   consumerLabeldialogRef: any;
@@ -38,27 +39,44 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
   departmentdialogRef: any;
   itemdialogRef: any;
   servicedialogRef: any;
+  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  selday_arr: any=[];
+  selallweekdays: boolean;
   constructor(
     private wordProcessor: WordProcessor,
     private router: Router,
-    private dialog:MatDialog,
+    private dialog: MatDialog,
     private provider_services: ProviderServices,
-    private activated_route:ActivatedRoute) { 
-   this.subs.sink= this.activated_route.params.subscribe(params => {
+    private activated_route: ActivatedRoute) {
+
+
+    this.subs.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
-      this.getcouponDetails(this.couponId).then((data)=>{
-       this.coupon=data;
-       if(this.coupon.couponRules.published){
-         this.title="Coupon " +this.coupon.couponCode +" Published";
-       }else{
-         this.title="Publish Coupon "+this.coupon.couponCode
-       }
-       this.api_loading=false;
+      this.getcouponDetails(this.couponId).then((data) => {
+        this.coupon = data;
+        if (this.coupon.couponRules.published) {
+          this.title = "Coupon " + this.coupon.couponCode + " Published";
+        } else {
+          this.title = "Publish Coupon " + this.coupon.couponCode
+        }
+        if (this.coupon.couponRules.validTimeRange && this.coupon.couponRules.validTimeRange.length > 0) {
+
+          for (let j = 0; j < this.coupon.couponRules.validTimeRange[0].repeatIntervals.length; j++) {
+            // pushing the day details to the respective array to show it in the page
+            this.selday_arr.push(Number(this.coupon.couponRules.validTimeRange[0].repeatIntervals[j]));
+          }
+          if (this.selday_arr.length === 7) {
+            this.selallweekdays = true;
+          } else {
+            this.selallweekdays = false;
+          }
+        }
+        this.api_loading = false;
       });
     });
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
 
-    
+
   }
 
   ngOnInit(): void {
@@ -66,13 +84,23 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
+  check_existsinweek_array(arr, val) {
+    let ret = -1;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === val) {
+        ret = i;
+      }
+    }
+    return ret;
+  }
+
   
-  getcouponDetails( couponId){
-    const _this=this;
+  getcouponDetails(couponId) {
+    const _this = this;
     return new Promise((resolve) => {
       _this.provider_services.getProviderCoupons(couponId).subscribe(
         (result: any) => {
-         this.coupon = result;
+          this.coupon = result;
           resolve(result);
         });
     });
@@ -82,13 +110,13 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
   redirecToCoupon() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-         coupon_list:'own_coupon'
-         
+        coupon_list: 'own_coupon'
+
       }
-  };
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon'],navigationExtras);
+    };
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon'], navigationExtras);
   }
-  
+
   publish() {
     const dialogrefd = this.dialog.open(PublishDialogComponent, {
       width: '50%',
@@ -96,14 +124,14 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'coupon': this.coupon,
-        
+
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-       this.getcouponDetails(this.coupon.id);
+      this.getcouponDetails(this.coupon.id);
     });
-   
-    
+
+
   }
   openServiceDialog() {
     this.servicedialogRef = this.dialog.open(ServiceListDialogComponent, {
@@ -111,13 +139,13 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'services':  this.coupon.couponRules.policies.services,
-        'mode':'view'
+        'services': this.coupon.couponRules.policies.services,
+        'mode': 'view'
       }
 
     });
     this.servicedialogRef.afterClosed().subscribe(result => {
-      
+
     });
   }
   openItemDialog() {
@@ -127,12 +155,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'items': this.coupon.couponRules.policies.items,
-        'mode':'view'
+        'mode': 'view'
       }
 
     });
     this.itemdialogRef.afterClosed().subscribe(result => {
-     
+
     });
 
   }
@@ -143,12 +171,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'departments': this.coupon.couponRules.policies.departments,
-        'mode':'view'
+        'mode': 'view'
       }
 
     });
     this.departmentdialogRef.afterClosed().subscribe(result => {
-     
+
     });
   }
   openCustomerGroupDialog() {
@@ -158,12 +186,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'groups': this.coupon.couponRules.policies.consumerGroups,
-        'mode':'view'
+        'mode': 'view'
       }
 
     });
     this.consumerGroupdialogRef.afterClosed().subscribe(result => {
-     
+
     });
 
   }
@@ -174,12 +202,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'labels': this.coupon.couponRules.policies.consumerLabels,
-        'mode':'view'
+        'mode': 'view'
       }
 
     });
     this.consumerLabeldialogRef.afterClosed().subscribe(result => {
-     
+
     });
 
   }
@@ -190,12 +218,12 @@ export class PublishCouponComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         'users': this.coupon.couponRules.policies.users,
-        'mode':'view'
+        'mode': 'view'
       }
 
     });
     this.userdialogRef.afterClosed().subscribe(result => {
-     
+
     });
   }
 

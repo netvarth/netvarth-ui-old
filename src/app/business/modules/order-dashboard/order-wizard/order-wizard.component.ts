@@ -1258,7 +1258,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         address: this.added_address,
         update_address: address,
         edit_index: index,
-        source: 'consumer',
+        customer: this.customer_data
 
       }
     });
