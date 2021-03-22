@@ -465,14 +465,14 @@
         </div>
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
+                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
                     <h6 class="question-header">Book online now and save your time
                     </h6>
                 </div>
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
+                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
                     </h5>
@@ -502,7 +502,7 @@
                 <!-- Departments True-->
                 <ng-container *ngIf="showDepartments && !this.userId">
                     <ng-container *ngFor="let sps of servicesAndProviders">
-                        <h4 class="p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
+                        <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
                             *ngIf="sps['departmentItems'].length > 0">
                             {{sps.departmentName}}
                         </h4>
@@ -528,29 +528,38 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
-                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 no-padding">
-                        <h5 class="mgn-bt-5 primary-color"><img
+                <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
+                    <div>
+                        <div class="no-padding">
+                            <h5 class="catalog-title mgn-bt-5 primary-color"><img
                                 (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
                                 width="50" height="50" id="catalog-image1"
-                                class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
-                                <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
+                                class="rounded pointer-cursor"><div>{{activeCatalog.catalogName}}</div></h5>
+                                <!-- <p class="catalog-desc module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
                                     {{activeCatalog.catalogDesc}}</p>
-                                <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
-                    </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 catalog-icons no-padding-small disp-flex">
-                        <div class="mgn-rt-10 disp-flex"
-                            *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
-                            <img class="ordericon home" src="../../../../assets/images/Delivery.svg" />
-                            <div class="mgn-lt-5">Home Delivery<div class="font-small "
-                                    *ngIf="activeCatalog.homeDelivery.deliveryRadius">
-                                    (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
+                                <p class="catalog-desc" *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p> -->
+                                
+                        </div>
+                        <div class="catalog-icons no-padding-small disp-flex">
+                            <div class="home-delivery mgn-rt-10 disp-flex align-items-center"
+                                *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
+                                <img class="ordericon home" src="../../../../assets/images/Delivery.svg" />
+                                <div class="mgn-lt-5">Home Delivery<div class="font-small "
+                                        *ngIf="activeCatalog.homeDelivery.deliveryRadius">
+                                        (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
+                                </div>
+                            </div>
+                            <div class="store-pickup disp-flex align-items-center"
+                                *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails">
+                                <img class="ordericon pickup" src="../../../../assets/images/order/Storepickup.svg" />
+                                <div class="mgn-lt-5">Store Pickup</div>
                             </div>
                         </div>
-                        <span class=""
-                            *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails"><img
-                                class="ordericon pickup"
-                                src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
+                    </div>
+                    <div>
+                        <p class="catalog-desc module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
+                            {{activeCatalog.catalogDesc}}</p>
+                        <p class="catalog-desc" *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
                     </div>
                 </div>
                 <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"

@@ -1112,8 +1112,8 @@ img.ordericon.pickup {
   height: 35px;
 }
 img.ordericon.home {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 }
 .line-clamp {
   display: -webkit-box !important;
@@ -1708,5 +1708,142 @@ img.ordericon.home {
 
   .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-fav.small-devices-remove-fav a .display-text {
     width: 110px !important;
+  }
+}
+
+.serv-head.order-serv-head {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 12px 15px !important;
+  background-color: steelblue !important;
+}
+
+.serv-head.order-serv-head > div:nth-child(1) {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.serv-head.order-serv-head > div:nth-child(2) {
+  margin-top: 8px !important;
+}
+
+.serv-head.order-serv-head .catalog-title {
+  color: gold !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.serv-head.order-serv-head .catalog-icons {
+  color: gold !important;
+  min-width: 310px !important;
+}
+
+.serv-head.order-serv-head .catalog-icons .store-pickup div,
+.serv-head.order-serv-head .catalog-icons .home-delivery div {
+  font-size: 16px !important;
+}
+
+.serv-head.order-serv-head .catalog-icons .home-delivery div .font-small {
+  font-size: 13.5px !important;
+}
+
+@media (max-width: 650px) {
+  .serv-head.order-serv-head .catalog-title div{
+    font-size: 16px !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons {
+    min-width: auto !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons .store-pickup,
+  .serv-head.order-serv-head .catalog-icons .home-delivery {
+    flex-direction: column !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons .home-delivery {
+    margin-right: 5px !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons .store-pickup div,
+  .serv-head.order-serv-head .catalog-icons .home-delivery div {
+    margin-left: 0 !important;
+    font-size: 12px !important;
+    text-align: center !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons .home-delivery div .font-small {
+    font-size: 10px !important;
+  }
+}
+
+.serv-head.order-serv-head .catalog-desc {
+  margin: 0 !important;
+  font-size: 13px !important;
+  color: white !important;
+}
+
+@media (max-width: 650px) {
+  .serv-head.order-serv-head .catalog-desc {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 650px) {
+  #catalog-image1 {
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .serv-head.order-serv-head .catalog-title div{
+    font-size: 13.5px !important;
+  }
+}
+
+.serv-head.service-serv-head {
+  background-color: steelblue !important;
+  padding: 12px 15px !important;
+}
+
+.serv-head.service-serv-head h5 {
+  color: gold !important;
+  font-weight: 500 !important;
+}
+
+.serv-head.service-serv-head h6 {
+  color: white !important;
+  margin-bottom: 0 !important;
+  font-size: 13px !important;
+}
+
+@media (max-width: 650px) {
+  .serv-head.service-serv-head h5 {
+    font-size: 16px !important;
+  }
+
+  .serv-head.service-serv-head h6 {
+    font-size: 11px !important;
+  }
+}
+
+.bus-page .dept-title-h4.department-title {
+  text-decoration: none !important;
+  text-align: right !important;
+  padding: 12px 15px !important;
+  background-color: darkslategrey !important;
+  color: white !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
+  font-size: 19px !important;
+}
+
+@media (max-width: 650px) {
+  .bus-page .dept-title-h4.department-title {
+    font-size: 15px !important;
   }
 }
