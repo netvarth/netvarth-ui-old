@@ -86,7 +86,7 @@
 
                         </h4>
                     </div>
-                    <div *ngIf="!isfutureAvailableTime" class="red">
+                    <div [hidden]="isfutureAvailableTime" class="red">
                         <span>No timings are available</span>
                       </div>
                     

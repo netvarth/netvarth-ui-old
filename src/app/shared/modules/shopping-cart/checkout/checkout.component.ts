@@ -101,7 +101,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   hold_sel_checkindate;
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
   ddate;
-  isfutureAvailableTime = false;
+  isfutureAvailableTime :boolean;
   storeContactNw: any;
   showSide = false;
   orderType = '';
@@ -563,8 +563,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoggedIn() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
+      console.log(customer_phonenumber);
       this.loginForm.get('phone').setValue(customer_phonenumber);
       // this.getaddress();
     }
