@@ -6,7 +6,6 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProviderWaitlistLocationsModule } from '../../../../ynw_provider/components/provider-waitlist-locations/provider-waitlist-locations.module';
 import { DepartmentModule } from '../../../../ynw_provider/shared/modules/department/department.module';
 import { GeneralSettingsRoutingModule } from './general-settings.routing.module';
 import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
@@ -24,7 +23,6 @@ import { DepartmentListComponent } from './departments/department-list/departmen
         MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
-        ProviderWaitlistLocationsModule,
         DepartmentModule,
         LoadingSpinnerModule,
         BreadCrumbModule,

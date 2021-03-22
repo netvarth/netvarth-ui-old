@@ -351,19 +351,19 @@ export class SharedFunctions {
 
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
-        resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
-      } else {
+      // if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+      //   resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
+      // } else {
         this.shared_service.gets3url(src)
           .subscribe(
             data => {
-              this.lStorageService.setitemonLocalStorage('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data);
               resolve(data);
             },
             error => {
               reject(error);
             });
-      }
+      // }
     });
     return promise;
   }

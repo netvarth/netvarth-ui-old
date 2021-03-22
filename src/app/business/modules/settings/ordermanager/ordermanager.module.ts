@@ -36,9 +36,6 @@ import { OrdermanagerComponent } from './ordermanager.component';
   declarations: [
     OrdermanagerComponent,
   ],
-  entryComponents: [
-     // AddProviderNonworkingdaysComponent
-  ],
   exports: [OrdermanagerComponent]
 })
 export class OrdermanagerModule { }

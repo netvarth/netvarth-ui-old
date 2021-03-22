@@ -11,13 +11,7 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
 import { WaitlistMgrComponent } from './waitlistmgr.component';
 import { WaitlistMgrRoutingModule } from './waitlistmgr.routing.module';
-// import { ProviderWaitlistLocationDetailComponent } from '../../../ynw_provider/components/provider-waitlist-location-detail/provider-waitlist-location-detail.component';
-// import { DepartmentsComponent } from '../../../ynw_provider/components/departments/departments.component';
-// import { DepartmentDetailComponent } from '../../../ynw_provider/components/departments/details/department.details.component';
-// import { ProviderWaitlistLocationsModule } from '../../../ynw_provider/components/provider-waitlist-locations/provider-waitlist-locations.module';
-import { ProviderWaitlistOnlineCheckinModule } from '../../../../ynw_provider/components/provider-waitlist-online-checkin/provider-waitlist-online-checkin.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-// import { DepartmentModule } from '../../../ynw_provider/shared/modules/department/department.module';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
 import { SelectionService } from '../../../../shared/services/selectionService';
 @NgModule({
@@ -34,17 +28,11 @@ import { SelectionService } from '../../../../shared/services/selectionService';
         ReactiveFormsModule,
         ModalGalleryModule,
         GalleryModule,
-        // ProviderWaitlistLocationsModule,
-        ProviderWaitlistOnlineCheckinModule,
         NgbTimepickerModule,
-        // DepartmentModule,
         WaitlistQueuesModule
     ],
     declarations: [
-        WaitlistMgrComponent,
-        // ProviderWaitlistLocationDetailComponent,
-        // DepartmentsComponent,
-        // DepartmentDetailComponent
+        WaitlistMgrComponent
     ],
     exports: [
         WaitlistMgrComponent
