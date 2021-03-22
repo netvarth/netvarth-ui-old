@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MenuComponent } from './home/menu/menu.component';
 import { FooterNewComponent } from './home/footer/footer.component';
-import { SettingsComponent } from './home/settings/settings.component';
 import { BusinessHeaderComponent } from './home/header/header.component';
 import { BusinessHomeComponent } from './home/business-home.component';
 import { RouterModule } from '@angular/router';
@@ -60,7 +59,6 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         MenuComponent,
         BusinessHeaderComponent,
         FooterNewComponent,
-        SettingsComponent,
         BusinessHomeComponent,
         BusinessComponent,
         ProviderSystemAuditLogComponent,

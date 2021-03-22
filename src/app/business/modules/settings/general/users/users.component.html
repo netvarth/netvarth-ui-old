@@ -1,14 +1,8 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
-        (performAction)="performActions($event)"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Users
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </h5>
@@ -18,102 +12,85 @@
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="card p0 w-dta">
-                    <div class="col-md-12 no-padding">
-                            <div class="card" *ngIf="api_loading">
-                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                            </div>
+                <div class="col-md-12 no-padding">
+                    <div class="card" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <ul class="nav jd-custom-nav chkn-dash">
+                        <li class="dropdown notifications-menu pull-right">
+                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+                                class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                <span>
+                                    <i class="fa fa-plus"></i> User
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="dropdown notifications-menu pull-right">
+                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                                data-toggle="control-sidebar">
+                                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="filtericonTooltip">
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <aside class="filterSidebar" *ngIf="filter_sidebar">
+                    <section class="sidebar" style="overflow:auto;height:568px">
+                        <div class="filterClosebtn">
+                            <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                            <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
+                                All</span>
                         </div>
 
-                        <!-- <div class="col-md-12 no-padding" *ngIf="!api_loading">
-                                <div class="card no-padding">
-                                    <div class="copy"> -->
-                                        <div class="col-md-12 no-padding" *ngIf="!api_loading">
-                                            <ul class="nav jd-custom-nav chkn-dash">
-                                                <li class="dropdown notifications-menu pull-right">
-                                                    <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                                        (click)="addBranchSP()"
-                                                        class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                                        <span>
-                                                            <i class="fa fa-plus"></i> User
-                                                        </span>
-                                                    </a>
-                                                </li>
+                        <ul class="sidebar-menu">
+                            <div class="filterTextinput">
+                                <li class="filterli">
+                                    <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
+                                        (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="20"
+                                        class="filterTextbox" placeholder="First Name">
+                                </li>
+                            </div>
 
-                                                <li class="dropdown notifications-menu pull-right">
-                                                    <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                                                        data-toggle="control-sidebar">
-                                                        <i class="icon-filter-one" (click)="showFilterSidebar()"
-                                                            [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip">
-                                                        </i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                            <div class="filterTextinput">
+                                <li class="filterli">
+                                    <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
+                                        (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)" maxlength="10"
+                                        class="filterTextbox" placeholder="Last Name">
+                                </li>
+                            </div>
+                            <div class="filterTextinput">
+                                <li class="filterli">
+                                    <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
+                                        #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
+                                        maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                </li>
 
-                                        </div>
-                                        <aside class="filterSidebar" *ngIf="filter_sidebar">
-                                            <section class="sidebar" style="overflow:auto;height:568px">
-                                                <div class="filterClosebtn">
-                                                    <i class="icon-filter-one-op ng-star-inserted closeFilter"
-                                                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                                        [matTooltip]="'Close filter window'"></i>
-                                                    <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                                                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
-                                                        All</span>
-                                                </div>
+                            </div>
+                            <div>
+                                <li class="filterli filterDatepicker">
+                                    <mat-form-field class="userfilter">
+                                        <mat-select id="userType" #userType [(ngModel)]="filter.userType"
+                                            placeholder="User type" (selectionChange)="doSearch()"
+                                            style="height: 0px;padding: 2px;">
+                                            <mat-option *ngFor="let user of userTypesFormfill" [value]="user">
+                                                {{user}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </li>
+                            </div>
+                        </ul>
+                    </section>
+                </aside>
 
-                                                <ul class="sidebar-menu">
-                                                    <div class="filterTextinput">
-                                                        <li class="filterli">
-                                                            <input type="text" id="firstName" [(ngModel)]="filter.firstName"
-                                                                #firstName (blur)="doSearch()"
-                                                                (keyup)="focusInput($event, lastName)" maxlength="20"
-                                                                class="filterTextbox" placeholder="First Name">
-                                                        </li>
-                                                    </div>
-
-                                                    <div class="filterTextinput">
-                                                        <li class="filterli">
-                                                            <input type="text" id="lastName" [(ngModel)]="filter.lastName"
-                                                                #lastName (blur)="doSearch()"
-                                                                (keyup)="focusInput($event, primaryMobileNo)" maxlength="10"
-                                                                class="filterTextbox" placeholder="Last Name">
-                                                        </li>
-                                                    </div>
-                                                    <div class="filterTextinput">
-                                                        <li class="filterli">
-                                                            <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                                                #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
-                                                                maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                                                        </li>
-
-                                                    </div>
-                                                    <div>
-                                                        <li class="filterli filterDatepicker">
-                                                            <mat-form-field class="userfilter">
-                                                                <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
-                                                                    (selectionChange)="doSearch()" style="height: 0px;padding: 2px;">
-                                                                    <mat-option *ngFor="let user of userTypesFormfill"
-                                                                        [value]="user">
-                                                                        {{user}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </mat-form-field>
-                                                        </li>
-                                                    </div>
-                                                </ul>
-                                            </section>
-                                        </aside>
-                                  
                 <table class="table childDetails singleDash" style="font-size: .875rem;">
-                    <!-- <thead id="childActionBar" class="qBoardselected-table">
-                        <tr>
-                            <th style="padding: 20px;"></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead> -->
                     <tbody *ngIf="users_list.length==0 && !api_loading">
                         <tr>
                             <td colspan="5" class="no-appt">
@@ -124,30 +101,35 @@
                     <tbody *ngFor="let user of users_list | orderBy: order">
                         <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
                             <td>
-                                    <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'" class="bold pull-left mgn-lt-5 teli-wtsap-a"
-                                    >
+                                <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'"
+                                    class="bold pull-left mgn-lt-5 teli-wtsap-a">
                                     {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
-                                   
+
                                 </div>
-                                <div *ngIf="user.userType === 'PROVIDER' " class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
-                                (click)="manageSettings(user.id)">
-                                {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
-                               
-                            </div>
+                                <div *ngIf="user.userType === 'PROVIDER' "
+                                    class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
+                                    (click)="manageSettings(user.id)">
+                                    {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
+
+                                </div>
                             </td>
                             <td>
-                                    <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label | capitalizeFirst}}</span>
-                                    <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label | capitalizeFirst}}</span>
-                                    <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
-                                    <!-- <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span> -->
+                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label |
+                                    capitalizeFirst}}</span>
+                                <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label |
+                                    capitalizeFirst}}</span>
+                                <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
                             </td>
                             <td>
-                                    <span *ngIf="user.userType === 'PROVIDER' && user.deptId">{{getDepartmentNamebyId(user.deptId)}}</span>
-                                </td>
-                            <td> <div *ngIf="user.userType === 'PROVIDER' ">Jaldee online:
-                                <span class="greenc" *ngIf="user.searchEnabled">On</span>
-                                <span class="red"*ngIf="!user.searchEnabled">Off</span></div>
-                                </td>
+                                <span
+                                    *ngIf="user.userType === 'PROVIDER' && user.deptId">{{getDepartmentNamebyId(user.deptId)}}</span>
+                            </td>
+                            <td>
+                                <div *ngIf="user.userType === 'PROVIDER' ">Jaldee online:
+                                    <span class="greenc" *ngIf="user.searchEnabled">On</span>
+                                    <span class="red" *ngIf="!user.searchEnabled">Off</span>
+                                </div>
+                            </td>
 
 
                             <td>
@@ -161,17 +143,12 @@
                                         <button mat-menu-item (click)="personalProfile(user.id)">
                                             Personal Details
                                         </button>
-                                        <button *ngIf="user.userType === 'PROVIDER'"
-                                            mat-menu-item (click)="manageSettings(user.id)">
+                                        <button *ngIf="user.userType === 'PROVIDER'" mat-menu-item
+                                            (click)="manageSettings(user.id)">
                                             Settings
                                         </button>
-                                        <!-- <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser && user.status === 'ACTIVE'"
-                                            mat-menu-item (click)="makeDefalutAdmin(user.id)">
-                                            Change to superadmin
-                                        </button> -->
-                                        <button  mat-menu-item (click)="changeUserStatus(user)">
-                                            <i *ngIf="user.status=='INACTIVE' || !user.status"
-                                                class="icon-enable"></i>
+                                        <button mat-menu-item (click)="changeUserStatus(user)">
+                                            <i *ngIf="user.status=='INACTIVE' || !user.status" class="icon-enable"></i>
                                             <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>
                                             {{(user.status=='ACTIVE') ? 'Disable' :'Enable'}}
                                         </button>
@@ -183,177 +160,16 @@
                     <tfoot>
                         <tr>
                             <td colspan="5">
-                                    <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                                    (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                                <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+                                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                                    [curpage]="pagination.startpageval">
                                 </app-pager>
                             </td>
                         </tr>
                     </tfoot>
                 </table>
-                <!-- </div>
-                </div>
-                </div> -->  
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
 </section>
-<!-- <section>
-
-    <div class="content displayboard loc-list users">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                <div class="col-md-12 no-padding">
-                    <div class="card" *ngIf="api_loading">
-                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                    </div>
-                </div>
-                <div class="col-md-12 no-padding" *ngIf="!api_loading">
-                    <div class="card no-padding">
-                        <div class="copy">
-                            <div class="col-md-12 no-padding">
-                                <ul class="nav jd-custom-nav chkn-dash">
-                                    <li class="dropdown notifications-menu pull-right">
-                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                            (click)="addBranchSP()"
-                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                            <span>
-                                                <i class="fa fa-plus"></i> User
-                                            </span>
-                                        </a>
-                                    </li>
-
-                                    <li class="dropdown notifications-menu pull-right">
-                                        <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                                            data-toggle="control-sidebar">
-                                            <i class="icon-filter-one" (click)="showFilterSidebar()"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip">
-                                            </i>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <aside class="filterSidebar" *ngIf="filter_sidebar">
-                                <section class="sidebar" style="overflow:auto;height:568px">
-                                    <div class="filterClosebtn">
-                                        <i class="icon-filter-one-op ng-star-inserted closeFilter"
-                                            (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                            [matTooltip]="'Close filter window'"></i>
-                                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
-                                            All</span>
-                                    </div>
-
-                                    <ul class="sidebar-menu">
-                                        <div class="filterTextinput">
-                                            <li class="filterli">
-                                                <input type="text" id="firstName" [(ngModel)]="filter.firstName"
-                                                    #firstName (blur)="doSearch()"
-                                                    (keyup)="focusInput($event, lastName)" maxlength="20"
-                                                    class="filterTextbox" placeholder="First Name">
-                                            </li>
-                                        </div>
-
-                                        <div class="filterTextinput">
-                                            <li class="filterli">
-                                                <input type="text" id="lastName" [(ngModel)]="filter.lastName"
-                                                    #lastName (blur)="doSearch()"
-                                                    (keyup)="focusInput($event, primaryMobileNo)" maxlength="10"
-                                                    class="filterTextbox" placeholder="Last Name">
-                                            </li>
-                                        </div>
-                                        <div class="filterTextinput">
-                                            <li class="filterli">
-                                                <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                                    #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
-                                                    maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                                            </li>
-
-                                        </div>
-                                        <div>
-                                            <li class="filterli filterDatepicker">
-                                                <mat-form-field class="userfilter">
-                                                    <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
-                                                        (blur)="doSearch()" style="height: 0px;padding: 2px;">
-                                                        <mat-option *ngFor="let user of userTypesFormfill"
-                                                            [value]="user">
-                                                            {{user}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </li>
-                                        </div>
-                                    </ul>
-                                </section>
-                            </aside>
-
-                            <div class="col-md-12" *ngIf="users_list.length==0">
-                                <div class="row">
-                                    <div class="no-dta">
-                                        <p>No Users Found</p>
-                                        <span class="cs-btn bt3" (click)="addBranchSP()">
-                                            User</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 no-padding user" *ngIf="users_list.length!==0">
-                                <div class="col-md-12 dboard" *ngFor="let user of users_list">
-                                    <div class="copy" [class.disabled]="user.status=='INACTIVE'">
-                                        <span class="mbt">
-                                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                        </span>
-                                        <div style="color: #3c8dbc;">
-                                            {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}} <span
-                                                *ngIf="user.userType === 'PROVIDER' && user.deptId">({{getDepartmentNamebyId(user.deptId)}})</span>
-                                        </div>
-
-                                        <div class="c-ot m0">
-                                            <div class="item">
-                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser">{{provider_label}}</span>
-                                                <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
-                                                <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
-                                                <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span>
-                                            </div>
-                                        </div>
-
-                                        <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="personalProfile(user.id)">
-                                                Personal Details
-                                            </button>
-
-
-                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
-                                                mat-menu-item (click)="manageSettings(user.id)">
-                                                Settings
-                                            </button>
-                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser && user.status === 'ACTIVE'"
-                                                mat-menu-item (click)="makeDefalutAdmin(user.id)">
-                                                Change to superadmin
-                                            </button>
-
-
-                                            <button *ngIf="!user.defaultAdminUser" mat-menu-item (click)="changeUserStatus(user)">
-                                                <i *ngIf="user.status=='INACTIVE' || !user.status"
-                                                    class="icon-enable"></i>
-                                                <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>
-                                                {{(user.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                            </button>
-                                        </mat-menu>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="search_paging" *ngIf="loadComplete">
-                                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                                    (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-                                </app-pager>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>  -->
