@@ -23,20 +23,22 @@
                 <span class=" mgn-lt-10 amount">Go to cart</span>
               </h5>
             </div>
-
-            <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action==''">
+            <div class="card" *ngIf="loading">
+              <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+            </div>
+            <div  class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action=='' &&!loading">
               <div class="col-md-12 no-padding-small mgn-up-30">
 
                 <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
-                  <mat-step label="Step1" [completed]="isLoggedIn()" >
-                    <!-- <ng-template matStepperIcon="edit">
+                  <!-- <mat-step label="Step1" [completed]="isLoggedIn()" >
+                   <ng-template matStepperIcon="edit">
                       <mat-icon></mat-icon>
-                    </ng-template> -->
+                    </ng-template>
                     <ng-template matStepLabel>Account</ng-template>
                     <form [formGroup]="loginForm" >
-                      <!-- <mat-form-field>
+                      <mat-form-field>
                         <input  formControlName="phone" readonly="true">
-                      </mat-form-field> -->
+                      </mat-form-field> 
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="phone" required >
                         <label class="ph-label">Mobile number</label>
@@ -46,8 +48,8 @@
                       <button  #firstStep type="button" class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
 
-                  </mat-step>
-                  <mat-step label="Step 2">
+                  </mat-step> -->
+                  <mat-step label="Step 1">
                     <ng-template matStepLabel>Delivery options</ng-template>
                     <div>
                       <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>

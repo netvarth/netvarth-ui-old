@@ -101,7 +101,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   hold_sel_checkindate;
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
   ddate;
-  isfutureAvailableTime :boolean;
+  isfutureAvailableTime=true;
   storeContactNw: any;
   showSide = false;
   orderType = '';
@@ -159,7 +159,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   showCouponWB: boolean;
   cartDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-  @ViewChild('firstStep', { read: ElementRef }) private nextbtn: ElementRef;
+  @ViewChild('firstStep',{static: false}) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   constructor(
@@ -360,7 +360,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
-      this.nextbtn.nativeElement.click();
+    
     } else {
       this.doLogin('consumer');
     }
@@ -560,17 +560,17 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  isLoggedIn() {
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (activeUser) {
-      const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-      const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
-      console.log(customer_phonenumber);
-      this.loginForm.get('phone').setValue(customer_phonenumber);
-      // this.getaddress();
-    }
-    return true;
-  }
+  // isLoggedIn() {
+  //   const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //   if (activeUser) {
+  //     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+  //     const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
+  //     console.log(customer_phonenumber);
+  //    //  this.loginForm.get('phone').setValue(customer_phonenumber);
+  //     // this.getaddress();
+  //   }
+  //   return true;
+  // }
   getDeliveryCharges() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
@@ -845,10 +845,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (this.isLoggedIn()) {
-          this.nextbtn.nativeElement.click();
-        }
-   
+       
       } else if (result === 'showsignup') {
        
       }

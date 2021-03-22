@@ -27,7 +27,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
-  isfutureAvailableTime = false;
+  isfutureAvailableTime=true ;
   selectedQeTime: any;
   order_date: any;
   selectedQsTime: any;
@@ -161,8 +161,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
-      this.getOrderAvailableDatesForPickup();
-      this.getOrderAvailableDatesForHome();
+    //  this.getOrderAvailableDatesForPickup();
+     // this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.getStoreContact();
       this.showfuturediv = false;
@@ -240,10 +240,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     });
 
 
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
+
 
   }
   getItemQty(item) {
