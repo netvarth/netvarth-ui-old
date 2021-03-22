@@ -15,7 +15,6 @@ import { ConsumerWaitlistHistoryComponent } from '../consumer-waitlist-history/c
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
-import { SearchProviderModule } from '../search-provider/search-provider.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { SearchFormModule } from '../search-form/search-form.module';
 import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/footer.module';
@@ -40,7 +39,6 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
         Nl2BrPipeModule,
         ConsumerCheckinHistoryListModule,
         SearchDetailRoutingModule,
-        SearchProviderModule,
         RouterModule,
         LoadingSpinnerModule,
         SearchFormModule,

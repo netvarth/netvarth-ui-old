@@ -25,7 +25,6 @@ const routes: Routes = [
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
-      // { path: 'inbox', loadChildren: () => import('./modules/mailbox/mailbox.module').then(m => m.MailboxModule) },
       { path: 'inbox', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
       { path: 'finance', loadChildren: () => import('./modules/learnmore/finance/finance.module').then(m => m.FinanceModule) },
       { path: 'foodJoints', loadChildren: () => import('./modules/learnmore/foodjoints/foodjoints.module').then(m => m.FoodjointsModule) },
@@ -39,7 +38,6 @@ const routes: Routes = [
       { path: 'otherMiscellaneous', loadChildren: () => import('./modules/learnmore/otherMiscellaneous/otherMiscellaneous.module').then(m => m.OtherMiscellaneousModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
       { path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
-     // { path: 'medicalrecord', loadChildren: () => import('../business/modules/medicalrecord/medicalrecord.module').then(m => m.MedicalrecordModule) },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
@@ -47,7 +45,6 @@ const routes: Routes = [
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
-      { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) }
     ]
   }
 ];
