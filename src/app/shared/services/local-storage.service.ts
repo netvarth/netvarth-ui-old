@@ -66,10 +66,10 @@ export class LocalStorageService {
           }
         }
         if (uniqueId) {
-          localStorage.setItem('mUniqueId', uniqueId);
+          localStorage.setItem('mUniqueId', JSON.stringify(uniqueId));
         }
         if (devicename) {
-          localStorage.setItem('deviceName', devicename);
+          localStorage.setItem('deviceName', JSON.stringify(devicename));
         }
       }
 }
