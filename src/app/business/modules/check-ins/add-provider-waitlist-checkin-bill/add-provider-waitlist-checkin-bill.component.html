@@ -850,7 +850,7 @@
                                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                                         <button type="button" class="btn btn-light-success  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill(bill_data)">{{settle_bill_cap}}</button>
 
-                                        <button type="button" class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="refund_show" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund" (click)="refundBtnShow('refund')">Refund</button>
+                                        <button type="button" class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="refund_show.length != 0" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund" (click)="refundBtnShow('refund')">Refund</button>
 
 
                                         <button type="button" class="full_wdth btn btn-light-info  font-weight-bolder mr-3 my-1 lh-p8 fnt-p8" (click)="printMe()" *ngIf="bill_data.billStatus=='Settled'">Print</button>
