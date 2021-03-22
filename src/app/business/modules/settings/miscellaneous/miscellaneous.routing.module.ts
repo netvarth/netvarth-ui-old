@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MiscellaneousComponent } from './miscellaneous.component';
-// import { ProviderNonworkingdaysComponent } from '../../../ynw_provider/components/provider-nonworkingdays/provider-nonworkingdays.component';
 import { JDNComponent } from './jdn/jdn.component';
 
 import { SaleschannelSettingsComponent } from './saleschannel/sc-settings.component';
 
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
-    // {
-    //   path: 'holidays',
-    //   component: ProviderNonworkingdaysComponent
-    // },
     {
       path: 'saleschannel',
       component: SaleschannelSettingsComponent

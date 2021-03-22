@@ -286,7 +286,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             }
         }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            console.log('inside');
             this.step = 3;
+            return;
         } 
         
         if (this.step === 2) {
@@ -412,8 +414,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                autoconfirm: [true],
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
-                cancelationPolicyStatus: [true],
-                cancelationPolicy: [''],
+               // cancelationPolicyStatus: [true],
+               // cancelationPolicy: [''],
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
@@ -433,7 +435,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
             this.amForm.get('advancePaymentStatus').setValue('NONE');
-            this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
+            //this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
 
             if (this.action === 'edit') {
                 this.getCatalog(this.catalog_id).then(
@@ -663,8 +665,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount || '',
-            'cancelationPolicyStatus': true,
-            'cancelationPolicy': this.catalog.cancellationPolicy,
+          //  'cancelationPolicyStatus': true,
+           // 'cancelationPolicy': this.catalog.cancellationPolicy,
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
@@ -1050,7 +1052,7 @@ console.log('hi submit');
             },
             'minNumberItem': 1,
             'maxNumberItem': 100,
-            'cancellationPolicy': form_data.cancelationPolicy
+            'cancellationPolicy': 'If cancellation is necessary, we require that you call at least 2 hour in advance.'
 
         };
         if (this.action === 'add') {
@@ -1576,6 +1578,7 @@ console.log('hi submit');
             return;
         }else{
             this.step=this.step +1; 
+            return;
         }
        
     }
@@ -1606,6 +1609,7 @@ console.log('hi submit');
             return;
         }else{
             this.step=this.step +1;
+            return;
         }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);

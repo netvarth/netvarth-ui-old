@@ -134,3 +134,6 @@ word-break: break-all;
 -ms-hyphens: auto;
 hyphens: auto;
 }
+.addressedit:hover{
+  color: #0707eca1 !important;
+  }

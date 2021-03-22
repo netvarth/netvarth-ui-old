@@ -102,6 +102,7 @@ export const Messages = {
   'BPROFILE_PRIVACY_EMAIL_DELETE': 'Do you really want to remove the Email id "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_INVALID': 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
+  'CONFIG_VIRTUAL_CALL_URL_VALID': 'Please enter a valid link',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   'BPROFILE_COVER_ADD': 'Cover photo uploaded successfully',
   'BPROFILE_COVER_DEL': 'Cover photo has been removed',

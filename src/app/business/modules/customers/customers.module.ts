@@ -11,7 +11,6 @@ import { CustomersListComponent } from './list/customers-list.component';
 import { JaldeeFilterModule } from '../../../shared/modules/filter/filter.module';
 import { DateFormatPipeModule } from '../../../shared/pipes/date-format/date-format.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
-import { CustomerModule } from '../customer/customer.module';
 import { CustomerCreateComponent } from './customer-create/customer-create.component';
 import { CustomerSearchComponent } from './search/customer-search.component';
 import { OwlModule } from 'ngx-owl-carousel';
@@ -37,7 +36,6 @@ import { CustomerDetailComponent } from './customer-details/customer-details.com
         JaldeeFilterModule,
         DateFormatPipeModule,
         FormMessageDisplayModule,
-        CustomerModule,
         CheckinAddMemberModule,
         NgxMatSelectSearchModule,
         NgbModule,

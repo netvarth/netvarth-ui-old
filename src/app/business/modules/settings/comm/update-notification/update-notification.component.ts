@@ -42,7 +42,7 @@ export class UpdateNotificationComponent implements OnInit {
             result = pattern.test(this.callingMode);
         }
         if (!result) {
-            this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONFIG_VIRTUAL_CALL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             this.virtualCallModesList.forEach(modes => {

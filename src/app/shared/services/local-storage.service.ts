@@ -12,13 +12,13 @@ export class LocalStorageService {
 
     /* holds the variables which not removed by clearLocalstorage() method */
     dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'qrp', 'qB'];
-    
+
     /**
      * Default constructor
      */
     constructor(
         // @Inject(PLATFORM_ID) private platformId: object
-        ) {
+    ) {
     }
 
     /**
@@ -27,9 +27,9 @@ export class LocalStorageService {
      */
     public getitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            if (localStorage.getItem(itemname) !== 'undefined') {
-                return JSON.parse(localStorage.getItem(itemname));
-            }
+        if (localStorage.getItem(itemname) !== 'undefined') {
+            return JSON.parse(localStorage.getItem(itemname));
+        }
         // }
         // return null;
     }
@@ -40,7 +40,7 @@ export class LocalStorageService {
      */
     public setitemonLocalStorage(itemname, itemvalue) {
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem(itemname, JSON.stringify(itemvalue));
+        localStorage.setItem(itemname, JSON.stringify(itemvalue));
         // }
     }
     /**
@@ -49,27 +49,27 @@ export class LocalStorageService {
      */
     public removeitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem(itemname);
+        localStorage.removeItem(itemname);
         // }
     }
     /**
      * Method to clear the local storage items except the ones contained in 'dont_delete_localstorage'
      */
-     public clearLocalstorage() {
+    public clearLocalstorage() {
         this.removeitemfromLocalStorage('ynw-credentials');
         const uniqueId = localStorage.getItem('mUniqueId');
         const devicename = localStorage.getItem('deviceName');
         for (let index = 0; index < localStorage.length; index++) {
-          if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-            localStorage.removeItem(localStorage.key(index));
-            index = index - 1; // manage index after remove
-          }
+            if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
+                localStorage.removeItem(localStorage.key(index));
+                index = index - 1; // manage index after remove
+            }
         }
         if (uniqueId) {
-          localStorage.setItem('mUniqueId', uniqueId);
+            localStorage.setItem('mUniqueId', JSON.stringify(uniqueId));
         }
         if (devicename) {
-          localStorage.setItem('deviceName', devicename);
+            localStorage.setItem('deviceName', JSON.stringify(devicename));
         }
-      }
+    }
 }
