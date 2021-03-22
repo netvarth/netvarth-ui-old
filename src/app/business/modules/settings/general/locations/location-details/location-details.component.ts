@@ -608,8 +608,14 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
         });
         dialogrefd.afterClosed().subscribe(result => {
-          this.locationFind = 'GOOGLEMAP';
-        });
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'GOOGLEMAP';
+            this.clearFormFields();
+          }
+         });
 
     } else if (val === 'autodetect') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
