@@ -51,7 +51,6 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
@@ -79,7 +78,6 @@ import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
-import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
@@ -138,7 +136,6 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     LiveChatComponent,
     JaldeeVideoComponent,
-    JaldeeBlogComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent,
@@ -188,7 +185,6 @@ export function init_app(globalService: GlobalService) {
     ProviderAppModule,
     LoadingSpinnerModule,
     LazyModule,
-    SearchProviderModule,
     ScrollToModule.forRoot(),
     DateFormatPipeModule,
     DisplayboardLayoutContentModule,

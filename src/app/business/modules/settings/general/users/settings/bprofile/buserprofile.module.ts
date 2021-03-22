@@ -43,7 +43,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     declarations: [
         BuserProfileComponent,
         MediaComponent,
-        // AddProviderBprofileSpokenLanguagesComponent,
         ProviderUserBprofileSearchDynamicComponent,
         LanguagesComponent,
         AdditionalInfoComponent,
@@ -55,7 +54,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
         AddProviderUserBprofileSpokenLanguagesComponent
     ],
     entryComponents: [
-        // AddProviderBprofileSpokenLanguagesComponent,
         ProviderUserBprofileSearchDynamicComponent,
         UserBprofileSearchPrimaryComponent,
         UserSpecializationComponent,

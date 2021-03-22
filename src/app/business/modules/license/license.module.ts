@@ -13,9 +13,7 @@ import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-
 import { ProviderAddonAuditlogsComponent } from '../../../ynw_provider/components/provider-addon-auditlogs/provider-addon-auditlogs.component';
 import { KeywordsComponent } from './keywords/keywords.component';
 import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
-import { ProviderLicenseUsageComponent } from '../../../ynw_provider/components/provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
-import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { licenseusageComponent } from './licenseusage/licenseusage.component';
 import { StatementsComponent } from './statements/statements.component';
@@ -32,7 +30,6 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         BreadCrumbModule,
         LicenseRoutingModule,
         PagerModule,
-        // CapitalizeFirstPipeMAodule,
         CapitalizeFirstPipeModule
 
     ],
@@ -48,9 +45,7 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         InvoiceStatusComponent,
         licenseusageComponent,
         UpgradeLicenseComponent,
-        ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
-        ProviderLicenceInvoiceDetailComponent,
         StatementsComponent,
         ViewPrevStatementComponent,
         AddonDetailComponent
@@ -59,9 +54,7 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         UpgradeLicenseComponent,
-        ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
-        ProviderLicenceInvoiceDetailComponent,
         StatementsComponent,
         ViewPrevStatementComponent
     ],

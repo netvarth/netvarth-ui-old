@@ -36,6 +36,9 @@
 }
 .main-sec {
     padding: 0 10px 10px 15px;
+    // min-height: 180px !important;
+    max-height: 180px !important;
+
 }
 .main-sec .datetime {
     font-size: 1.2rem;

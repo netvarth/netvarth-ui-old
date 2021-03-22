@@ -8,8 +8,6 @@ import { SharedModule } from '../../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
-import { MediaComponent } from './media/media.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
@@ -46,8 +44,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     ],
     declarations: [
         BProfileComponent,
-        MediaComponent,
-        AddProviderBprofileSpokenLanguagesComponent,
         ProviderBprofileSearchDynamicComponent,
         LanguagesComponent,
         QRCodeGeneratorComponent,
@@ -58,7 +54,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
         SocialMediaComponent
     ],
     entryComponents: [
-        AddProviderBprofileSpokenLanguagesComponent,
         QRCodeGeneratorComponent,
         ProviderBprofileSearchDynamicComponent
     ],

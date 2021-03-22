@@ -1156,8 +1156,10 @@ ul.bus-actions-horiz li {
 
 .search-detail-component.content.search-details-list .c-outer .c-body .ct2 {
   /* background-color: #ffffff !important; */
-  background-color: #dedede !important;
-  border-color: white !important;
+  /* background-color: #dedede !important; */
+  background: none !important;
+  border: 2px solid #dedede !important;
+  /* border-color: white !important; */
   /* box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important; */
   border-radius: 10px !important;
   /* border-top-left-radius: 0px !important;

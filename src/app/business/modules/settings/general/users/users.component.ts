@@ -3,7 +3,6 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { projectConstants } from '../../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
@@ -136,48 +135,9 @@ export class BranchUsersComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
     }
-    // manageOnlineProfile(userId) {
-    //     this.routerobj.navigate(['provider', 'settings', 'general', 'users', userId, 'settings', 'bprofile']);
-    // }
     manageSettings(userId) {
         this.routerobj.navigate(['provider', 'settings', 'general', 'users', userId, 'settings']);
     }
-    linkProfile(userid) {
-        this.linkprofiledialogRef = this.dialog.open(LinkProfileComponent, {
-            width: '50%',
-            data: {
-                provId: userid
-            },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            autoFocus: true,
-            disableClose: true
-
-        });
-        this.linkprofiledialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                if (result === 'reloadlist') {
-                    this.getUsers();
-                }
-            }
-        });
-    }
-    // changeUserStatus(user) {
-    //     let passingStatus;
-    //     if (user.status === 'ACTIVE') {
-    //         passingStatus = 'Disable';
-    //     } else {
-    //         passingStatus = 'Enable';
-    //     }
-    //     this.provider_services.disableEnableuser(user.id, passingStatus)
-    //         .subscribe(
-    //             () => {
-    //                 this.getUsers();
-    //             },
-    //             (error) => {
-    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                 this.getUsers();
-    //             });
-    // }
     changeUserStatus(user) {
         let passingStatus;
         if (user.status === 'ACTIVE') {
