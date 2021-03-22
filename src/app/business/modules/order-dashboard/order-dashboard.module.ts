@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CustomerModule } from '../customer/customer.module';
+import { ContactInfoComponent } from './order-wizard/contact-info/contact-info.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CustomerModule } from '../customer/customer.module';
     OrderItemsComponent,
     DisplaylabelpopupComponent,
     OrderWizardComponent,
-    AddressComponent
+    AddressComponent,
+    ContactInfoComponent
 
 
   ],

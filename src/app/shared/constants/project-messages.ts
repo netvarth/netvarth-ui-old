@@ -819,6 +819,7 @@ export const Messages = {
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',
   'NO_QUEUE_MSG': 'No queues set for the selected location',
+  'NO_SCHEDULE_MSG': 'No schedules set for the selected location',
   'ACTIONS_CAP': 'Actions',
   'ITEM_HI_CAP': 'Item',
   'ITEM_NAME_CAP': 'Item Name',

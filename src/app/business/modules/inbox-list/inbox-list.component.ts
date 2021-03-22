@@ -1,5 +1,5 @@
 
-import { Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
@@ -76,6 +76,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgHeight;
   scrollDone = false;
   qParams;
+  customer_label;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
   @ViewChild('reply') replyFrame: ElementRef;
   constructor(
@@ -98,6 +100,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -118,23 +121,33 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
       );
     this.loading = true;
-    this.onResize();
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.getInboxMessages();
+    });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    if (this.screenWidth <= 991) {
-      this.userHeight = screenHeight - 320;
-      this.msgHeight = screenHeight - 421;
+ 	if (this.screenWidth <= 991) {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 303;
+      } else {
+        this.userHeight = screenHeight - 234;
+      }
+      this.msgHeight = screenHeight - 425;
     } else {
-      this.userHeight = screenHeight - 285;
-      this.msgHeight = screenHeight - 405;
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 264;
+      } else {
+        this.userHeight = screenHeight - 208;
+      }
+      this.msgHeight = screenHeight - 410;
     }
   }
   ngOnDestroy() {
@@ -237,6 +250,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
+    this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (this.small_device_display) {
@@ -295,7 +309,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName) ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -351,11 +365,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       caption: []
     };
   }
-  getUser(user, type?) {
-    if (!type) {
-      user = user.split('=');
-      user = user[0];
-    }
+  getUserShort(user) {
+    user = user.split('=');
+    user = user[0];
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
@@ -396,10 +408,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     //   setTimeout(() => {
     //     this.userMsg.toArray().forEach(element => {
     //       if (element.nativeElement.innerHTML.trim() === this.selectedCustomer.trim()) {
-    //         console.log(element.nativeElement);
 
     // var height = element.nativeElement.offsetHeight;
-    // console.log(height);
     //     window.scroll({
     //         top: height,
     //         left: 0,
@@ -574,6 +584,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getMsgType(msg) {
     return 'chat';
+  }
+    gotoCustomers() {
+    this.router.navigate(['/provider/customers']);
   }
   replytoMsg(msg) {
 this.replyMsg = msg;

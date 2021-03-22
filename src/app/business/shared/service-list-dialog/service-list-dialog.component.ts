@@ -1,23 +1,26 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-service-list-dialog',
   templateUrl: './service-list-dialog.component.html',
   styleUrls: ['./service-list-dialog.component.css']
 })
-export class ServiceListDialogComponent implements OnInit {
+export class ServiceListDialogComponent implements OnInit,OnDestroy {
 
   former_chosen_services: any = [];
   service_list: any = [];
   selectedServices: any = [];
 loading=true;
+subscription:Subscription;
+  mode: any;
   constructor(public dialogRef: MatDialogRef<ServiceListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private provider_services: ProviderServices) {
-
+      this.mode=this.data.mode;
   }
 
   ngOnInit(): void {
@@ -25,10 +28,13 @@ loading=true;
     this.getServices();
 
   }
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 
   getServices() {
     const filter1 = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
-    this.provider_services.getServicesList(filter1)
+   this.subscription= this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {
           this.service_list = data;

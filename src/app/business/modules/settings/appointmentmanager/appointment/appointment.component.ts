@@ -118,6 +118,7 @@ export class AppointmentComponent implements OnInit {
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '', 'jaldeeid': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;

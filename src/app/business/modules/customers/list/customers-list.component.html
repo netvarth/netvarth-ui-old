@@ -6,208 +6,12 @@
     </div>
   </div>
 </section>
-<!-- <section class="dashboard content customers" *ngIf="!apiloading">
-  <div class="col-md-12 no-padding-small">
-    <div class="row">
-      <div class="card p0 w-dta ">
-        <div class="col-md-12 no-padding">
-          <ul class="nav cust-dash jd-custom-nav">
-            <li class="pad-10 pull-left" *ngIf="customers.length>1">
-              <span class="bold" data-toggle="control-sidebar">
-                <input [checked]="allCustomerSelected" type="checkbox" class="ckbx pull-left" (change)="selectAll()" />
-                <span class="statuslink " [matTooltip]="'Select all'">
-                  Select All</span>
-              </span>
-            </li>
-            <li class="dropdown notifications-menu">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                  [matTooltip]="filtericonTooltip">
-                </i>
-              </a>
-            </li>
-            <li class="dropdown notifications-menu"
-              *ngIf="selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10" data-toggle="control-sidebar">
-                <span class="" [matTooltip]="'Send Message'">
-                  <i class="fa fa-comments-o" (click)="CustomersInboxMessage()" style="font-size: 1.1rem"></i> </span>
-              </a>
-            </li>
-            <li class="dropdown notifications-menu" *ngIf="selectedcustomersformsg && selectedcustomersformsg.length>0">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10" data-toggle="control-sidebar">
-                <span class="" [matTooltip]="'Label'">
-                  <i class="label-icon" (click)="showLabelPopup()"></i> </span>
-              </a>
-            </li>
-            <li class="dropdown notifications-menu">
-              <a (click)="searchCustomer()" class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10"
-                data-toggle="dropdown">
-                <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
-              </a>
-            </li>
-          </ul>
-        </div>
-        <aside class="filterSidebar" *ngIf="filter_sidebar">
-          <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
-            <div class="filterClosebtn">
-              <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
-                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-              <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
-            </div>
-            <ul class="sidebar-menu">
-              <div class="filterTextinput">
-                <li class="filterli">
-                  <input type="text" #jaldeeid (blur)="doSearch()" (keyup)="focusInput($event,lName)"
-                    class="filterTextbox" [(ngModel)]="filter.jaldeeid" placeholder="{{customer_label | capitalizeFirst}} id">
-                </li>
-              </div>
-              <div class="filterTextinput">
-                <li class="filterli">
-                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
-                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                </li>
-              </div>
-              <div class="filterTextinput">
-                <li class="filterli">
-                  <input type="text" #lName (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                    class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                </li>
-              </div>
-              <div class="filterTextinput">
-                <li class="filterli filterDatepicker">
-                  <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
-                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                    placeholder="Date of birth" readonly>
-                  <mat-datepicker-toggle matSuffix [for]="picker">
-                  </mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </li>
-              </div>
-              <div class="filterTextinput">
-                <li class="filterli">
-                  <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
-                    (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
-                    class="filterTextbox" placeholder="Phone Number">
-                </li>
-              </div>
-              <div class="filterTextinput">
-                <li class="filterli filterDatepicker">
-                  <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                    (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
-                </li>
-              </div>
-              <div *ngIf="providerLabels.length > 0">
-                <label class="filterHeaders">Labels</label>
-                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                  *ngFor="let lbl of providerLabels">
-                  <mat-checkbox [checked]="selectedLabels[lbl.label]" (change)="setLabelFilter(lbl, $event)">
-                    {{lbl.displayName}}</mat-checkbox>
-                </li>
-              </div>
-            </ul>
-          </section>
-        </aside>
-        <div class="col-md-12 cust-sect no-padding table-responsive">
-          <table class="table customerlist-grid">
-            <tbody>
-              <tr class="pointer-cursor" *ngFor="let customer of customers let i=index"
-                [class.selected-customer]="customerSelected[i]" (click)="viewCustomer(customer)">
-                <td class="one">
-                  <input [checked]="customerSelected[i]" type="checkbox" class="ckbx pull-left"
-                    (click)="stopprop($event)" (change)="selectcustomers(i)" />
-                  <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
-                      Id:</b> {{customer.jaldeeId}}</span>
-                  <div class="mgn-lt-15">
-                    <span *ngFor="let label of customer.label | keyvalue"
-                      [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
-                  </div>
-                </td>
-                <td class="one">
-                  <div class="bold pull-left mgn-lt-10">
-                    {{customer.firstName}} {{customer.lastName}}</div>
-                </td>
-                <td class="two">
-                  <span *ngIf="customer.phoneNo && customer.phoneNo.length === 10"><i
-                      class="fa fa-mobile"></i>&nbsp;{{customer.countryCode}} {{customer.phoneNo}}</span>
-                </td>
-                <td class="hidden-xs hidden-sm">
-                  <span *ngIf="customer.email" class="pad-rt-5"><i
-                      class="fa fa-envelope"></i>&nbsp;{{customer.email}}</span>
-                </td>
-                <td class="hidden-xs hidden-sm">
-                  <span *ngIf="customer.lastVisitedDate">Last visited on
-                    {{customer.lastVisitedDate | date: dateFormat }}</span>
-                </td>
-                <td class="four pull-right">
-                  <span>
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
-                      <mat-icon>more_horiz</mat-icon>
-                    </button>
-                  </span>
-                  <mat-menu #appMenu="matMenu">
-                    <button mat-menu-item (click)="viewCustomer(customer)">
-                      <i class="fa fa-eye"></i>
-                      View
-                    </button>
-                    <button mat-menu-item (click)="editCustomer(customer)">
-                      <i class="icon-edit"></i>
-                      Edit
-                    </button>
-                    <button
-                      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                      mat-menu-item (click)="listMedicalrecords(customer)">
-                      <i class="medicalrecordlisticon-customer"></i>
-                      List of MedicalRecords
-                    </button>
-                    <button
-                      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                      mat-menu-item (click)="lastvisits(customer)">
-                      <i class="viewdetails-icon-customer"></i>
-                      Last visits
-                    </button>
-                    <button
-                      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                      mat-menu-item (click)="medicalRecord(customer)">
-                      <i class="medicalrecord-icon-customer"></i>
-                      MedicalRecord
-                    </button>
-                    <button
-                      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                      mat-menu-item (click)="prescription(customer)">
-                      <i class="mr-rx-icon-customer"></i>
-                      Prescription
-                    </button>
-                  </mat-menu>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="search_paging" *ngIf="loadComplete">
-            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
-          </div>
-          <table *ngIf="loadComplete && customers.length === 0">
-            <tr>
-              <td>
-                No {{customer_label | capitalizeFirst}}s Found
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="clearfix"></div>
-</section> -->
-
 <section class="customersList">
   <div class="row p-3">
     <div class="card" *ngIf="groupLoaded">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
     <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0">
-      <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
@@ -240,15 +44,13 @@
           <div class="selected_customers">{{group.description}}</div>
         </div>
       </div>
-      <!--end::Mixed Widget 14-->
     </div>
     <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!groupLoaded">
-      <!--begin::Advance Table Widget 4-->
       <div class="card card-custom card-stretch gutter-b no-padding">
-        <!--begin::Header-->
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all' && groups.length > 0">All
+            <span class="card-label font-1 font-weight-bolder text-dark"
+              *ngIf="selectedGroup == 'all' && groups.length > 0">All
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
@@ -265,7 +67,6 @@
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10"
               *ngIf="selectedGroup == 'all' && groups.length == 0 && selectedcustomersformsg.length == 0"
               data-toggle="modal" data-target="#exampleModalCenter">Create Group</button>
-            <!-- Modal-->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -314,14 +115,17 @@
               Cancel</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
               *ngIf="selectedGroup !== 'all' && showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0">Add</button>
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="removeCustomerFromGroup()" [matTooltip]="'Remove from group'"
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="removeCustomerFromGroup()"
+              [matTooltip]="'Remove from group'"
               *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()" [matTooltip]="'Send message'"
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
+              [matTooltip]="'Send message'"
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon"><i
                 class="flaticon2-chat-1" aria-hidden="true"></i> </button>
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showLabelPopup()" [matTooltip]="'Label'"
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showLabelPopup()"
+              [matTooltip]="'Label'"
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="label-icon"></i></button>
           </div>
@@ -329,7 +133,6 @@
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
               [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
-            <!-- <mat-menu #filtermenu="matMenu"> -->
             <aside class="filterSidebar" *ngIf="filter_sidebar">
               <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
                 <div class="filterClosebtn">
@@ -392,19 +195,14 @@
                 </ul>
               </section>
             </aside>
-            <!-- </mat-menu> -->
           </div>
         </div>
-        <!--end::Header-->
-
-        <!--begin::Body-->
         <div class="card-body pt-0 pb-3">
           <div class="tab-content">
-            <!--begin::Table-->
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                <thead *ngIf="customers.length > 0">
+              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center" *ngIf="customers.length > 0">
+                <thead>
                   <tr class="text-left text-uppercase">
                     <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
                       <span class="text-dark-75">
@@ -415,9 +213,9 @@
                         {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
                         : customer_label + 's'}} selected </div>
                     </th>
-                    <th class="hide_th" style="min-width: 100px">Id</th>
+                    <th class="hide_th" style="min-width: 50px">Id</th>
                     <th class="hide_th" style="min-width: 100px">Phone</th>
-                    <th class="hide_th" style="min-width: 10px">DOB</th>
+                    <!-- <th class="hide_th" style="min-width: 10px">DOB</th> -->
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 10px"></th>
@@ -454,14 +252,16 @@
                         {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
-                    <td class="hide_th">
+                    <!-- <td class="hide_th">
                       <span class="text-dark-75 d-block" *ngIf="customer.dob">
                         {{customer.dob | date : dateFormat}}
                       </span>
-                    </td>
+                    </td> -->
                     <td *ngIf="!showCustomers">
-                      <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
-                      <i *ngIf="customer.phoneNo || customer.email" class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
+                      <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button
+                        (click)="CustomersInboxMessage(customer)">Message</button>
+                      <i *ngIf="customer.phoneNo || customer.email" class="text-dark-50 flaticon2-chat-1 hidden_th"
+                        (click)="CustomersInboxMessage(customer)"></i>
                     </td>
                     <td *ngIf="!showCustomers">
                       <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
@@ -512,65 +312,37 @@
                       </mat-menu>
                     </td>
                   </tr>
-                  <tr *ngIf="!apiloading && customers.length === 0">
-                    No {{customer_label}}s found
-                  </tr>
                 </tbody>
               </table>
+              <div class="no-customer"
+                *ngIf="!apiloading && customers.length === 0 && !filterapplied && selectedGroup == 'all'">
+                <div>
+                You don't have any {{customer_label}}s
+                <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create {{customer_label
+                  |
+                  capitalizeFirst}}</button>
+                </div>
+              </div>
+              <div
+                *ngIf="(!apiloading && customers.length === 0 && filterapplied) || (!apiloading && customers.length === 0 && selectedGroup !== 'all')">
+                No {{customer_label}}s found
+              </div>
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
                 *ngIf="!apiloading && !showCustomers">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
-                <!-- <div class="d-flex center py-2 mr-3">
-                  <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
-                      class="ki ki-bold-double-arrow-back icon-xs"></i></a>
-                  <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
-                      class="ki ki-bold-arrow-back icon-xs"></i></a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
-                  <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                  <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
-                      class="ki ki-bold-arrow-next icon-xs"></i></a>
-                  <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
-                      class="ki ki-bold-double-arrow-next icon-xs"></i></a>
-                </div> -->
-                <!-- <div class="d-flex align-items-center py-3">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-2 text-muted">Loading...</div>
-                        <div class="spinner spinner-primary mr-10"></div>
-                    </div>
-            
-                    <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="text-muted">Displaying 10 of 230 records</span>
-                </div> -->
               </div>
             </div>
-            <!--end::Table-->
           </div>
         </div>
-        <!--end::Body-->
       </div>
-      <!--end::Advance Table Widget 4-->
     </div>
   </div>
-
 
   <script src="../../../../../assets/plugins/global/plugins.bundle.js"></script>
   <script src="../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
   <script src="../../../../../assets/js/scripts.bundle.js"></script>
   <!--end::Global Theme Bundle-->
-
 
   <!--begin::Page Scripts(used by this page)-->
   <script src="../../../../../assets/js/pages/widgets.js"></script>

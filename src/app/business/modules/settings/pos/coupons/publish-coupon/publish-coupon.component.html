@@ -59,6 +59,17 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            <div class="c-ot">
+                                                <div class="item">
+                                                    <span class="ttle">Applicable Days</span>
+                                                    <span *ngFor="let wday of weekdays; index as i">
+                                                        <mat-checkbox  *ngIf="i>0"  [disabled]="true"
+                                                          [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
+                                                        </mat-checkbox>&nbsp;&nbsp;
+                                                    </span>
+                                                </div>
+                                                
+                                            </div>
                                             <div class="c-ot rules-cap">
                                                 <h6>{{rules_cap}}</h6>
                                             </div>
@@ -103,13 +114,14 @@
                                                 <h6>Applicable For</h6>
                                             </div>
                                             <div class="row">
-
+                                              
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                   
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.services.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.services.length}} services
+                                                            <a href="javascript:" (click)="openServiceDialog();">{{coupon.couponRules.policies.services.length}} services</a> 
                                                         </span>
 
                                                     </div>
@@ -117,7 +129,7 @@
                                                         *ngIf="coupon.couponRules.policies.departments.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.departments.length}}
+                                                            <a href="javascript:" (click)="openDepartmentDialog();">{{coupon.couponRules.policies.departments.length}}</a> 
                                                             departments
                                                         </span>
 
@@ -126,7 +138,7 @@
                                                         *ngIf="coupon.couponRules.policies.users.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.users.length}} users
+                                                            <a href="javascript:" (click)="openUserDialog();">{{coupon.couponRules.policies.users.length}} users</a> 
                                                         </span>
 
                                                     </div>
@@ -134,7 +146,7 @@
                                                         *ngIf="coupon.couponRules.policies.consumerLabels.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.consumerLabels.length}} labels
+                                                            <a href="javascript:" (click)="openCustomerLabelDialog();">{{coupon.couponRules.policies.consumerLabels.length}} labels</a>
                                                         </span>
 
                                                     </div>
@@ -142,7 +154,7 @@
                                                         *ngIf="coupon.couponRules.policies.consumerGroups.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.consumerGroups.length}} groups
+                                                            <a href="javascript:" (click)="openCustomerGroupDialog();"> {{coupon.couponRules.policies.consumerGroups.length}} groups</a>
                                                         </span>
 
                                                     </div>
@@ -158,7 +170,7 @@
                                                         *ngIf="coupon.couponRules.policies.items.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            {{coupon.couponRules.policies.items.length}} items
+                                                            <a href="javascript:" (click)="openItemDialog();"> {{coupon.couponRules.policies.items.length}} items</a>
                                                         </span>
 
                                                     </div>

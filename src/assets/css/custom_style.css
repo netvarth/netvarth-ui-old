@@ -13976,7 +13976,6 @@ width: 40px !important;
   }
   .body-section {
     margin-top: 50px;
-    height: 75vh !important;
   }
   .filterSidebar {
     margin-top: 105px !important;
@@ -13984,7 +13983,6 @@ width: 40px !important;
 }
 .body-section {
   overflow-y: auto;
-  height: 83vh;
   background: #f0efef;
   overflow-x: hidden;
 }
@@ -14060,9 +14058,40 @@ width: 40px !important;
 .wizardstyle {
   margin: 0px !important;
 }
-.wizardstyle .body-section {
-  height: 93vh;
-}
 .wizardstyle app-footernew .main-footer {
   margin-left: 0px !important;
+}
+.cont-outer {
+    padding-bottom: 20px;
+}
+.booking-img {
+    content: url(../images/bookingwindow.png);
+    width: 400px;
+    margin: auto;
+    margin-top: 50px;
+}
+.wizard-nav {
+  justify-content: center;
+  display: flex;
+}
+.nomsg-img {
+  content: url(../images/Nomsgs.svg);
+  width: 300px;
+  margin: auto;
+}
+.inbox-nullimg {
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
+}
+.inbox-nullimg-user {
+  content: url(../images/inbox.png);
+  margin-left: auto;
+  margin-right: auto;
+}
+.normal-btn {
+  background: #1e4079;
+  color: white;
+  line-height: 26px !important;
+  border-radius: 5px !important;
 }

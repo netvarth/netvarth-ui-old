@@ -8,14 +8,12 @@ import { projectConstants } from '../../../../app.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -23,6 +21,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { AddressComponent } from '../order-wizard/address/address.component';
 
 
 @Component({
@@ -208,7 +207,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
             'sTime': timeslot[0],
             'eTime': timeslot[1]
           },
-          'orderDate': this.orderDetails.orderDate,
+          'orderDate':  this.sel_checkindate,
           'countryCode': this.orderDetails.countryCode,
           'phoneNumber': this.orderDetails.phoneNumber,
           'email': this.orderDetails.email
@@ -227,7 +226,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           'sTime': timeslot[0],
           'eTime': timeslot[1]
         },
-        'orderDate': this.orderDetails.orderDate,
+        'orderDate': this.sel_checkindate,
         'countryCode': this.orderDetails.countryCode,
         'phoneNumber': this.orderDetails.phoneNumber,
         'email': this.orderDetails.email
@@ -250,7 +249,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'sTime': timeslot[0],
         'eTime': timeslot[1]
       },
-      'orderDate': this.orderDetails.orderDate,
+      'orderDate':  this.sel_checkindate,
       'countryCode': this.orderDetails.countryCode,
       'phoneNumber': this.orderDetails.phoneNumber,
       'email': this.orderDetails.email
@@ -454,7 +453,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
-            this.timings_title="Pickup Timings";
+            this.timings_title="Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -835,7 +834,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
-      this.timings_title="Pickup Timings";
+      this.timings_title="Store Pickup Timings";
       this.storeChecked = true;
       if (this.orderDetails.storePickup) {
         this.sel_checkindate = this.orderDetails.orderDate;
@@ -938,32 +937,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
   }
-  addNotes(item, index) {
-    this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: item
-
-    });
-    this.addItemNotesdialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      if (result) {
-        this.orderList.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-        this.orders.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-      }
-      // console.log(this.orderList);
-    });
-  }
   deleteNotes(item, index) {
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -1016,7 +989,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   EditAddress(selectedAddress) {
     console.log(selectedAddress);
 
-    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,

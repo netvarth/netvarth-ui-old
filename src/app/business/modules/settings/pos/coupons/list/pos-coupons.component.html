@@ -121,6 +121,9 @@
                         </div>
                         <div class="w-dta" *ngIf="coupon_list.length>0">
                             <div class="row">
+                                    <div class="n-loc col-md-12 col-sm-12 col-xs-12 reportbtn">
+                                            <span class="cs-btn bt3 " (click)="addCoupons()">{{add_coupon_btn}}</span>
+                                        </div>
                                 <div class="card">
                                     <div class="copy">
                                         <div class="table-outer q-tbl">
@@ -134,7 +137,7 @@
                                                         <th>{{status_cap}}</th>
                                                         <th>{{published_cap}}</th>
                                                         <th></th>
-                                                        <th> <span class="addbt" (click)="addCoupons()"></span></th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -177,8 +180,8 @@
                                                                 <mat-menu #menu="matMenu">
                                                                     <button type="button" (click)="editCoupons(coupon)"
                                                                         mat-menu-item>
-                                                                        <i class="icon-edit"></i>
-                                                                        {{edit_btn}}
+                                                                        <i [ngClass]="coupon.couponRules.published?'fa fa-eye':'icon-edit'"></i>
+                                                                        {{coupon.couponRules.published? 'View':'Edit'}}
                                                                     </button>
                                                                     <button type="button" (click)="publish(coupon)"
                                                                     mat-menu-item>
@@ -194,8 +197,8 @@
                                                             </span>
                                                             <span class="mbt-mobile-show">
                                                                 <button class="editcls" type="button"
-                                                                    (click)="editCoupons(coupon)">{{edit_btn}}</button>
-                                                                    <button class="editcls" type="button"
+                                                                    (click)="editCoupons(coupon)"> {{coupon.couponRules.published? 'View':'Edit'}}</button>
+                                                                    <button class="publishcls" type="button"
                                                                     (click)="publish(coupon)">{{publish_btn}}</button>
                                                                 <button class="deletecls" type="button"
                                                                     (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>
@@ -204,7 +207,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
+                                            <!-- <span class="addbt d-block d-md-none" (click)="addCoupons()"></span> -->
                                         </div>
                                     </div>
                                 </div>

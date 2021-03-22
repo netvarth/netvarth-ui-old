@@ -176,7 +176,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <label>Gender</label>
+                            <!-- <label>Gender</label>
                             <div class="radio-inline">
                                 <label class="radio radio-solid">
                                     <input type="radio" name="example_2" checked="checked" value="2"/>
@@ -193,9 +193,20 @@
                                     <span></span>
                                     Others
                                 </label>
-                            </div>
+                                
+                            </div> -->
+                            <label class="col-form-label" for="gender">{{gender_cap}}</label>
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="female">
+                                    {{female_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="others">Others
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                                errorMsg="Please select the gender.">
+                            </app-field-error-display>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="card-footer">

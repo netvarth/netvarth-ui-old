@@ -333,7 +333,7 @@
                         <!--begin::Input-->
                         <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                           <div *ngIf="!seletedCatalogItems">
-                            <h6>Add items to your Catalog</h6>
+                            <h6>Select items to your Catalog</h6>
                             <!-- <a class="link underline pointer-cursor"><u>Add items</u></a>&nbsp;
                             <a class="link underline pointer-cursor"
                               (click)="showCreateItemPopup()"><u>Create items</u></a> -->
@@ -366,7 +366,7 @@
                           <button mat-menu-item (click)="editCatalogItem(item)">
                             <i class="icon-edit"></i>Edit</button>
                           <button mat-menu-item (click)="deleteCatalogItem(item)">
-                            <i class="icon-delete"></i>Delete</button>
+                            <i class="icon-delete"></i>Remove</button>
                         </mat-menu>
                         <div class="card card-custom card-shadowless itemselected"   >
                           <div class="card-body p-0">
@@ -383,7 +383,7 @@
                             <div
                               class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                               <a
-                                class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.item.displayName}}*</a>
+                                class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.item.displayName}}</a>
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.item.price}}</div>
                               <!-- min -->
@@ -597,7 +597,7 @@
                       <div class="col-xl-4">
                         <div *ngIf="payAdvance === 'FIXED'">
                           <div class="form-group">
-                            <label>Advance amount</label>
+                            <label>Advance amount *</label>
                             <input type="text" class="form-control1 form-control-solid form-control-lg"
                               (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="advancePayment"
                               placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off" />

@@ -2,7 +2,7 @@
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">Appointments </div>
   </div>
-  <div class="pull-right">
+  <div class="pull-right" *ngIf="time_type !==3">
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
       <div class="navbar-custom-menu width100pc">
         <ul class="nav navbar-nav width100pc">

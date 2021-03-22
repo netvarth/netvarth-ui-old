@@ -31,8 +31,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
     templateUrl: './consumer-checkin.component.html',
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
-export class ConsumerCheckinComponent implements OnInit,OnDestroy {
-  
+export class ConsumerCheckinComponent implements OnInit, OnDestroy {
+
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -55,12 +55,16 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     sel_ser_det: any = [];
     prepaymentAmount = 0;
     sel_queue_id;
+    queueId;
     sel_queue_waitingmins;
+    waitingTime;
     sel_queue_servicetime = '';
+    serviceTime;
     sel_queue_name;
     sel_queue_timecaption;
     sel_queue_indx;
     sel_queue_personaahead = 0;
+    personsAhead;
     calc_mode;
     multipleMembers_allowed = false;
     partySize = false;
@@ -73,6 +77,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     holdenterd_partySize = 0;
     sel_checkindate;
     hold_sel_checkindate;
+    selectedDate;
     account_id;
     retval;
     futuredate_allowed = false;
@@ -118,8 +123,8 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     availableSlots: any = [];
     data;
     provider_id: any;
-    s3CouponsList: any={
-        JC:[],OWN:[]
+    s3CouponsList: any = {
+        JC: [], OWN: []
     };
     showCouponWB: boolean;
     change_date: any;
@@ -182,7 +187,8 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     questionnaireList: any = [];
     questionAnswers;
     googleMapUrl;
-    private subs=new SubSink();
+    private subs = new SubSink();
+    selectedQTime;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -201,12 +207,11 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
-        private dateTimeProcessor:DateTimeProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         @Inject(DOCUMENT) public document
     ) {
-       this.subs.sink= this.route.queryParams.subscribe(
+        this.subs.sink = this.route.queryParams.subscribe(
             params => {
-                console.log(params);
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -216,7 +221,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 this.change_date = params.cur;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = params.sel_date;
+                this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
                 if (params.dept) {
@@ -300,7 +305,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 const serverdate = moment(server).format();
                 const servdate = new Date(serverdate);
                 const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
             }
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -323,10 +328,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         );
     }
     ngOnDestroy(): void {
-       this.subs.unsubscribe();
+        this.subs.unsubscribe();
     }
     getRescheduleWaitlistDet() {
-        this.subs.sink= this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
+        this.subs.sink = this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (waitlst: any) => {
                 this.waitlist = waitlst;
                 if (this.type === 'waitlistreschedule') {
@@ -342,7 +347,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 }
                 this.sel_loc = this.waitlist.queue.location.id;
                 this.selectedService = this.waitlist.service.id;
-                this.sel_checkindate = this.hold_sel_checkindate = this.waitlist.date;
+                this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.waitlist.date;
                 this.sel_ser = this.waitlist.service.id;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
@@ -351,16 +356,20 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     rescheduleWaitlist() {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
-            'date': this.sel_checkindate,
-            'queue': this.sel_queue_id
+            'date': this.selectedDate,
+            'queue': this.queueId
         };
-        this.subs.sink= this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
+        this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
-                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
-                        this.consumerNoteAndFileSave(this.rescheduleUserId);
+                    if (this.selectedMessage.files.length > 0) {
+                        const uid = [];
+                        uid.push(this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(uid);
                     }
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
+                    setTimeout(() => {
+                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
+                    }, 500);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -369,7 +378,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-            _this.subs.sink= _this.provider_services.getWaitlistMgr()
+            _this.subs.sink = _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -384,7 +393,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.subs.sink= _this.provider_services.getBussinessProfile()
+            _this.subs.sink = _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -407,7 +416,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 'lastName': this.customer_data.lastName
             }
         };
-        this.subs.sink=fn.subscribe(data => {
+        this.subs.sink = fn.subscribe(data => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -488,14 +497,13 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
-        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         this.serviceCost = this.sel_ser_det.price;
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-            _this.subs.sink= _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+            _this.subs.sink = _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
                 .subscribe((data: any) => {
                     const availables = data.filter(obj => obj.isAvailable);
                     const availDates = availables.map(function (a) { return a.date; });
@@ -508,10 +516,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
-    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
-            this.subs.sink= this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+            this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
                     this.queueQryExecuted = true;
@@ -541,6 +549,13 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         this.sel_queue_name = '';
                         this.sel_queue_timecaption = '';
                         this.sel_queue_personaahead = 0;
+                    }
+                    if (type) {
+                        this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+                        this.personsAhead = this.sel_queue_personaahead;
+                        this.waitingTime = this.sel_queue_waitingmins;
+                        this.serviceTime = this.sel_queue_servicetime;
+                        this.queueId = this.sel_queue_id;
                     }
                 });
         }
@@ -585,10 +600,13 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    checkFutureorToday() {
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -596,7 +614,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         } else {
             this.isFuturedate = false;
         }
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     handleCheckinClicked() {
         let error = '';
@@ -648,9 +665,9 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
         const post_Data = {
             'queue': {
-                'id': this.sel_queue_id
+                'id': this.queueId
             },
-            'date': this.sel_checkindate,
+            'date': this.selectedDate,
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
@@ -696,7 +713,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     addCheckInConsumer(postData) {
-        this.subs.sink= this.shared_services.addCheckin(this.account_id, postData)
+        this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 const retData = data;
                 this.uuidList = [];
@@ -708,10 +725,12 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         this.uuidList.push(retData[key]);
                     }
                 });
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(this.uuidList);
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(this.uuidList[0]);
                 } else {
-
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment();
                     } else {
@@ -721,11 +740,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                         } else {
                             multiple = false;
                         }
-                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                        setTimeout(() => {
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                        }, 500);
                     }
-                }
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList);
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -737,18 +755,15 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 });
     }
     submitQuestionnaire(uuid) {
-
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.subs.sink=this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
 
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
@@ -890,7 +905,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            this.subs.sink=fn.subscribe(() => {
+            this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
@@ -929,17 +944,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             this.sel_checkindate = ndate;
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
@@ -961,7 +965,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     getPartysizeDetails(domain, subdomain) {
-        this.subs.sink=this.shared_services.getPartysizeDetails(domain, subdomain)
+        this.subs.sink = this.shared_services.getPartysizeDetails(domain, subdomain)
             .subscribe(data => {
                 this.partysizejson = data;
                 this.partySize = false;
@@ -1006,7 +1010,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
     }
     getProviderDepart(id) {
-        this.subs.sink= this.shared_services.getProviderDept(id).
+        this.subs.sink = this.shared_services.getProviderDept(id).
             subscribe(data => {
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
@@ -1025,7 +1029,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
-        this.subs.sink=this.shared_services.getServicesByLocationId(locid)
+        this.subs.sink = this.shared_services.getServicesByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = this.servicesjson;
@@ -1039,7 +1043,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 }
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
-                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id, 'init');
                     this.getConsumerQuestionnaire();
                 }
                 this.api_loading1 = false;
@@ -1067,7 +1071,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
@@ -1091,7 +1095,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
         for (const uuid of uuids) {
-            this.subs.sink=this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
+            this.subs.sink = this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
                 .subscribe(
                     () => {
                     },
@@ -1119,7 +1123,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         }
         this.apptTime = '';
         if (!future) {
-            _this.subs.sink= _this.provider_services.getTodayWaitlist(filter).subscribe(
+            _this.subs.sink = _this.provider_services.getTodayWaitlist(filter).subscribe(
                 (waitlist: any) => {
                     for (let i = 0; i < waitlist.length; i++) {
                         if (waitlist[i]['appointmentTime']) {
@@ -1133,7 +1137,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             );
         } else {
             filter['date-eq'] = _this.sel_checkindate;
-            _this.subs.sink=_this.provider_services.getFutureWaitlist(filter).subscribe(
+            _this.subs.sink = _this.provider_services.getFutureWaitlist(filter).subscribe(
                 (waitlist: any) => {
                     for (let i = 0; i < waitlist.length; i++) {
                         if (waitlist[i]['appointmentTime']) {
@@ -1214,7 +1218,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         if (modDateReq) {
             UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
         }
-        this.subs.sink= this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+        this.subs.sink = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
             .subscribe(res => {
                 switch (section) {
                     case 'settings':
@@ -1346,7 +1350,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                     break;
                 }
             }
-            console.log(JSON.stringify(this.selected_coupons));
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -1392,7 +1395,11 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     goBack(type?) {
         if (type) {
-            this.location.back();
+            if (this.bookStep === 1) {
+                this.location.back();
+            } else {
+                this.bookStep = 1;
+            }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
@@ -1415,6 +1422,8 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     applyPromocode() {
         this.action = 'coupons';
+        this.selected_coupon = '';
+        this.clearCouponErrors();
     }
     handleDepartment(dept) {
         this.servicesjson = this.serviceslist;
@@ -1433,8 +1442,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         this.action = 'service';
     }
     getUserName(id) {
-        console.log(id);
-        console.log(this.users);
         let selectedUser = '';
         for (let i = 0; i < this.users.length; i++) {
             if (this.users[i].id === id) {
@@ -1442,7 +1449,6 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
                 break;
             }
         }
-        console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {
@@ -1564,7 +1570,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {
-            _this.subs.sink=_this.shared_services.updateProfile(post_data, passtyp)
+            _this.subs.sink = _this.shared_services.updateProfile(post_data, passtyp)
                 .subscribe(
                     () => {
                         _this.getProfile();
@@ -1617,11 +1623,10 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
-        console.log(this.questionAnswers);
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
-        this.subs.sink=this.shared_services.addWaitlistAdvancePayment(param, post_Data)
+        this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
@@ -1647,7 +1652,7 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink= this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.pGateway = pData.paymentGateway;
                 if (this.pGateway === 'RAZORPAY') {
@@ -1702,12 +1707,21 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
     }
     getAttachLength() {
         let length = this.selectedMessage.files.length;
-        if (this.type == 'waitlistreschedule') {
+        if (this.type == 'waitlistreschedule' && this.waitlist && this.waitlist.attchment && this.waitlist.attchment[0] && this.waitlist.attchment[0].thumbPath) {
             length = length + this.waitlist.attchment.length;
         }
         return length;
     }
     actionCompleted() {
+        if (this.action === 'timeChange') {
+            this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+            this.selectedDate = this.sel_checkindate;
+            this.checkFutureorToday();
+            this.personsAhead = this.sel_queue_personaahead;
+            this.waitingTime = this.sel_queue_waitingmins;
+            this.serviceTime = this.sel_queue_servicetime;
+            this.queueId = this.sel_queue_id;
+        }
         if (this.action === 'members') {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
@@ -1718,14 +1732,22 @@ export class ConsumerCheckinComponent implements OnInit,OnDestroy {
             this.applyCoupons();
         }
     }
+    popupClosed() {
+        this.sel_checkindate = this.selectedDate;
+        this.checkFutureorToday();
+        this.sel_queue_personaahead = this.personsAhead;
+        this.sel_queue_waitingmins = this.waitingTime;
+        this.sel_queue_servicetime = this.serviceTime;
+        this.sel_queue_id = this.queueId;
+        const que = this.queuejson.filter(q => q.id === this.queueId);
+        this.sel_queue_indx = this.queuejson.indexOf(que[0]);
+    }
     getQuestionAnswers(event) {
-        console.log(event);
         this.questionAnswers = event;
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
-        this.subs.sink= this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-            console.log(data);
+        this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
         });
     }

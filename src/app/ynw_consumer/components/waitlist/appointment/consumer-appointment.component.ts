@@ -31,8 +31,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
     templateUrl: './consumer-appointment.component.html',
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
-export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
- 
+export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
+
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -135,6 +135,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     activeWt;
     searchForm: FormGroup;
     apptTime = '';
+    selectedApptTime = '';
     allSlots: any = [];
     availableSlots: any = [];
     data;
@@ -213,7 +214,8 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     apiSuccess = '';
     questionAnswers;
     googleMapUrl;
-    private subs=new  SubSink();
+    selectedDate;
+    private subs = new SubSink();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -233,7 +235,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         private dateTimeProcessor: DateTimeProcessor,
         @Inject(DOCUMENT) public document,
         public dialog: MatDialog) {
-       this.subs.sink= this.route.queryParams.subscribe(
+        this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
@@ -245,7 +247,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 this.futureAppt = params.futureAppt;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = params.sel_date;
+                this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
                 if (params.dept) {
@@ -266,7 +268,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
             });
     }
     ngOnDestroy(): void {
-       this.subs.unsubscribe();
+        this.subs.unsubscribe();
     }
     ngOnInit() {
         this.bookingForm = this.fb.group({
@@ -334,7 +336,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 const serverdate = moment(server).format();
                 const servdate = new Date(serverdate);
                 const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
             }
         }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -357,7 +359,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         );
     }
     getRescheduleApptDet() {
-        this.subs.sink=this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
+        this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (appt: any) => {
                 this.appointment = appt;
                 if (this.type === 'reschedule') {
@@ -367,7 +369,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 }
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
-                this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
+                this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.appointment.appmtDate;
                 this.sel_ser = this.appointment.service.id;
                 this.holdselectedTime = this.appointment.appmtTime;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -377,7 +379,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     getWaitlistMgr() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.subs.sink= _this.provider_services.getWaitlistMgr()
+            _this.subs.sink = _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -392,7 +394,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.subs.sink==  _this.provider_services.getBussinessProfile()
+            _this.subs.sink == _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -415,7 +417,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 'lastName': this.customer_data.lastName
             }
         };
-        this.subs.sink= fn.subscribe(data => {
+        this.subs.sink = fn.subscribe(data => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -513,7 +515,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-            _this.subs.sink= _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+            _this.subs.sink = _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
                 .subscribe((data: any) => {
                     const availables = data.filter(obj => obj.availableSlots);
                     const availDates = availables.map(function (a) { return a.date; });
@@ -526,12 +528,11 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
-    getAvailableSlotByLocationandService(locid, servid, pdate, accountid) {
-        this.subs.sink= this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
+    getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
+        this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
                 this.freeSlots = [];
-                console.log(this.slots);
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
@@ -542,7 +543,6 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                         }
                     }
                 }
-                console.log(this.freeSlots);
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
                     if (this.appointment && this.appointment.appmtTime) {
@@ -554,6 +554,9 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = false;
+                }
+                if (type) {
+                    this.selectedApptTime = this.apptTime;
                 }
                 this.api_loading1 = false;
             });
@@ -581,10 +584,13 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    checkFutureorToday() {
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -592,7 +598,6 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         } else {
             this.isFuturedate = false;
         }
-        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     handleApptClicked() {
         this.apptdisable = true;
@@ -646,9 +651,9 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         }
         const post_Data = {
             'schedule': {
-                'id': this.apptTime['scheduleId']
+                'id': this.selectedApptTime['scheduleId']
             },
-            'appmtDate': this.sel_checkindate,
+            'appmtDate': this.selectedDate,
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
@@ -689,18 +694,20 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         this.apptdisable = true;
         const post_Data = {
             'uid': this.rescheduleUserId,
-            'time': this.apptTime['time'],
-            'date': this.sel_checkindate,
-            'schedule': this.apptTime['scheduleId']
+            'time': this.selectedApptTime['time'],
+            'date': this.selectedDate,
+            'schedule': this.selectedApptTime['scheduleId']
         };
-        this.subs.sink=this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
+        this.subs.sink = this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(
                 () => {
                     this.apptdisable = false;
-                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                    if (this.selectedMessage.files.length > 0) {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
-                    this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
+                    setTimeout(() => {
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
+                    }, 500);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -708,7 +715,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 });
     }
     addCheckInConsumer(post_Data) {
-        this.subs.sink= this.shared_services.addCustomerAppointment(this.account_id, post_Data)
+        this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
                 this.uuidList = [];
@@ -720,17 +727,19 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                         this.uuidList.push(retData[key]);
                     }
                 });
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(this.uuidList);
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(this.uuidList[0]);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment();
                     } else {
-                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                        setTimeout(() => {
+                            this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                        }, 500);
                     }
-                }
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList);
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -744,7 +753,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     handleOneMemberSelect(id, firstName, lastName) {
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
@@ -752,7 +761,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
         } else {
             let exists = false;
             let existindx = -1;
@@ -766,7 +775,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime['time'] });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.selectedApptTime['time'] });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -838,7 +847,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            this.subs.sink=fn.subscribe(() => {
+            this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
@@ -881,17 +890,6 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
             this.sel_checkindate = ndate;
             this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
@@ -913,7 +911,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         }
     }
     getPartysizeDetails(domain, subdomain) {
-        this.subs.sink= this.shared_services.getPartysizeDetails(domain, subdomain)
+        this.subs.sink = this.shared_services.getPartysizeDetails(domain, subdomain)
             .subscribe(data => {
                 this.partysizejson = data;
                 this.partySize = false;
@@ -955,7 +953,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         }
     }
     getProviderDepart(id) {
-        this.subs.sink=this.shared_services.getProviderDept(id).
+        this.subs.sink = this.shared_services.getProviderDept(id).
             subscribe(data => {
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
@@ -974,7 +972,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
-        this.subs.sink=this.shared_services.getServicesforAppontmntByLocationId(locid)
+        this.subs.sink = this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = this.servicesjson;
@@ -986,10 +984,9 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                         this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                     }
                 }
-                console.log(this.sel_ser);
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
-                    this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id);
+                    this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id, 'init');
                     if (this.type != 'reschedule') {
                         this.getConsumerQuestionnaire();
                     }
@@ -1019,7 +1016,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
@@ -1033,6 +1030,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
+        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1042,9 +1040,10 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.subs.sink=this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
+        this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
+                    console.log(true);
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1053,7 +1052,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        this.waitlist_for[0].apptTime = this.apptTime['time'];
+        // this.waitlist_for[0].apptTime = this.apptTime['time'];
     }
     getProfile() {
         const _this = this;
@@ -1117,7 +1116,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         if (modDateReq) {
             UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
         }
-        this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+        this.subs.sink = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
             .subscribe(res => {
                 switch (section) {
                     case 'settings':
@@ -1297,7 +1296,11 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     goBack(type?) {
         if (type) {
-            this.location.back();
+            if (this.bookStep === 1) {
+                this.location.back();
+            } else {
+                this.bookStep = 1;
+            }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
@@ -1379,7 +1382,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.apptTime['time'] === this.holdselectedTime) {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
             return true;
         } else {
             return false;
@@ -1474,7 +1477,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {
-            _this.subs.sink=  _this.shared_services.updateProfile(post_data, passtyp)
+            _this.subs.sink = _this.shared_services.updateProfile(post_data, passtyp)
                 .subscribe(
                     () => {
                         _this.getProfile();
@@ -1523,7 +1526,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     addApptAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
-        this.subs.sink=this.shared_services.addApptAdvancePayment(param, post_Data)
+        this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
@@ -1549,7 +1552,7 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink= this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.pGateway = pData.paymentGateway;
                 if (this.pGateway === 'RAZORPAY') {
@@ -1604,12 +1607,18 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     }
     getAttachLength() {
         let length = this.selectedMessage.files.length;
-        if (this.type == 'waitlistreschedule' && this.appointment.attchment) {
+        if (this.type == 'waitlistreschedule' && this.appointment && this.appointment.attchment && this.appointment.attchment[0] && this.appointment.attchment[0].thumbPath) {
             length = length + this.appointment.attchment.length;
         }
         return length;
     }
     actionCompleted() {
+        if (this.action === 'slotChange') {
+            this.selectedDate = this.sel_checkindate;
+            this.checkFutureorToday();
+            this.selectedApptTime = this.apptTime;
+            this.waitlist_for[0].apptTime = this.apptTime['time'];
+        }
         if (this.action === 'members') {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
@@ -1620,24 +1629,25 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
             this.applyCoupons();
         }
     }
-
+    popupClosed() {
+        this.sel_checkindate = this.selectedDate;
+        this.checkFutureorToday();
+        this.apptTime = this.selectedApptTime;
+        this.waitlist_for[0].apptTime = this.apptTime['time'];
+    }
     getQuestionAnswers(event) {
-        console.log(event);
         this.questionAnswers = event;
     }
     submitQuestionnaire(uuid) {
-
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.subs.sink=this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+        this.subs.sink = this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
             } else {
@@ -1651,7 +1661,6 @@ export class ConsumerAppointmentComponent implements OnInit,OnDestroy {
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-            console.log(data);
             this.questionnaireList = data;
         });
     }

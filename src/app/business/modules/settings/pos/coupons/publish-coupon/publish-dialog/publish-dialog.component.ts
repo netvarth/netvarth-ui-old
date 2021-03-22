@@ -5,9 +5,11 @@ import { projectConstantsLocal } from '../../../../../../../shared/constants/pro
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SubSink } from 'subsink';
+
+
 
 
 @Component({
@@ -18,13 +20,16 @@ import { SubSink } from 'subsink';
 export class PublishDialogComponent implements OnInit {
   public publishForm: FormGroup;
   couponId: any;
-  startdateError: boolean;
-  enddateError: boolean;
   coupon: any;
   api_error='';
   api_success='';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   private subscriptions = new SubSink();
+  publishFromrequired=false;
+  startdateError: boolean;
+  enddateError: boolean;
+  startDaterequired: boolean;
+
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -52,27 +57,54 @@ export class PublishDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
 }
-  compareDate(dateValue, startOrend) {
-    const UserDate = dateValue;
-    this.startdateError = false;
-    this.enddateError = false;
-    const ToDate = new Date().toString();
-    const l = ToDate.split(' ').splice(0, 4).join(' ');
-    const sDate = this.publishForm.get('publishedFrom').value;
-    const sDate1 = new Date(sDate).toString();
-    const l2 = sDate1.split(' ').splice(0, 4).join(' ');
-    if (startOrend === 0) {
-      if (new Date(UserDate) < new Date(l)) {
-        return this.startdateError = true;
-      }
-      return this.startdateError = false;
-    } else if (startOrend === 1 && dateValue) {
-      if (new Date(UserDate) < new Date(l2)) {
-        return this.enddateError = true;
-      }
-      return this.enddateError = false;
-    }
+checkSameDay(date) {
+  if (moment(new Date(date)).isSame(moment(), 'day')) {
+    return true;
+  } else {
+    return false;
   }
+}
+checkDayBeforeToday(date) {
+  if (moment(new Date(date)).isBefore(new Date(), 'day')) {
+    return true;
+  }
+  else { return false; }
+}
+checkDayisBeforeEndDate(sDate, eDate) {
+  if (moment(new Date(sDate),'day').isBefore(new Date(eDate),'day')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+compareDate( startOrend) {
+  this.startdateError = false;
+  this.enddateError = false;
+  const sDate = this.publishForm.get('couponRules').get('publishedFrom').value;
+  const eDate = this.publishForm.get('couponRules').get('publishedTo').value;
+  if (startOrend === 0) {
+
+    if (!this.checkSameDay(sDate)) {
+      return this.startdateError = true;
+    }
+    if (this.checkDayBeforeToday(sDate)) {
+      return this.startdateError = true;
+    }
+
+  } else if (startOrend === 1) {
+    if (!this.checkSameDay(eDate)) {
+      return this.enddateError = true;
+    }
+    if (this.checkDayBeforeToday(eDate)) {
+      return this.enddateError = true;
+    }
+    if(this.checkDayisBeforeEndDate(sDate,eDate)){
+      return this.enddateError=true;
+    }
+   
+
+  }
+}
   onSubmit(){
    const  msg = 'This Coupon wil be visible to consumers after publishing.Are you sure you want publish this coupon?';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {

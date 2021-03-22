@@ -235,6 +235,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('closenotesdialog') closenotesdialog;
   @ViewChild('closeDelivery') closeDelivery;
   discount_type: any = '';
+  selectedservice: any;
+  selectedItem: any;
+  refund_show;
+  btn_hide = false;
 
 
   constructor(
@@ -433,7 +437,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
-          this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer !== 0 ? true : false;
+          this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
             this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
@@ -653,6 +657,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.pre_payment_log = data;
+             this.refund_show = this.pre_payment_log.filter(obj => (obj.refundableAmount > 0) && (obj.status === 'SUCCESS') && (!obj.fullyRefunded) && (obj.paymentPurpose == 'prePayment'));
             resolve();
           },
           error => {
@@ -783,7 +788,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Item Discount/Coupon Section
    * @param indx Index
    */
-  itemDiscCoupSec(indx) {
+  itemDiscCoupSec(indx ,item?) {
+    this.selectedItem = item
     this.bill_data.items[indx].itemDiscount = '';
     if (this.bill_data.items[indx]) {
       if (this.bill_data.items[indx].showitemdisccoup) {
@@ -798,7 +804,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Service Discount/Coupon section
    * @param indx Index
    */
-  serviceDiscCoupSec(indx) {
+  serviceDiscCoupSec(indx , service?) {
+    this.selectedservice = service;
     this.bill_data.service[indx].serviceDiscount = '';
     if (this.bill_data.service[indx]) {
       if (this.bill_data.service[indx].showservicedisccoup) {
@@ -1098,7 +1105,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discountIds.push(this.discountId_servie);
     // discountIds.push(service.serviceDiscount.id);
     const data = {};
-    data['serviceId'] = service.serviceId;
+    // data['serviceId'] = service.serviceId;
+    // data['discountIds'] = discountIds;
+    data['serviceId'] = this.selectedservice.serviceId;
     data['discountIds'] = discountIds;
     this.disableButton = true;
     this.applyAction(action, this.bill_data.uuid, data);
@@ -1141,7 +1150,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discountIds.push(this.discountId_servie);
     // discountIds.push(item.itemDiscount.id);
     const data = {};
-    data['itemId'] = item.itemId;
+    // data['itemId'] = item.itemId;
+      data['itemId'] = this.selectedItem.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
     this.applyAction(action, this.bill_data.uuid, data, 'applyitemDisc');
@@ -1179,18 +1189,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
-  /**
-   * Apply Jaldee Coupon
-   * @param jCoupon Coupon Code
-   */
-  applyJCoupon(jCoupon) {
-    const action = 'addJaldeeCoupons';
-    let jaldeeCoupon: string;
-    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
-    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
-    this.disableJCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
-  }
+ 
   /**
    * Remove Jaldee Coupon
    * @param jCouponCode Coupon Code
@@ -1296,14 +1295,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyOrderCoupon() {
     const action = 'addProviderCoupons';
-    const data = {};
-    data['id'] = this.bill_data.id;
-    const coupons = [];
-    coupons.push(this.selOrderProviderCoupon);
-    // coupons.push(this.selOrderProviderCoupon.id);
-    data['couponIds'] = coupons;
+   let couponCode:string;
+   couponCode = '"' + this.selOrderProviderCoupon + '"';
     this.disableCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
+    this.applyAction(action, this.bill_data.uuid, couponCode, 'closeJcDiscPc');
+  }
+   /**
+   * Apply Jaldee Coupon
+   * @param jCoupon Coupon Code
+   */
+  applyJCoupon() {
+    const action = 'addJaldeeCoupons';
+    let jaldeeCoupon: string;
+    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
+    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
+    this.disableJCouponbtn = true;
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon, 'closeJcDiscPc');
   }
 
   initPayment(mode, amount, paynot) {
@@ -1411,8 +1418,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
   }
 
-  confirmSettleBill() {
-    if (this.amountpay > 0 || this.bill_data.amountDue < 0) {
+  confirmSettleBill(amount) {
+    if (amount.amountDue > 0 || this.bill_data.amountDue < 0) {
       let msg = '';
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
@@ -1832,4 +1839,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
     );
 }
+  refundBtnShow(value) {
+    if (value === 'refund') {
+      this.btn_hide = true;
+    } else {
+      this.btn_hide = false;
+    }
+  }
 }

@@ -36,7 +36,11 @@
                                                         *ngIf="donation.providerAccount">{{donation.providerAccount.businessName}}</span>
                                                 </div>
                                                 <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
-											currency:'&#8377; ' }}
+                                            currency:'&#8377; ' }}
+                                                <span class="pull-right mgn-rt-5">
+                                                    <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                                                    (click)="showConsumerNote(donation)"></i>
+                                                </span>
                                                 </div>
                                             </div>
                                         </div>

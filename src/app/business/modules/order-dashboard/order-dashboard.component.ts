@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -11,13 +11,18 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
+import { projectConstants } from '../../../app.component';
+import { interval as observableInterval, Subscription } from 'rxjs';
+import { SubSink } from 'subsink';
+
+
 
 @Component({
   selector: 'app-order-dashboard',
   templateUrl: './order-dashboard.component.html',
   styleUrls: ['./order-dashboard.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
-export class OrderDashboardComponent implements OnInit {
+export class OrderDashboardComponent implements OnInit,OnDestroy {
   businessName;
   historyOrders: any = [];
   orders: any = [];
@@ -47,7 +52,7 @@ export class OrderDashboardComponent implements OnInit {
     orderStatus: false,
     orderMode: false
   };
-
+  todaySubscription:Subscription;
   customerIdTooltip = '';
   customer_label = '';
   selected_type = 'all';
@@ -82,6 +87,8 @@ export class OrderDashboardComponent implements OnInit {
     { mode: 'ONLINE_ORDER', value: 'Online Order' },
   ];
   allModeSelected = false;
+  refreshTime: any;
+  private subs=new SubSink();
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -98,6 +105,7 @@ export class OrderDashboardComponent implements OnInit {
     this.filterHeight = screenHeight - 60;
   }
   ngOnInit() {
+    this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     const businessdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -114,6 +122,12 @@ export class OrderDashboardComponent implements OnInit {
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
+    this.subs.sink= observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.refresh();
+    });
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
   setTabSelection(type) {
     this.selectedTab = type;
@@ -175,51 +189,61 @@ export class OrderDashboardComponent implements OnInit {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    this.providerservices.getProviderTodayOrders(filter).subscribe(data => {
+   
+   this.subs.sink=this.providerservices.getProviderTodayOrders(filter)
+
+    .subscribe(data => {
       this.orders = data;
       this.loading = false;
     });
-  }
+
+  }  
+   
 
   getProviderFutureOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
+    this.subs.sink=this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
       this.orders = data;
       this.loading = false;
     });
+  
   }
   getProviderFutureOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
+    this.subs.sink=this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
+
   }
   getProviderTodayOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
+    this.subs.sink=this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
-    });
+   
+  });
   }
   getProviderHistoryOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
     console.log(filter);
-    this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
+    this.subs.sink=this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
       this.loading = false;
-    });
+   
+  });
   }
   getProviderHistoryOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
+   this.subs.sink= this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
-    });
+    
+  });
   }
   checkOrder(order, index) {
     if (!this.orderSelected[index]) {
@@ -403,7 +427,7 @@ export class OrderDashboardComponent implements OnInit {
     return api_filter;
   }
   getDefaultCatalogStatus() {
-    this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
+   this.subs.sink= this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
       this.orderStatusFilter = data;
     });
   }
@@ -413,7 +437,7 @@ export class OrderDashboardComponent implements OnInit {
       this.getProviderTodayOrdersCount();
     }
     if (this.selectedTab === 2) {
-      this.getProviderFutureOrders();
+      this.getProviderFutureOrders(); 
       this.getProviderFutureOrdersCount();
     }
   }
@@ -429,7 +453,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   gotoBill(order) {
     if (this.pos && (order.orderStatus !== 'Cancelled' || (order.orderStatus === 'Cancelled' && order.bill && order.bill.billPaymentStatus !== 'NotPaid'))) {
-      this.providerservices.getWaitlistBill(order.uid)
+     this.subs.sink= this.providerservices.getWaitlistBill(order.uid)
         .subscribe(
           data => {
             this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
@@ -482,7 +506,7 @@ export class OrderDashboardComponent implements OnInit {
   // }
   getLabel() {
     this.providerLabels = [];
-    this.providerservices.getLabelList().subscribe(data => {
+    this.subs.sink=this.providerservices.getLabelList().subscribe(data => {
       this.allLabels = data;
       this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });

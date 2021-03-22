@@ -352,7 +352,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.userId) {
@@ -364,9 +364,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (qparams.locId) {
         this.locId = qparams.locId;
       }
-      // if (qparams.pId) {
-      //   this.businessid = qparams.pId;
-      // }
       this.businessjson = [];
       this.servicesjson = [];
       this.apptServicesjson = [];
@@ -443,7 +440,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           resolve(id);
         },
         error => {
-          console.error(error);
           resolve(encId);
         }
       );
@@ -724,12 +720,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               }
             }
-            console.log(this.locId);
+     
             if (this.locId) {
-              const location1 = this.locationjson.filter(loc => loc.id === this.locId);
-              console.log(location1);
               const location = this.locationjson.filter(loc => loc.id === JSON.parse(this.locId));
-              console.log(location);
               this.changeLocation(location[0]);
             } else {
               this.changeLocation(this.locationjson[0]);
@@ -1301,12 +1294,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   openImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   openCatalogImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
     this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -1423,7 +1414,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        caption: 'Enquiry',
+        // caption: 'Enquiry',
         user_id: provid,
         source: 'consumer-common',
         type: 'send',
@@ -2197,10 +2188,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
-    console.log(account_Id);
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
-    //const orderItems = [];
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
@@ -2355,7 +2344,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
     if (this.userType === 'consumer') {
       let blogoUrl;
       if (this.businessjson.logo) {
@@ -2386,7 +2374,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   }
   itemDetails(item) {
-    console.log(JSON.stringify(item));
     let blogoUrl;
     if (this.businessjson.logo) {
       blogoUrl = this.businessjson.logo.url;

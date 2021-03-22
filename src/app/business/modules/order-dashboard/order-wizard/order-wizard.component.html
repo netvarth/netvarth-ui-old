@@ -1,773 +1,724 @@
 <section class="">
-    <div class="card title-gb rounded-0">
-      <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New order
-      </h5>
-    </div>
-  </section>
-  <section>
-  
-    <div class="d-flex flex-column-fluid mt-4">
-      <div class="container">
-        <div class="card card-custom rounded-0 p-0">
-          <div class="card-body p-0 rounded-0">
-            <!--begin::Wizard-->
-            <div class="wizard wizard-1">
-              <!--begin::Wizard Nav-->
-              <div class="wizard-nav border-bottom">
-                <div class="wizard-steps padding-lg-10">
-                  <!--begin::Wizard Step 1 Nav-->
-                  <div class="wizard-step" [class.tab-selected]="step>=1">
-                    <div class="wizard-label">
-                      <i class="wizard-icon text-dark-50 flaticon-user-add"></i>
-                      <h3 class="wizard-title">1. Find {{customer_label |capitalizeFirst}}</h3>
-                    </div>
-                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                      <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                        height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <polygon points="0 0 24 0 24 24 0 24" />
-                          <rect fill="#000000" opacity="0.3"
-                            transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                            x="11" y="5" width="2" height="14" rx="1" />
-                          <path
-                            d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                            fill="#000000" fill-rule="nonzero"
-                            transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                        </g>
-                      </svg>
-                      <!--end::Svg Icon-->
-                    </span>
+  <div class="card title-gb rounded-0">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New order
+    </h5>
+  </div>
+</section>
+<section>
+
+  <div class="d-flex flex-column-fluid mt-4">
+    <div class="container">
+      <div class="card card-custom rounded-0 p-0">
+        <div class="card-body p-0 rounded-0">
+          <!--begin::Wizard-->
+          <div class="wizard wizard-1">
+            <!--begin::Wizard Nav-->
+            <div class="wizard-nav border-bottom">
+              <div class="wizard-steps padding-lg-10">
+                <!--begin::Wizard Step 1 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step>=1">
+                  <div class="wizard-label">
+                    <i class="wizard-icon text-dark-50 flaticon-user-add"></i>
+                    <h3 class="wizard-title">1. Find {{customer_label |capitalizeFirst}}</h3>
                   </div>
-                  <!--end::Wizard Step 1 Nav-->
-  
-                  <!--begin::Wizard Step 2 Nav-->
-                  <div class="wizard-step" [class.tab-selected]="step>=2">
-                    <div class="wizard-label">
-                      <i class="wizard-icon text-dark-50 flaticon-bag"></i>
-                      <h3 class="wizard-title">2. Add items</h3>
-                    </div>
-  
-                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                      <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                        height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <polygon points="0 0 24 0 24 24 0 24" />
-                          <rect fill="#000000" opacity="0.3"
-                            transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                            x="11" y="5" width="2" height="14" rx="1" />
-                          <path
-                            d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                            fill="#000000" fill-rule="nonzero"
-                            transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                        </g>
-                      </svg>
-                      <!--end::Svg Icon-->
-                    </span>
-                  </div>
-                  <!--end::Wizard Step 2 Nav-->
-                  <!--begin::Wizard Step 3 Nav-->
-                  <div class="wizard-step" [class.tab-selected]="step==3">
-                    <div class="wizard-label">
-                      <i class="wizard-icon text-dark-50 flaticon-cart"></i>
-                      <h3 class="wizard-title">3. Place order</h3>
-                    </div>
-                    <span class="svg-icon svg-icon-xl wizard-arrow last">
-                      <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                        height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <polygon points="0 0 24 0 24 24 0 24" />
-                          <rect fill="#000000" opacity="0.3"
-                            transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                            x="11" y="5" width="2" height="14" rx="1" />
-                          <path
-                            d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                            fill="#000000" fill-rule="nonzero"
-                            transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                        </g>
-                      </svg>
-                      <!--end::Svg Icon-->
-                    </span>
-                  </div>
-                  <!--end::Wizard Step 3 Nav-->
+                  <span class="svg-icon svg-icon-xl wizard-arrow">
+                    <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                      height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24" />
+                        <rect fill="#000000" opacity="0.3"
+                          transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                          x="11" y="5" width="2" height="14" rx="1" />
+                        <path
+                          d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                          fill="#000000" fill-rule="nonzero"
+                          transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                      </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                  </span>
                 </div>
-              </div>
-              <!--end::Wizard Nav-->
-  
-              <!--begin::Wizard Body-->
-              <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
-                <div class="col-lg-12">
-                  <!--begin::Wizard Form-->
-                  <!-- <form class="form"> -->
-                  <!--begin::Wizard Step 1-->
-                  <div class="pb-5" *ngIf="step == 1">
-                    <form class="form" [formGroup]="searchForm">
-                      <h3 class="mb-10 font-weight-bold text-dark"> Find {{customer_label |capitalizeFirst }} </h3>
-                      <!--begin::Input-->
-                      <div class="form-group disp-flex">
-                        <input type="text" formControlName="search_input"
-                          class=" form-control1 form-control1-solid form-control1-lg" name="search"
-                          placeholder={{searchby}} />
-                        <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
-                                                searchCustomer(searchForm.value)"> Find </button>
-                      </div>
-  
-                    </form>
-  
+                <!--end::Wizard Step 1 Nav-->
+
+                <!--begin::Wizard Step 2 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step>=2">
+                  <div class="wizard-label">
+                    <i class="wizard-icon text-dark-50 flaticon-bag"></i>
+                    <h3 class="wizard-title">2. Add items</h3>
                   </div>
-  
-  
-  
-  
-  
-  
-                  <!--end::Wizard Step 1-->
-  
-                  <!--begin::Wizard Step 2-->
-                  <div class="pb-5" *ngIf="step == 2">
-                    <!--begin::Layout-->
-                    <div class="flex-row-fluid">
-                      <div class="row" *ngIf="show_customer && step == 2">
-                        <div class="orderdetails col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                          <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
-                            <div class="bold font11" *ngIf="customer_data.firstName || customer_data.lastName">
-                              {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
-                            <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
-                            <div *ngIf="customer_data.phoneNo"> <i class="fa fa-phone" aria-hidden="true"></i>
-                              {{countryCode}} {{customer_data.phoneNo}}</div>
-                            <div *ngIf="customer_email"> <i class="fa fa-envelope" aria-hidden="true"></i>
-                              {{customer_email}}</div>
-                            <button class="pull-left btn btn-sm btn-primary"
-                              [hidden]="customer_data.phoneNo&&customer_data.email"
-                              (click)="updateCustomer(customer_data.id);">Update</button>
-                          </div>
+
+                  <span class="svg-icon svg-icon-xl wizard-arrow">
+                    <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                      height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24" />
+                        <rect fill="#000000" opacity="0.3"
+                          transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                          x="11" y="5" width="2" height="14" rx="1" />
+                        <path
+                          d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                          fill="#000000" fill-rule="nonzero"
+                          transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                      </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                  </span>
+                </div>
+                <!--end::Wizard Step 2 Nav-->
+                <!--begin::Wizard Step 3 Nav-->
+                <div class="wizard-step" [class.tab-selected]="step==3">
+                  <div class="wizard-label">
+                    <i class="wizard-icon text-dark-50 flaticon-cart"></i>
+                    <h3 class="wizard-title">3. Place order</h3>
+                  </div>
+                  <span class="svg-icon svg-icon-xl wizard-arrow last">
+                    <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                      height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24" />
+                        <rect fill="#000000" opacity="0.3"
+                          transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                          x="11" y="5" width="2" height="14" rx="1" />
+                        <path
+                          d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                          fill="#000000" fill-rule="nonzero"
+                          transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                      </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                  </span>
+                </div>
+                <!--end::Wizard Step 3 Nav-->
+              </div>
+            </div>
+            <!--end::Wizard Nav-->
+
+            <!--begin::Wizard Body-->
+            <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
+              <div class="col-lg-12">
+                <!--begin::Wizard Form-->
+                <!-- <form class="form"> -->
+                <!--begin::Wizard Step 1-->
+                <div class="pb-5" *ngIf="step == 1">
+                  <form class="form" [formGroup]="searchForm">
+                    <h3 class="mb-10 font-weight-bold text-dark"> Find {{customer_label |capitalizeFirst }} </h3>
+                    <!--begin::Input-->
+                    <div class="form-group disp-flex">
+                      <input type="text" formControlName="search_input"
+                        class=" form-control1 form-control1-solid form-control1-lg" name="search"
+                        placeholder={{searchby}} />
+                      <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                              searchCustomer(searchForm.value)"> Find </button>
+                    </div>
+
+                  </form>
+
+                </div>
+
+
+
+
+
+
+                <!--end::Wizard Step 1-->
+
+                <!--begin::Wizard Step 2-->
+                <div class="pb-5" *ngIf="step == 2">
+                  <!--begin::Layout-->
+                  <div class="flex-row-fluid">
+                    <div class="row" *ngIf="show_customer && step == 2">
+                      <div class="orderdetails col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
+                          <div class="bold font11" *ngIf="customer_data.firstName || customer_data.lastName">
+                            {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
+                          <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
+                          <div *ngIf="customer_data.phoneNo"> <i class="fa fa-phone" aria-hidden="true"></i>
+                            {{countryCode}} {{customer_data.phoneNo}}</div>
+                          <div *ngIf="customer_email"> <i class="fa fa-envelope" aria-hidden="true"></i>
+                            {{customer_email}}</div>
+                         
                         </div>
                       </div>
-                      <!--begin::Card-->
-                      <div class="row">
-  
-  
-  
-                        <!--end::Engage Widget 15-->
-                        <!--begin::Section-->
-                        
-  
-                          <!-- <div class="row">
-                           begin::Product
-                            <div class="card-body p-0" *ngIf="orderType !== 'SHOPPINGLIST'">
-                              <ng-container *ngFor="let item of orderItems">
-                                <div class="col-xs-12 col-md-6 col-xl-4 col-lg-12 orderItems">
-                                
-                                  <div class="card card-custom card-shadowless">
-                                    <div class="card-body p-0">
-                                   
-                                      <div class="overlay" >
-                                           <div  class="bgItemimg"
-                                         [style.background-image]="'url('+getItemImg(item.item)+''" >
-                                        </div> 
-                                        <div class="add_qty noHover">
-                                          <td class="text-center align-middle">
-                                            <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
-                                              <i class="ki ki-minus icon-xs"></i>
-                                            </a>
-                                            <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
-                                            <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
-                                              <i class="ki ki-plus icon-xs"></i>
-                                            </a>
-                                          </td>
-                                        </div>
-                                        
-                                       
-                                        
-  
-                                            
-                                         
-                                      </div>
-                                      end::Image
-  
-                                      <div class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                                        <a href="#" class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{ item.item.displayName }}
-                                        </a>
-                                        <span class="font-size-lg">{{ item.item.shortDesc }}</span>
-                                      </div>
-                                      <div class="strikeMe " *ngIf="item.item.showPromotionalPrice rupee-font">₹ {{ item.item.price | currency:'':''}}</div>
-                                      <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price) |
-                                        currency:'':''}}</div>
-                                      
-                                    </div>
-                                  </div>
-                                 
-                                </div>
-                              </ng-container>
-                              <-end::Product-->
-                              <ng-container  *ngIf="orderType !== 'SHOPPINGLIST'">
-                          <div class="col-xs-12 col-sm-6  col-md-6 col-xl-4 col-lg-4 mb-3"
-                            *ngFor="let item of orderItems;let i=index;">
-                            <div class="card card-custom card-shadowless orderItems">
-                              <div class="card-body p-0">
-                                <!--begin::Image-->
-                                <div class="overlay">
-  
-                                  <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
-                                    [ngStyle]="{ 'background-image': 'url(' + getItemImg(item.item) + ')'}">
-                                  </div>
-                                </div>
-                            
-                                <!--end::Image-->
-  
-                                <!--begin::Details-->
-                                <div
-                                  class="mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
-                                  <a
-                                    class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">{{item.item.displayName}}</a>
-                                    <span class="font-size-sm twoline-break">{{ item.item.shortDesc }}</span>
-                                  </div>
-                                    <div>
-                                      <span class="strikeMe rupee-font font-weight-bolder " *ngIf="item.item.showPromotionalPrice" > {{ item.item.price  | currency:'&#8377;'}}&nbsp;&nbsp;</span> 
-                                     <span class="font-size-h6 text-muted font-weight-bolder rupee-font  ">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price)  }}</span>
-                                    </div>
-                  
-                                
-  
-  
-  
+                    </div>
+                    <!--begin::Card-->
+                    <div class="row">
+
+
+
+                      <!--end::Engage Widget 15-->
+                      <!--begin::Section-->
+                      
+
+                        <!-- <div class="row">
+                         begin::Product
+                          <div class="card-body p-0" *ngIf="orderType !== 'SHOPPINGLIST'">
+                            <ng-container *ngFor="let item of orderItems">
+                              <div class="col-xs-12 col-md-6 col-xl-4 col-lg-12 orderItems">
                               
-                                <div class="add_qty noHover">
-                                    <td class="text-center align-middle">
-                                      <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
-                                        <i class="ki ki-minus icon-xs"></i>
+                                <div class="card card-custom card-shadowless">
+                                  <div class="card-body p-0">
+                                 
+                                    <div class="overlay" >
+                                         <div  class="bgItemimg"
+                                       [style.background-image]="'url('+getItemImg(item.item)+''" >
+                                      </div> 
+                                      <div class="add_qty noHover">
+                                        <td class="text-center align-middle">
+                                          <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                            <i class="ki ki-minus icon-xs"></i>
+                                          </a>
+                                          <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
+                                          <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
+                                            <i class="ki ki-plus icon-xs"></i>
+                                          </a>
+                                        </td>
+                                      </div>
+                                      
+                                     
+                                      
+
+                                          
+                                       
+                                    </div>
+                                    end::Image
+
+                                    <div class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                      <a href="#" class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{ item.item.displayName }}
                                       </a>
-                                      <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
-                                      <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
-                                        <i class="ki ki-plus icon-xs"></i>
-                                      </a>
-                                    </td>
+                                      <span class="font-size-lg">{{ item.item.shortDesc }}</span>
+                                    </div>
+                                    <div class="strikeMe " *ngIf="item.item.showPromotionalPrice rupee-font">₹ {{ item.item.price | currency:'':''}}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price) |
+                                      currency:'':''}}</div>
+                                    
                                   </div>
-                                <!--end::Details-->
+                                </div>
+                               
                               </div>
+                            </ng-container>
+                            <-end::Product-->
+                            <ng-container  *ngIf="orderType !== 'SHOPPINGLIST'">
+                        <div class="col-xs-12 col-sm-6  col-md-6 col-xl-4 col-lg-6 mb-3"
+                          *ngFor="let item of orderItems;let i=index;">
+                          <div class="card card-custom card-shadowless orderItems">
+                            <div class="card-body p-0">
+                              <!--begin::Image-->
+                              <div class="overlay">
+
+                                <div class="overlay-wrapper rounded bg-light text-center bg_item_img" 
+                                  ><img  [src]="getItemImg(item.item)" style="width: 50%;height: 100%;" alt="Profile Pic">
+                                </div>
+                              </div>
+                          
+                              <!--end::Image-->
+
+                              <!--begin::Details-->
+                              <div
+                                class="mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
+                                <a
+                                  class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">{{item.item.displayName}}</a>
+                                  <span class="font-size-sm twoline-break">{{ item.item.shortDesc }}</span>
+                                </div>
+                                  <div>
+                                    <span class="strikeMe rupee-font font-weight-bolder " *ngIf="item.item.showPromotionalPrice" > {{ item.item.price  | currency:'&#8377;'}}&nbsp;&nbsp;</span> 
+                                   <span class="font-size-h6 text-muted font-weight-bolder rupee-font  "> {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price)  | currency:'&#8377;' }}</span>
+                                  </div>
+                
+                              
+
+
+
+                            
+                              <div class="add_qty noHover">
+                                  <td class="text-center align-middle">
+                                    <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                      <i class="ki ki-minus icon-xs"></i>
+                                    </a>
+                                    <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
+                                    <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
+                                      <i class="ki ki-plus icon-xs"></i>
+                                    </a>
+                                  </td>
+                                </div>
+                              <!--end::Details-->
                             </div>
-  
-  
                           </div>
-                        </ng-container>
-                        <ng-container *ngIf="orderType === 'SHOPPINGLIST'">
-                            <div class="col-xs-12 col-sm-12  col-md-12 col-xl-6col-lg-6 mb-3">
-                            <div class="card" >
-                                <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
-                                    <span *ngIf="!image_list_popup " (click)="uploadShoppingList()">
-                                      <a class="uploadshoppinglist-btn">Upload Shopping List</a>
-                                    </span>
-                                    <div *ngIf="image_list_popup ">
-                                      <ul class="shoppinglist-gal">
-                                        <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                          <li *ngIf="i<2" class="shoppinglist-li">
-                                            <div class="shoppinglistbx">
-                                              <span class="shoppinglistmbt">
-                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                  <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                                <mat-menu #menu="matMenu">
-                                                  <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
-                                                    <i class="icon-delete"></i>
-                                                    <span>delete</span>
-                                                  </button>
-                                                </mat-menu>
-                                              </span>
-                                              <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
-                                                <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                                  [src]="file.modal.img" *ngIf="file.modal.img" />
-                                              </div>
-                                            </div>
-                                          </li>
-                                        </ng-container>
-                                        <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
+
+
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="orderType === 'SHOPPINGLIST'">
+                          <div class="col-xs-12 col-sm-12  col-md-12 col-xl-6 col-lg-6 mb-3">
+                          <div class="card" >
+                              <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
+                                  <span *ngIf="!image_list_popup || image_list_popup.length ==0" (click)="uploadShoppingList()">
+                                    <a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                                  </span>
+                                  <div *ngIf="image_list_popup && image_list_popup.length > 0">
+                                    <ul class="shoppinglist-gal">
+                                      <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                        <li *ngIf="i<2" class="shoppinglist-li">
                                           <div class="shoppinglistbx">
-                                            <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
-                                              *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                                            <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
-                                                class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
-                                                [src]="image_list_popup[2].modal.img" /></div>
-                                            <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                            <span class="shoppinglistmbt">
                                               <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                 <mat-icon>more_vert</mat-icon>
                                               </button>
                                               <mat-menu #menu="matMenu">
-                                                <button type="button" mat-menu-item
-                                                  (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
                                                   <i class="icon-delete"></i>
                                                   <span>delete</span>
                                                 </button>
                                               </mat-menu>
                                             </span>
-                                            <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
-                                              *ngIf="(image_list_popup.length-3)==0">
+                                            <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                               <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                                *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" />
+                                                [src]="file.modal.img" *ngIf="file.modal.img" />
                                             </div>
                                           </div>
                                         </li>
-                                      </ul>
-                                      <a (click)="filed.click()" class="pointerlist">
-                                        <input type="file" multiple name="image_src" id="image_src" accept="/*;capture=camera"
-                                          #filed (change)="imageSelect($event)">Add more
-                                      </a>
-            
-                                      <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
-                                        (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()">
-                                      </ks-modal-gallery>
-            
-                                    </div>
+                                      </ng-container>
+                                      <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
+                                        <div class="shoppinglistbx">
+                                          <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                                            *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                          <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
+                                              class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
+                                              [src]="image_list_popup[2].modal.img" /></div>
+                                          <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                              <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                              <button type="button" mat-menu-item
+                                                (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                <i class="icon-delete"></i>
+                                                <span>delete</span>
+                                              </button>
+                                            </mat-menu>
+                                          </span>
+                                          <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                                            *ngIf="(image_list_popup.length-3)==0">
+                                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                                              *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" />
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                    <a (click)="filed.click()" class="pointerlist">
+                                      <input type="file" multiple name="image_src" id="image_src" accept="/*;capture=camera"
+                                        #filed (change)="imageSelect($event)">Add more
+                                    </a>
+          
+                                    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                      [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                      [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                      (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()">
+                                    </ks-modal-gallery>
+          
                                   </div>
-                            </div>
+                                </div>
                           </div>
-                        </ng-container>
-  
-  
-  
-  
                         </div>
-  
-  <!--                       
-                        <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
-                          <span *ngIf="!image_list_popup " (click)="uploadShoppingList()">
-                            <a class="uploadshoppinglist-btn">Upload Shopping List</a>
-                          </span>
-                          <div *ngIf="image_list_popup ">
-                            <ul class="shoppinglist-gal">
-                              <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                <li *ngIf="i<2" class="shoppinglist-li">
-                                  <div class="shoppinglistbx">
-                                    <span class="shoppinglistmbt">
-                                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                        <mat-icon>more_vert</mat-icon>
-                                      </button>
-                                      <mat-menu #menu="matMenu">
-                                        <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
-                                          <i class="icon-delete"></i>
-                                          <span>delete</span>
-                                        </button>
-                                      </mat-menu>
-                                    </span>
-                                    <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
-                                      <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                        [src]="file.modal.img" *ngIf="file.modal.img" />
-                                    </div>
-                                  </div>
-                                </li>
-                              </ng-container>
-                              <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
+                      </ng-container>
+
+
+
+
+                      </div>
+
+<!--                       
+                      <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
+                        <span *ngIf="!image_list_popup " (click)="uploadShoppingList()">
+                          <a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                        </span>
+                        <div *ngIf="image_list_popup ">
+                          <ul class="shoppinglist-gal">
+                            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                              <li *ngIf="i<2" class="shoppinglist-li">
                                 <div class="shoppinglistbx">
-                                  <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
-                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                                  <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
-                                      class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
-                                      [src]="image_list_popup[2].modal.img" /></div>
-                                  <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                  <span class="shoppinglistmbt">
                                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                       <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                      <button type="button" mat-menu-item
-                                        (click)="deleteTempImage(image_list_popup[2], 2)">
+                                      <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
                                         <i class="icon-delete"></i>
                                         <span>delete</span>
                                       </button>
                                     </mat-menu>
                                   </span>
-                                  <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
-                                    *ngIf="(image_list_popup.length-3)==0">
+                                  <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                      *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" />
+                                      [src]="file.modal.img" *ngIf="file.modal.img" />
                                   </div>
                                 </div>
                               </li>
-                            </ul>
-                            <a (click)="filed.click()" class="pointerlist">
-                              <input type="file" multiple name="image_src" id="image_src" accept="/*;capture=camera"
-                                #filed (change)="imageSelect($event)">Add more
-                            </a>
-  
-                            <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                              [plainGalleryConfig]="customPlainGalleryRowConfig"
-                              [buttonsConfig]="customButtonsFontAwesomeConfig"
-                              (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()">
-                            </ks-modal-gallery>
-  
-                          </div>
-                        </div> -->
-                        <!--end::Products-->
-                      </div> 
-  
-                    </div>
-                  <!-- </div>
-               
-                </div>
-  
-              </div> -->
-              <!--end::Wizard Step 2-->
-  
-              <!--begin::Wizard Step 3-->
-              <div class="pb-5" *ngIf="step == 3">
-                <div class="flex-row-fluid">
-  
-                  <!--begin::Section-->
-                  <div>
-                    <!--begin::Header-->
-                    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                      <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
-                        </span>
-                      </h3>
-                    </div>
-                    <!--end::Header-->
-  
-                    <div class="card-body p-0">
-                      <!--begin::Shopping Cart-->
-                      <div *ngIf="orders && orders.length == 0 && orderType !== 'SHOPPINGLIST'"
-                        class="card card-shadow card-custom card-shadowless mgn-bt-10">
-                        <div class="card-body p-0">
-                          <div class="no-dta text-center">
-                            <p>No items in the cart</p>
-                            <span class="cs-btn bt3" (click)="addItem()">
-                              Add Item</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="w-dta">
-                        <div class="row">
-                          <div class="copy width100">
-                            <div *ngIf="orders && orders.length != 0 && orderType !== 'SHOPPINGLIST'"
-                              class="table-outer q-itm">
-                              <table class="table">
-                                <!--begin::Cart Header-->
-                                <thead>
-                                  <tr>
-                                    <th>Product</th>
-                                    <th class="text-center">Qty</th>
-                                    <th class="text-right rupee-font">Price (₹)</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <!--end::Cart Header-->
-  
-                                <tbody>
-                                  <!--begin::Cart Content-->
-                                  <tr *ngFor="let item of orders">
-                                    <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
-                                      <!--begin::Symbol-->
-                                      <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                        <div class="symbol-label"
-                                          [style.background-image]="'url('+getItemImg(item.item)+')'">
-                                        </div>
-                                      </div>
-                                      <!--end::Symbol-->
-                                      <a class="text-dark text-hover-primary">{{ item.item.displayName }}
-                                      </a>
-                                    </td>
-                                    <td data-title="Qty" class="text-center align-middle noHover">
-                                      <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2"
-                                        (click)="decrement(item);">
-                                        <i class="ki ki-minus icon-xs"></i>
-                                      </a>
-                                      <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
-                                      <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon"
-                                        [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
-                                        <i class="ki ki-plus icon-xs"></i>
-                                      </a>
-                                    </td>
-                                    <td data-title="Price"
-                                      class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
-                                      ₹ {{ getItemPrice(item) }}
-                                    </td>
-                                    <td data-title="" class="text-right align-middle" (click)="removeItemFromCart(item)">
-                                      <i class="font-weight-bolder font-size-sm red icon-delete">
-                                      </i>
-                                    </td>
-                                  </tr>
-  
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- begin: Invoice footer-->
-                      <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
-                        <div class="col-md-10 ln-ht-2">
-                          <div class="text-muted">DELIVERY TYPE</div>
-                          <ng-container *ngIf="home_delivery && store_pickup">
-                            <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
-                              <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                                Store pick up
-                              </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              <mat-radio-button [value]="'home'" [checked]="!storeChecked">
-                                Home delivery
-                              </mat-radio-button>
-                            </mat-radio-group>
-                          </ng-container>
-                          <div *ngIf="store_pickup && !home_delivery">
-                            Store Pickup
-                          </div>
-                          <div *ngIf="home_delivery && !store_pickup">
-                            Home delivery
-                          </div>
-                          <div class="text-muted">DATE/TIME
-                            <span>
-                              <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal"
-                                data-target="#datePickerModal">
-                                Change </button>
-                            </span>
-                            <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
-                          </div>
-                          <div>
-                            <span *ngIf="!isFuturedate">Today ,</span>
-                            <span *ngIf="!isFuturedate">
-                              {{nextAvailableTime}}
-                            </span>
-                            <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                            </span>
-                            <span *ngIf="isFuturedate">
-                              {{nextAvailableTime}}
-                            </span>
-                          </div>
-  
-                          <!-- Home Address -->
-                          <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
-                            <div>
-                              <div [hidden]="added_address.length==0"
-                                class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4"
-                                *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
-                                [ngClass]="{'highlight': selectedRowIndex == i}">
-                                <div class="card card-custom gutter-b rounded-0 card-stretch p-2"
-                                  style="line-height:none">
-                                  <div class="card-body text-left pl-5 p-0 font-addrss">
-                                    <div class="adrs-data">
-                                      <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                                      <div>{{address.address}}</div>
-                                      <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
-                                      <div> +91 {{address.phoneNumber}}</div>
-                                      <div> {{address.email}}</div>
-                                    </div>
-  
-                                  </div>
+                            </ng-container>
+                            <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
+                              <div class="shoppinglistbx">
+                                <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                                  *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
+                                    class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
+                                    [src]="image_list_popup[2].modal.img" /></div>
+                                <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu="matMenu">
+                                    <button type="button" mat-menu-item
+                                      (click)="deleteTempImage(image_list_popup[2], 2)">
+                                      <i class="icon-delete"></i>
+                                      <span>delete</span>
+                                    </button>
+                                  </mat-menu>
+                                </span>
+                                <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                                  *ngIf="(image_list_popup.length-3)==0">
+                                  <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                                    *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" />
                                 </div>
                               </div>
-                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
-                                <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
-                                  <div class="card-body text-center p-0">
-                                    <button type="button" class="btn btn-success px-2 py-1" (click)="addAddress();">
-                                      Add Address </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </ng-container>
-  
-                          <!--Change Date picker  -->
-                          <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog"
-                            aria-labelledby="datePickerModal" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-  
-                              <div class="modal-content">
-                                <div class="modal-body">
-                                  <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
-                                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Choose Date
-                                          </div> -->
-                                      <div class="col-md-8 col-xs-12 col-sm-10 ">
-                                        <div class="lnk ">Choose Date</div>
-                                        <div class="pull-left brd-round brd-light mgn-up-10">
-                                          <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
-                                          <span
-                                            class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
-                                          <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
-                                          <!-- </div>-->
-                                          <span class="datepicker">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                                            <input class="" style="visibility: hidden; width:1px" type="text"
-                                              [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                                              (dateChange)="handleFutureDateChange($event)">
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
-                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
-  
-                                      <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
-                                        <div class="lnk ">{{timings_title}} </div>
-                                        <mat-chip-list class="">
-                                          <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                                            (click)="handleQueueSelection(queue, i)">
-                                            <!-- [selected]="queue(i) === nextAvailableTime"> -->
-                                            {{queue['sTime'] + ' - ' +
-                                                                                    queue['eTime']}}
-                                          </mat-chip>
-                                        </mat-chip-list>
-                                      </div>
-                                      <div *ngIf="!isfutureAvailableTime">
-                                        <div class="lnk ">{{timings_title}} </div>
-                                        <p>No timings are available</p>
-                                      </div>
-                                      <!-- </div> -->
-                                    </div>
-  
-                                  </div>
-  
-                                </div>
-                                <div class="modal-footer">
-                                  <button #closeDatepickerModal type="button"
-                                    class="btn ln-ht-1 btn-light-primary font-weight-bold"
-                                    data-dismiss="modal">Close</button>
-                                  <button type="button" [disabled]="!isfutureAvailableTime"
-                                    (click)="goBackToSummary(futureAvailableTime ,queue)"
-                                    class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
-                                </div>
-                              </div>
-  
-                            </div>
-                          </div>
-  
-  
-  
-  
+                            </li>
+                          </ul>
+                          <a (click)="filed.click()" class="pointerlist">
+                            <input type="file" multiple name="image_src" id="image_src" accept="/*;capture=camera"
+                              #filed (change)="imageSelect($event)">Add more
+                          </a>
+
+                          <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                            [plainGalleryConfig]="customPlainGalleryRowConfig"
+                            [buttonsConfig]="customButtonsFontAwesomeConfig"
+                            (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()">
+                          </ks-modal-gallery>
+
                         </div>
-  
-                      </div>
-                      <!-- end: Invoice footer-->
-                      <!-- Coupon  start-->
-  
-                      <!-- <div>
-  
-                                <div class="form-group row mt-5">
-  
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <a class="btn btn-primary"  (click)="toggleCoupon();">Apply promo code</a>
-  
-                                </div>
-                                <div class="col-md-7" *ngIf="showCoupon" >
-                                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                                    <i class="icon-bell"></i>{{applied_inbilltime}}
-                                  </div>
-                                  <div class="input-group w-100">
-                                    <input type="text" class="form-control" [(ngModel)]="selected_coupon" placeholder="Voucher Code">
-                                    <div class="input-group-append">
-                                      <button class="btn btn-secondary line-height-sm" (click)="applyCoupons(selected_coupon)" type="button">Apply</button>
-                                    </div>
-                                  </div>
-                                </div>
-  
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;" *ngIf="api_cp_error !== null">
-                                  {{api_cp_error}}</div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-  
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                                *ngIf="couponsList && couponsList.length>0">
-                                <label style="color:blue">Coupon Applied</label>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                  *ngFor="let coupon of couponsList let i=index">
-                                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                    <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                      {{coupon.couponCode}} </div>
-                                    <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                      <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                          class="pointer-cursor lnk read-more-checkin">Read
-                                          T & C </a></span>
-                                      <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                            (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                            [matTooltip]="'Remove Coupon'"></i></a></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                    *ngIf="coupon.showme">
-                                    {{coupon.instructions}}
-                                  </div>
-                                </div>
-                              </div>
-                              </div>
-  
-  
-                          </div> -->
-  
-                      <!-- Coupon  end-->
-                      <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderType !== 'SHOPPINGLIST'">
-                        <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
-  
-                        <div class="d-flex justify-content-between mb-3">
-                          <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
-                          <span class="text-right price rupee-font"> {{getTotalItemPrice() | currency:'&#8377;'}}</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3"
-                          *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
-                          <span class="mr-15 font-weight-bold">Tax</span>
-                          <span
-                            class="text-right price rupee-font">{{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3"
-                          *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
-                          <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                          <span class="text-right price rupee-font"> {{getDeliveryCharge() | currency:'&#8377;'}}</span>
-                        </div>
-  
-                        <div class="d-flex justify-content-between">
-                          <span class="mr-15 font-weight-bold">Total Price</span>
-                          <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
-                        </div>
-                      </div>
-  
-  
-  
-  
-                      <!--end::Shopping Cart-->
-                    </div>
+                      </div> -->
+                      <!--end::Products-->
+                    </div> 
+
                   </div>
-                  <!--end::Section-->
-                </div>
+                <!-- </div>
+             
               </div>
-              <!--end::Wizard Step 3-->
-  
-              <!--begin::Wizard Actions-->
-              <div class="d-flex justify-content-between border-top mt-2 py-5">
-                <div class="mr-2" *ngIf="step == 2 || step == 3">
-                  <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1"
-                    (click)="gotoPrev()">
-                    Previous
-                  </button>
-                </div>
+
+            </div> -->
+            <!--end::Wizard Step 2-->
+
+            <!--begin::Wizard Step 3-->
+            <div class="pb-5" *ngIf="step == 3">
+              <div class="flex-row-fluid">
+
+                <!--begin::Section-->
                 <div>
-  
-                  <button [disabled]="placeOrderDisabled" *ngIf="step == 3" type="button"
-                    class="btn btn-success font-weight-bold text-uppercase px-9 py-1" (click)="confirm()">
-                    Place Order
-                  </button>
-                  <button [disabled]='disabledNextbtn' *ngIf="step==2" type="button"
-                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
-                    Next
-                  </button>
+                  <!--begin::Header-->
+                  <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                    <h3 class="card-title align-items-start flex-column">
+                      <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
+                      </span>
+                    </h3>
+                  </div>
+                  <!--end::Header-->
+
+                  <div class="card-body p-0">
+                    <!--begin::Shopping Cart-->
+                    <div *ngIf="orders && orders.length == 0 && orderType !== 'SHOPPINGLIST'"
+                      class="card card-shadow card-custom card-shadowless mgn-bt-10">
+                      <div class="card-body p-0">
+                        <div class="no-dta text-center">
+                          <p>No items in the cart</p>
+                          <span class="cs-btn bt3" (click)="addItem()">
+                            Add Item</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w-dta">
+                      <div class="row">
+                        <div class="copy width100">
+                          <div *ngIf="orders && orders.length != 0 && orderType !== 'SHOPPINGLIST'"
+                            class="table-outer q-itm">
+                            <table class="table">
+                              <!--begin::Cart Header-->
+                              <thead>
+                                <tr>
+                                  <th>Product</th>
+                                  <th class="text-center">Qty</th>
+                                  <th class="text-right rupee-font">Price (₹)</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <!--end::Cart Header-->
+
+                              <tbody>
+                                <!--begin::Cart Content-->
+                                <tr *ngFor="let item of orders">
+                                  <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                      <div class="symbol-label"
+                                        [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                      </div>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <a class="text-dark text-hover-primary">{{ item.item.displayName }}
+                                    </a>
+                                  </td>
+                                  <td data-title="Qty" class="text-center align-middle noHover">
+                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2"
+                                      (click)="decrement(item);">
+                                      <i class="ki ki-minus icon-xs"></i>
+                                    </a>
+                                    <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
+                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon"
+                                      [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item);">
+                                      <i class="ki ki-plus icon-xs"></i>
+                                    </a>
+                                  </td>
+                                  <td data-title="Price"
+                                    class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                    ₹ {{ getItemPrice(item) }}
+                                  </td>
+                                  <td data-title="" class="text-right align-middle" (click)="removeItemFromCart(item)">
+                                    <i class="font-weight-bolder font-size-sm red icon-delete">
+                                    </i>
+                                  </td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- begin: Invoice footer-->
+                    <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
+                      <div class="col-md-10 ln-ht-2">
+                        <div class="text-muted">DELIVERY TYPE</div>
+                        <ng-container *ngIf="home_delivery && store_pickup">
+                          <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
+                            <mat-radio-button [value]="'store'" [checked]="storeChecked">
+                              Store pick up
+                            </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <mat-radio-button [value]="'home'" [checked]="!storeChecked">
+                              Home delivery
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </ng-container>
+                        <div *ngIf="store_pickup && !home_delivery">
+                          Store Pickup
+                        </div>
+                        <div *ngIf="home_delivery && !store_pickup">
+                          Home delivery
+                        </div>
+                        <div class="text-muted">DATE/TIME
+                          <span>
+                            <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal"
+                              data-target="#datePickerModal">
+                              Change </button>
+                          </span>
+                          <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
+                        </div>
+                        <div *ngIf="isfutureAvailableTime">
+                          <span *ngIf="!isFuturedate">Today ,</span>
+                          <span *ngIf="!isFuturedate">
+                            {{nextAvailableTime}}
+                          </span>
+                          <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
+                          </span>
+                          <span *ngIf="isFuturedate">
+                            {{nextAvailableTime}}
+                          </span>
+                        </div>
+                        <div *ngIf="!isfutureAvailableTime" class="red">
+                            <span>No timings are available</span>
+                          </div>
+
+                        <!-- Home Address -->
+                        <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                          <div>
+                            <div [hidden]="added_address.length==0"
+                              class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card"
+                              *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                              [ngClass]="{'highlight': selectedRowIndex == i}">
+                              <div class=" card-custom gutter-b rounded-0 card-stretch p-2"
+                                style="line-height:none">
+                                <div class="card-body text-left pl-5 p-0 font-addrss">
+                                  <div class="adrs-data">
+                                      <div class="pull-right">
+                                        <i class="font-weight-bolder font-size-sm blue icon-edit"  (click)="updateAddress(address,i)">
+                                        </i>&nbsp; <i class="font-weight-bolder font-size-sm red icon-delete" (click)="deleteAddress(address, i)">
+                                          </i> </div>
+                                    <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                    <div>{{address.address}}</div>
+                                    <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                    <div> +91 {{address.phoneNumber}}</div>
+                                    <div> {{address.email}}</div>
+                                    <!-- <a  class="addressedit"  (click)="updateAddress(address,i);" >
+                                      Edit</a> -->
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card ">
+                              <div class="card-custom gutter-b rounded-0 card-stretch p-2">
+                                <div class="card-body text-center p-0">
+                                  <button type="button" class="btn btn-success px-2 py-1" (click)="addAddress();">
+                                    Add Address </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                        <!--Change Date picker  -->
+                        <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog"
+                          aria-labelledby="datePickerModal" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
+                                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                          Choose Date
+                                        </div> -->
+                                    <div class="col-md-8 col-xs-12 col-sm-10 ">
+                                      <div class="lnk ">Choose Date</div>
+                                      <div class="pull-left brd-round brd-light mgn-up-10">
+                                        <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
+                                        <span
+                                          class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
+                                        <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
+                                        <!-- </div>-->
+                                        <span class="datepicker">
+                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                          <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                          <input class="" style="visibility: hidden; width:1px" type="text"
+                                            [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                            (dateChange)="handleFutureDateChange($event)">
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
+
+                                    <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
+                                      <div class="lnk ">{{timings_title}} </div>
+                                      <mat-chip-list class="">
+                                        <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
+                                          (click)="handleQueueSelection(queue, i)">
+                                          <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                          {{queue['sTime'] + ' - ' +
+                                                                                  queue['eTime']}}
+                                        </mat-chip>
+                                      </mat-chip-list>
+                                    </div>
+                                    <div *ngIf="!isfutureAvailableTime">
+                                      <div class="lnk ">{{timings_title}} </div>
+                                      <p>No timings are available</p>
+                                    </div>
+                                    <!-- </div> -->
+                                  </div>
+
+                                </div>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button #closeDatepickerModal type="button"
+                                  class="btn ln-ht-1 btn-light-primary font-weight-bold"
+                                  data-dismiss="modal">Close</button>
+                                <button type="button" [disabled]="!isfutureAvailableTime"
+                                  (click)="goBackToSummary(futureAvailableTime ,queue)"
+                                  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+
+                    <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderType !== 'SHOPPINGLIST'">
+                      <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                      <div class="d-flex justify-content-between mb-3">
+                        <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
+                        <span class="text-right price rupee-font"> {{getTotalItemPrice() | currency:'&#8377;'}}</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-3"
+                        *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
+                        <span class="mr-15 font-weight-bold">Tax</span>
+                        <span
+                          class="text-right price rupee-font">{{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-3"
+                        *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                        <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                        <span class="text-right price rupee-font"> {{getDeliveryCharge() | currency:'&#8377;'}}</span>
+                      </div>
+
+                      <div class="d-flex justify-content-between">
+                        <span class="mr-15 font-weight-bold">Total Price</span>
+                        <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
+                      </div>
+                    </div>
+
+
+
+
+                    <!--end::Shopping Cart-->
+                  </div>
                 </div>
+                <!--end::Section-->
               </div>
-              <!--end::Wizard Actions-->
-              <!-- </form> -->
-              <!--end::Wizard Form-->
             </div>
+            <!--end::Wizard Step 3-->
+
+            <!--begin::Wizard Actions-->
+            <div class="d-flex justify-content-between border-top mt-2 py-5">
+              <div class="mr-2" *ngIf="step == 2 || step == 3">
+                <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1"
+                  (click)="gotoPrev()">
+                  Previous
+                </button>
+              </div>
+              <div>
+
+                <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button"
+                  class="btn btn-success font-weight-bold text-uppercase px-9 py-1" (click)="confirm()">
+                  Place Order
+                </button>
+                <button [disabled]='disabledNextbtn' *ngIf="step==2" type="button"
+                  class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
+                  Next
+                </button>
+              </div>
+            </div>
+            <!--end::Wizard Actions-->
+            <!-- </form> -->
+            <!--end::Wizard Form-->
           </div>
-          </div>
-          <!--end::Wizard Body-->
         </div>
-        <!--end::Wizard-->
+        </div>
+        <!--end::Wizard Body-->
       </div>
       <!--end::Wizard-->
-                              
     </div>
-    </div>
-  
-  </section>
+    <!--end::Wizard-->
+                            
+  </div>
+  </div>
+
+</section>

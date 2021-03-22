@@ -13,8 +13,13 @@
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                     <div class="d-flex flex-column-fluid">
-                        <div class="d-flex flex-row minhgt-80" *ngIf="messages.length==0">
-                            No messages
+                        <div class="d-flex flex-row minhgt-60" *ngIf="!showEnquiry && messages.length==0">
+                            <div class="no-msg-section">
+                                <div class="nomsg-img mgn-bt-20"></div>
+                                Start messaging to {{customer_label}}s
+                                <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10"
+                                    (click)="gotoCustomers()"> Go to patients </button>
+                            </div>
                         </div>
                         <div class="d-flex flex-row" *ngIf="messages.length>0">
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
@@ -46,7 +51,7 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50 mr-3">
                                                             <div class="user-name">
-                                                                {{getUser(user.key)}}
+                                                                {{getUserShort(user.key)}}
                                                                 <!--   <div class="display-none" #userMsg> {{user.key}} </div>-->
                                                             </div>
                                                         </div>
@@ -100,8 +105,15 @@
                             </div>
                             <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
                                 *ngIf="selectedCustomer == '' && !small_device_display">
-                                <div class="inbox-img" [ngStyle]="{'height.px': msgHeight - 100}"></div>
-                                <div class="null-text">Select a chat to start messaging</div>
+                                <ng-container
+                                    *ngIf="msgDisplay=='user' && selectedUser.userType !== 'PROVIDER'; else elseBlock">
+                                    <div class="inbox-nullimg-user" [ngStyle]="{'height.vh': 40}"></div>
+                                    <div class="null-text">Select a chat to start messaging</div>
+                                </ng-container>
+                                <ng-template #elseBlock>
+                                    <div class="inbox-nullimg" [ngStyle]="{'height.vh': 40}"></div>
+                                    <div class="null-text">Select a chat to start messaging</div>
+                                </ng-template>
                             </div>
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                                 *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">

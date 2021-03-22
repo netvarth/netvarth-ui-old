@@ -207,6 +207,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     addCatalogItems: any = [];
     editcataItemdialogRef: any;
     removeitemdialogRef: any;
+    addItems:any=[];
     private subscriptions = new SubSink();
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
@@ -242,9 +243,10 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                             
                        
                     });
-                    this.getItems();
-                    this.getProviderLocations();
+                    
                 }
+                this.getItems();
+                this.getProviderLocations();
             
             });
         this.createForm();
@@ -273,13 +275,21 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     gotoNext() {
+        if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
+            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (this.payAdvance === 'FIXED' && this.step === 3) {
+            if (this.amForm.get('advancePayment').value === '') {
+                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+        }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 3;
-        } else {
-            this.step = this.step + 1;
-        }
+        } 
         
-        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+        if (this.step === 2) {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
@@ -287,6 +297,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.selectedItems();
             }
             
+        }else {
+            this.step = this.step + 1;
         }
     }
     gotoPrev() {
@@ -942,16 +954,16 @@ console.log('hi submit');
             homeendDate = '';
         }
         
-        if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
-            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        if (this.payAdvance === 'FIXED') {
-            if (form_data.advancePayment === '') {
-                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-        }
+        // if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
+        //     this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // if (this.payAdvance === 'FIXED') {
+        //     if (form_data.advancePayment === '') {
+        //         this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+        //         return;
+        //     }
+        // }
         const postdata = {
             'catalogName': form_data.catalogName,
             'catalogDesc': form_data.catalogDesc,
@@ -1042,14 +1054,16 @@ console.log('hi submit');
 
         };
         if (this.action === 'add') {
-            // postdata['catalogItem'] = this.seletedCatalogItems;
+           if(form_data.orderType==='SHOPPINGCART'){
             postdata['catalogItem'] = this.catalogItemsSelected;
+           }
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
-            // postdata['catalogItem'] = this.catalogItems;
-            //postdata['catalogItem'] = this.seletedCatalogItems;
-           // const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+          console.log(form_data.orderType);
+          console.log(this.catalogItemsSelected);
+           if(form_data.orderType==='SHOPPINGCART'){
             postdata['catalogItem'] = this.catalogSelectedItemsadd;
+           }
             console.log(postdata);
             this.editCatalog(postdata);
         }
@@ -1557,11 +1571,13 @@ console.log('hi submit');
         }
         console.log(this.catalogItemsSelected);
         this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
-        //     const navigationExtras: NavigationExtras = {
-        //       queryParams: { action: 'add',
-        //                       isFrom: true }
-        // };
-        //     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
+        if(this.catalogItemsSelected.length==0){
+            this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
+            return;
+        }else{
+            this.step=this.step +1; 
+        }
+       
     }
     selectedaddItems() {
         this.catalogSelectedItemsadd = [];
@@ -1583,11 +1599,13 @@ console.log('hi submit');
                 this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
             }
         }
-        const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
-        console.log(additems);
-        if(additems.length == 0){
+      this.addItems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+        console.log(this.addItems);
+        if(this.addItems.length == 0){
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
+        }else{
+            this.step=this.step +1;
         }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
@@ -1678,7 +1696,6 @@ console.log('hi submit');
                     this.disableButton = false;
                     this.showPromotionalPrice = false;
                     this.showCustomlabel = false;
-                    // this.amForm.reset();
                     this.haveMainImg = false;
                     this.mainImage = false;
                     this.closeGroupDialog();

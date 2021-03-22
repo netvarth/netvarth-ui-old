@@ -284,11 +284,11 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
     </div> -->
 
 
-    <div class="card-body" style="padding-bottom: .5rem; padding-top: .5rem;" *ngIf="action !== 'view'">
+    <div class="card-body" style="padding-bottom: .5rem; padding-top: .5rem;" *ngIf="action !== 'view' && !api_loading">
       <div class="form-group m-0">
         <div class="row">
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('googlemap')" name="locationradio" value="googlemap" [checked]="locationFind === 'GOOGLEMAP'"/>
@@ -308,7 +308,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('autodetect')" name="locationradio" value="autodetect" [checked]="locationFind === 'AUTODETECT'"/>
@@ -329,7 +329,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option" style="border-color: grey; background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey; background: white; height: 150px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio"  (click)="handlelocationfind('manual')" name="locationradio" value="manual" [checked]="locationFind === 'MANUAL'"/>
@@ -354,7 +354,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
     </div>
 
 <!--begin::Section-->
-<div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view'">
+<div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view' && !api_loading">
   <div class="card">
       <div class="card-body">
         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
@@ -511,7 +511,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Location Name</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="locname" autocomplete="off" readonly maxlength="50"/>
+              formControlName="locname" autocomplete="off"  maxlength="50"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
             'required' : 'Please enter the location name',
@@ -525,7 +525,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <!--begin::Input-->
             <div class="form-group">
               <label>Full address</label>
-              <textarea type="text" readonly class="form-control1 form-control-solid form-control-lg"
+              <textarea type="text"  class="form-control1 form-control-solid form-control-lg"
               formControlName="locaddress" row="4"></textarea>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
             {
@@ -543,7 +543,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Latitude</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclattitude" readonly autocomplete="off"/>
+              formControlName="loclattitude"  autocomplete="off"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
                     {
                     'required' : 'Please enter the latitude',
@@ -558,7 +558,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <div class="form-group">
               <label>Longitude</label>
               <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclongitude" readonly autocomplete="off"/>
+              formControlName="loclongitude"  autocomplete="off"/>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
                     {
                     'required' : 'Please enter the longitude',

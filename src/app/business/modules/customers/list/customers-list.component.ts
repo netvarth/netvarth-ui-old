@@ -126,12 +126,12 @@ export class CustomersListComponent implements OnInit {
     private groupService: GroupStorageService,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private dateTimeProcessor:DateTimeProcessor) {
-      if (this.groupService.getitemFromGroupStorage('group')) {
-        this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
-      } else {
-        this.selectedGroup = 'all';
-      }
+    private dateTimeProcessor: DateTimeProcessor) {
+    if (this.groupService.getitemFromGroupStorage('group')) {
+      this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
+    } else {
+      this.selectedGroup = 'all';
+    }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
@@ -803,8 +803,8 @@ export class CustomersListComponent implements OnInit {
       }
     });
     removeitemdialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['provider', 'customers']);
       if (result) {
-        this.router.navigate(['provider', 'customers']);
         this.addCustomerToGroup(customerId);
       }
     });

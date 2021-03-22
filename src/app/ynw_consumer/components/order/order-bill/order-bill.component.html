@@ -181,13 +181,18 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngFor="let coupon of bill_data.providerCoupon">
+                                                                                    *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
-                                                                                            {{coupon.name}}
+                                                                                            {{coupon.key}}
                                                                                         </div>
-                                                                                        <div class="price rupee-font">(-){{coupon.couponValue |
-                                                currency:'&#8377; '}}</div>
+                                                                                        <div class="price rupee-font">
+                                                                                            <span>(-)</span>
+                                                                                            <span
+                                                                                                (click)="showJCCouponNote(coupon)"
+                                                                                                [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
+																		currency:'&#8377; '}}</span>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
@@ -317,7 +322,7 @@
                                                         </div>
                                                         <div class="section-three other-section" *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled'">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf="this.couponList.length > 0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                                                            *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                     <span class="">Jaldee Coupon</span>

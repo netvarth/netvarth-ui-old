@@ -5,6 +5,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+
 @Component({
     selector: 'app-consumer-donations',
     templateUrl: './donations.component.html'
@@ -26,6 +29,7 @@ export class ConsumerDonationsComponent implements OnInit,OnDestroy {
     private subs=new SubSink();
     constructor(public shared_functions: SharedFunctions,
         private dateTimeProcessor: DateTimeProcessor,
+        private dialog: MatDialog,
         private shared_services: SharedServices) {
 
     }
@@ -48,4 +52,19 @@ export class ConsumerDonationsComponent implements OnInit,OnDestroy {
             }
         );
     }
+    showConsumerNote(donation) {
+        const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            checkin: donation,
+            type: 'donation'
+          }
+        });
+        notedialogRef.afterClosed().subscribe(result => {
+          if (result === 'reloadlist') {
+          }
+        });
+      }
 }

@@ -227,13 +227,13 @@ addItem(post_data) {
   }
   setDescFocus() {
     this.isfocused = true;
-    this.char_count = this.max_char_count - this.amItemForm.get('catalogDesc').value.length;
+    this.char_count = this.max_char_count - this.amItemForm.get('displayDesc').value.length;
 }
 lostDescFocus() {
     this.isfocused = false;
 }
 setCharCount() {
-    this.char_count = this.max_char_count - this.amItemForm.get('catalogDesc').value.length;
+    this.char_count = this.max_char_count - this.amItemForm.get('displayDesc').value.length;
 }
 isNumeric(evt) {
   return this.sharedfunctionObj.isNumeric(evt);

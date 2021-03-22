@@ -24,9 +24,9 @@
 .card-width {
     width: 350px;
 }
-@media(max-width: 340px) {
+@media(max-width: 600px) {
     .card-width {
-        width: 300px;
+        width: 100%;
     }
 }
 .msg-body {
@@ -95,6 +95,10 @@ textarea {
 }
 .fa-paper-plane {
     color: #1e4079;
+    font-size: 1.8rem;
+}
+.fa-times {
+    color: black !important;
 }
 .grey {
     color: lightgrey !important;
@@ -102,11 +106,6 @@ textarea {
 .btn.btn-primary.disabled {
     background: #ccc !important;
     border-color: #ccc !important;
-}
-.inbox-img {
-    content: url(../../../../../assets/images/inbox.png);
-    margin-left: auto;
-    margin-right: auto;
 }
 .null-img {
     margin: auto;
@@ -123,5 +122,12 @@ textarea {
     width: 20px !important;
 }
 .minhgt-80 {
-    min-height: 70vh;
+    min-height: 80vh;
+}
+.panel {
+    margin-bottom: 0px !important;
+}
+.no-msg-section {
+    margin: auto;
+    text-align: center;
 }

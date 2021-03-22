@@ -27,12 +27,12 @@ export class AddressComponent implements OnInit {
   api_success = null;
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
-    public dialogRef: MatDialogRef<AddressComponent>,
+    private dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices,
+    private provider_services: ProviderServices,
     private snackbarService: SnackbarService
   ) {
     this.address_title = 'Add New Address';
@@ -47,6 +47,8 @@ export class AddressComponent implements OnInit {
     }
 
     this.edit_address = data.update_address;
+    console.log(this.edit_address);
+
     this.index = data.edit_index;
 
   }
@@ -93,6 +95,9 @@ export class AddressComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableSave = true;
+    if (this.formMode === 'edit') {
+      this.exist_add.splice(this.index, 1);
+    }
     this.exist_add.push(form_data);
     this.provider_services.updateDeliveryaddress(this.customer.id, this.exist_add)
     .pipe(takeUntil(this.onDestroy$))

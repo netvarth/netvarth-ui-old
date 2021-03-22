@@ -5,7 +5,9 @@
 input.picker[type="date"] {
   position: relative !important;
 }
-
+.wizard-nav {
+  justify-content:left!important;
+}
 input.picker[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute !important;
   top: 0 !important;
