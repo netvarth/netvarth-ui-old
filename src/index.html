@@ -63,17 +63,17 @@
 
   }
   function onDeviceReady() {
-    localStorage.setItem('deviceName', device.name);
+    localStorage.setItem('deviceName', JSON.stringify(device.name));
     if (typeof FCMPlugin != 'undefined') {
       FCMPlugin.getToken(function (token) {
         console.log(token);
-        localStorage.setItem("mUniqueId", token);
+        localStorage.setItem("mUniqueId", JSON.stringify(token));
       }, function (err) {
         localStorage.setItem("mUniqueId", null);
       });
       FCMPlugin.onTokenRefresh(function (token) {
         console.log("Token Refreshed : " + token);
-        localStorage.setItem("mUniqueId", token);
+        localStorage.setItem("mUniqueId", JSON.stringify(token));
         if (localStorage.getItem("ynw-user")) {
           setPushToken(token);
         }
