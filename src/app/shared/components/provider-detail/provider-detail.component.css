@@ -1190,7 +1190,7 @@ img.ordericon.home {
   border-bottom-left-radius: 0.50rem !important;
   border-bottom-right-radius: 0.50rem !important;
   overflow: hidden !important;
-  perspective: 1px !important;
+  /* perspective: 1px !important; */
   padding-bottom: 0 !important;
   margin-bottom: 10px !important;
 }
