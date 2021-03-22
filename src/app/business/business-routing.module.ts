@@ -10,7 +10,6 @@ import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/prov
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
-import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 
 const routes: Routes = [
@@ -26,7 +25,6 @@ const routes: Routes = [
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
-      { path: 'members', component: ProviderMembersComponent },
       // { path: 'inbox', loadChildren: () => import('./modules/mailbox/mailbox.module').then(m => m.MailboxModule) },
       { path: 'inbox', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
       { path: 'finance', loadChildren: () => import('./modules/learnmore/finance/finance.module').then(m => m.FinanceModule) },

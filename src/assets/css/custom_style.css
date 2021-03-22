@@ -14095,3 +14095,6 @@ width: 40px !important;
   line-height: 26px !important;
   border-radius: 5px !important;
 }
+.position-absolute {
+  position: absolute !important;
+}

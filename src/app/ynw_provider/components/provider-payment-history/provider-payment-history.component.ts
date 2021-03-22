@@ -89,18 +89,6 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     this.locationobj.back();
   }
   getInvoice(invoice) {
-    // const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-    //   width: '50%',
-    //   data: {
-    //     invoice: invoice,
-    //     source: 'payment-history'
-    //   },
-    //   panelClass: ['popup-class', 'commonpopupmainclass', 'smallform'],
-    //   disableClose: true
-    // });
-    // dialogRef.afterClosed().subscribe(() => {
-    // });
-
     const invoiceJson = JSON.stringify(invoice);
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -111,11 +99,6 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
     };
     this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
-
-
-
-
-
   }
 
   handle_pageclick(pg) {

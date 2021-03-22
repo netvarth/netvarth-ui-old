@@ -11,7 +11,6 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
-import { CustomerModule } from '../customer/customer.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
@@ -47,7 +46,6 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         LoadingSpinnerModule,
         Nl2BrPipeModule,
         InboxModule,
-        CustomerModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,
         NgbModule,
@@ -60,7 +58,6 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         ProviderWaitlistCheckInConsumerNoteModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
-        CustomerModule,
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),

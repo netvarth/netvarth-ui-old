@@ -1,7 +1,0 @@
-<h1 class="mat-dialog-title">{{manage_work_hours_cap}}  <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<mat-dialog-content>
-<app-provider-schedule [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" [showsavebutton]="'1'" [hidecancelbutton]="'1'" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
-</mat-dialog-content>
-<mat-dialog-actions>
-<button  type="button" mat-dialog-close class="cs-btn bt2">{{close_btn}}</button>
-</mat-dialog-actions>

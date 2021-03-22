@@ -102,40 +102,6 @@ export class DiscountComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['provider', 'settings', 'pos', 'discount', discount.id], navigationExtras);
   }
-
-  // addDiscounts() {
-  //   this.accountdialogRef = this.dialog.open(AddProviderDiscountsComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       type: 'add'
-  //     }
-  //   });
-
-  //   this.accountdialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'reloadlist') {
-  //       this.getDiscounts();
-  //     }
-  //   });
-  // }
-  // editDiscounts(obj) {
-  //   this.adddiscdialogRef = this.dialog.open(AddProviderDiscountsComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       discount: obj,
-  //       type: 'edit'
-  //     }
-  //   });
-
-  //   this.adddiscdialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'reloadlist') {
-  //       this.getDiscounts();
-  //     }
-  //   });
-  // }
   doRemoveDiscounts(discount) {
     const id = discount.id;
     if (!id) {

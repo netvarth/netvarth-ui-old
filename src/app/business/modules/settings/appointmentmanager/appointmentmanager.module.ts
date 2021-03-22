@@ -38,9 +38,6 @@ import { QuestionnaireModule } from '../../../../shared/components/questionnaire
         AppointmentmanagerComponent,
         AppointmentComponent
     ],
-    entryComponents: [
-       // AddProviderNonworkingdaysComponent
-    ],
     exports: [AppointmentmanagerComponent]
 })
 export class AppointmentmanagerModule { }

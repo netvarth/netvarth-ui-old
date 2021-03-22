@@ -157,72 +157,11 @@
                                         <button class="cs-btn bt2 ml-4 small_btn" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
                                     </div>
                                 </div>
-
-                                <!-- <input type="text" #itemservicesearch
-										aria-label="Number"
-										[formControl]="itemServiceSearch"
-										(keyup)="itemServiceManualAdd('',itemServiceSearch)"
-										[matAutocomplete]="auto">
-									
-										
-										
-									<mat-autocomplete #auto="matAutocomplete">
-										<ng-container
-											*ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
-											<ng-container
-												*ngFor="let group of ItemServiceGroupOptions | async">
-												<ng-container
-													*ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
-													<mat-option
-														*ngFor="let value of group.values; let i = index"
-														[value]="value"
-														(onSelectionChange)="itemServiceSelected(group.type,value)">
-														{{ value }} <span
-															class="bill_item_service">{{(group.type=='Items')?
-															'Item' :
-															'Service'}}</span>
-													</mat-option>
-												</ng-container>
-												<mat-option
-													*ngIf="group.values.length==0 && source !== 'order'"
-													[disabled]="true">
-													<span
-														class="no-data"></span>{{no_cap}}
-													{{group.type}}
-													{{available_cap}}
-												</mat-option>
-											</ng-container>
-										</ng-container>
-									</mat-autocomplete>
-
-								<input type="number" min="1" max="{{qty_limit}}"  aria-label="Number" value="1" size="3"
-									class="mat-input-element mat-form-field-autofill-control ml-5 ip_feild"
-									id="mat-input-4" aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
-									(keyup)="isvalid($event)" 	[(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)" >
-
-								<input *ngIf="curSelItm.typ === 'Items' && actiontype !== 'adjustItem'" type="number" min="0" max="100000" aria-label="Number" value="1" size="3"
-									class="mat-input-element mat-form-field-autofill-control ml-5 ip_feild"
-									id="mat-input-4" aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
-									(keyup)="isvalid($event)" 	[(ngModel)]="curSelItm.price" >
-								
-								<button class="cs-btn bt1 ml-4 btn_prim"
-									(click)="addService_Item()">{{(actiontype=='adjustService'
-									||
-									actiontype=='adjustItem')?'Change':
-									add_btn_cap}}</button>
-								<button class="cs-btn bt2 ml-4" (click)="hideWorkBench()">{{cancel_btn_cap}}</button> -->
-
                             </div>
                             <div class="add_item col-2" *ngIf="pos && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
-                                <!-- <a *ngIf="(source == 'order' && items.length > 0) || source != 'order'"
-									(click)="showAddItem()"
-									class="btn btn-sm btn-success font-weight-bold py-2 px-3 flat_item px-xxl-5 my-1">Add
-									Service/Item</a> -->
 
-                                <!-- <button mat-button [matMenuTriggerFor]="topmenu"> -->
-                                <!-- <mat-icon>more_vert</mat-icon> -->
                                 <div class="symbol fl_right symbol-40 symbol-light-success mr-5 hand_symb" *ngIf="!showAddItemsec && showAddItemMenuSection" [matMenuTriggerFor]="topmenu">
                                     <span class="symbol-label"> <span class="svg-icon svg-icon-lg svg-icon-success"><svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -291,36 +230,12 @@
                                             <td class="text-right pt-7" *ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
                                                 {{service.quantity}}
-                                                <!-- <br>
-												<div *ngFor="let discount of service.discount">
-													<span
-														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
-													<br>
-													<span class="text-right font-size-xs font-weight-boldest">
-														<span class="rupee-font">(-){{discount.discountValue
-															|
-															currency:'&#8377;'}}</span> <i
-															(click)="removeServiceDiscount(service.serviceId, discount.id)"
-															class="fa fa-window-close" aria-hidden="true"></i>
-													</span>
-												</div> -->
+
                                             </td>
                                             <td class="text-right pt-7" *ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
                                                 {{service.quantity}}
-                                                <!-- <br><br>
-												<div *ngFor="let discount of service.discount">
-													<span
-														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
-													<br>
-													<span class="text-right font-size-xs font-weight-boldest">
-														<span class="rupee-font">(-){{discount.discountValue
-															|
-															currency:'&#8377;'}}</span> <i
-															(click)="removeServiceDiscount(service.serviceId, discount.id)"
-															class="fa fa-window-close" aria-hidden="true"></i>
-													</span>
-												</div> -->
+
                                             </td>
 
                                             <td class="text-right pt-7" style="color: red;font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId && service.quantity === 0">
@@ -346,7 +261,7 @@
 													</button>
 
                                                     <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'" (click)="adjustService(service.serviceName, service.quantity)">
-														Change Qty
+														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
 														Remove Service
@@ -360,13 +275,7 @@
                                                 </span>
                                                 <br>
                                                 <span *ngIf="service.discount && service.discount.length > 0" class="clr_ornge mr-11 text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
-                                                <!-- <br>
-												<span *ngIf="service.discount && service.discount.length > 0"
-													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
-												<br>
-												<span *ngIf="service.discount && service.discount.length > 0"
-													class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate
-													| currency:'&#8377;'}}</span> -->
+
                                             </td>
                                             <td class="text-right pt-7 pr-0" *ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
@@ -387,7 +296,7 @@
 													</button>
 
                                                     <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="checkin.waitlistStatus != 'cancelled'" (click)="adjustService(service.serviceName, service.quantity)">
-														Change Qty
+														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
 														Remove Service
@@ -401,13 +310,7 @@
                                                 </span>
                                                 <br>
                                                 <span *ngIf="service.discount && service.discount.length > 0" class="clr_ornge mr-11 text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
-                                                <!-- <br>
-												<span *ngIf="service.discount && service.discount.length > 0"
-													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
-												<br>
-												<span *ngIf="service.discount && service.discount.length > 0"
-													class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate
-													| currency:'&#8377;'}}</span> -->
+
                                             </td>
 
                                             <!-- Modal for Service level apply discount -->
@@ -439,18 +342,7 @@
                                                 <span *ngIf="item.discount &&item.discount.length > 0" class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
                                             </td>
                                             <td class="border-top-0 text-right py-4">{{item.quantity}}
-                                                <!-- <br>
-												<div *ngFor="let discount of item.discount">
-													<span
-														class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>
-													<br>
-													<span class="text-right font-size-xs font-weight-boldest">
-														<span class="rupee-font">(-){{discount.discountValue |
-															currency:'&#8377;'}}</span> <i
-															(click)="removeItemDiscount(item.itemId, discount.id)"
-															class="fa fa-window-close" aria-hidden="true"></i>
-													</span>
-												</div> -->
+
                                             </td>
                                             <td class="border-top-0 text-right py-4 pr-0"> <span class="rupee-font"> <sup
 														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
@@ -464,8 +356,8 @@
 														Apply Discount
 													</button>
 
-                                                    <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="bill_data.billStatus !== 'Cancel'" (click)="adjustItem(item.itemName, item.quantity)">
-														Change Qty
+                                                    <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="bill_data.billStatus !== 'Cancel'">
+														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
 														Remove Item
@@ -482,13 +374,6 @@
 														| currency:'&#8377;'}}</span>
                                                 </span>
 
-
-                                                <!-- <span *ngIf="item.discount &&item.discount.length > 0"
-													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
-												<br>
-												<span *ngIf="item.discount &&item.discount.length > 0"
-													class="text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate
-													| currency:'&#8377;'}}</span> -->
                                             </td>
 
                                             <!-- Modal for Item level apply discount -->
@@ -519,12 +404,20 @@
                             <div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="form-group mb-0 row">
+                                        <div class="modal-body disp_flx">
+                                            <div class="form-group mb-0 row txt_wdth">
                                                 <label for="example-number-input" class="col-12 col-form-label">
 													{{qty_cap}}</label>
                                                 <div class="col-12">
-                                                    <input class="form-control" type="number" value="42" id="example-number-input" type="number" min="0" max="{{qty_limit}}" (keypress)="isNumber($event)" (keyup)="isvalid($event)" matInput value="1" size="3" [(ngModel)]="curSelItm.qty" [ngModelOptions]="{standalone: true}"
+                                                    <input class="form-control1" type="number" value="42" id="example-number-input" type="number" min="0" max="{{qty_limit}}" (keypress)="isNumber($event)" (keyup)="isvalid($event)" matInput value="1" size="3" [(ngModel)]="curSelItm.qty" [ngModelOptions]="{standalone: true}"
+                                                        (blur)="blurQty($event.target.value, curSelItm)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group ml-10 mb-0 row txt_wdth">
+                                                <label for="example-number-input" class="col-12 col-form-label">
+													Price</label>
+                                                <div class="col-12">
+                                                    <input class="form-control1" type="number" value="42" id="example-number-input" type="number" min="0" (keypress)="isNumber($event)" (keyup)="isvalid($event)" matInput value="1" size="5" [(ngModel)]="curSelItm.price" [ngModelOptions]="{standalone: true}"
                                                         (blur)="blurQty($event.target.value, curSelItm)">
                                                 </div>
                                             </div>
@@ -536,48 +429,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal for order discound -->
-                            <!-- <div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog"
-								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-body">
-											<select class="form-control">
-												<option>Disc 1</option>
-												<option>Disc 2</option>
-												<option>Disc 3</option>
-											</select>
-											<label
-												class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
-												<input type="checkbox" name="Checkboxes16">
-												<span style="margin-right: 0.75rem;"></span>
-												Private note
-											</label>
-											<div class="form-group mt-2 mb-1">
-												<textarea class="form-control radii" id="exampleTextarea"
-													rows="3"></textarea>
-											</div>
-											<label
-												class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
-												<input type="checkbox" name="Checkboxes16">
-												<span style="margin-right: 0.75rem;"></span>
-												Notes for Patient
-											</label>
-											<div class="form-group mt-2 mb-1">
-												<textarea class="form-control radii" id="exampleTextarea"
-													rows="3"></textarea>
-											</div>
-										</div>
-										<div class="modal-footer p-2">
-											<button type="button"
-												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
-												data-dismiss="modal">Close</button>
-											<button type="button"
-												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
-										</div>
-									</div>
-								</div>
-							</div> -->
                             <div *ngIf="(showPCouponSection || showDiscountSection || showJCouponSection)" class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -863,29 +714,7 @@
                                                                                 (click)="applyRefund(payment)">Refund</button>
                                                                         </td>
                                                                     </tr>
-                                                                    <!-- <tr>
-																	<td class="fnt-p7 pr-0 pt-4  text-center">
-																		<button  type="button" class="btn btn-primary btn-square lh-p4  font-weight-bold font-size-xs"
-												                       *ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'"
-												                         (click)="applyRefund(payment)">Refund</button>
-																	</td>
-																</tr> -->
-                                                                    <!-- <tr>
-																	<td>
-																		<button type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
-																	 data-dismiss="modal">Pay by Cash</button>
-																	</td>
-																	<td><button  type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
-																		(click)="refundPayment('other')"  data-dismiss="modal">Pay by Others</button></td>
-																	<td><button  type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
-																		
-																		(click)="refundPayment('online')"  data-dismiss="modal">Pay Online</button></td>
-																	<td colspan="2">
 
-											<button  type="button" class="btn btn-light-primary btn-square lh-p4 font-size-xs font-weight-bold"
-											(click)="revokeRefund()">Cancel</button>
-																	</td>
-																</tr> -->
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -983,38 +812,7 @@
                                     </div>
 
                                     <div class="d-flex flex-column flex-md-row">
-                                        <!-- <div class="d-flex flex-column extra-bill"
-											*ngIf="!showPayWorkBench && !showRefundSection">
-											<button _ngcontent-tyf-c451="" type="button" onclick="window.print();"
-												class="btn rounded-0 btn-light-primary font-weight-bold mb-2"
-												*ngIf="bill_data.billStatus=='Settled'"
-												(click)="printMe()">Print</button>
 
-											<button type="button"
-												class="btn btn-primary rounded-0 font-weight-bold mb-2"
-												*ngIf="bill_data.billStatus!='Settled'"
-												(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
-
-											<button type="button"
-												class="btn btn-primary rounded-0 font-weight-bold mb-2"
-												*ngIf="bill_data.billStatus=='Settled'"
-												(click)="emailBill()">{{email_bill_cap}}</button>
-
-											<button type="button"
-												class="btn btn-primary rounded-0 font-weight-bold mb-2"
-												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
-												(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
-
-											<button type="button"
-												class="btn btn-primary rounded-0 font-weight-bold mb-2"
-												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
-												(click)="paymentlink()">SMS/Email link</button>
-
-											<button type="button"
-												class="btn btn-primary rounded-0 font-weight-bold mb-2"
-												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
-												(click)="showPayment()">{{paybycashothers_cap}}</button>
-										</div> -->
                                         <div class="d-flex flex-row mt-1 mb-10 extra-bill" *ngIf="showPayWorkBench">
                                             <button type="button" class="btn btn-light-success font-size-sm font-weight-bold mb-2 mr-1" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'" (click)="initPayment('cash',amountpay,paynot)">{{paybycash_cap}}</button>
                                             <button type="button" class="btn btn-light-success font-size-sm font-weight-bold mb-2 mr-1" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'" (click)="initPayment('other',amountpay,paynot)">{{paybyothers_cap}}</button>
@@ -1052,7 +850,7 @@
                                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                                         <button type="button" class="btn btn-light-success  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill(bill_data)">{{settle_bill_cap}}</button>
 
-                                        <button type="button" class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="refund_show" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund" (click)="refundBtnShow('refund')">Refund</button>
+                                        <button type="button" class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth" *ngIf="refund_show.length != 0" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund" (click)="refundBtnShow('refund')">Refund</button>
 
 
                                         <button type="button" class="full_wdth btn btn-light-info  font-weight-bolder mr-3 my-1 lh-p8 fnt-p8" (click)="printMe()" *ngIf="bill_data.billStatus=='Settled'">Print</button>

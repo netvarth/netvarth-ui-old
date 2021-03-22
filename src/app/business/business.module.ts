@@ -20,7 +20,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
 import { BusinessComponent } from './business.component';
-import { ProviderCustomersComponent } from '../ynw_provider/components/provider-customers/provider-customers.component';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
 import { CommonModule } from '@angular/common';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
@@ -39,10 +38,7 @@ import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bw
 import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
 import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
-import { AddProviderMemberComponent } from '../ynw_provider/components/add-provider-member/add-provider-member.component';
 import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
-import { CustomerModule } from './modules/customer/customer.module';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ShowMessageComponent } from './modules/show-messages/show-messages.component';
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
@@ -67,17 +63,13 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         SettingsComponent,
         BusinessHomeComponent,
         BusinessComponent,
-        ProviderCustomersComponent,
         ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
-        // ProviderWaitlistCheckInDetailComponent,
         GoogleMapComponent,
         ProviderbWizardComponent,
         ConfirmBoxComponent,
-        ProviderMembersComponent,
-        AddProviderMemberComponent,
         ConfirmPaymentBoxComponent,
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
@@ -108,7 +100,6 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
         DynamicFormModule,
-        CustomerModule,
         JoyrideModule.forChild(),
         InboxListModule
     ],
@@ -117,7 +108,6 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,
         ConfirmBoxComponent,
-        AddProviderMemberComponent,
         ConfirmPaymentBoxComponent,
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,

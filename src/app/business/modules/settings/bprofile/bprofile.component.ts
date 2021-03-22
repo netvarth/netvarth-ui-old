@@ -17,7 +17,6 @@ import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
-import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
@@ -1369,28 +1368,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
-
-  // Social Media
-  handleSocialmedia(key?) {
-    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        bprofile: this.bProfile,
-        editkey: key || ''
-      }
-    });
-    this.socialdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      }
-    });
-  }
-
   getSocialdet(key, field) {
     const retdet = this.orgsocial_list.filter(
       soc => soc.key === key);
@@ -1398,9 +1375,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     return returndet;
   }
 
-  editSocialmedia(key) {
-    this.handleSocialmedia(key);
-  }
   deleteSocialmedia(sockey) {
     const post_data: any = [];
     for (let i = 0; i < this.social_arr.length; i++) {
