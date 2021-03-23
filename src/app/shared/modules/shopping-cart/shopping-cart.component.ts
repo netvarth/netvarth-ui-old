@@ -487,7 +487,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
       }
     }
-    subtotal = subtotal + this.price + deliveryCharge + this.totaltax;
+    subtotal = subtotal + this.price + deliveryCharge;
     return subtotal.toFixed(2);
   }
   confirmOrder() {

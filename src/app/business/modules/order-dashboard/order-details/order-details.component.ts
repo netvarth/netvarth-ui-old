@@ -68,7 +68,6 @@ export class OrderDetailsComponent implements OnInit {
       this.uid = param.id;
       this.customerLabel = this.wordProcessor.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
-      console.log(this.uid);
       this.getorderHistory(this.uid);
       this.getOrderCommunications();
     });
@@ -172,8 +171,6 @@ export class OrderDetailsComponent implements OnInit {
     });
   }
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -205,12 +202,10 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getorderHistory(uuid) {
-    console.log(uuid);
     this.providerservice.getProviderorderlistHistroy(uuid)
     .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
-          console.log(data);
           this.orderlist_history = data;
         },
         () => {
@@ -258,7 +253,6 @@ for (const stat of this.orderstatus) {
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
-    console.log(timeDate);
     return timeDate;
   }
   onButtonBeforeHook() {

@@ -228,8 +228,11 @@
                     </div>
                   </div>
                 </div>
-                <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
+                <!-- <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                </span> -->
+                <span *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'" (click)="uploadShoppingList()">
+                  <a class="uploadshoppinglist-btn">Upload Shopping List</a>
                 </span>
                 <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                   <div class="bill-section-content">
@@ -270,7 +273,7 @@
                                             <span class="item-name">{{item.name}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{item.quantity}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.showPromotionalPrice?item.promotionalPrice: item.price | currency:'&#8377;'}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.totalPrice | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 
@@ -401,10 +404,10 @@
                         </div>
                     </li>
                 </ul>
-                <a (click)="filed.click()" class="pointerlist">
+                <!-- <a (click)="filed.click()" class="pointerlist">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
-                </a>
-                 <!-- <a class="pointerlist" (click)="editshoppinglist()" class="popular_more">Add more</a> -->
+                </a> -->
+                 <a class="pointerlist" (click)="editshoppinglist()" >Update</a>
                 <div class="snd_msg_outer">
                     <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                   </div>

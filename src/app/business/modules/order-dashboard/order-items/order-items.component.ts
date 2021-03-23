@@ -33,14 +33,12 @@ export class OrderItemsComponent implements OnInit {
     const cuser = this.groupService.getitemFromGroupStorage('accountId');
     this.account_id = cuser;
     this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
-    console.log(this.orderList);
     this.fetchCatalog();
   }
  
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
       this.orderItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
@@ -49,7 +47,6 @@ export class OrderItemsComponent implements OnInit {
         const showpric = this.catalog_details.showPrice;
         this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(this.orderItems);
       }
       this.loading = false;
     });
@@ -69,22 +66,7 @@ export class OrderItemsComponent implements OnInit {
         );
     });
   }
-  showConsumerNote(item) {
-    console.log(item);
-    // const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     checkin: item,
-    //     type: 'order-details'
-    //   }
-    // });
-    // notedialogRef.afterClosed().subscribe(result => {
-    //   if (result === 'reloadlist') {
-    //   }
-    // });
-  }
+
 
   cardClicked(actionObj) {
     if (actionObj['type'] === 'item') {
@@ -96,19 +78,13 @@ export class OrderItemsComponent implements OnInit {
     }
   }
   increment(item) {
-    console.log(item);
     this.addToCart(item);
   }
   decrement(item) {
-    console.log(item);
     this.removeFromCart(item);
   }
   addToCart(itemObj) {
-    const item = itemObj.item;
     this.orderList.push(itemObj);
-    console.log(this.orderList);
-    console.log(item);
-    console.log(itemObj);
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
    
   }

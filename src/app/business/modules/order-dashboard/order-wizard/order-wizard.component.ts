@@ -215,7 +215,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               this.show_customer = true;
             }
             this.jaldeeId = this.customer_data.jaldeeId;
-           
+            this.disabledNextbtn = false;
            
               console.log(this.jaldeeId);
               if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -1406,9 +1406,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
     if (event.button.type === ButtonType.DELETE) {
 
-      console.log(event.image.plain);
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
       // this.deletemodelboxImage(event.image.plain);
       const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
       console.log(idex);
@@ -1417,20 +1414,14 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       this.selectedImagelist.base64.splice(idex, 1);
       this.selectedImagelist.caption.splice(idex, 1);
       // this.image_list_popup.splice(idex, 1);
-
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
     }
 
   }
   deletemodelboxImage(name) {
-    console.log(name);
     const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
-    console.log(idex);
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
-    console.log(this.selectedImagelist.files);
     // this.image_list_popup = [];
     //   if (this.selectedImagelist.files.length > 0) {
     //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1448,6 +1439,11 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   onButtonAfterHook() { }
   uploadShoppingList(){
+    this.imagelist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
       this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1460,6 +1456,11 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
         if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
           console.log(result);
           this.selectedImagelist = result;
           console.log(this.selectedImagelist.files);
@@ -1475,6 +1476,54 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             }
             console.log(this.image_list_popup);
 
+          }
+        }
+      });
+    }
+
+    editshoppinglist() {
+      this.imagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
+      this.imagelist = this.selectedImagelist;
+      // this.imagelist = {
+      //   files: [],
+      //   base64: [],
+      //   caption: []
+      // };
+      console.log(this.selectedImagelist);
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          source: this.imagelist
+        }
+      });
+      this.shoppinglistdialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
+          console.log(result);
+         this.selectedImagelist = result;
+          this.image_list_popup = [];
+          if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: ''
+                });
+              this.image_list_popup.push(imgobj);
+            }
+  
           }
         }
       });
