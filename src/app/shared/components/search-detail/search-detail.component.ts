@@ -2196,7 +2196,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     //  couponArray.splice(0,0, {'JC':jc_coupons});
                     resolve(jc_coupons);
                   }, error => {
-                    reject();
+                    console.log(error);
+                    resolve([])
                   });
               } else {
                 resolve(jc_coupons);
@@ -2207,12 +2208,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               if (obj.fields.provider_coupon_enabled && obj.fields.provider_coupon_enabled !== 0) {
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
                   .subscribe(couponsList => {
+                    if(couponsList){
                     own_coupons = couponsList;
+                    }
                     //couponArray.splice(0,1,{'OWN':own_coupons});
                     resolve(own_coupons);
                   },
                     error => {
-                      reject();
+                      console.log(error);
+                     resolve([])
                     });
               } else {
                 resolve(own_coupons);
@@ -2220,6 +2224,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             })
           ];
           Promise.all([arr[0], arr[1]]).then((resp) => {
+            console.log(resp[0]);
+            console.log(resp[1]);
+            
+            
             couponObject.JC = resp[0];
             couponObject.OWN = resp[1];
 

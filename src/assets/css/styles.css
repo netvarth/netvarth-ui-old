@@ -412,6 +412,9 @@
 .icon-delete:before {
     content: "\4b";
 }
+.icon-publish:before {
+    content: "\4b";
+}
 
 .icon-info:before {
     content: "\42";
@@ -3688,7 +3691,7 @@ body { font-size: 1rem !important}
     justify-content: flex-end;
 }
 
-.table-outer table tbody tr td.action .mbt-mobile-show .editcls, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls {
+.table-outer table tbody tr td.action .mbt-mobile-show .editcls, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls ,.table-outer table tbody tr td.action .mbt-mobile-show .publishcls{
     position: relative;
     border: none;
     background: transparent;
@@ -3698,7 +3701,7 @@ body { font-size: 1rem !important}
     cursor: pointer;
 }
 
-.table-outer table tbody tr td.action .mbt-mobile-show .editcls:before, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls:before {
+.table-outer table tbody tr td.action .mbt-mobile-show .editcls:before, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls:before,.table-outer table tbody tr td.action .mbt-mobile-show .publishcls:before {
     font-family: "custom-ynw" !important;
     content: "\78";
     position: absolute;

@@ -284,7 +284,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   userEncId: string;
 
   bsModalRef: BsModalRef;
-  nonfirstCouponCount: any;
+  nonfirstCouponCount=0;
 
   constructor(
     private activaterouterobj: ActivatedRoute,

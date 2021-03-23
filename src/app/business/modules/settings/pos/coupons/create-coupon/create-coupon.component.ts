@@ -157,7 +157,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       }),
 
       bookingChannel: [[]],
-      couponBasedOn: [[]]
+      couponBasedOn: [[]],
+      termsConditions: ['',[Validators.required]],
     });
     if (this.action === 'edit') {
       this.coupon_title = 'Edit Coupon';
@@ -186,7 +187,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       description: coupon.description,
       calculationType: coupon.calculationType,
       amount: coupon.amount,
-      bookingChannel: coupon.bookingChannel
+      bookingChannel: coupon.bookingChannel,
+      termsConditions:coupon.termsConditions
     });
     this.couponForm.get('couponRules').patchValue({
       startDate: new Date(coupon.couponRules.startDate).toISOString().slice(0, 10),

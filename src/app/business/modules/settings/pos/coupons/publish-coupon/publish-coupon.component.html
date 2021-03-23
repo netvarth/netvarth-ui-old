@@ -61,6 +61,13 @@
                                             </div>
                                             <div class="c-ot">
                                                 <div class="item">
+                                                    <span class="ttle">Terms And Conditions</span>
+                                                    <span>{{coupon.termsConditions}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="c-ot">
+                                                <div class="item">
                                                     <span class="ttle">Applicable Days</span>
                                                     <span *ngFor="let wday of weekdays; index as i">
                                                         <mat-checkbox  *ngIf="i>0"  [disabled]="true"

@@ -287,7 +287,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   elementType: 'url' | 'canvas' | 'img' = 'url';
   checkinProviderList: any;
   activeUser: any;
-  nonfirstCouponCount: any;
+  nonfirstCouponCount=0;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -833,6 +833,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.bLogo = '../../../assets/images/img-null.svg';
             }
           }
+          if (section === 'coupon') {
+            this.s3CouponList.JC=[];
+          }
+          if (section === 'providerCoupon') {
+            this.s3CouponList.OWN=[];
+          }
+        
+       
         }
       );
   }
@@ -1860,6 +1868,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   nonfirstPresent(CouponList) {
     for (let index = 0; index < CouponList.JC.length; index++) {
       if (CouponList.JC[index].firstCheckinOnly === false) {
+        console.log('inisdere');
+        
         this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
@@ -1868,6 +1878,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
+    console.log(this.nonfirstCouponCount);
+    
   }
 
   claimBusiness() {
