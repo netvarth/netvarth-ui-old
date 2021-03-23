@@ -2049,13 +2049,18 @@ img.ordericon.home {
 
 .bus-page .dept-title-h4.department-title {
   text-decoration: none !important;
-  text-align: right !important;
+  /* text-align: right !important; */
   padding: 12px 15px !important;
-  background-color: darkslategrey !important;
-  color: white !important;
-  font-weight: 500 !important;
+  /* background-color: darkslategrey !important; */
+  /* color: white !important; */
+  /* font-weight: 500 !important; */
   text-transform: capitalize !important;
   font-size: 19px !important;
+  color: black !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+  font-style: italic !important;
+  background-color: mintcream !important;
 }
 
 @media (max-width: 650px) {
