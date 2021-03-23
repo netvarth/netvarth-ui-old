@@ -215,7 +215,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               this.show_customer = true;
             }
             this.jaldeeId = this.customer_data.jaldeeId;
-           
+            this.disabledNextbtn = false;
            
               console.log(this.jaldeeId);
               if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
