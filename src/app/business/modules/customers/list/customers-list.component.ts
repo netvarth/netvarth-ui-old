@@ -728,7 +728,7 @@ export class CustomersListComponent implements OnInit {
     }
   }
   customerGroupAction() {
-    if (this.groupName === '') {
+    if (this.groupName === '' || (this.groupName && this.groupName.trim() === '')) {
       this.apiError = 'Please enter the group name';
     } else {
       const postData = {
