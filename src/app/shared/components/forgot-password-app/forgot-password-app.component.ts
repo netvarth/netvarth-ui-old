@@ -8,7 +8,7 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-forgot-password-app',
@@ -31,19 +31,19 @@ export class ForgotPasswordAppComponent {
   otp = null;
   submit_data = {};
   is_provider = 'true';
-
+  otp_mobile = '';
   @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
   @Output() retonCancelForgotPassword: EventEmitter<any> = new EventEmitter();
 
   constructor(
     // public dialogRef: MatDialogRef<ForgotPasswordComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackbarService: SnackbarService,
     private shared_services: SharedServices,
     private fb: FormBuilder,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor
+    public shared_functions: SharedFunctions
   ) {
 
     this.createForm(1);
@@ -99,7 +99,8 @@ export class ForgotPasswordAppComponent {
           this.createForm(3);
         },
         error => {
-          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -113,15 +114,16 @@ export class ForgotPasswordAppComponent {
     this.shared_services.changePassword(type, this.otp, post_data)
       .subscribe(
         () => {
-          this.api_success = 'Password changed successfully .. you will be redirected to the login page now';
-          setTimeout(() => {
+          // this.api_success = 'Password changed successfully .. you will be redirected to the login page now';
+          // setTimeout(() => {
 
-            this.retonChangePassword.emit();
-          }, projectConstants.TIMEOUT_DELAY);
+          this.retonChangePassword.emit();
+          // }, projectConstants.TIMEOUT_DELAY);
 
         },
         error => {
-          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -146,7 +148,8 @@ export class ForgotPasswordAppComponent {
           }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {
-          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -161,6 +164,22 @@ export class ForgotPasswordAppComponent {
     this.api_success = null;
   }
   goBack() {
-    this.step = 1;
+    if (this.step === 1) {
+      this.cancelForgotPassword();
+    } else {
+      this.step--;
+    }
+  }
+  setMessage() {
+    // if (type === 'email') {
+    //   const email = (data) ? data : 'your email';
+    //   this.otp_mobile = 'OTP has been sent to';
+    // } else if (type === 'mobile') {
+    // const phonenumber = this.submit_data;
+    // }
+    if (this.submit_data) {
+      const msg = 'OTP has been sent to +91 ' + this.submit_data;
+      return msg;
+    }
   }
 }

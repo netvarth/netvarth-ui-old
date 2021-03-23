@@ -57,7 +57,11 @@ export class SetPasswordAppComponent implements OnInit {
   }
 
   doOnPasswordSubmit(value) {
-    this.retonPasswordSubmit.emit(value);
+    if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
+      this.retonPasswordSubmit.emit(value);
+    } else {
+    this.isValidConfirm_pw = true;
+    }
   }
 
   doResetApiErrors() {
@@ -71,8 +75,10 @@ export class SetPasswordAppComponent implements OnInit {
   keyPressed(ev) {
     if (ev.keyCode === 13) {
       this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
-      if (this.spForm.valid) {
+      if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
         this.doOnPasswordSubmit(this.spForm.value);
+      } else {
+        this.isValidConfirm_pw = true;
       }
     } else {
       this.resetError(ev);
