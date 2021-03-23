@@ -63,3 +63,39 @@ html, body {
 .signupterms .p-subouter {font-size: 0.75rem !important; line-height: 20px;}
 .signupterms p {font-size: 0.75rem !important;}
 .login-form .mob-prefix span {padding-top: 19px !important}
+
+
+.btn {
+  border-radius: 0.25rem;
+}
+.btn-primary:disabled, .can-btn {
+  color: #fff;
+  background-color: #ccc !important;
+  border-color: #ccc !important; 
+}
+.form-control {
+  height: 40px;
+}
+.form-control:focus, .form-control:active {
+  outline: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #01d28e; 
+}
+.btn {
+    box-shadow: none !important;
+    font-size: 15px;
+}
+.btn.btn-primary {
+    background: #1e4079;
+    border: 1px solid #1e4079;
+    color: #fff; 
+}
+.code-box {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+.input-group input {
+  border-left: none !important;
+}
