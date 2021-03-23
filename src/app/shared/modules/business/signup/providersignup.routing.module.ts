@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TermsStaticComponent } from '../../terms-static/terms-static.component';
 import { ProvidersignupComponent } from './providersignup.component';
 
 
 const routes: Routes = [
-    { path: '', component: ProvidersignupComponent }
+    { path: '', component: ProvidersignupComponent },
+    { path: 'terms', component: TermsStaticComponent }
     
     
     // { path: 'doctors', loadChildren: './doctors/doctors.module#DoctorsModule' },
