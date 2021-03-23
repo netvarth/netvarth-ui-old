@@ -230,7 +230,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    console.log(filter);
     this.subs.sink=this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
       this.loading = false;
@@ -322,8 +321,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.allModeSelected = false;
   }
   setFilterDataCheckbox(type, value?, event?) {
-    console.log(type);
-    console.log(value);
     if (type === 'homeDelivery' || 'storePickup') {
       this.historyOrdertype = type;
     }
@@ -334,13 +331,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
         this.orderStatuses.push(value);
       }
     }
-    // if (type === 'orderMode') {
-    //   const indx = this.orderModes.indexOf(value);
-    //   this.orderModes = [];
-    //   if (indx === -1) {
-    //     this.orderModes.push(value);
-    //   }
-    // }
     if (type === 'orderMode') {
       if (value === 'all') {
         this.orderModes = [];
@@ -354,7 +344,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
           this.allModeSelected = true;
         }
       } else {
-        console.log(this.orderModes);
         this.allModeSelected = false;
         const indx = this.orderModes.indexOf(value);
         if (indx === -1) {
@@ -397,8 +386,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
-    console.log(this.orderModes);
-    console.log(this.filter.orderMode);
     if (this.orderModes.length > 0 ) {
       api_filter['orderMode-eq'] = this.orderModes.toString();
     }
@@ -423,7 +410,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
-    console.log(api_filter);
     return api_filter;
   }
   getDefaultCatalogStatus() {
@@ -555,7 +541,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     });
     this.displayLabeldialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }

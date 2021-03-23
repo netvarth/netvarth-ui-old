@@ -103,8 +103,6 @@ export class MedicalrecordService {
 
     } else {
       return new Promise((resolve, reject) => {
-        console.log(JSON.stringify(mrObject));
-
         this.provider_services.createMedicalRecord(mrObject, $this.bookingId)
           .subscribe(
             response => {
@@ -125,11 +123,6 @@ export class MedicalrecordService {
     delete $this.mr_payload_new['clinicalNotes'];
     delete $this.mr_payload_new['prescriptions'];
     this.mr_payload_new['mrConsultationDate'] = new Date();
-    console.log($this.mr_payload_new);
-    console.log(type);
-    console.log(id);
-
-
 
     if (type === 'FOLLOWUP') {
 

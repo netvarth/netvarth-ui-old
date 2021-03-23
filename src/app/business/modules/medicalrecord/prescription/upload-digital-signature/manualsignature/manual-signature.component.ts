@@ -108,10 +108,8 @@ export class ManualSignatureComponent implements OnInit {
     const propertiesDetob = {};
     let i = 0;
     const blob = this.sharedfunctionObj.b64toBlobforSign(this.signaturePad.toDataURL());
-      console.log(blob);
        const submit_data: FormData = new FormData();
       submit_data.append('files', blob, signName);
-      console.log(submit_data);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''
       };
@@ -133,8 +131,6 @@ export class ManualSignatureComponent implements OnInit {
 
   drawStart() {
     this.sign = false;
-    // will be notified signature_pad's onBegin event
-    console.log('begin drawing');
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);

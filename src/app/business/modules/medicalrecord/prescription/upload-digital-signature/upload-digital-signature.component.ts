@@ -75,7 +75,6 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.providerId = this.medicalrecord_service.getDoctorId();
-    console.log(this.providerId);
     if (!this.providerId) {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.providerId = user.id;
@@ -100,10 +99,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     const propertiesDetob = {};
     let i = 0;
     const blob = this.sharedfunctionObj.b64toBlobforSign(this.signaturePad.toDataURL());
-      console.log(blob);
        const submit_data: FormData = new FormData();
       submit_data.append('files', blob, signName);
-      console.log(submit_data);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''
       };
@@ -121,8 +118,6 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   }
 
   drawStart() {
-    // will be notified signature_pad's onBegin event
-    console.log('begin drawing');
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -145,10 +140,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       this.provider_services.getDigitalSign(this.providerId)
         .subscribe((data: any) => {
           this.loading = false;
-          console.log(data);
           this.digitalSign = true;
                   this.selectedMessage.files.push(JSON.parse(data));
-          console.log(this.selectedMessage.files);
         },
           error => {
             this.digitalSign = false;
@@ -219,7 +212,6 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.selectedMessage.files) {
-      console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''
@@ -258,7 +250,6 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     });
     this.signatureviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }
