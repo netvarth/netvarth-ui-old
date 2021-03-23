@@ -65,6 +65,9 @@
             <span *ngIf="coupon.discountType == 'PERCENTAGE'">%</span>
           </div> -->
           <div *ngIf="coupon.calculationType == 'Percentage'">Discount Value: {{coupon.amount}}%
+            <span class="rupee-font">
+                (upto {{coupon.couponRules.maxDiscountValue  | currency:'&#8377;'}} )
+          </span>
           </div>
           <div *ngIf="coupon.discountType == 'Fixed'">
             <span class="rupee-font"> Discount Value:  {{coupon.amount | currency:'&#8377;'}} </span>
@@ -74,19 +77,19 @@
                 <span class="expire">Valid Through: {{formatDateDisplay(coupon.couponRules.startDate)}} -
                   {{formatDateDisplay(coupon.couponRules.endDate)}}</span>
               </div>
-              <!-- <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
+              <div class="tnc" *ngIf="coupon.termsConditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
                     <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C Apply</div>
                   </div>
                 </ng-container>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
-          <div [innerHTML]="coupon.consumerTermsAndconditions | nl2br"></div>
-        </div> -->
+        <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
+          <div [innerHTML]="coupon.termsConditions | nl2br"></div>
+        </div>
       </div>
     </div>
   </div>
