@@ -13,9 +13,10 @@
 }
 }
 .parent-cont {
-  background: url(../images/mobile/mobile.jpg) !important;
+  /* background: url(../images/mobile/mobile.jpg) !important; 
   background-repeat : no-repeat !important;
-  background-size: cover !important;
+  background-size: cover !important; */
+  background: white !important;
 }
 .home-cnt {
   height: 100vh !important;

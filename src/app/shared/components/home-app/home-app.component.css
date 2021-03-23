@@ -1,0 +1,66 @@
+.btn {
+    border-radius: 0.25rem;
+}
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff; 
+}
+.bg-primary {
+    background: #01d28e !important; 
+}
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+.wrap .img {
+    height: 200px; 
+    width: 100%;
+}
+.login-wrap {
+    padding: 40px;
+}
+.login-wrap h3 {
+    font-weight: 300; 
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 20px !important; 
+}
+.form-control {
+    height: 48px;
+}
+/* .form-control:focus, .form-control:active {
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #01d28e; 
+} */
+.field-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.3); 
+}
+.btn {
+    box-shadow: none !important;
+    font-size: 15px;
+}
+.btn.btn-primary {
+    background: #1e4079 !important;
+    border: 1px solid #1e4079 !important;
+    color: #fff !important; 
+}
+.mgn-lt-auto {
+    margin-left: auto;
+}
+.login-img {
+    content: url(../../../../assets/images/loginimg.png);
+}
+.wrap {
+    height: 100vh;
+}

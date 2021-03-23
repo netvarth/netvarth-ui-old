@@ -14,7 +14,8 @@ import {version} from '../../../shared/constants/version';
 import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-home-app',
-  templateUrl: './home-app.component.html'
+  templateUrl: './home-app.component.html',
+  styleUrls: ['./home-app.component.css']
 })
 export class HomeAppComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
