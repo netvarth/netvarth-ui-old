@@ -14,12 +14,13 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
+// import './join.component.ts'
 
 
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.css'] 
+  styleUrls: ['./join.component.scss'] 
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
@@ -66,6 +67,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
   phoneDialCode;
+  joinStep = true;
   private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
@@ -85,7 +87,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.test_provider = data.test_account;
   }
   ngOnInit() {
-    console.log(this.selectedCountryCode)
+    this.joinStep = true;
     this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
     this.createForm();
@@ -410,6 +412,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.resetApiErrors();
     this.api_loading = false;
     this.step = 2;
+    console.log(this.step);
   }
   cancelForgotPassword() {
     this.step = 1;
@@ -472,4 +475,15 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       this.phoneError = 'Mobile number required';
     }
   }
-}
+
+  toastNext(str) {
+    console.log('toast');
+    this.joinStep = !this.joinStep;
+    if(str === 'sUp') {
+      this.step = 3;
+    } else {
+      this.step = 1;
+    }
+  }
+  
+ }
