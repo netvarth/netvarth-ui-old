@@ -1318,6 +1318,11 @@ console.log(post_Data.email);
   }
   editshoppinglist() {
     this.imagelist = this.selectedImagelist;
+    // this.imagelist = {
+    //   files: [],
+    //   base64: [],
+    //   caption: []
+    // };
     console.log(this.selectedImagelist);
     this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
       width: '50%',
@@ -1330,7 +1335,7 @@ console.log(post_Data.email);
     this.shoppinglistdialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        this.selectedImagelist = result;
+       this.selectedImagelist = result;
         this.image_list_popup = [];
         if (this.selectedImagelist.files.length > 0) {
           for (let i = 0; i < this.selectedImagelist.files.length; i++) {

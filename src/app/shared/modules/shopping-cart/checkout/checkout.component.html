@@ -401,10 +401,10 @@
                         </div>
                     </li>
                 </ul>
-                <a (click)="filed.click()" class="pointerlist">
+                <!-- <a (click)="filed.click()" class="pointerlist">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
-                </a>
-                 <!-- <a class="pointerlist" (click)="editshoppinglist()" class="popular_more">Add more</a> -->
+                </a> -->
+                 <a class="pointerlist" (click)="editshoppinglist()" >Update</a>
                 <div class="snd_msg_outer">
                     <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                   </div>
