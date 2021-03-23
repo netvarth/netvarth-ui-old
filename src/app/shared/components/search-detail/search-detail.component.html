@@ -612,7 +612,7 @@
                                             <span>
                                               <span class="first-time-coupon centeralign"
                                                 *ngIf="search_result.fields.claimable!=1 && search_result.fields.first_checkin_coupon_count && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer
-                                                 ||search_result.fields.claimable!=1 && search_result.fields.first_checkin_provider_coupon_count && (stringToInt(search_result.fields.first_checkin_provider_coupon_count))!=0 && isfirstCheckinOffer"
+                                                 ||search_result.fields.claimable!=1 && search_result.fields.first_checkin_provider_coupon_count && (stringToInt(search_result.fields.first_checkin_provider_coupon_count))!=0 && isfirstCheckinOfferProvider(search_result.id)"
                                                 (click)="!btn_clicked && openCoupons(search_result,true)">
                                                 <!-- <img class="img2" src="./assets/images/first_coupon.png"
                                                   alt="First Time Coupons" /> -->

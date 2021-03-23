@@ -284,6 +284,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   userEncId: string;
 
   bsModalRef: BsModalRef;
+  nonfirstCouponCount: any;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -728,6 +729,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
             this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
@@ -738,6 +740,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
             this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
             break;
           }
           case 'virtualFields': {
@@ -1910,6 +1913,18 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let index = 0; index < CouponList.OWN.length; index++) {
       if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+      }
+    }
+  }
+  nonfirstPresent(CouponList) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
   }

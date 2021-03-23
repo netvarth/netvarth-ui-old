@@ -285,6 +285,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   qrdialogRef: any;
   wndw_path = projectConstants.PATH;
   elementType: 'url' | 'canvas' | 'img' = 'url';
+  checkinProviderList: any;
+  activeUser: any;
+  nonfirstCouponCount: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -316,7 +319,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     const isMobile = {
@@ -349,8 +352,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.playstore = true;
       this.appstore = true;
     }
-    if (activeUser) {
-      this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    if (this.activeUser) {
+      this.isfirstCheckinOffer = this.activeUser.firstCheckIn;
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
@@ -445,7 +448,27 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       );
     });
   }
-  ngOnDestroy() {
+
+  isfirstCheckinOfferProvider(){
+  let firstCheckin = true;
+    if (this.activeUser) {
+      this.checkinProviderList = this.activeUser.checkedInProviders;
+      if (this.checkinProviderList.length > 0) {
+        if (this.checkinProviderList.includes(this.provider_id)) {
+          firstCheckin = false;
+        } else {
+          firstCheckin = true;
+
+        }
+      } else {
+        firstCheckin = true;
+      }
+
+    }
+    return firstCheckin;
+
+} 
+ ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
     }
@@ -741,6 +764,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.s3CouponList.JC=[];
             }
             this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
@@ -750,6 +774,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.s3CouponList.OWN=[];
             }
             this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
             break;
           }
           case 'virtualFields': {
@@ -1829,6 +1854,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     for (let index = 0; index < CouponList.OWN.length; index++) {
       if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+      }
+    }
+  }
+  nonfirstPresent(CouponList) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
   }
