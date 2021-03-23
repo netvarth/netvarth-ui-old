@@ -832,11 +832,13 @@
 												| currency:'&#8377;'}}</span>
                                             <span *ngIf="!showPayWorkBench && bill_data.amountDue < 0" class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{refund_value | currency:'&#8377;'}}</span>
 
-                                            <span *ngIf="showPayWorkBench" class="font-size-sm line-height-sm rupee-font">&#8377;
-												<input class="form-control" type="number" id="example-number-input"
+                                            <span *ngIf="showPayWorkBench" class=" d-flex font-size-sm line-height-sm rupee-font"><div class="margin-top-10">&#8377;</div>
+												<div>
+													<input class="form-control" type="number" id="example-number-input"
 													size="5" max="{{price_limit}}" min="0" [(ngModel)]="amountpay"
 													[ngModelOptions]="{standalone: true}" (keyup)="isvalid($event)"
 													autocomplete="off">
+												</div>
 											</span>
                                             <!-- <span class="font-size-sm">Taxes included</span> -->
                                         </div>
