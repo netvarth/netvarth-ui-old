@@ -270,7 +270,7 @@
                                             <span class="item-name">{{item.name}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{item.quantity}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.showPromotionalPrice?item.promotionalPrice: item.price | currency:'&#8377;'}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.totalPrice | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 
