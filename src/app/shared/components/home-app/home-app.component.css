@@ -27,7 +27,7 @@
     margin-left: auto;
 }
 .login-img {
-    content: url(../../../../assets/images/loginimg.png);
+    content: url(../../../../assets/images/loginimg.svg);
 }
 .wrap {
     height: 100vh;
