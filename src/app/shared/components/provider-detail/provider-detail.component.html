@@ -237,13 +237,13 @@
                                 *ngIf="settings_exists && business_exists">
                                 <li class="favourite" *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;
-                                        {{add_to_fav_cap}}
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        <span>&nbsp;{{add_to_fav_cap}}</span>
                                     </a>
                                 </li>
                                 <li class="favourite remove-favourite" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
-                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;
+                                        <i class="fa fa-heart" aria-hidden="true"></i>&nbsp;
                                         <span>{{rem_from_fav_cap}}</span>
                                     </a>
                                 </li>
@@ -289,13 +289,13 @@
                             <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
                                 <li class="small-devices-fav centeralign" *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         <span class="display-text">&nbsp;{{add_to_fav_cap}}</span>
                                     </a>
                                 </li>
                                 <li class="small-devices-fav small-devices-remove-fav centeralign" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
-                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
                                         <span class="display-text">&nbsp;{{rem_from_fav_cap}}</span>
                                     </a>
                                 </li>

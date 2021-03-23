@@ -286,8 +286,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="!search_result_count && nosearch_results" class="no-search-result">
-                                    {{no_ynw_results_found}}</div>
+                                <!-- <div *ngIf="!search_result_count && nosearch_results" class="no-search-result">
+                                    {{no_ynw_results_found}}</div> -->
+                                <div *ngIf="!search_result_count && nosearch_results" class="zero-search-results">
+                                    <div>
+                                        <img class="no-results-img" src="../../../../assets/images/no-results.png">
+                                        <div class="no-results-msg">
+                                            <div>We're Sorry!</div>
+                                            <div>Currently there are no service providers in your area.</div>
+                                        </div>
+                                        <div class="no-results-stay-tuned">
+                                            Stay tuned! New providers are getting added everyday.
+                                        </div>
+                                        <div class="no-results-second-section">
+                                            <div>
+                                                <img class="no-results-trophy-img" src="../../../../assets/images/trophy.png">
+                                                <div>
+                                                    <div class="no-results-refer-message">
+                                                        <div>Do you know a service provider or a business owner in your area?</div>
+                                                        <div>Can your service provider or business owner benefit from Jaldee?</div>
+                                                    </div>
+                                                    <button onclick="location.href='https://docs.google.com/forms/d/1BieILn0BeFfnANtQFJiGkEM_kdqwBRG8wqhJQi2PKVc'"
+                                                        type="button">Refer and earn <i class="fa fa-inr"></i> 250/-</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="srlst" *ngFor="let search_result of search_data.hits.hit">
                                     <div class="panel-body pad-lt-0 pad-rt-0 pad-bt-5 pad-up-5">
                                         <div
