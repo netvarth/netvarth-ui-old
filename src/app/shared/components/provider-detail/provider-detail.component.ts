@@ -454,8 +454,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.activeUser) {
       this.checkinProviderList = this.activeUser.checkedInProviders;
       if (this.checkinProviderList.length > 0) {
-        if (this.checkinProviderList.includes(this.provider_id)) {
+        if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
+          console.log('already taken');
         } else {
           firstCheckin = true;
 

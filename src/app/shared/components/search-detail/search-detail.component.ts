@@ -253,10 +253,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let firstCheckin = true;
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
+     
+      
       this.checkinProviderList = activeUser.checkedInProviders;
       const providerInfo = provider.split('-');
       if (this.checkinProviderList.length > 0) {
+        console.log(providerInfo[0]);
         if (this.checkinProviderList.includes(providerInfo[0])) {
+          console.log('fiststcheckinover');
+          
           firstCheckin = false;
         } else {
           firstCheckin = true;
