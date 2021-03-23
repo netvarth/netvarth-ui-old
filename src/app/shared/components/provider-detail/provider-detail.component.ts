@@ -1868,8 +1868,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   nonfirstPresent(CouponList) {
     for (let index = 0; index < CouponList.JC.length; index++) {
       if (CouponList.JC[index].firstCheckinOnly === false) {
-        console.log('inisdere');
-        
         this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
@@ -1878,7 +1876,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
-    console.log(this.nonfirstCouponCount);
     
   }
 
@@ -2501,7 +2498,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
     if (this.userType === 'consumer') {
       let blogoUrl;
       if (this.businessjson.logo) {

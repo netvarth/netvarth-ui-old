@@ -2193,10 +2193,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
                   .subscribe(couponsList => {
                     jc_coupons = couponsList;
-                    //  couponArray.splice(0,0, {'JC':jc_coupons});
                     resolve(jc_coupons);
                   }, error => {
-                    console.log(error);
                     resolve([])
                   });
               } else {
@@ -2211,11 +2209,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     if(couponsList){
                     own_coupons = couponsList;
                     }
-                    //couponArray.splice(0,1,{'OWN':own_coupons});
                     resolve(own_coupons);
                   },
                     error => {
-                      console.log(error);
                      resolve([])
                     });
               } else {
@@ -2224,13 +2220,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             })
           ];
           Promise.all([arr[0], arr[1]]).then((resp) => {
-            console.log(resp[0]);
-            console.log(resp[1]);
-            
-            
             couponObject.JC = resp[0];
             couponObject.OWN = resp[1];
-
 
             this.coupondialogRef = this.dialog.open(CouponsComponent, {
               width: '60%',
