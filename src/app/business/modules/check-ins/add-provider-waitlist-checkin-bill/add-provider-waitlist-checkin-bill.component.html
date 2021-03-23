@@ -224,7 +224,7 @@
                                                 <br> <br>
                                                 <!-- Incase of discount name -->
                                                 <span *ngFor="let discount of service.discount" class="text-right text-muted-dark font-size-xs ">{{discount.name}} <br></span>
-                                                <br><br>
+                                                <br>
                                                 <span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
                                             </td>
                                             <td class="text-right pt-7" *ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
