@@ -1,0 +1,201 @@
+<!-- join Section starts -->
+
+
+<div class="cont" [formGroup]="loginForm" novalidate (ngSubmit)="loginForm.valid &&
+onSubmit(loginForm.value)">
+    <!-- sign in STEP 1-->
+    <div class="form sign-in" *ngIf="step==1">
+        <h2>Welcome back,</h2>
+        <label>
+            <span>Mobile</span>
+            <!-- <input type="email" /> -->
+            <div class="form-group mobile-no">
+                <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                    [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                    [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
+                    [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone">
+                </ngx-intl-tel-input>
+                <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+            </div>
+        </label>
+        <label *ngIf="phoneExists">
+            <span>Password</span>
+            <!-- <input type="password" /> -->
+            <input type="password" id="password" formControlName="password" autocomplete="off"
+                (keyup)="handlekeyup($event)">
+            <!-- </mat-form-field> -->
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
+                errorMsg="Password is required">
+            </app-field-error-display>
+
+        </label>
+        <p class="forgot-pass" *ngIf="phoneExists" (click)="doForgotPassword()">Forgot password?</p>
+
+        <button type="button" class="submit" *ngIf="!phoneExists" (click)="checkAccountExists()">Continue</button>
+        <button type="button" class="submit" *ngIf="phoneExists" (click)="onSubmit(loginForm.value)">Sign In</button>
+    </div>
+
+    <!-- forgot paswd STEP 2 -->
+    <div class="form sign-in" *ngIf="step==2">
+        <h2>Recover Password</h2>
+        <app-forgot-password (retonChangePassword)="onChangePassword()" [business]="true"
+            (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin]="consumerjoin"></app-forgot-password>
+    </div>
+
+    <!-- Signup STEP 3 otp -->
+    <div class="form sign-in" *ngIf="step==3">
+        <h2>Welcome back</h2>
+        <label *ngIf="!resendViaEmail">
+            <span>First Name*</span>
+            <input type="text" id="first_name" formControlName="first_name" (keypress)="resetApiErrors()"
+                autocomplete="off" (blur)="onFieldBlur('first_name')">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
+            {
+              'required' : 'First name is required',
+              'pattern' : 'Only alphabets are allowed'
+            })">
+            </app-field-error-display>
+        </label>
+
+        <label *ngIf="!resendViaEmail">
+            <span>Last Name*</span>
+            <input type="text" id="last_name" formControlName="last_name" autocomplete="off"
+                (keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
+                    {
+                        'required' : 'Last name is required',
+                        'pattern' : 'Only alphabets are allowed'
+                    })">
+            </app-field-error-display>
+        </label>
+
+        <label *ngIf="!resendViaEmail && phoneDialCode != '+91'">
+            <span>Email*</span>
+            <input type="text" id="emailId" formControlName="emailId" autocomplete="off"
+            (keypress)="resetApiErrors()" (blur)="onFieldBlur('emailId')">
+        </label>
+
+        <div class="dis_flx">
+            <button type="button" class="submit wdth_100 mr-0" (click)="cancelForgotPassword()">Back</button>
+        <button type="button" class="submit wdth_100 ml-35" (click)="otpSend()">Sign Up</button>
+        </div>
+        
+    </div>
+
+    <!-- Enter recieved otp STEP 4 -->
+    <div class="form sign-in" *ngIf="step==4" style="margin-top: 50px;">
+        <h2>Enter OTP</h2>
+            <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+                (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+                [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
+                (resendOTPEmail)="resendOTPEmail($event)">
+            </app-otp-form>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+    </div>
+
+    <!-- Enter new paswd STEP 5(6) -->
+    <div class="form sign-in" *ngIf="step==6">
+        <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">
+        </app-sp-form>
+    </div>
+
+
+
+
+    <!-- signup -->
+    <div class="form sign-in" *ngIf="!joinStep">
+        <h2>Time to feel like home,</h2>
+        <label *ngIf="!resendViaEmail">
+            <span>First Name *</span>
+            <!-- <input type="text" /> -->
+
+            <input type="text" class="form-control" id="first_name" formControlName="first_name"
+                (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
+            <!-- </mat-form-field> -->
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
+        {
+          'required' : 'First name is required',
+          'pattern' : 'Only alphabets are allowed'
+        })">
+            </app-field-error-display>
+        </label>
+
+        <label *ngIf="!resendViaEmail">
+            <span>Last Name*</span>
+            <!-- <input type="email" /> -->
+            <input type="text" class="form-control" id="last_name" formControlName="last_name" autocomplete="off"
+                (keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
+            <!-- </mat-form-field> -->
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
+                    {
+                        'required' : 'Last name is required',
+                        'pattern' : 'Only alphabets are allowed'
+                    })">
+            </app-field-error-display>
+        </label>
+        <label>
+            <span>Password</span>
+            <input type="password" />
+        </label>
+        <button type="button" class="submit">Sign Up</button>
+    </div>
+
+    <div class="sub-cont">
+        <div class="img">
+            <!-- <div class="img__text" *ngIf="joinStep">
+                <h2>New here?</h2>
+                <p>Sign up and discover great amount of new opportunities!</p>
+            </div>
+
+            <div class="img__text " *ngIf="!joinStep">
+                <h2>One of us?</h2>
+                <p>If you already has an account, just sign in. We've missed you!</p>
+            </div>
+            <div class="img__btn" (click)="toastNext('sUp')" *ngIf="joinStep">
+                <span class="">Sign Up</span>
+            </div>
+            <div class="img__btn" (click)="toastNext('sIn')" *ngIf="!joinStep">
+                <span class="">Sign In</span>
+            </div> -->
+        </div>
+
+        <!-- <div class="" *ngIf="!joinStep">
+            <h2>Time to feel like home,</h2>
+            <label>
+                <span>Name</span>
+                <input type="text" />
+            </label>
+            <label>
+                <span>Email</span>
+                <input type="email" />
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" />
+            </label>
+            <button type="button" class="submit">Sign Up</button>
+        </div> -->
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- join section ends -->
