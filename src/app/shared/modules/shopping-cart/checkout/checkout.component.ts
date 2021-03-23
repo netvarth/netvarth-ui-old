@@ -379,7 +379,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       'orderItem': this.getOrderItems(),
       'homeDelivery': delivery,
-      'coupons': this.selected_coupons
+      'coupons': this.selected_coupons,
+      'orderDate': this.sel_checkindate
     };
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
