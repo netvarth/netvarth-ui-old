@@ -20,7 +20,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+// import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -114,7 +114,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   message = '';
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
@@ -252,7 +252,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
-    private dateTimeProcessor: DateTimeProcessor,
+    // private dateTimeProcessor: DateTimeProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -458,20 +458,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       this.billdate = this.bill_data.createdDate;
+      const datearr = this.bill_data.createdDate.split(' ');
+      const billdatearr = datearr[0].split('-');
+      this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
+      console.log(this.billdate);
     } else {
       this.billdate = this.bill_data.createdDate;
     }
-    const gethrs = this.today.getHours();
-    const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-    let hour = 0;
-    if (gethrs === 12) {
-      hour = 12;
-    } else if (gethrs > 12) {
-      hour = gethrs - 12;
-    } else {
-      hour = gethrs;
-    }
-    this.billtime = this.dateTimeProcessor.addZero(hour) + ':' + this.dateTimeProcessor.addZero(this.today.getMinutes()) + ' ' + amOrPm;
+    // const gethrs = this.today.getHours();
+    // const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
+    // let hour = 0;
+    // if (gethrs === 12) {
+    //   hour = 12;
+    // } else if (gethrs > 12) {
+    //   hour = gethrs - 12;
+    // } else {
+    //   hour = gethrs;
+    // }
+    const bill_time = this.bill_data.createdDate.split(" ");
+    this.billtime = bill_time[1] + ' ' + bill_time[2];
+    // this.billtime = this.dateTimeProcessor.addZero(hour) + ':' + this.dateTimeProcessor.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
@@ -1788,7 +1794,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   showRefund(payment?) {
     if (payment) {
       this.selectedPayment = payment;
-      this.amounttoRefund = payment.refundableAmount;
+      this.amounttoRefund = payment.refundableAmount.toFixed(2);
       this.showRefundSection = true;
     } else {
       this.selectedPayment = [];
@@ -1818,7 +1824,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.applydisc = true;
     if (payment) {
       this.selectedPayment = payment;
-      this.amounttoRefund = payment.refundableAmount;
+      this.amounttoRefund = payment.refundableAmount.toFixed(2);
       // this.showRefundSection = true;
     } else {
       this.selectedPayment = [];
