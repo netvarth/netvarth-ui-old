@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild, ElementRef } from '@angular/core';
 // import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -19,9 +19,6 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { SubSink } from 'subsink';
-import { DOCUMENT } from '@angular/common';
-
-
 
 @Component({
   selector: 'app-create-coupon',
@@ -83,7 +80,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   minbillamountError = false;
   mxDate: Date;
   hideSubmitbtn=false;
-
+@ViewChild('start',{static:false}) startDate:ElementRef;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -93,7 +90,6 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
-    @Inject(DOCUMENT) public document,
     public dialog: MatDialog, ) {
     this.subscriptions.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
@@ -330,11 +326,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
         if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
           this.step = this.step + 1;
-          let elem = this.document.getElementById("start");
-          if (typeof elem !== null && elem !== 'undefined' && elem !== null) {
-            elem.focus();
-          }
-
+           setTimeout(() => {
+            this.startDate.nativeElement.focus();
+           }, 100);
+        
 
         }
       } else if (this.step == 2) {
