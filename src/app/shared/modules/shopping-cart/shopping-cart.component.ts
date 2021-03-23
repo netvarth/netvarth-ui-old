@@ -295,7 +295,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   gets3curl() {
     this.api_loading1 = true;
         let accountS3List = 'coupon,providerCoupon';
-        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
                     this.processS3s('coupon', accountS3s['coupon']);
@@ -317,7 +317,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     //     }
     //   );
   }
-  processS3s(type, result) {
+  processS3s(type, res) {
+    let result = this.s3Processor.getJson(res);
     switch (type) {
         case 'coupon': {
           this.s3CouponsList.JC = result;

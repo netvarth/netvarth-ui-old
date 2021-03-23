@@ -218,7 +218,7 @@ export class SearchProviderComponent implements OnInit, OnChanges, OnDestroy {
           const apptTimearr = [];
 
 
-          this.subs.sink = this.s3Processor.getPresignedUrls(this.businessjson.uniqueId,
+          this.subs.sink = this.s3Processor.getJsonsbyTypes(this.businessjson.uniqueId,
             this.usersList[i], userS3List).subscribe(
               (userS3s) => {
                 this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile'], this.usersList[i]);
@@ -310,7 +310,7 @@ export class SearchProviderComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   processS3s(type, res, user) {
-    let result = JSON.parse(res);
+    let result = this.s3Processor.getJson(res);
     console.log(result);
     switch (type) {
       case 'providerBusinessProfile': {

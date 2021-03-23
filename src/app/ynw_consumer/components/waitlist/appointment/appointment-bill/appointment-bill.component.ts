@@ -217,7 +217,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         }
     }
     processS3s(type, res) {
-        let result = JSON.parse(res);
+        let result = this.s3Processor.getJson(res);
         switch (type) {
             case 'terminologies': {
                 this.terminologiesjson = result;
@@ -235,7 +235,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         }
     }
     gets3curl() {
-        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
             (accountS3s) => {
                 if(accountS3s['terminologies']){
                     this.processS3s('terminologies', accountS3s['terminologies']);

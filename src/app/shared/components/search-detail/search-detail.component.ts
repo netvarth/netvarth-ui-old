@@ -2069,12 +2069,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       //   .then(
       //     res => {
       // const s3url = res;
-      this.subs.sink = this.s3Processor.getPresignedUrls(s3id,
+      this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
         null, 'services').subscribe(
           (accountS3s) => {
             if (accountS3s['services']) {
               let servicesList: any = [];
-              servicesList = JSON.parse(accountS3s['services']);
+              servicesList = this.s3Processor.getJson(accountS3s['services']);
 
               if (origin === 'serviceClick' || origin === 'donation') {
                 for (let i = 0; i < servicesList.length; i++) {
@@ -2215,14 +2215,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     //     res => {
     //       const s3url = res;
 
-    this.subs.sink = this.s3Processor.getPresignedUrls(s3id,
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
       null, 'coupon,providerCoupon').subscribe(
         (accountS3s) => {
           if (accountS3s['coupon']) {
-            couponObject.JC = JSON.parse(accountS3s['coupon']);
+            couponObject.JC = this.s3Processor.getJson(accountS3s['coupon']);
           }
           if (accountS3s['providerCoupon']) {
-            couponObject.OWN = JSON.parse(accountS3s['providerCoupon']);
+            couponObject.OWN = this.s3Processor.getJson(accountS3s['providerCoupon']);
           }
           this.coupondialogRef = this.dialog.open(CouponsComponent, {
             width: '60%',
@@ -2321,7 +2321,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     //     res => {
     //       const s3url = res;
 
-    this.subs.sink = this.s3Processor.getPresignedUrls(s3id,
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
       null, 'jaldeediscount').subscribe(
         (accountS3s) => {
           if (accountS3s['jaldeediscount']) {
@@ -2330,7 +2330,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
               disableClose: true,
               data: {
-                jdnList: JSON.parse(accountS3s['jaldeediscount'])
+                jdnList: this.s3Processor.getJson(accountS3s['jaldeediscount'])
               }
             });
             this.jdndialogRef.afterClosed().subscribe(result => {

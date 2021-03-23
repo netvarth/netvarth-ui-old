@@ -111,10 +111,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.subs.sink =  this.s3Processor.getPresignedUrls(this.data.user_id, null, 'terminologies').subscribe(
+      this.subs.sink =  this.s3Processor.getJsonsbyTypes(this.data.user_id, null, 'terminologies').subscribe(
         (accountS3s) => {
           if (accountS3s['terminologies']) {
-            this.terminologies = JSON.parse(accountS3s['terminologies']);
+            this.terminologies = this.s3Processor.getJson(accountS3s['terminologies']);
           }
         }, () => { },
         () => {

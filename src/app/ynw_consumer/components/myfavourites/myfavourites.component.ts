@@ -152,7 +152,7 @@ private subs=new SubSink();
   // }
   setWaitlistTimeDetailsProvider(provider, k) {
     // if (this.s3url) {
-      this.subs.sink = this.s3Processor.getPresignedUrls(provider.uniqueId,null, 'settings,terminologies').subscribe(
+      this.subs.sink = this.s3Processor.getJsonsbyTypes(provider.uniqueId,null, 'settings,terminologies').subscribe(
           (accountS3s) => {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings'], k);
@@ -175,7 +175,7 @@ private subs=new SubSink();
     this.getApptTime(locarr, k);
   }
   processS3s(type, res, index) {
-    let result = JSON.parse(res);
+    let result = this.s3Processor.getJson(res);
     if (type === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
       return false;
     }

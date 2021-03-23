@@ -595,11 +595,11 @@ ngOnDestroy() {
     //   .then(
     //     s3Url => {
 
-    this.subs.sink = this.s3Processor.getPresignedUrls(this.checkin.providerAccount.uniqueId,
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.checkin.providerAccount.uniqueId,
       null, 'coupon').subscribe(
         (accountS3s) => {
           if (accountS3s['coupon']) {
-            this.couponList = JSON.parse(accountS3s['coupon']);
+            this.couponList = this.s3Processor.getJson(accountS3s['coupon']);
           }
         }
       );

@@ -478,7 +478,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders' //gallery
     }
 
-    this.subscriptions.sink = this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
 
@@ -504,7 +504,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             // this.processS3s('providerCoupon', accountS3s['providerCoupon']);
             // this.processS3s('location', accountS3s['location']);
 
-            this.s3Processor.getPresignedUrls(this.provider_id, this.userId, userS3List).subscribe(
+            this.s3Processor.getJsonsbyTypes(this.provider_id, this.userId, userS3List).subscribe(
               (userS3s) => {
                 if (userS3s['providerBusinessProfile']) {
                   this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
@@ -570,7 +570,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   processS3s(type, res) {
-    let result = JSON.parse(res);
+    let result = this.s3Processor.getJson(res);
     switch (type) {
       case 'settings': {
         this.setAccountSettings(result);

@@ -399,7 +399,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   gets3curl() {
     this.api_loading1 = true;
     let accountS3List = 'coupon,providerCoupon';
-    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
           if (accountS3s['coupon']) {
@@ -413,7 +413,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   processS3s(type, res) {
-    let result = JSON.parse(res);
+    let result = this.s3Processor.getJson(res);
     switch (type) {
       case 'coupon': {
         this.s3CouponsList.JC = result;

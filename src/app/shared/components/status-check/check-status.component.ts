@@ -118,11 +118,11 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
     }
   }
   gets3curl() {
-    this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, 'terminologies').subscribe(
         (accountS3s) => {
           if (accountS3s['terminologies']) {
-            this.terminologiesjson = JSON.parse(accountS3s['terminologies']);
+            this.terminologiesjson = this.s3Processor.getJson(accountS3s['terminologies']);
           }
         }
       );

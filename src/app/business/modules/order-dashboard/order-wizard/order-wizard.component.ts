@@ -275,10 +275,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   gets3curl() {
     this.api_loading1 = true;
     
-    this.subs.sink = this.s3Processor.getPresignedUrls(this.accountId, null, 'coupon').subscribe(
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.accountId, null, 'coupon').subscribe(
       (accountS3s) => {
         if (accountS3s['coupon']) {
-          this.s3CouponsList = JSON.parse(accountS3s['coupon']);
+          this.s3CouponsList = this.s3Processor.getJson(accountS3s['coupon']);
           if (this.s3CouponsList.length > 0) {
             this.showCouponWB = true;
           }

@@ -1193,7 +1193,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     gets3curl() {
 
         let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
-        this.subs.sink = this.s3Processor.getPresignedUrls(this.provider_id,
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
                     if (accountS3s['settings']) {
@@ -1219,7 +1219,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     processS3s(type, res) {
-        let result = JSON.parse(res);
+        let result = this.s3Processor.getJson(res);
         switch (type) {
             case 'settings': {
                 this.settingsjson = result;
