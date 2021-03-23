@@ -84,7 +84,6 @@ html, body {
 }
 .btn {
     box-shadow: none !important;
-    font-size: 15px !important;
 }
 .btn.btn-primary {
     background: #1e4079;

@@ -19,7 +19,9 @@
         <div>
           <div class="criteria-btn-dv pull-right">
             <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save" (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn default" (click)="exportReport()"> Export to XLS(Excel)</button>
+            <button type="button" class="btn default"> Export to XLS(Excel)</button>
+            <p class="pull-right" style="font-style: italic;
+            font-size: xx-small;">Use web application to use this feature</p>
           </div>
         </div>
         <div id="reportGenerated">

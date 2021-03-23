@@ -1,6 +1,6 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
@@ -17,6 +17,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Title } from '@angular/platform-browser';
+import { TermsStaticComponent } from '../../terms-static/terms-static.component';
 
 @Component({
   selector: 'app-providersignup',
@@ -162,7 +163,8 @@ export class ProvidersignupComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private titleService: Title) {
+    private titleService: Title,
+    private dialog: MatDialog) {
     this.titleService.setTitle('Jaldee Business - Signup');
     this.activatedRoute.queryParams.subscribe(params => {
       this.claimDetails = params;
@@ -845,6 +847,11 @@ export class ProvidersignupComponent implements OnInit {
     this.active_step = 2;
   }
   gotoTerms() {
-    window.open('business/terms', '_blank');
+    // window.open('business/terms', '_blank');
+    this.dialog.open(TermsStaticComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true
+    });
   }
 }
