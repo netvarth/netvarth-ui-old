@@ -263,6 +263,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getCartDetails();
       }
       if (this.orderType === 'SHOPPINGLIST') {
+        this.imagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
         this.gets3curl();
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
@@ -274,6 +279,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
           if (result) {
+            this.selectedImagelist = {
+              files: [],
+              base64: [],
+              caption: []
+            };
             console.log(result);
             this.selectedImagelist = result;
             console.log(this.selectedImagelist.files);
@@ -1284,6 +1294,7 @@ console.log(post_Data.email);
     const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
+    this.selectedImagelist.caption.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
   }
   onButtonAfterHook() { }
@@ -1317,13 +1328,12 @@ console.log(post_Data.email);
     }
   }
   editshoppinglist() {
+    this.imagelist = {
+      files: [],
+      base64: [],
+      caption: []
+    };
     this.imagelist = this.selectedImagelist;
-    // this.imagelist = {
-    //   files: [],
-    //   base64: [],
-    //   caption: []
-    // };
-    console.log(this.selectedImagelist);
     this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1335,6 +1345,11 @@ console.log(post_Data.email);
     this.shoppinglistdialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
+        this.selectedImagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
        this.selectedImagelist = result;
         this.image_list_popup = [];
         if (this.selectedImagelist.files.length > 0) {
@@ -1351,6 +1366,46 @@ console.log(post_Data.email);
       }
     });
   }
+  uploadShoppingList(){
+    this.imagelist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          source: this.imagelist
+        }
+      });
+      this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
+          console.log(result);
+          this.selectedImagelist = result;
+          console.log(this.selectedImagelist.files);
+          this.image_list_popup = [];
+          if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: this.selectedImagelist.caption[i] || ''
+                }, this.selectedImagelist.files[i].name);
+              this.image_list_popup.push(imgobj);
+            }
+            console.log(this.image_list_popup);
+
+          }
+        }
+      });
+    }
   handleQueueSelection(queue, index) {
     console.log(index);
     this.queue = queue;
