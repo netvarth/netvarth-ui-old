@@ -213,7 +213,7 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
                     *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
@@ -411,7 +411,7 @@
                 </div>
 
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
                   *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
@@ -609,7 +609,7 @@
                 
 
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
                   *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
