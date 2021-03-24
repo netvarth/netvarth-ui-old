@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProvidersignupComponent } from './providersignup.component';
 import { providersignupRoutingModule } from './providersignup.routing.module';
+import { HeaderModule } from '../../header/header.module';
+// import { MaterialModule } from '../../common/material.module';
 import { FooterModule } from '../../footer/footer.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
 import { SalesChannelModule } from '../../saleschannel/saleschannel.module';
@@ -15,6 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     imports: [
        CommonModule,
        FormsModule,
+       HeaderModule,
+    //    MaterialModule,
        FooterModule,
        providersignupRoutingModule,
        ReactiveFormsModule,

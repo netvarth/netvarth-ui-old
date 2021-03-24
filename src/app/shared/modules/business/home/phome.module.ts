@@ -11,6 +11,7 @@ import { FormMessageDisplayModule } from '../../form-message-display/form-messag
 import { ProvidersignupModule } from '../signup/providersignup.module';
 // import { MaterialModule } from '../../common/material.module';
 import { FooterModule } from '../../footer/footer.module';
+import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 // import { ContactusComponent } from './contactus/contactus.component';
@@ -18,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     imports: [
         CommonModule,
         OwlModule,
+        HeaderModule,
         FooterModule,
         PhomeRoutingModule,
         RouterModule,
