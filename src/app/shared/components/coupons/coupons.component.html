@@ -70,7 +70,7 @@
           </span>
           </div>
           <div *ngIf="coupon.calculationType == 'Fixed'">
-            <span class="rupee-font "> Discount Value:  {{coupon.amount | currency:'&#8377;'}} </span>
+            <span class="rupee-font "> Discount Value:  <b class="bluefont">{{coupon.amount | currency:'&#8377;'}}</b> </span>
             </div>
             <div class="outer4">
               <div class="coupon_validity">
