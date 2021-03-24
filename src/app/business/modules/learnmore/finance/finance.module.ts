@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../../shared/modules/common/shared.module';
-import { HeaderModule } from '../../../../shared/modules/header/header.module';
 
 // import { SearchDataStorageService  } from '../../services/search-datastorage.services';
 
@@ -11,7 +10,6 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 @NgModule({
   imports: [
     SharedModule,
-    HeaderModule,
     BreadCrumbModule,
     FinanceRoutingModule
   ],
