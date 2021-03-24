@@ -38,12 +38,9 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
-import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
-import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
@@ -53,7 +50,6 @@ import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
-import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
@@ -88,7 +84,6 @@ export function init_app(globalService: GlobalService) {
     AddInboxMessagesComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent
@@ -100,8 +95,7 @@ export function init_app(globalService: GlobalService) {
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,
     RequestForComponent,
-    ForceDialogComponent,
-    ConsumerPaymentmodeComponent
+    ForceDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -116,7 +110,6 @@ export function init_app(globalService: GlobalService) {
     PagerModule,
     SharedModule,
     RatingStarModule,
-    HeaderModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     Nl2BrPipeModule,
     MaintenanceModule,
@@ -129,8 +122,6 @@ export function init_app(globalService: GlobalService) {
     DateFormatPipeModule,
     DisplayboardLayoutContentModule,
     SalesChannelModule,
-    ForgotPasswordModule,
-    SetPasswwordModule,
     JoyrideModule.forRoot(),
     CardModule
   ],

@@ -7,7 +7,6 @@ import { HeaderModule } from '../../header/header.module';
 // import { MaterialModule } from '../../common/material.module';
 import { FooterModule } from '../../footer/footer.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
-import { ProviderOtpModule } from '../../../../shared/components/providerotp/providerotp.module';
 import { SalesChannelModule } from '../../saleschannel/saleschannel.module';
 import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +23,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
        providersignupRoutingModule,
        ReactiveFormsModule,
        FormMessageDisplayModule,
-       ProviderOtpModule,
        SalesChannelModule,
        LoadingSpinnerModule,
        MatFormFieldModule,
