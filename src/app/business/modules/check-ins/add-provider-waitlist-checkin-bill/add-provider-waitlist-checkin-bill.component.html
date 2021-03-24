@@ -319,6 +319,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-body">
                                                             <select class="form-control" [(ngModel)]="discountid" (ngModelChange)="selectChangeHandler($event)">
+																<!-- <option value="" disabled selected hidden>Select discount</option> -->
 																<option
 																	*ngFor="let discount of itemdiscounts; let i = index"
 																	[value]="discount.id">{{discount.name}}</option>
@@ -348,7 +349,9 @@
 														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-                                                <button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf="bill_data.billStatus!='Settled' && pos" class="top_n10">
+                                                <button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf=" bill_data.billStatus!='Settled' && pos && ((!source && checkin.waitlistStatus != 'cancelled') ||
+												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
+												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))" class="top_n10">
 													<mat-icon>more_horiz</mat-icon>
 												</button>
                                                 <mat-menu #tdmenu="matMenu">
@@ -449,6 +452,7 @@
 													[value]="discount.id">{{discount.name}}</option>
 											</select>
                                             <select *ngIf="coupons.length >0 && showPCouponSection" class="form-control" [(ngModel)]="selOrderProviderCoupon">
+												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
 													[value]="coupon.couponCode">{{coupon.name}}</option>
 											</select>
