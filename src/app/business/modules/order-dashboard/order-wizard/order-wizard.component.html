@@ -206,7 +206,7 @@
                                                                     <ng-container *ngFor="let file of image_list_popup;let i = index">
                                                                         <li *ngIf="i<2" class="shoppinglist-li">
                                                                             <div class="shoppinglistbx">
-                                                                                <span class="shoppinglistmbt">
+                                                                                <!-- <span class="shoppinglistmbt">
                                               <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                 <mat-icon>more_vert</mat-icon>
                                               </button>
@@ -216,7 +216,7 @@
                                                   <span>delete</span>
                                                                                 </button>
                                                                                 </mat-menu>
-                                                                                </span>
+                                                                                </span> -->
                                                                                 <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                                                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img" *ngIf="file.modal.img" />
                                                                                 </div>
@@ -227,7 +227,7 @@
                                                                         <div class="shoppinglistbx">
                                                                             <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])" *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
                                                                             <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" /></div>
-                                                                            <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                                                            <!-- <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                               <mat-icon>more_vert</mat-icon>
                                             </button>
@@ -238,7 +238,7 @@
                                                 <span>delete</span>
                                                                             </button>
                                                                             </mat-menu>
-                                                                            </span>
+                                                                            </span> -->
                                                                             <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])" *ngIf="(image_list_popup.length-3)==0">
                                                                                 <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img" [src]="image_list_popup[2].modal.img" />
                                                                             </div>

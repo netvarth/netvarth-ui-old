@@ -125,13 +125,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      {
-        className: 'fa fa-trash-o',
-        type: ButtonType.DELETE,
-        ariaLabel: 'custom plus aria label',
-        title: 'Delete',
-        fontSize: '20px'
-      },
+      // {
+      //   className: 'fa fa-trash-o',
+      //   type: ButtonType.DELETE,
+      //   ariaLabel: 'custom plus aria label',
+      //   title: 'Delete',
+      //   fontSize: '20px'
+      // },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -1264,9 +1264,9 @@ console.log(post_Data.email);
   }
   deleteTempImage(img, index) {
     this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
-    this.selectedImagelist.files.splice(img.id, 1);
-    this.selectedImagelist.base64.splice(img.id, 1);
-    this.selectedImagelist.caption.splice(img.id, 1);
+    this.selectedImagelist.files.splice(index, 1);
+    this.selectedImagelist.base64.splice(index, 1);
+    this.selectedImagelist.caption.splice(index, 1);
   }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
@@ -1357,7 +1357,7 @@ console.log(post_Data.email);
             const imgobj = new Image(i,
               {
                 img: this.selectedImagelist.base64[i],
-                description: ''
+                description: this.selectedImagelist.caption[i] || ''
               });
             this.image_list_popup.push(imgobj);
           }

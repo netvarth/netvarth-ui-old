@@ -48,8 +48,14 @@ export class ShoppinglistuploadComponent implements OnInit, OnChanges {
     ngOnChanges() { }
     ngOnInit() {
         if (this.data.source) {
+          let  list_pic = {
+                files: [],
+                base64: [],
+                caption: []
+            };
             console.log(this.data.source);
-            this.item_pic = this.data.source;
+            list_pic = this.data.source;
+            this.item_pic =  list_pic;
         }
     }
     resetVariables() {
