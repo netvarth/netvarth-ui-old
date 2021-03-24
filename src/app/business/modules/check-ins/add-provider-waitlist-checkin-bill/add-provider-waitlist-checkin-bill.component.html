@@ -260,7 +260,7 @@
 														Apply Discount
 													</button>
 
-                                                    <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'" (click)="adjustService(service.serviceName, service.quantity)">
+                                                    <button mat-menu-item data-toggle="modal"  *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'" (click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
@@ -295,7 +295,7 @@
 														Apply Discount
 													</button>
 
-                                                    <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="checkin.waitlistStatus != 'cancelled'" (click)="adjustService(service.serviceName, service.quantity)">
+                                                    <button mat-menu-item data-toggle="modal" *ngIf="checkin.waitlistStatus != 'cancelled'" (click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
@@ -356,7 +356,7 @@
 														Apply Discount
 													</button>
 
-                                                    <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1" *ngIf="bill_data.billStatus !== 'Cancel'">
+                                                    <button mat-menu-item data-toggle="modal"  *ngIf="bill_data.billStatus !== 'Cancel'" (click)="adjustItem(item.itemName, item.quantity)">
 														Change Qty/Price
 													</button>
                                                     <button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
