@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
-import { ForgotPasswordModel } from '../forgot-password/forgot-password.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedServices } from '../../services/shared-services';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,7 +20,6 @@ export class ForgotPasswordAppComponent {
   ok_btn_cap = Messages.OK_BTN;
   back_to_login_cap = Messages.BACK_TO_LOGIN_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
-  fp = new ForgotPasswordModel();
   fpForm: FormGroup;
   fpForm2: FormGroup;
   fpForm3: FormGroup;
