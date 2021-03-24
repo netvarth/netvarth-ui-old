@@ -141,6 +141,7 @@ export class PhomeComponent implements OnInit {
   scrollToTop() {
     this.handleScroll('prov_home_n');
   }
+
   cancelForgotPassword() {
     this.step = 1;
   }
