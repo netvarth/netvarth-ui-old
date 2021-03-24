@@ -72,6 +72,7 @@
     "rxjs": "^6.6.3",
     "save": "^2.4.0",
     "speak-tts": "^2.0.8",
+    "subsink": "^1.0.2",
     "tslib": "^2.0.0",
     "twilio-video": "^2.7.2",
     "underscore": "^1.8.3",

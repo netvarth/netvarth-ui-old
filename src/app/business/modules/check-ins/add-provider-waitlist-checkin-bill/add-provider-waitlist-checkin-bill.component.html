@@ -74,7 +74,7 @@
                             <div class="d-flex justify-content-between text-white pt-6">
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2r">DATE</span>
-                                    <span class="opacity-70">{{billdate | date:'mediumDate'}} {{billtime}}</span>
+                                    <span class="opacity-70">{{billdate | date: newDateFormat }} {{billtime}}</span>
                                 </div>
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2">BILL #</span>
@@ -224,7 +224,7 @@
                                                 <br> <br>
                                                 <!-- Incase of discount name -->
                                                 <span *ngFor="let discount of service.discount" class="text-right text-muted-dark font-size-xs ">{{discount.name}} <br></span>
-                                                <br><br>
+                                                <br>
                                                 <span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
                                             </td>
                                             <td class="text-right pt-7" *ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
@@ -697,7 +697,7 @@
                                                                         <!-- <td class="fnt-p7 pr-0 pt-4  text-center">
 																			{{payment.paymentGateway}}</td> -->
                                                                         <td *ngIf="payment.paymentGateway" class="fnt-p7 pr-0 pt-4  text-center">{{payment.paymentGateway}}</td>
-                                                                        <td *ngIf="!payment.paymentGateway" class="fnt-p7 pr-0 pt-4  text-center">Nill</td>
+                                                                        <td *ngIf="!payment.paymentGateway" class="fnt-p7 pr-0 pt-4  text-center">Nil</td>
 
                                                                         <td class="fnt-p7 pr-0 pt-4  text-center">
                                                                             <span class="date">{{payment.paymentOn |
@@ -752,7 +752,8 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="applydisc" class="disp_flx">
-                                                <div class="txt_wdth text-primary txt_wdth mt-3 text-center">Enter amount to be refunded</div>
+												<div class="txt_wdth text-primary txt_wdth mt-3 text-center">Enter amount to be refunded</div>
+												<span class="rupee-font" style="font-size: larger;">₹ &nbsp;</span>
                                                 <input type="number" class="form-control1 mr-2 mb-2 ip_refund" type="number" aria-label="Number" matInput value="1" size="5" max="{{price_limit}}" min="0" id="example-number-input" [(ngModel)]="amounttoRefund">
                                             </div>
                                             <div class="modal-footer p-1">
@@ -831,11 +832,13 @@
 												| currency:'&#8377;'}}</span>
                                             <span *ngIf="!showPayWorkBench && bill_data.amountDue < 0" class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{refund_value | currency:'&#8377;'}}</span>
 
-                                            <span *ngIf="showPayWorkBench" class="font-size-sm line-height-sm rupee-font">&#8377;
-												<input class="form-control" type="number" id="example-number-input"
+                                            <span *ngIf="showPayWorkBench" class=" d-flex font-size-sm line-height-sm rupee-font"><div class="margin-top-10">&#8377;</div>
+												<div>
+													<input class="form-control" type="number" id="example-number-input"
 													size="5" max="{{price_limit}}" min="0" [(ngModel)]="amountpay"
 													[ngModelOptions]="{standalone: true}" (keyup)="isvalid($event)"
 													autocomplete="off">
+												</div>
 											</span>
                                             <!-- <span class="font-size-sm">Taxes included</span> -->
                                         </div>

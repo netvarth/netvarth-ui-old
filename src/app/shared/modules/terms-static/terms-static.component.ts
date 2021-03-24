@@ -77,4 +77,7 @@ showheaderandfooter = false;
     }, 200);
     // }
   }
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

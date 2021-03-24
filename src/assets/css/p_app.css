@@ -13,9 +13,10 @@
 }
 }
 .parent-cont {
-  background: url(../images/mobile/mobile.jpg) !important;
+  /* background: url(../images/mobile/mobile.jpg) !important; 
   background-repeat : no-repeat !important;
-  background-size: cover !important;
+  background-size: cover !important; */
+  background: white !important;
 }
 .home-cnt {
   height: 100vh !important;
@@ -62,3 +63,45 @@ html, body {
 .signupterms .p-subouter {font-size: 0.75rem !important; line-height: 20px;}
 .signupterms p {font-size: 0.75rem !important;}
 .login-form .mob-prefix span {padding-top: 19px !important}
+
+
+.btn {
+  border-radius: 0.25rem;
+}
+.btn-primary:disabled, .can-btn {
+  color: #fff;
+  background-color: #ccc !important;
+  border-color: #ccc !important; 
+}
+.form-control {
+  height: 40px;
+}
+.form-control:focus, .form-control:active, input:-webkit-autofill, input:-webkit-autofill:hover {
+  outline: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #ccc; 
+}
+.btn {
+    box-shadow: none !important;
+}
+.btn.btn-primary {
+    background: #1e4079;
+    border: 1px solid #1e4079;
+    color: #fff; 
+}
+.code-box {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+.input-group input {
+  border-left: none !important;
+}
+.login-wrap h3 {
+  font-weight: 300; 
+  margin-bottom: 20px;
+}
+.mgn-up-100 {
+  margin-top: 100px !important;
+}

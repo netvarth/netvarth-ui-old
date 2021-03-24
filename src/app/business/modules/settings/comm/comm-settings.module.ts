@@ -9,7 +9,6 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CommSettingsRoutingModule } from './comm-settings.routing.module';
 import { CommSettingsComponent } from './comm-settings.component';
-import { VideoSettingsComponent } from './video/video-settings.component';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     ],
     declarations: [
         CommSettingsComponent,
-        VideoSettingsComponent,
         UpdateNotificationComponent
     ],
     exports: [

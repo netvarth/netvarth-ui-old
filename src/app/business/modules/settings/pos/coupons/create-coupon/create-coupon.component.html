@@ -530,6 +530,26 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                        <div class="form-group">
+                            <label>Terms and Conditions</label>
+                            <textarea type="text" class="form-control1 form-control-solid form-control-lg"
+                            id="description" placeholder="Enter coupon terms and conditions" formControlName="termsConditions"
+                           
+                            maxlength="500"></textarea>
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'termsConditions')"
+                            [errorMsgs]="fed_service.getErrorMessage(couponForm,'termsConditions',
+                            {
+                            'required' : 'Enter coupon terms and conditions.'
+        
+                            })">
+                          </app-field-error-display>
+                       
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <!--end: Wizard Step 3-->

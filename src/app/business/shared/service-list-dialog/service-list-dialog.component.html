@@ -12,9 +12,21 @@
       <mat-selection-list [disabled]="mode==='view'"  #services [(ngModel)]="selectedServices" (ngModelChange)="onServiceChange($event)" >
 
         <mat-list-option checkboxPosition="before" *ngFor=" let service of service_list" [value] ="service" [selected]="isSelected(service)">
-
-          {{service.name}}
-
+ 
+            <span class="dash">
+                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                class="fa wtsapaud-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                class="fa wtsapvid-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                class="fa zoom-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                class="fa meet-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                class="fa phon-icon" aria-hidden="true"></i>
+              {{service.name | capitalizeFirst}}
+            </span>
+         
         </mat-list-option>
 
       </mat-selection-list>
