@@ -1006,15 +1006,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
-      if (this.actiontype !== 'adjustService') {
+      // if (this.actiontype !== 'adjustService') {
         data['price'] = this.curSelItm.price;
-      }
+      // }
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
-      if (this.actiontype !== 'adjustItem') {
+      // if (this.actiontype !== 'adjustItem') {
         data['price'] = this.curSelItm.price;
-      }
+      // }
       if (this.curSelItm.qty === 0) {
         action = 'removeItem';
       }
@@ -1055,7 +1055,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showDeliveryChargeSection = false;
-    // this.showAddItemsec = true;
+    this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);

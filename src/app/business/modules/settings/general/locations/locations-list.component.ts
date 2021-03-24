@@ -232,13 +232,6 @@ export class LocationsListComponent implements OnInit {
                     this.getProviderLocations();
                 });
     }
-    getLocationBadgeIcon(key) {
-        if (!projectConstants.LOCATION_BADGE_ICON[key]) {
-            key = 'none';
-        }
-        const imgurl = 'assets/locationbadges/' + projectConstants.LOCATION_BADGE_ICON[key];
-        return imgurl;
-    }
     goLocationDetail(location_detail, action) {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: action }
