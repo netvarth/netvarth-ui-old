@@ -142,3 +142,9 @@
     margin-left: 11px;
     line-height: unset !important;
 }
+.socicon-googleplus::before {
+    line-height: unset !important;
+    font-size: 3.8rem;
+    margin-left: 12px;
+    color: #cc0c0c;
+}

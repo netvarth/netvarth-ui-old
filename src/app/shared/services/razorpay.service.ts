@@ -131,6 +131,10 @@ export class RazorpayService {
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
       }
+      if (checkin_type === 'order_prepayment') {
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.ngZone.run(() => this.router.navigate(['consumer']));
+      }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();

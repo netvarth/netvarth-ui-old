@@ -86,3 +86,12 @@ color: #0707eca1 !important;
   min-height: 400px !important;
   max-width: 350px !important;
   }
+.mob-prefix-border {
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  margin-right: 0px !important;
+}
+.mob-field-border {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}

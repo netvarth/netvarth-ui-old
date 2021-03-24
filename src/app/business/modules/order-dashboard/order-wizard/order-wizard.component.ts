@@ -144,13 +144,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      {
-        className: 'fa fa-trash-o',
-        type: ButtonType.DELETE,
-        ariaLabel: 'custom plus aria label',
-        title: 'Delete',
-        fontSize: '20px'
-      },
+      // {
+      //   className: 'fa fa-trash-o',
+      //   type: ButtonType.DELETE,
+      //   ariaLabel: 'custom plus aria label',
+      //   title: 'Delete',
+      //   fontSize: '20px'
+      // },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -1378,18 +1378,17 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
   }
 
-  deleteTempImage(img, index) {
-    console.log(img);
-    // this.image_list_popup.splice(index, 1);
-    //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
-    // console.log(idex);
-    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
-    this.selectedImagelist.files.splice(img.id, 1);
-    this.selectedImagelist.base64.splice(img.id, 1);
-    this.selectedImagelist.caption.splice(img.id, 1);
-    console.log(this.image_list_popup);
-    console.log(this.selectedImagelist.files);
-  }
+  // deleteTempImage(img, index) {
+  //   console.log(img);
+  //   const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
+  //     console.log(idex);
+  //   this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+  //   this.selectedImagelist.files.splice(index, 1);
+  //   this.selectedImagelist.base64.splice(index, 1);
+  //   this.selectedImagelist.caption.splice(index, 1);
+  //   console.log(this.image_list_popup);
+  //   console.log(this.selectedImagelist.files);
+  // }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -1439,7 +1438,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   onButtonAfterHook() { }
   uploadShoppingList(){
-    this.imagelist = {
+    const imglist = {
         files: [],
         base64: [],
         caption: []
@@ -1449,7 +1448,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: this.imagelist
+          source: imglist
         }
       });
       this.shoppinglistdialogRef.afterClosed()
@@ -1463,7 +1462,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           };
           console.log(result);
           this.selectedImagelist = result;
-          console.log(this.selectedImagelist.files);
+          console.log(this.selectedImagelist);
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1482,36 +1481,32 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
 
     editshoppinglist() {
-      this.imagelist = {
-          files: [],
-          base64: [],
-          caption: []
-        };
-      this.imagelist = this.selectedImagelist;
-      // this.imagelist = {
-      //   files: [],
-      //   base64: [],
-      //   caption: []
-      // };
+      console.log(this.selectedImagelist);
+      let imglist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
+      imglist = this.selectedImagelist;
       console.log(this.selectedImagelist);
       this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: this.imagelist
+          source: imglist
         }
       });
       this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
+        console.log(result);
         if (result) {
           this.selectedImagelist = {
             files: [],
             base64: [],
             caption: []
           };
-          console.log(result);
          this.selectedImagelist = result;
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
@@ -1519,7 +1514,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               const imgobj = new Image(i,
                 {
                   img: this.selectedImagelist.base64[i],
-                  description: ''
+                  description: this.selectedImagelist.caption[i] || ''
                 });
               this.image_list_popup.push(imgobj);
             }
