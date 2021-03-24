@@ -247,7 +247,7 @@
                             </div>
                             <div class="c-body right-pane" [class.hideme]="showrefinedsection"
                                 *ngIf="search_result_count || (!search_result_count && nosearch_results)">
-                                <div class="ct2" [class.ct2pad]="!showrefinedsection">
+                                <div class="ct2" [class.ct2pad]="!showrefinedsection" *ngIf="search_result_count && !nosearch_results">
                                     <div class="ct-l">
                                         <div class="rslts" *ngIf="search_data.hits.found > 0">
                                             {{ (search_data.hits.found>10) ? 'Over': ''}}

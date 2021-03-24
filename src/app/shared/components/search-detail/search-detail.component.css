@@ -1222,7 +1222,7 @@ ul.bus-actions-horiz li {
   width: 500px !important;
   height: 500px !important;
   margin: auto !important;
-  background-color: beige !important;
+  /* background-color: beige !important; */
 }
 
 .zero-search-results .no-results-img {
