@@ -38,7 +38,6 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
@@ -88,7 +87,6 @@ export function init_app(globalService: GlobalService) {
     AddInboxMessagesComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent
@@ -100,8 +98,7 @@ export function init_app(globalService: GlobalService) {
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,
     RequestForComponent,
-    ForceDialogComponent,
-    ConsumerPaymentmodeComponent
+    ForceDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

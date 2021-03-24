@@ -4,7 +4,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -123,22 +122,6 @@ export class ViewPrevStatementComponent implements OnInit {
             );
     }
 
-    makePayment() {
-        this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
-        if (this.pay_data.uuid && this.pay_data.amount &&
-            this.pay_data.amount !== 0) {
-            this.payment_loading = true;
-            this.dialog.open(ConsumerPaymentmodeComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                    'details': this.pay_data,
-                    'origin': 'provider'
-                }
-            });
-        }
-    }
     PreviousInvoiceReferenceNo(invoicerefno) {
         this.showPreviousDue = !this.showPreviousDue;
         this.providerServices.getMergestatement(invoicerefno).subscribe(data => {
