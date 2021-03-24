@@ -53,7 +53,6 @@ import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
@@ -127,7 +126,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     AdminLoginComponent,
     ConsumerJoinComponent,
-    ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
     PaymentLinkComponent,
@@ -153,7 +151,6 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
-    ConsumerPaymentmodeComponent,
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
