@@ -43,7 +43,6 @@ const routes: Routes = [
     { path: 'meeting/provider/:id', component: MeetingRoomComponent },
     { path: 'meeting/:phonenumber/:id', component: LiveChatComponent },
     { path: 'meeting/:phonenumber', component: JaldeeVideoComponent },
-    { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },

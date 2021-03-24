@@ -45,7 +45,6 @@ import { CouponsComponent } from './shared/components/coupons/coupons.component'
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
-import { AboutJaldeeModule } from './shared/modules/about-jaldee/about-jaldee.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
@@ -175,7 +174,6 @@ export function init_app(globalService: GlobalService) {
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
-    AboutJaldeeModule,
     MaintenanceModule,
     ScrollbarModule,
     OwlModule,

@@ -4,7 +4,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -49,7 +48,6 @@ export class ViewPrevStatementComponent implements OnInit {
         private providerServices: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, public location: Location,
-        private dialog: MatDialog,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
     ) {
