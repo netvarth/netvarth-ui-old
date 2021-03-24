@@ -1067,3 +1067,299 @@ input[type=checkbox]:not(old):checked + label > span:before {
   line-height: 40px !important;
   height: 40px !important;
 }
+
+.otp-form.register-form .otp-form-title.form-title {
+  color: #3d4da6 !important;
+  font-size: 30px !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 1200px) {
+  .otp-form.register-form .otp-form-title.form-title {
+    font-size: 28px !important;
+    margin-bottom: 25px !important;
+  }  
+}
+
+@media (max-width: 991px) {
+  .otp-form.register-form .otp-form-title.form-title {
+    font-size: 22px !important;
+    margin-bottom: 18px !important;
+  }  
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .otp-form-title.form-title {
+    color: #3d4da6 !important;
+    font-size: 30px !important;
+    font-weight: 700 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .otp-form.register-form .otp-form-title.form-title {
+    font-size: 28px !important;
+    margin-bottom: 25px !important;
+  }  
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .otp-form-title.form-title {
+    font-size: 22px !important;
+    margin-bottom: 18px !important;
+  }  
+}
+
+.otp-form.register-form .otp-form-message {
+  font-weight: 700 !important;
+  color: darkslategrey !important;
+  font-size: 18px !important;
+}
+
+
+@media (max-width: 1200px) {
+  .otp-form.register-form .otp-form-message {
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+  }  
+}
+
+@media (max-width: 991px) {
+  .otp-form.register-form .otp-form-message {
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+  }  
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .otp-form-message {
+    text-align: center !important;
+    font-weight: 700 !important;
+    color: darkslategrey !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .otp-form.register-form .otp-form-message {
+    text-align: center !important;
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+  }  
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .otp-form-message {
+    text-align: center !important;
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+  }  
+}
+
+
+.otp-form.register-form .otpsection input {
+  padding: 10px !important;
+  max-width: 100px !important;
+  height: 40px !important;
+  border: 1px solid #999 !important;
+  border-radius: 5px !important;
+  margin: 6px 0 !important;
+}
+
+.otp-form.register-form .otpsection input:focus {
+  border-color: cornflowerblue !important;
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .otpsection input {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 250px !important;
+    padding: 10px !important;
+    height: 40px !important;
+    border: 1px solid #999 !important;
+    border-radius: 5px !important;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .otp-form.register-form .otpsection input:focus {
+    border-color: cornflowerblue !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .otpsection input {
+    max-width: 200px !important;
+  }
+}
+
+.otp-form.register-form .otpsection .counter-outer {
+  font-size: 14px !important;
+  margin-bottom: 25px !important;
+  color: darkslategrey !important;
+  margin-top: 30px !important;
+}
+
+.otp-form.register-form .otpsection .counter-outer .counter {
+  font-size: 18px !important;
+  color: darkslategrey !important;
+}
+
+@media (max-width: 991px) {
+  .otp-form.register-form .otpsection .counter-outer {
+    font-size: 13.5px !important;
+    margin-bottom: 22px !important;
+    margin-top: 25px !important;
+  }
+  
+  .otp-form.register-form .otpsection .counter-outer .counter {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .otpsection .counter-outer {
+    text-align: center !important;
+    font-size: 14px !important;
+    margin-bottom: 25px !important;
+    color: darkslategrey !important;
+    margin-top: 30px !important;
+  }
+
+  .otp-form.register-form .otpsection .counter-outer .counter {
+    font-size: 18px !important;
+    color: darkslategrey !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .otpsection .counter-outer {
+    text-align: center !important;
+    font-size: 13.5px !important;
+    margin-bottom: 22px !important;
+    margin-top: 25px !important;
+  }
+  
+  .otp-form.register-form .otpsection .counter-outer .counter {
+    font-size: 16px !important;
+  }
+}
+
+.otp-form.register-form .otpsection .resendouter .infolst {
+  margin-bottom: 25px !important;
+  margin-left: 0 !important;
+  margin-top: 30px !important;
+}
+
+.otp-form.register-form .otpsection .resendouter .infolst > span {
+  font-size: 14px !important;
+  color: darkslategrey !important;  
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+  font-style: italic !important;
+}
+
+.otp-form.register-form .otpsection .resendouter .infolst > span > span{
+  font-size: 16px !important;
+  color: #1E4079 !important;
+  font-weight: 600 !important;
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+  font-style: normal !important;
+}
+
+@media (max-width: 991px) {
+  .otp-form.register-form .otpsection .resendouter .infolst {
+    margin-bottom: 22px !important;
+    margin-top: 25px !important;
+  }
+  
+  .otp-form.register-form .otpsection .resendouter .infolst > span {
+    font-size: 13.5px !important;
+  }
+
+  .otp-form.register-form .otpsection .resendouter .infolst > span > span {
+    font-size: 14.5px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .otpsection .resendouter .infolst {
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 25px !important;
+    margin-left: 0 !important;
+    margin-top: 30px !important;
+  }
+
+  .otp-form.register-form .otpsection .resendouter .infolst > span {
+    font-size: 14px !important;
+    color: darkslategrey !important;  
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    font-style: italic !important;
+  }
+
+  .otp-form.register-form .otpsection .resendouter .infolst > span > span{
+    display: flex !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    color: #1E4079 !important;
+    font-weight: 600 !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    font-style: normal !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .otpsection .resendouter .infolst {
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 22px !important;
+    margin-top: 25px !important;
+  }
+  
+  .otp-form.register-form .otpsection .resendouter .infolst > span {
+    font-size: 13.5px !important;
+  }
+
+  .otp-form.register-form .otpsection .resendouter .infolst > span > span {
+    display: flex !important;
+    justify-content: center !important;
+    font-size: 14.5px !important;
+  }
+}
+
+.otp-form.register-form .confirm-otp-button {
+  text-transform: none !important;
+  background-color: #3F51B5 !important;
+  border-radius: 60px !important;
+}
+
+.otp-form.register-form .confirm-otp-button:hover {
+  opacity: 0.95 !important;
+}
+
+@media (max-width: 767px) {
+  .otp-form.register-form .confirm-otp-button {
+    padding: 10px 30px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    width: 30% !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .otp-form.register-form .confirm-otp-button {
+    width: 40% !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .otp-form.register-form .confirm-otp-button {
+    width: 50% !important;
+  }
+}
