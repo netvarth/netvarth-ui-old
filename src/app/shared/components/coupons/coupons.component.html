@@ -69,7 +69,7 @@
                 (upto <b class="bluefont">{{coupon.couponRules.maxDiscountValue  | currency:'&#8377;'}}  MAX)</b>
           </span>
           </div>
-          <div *ngIf="coupon.discountType == 'Fixed'">
+          <div *ngIf="coupon.calculationType == 'Fixed'">
             <span class="rupee-font "> Discount Value:  {{coupon.amount | currency:'&#8377;'}} </span>
             </div>
             <div class="outer4">
