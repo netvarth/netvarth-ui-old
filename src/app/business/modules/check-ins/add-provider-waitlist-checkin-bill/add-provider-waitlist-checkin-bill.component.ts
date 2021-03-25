@@ -784,7 +784,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     let itemPrice = 0;
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].displayName === itemName) {
-        itemPrice = (this.items[i].promotionalPrice) ? this.items[i].promotionalPrice : this.items[i].price;
+        itemPrice = (this.items[i].showPromotionalPrice) ? this.items[i].promotionalPrice : this.items[i].price;
         break;
       }
     }
