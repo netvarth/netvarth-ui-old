@@ -101,6 +101,9 @@ import { DateTimeProcessor } from './shared/services/datetime-processor.service'
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { JaldeeTimeService } from './shared/services/jaldee-time-service';
+import { FileService } from './shared/services/file-service';
+import { LivetrackService } from './shared/services/livetrack-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -232,6 +235,9 @@ export function init_app(globalService: GlobalService) {
     SnackbarService,
     GroupStorageService,
     MeetService,
+    JaldeeTimeService,
+    FileService,
+    LivetrackService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

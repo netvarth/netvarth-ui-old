@@ -7,6 +7,7 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
+import { LivetrackService } from '../../../../../shared/services/livetrack-service';
 
 @Component({
     selector: 'app-consumer-livetrack',
@@ -48,6 +49,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
         public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         private snackbarService: SnackbarService,
+        private liveTrackService: LivetrackService,
         private wordProcessor: WordProcessor) {
         this.subs.sink=this.route.params.subscribe(
             params => {
@@ -138,7 +140,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
         this.saveLiveTrackTravelModeInfo().then(
             data => {
                 this.api_loading = true;
-                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(data, this.activeWt.providerAccount.businessName, this.travelMode);
+                this.liveTrackMessage = this.liveTrackService.getLiveTrackStatusMessage(data, this.activeWt.providerAccount.businessName, this.travelMode);
             },
             error => {
                 this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
@@ -281,7 +283,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
                         this.updateLiveTrackInfo().then(
                             (liveTInfo) => {
                                 this.track_loading = false;
-                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                                this.liveTrackMessage = this.liveTrackService.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
                             }
                         );
                     } else {
@@ -289,7 +291,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
                             (liveTInfo) => {
                                 this.track_loading = false;
                                 this.firstTimeClick = false;
-                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                                this.liveTrackMessage = this.liveTrackService.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
                             }
                         );
                     }

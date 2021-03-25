@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { JaldeeTimeService } from '../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -53,7 +54,8 @@ export class AddProviderSchedulesComponent implements OnInit {
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private jaldeeTimeService: JaldeeTimeService
   ) {
   }
 
@@ -64,7 +66,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
     this.schedule_arr = this.existingSchedules;
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(this.schedule_arr);
     if (this.display_schedule.length > 1) {
       this.showMenu = true;
     } else {
@@ -218,7 +220,7 @@ export class AddProviderSchedulesComponent implements OnInit {
       }
     }
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(this.schedule_arr);
     if (this.display_schedule.length > 1) {
       this.showMenu = true;
     } else {
@@ -248,7 +250,7 @@ export class AddProviderSchedulesComponent implements OnInit {
       }
     }
     this.schedule_arr = holdarr;
-    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(this.schedule_arr);
     if (this.display_schedule.length > 1) {
       this.showMenu = true;
     } else {

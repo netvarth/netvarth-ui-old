@@ -9233,10 +9233,6 @@ owl-carousel .bt3.active {
   padding-left: 5px !important;
 }
 
-.widget-user-2 .widget-user-header, .widget-user-2 .widget-user-header {
-  /* padding: 10px !important; */
-}
-
 .settings_info {
   margin-bottom: 0px !important;
 }
@@ -13836,12 +13832,6 @@ width: 40px !important;
       padding: 10px !important;
   }
 }
-@media only screen and (max-width: 767px){
-  .sm {
-      padding: 5px 10px !important;;
-      height: auto;
-  }
-  }
 .video_blinking {
   animation: videocallBlinking 1s infinite;
   font-size: 1rem;
@@ -14118,4 +14108,7 @@ width: 40px !important;
   .lctn-dtl-lp {
 padding-left: 15px !important;
   }
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1) !important;
 }

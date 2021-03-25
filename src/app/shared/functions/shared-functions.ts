@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
-import { projectConstants } from '../../app.component';
+// import { projectConstants } from '../../app.component';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { SessionStorageService } from '../services/session-storage.service';
-import { DateTimeProcessor } from '../services/datetime-processor.service';
+import { FileService } from '../services/file-service';
 @Injectable()
 
 export class SharedFunctions {
@@ -29,7 +28,7 @@ export class SharedFunctions {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,
-    private dateTimeProcessor: DateTimeProcessor
+    private fileService: FileService
   ) { }
 
   logout() {
@@ -511,15 +510,13 @@ export class SharedFunctions {
   }
 
   imageValidation(file ,source?) {
-   let file_types;
+    let file_types;
     if(source ==='attachment' || source ==='consumerimages' ){
-        file_types = projectConstants.FILETYPES_UPLOAD;
+        file_types = this.fileService.getSupportedFormats('file');
     } else{
-        file_types = projectConstants.IMAGE_FORMATS;
+        file_types = this.fileService.getSupportedFormats('image');
     }
-    //const file_types = projectConstants.IMAGE_FORMATS;
-    // const image_max_size = projectConstants.IMAGE_MAX_SIZE;
-    const image_max_size = 15000000;
+    const image_max_size = this.fileService.getMaximumImageSize();
     const error = [];
     let is_error = false;
     if (!file.type || (file.type && file_types.indexOf(file.type) === -1)) {
@@ -694,13 +691,13 @@ export class SharedFunctions {
     return /^\d*$/.test(val);
   }
 
-  repeatFunction(ob) {
-    setInterval(
-      () => {
-        ob.repeatFunctions();
-      }, projectConstants.INTERVAL_TIME
-    );
-  }
+  // repeatFunction(ob) {
+  //   setInterval(
+  //     () => {
+  //       ob.repeatFunctions();
+  //     }, projectConstants.INTERVAL_TIME
+  //   );
+  // }
 
   getminutesOfDay(m) {
     return parseInt(m.minute, 10) + parseInt(m.hour, 10) * 60;
@@ -721,68 +718,68 @@ export class SharedFunctions {
     }
     return schedule_arr;
   }
-  arrageScheduleforDisplay(schedule_arr) {
-    const timebase: any = [];
-    for (let i = 0; i < schedule_arr.length; i++) {
-      const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
-      if (timebase[timeindx] === undefined) {
-        timebase[timeindx] = new Array();
-        timebase[timeindx].push(schedule_arr[i]);
-      } else {
-        timebase[timeindx].push(schedule_arr[i]);
-      }
-    }
-    for (const obj in timebase) {
-      if (obj) {
-        const len = timebase[obj].length;
-        for (let i = 0; i < len; i++) {
-          for (let j = i + 1; j < len; j++) {
-            if (timebase[obj][j].day < timebase[obj][i].day) {
-              const tempobj = timebase[obj][i];
-              timebase[obj][i] = timebase[obj][j];
-              timebase[obj][j] = tempobj;
-            }
-          }
-        }
-      }
-    }
-    const displaysch = [];
-    let pday = 0;
-    for (const obj in timebase) {
-      if (obj) {
-        let curstr = '';
-        let gap = 0;
-        for (let i = 0; i < timebase[obj].length; i++) {
-          if (i === 0) {
-            curstr = this.getDay(timebase[obj][i].day);
-            pday = timebase[obj][i].day;
-          } else {
-            const diffs = timebase[obj][i].day - pday;
-            if (diffs > 1) {
-              if (gap >= 1) {
-                if (curstr.includes((this.getDay(pday)))) {
-                } else {
-                  curstr = curstr + ' - ' + this.getDay(pday);
-                }
-              }
-              curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
-            } else {
-              if (i === (timebase[obj].length - 1)) {
-                curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
-              }
-              gap++;
-            }
-            pday = timebase[obj][i].day;
-          }
-        }
-        displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
-      }
-    }
-    return displaysch;
-  }
-  getDay(num) {
-    return projectConstants.myweekdaysSchedule[num];
-  }
+  // arrageScheduleforDisplay(schedule_arr) {
+  //   const timebase: any = [];
+  //   for (let i = 0; i < schedule_arr.length; i++) {
+  //     const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
+  //     if (timebase[timeindx] === undefined) {
+  //       timebase[timeindx] = new Array();
+  //       timebase[timeindx].push(schedule_arr[i]);
+  //     } else {
+  //       timebase[timeindx].push(schedule_arr[i]);
+  //     }
+  //   }
+  //   for (const obj in timebase) {
+  //     if (obj) {
+  //       const len = timebase[obj].length;
+  //       for (let i = 0; i < len; i++) {
+  //         for (let j = i + 1; j < len; j++) {
+  //           if (timebase[obj][j].day < timebase[obj][i].day) {
+  //             const tempobj = timebase[obj][i];
+  //             timebase[obj][i] = timebase[obj][j];
+  //             timebase[obj][j] = tempobj;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   const displaysch = [];
+  //   let pday = 0;
+  //   for (const obj in timebase) {
+  //     if (obj) {
+  //       let curstr = '';
+  //       let gap = 0;
+  //       for (let i = 0; i < timebase[obj].length; i++) {
+  //         if (i === 0) {
+  //           curstr = this.getDay(timebase[obj][i].day);
+  //           pday = timebase[obj][i].day;
+  //         } else {
+  //           const diffs = timebase[obj][i].day - pday;
+  //           if (diffs > 1) {
+  //             if (gap >= 1) {
+  //               if (curstr.includes((this.getDay(pday)))) {
+  //               } else {
+  //                 curstr = curstr + ' - ' + this.getDay(pday);
+  //               }
+  //             }
+  //             curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
+  //           } else {
+  //             if (i === (timebase[obj].length - 1)) {
+  //               curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
+  //             }
+  //             gap++;
+  //           }
+  //           pday = timebase[obj][i].day;
+  //         }
+  //       }
+  //       displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
+  //     }
+  //   }
+  //   return displaysch;
+  // }
+  // getDay(num) {
+  //   return projectConstants.myweekdaysSchedule[num];
+  // }
 
   orderChangeWorkingHours(schedulearr) {
     const tmparr = schedulearr;
@@ -940,37 +937,6 @@ export class SharedFunctions {
         this.router.navigate([usertype]);
         break;
     }
-  }
-
-  getTimeSlotsFromQTimings(interval, startTime, endTime) {
-    const slotList = [];
-    // slotList.push(startTime);
-    const startTimeStr = moment(startTime, ['HH:mm A']).format('HH:mm A').toString();
-    let startingDTime = this.dateTimeProcessor.getDateFromTimeString(startTimeStr);
-    slotList.push(moment(startTime, ['HH:mm A']).format('hh:mm A').toString());
-    const endTimeStr = moment(endTime, ['HH:mm A']).format('HH:mm A').toString();
-    const endDTime = this.dateTimeProcessor.getDateFromTimeString(endTimeStr);
-    // tslint:disable-next-line:radix
-    const endDate = parseInt(moment(endDTime, ['DD']).format('DD').toString());
-    // let startingDTime = this.getDateFromTimeString(startTime);
-    let exitLoop = false;
-    while (!exitLoop) {
-      const nextTime = moment(startingDTime).add(interval, 'm');
-      // tslint:disable-next-line:radix
-      const nextDate = parseInt(nextTime.format('DD'));
-      const nextTimeDt = this.dateTimeProcessor.getDateFromTimeString(moment(nextTime, ['HH:mm A']).format('HH:mm A').toString());
-      if (nextDate === endDate) {
-        if (nextTimeDt.getTime() <= endDTime.getTime()) {
-          slotList.push(moment(nextTime, ['HH:mm A']).format('hh:mm A').toString());
-        } else {
-          exitLoop = true;
-        }
-      } else {
-        exitLoop = true;
-      }
-      startingDTime = nextTimeDt;
-    }
-    return slotList;
   }
   Lbase64Encode(str) {
     let retstr = '';
@@ -1220,47 +1186,7 @@ export class SharedFunctions {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
   }
-  getLiveTrackStatusMessage(liveTrackInfo, businessName, mode) {
-    if (liveTrackInfo && liveTrackInfo.jaldeeDistanceTime) {
-      const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
-      const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
-      const travelTime = liveTrackInfo.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
-      const hours = Math.floor(travelTime / 60);
-      const minutes = travelTime % 60;
-      let message = '';
-      if (distance === 0) {
-        message += 'You are close to ' + businessName;
-      } else {
-        message += 'From your current location, you are ' + distance + ' ' + unit + ' away and will take around';
-        if (hours !== 0) {
-          message += ' ' + hours;
-          if (hours === 1) {
-            message += ' hr';
-          } else {
-            message += ' hrs';
-          }
-        }
-        if (minutes !== 0) {
-          message += ' ' + minutes;
-          if (minutes === 1) {
-            message += ' min';
-          } else {
-            message += ' mins';
-          }
-        }
-        if (mode === 'WALKING') {
-          message += ' walk';
-        } else if (mode === 'DRIVING') {
-          message += ' drive';
-        } else if (mode === 'BICYCLING') {
-          message += ' ride';
-        }
-        message += ' to reach ' + businessName;
-      }
-      return message;
-    }
-  }
-  
+    
   setFilter() {
     setTimeout(() => {
       const sidebar = document.getElementById('filterContainer');

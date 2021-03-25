@@ -26,6 +26,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -208,6 +209,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         private dateTimeProcessor: DateTimeProcessor,
+        private jaldeeTimeService: JaldeeTimeService,
         @Inject(DOCUMENT) public document
     ) {
         this.subs.sink = this.route.queryParams.subscribe(
@@ -1107,7 +1109,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         const _this = this;
-        const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
+        const allSlots = _this.jaldeeTimeService.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
         this.availableSlots = allSlots;
         const filter = {};
         const activeSlots = [];

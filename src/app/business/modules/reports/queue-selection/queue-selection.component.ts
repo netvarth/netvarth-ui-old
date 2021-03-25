@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class QueueSelectionComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private report_service: ReportDataService,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private jaldeeTimeService: JaldeeTimeService
   ) {
 
     this.activated_route.queryParams.subscribe(qparams => {
@@ -147,7 +149,7 @@ export class QueueSelectionComponent implements OnInit {
               if (this.queues[i].queueSchedule) {
                 queue_arr = this.shared_functions.queueSheduleLoop(this.queues[i].queueSchedule);
               }
-              queue_list = this.shared_functions.arrageScheduleforDisplay(queue_arr);
+              queue_list = this.jaldeeTimeService.arrageScheduleforDisplay(queue_arr);
               this.queues[i].displayQ = queue_list[0];
               console.log(JSON.stringify(this.queues[i].displayQ));
               let userName = '';
@@ -179,14 +181,7 @@ export class QueueSelectionComponent implements OnInit {
     });
   }
 
-
-
-
-
-
-
-
-  // common method got o previous page------------------------------------->
+   // common method got o previous page------------------------------------->
   passQueueSelectedToReports() {
     this.queues_selected = this.selection.selected;
     if (this.selection.selected.length === 0) {

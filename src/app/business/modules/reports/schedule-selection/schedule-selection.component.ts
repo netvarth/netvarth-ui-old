@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-schedule-selection',
@@ -38,6 +39,7 @@ export class ScheduleSelectionComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private report_service: ReportDataService,
     private groupService: GroupStorageService,
+    private jaldeeTimeService: JaldeeTimeService,
     private snackbarService: SnackbarService) {
 
     this.activated_route.queryParams.subscribe(qparams => {
@@ -145,7 +147,7 @@ export class ScheduleSelectionComponent implements OnInit {
               schedule_arr = this.shared_functions.queueSheduleLoop(schedules[i].apptSchedule);
             }
             let display_schedule = [];
-            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+            display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
             schedules[i]['displayschedule'] = display_schedule;
             console.log('schdeule..' + JSON.stringify(schedules));
             let userName = '';

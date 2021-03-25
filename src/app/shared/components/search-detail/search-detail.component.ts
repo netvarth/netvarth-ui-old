@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { JaldeeTimeService } from '../../services/jaldee-time-service';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
@@ -210,6 +211,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dateTimeProcessor: DateTimeProcessor,
+    private jaldeeTimeService: JaldeeTimeService,
     private dialog: MatDialog) {
     this.onResize();
   }
@@ -1032,7 +1034,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                         });
                       }
                     }
-                    this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                    this.search_data.hits.hit[i].fields['display_schedule'] = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                   }
                 }
 

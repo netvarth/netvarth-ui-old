@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-userwaitlist-queuedetail',
@@ -113,6 +114,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_shared_functions: ProviderSharedFuctions,
     private wordProcessor: WordProcessor,
+    private jaldeeTimeService: JaldeeTimeService,
     private snackbarService: SnackbarService) {
     this.activated_route.params.subscribe(params => {
       this.queue_id = params.sid;
@@ -225,7 +227,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].apptSchedule);
         }
         let display_schedule = [];
-        display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+        display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
         if (this.queue_list[ii].apptState === 'ENABLED') {
           this.activeQueues.push(display_schedule[0]);
         }
@@ -283,7 +285,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.apptSchedule);
           }
           this.display_schedule = [];
-          this.display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+          this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
           // remove multiple end breadcrumb on edit function
           const breadcrumbs = [];
           this.breadcrumbs_init.map((e) => {
@@ -389,7 +391,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].apptSchedule);
           }
           let display_schedule = [];
-          display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+          display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
           if (this.queue_list[ii].apptState === 'ENABLED') {
             activeQueues.push(display_schedule[0]);
           }

@@ -46,7 +46,7 @@
   height: 100vh;
 }
 .remote {
-  /* height: 99.7vh; */
+  height: 100vh;
   height: 100%;
   width: 100%;
   text-align: center;
@@ -64,12 +64,12 @@
   margin-right: 10px;
 }
 .local-zeroPs {
-  /* height: 99.7vh; */
+  height: 100vh;
   width:100%;
   text-align: center;
 }
 .round {
-  border: 1px solid #ddd;
+  border: 1px solid rgb(105, 56, 56);
   border-radius: 50% !important;
   background: #fff;
   margin: 8px;

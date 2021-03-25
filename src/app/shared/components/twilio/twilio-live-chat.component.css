@@ -21,7 +21,7 @@
   background: #000;
 }
 .local video, .local-zeroPs video, .previewContainer video {
-  transform: scaleX(-1);
+  transform: scaleX(-1) !important;
 }
 .videocontainer .join-vid-btn button {
   background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
@@ -33,7 +33,7 @@
   height: 100vh;
 }
 .remote {
-  /* height: 99.7vh; */
+  height: 100vh;
   width: 100%;
   text-align: center;
   background: #000 !important;
@@ -50,7 +50,7 @@
   margin-right: 10px;
 }
 .local-zeroPs {
-  /* height: 99.7vh; */
+  height: 100vh;
   width:100%;
   text-align: center;
 }

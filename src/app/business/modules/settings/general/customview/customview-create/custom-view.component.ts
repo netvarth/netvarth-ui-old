@@ -9,6 +9,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-custom-view',
@@ -81,6 +82,7 @@ export class CustomViewComponent implements OnInit {
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private jaldeeTimeService: JaldeeTimeService,
         private groupService: GroupStorageService) {
         this.activated_route.queryParams.subscribe((qparams) => {
             this.loading = true;
@@ -245,7 +247,7 @@ export class CustomViewComponent implements OnInit {
                             schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].queueSchedule);
                         }
                         let display_schedule = [];
-                        display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                        display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                         allQs[ii]['displayschedule'] = display_schedule;
                     }
                     for (let ii = 0; ii < allQs.length; ii++) {
@@ -620,7 +622,7 @@ export class CustomViewComponent implements OnInit {
                             schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].apptSchedule);
                         }
                         let display_schedule = [];
-                        display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                        display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                         allQs[ii]['displayschedule'] = display_schedule;
                     }
                     for (let ii = 0; ii < allQs.length; ii++) {

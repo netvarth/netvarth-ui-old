@@ -20,6 +20,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { JaldeeTimeService } from '../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -249,7 +250,8 @@ export class ProviderbWizardComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private jaldeeTimeService: JaldeeTimeService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
@@ -712,7 +714,7 @@ export class ProviderbWizardComponent implements OnInit {
       }
     }
     this.display_schedule = [];
-    this.display_schedule = this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(this.schedule_arr);
   }
 
   skipMe() {
@@ -770,7 +772,7 @@ export class ProviderbWizardComponent implements OnInit {
   // Save schedule to arr
   handlesSaveschedule(obj) {
     this.schedule_arr = obj;
-    this.display_schedule = this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(this.schedule_arr);
     this.disablebuttonsInSchedule = false;
   }
   handleCancelschedule(obj) {
