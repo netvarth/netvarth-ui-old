@@ -19,6 +19,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-create-coupon',
@@ -93,6 +94,7 @@ endDateInvalidError=false;
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
+    private dateTimeProcessor: DateTimeProcessor,
     public dialog: MatDialog, ) {
     this.subscriptions.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
@@ -519,16 +521,25 @@ endDateInvalidError=false;
   }
 
   onSubmit() {
-
+    let startDate ='';
+    let endDate='';
     const form_data = this.couponForm.value;
+    if (form_data.couponRules.startDate) {
+      startDate = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.startDate);
+      form_data.couponRules.startDate=startDate;
+    }
+    if (form_data.couponRules.endDate) {
+     endDate = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.endDate);
+     form_data.couponRules.endDate=endDate;
+    }
     if (this.checkpoliciesEntered(form_data)) {
       const timeRangeObject = [{
         'recurringType': 'Weekly',
         'repeatIntervals': this.selday_arr,
         'timeSlots': this.timewindow_list,
-        'startDate': form_data.couponRules.startDate,
+        'startDate':startDate,
         'terminator': {
-          'endDate': form_data.couponRules.endDate,
+          'endDate': endDate,
           'noOfOccurance': ''
         },
       }];

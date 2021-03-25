@@ -8,6 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../../../../../shared/services/datetime-processor.service';
 
 
 
@@ -36,6 +37,7 @@ minDay=new Date();
     private formbuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     private dialog: MatDialog,
     private provider_services: ProviderServices) {
       this.couponId=data.coupon.id;
@@ -103,7 +105,17 @@ checkDayisBeforeEndDate(sDate, eDate) {
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-        const form_data=this.publishForm.value;
+        let publishedFrom ='';
+        let publishedTo='';
+        const form_data = this.publishForm.value;
+        if (form_data.couponRules.publishedFrom) {
+          publishedFrom = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.publishedFrom);
+          form_data.couponRules.publishedFrom=publishedFrom;
+        }
+        if (form_data.couponRules.publishedTo) {
+          publishedTo = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.publishedTo);
+         form_data.couponRules.publishedTo=publishedTo;
+        }
         form_data.id=this.couponId;
         this.subscriptions.sink=this.provider_services.publishCoupon(form_data,this.couponId)
         .subscribe(result=>{
