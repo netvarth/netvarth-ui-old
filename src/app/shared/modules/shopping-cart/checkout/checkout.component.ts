@@ -274,7 +274,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            source: this.imagelist
+            source: this.imagelist,
+            type: 'add'
           }
         });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
@@ -1339,7 +1340,10 @@ console.log(post_Data.email);
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        source: this.imagelist
+        file: this.imagelist.files.slice(),
+        base: this.imagelist.base64.slice(),
+        caption:this.imagelist.caption.slice(),
+        type: 'edit'
       }
     });
     this.shoppinglistdialogRef.afterClosed().subscribe(result => {
@@ -1377,7 +1381,8 @@ console.log(post_Data.email);
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: this.imagelist
+          source: this.imagelist,
+          type: 'add'
         }
       });
       this.shoppinglistdialogRef.afterClosed().subscribe(result => {
