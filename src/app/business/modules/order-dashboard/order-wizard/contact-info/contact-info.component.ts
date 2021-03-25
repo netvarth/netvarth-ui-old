@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-contact-info',
@@ -30,11 +31,11 @@ export class ContactInfoComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
   }
-  createForm() {
+  createForm() { 
     this.contantInfo = this.formBuilder.group({
 
-      phone: [this.customer_phone, Validators.required],
-      email: [this.customer_email, Validators.required]
+      phone: [this.customer_phone, Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      email: [this.customer_email, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])]
     });
   }
   onSubmit(form_data) {
