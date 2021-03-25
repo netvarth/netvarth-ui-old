@@ -14098,3 +14098,18 @@ width: 40px !important;
 .position-absolute {
   position: absolute !important;
 }
+.join_nw_btn {
+  width: 100px;
+  background-color: #FFF4DE;
+  border-color: transparent;
+  font-weight: 600;
+  border: 2px solid #ffa800;
+  padding: 0.55rem 0.75rem !important;
+  font-size: 0.925rem !important;
+  line-height: 1.35;
+  border-radius: 0.42rem !important;
+  color: #1e4079;
+}
+.mgn-ntop-10 {
+  margin-top: -10px;
+}
