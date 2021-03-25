@@ -361,7 +361,7 @@ endDateInvalidError=false;
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError && this.weekdayError === false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError==false && this.weekdayError === false) {
           this.step = this.step + 1;
         }
       }
