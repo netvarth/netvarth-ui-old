@@ -14113,3 +14113,8 @@ width: 40px !important;
 .mgn-ntop-10 {
   margin-top: -10px;
 }
+@media only screen and (max-width: 768px) {
+  .lctn-dtl-lp {
+padding-left: 15px !important;
+  }
+}
