@@ -257,7 +257,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       
       this.checkinProviderList = activeUser.checkedInProviders;
       const providerInfo = provider.split('-');
-      if (this.checkinProviderList.length > 0) {
+      if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         console.log(providerInfo[0]);
         if (this.checkinProviderList.includes(providerInfo[0])) {
           console.log('fiststcheckinover');
