@@ -669,6 +669,7 @@ clearFormFields(){
   // });
 }
 getCurrentLocation() {
+  console.log("Hello")
   if (navigator) {
     navigator.geolocation.getCurrentPosition(pos => {
      console.log(pos)
@@ -680,6 +681,8 @@ getCurrentLocation() {
     },
       error => {
           this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+          this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+
       });
   }
   
