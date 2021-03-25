@@ -2455,3 +2455,4 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     return (verifiedLevel + jDN + stars);
   }
 }
+

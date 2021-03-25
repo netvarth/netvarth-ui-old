@@ -23,7 +23,6 @@ import { SubSink } from '../../../../../../../node_modules/subsink';
 @Component({
     selector: 'app-consumer-appointment-bill',
     templateUrl: './appointment-bill.component.html'
-
 })
 export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
   

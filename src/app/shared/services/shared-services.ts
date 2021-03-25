@@ -14,7 +14,8 @@ export class SharedServices {
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }
-  getUIConfig(s3Url) {
+  getUIConfig(s3Url: any) {
+    // const url = 'https://s3-us-west-1.amazonaws.com/jaldeelocal/UIConfig/config.json?modifiedDate=' + UTCstring;
     return this.servicemeta.httpGet(s3Url);
   }
   adminLogin(body, type) {
@@ -841,19 +842,19 @@ export class SharedServices {
   }
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
-        resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
-      } else {
+      // if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+      //   resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
+      // } else {
         this.gets3url(src)
           .subscribe(
             data => {
-              this.lStorageService.setitemonLocalStorage('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data);
               resolve(data);
             },
             error => {
               reject(error);
             });
-      }
+      // }
     });
     return promise;
   }

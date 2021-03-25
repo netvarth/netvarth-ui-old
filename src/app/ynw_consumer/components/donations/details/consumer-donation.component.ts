@@ -31,7 +31,6 @@ import { SubSink } from '../../../../../../node_modules/subsink';
 })
 export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
-
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
     no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;

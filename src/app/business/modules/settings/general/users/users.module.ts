@@ -11,8 +11,6 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { UserDataStorageService } from './settings/user-datastorage.service';
-// import { ManageOnlineProfileComponent } from './settings/bprofile/manageonlineprofile.component';
-import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
 import { OrderModule } from 'ngx-order-pipe';
 
@@ -20,9 +18,7 @@ import { OrderModule } from 'ngx-order-pipe';
 @NgModule({
     declarations: [
         BranchUsersComponent,
-        BranchUserDetailComponent,
-        // ManageOnlineProfileComponent,
-        LinkProfileComponent
+        BranchUserDetailComponent
     ],
     imports: [
         UsersRoutingModule,
@@ -39,7 +35,6 @@ import { OrderModule } from 'ngx-order-pipe';
         OrderModule
 
     ],
-    entryComponents: [LinkProfileComponent],
     providers: [UserDataStorageService],
     exports: [BranchUsersComponent]
 })

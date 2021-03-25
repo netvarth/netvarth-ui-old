@@ -819,3 +819,4 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.locationobj.back();
     }
 }
+

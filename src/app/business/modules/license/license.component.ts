@@ -292,16 +292,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
             );
     }
     showLicenseUsage() {
-        // this.licenseusedialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
-        //     width: '50%',
-        //     data: {
-        //         metrics: this.metrics
-        //     },
-        //     panelClass: ['popup-class', 'commonpopupmainclass'],
-        //     disableClose: true
-        // });
-        // this.licenseusedialogRef.afterClosed().subscribe(() => {
-        // });
         this.router.navigate(['provider', 'license', 'licenseusage']);
     }
     getInvoiceList() {

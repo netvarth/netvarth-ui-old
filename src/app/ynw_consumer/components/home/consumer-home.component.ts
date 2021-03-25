@@ -823,20 +823,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // setWaitlistTimeDetailsProvider(provider, k) {
-  //   if (this.s3url) {
-  //     this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-  //     this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
-  //   }
-  //   const locarr = [];
-  //   let i = 0;
-  //   for (const loc of provider.locations) {
-  //     locarr.push({ 'locid': provider.id + '-' + loc.id, 'locindx': i });
-  //     i++;
-  //   }
-  //   this.getWaitingTime(locarr, k);
-  //   this.getApptTime(locarr, k);
-  // }
+  setWaitlistTimeDetailsProvider(provider, k) {
+    if (this.s3url) {
+      this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
+      this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
+    }
+    const locarr = [];
+    let i = 0;
+    for (const loc of provider.locations) {
+      locarr.push({ 'locid': provider.id + '-' + loc.id, 'locindx': i });
+      i++;
+    }
+    this.getWaitingTime(locarr, k);
+    this.getApptTime(locarr, k);
+  }
 
   getApptTime(provids_locid, index) {
     if (provids_locid.length > 0) {
@@ -1238,18 +1238,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // };
     // this.showCheckin(post_data);
   }
-  // gets3curl() {
-  //   this.shared_functions.getS3Url('provider')
-  //     .then(
-  //       res => {
-  //         this.s3url = res;
-  //         // this.getFavouriteProvider();
-  //       },
-  //       error => {
-  //         this.wordProcessor.apiErrorAutoHide(this, error);
-  //       }
-  //     );
-  // }
+  gets3curl() {
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          this.s3url = res;
+          // this.getFavouriteProvider();
+        },
+        error => {
+          this.wordProcessor.apiErrorAutoHide(this, error);
+        }
+      );
+  }
   // gets the various json files based on the value of "section" parameter
   // getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
   //   let UTCstring = null;
@@ -1427,20 +1427,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return false;
     }
   }
-  // toogleDetail(provider, i) {
-  //   let open_fav_div = null;
-  //   if (this.open_fav_div === i) {
-  //     this.hideShowAnimator = false;
-  //     open_fav_div = null;
-  //   } else {
-  //     this.hideShowAnimator = true;
-  //     open_fav_div = i;
-  //     this.setWaitlistTimeDetailsProvider(provider, i);
-  //   }
-  //   setTimeout(() => {
-  //     this.open_fav_div = open_fav_div;
-  //   }, 500);
-  // }
+  toogleDetail(provider, i) {
+    let open_fav_div = null;
+    if (this.open_fav_div === i) {
+      this.hideShowAnimator = false;
+      open_fav_div = null;
+    } else {
+      this.hideShowAnimator = true;
+      open_fav_div = i;
+      this.setWaitlistTimeDetailsProvider(provider, i);
+    }
+    setTimeout(() => {
+      this.open_fav_div = open_fav_div;
+    }, 500);
+  }
   providerManagePrivacy(provider, i) {
     this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
       width: '50%',

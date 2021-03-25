@@ -2443,7 +2443,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
     if (this.userType === 'consumer') {
       let blogoUrl;
       if (this.businessjson.logo) {

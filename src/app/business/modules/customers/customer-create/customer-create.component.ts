@@ -167,12 +167,12 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
-        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist') {
+        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' ||this.source==='order') {
           this.getJaldeeIntegrationSettings();
           this.save_btn = 'Proceed';
         }
       } else {
-        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block')) {
+        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source==='order')) {
           this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
           if (this.source === 'waitlist-block') {
             if (this.showToken) {

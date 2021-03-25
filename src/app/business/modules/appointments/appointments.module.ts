@@ -20,7 +20,6 @@ import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-d
 import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
-import { CustomerModule } from '../customer/customer.module';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 
@@ -43,7 +42,6 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         ProviderWaitlistCheckInConsumerNoteModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
-        CustomerModule,
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),

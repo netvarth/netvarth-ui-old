@@ -73,7 +73,7 @@
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.batchId}}</td>
                   </tr>
-                  <tr *ngIf="type=='wl'">
+                  <tr *ngIf="type=='wl' && isuser(statusInfo.waitlistingFor)">
                     <td width="48%" align="right" *ngIf="statusInfo.showToken">Token For </td>
                     <td width="48%" align="right" *ngIf="!statusInfo.showToken"> Check-in For </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -223,13 +223,15 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="txt-align-center" *ngIf="statusInfo.waitlistStatus">
+              <div class="txt-align-center"  *ngIf="statusInfo.waitlistStatus && ((statusInfo.service.serviceType == 'virtualService' && statusInfo.waitlistStatus !== 'arrived') || 
+                statusInfo.service.serviceType != 'virtualService')">
                 <span [class.cancelled]="statusInfo.waitlistStatus === 'cancelled'"
                   [class.green]="statusInfo.waitlistStatus !== 'cancelled'">
                   Status: {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
                 </span>
               </div>
-              <div class="txt-align-center" *ngIf="statusInfo.apptStatus">
+              <div class="txt-align-center" *ngIf="statusInfo.apptStatus && ((statusInfo.service.serviceType == 'virtualService' && statusInfo.apptStatus !== 'arrived') || 
+                statusInfo.service.serviceType != 'virtualService')">
                 <span [class.cancelled]="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'"
                   [class.green]="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
                   Status: {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}

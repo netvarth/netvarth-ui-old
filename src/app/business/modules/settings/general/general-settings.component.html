@@ -1,12 +1,6 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Features and Customization
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
@@ -28,20 +22,6 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="card pos">
-                    <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding" style="margin-bottom: 10px">
-                        <label>Select services by department
-                            <mat-slide-toggle [checked]="filterbydepartment"
-                             [(ngModel)]="filterByDept" (change)="doRemoveservice()">
-                            </mat-slide-toggle> &nbsp;{{deptstatusstr}}
-                        </label>
-                        <div class="form-level-settings"> Enable to select services by department.<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('departments', $event)">Learn
-                                More</a></div>
-                    </div>
-                </div>
-            </div> -->
             <div class="row" *ngIf="accountType=='BRANCH'&& isMultilevel">
                 <div class="card p0">
                     <span class="b-link" (click)="goDepartments()">

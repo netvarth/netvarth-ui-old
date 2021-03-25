@@ -547,7 +547,7 @@
                       </button>
                     </div>
                     <div>
-                      <button type="button" *ngIf="step == 3" 
+                      <button type="button" *ngIf="step == 3" [hidden]="hideSubmitbtn"
                         class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="couponForm.invalid ||published">
                         Submit
                       </button>

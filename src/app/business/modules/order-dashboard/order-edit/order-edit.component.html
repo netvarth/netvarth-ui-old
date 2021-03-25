@@ -313,14 +313,12 @@
                               </div>
                               <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
+                            
                             <div *ngIf="isfutureAvailableTime">
-                              <span *ngIf="!isFuturedate">Today ,</span>
-                              <span *ngIf="!isFuturedate">
-                                {{nextAvailableTime}}
+                              
+                              <span >{{sel_checkindate | date: newDateFormat}},
                               </span>
-                              <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                              </span>
-                              <span *ngIf="isFuturedate">
+                              <span >
                                 {{nextAvailableTime}}
                               </span>
                             </div>
@@ -335,6 +333,9 @@
                                     <div class="card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
                                         <div class="card-body text-left pl-5 p-0 font-addrss">
                                           <div class="adrs-data mgn-up-minus-20">
+                                              <div class="pull-right">
+                                                  <i class="font-weight-bolder font-size-sm blue icon-edit"  (click)="editAddress()" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                                  </i></div>
                                             <div *ngIf="orderDetails.homeDeliveryAddress">
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
@@ -354,8 +355,8 @@
                                                 {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
                                               </span><br>
                                             </div>
-                                            <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
-                                              Edit</a>
+                                            <!-- <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                              Edit</a> -->
                                           </div>
                                           
                                         </div>

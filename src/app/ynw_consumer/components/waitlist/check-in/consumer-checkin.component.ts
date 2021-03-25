@@ -1860,3 +1860,4 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
 }
+

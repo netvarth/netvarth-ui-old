@@ -187,7 +187,9 @@ export class InboxOuterComponent implements OnInit {
         communicationMessage: this.message
       };
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'CHAT';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -199,6 +201,8 @@ export class InboxOuterComponent implements OnInit {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+	    dataToSend.append('message', blobpost_Data);
       const filter = { 'account': this.selectedUserMessages[0].accountId };
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(

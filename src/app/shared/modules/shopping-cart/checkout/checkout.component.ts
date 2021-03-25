@@ -26,7 +26,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 
-
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',

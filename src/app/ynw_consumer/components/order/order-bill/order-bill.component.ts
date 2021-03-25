@@ -767,5 +767,4 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     backtoProviderDetails() {
         this.locationobj.back();
     }
-
 }

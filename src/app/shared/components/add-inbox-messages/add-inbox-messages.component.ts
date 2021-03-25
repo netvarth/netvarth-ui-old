@@ -350,7 +350,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.disableButton = true;
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'BOOKINGS';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -364,6 +366,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       foruuid.push(this.uuid);
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const postdata = {
         medium: {
           email: this.email,
@@ -495,7 +499,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'BOOKINGS';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -507,6 +513,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       if (this.type === 'appt') {
         this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
           dataToSend)
@@ -583,7 +591,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'CHAT';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -595,6 +605,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+	    dataToSend.append('message', blobpost_Data);
       this.shared_services.addProvidertoConsumerNote(this.user_id,
         dataToSend)
         .subscribe(
@@ -613,7 +625,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'ENQUIRY';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -625,6 +639,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const filter = {};
       filter['account'] = this.user_id;
       if (this.userId) {

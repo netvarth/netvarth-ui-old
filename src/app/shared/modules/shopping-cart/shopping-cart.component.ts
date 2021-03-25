@@ -911,4 +911,3 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 }
 
-

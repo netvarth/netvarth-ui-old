@@ -89,6 +89,18 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+        (click)="showMenuSection()">
+        <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
+            class="svg-icon menu-icon">
+            <i class="fa fa-envelope"></i>
+          </span><span class="menu-text">Enquiry</span>
+          <small class="label pull-right bg-green"
+            *ngIf="enquiryCount>0 && !minimizeMenu">{{enquiryCount}}</small>
+          <i class="menu-arrow"></i></a>
+        <div class="menu-submenu"><i class="menu-arrow"></i>
+        </div>
+      </li>
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
           <a routerLink="auditlog" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">

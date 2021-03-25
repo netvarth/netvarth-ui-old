@@ -1295,7 +1295,7 @@ ngx-intl-tel-input input {
 }
 .bookdetails tbody {
   vertical-align: baseline !important;
-  word-break: break-all !important;
+  /* word-break: break-all !important; */
 }
 .containerAppt {
   font-size: 1.7rem;
