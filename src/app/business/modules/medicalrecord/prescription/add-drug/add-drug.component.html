@@ -62,8 +62,8 @@
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
 {
-'required' : 'Please enter detailed instructions.',
-'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+'required' : 'Please enter additional instructions.',
+'maxlength' : 'Additional instructions can contain only ' + maxCharslong + ' characters'
 })">
       </app-field-error-display>
       <!-- <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span> -->
