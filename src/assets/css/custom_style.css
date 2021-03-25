@@ -7046,7 +7046,7 @@ input.jdn_ip {
   border: none !important;
   white-space: nowrap !important;
   line-height: inherit !important;
-  -moz-user-select: none;
+  -moz-user-select: none; 
   z-index: 2;
   text-transform: uppercase;
   -webkit-border-radius: 3px !important;

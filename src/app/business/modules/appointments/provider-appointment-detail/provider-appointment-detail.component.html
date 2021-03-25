@@ -7,7 +7,7 @@
   </div>
 </section>
 
-<section class="prov-apptDetail">
+<section class="prov-apptDetail" *ngIf="waitlist_data">
   <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
       <div class="row">
@@ -18,7 +18,7 @@
           <div class="card" *ngIf="!api_loading">
             <div class="c-details">
               <h2>
-                <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
                 {{waitlist_data.service.name |
                 capitalizeFirst}}
                 <span class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>

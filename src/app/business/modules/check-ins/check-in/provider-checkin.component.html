@@ -293,7 +293,7 @@
                 <div class="col-md-12 no-padding ">
                   <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                     <mat-chip-list class="pcheckin-owl">
-                      <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queuejson">
+                      <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                         <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                           [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                           (click)="handleQueueSelection(queue, i);">
