@@ -78,9 +78,12 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   startDaterequired = false;
   endDaterequired = false;
   minbillamountError = false;
-  mxDate: Date;
+  minday=new Date();
   hideSubmitbtn=false;
-@ViewChild('start',{static:false}) startDate:ElementRef;
+  endDate;
+  startDate;
+@ViewChild('startDate',{static:false}) startDatePicker:ElementRef;
+endDateInvalidError=false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -104,7 +107,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.getCatalogs();
-    this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
+    // this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
 
   }
@@ -309,6 +312,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   gotoNext() {
     this.startDaterequired = false;
     this.endDaterequired = false;
+    this.endDateInvalidError=false;
     this.weekdayError = false;
     this.minbillamountError = false;
     if (this.action === 'edit' && this.couponDetails.couponRules.published) {
@@ -327,7 +331,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
           this.step = this.step + 1;
            setTimeout(() => {
-            this.startDate.nativeElement.focus();
+            this.startDatePicker.nativeElement.focus();
            }, 100);
         
 
@@ -336,11 +340,19 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         const startDateVal = this.couponForm.get('couponRules').get('startDate').value;
         const endDateVal = this.couponForm.get('couponRules').get('endDate').value;
         const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
+        console.log(startDateVal);
+        console.log(endDateVal);
+        
         if (startDateVal == null || startDateVal == undefined || startDateVal == '') {
           this.startDaterequired = true;
         }
         if (endDateVal == null || endDateVal == undefined || endDateVal == '') {
           this.endDaterequired = true;
+        }
+        if(startDateVal!==''&&endDateVal!==''){
+        if(!this.checkDayisBeforeEndDate(startDateVal,endDateVal)){
+           this.endDateInvalidError=true;
+        }
         }
         if (minbillamountval == null || minbillamountval == '' || minbillamountval == undefined) {
           this.minbillamountError = true;
@@ -349,7 +361,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.weekdayError === false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError && this.weekdayError === false) {
           this.step = this.step + 1;
         }
       }
@@ -358,78 +370,29 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
 
   }
+  onChangeStartDate() {
+ this.startDaterequired=false;
+  }
+  onChangeEndDate() {
+    this.endDateInvalidError=false;
+    this.endDaterequired=false;
+  }
   // wizard
   gotoPrevious() {
     this.step = this.step - 1;
   }
   resetApiErrors() {
   }
-  checkSameDay(date) {
-    if (moment(new Date(date)).isSame(moment(), 'day')) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  checkDayBeforeToday(date) {
-    if (moment(new Date(date)).isBefore(new Date(), 'day')) {
-      return true;
-    }
-    else { return false; }
-  }
+
   checkDayisBeforeEndDate(sDate, eDate) {
-    if (moment(new Date(sDate),'day').isBefore(new Date(eDate),'day')) {
+    if (moment(new Date(sDate),'day').isSameOrBefore(new Date(eDate),'day')) {
       return true;
     } else {
       return false;
     }
   }
-  compareDate( startOrend) {
-    this.startdateError = false;
-    this.enddateError = false;
-    const sDate = this.couponForm.get('couponRules').get('startDate').value;
-    const eDate = this.couponForm.get('couponRules').get('endDate').value;
-    if (startOrend === 0) {
-      this.startDaterequired = false;
-      this.checkStartDateValid(sDate);
-      if(eDate!==null && eDate!==undefined && eDate!=='' ){
-        this.checkEndDateValid(eDate);
-        if(!this.checkDayisBeforeEndDate(sDate,eDate)){
-          return this.enddateError=true;
-        }
-      }
 
-    } else if (startOrend === 1) {
-      this.endDaterequired = false;
-      if(sDate!==null &&sDate!==undefined &&sDate!==''){
-        this.checkStartDateValid(sDate);
-        if(!this.checkDayisBeforeEndDate(sDate,eDate)){
-          return this.enddateError=true;
-        }
-       
-      }
-       this.checkEndDateValid(eDate);
-    
-      
 
-    }
-  }
-  checkStartDateValid(sDate){
-    if (this.checkSameDay(sDate)) {
-      return this.startdateError = false;
-    }
-    if (this.checkDayBeforeToday(sDate)) {
-      return this.startdateError = true;
-    }
-  }
-  checkEndDateValid(eDate){
-    if (this.checkSameDay(eDate)) {
-      return this.enddateError = false;
-    }
-    if (this.checkDayBeforeToday(eDate)) {
-      return this.enddateError = true;
-    }
-  }
   handleDaychange(index) {
     this.weekdayError = false;
     const selindx = this.selday_arr.indexOf(index);
