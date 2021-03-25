@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -101,6 +101,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   };
   mapaddress;
   locationName;
+  @ViewChild('googleradio',{static:false}) googleradio:ElementRef;
+  @ViewChild('autolocateradio',{static:false}) autolocateradio:ElementRef;
+  @ViewChild('manualradio',{static:false}) manualradio:ElementRef;
 
   constructor(
     private provider_services: ProviderServices,
@@ -612,7 +615,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.locationFind = 'GOOGLEMAP';
           }
           else {
+            console.log("Hello")
             this.locationFind = 'GOOGLEMAP';
+            setTimeout(() => {
+              this.googleradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }
          });
@@ -632,6 +639,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'AUTODETECT';
+            setTimeout(() => {
+              this.autolocateradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }         });
     } else if(val === 'manual'){
@@ -649,12 +659,16 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'MANUAL';
+            setTimeout(() => {
+              this.manualradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }
          });
 
     }
 }
+
 clearFormFields(){
   this.amForm.setValue({
     locname: '',
