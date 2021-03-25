@@ -439,7 +439,9 @@ export const projectConstantsLocal = {
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
     ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
     ONLINE_CHECKIN_REQUIRED: 'Online check-in required',
-    CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons'
+    CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons',
+    COUPON_CAN_NOT_APPLY: 'Coupon cannot be applied. Please check coupon rules in Settings>Jaldee Billing>Coupons',
+    CONSUMER_CAN_NOT_APPLY_COUPON:'Coupon cannot be applied.'
   },
   CHECK_IN_STATUSES: {
     Done: 'Completed',
