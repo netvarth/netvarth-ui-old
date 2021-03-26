@@ -1747,6 +1747,7 @@ img.ordericon.home {
   min-width: 310px !important;
   color: darkslategrey !important;
   font-weight: 700 !important;
+  justify-content: flex-end !important;
 }
 
 .serv-head.order-serv-head .catalog-icons .store-pickup div,

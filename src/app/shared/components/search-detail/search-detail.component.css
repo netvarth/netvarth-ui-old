@@ -817,6 +817,9 @@ ul.bus-actions-horiz li {
   background-color: #1E4079 !important;
   padding: 10px 20px !important;
   border-radius: 5px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: center !important;
 }
 
 .checkin-est {

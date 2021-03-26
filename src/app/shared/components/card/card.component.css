@@ -665,7 +665,8 @@ button.fxmenu {
 }
 
 .card.booking-card.items .card-item-content .card-title a {
-    word-break: normal;
+    /* word-break: normal; */
+    word-break: break-word !important;
     text-transform: capitalize;
 }
 
@@ -676,6 +677,13 @@ button.fxmenu {
     padding: 0 !important;
     margin: 0 !important;
     justify-content: flex-end !important;
+    height: 44px !important;
+}
+
+@media (max-width: 575px) {
+    .card.booking-card.items .card-item-content .amount {
+        height: 40px !important;
+    }
 }
 
 .card.booking-card.items .card-item-content .amount .amount-label {
