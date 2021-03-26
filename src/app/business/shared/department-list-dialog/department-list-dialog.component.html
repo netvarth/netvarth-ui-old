@@ -8,7 +8,7 @@
     <div *ngIf="!loading && department_list.length>0">
     <mat-dialog-content>
 
-      <mat-selection-list #departments [disabled]="mode==='view'" [(ngModel)]="selectedDepartments" (ngModelChange)="onDepartmentChange($event)" >
+      <mat-selection-list #departments  [(ngModel)]="selectedDepartments" (ngModelChange)="onDepartmentChange($event)" >
 
         <mat-list-option checkboxPosition="before" *ngFor=" let department of department_list" [value] ="department" [selected]="isSelected(department)">
 
@@ -21,8 +21,8 @@
 
     <mat-dialog-actions>
         <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
-      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
-      <button  mat-button class="cs-btn bt1 style-button" type="button" [disabled]="mode==='view'"  (click)="onConfirm(departments.selectedOptions)" >Confirm</button>
+      <button   type="button"  class="cs-btn bt2 "(click)="close();"  *ngIf="mode!='view'"> Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button" *ngIf="mode!='view'"  (click)="onConfirm(departments.selectedOptions)" >Confirm</button>
     </div>
     </mat-dialog-actions>
     </div>

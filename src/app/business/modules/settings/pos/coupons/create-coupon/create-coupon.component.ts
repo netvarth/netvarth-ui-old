@@ -227,11 +227,11 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     if (coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length > 0) {
       this.departments = coupon.couponRules.policies.departments;
     }
-    if (coupon.couponRules.policies.customerGroup && coupon.couponRules.policies.customerGroup.length > 0) {
-      this.customer_groups = coupon.couponRules.policies.customerGroup;
+    if (coupon.couponRules.policies.consumerGroups && coupon.couponRules.policies.consumerGroups.length > 0) {
+      this.customer_groups = coupon.couponRules.policies.consumerGroups;
     }
-    if (coupon.couponRules.policies.customerLabel && coupon.couponRules.policies.customerLabel.length > 0) {
-      this.customer_labels = coupon.couponRules.policies.customerLabel;
+    if (coupon.couponRules.policies.consumerLabels && coupon.couponRules.policies.consumerLabels.length > 0) {
+      this.customer_labels = coupon.couponRules.policies.consumerLabels;
     }
 
     this.timewindow_list = coupon.couponRules.validTimeRange[0].timeSlots;
@@ -426,7 +426,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'services': this.services
+        'services': this.services,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -442,7 +443,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'items': this.items
+        'items': this.items,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -459,7 +461,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'departments': this.departments
+        'departments': this.departments,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -475,7 +478,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'groups': this.customer_groups
+        'groups': this.customer_groups,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -492,7 +496,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'labels': this.customer_labels
+        'labels': this.customer_labels,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -509,7 +514,8 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'users': this.users
+        'users': this.users,
+        'mode':this.couponDetails.couponRules.published?'view':'edit'
       }
 
     });
@@ -579,11 +585,13 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
       }
       if (this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value) {
-        form_data.couponRules.policies.customerGroup = this.customer_groups;
+        form_data.couponRules.policies.consumerGroups = this.customer_groups;
 
       }
       if (this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value) {
-        form_data.couponRules.policies.customerLabel = this.customer_labels;
+        console.log(this.customer_labels);
+        
+        form_data.couponRules.policies.consumerLabels = this.customer_labels;
 
       }
       form_data.couponBasedOn = this.couponBasedOnValue;
