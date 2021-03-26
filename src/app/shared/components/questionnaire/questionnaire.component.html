@@ -10,6 +10,7 @@
         <h5 class="mgn-up-10 bold">Questionnaire <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                     class="fa fa-arrow-left"></i></a></h5>
     </div>
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="questionnaireList" [class.card]="params.uuid">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <div class="quest-outer" *ngFor="let question of questionnaireList.labels;let i = index">

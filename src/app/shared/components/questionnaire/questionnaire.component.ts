@@ -30,6 +30,7 @@ export class QuestionnaireComponent implements OnInit {
   apiError = [];
   params;
   fileuploadpreAnswers: any = {};
+  loading = false;
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -77,6 +78,7 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.source);
     console.log(this.params.uuid);
     if (this.params.uuid) {
+      this.loading = true;
       if (this.source === 'consCheckin') {
         this.getConsumerCheckinDetails();
       } else if (this.source === 'consAppt') {
@@ -169,6 +171,7 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
+      this.loading = false;
       if (this.questionAnswers && this.questionAnswers.length > 0) {
         this.getAnswers(this.questionAnswers, 'get');
       }
@@ -178,6 +181,7 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
+      this.loading = false;
       if (this.questionAnswers && this.questionAnswers.length > 0) {
         this.getAnswers(this.questionAnswers, 'get');
       }

@@ -2007,9 +2007,9 @@ console.log(Object.keys(this.questionAnswers).length);
         this.showQuestionnaire = !this.showQuestionnaire;
     }
     getProviderQuestionnaire() {
-        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-        //   console.log(data);
-        //   this.questionnaireList = data;
-        // });
+        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
       }
 }

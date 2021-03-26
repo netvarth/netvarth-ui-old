@@ -1481,3 +1481,6 @@ body.modal-open {
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
   display: none !important;
 }
+.loading-hgt {
+  height: 85vh;
+}

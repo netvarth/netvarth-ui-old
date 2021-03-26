@@ -216,6 +216,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     googleMapUrl;
     selectedDate;
     private subs = new SubSink();
+    questionnaireLoaded = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1762,6 +1763,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
+            this.questionnaireLoaded = true;
+            
         });
     }
 }

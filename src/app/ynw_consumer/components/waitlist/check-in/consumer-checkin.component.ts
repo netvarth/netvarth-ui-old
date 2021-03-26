@@ -190,6 +190,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     googleMapUrl;
     private subs = new SubSink();
     selectedQTime;
+    questionnaireLoaded = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1857,6 +1858,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
+            this.questionnaireLoaded = true;
         });
     }
 }

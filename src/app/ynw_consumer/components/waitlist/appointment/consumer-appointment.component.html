@@ -15,7 +15,10 @@
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
-                                <div class="col-xl-12">
+                                <div class="loading-hgt" *ngIf="!questionnaireLoaded">
+                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                </div>
+                                <div class="col-xl-12" *ngIf="questionnaireLoaded">
                                     <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding">
                                         <div class="wizard-nav" *ngIf="type != 'reschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
@@ -43,7 +46,7 @@
                                                         </svg>
                                                     </span>
                                                 </div>
-                                                <div class="wizard-step" data-wizard-type="step"
+                                                <div class="wizard-step tab-selected wizard-mgn-30" data-wizard-type="step"
                                                     [class.tab-selected]="bookStep>=2"
                                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                     <div class="wizard-label">
@@ -779,7 +782,7 @@
                                     <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
-                                        <div class="mgn-bt-20 quest-head mgn-up-10">
+                                        <div class="pad-20 quest-head">
                                             Please provide us with a little more information complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
@@ -787,6 +790,23 @@
                                             [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
                                             [serviceId]="sel_ser" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                                            <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+                                            <div class="mr-2">
+                                                <button type="button"
+                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('prev')">
+                                                    Previous
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')">
+                                                    Next
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
