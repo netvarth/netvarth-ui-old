@@ -85,6 +85,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   startDate;
   @ViewChild('startDate', { static: false }) startDatePicker: ElementRef;
   endDateInvalidError = false;
+  dialogMode='edit';
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -167,7 +168,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         (couponDetails: any) => {
           if (couponDetails.couponRules.published) {
             this.coupon_title = 'View Coupon';
+            this.dialogMode='view';
             this.hideSubmitbtn = true;
+          }else{
+            this.dialogMode='edit';
           }
           this.updateForm(couponDetails);
         }
@@ -421,13 +425,14 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
 
   openServiceDialog() {
+    
     this.servicedialogRef = this.dialog.open(ServiceListDialogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'services': this.services,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
@@ -444,7 +449,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'items': this.items,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
@@ -462,7 +467,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'departments': this.departments,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
@@ -479,7 +484,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'groups': this.customer_groups,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
@@ -497,7 +502,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'labels': this.customer_labels,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
@@ -515,7 +520,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'users': this.users,
-        'mode':this.couponDetails.couponRules.published?'view':'edit'
+        'mode':this.dialogMode
       }
 
     });
