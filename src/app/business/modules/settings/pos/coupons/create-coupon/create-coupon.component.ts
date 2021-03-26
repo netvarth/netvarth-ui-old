@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 // import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -79,12 +79,12 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   startDaterequired = false;
   endDaterequired = false;
   minbillamountError = false;
-  minday=new Date();
-  hideSubmitbtn=false;
+  minday = new Date();
+  hideSubmitbtn = false;
   endDate;
   startDate;
-@ViewChild('startDate',{static:false}) startDatePicker:ElementRef;
-endDateInvalidError=false;
+  @ViewChild('startDate', { static: false }) startDatePicker: ElementRef;
+  endDateInvalidError = false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -151,23 +151,23 @@ endDateInvalidError=false;
           isItem: [''],
           isCustomerGroup: [''],
           isCustomerLabel: [''],
-          isCatalogBased: [''],
-          isServiceBased: ['']
+          isCatalogBased: [false],
+          isServiceBased: [false]
         })
 
       }),
 
       bookingChannel: [[]],
       couponBasedOn: [[]],
-      termsConditions: ['',[Validators.required]],
+      termsConditions: ['', [Validators.required]],
     });
     if (this.action === 'edit') {
       this.coupon_title = 'Edit Coupon';
       this.getCouponById(this.couponId).then(
-        (couponDetails:any) => {
-          if(couponDetails.couponRules.published){
-            this.coupon_title='View Coupon';
-            this.hideSubmitbtn=true;
+        (couponDetails: any) => {
+          if (couponDetails.couponRules.published) {
+            this.coupon_title = 'View Coupon';
+            this.hideSubmitbtn = true;
           }
           this.updateForm(couponDetails);
         }
@@ -189,7 +189,7 @@ endDateInvalidError=false;
       calculationType: coupon.calculationType,
       amount: coupon.amount,
       bookingChannel: coupon.bookingChannel,
-      termsConditions:coupon.termsConditions
+      termsConditions: coupon.termsConditions
     });
     this.couponForm.get('couponRules').patchValue({
       startDate: new Date(coupon.couponRules.startDate).toISOString().slice(0, 10),
@@ -314,7 +314,7 @@ endDateInvalidError=false;
   gotoNext() {
     this.startDaterequired = false;
     this.endDaterequired = false;
-    this.endDateInvalidError=false;
+    this.endDateInvalidError = false;
     this.weekdayError = false;
     this.minbillamountError = false;
     if (this.action === 'edit' && this.couponDetails.couponRules.published) {
@@ -332,10 +332,10 @@ endDateInvalidError=false;
 
         if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
           this.step = this.step + 1;
-           setTimeout(() => {
+          setTimeout(() => {
             this.startDatePicker.nativeElement.focus();
-           }, 100);
-        
+          }, 100);
+
 
         }
       } else if (this.step == 2) {
@@ -344,17 +344,17 @@ endDateInvalidError=false;
         const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
         console.log(startDateVal);
         console.log(endDateVal);
-        
+
         if (startDateVal == null || startDateVal == undefined || startDateVal == '') {
           this.startDaterequired = true;
         }
         if (endDateVal == null || endDateVal == undefined || endDateVal == '') {
           this.endDaterequired = true;
         }
-        if(startDateVal!==''&&endDateVal!==''){
-        if(!this.checkDayisBeforeEndDate(startDateVal,endDateVal)){
-           this.endDateInvalidError=true;
-        }
+        if (startDateVal !== '' && endDateVal !== '') {
+          if (!this.checkDayisBeforeEndDate(startDateVal, endDateVal)) {
+            this.endDateInvalidError = true;
+          }
         }
         if (minbillamountval == null || minbillamountval == '' || minbillamountval == undefined) {
           this.minbillamountError = true;
@@ -363,7 +363,7 @@ endDateInvalidError=false;
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError==false && this.weekdayError === false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false) {
           this.step = this.step + 1;
         }
       }
@@ -373,11 +373,11 @@ endDateInvalidError=false;
 
   }
   onChangeStartDate() {
- this.startDaterequired=false;
+    this.startDaterequired = false;
   }
   onChangeEndDate() {
-    this.endDateInvalidError=false;
-    this.endDaterequired=false;
+    this.endDateInvalidError = false;
+    this.endDaterequired = false;
   }
   // wizard
   gotoPrevious() {
@@ -387,7 +387,7 @@ endDateInvalidError=false;
   }
 
   checkDayisBeforeEndDate(sDate, eDate) {
-    if (moment(new Date(sDate),'day').isSameOrBefore(new Date(eDate),'day')) {
+    if (moment(new Date(sDate), 'day').isSameOrBefore(new Date(eDate), 'day')) {
       return true;
     } else {
       return false;
@@ -521,23 +521,23 @@ endDateInvalidError=false;
   }
 
   onSubmit() {
-    let startDate ='';
-    let endDate='';
+    let startDate = '';
+    let endDate = '';
     const form_data = this.couponForm.value;
     if (form_data.couponRules.startDate) {
       startDate = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.startDate);
-      form_data.couponRules.startDate=startDate;
+      form_data.couponRules.startDate = startDate;
     }
     if (form_data.couponRules.endDate) {
-     endDate = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.endDate);
-     form_data.couponRules.endDate=endDate;
+      endDate = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.endDate);
+      form_data.couponRules.endDate = endDate;
     }
     if (this.checkpoliciesEntered(form_data)) {
       const timeRangeObject = [{
         'recurringType': 'Weekly',
         'repeatIntervals': this.selday_arr,
         'timeSlots': this.timewindow_list,
-        'startDate':startDate,
+        'startDate': startDate,
         'terminator': {
           'endDate': endDate,
           'noOfOccurance': ''
@@ -546,41 +546,43 @@ endDateInvalidError=false;
 
 
       form_data.couponRules.validTimeRange = timeRangeObject;
-      if (form_data.couponRules.policies.isServiceBased && !this.couponBasedOnValue.includes('ServiceBased')) {
+      const isService = this.couponForm.get('couponRules').get('policies').get('isServiceBased').value;
+      const isCatalog = this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value;
+      if (isService && !this.couponBasedOnValue.includes('ServiceBased')) {
         this.couponBasedOnValue.push('ServiceBased');
       }
       if (form_data.couponRules.maxDiscountValue) {
         const discountVal = Number(form_data.couponRules.maxDiscountValue).toFixed(2);
         form_data.couponRules.maxDiscountValue = discountVal;
       }
-      if (form_data.couponRules.policies.isCatalogBased && !this.couponBasedOnValue.includes('CatalogueBased')) {
+      if (isCatalog && !this.couponBasedOnValue.includes('CatalogueBased')) {
         this.couponBasedOnValue.push('CatalogueBased');
 
       }
 
-      if (form_data.couponRules.policies.isServiceBased) {
+      if (isService) {
         form_data.couponRules.policies.services = this.services;
       }
 
-      if (form_data.couponRules.policies.isDepartment) {
+      if ( this.couponForm.get('couponRules').get('policies').get('isDepartment').value) {
         form_data.couponRules.policies.departments = this.departments;
 
       }
 
-      if (form_data.couponRules.policies.isUser) {
+      if ( this.couponForm.get('couponRules').get('policies').get('isUser').value) {
         form_data.couponRules.policies.users = this.users;
 
       }
 
-      if (form_data.couponRules.policies.isItem) {
+      if (this.couponForm.get('couponRules').get('policies').get('isItem').value) {
         form_data.couponRules.policies.items = this.items;
 
       }
-      if (form_data.couponRules.policies.isCustomerGroup) {
+      if (this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value) {
         form_data.couponRules.policies.customerGroup = this.customer_groups;
 
       }
-      if (form_data.couponRules.policies.isCustomerLabel) {
+      if (this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value) {
         form_data.couponRules.policies.customerLabel = this.customer_labels;
 
       }
@@ -635,18 +637,23 @@ endDateInvalidError=false;
   }
   checkpoliciesEntered(form_data) {
     let policiesEntered = true;
-    if (!form_data.couponRules.policies.isServiceBased && !form_data.couponRules.policies.isCatalogBased) {
+    const isService = this.couponForm.get('couponRules').get('policies').get('isServiceBased').value;
+    const isCatalog = this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value;
+
+
+    if (isService === false && isCatalog === false) {
       this.snackbarService.openSnackBar('Limit coupon to either Services or Catalog', { 'panelClass': 'snackbarerror' });
       policiesEntered = false;
     }
-    if (form_data.couponRules.policies.isServiceBased) {
+    if (isService) {
       if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0) {
         this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
         policiesEntered = false;
       }
     }
-    if (form_data.couponRules.policies.isCatalogBased) {
-      let catalog = form_data.couponRules.policies.catalogues;
+    if (isCatalog) {
+      
+      let catalog = this.couponForm.get('couponRules').get('policies').get('catalogues').value;
       if (catalog == '' || catalog == undefined || catalog == null) {
         this.snackbarService.openSnackBar('Please choose the catalog', { 'panelClass': 'snackbarerror' });
         policiesEntered = false;
