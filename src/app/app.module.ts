@@ -67,7 +67,9 @@ import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
-
+import { JaldeeTimeService } from './shared/services/jaldee-time-service';
+import { FileService } from './shared/services/file-service';
+import { LivetrackService } from './shared/services/livetrack-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -158,6 +160,9 @@ export function init_app(globalService: GlobalService) {
     SnackbarService,
     GroupStorageService,
     MeetService,
+    JaldeeTimeService,
+    FileService,
+    LivetrackService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
@@ -176,4 +181,5 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 

@@ -15,6 +15,7 @@ import { LocalStorageService } from '../../../../../../../shared/services/local-
 import { GroupStorageService } from '../../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
+import { JaldeeTimeService } from '../../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-displayboard-qset-detail',
@@ -103,7 +104,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
-        private lStorageService: LocalStorageService
+        private lStorageService: LocalStorageService,
+        private jaldeeTimeService: JaldeeTimeService
     ) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -552,7 +554,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         if (this.display_schedule[ii].queueSchedule) {
                             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.display_schedule[ii].queueSchedule);
                         }
-                        queue_list = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                        queue_list = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                         this.display_schedule[ii].displayQ = queue_list[0];
                     }
                     resolve();

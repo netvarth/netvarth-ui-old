@@ -16,6 +16,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 
 @Component({
@@ -126,7 +127,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor,
+    private wordProcessor: WordProcessor,
+    private jaldeeTimeService: JaldeeTimeService,
     public provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.queue_id = params.id;
@@ -229,7 +231,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
         }
         let display_schedule = [];
-        display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+        display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
         if (this.queue_list[ii].queueState === 'ENABLED') {
           this.activeQueues.push(display_schedule[0]);
         }
@@ -295,7 +297,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
           }
           this.display_schedule = [];
-          this.display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+          this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
           // remove multiple end breadcrumb on edit function
           const breadcrumbs = [];
           this.breadcrumbs_init.map((e) => {

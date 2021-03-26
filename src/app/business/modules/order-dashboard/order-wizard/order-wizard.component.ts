@@ -129,11 +129,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     base64: [],
     caption: []
   };
-  imagelist = {
-    files: [],
-    base64: [],
-    caption: []
-  };
   shoppinglistdialogRef;
   image_list_popup: Image[];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -1448,7 +1443,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: imglist
+          source: imglist,
+          type: 'add'
         }
       });
       this.shoppinglistdialogRef.afterClosed()
@@ -1488,19 +1484,23 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         caption: []
       };
       imglist = this.selectedImagelist;
-      console.log(this.selectedImagelist);
+      console.log(imglist);
       this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: imglist
+          file: imglist.files.slice(),
+          base: imglist.base64.slice(),
+          caption:imglist.caption.slice(),
+          type: 'edit'
         }
       });
       this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
         console.log(result);
+      //  console.log(JSON.parse(JSON.stringify(result)));
         if (result) {
           this.selectedImagelist = {
             files: [],

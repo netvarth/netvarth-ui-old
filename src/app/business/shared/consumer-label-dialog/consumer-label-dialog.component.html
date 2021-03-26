@@ -7,7 +7,7 @@
     <div *ngIf="consumer_labels.length>0">
     <mat-dialog-content>
       <!-- <div *ngIf="consumer_labels.length>0"> -->
-      <mat-selection-list #labels  [disabled]="mode==='view'"  [(ngModel)]="selectedLabels" (ngModelChange)="onLabelChange($event)" >
+      <mat-selection-list #labels    [(ngModel)]="selectedLabels" (ngModelChange)="onLabelChange($event)" >
 
         <mat-list-option checkboxPosition="before" *ngFor=" let label of consumer_labels" [value] ="label" [selected]="isSelected(label)">
 
@@ -25,8 +25,8 @@
 
     <mat-dialog-actions>
         <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
-      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
-      <button  mat-button class="cs-btn bt1 style-button" type="button" [disabled]="mode==='view'"  (click)="onConfirm(labels.selectedOptions)" >Confirm</button>
+      <button   type="button"  class="cs-btn bt2 "  *ngIf="mode!='view'" (click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button"  *ngIf="mode!='view'"  (click)="onConfirm(labels.selectedOptions)" >Confirm</button>
     </div>
     </mat-dialog-actions>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -18,6 +18,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-location-details',
@@ -101,6 +102,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   };
   mapaddress;
   locationName;
+  @ViewChild('googleradio',{static:false}) googleradio:ElementRef;
+  @ViewChild('autolocateradio',{static:false}) autolocateradio:ElementRef;
+  @ViewChild('manualradio',{static:false}) manualradio:ElementRef;
 
   constructor(
     private provider_services: ProviderServices,
@@ -116,6 +120,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     public shared_service: SharedServices,
+    private jaldeeTimeService: JaldeeTimeService,
     private dialog: MatDialog) {
     this.activated_route.params.subscribe(params => {
       this.location_id = params.id;
@@ -232,7 +237,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             }
           }
           for (let i = 0; i < this.active_Schedules.length; i++) {
-            this.schedule_ar.push(this.shared_Functionsobj.arrageScheduleforDisplay(this.active_Schedules[i]));
+            this.schedule_ar.push(this.jaldeeTimeService.arrageScheduleforDisplay(this.active_Schedules[i]));
           }
           this.display_schedule = [];
           for (let i = 0; i < this.schedule_ar.length; i++) {
@@ -302,7 +307,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queues[ii].queueSchedule);
               }
               let display_schedule = [];
-              display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+              display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
               this.queues[ii]['displayschedule'] = display_schedule;
             }
           },
@@ -613,6 +618,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'GOOGLEMAP';
+            setTimeout(() => {
+              this.googleradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }
          });
@@ -632,6 +640,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'AUTODETECT';
+            setTimeout(() => {
+              this.autolocateradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }         });
     } else if(val === 'manual'){
@@ -649,6 +660,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           }
           else {
             this.locationFind = 'MANUAL';
+            setTimeout(() => {
+              this.manualradio.nativeElement.focus();
+            }, 100);
             this.clearFormFields();
           }
          });
@@ -669,7 +683,6 @@ clearFormFields(){
   // });
 }
 getCurrentLocation() {
-  console.log("Hello")
   if (navigator) {
     navigator.geolocation.getCurrentPosition(pos => {
      console.log(pos)
