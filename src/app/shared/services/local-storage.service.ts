@@ -28,6 +28,10 @@ export class LocalStorageService {
     public getitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
             if (localStorage.getItem(itemname) !== 'undefined') {
+                if (itemname === 'ynw-credentials') {
+                console.log('localStorage =' + localStorage.getItem(itemname));
+                console.log('localStorage parse=' + JSON.parse(localStorage.getItem(itemname)));
+                }
                 return JSON.parse(localStorage.getItem(itemname));
             }
         // }

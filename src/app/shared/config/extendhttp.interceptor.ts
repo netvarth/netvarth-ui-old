@@ -77,7 +77,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       // to get new access token and refresh token pair
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
       this.sessionStorageService.removeitemfromSessionStorage('tabId');
-      const ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      let ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      console.log('ynw_user = ' + ynw_user);
+      console.log('ynw_user parse = ' + JSON.parse(ynw_user));
+      console.log('ynw_user type = ' + typeof(ynw_user));
+      ynw_user = JSON.parse(ynw_user);
+      console.log('ynw_user parsetype = ' + typeof(ynw_user));
       if (!ynw_user) {
         window.location.reload();
       }
