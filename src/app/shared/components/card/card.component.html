@@ -35,7 +35,7 @@
             <div class="module line-clamp m-0"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
                 <h4 class="card-title font-weight-bold service-title">
-                    <a>{{service.name | capitalizeFirst | limitTo: [16, '...']}}</a>
+                    <a>{{service.name | capitalizeFirst | limitTo: [14, '...']}}</a>
                 </h4>
             </div>
             <!-- </div>
@@ -107,7 +107,7 @@
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
             <div style="height: 22px !important;">
-                <div *ngIf="!service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
+                <div *ngIf="service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
             </div>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
@@ -180,11 +180,11 @@
     </div>
     <div class="card-item-content">
         <h4 class="user-name card-title font-weight-bold module line-clamp">
-            <a *ngIf="user.businessName">{{user.businessName}}</a>
+            <a *ngIf="user.businessName">{{user.businessName | limitTo: [14, '...']}}</a>
             <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
-                capitalizeFirst}}</a>
+                capitalizeFirst | limitTo: [14, '...']}}</a>
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
-                capitalizeFirst}}</a>
+                capitalizeFirst | limitTo: [14, '...']}}</a>
         </h4>
         <h6 class="qualification" *ngIf="user.qualifications && user.qualifications.length>0">
             {{user.qualifications[0]}}{{ user.qualifications.length > 1 ? ", +" + (user.qualifications.length-1) : "" }}
