@@ -161,8 +161,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
-    //  this.getOrderAvailableDatesForPickup();
-     // this.getOrderAvailableDatesForHome();
+     this.getOrderAvailableDatesForPickup();
+     this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.getStoreContact();
       this.showfuturediv = false;
