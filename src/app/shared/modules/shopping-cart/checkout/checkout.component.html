@@ -313,6 +313,11 @@
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.jaldeeCouponDiscount | currency:'&#8377;'}}</div>
                                 </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.providerCouponDiscount">
+                                  <div class="bill-labels">Provider Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.providerCouponDiscount | currency:'&#8377;'}}</div>
+                                </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jdnDiscount">
                                   <div class="bill-labels">JDN Discount </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
