@@ -608,6 +608,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.coupons = data;
+            this.coupons=this.coupons.filter(obj=> obj.status==='ACTIVE');
             resolve();
           },
           error => {
