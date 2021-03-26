@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../../modules/header/header.module';
 import { QuestionnaireComponent } from './questionnaire.component';
 import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
@@ -19,7 +20,8 @@ import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
         MatCheckboxModule,
         MatSlideToggleModule,
         QuestionnaireRoutingModule,
-        HeaderModule
+        HeaderModule,
+        LoadingSpinnerModule
     ],
     exports: [QuestionnaireComponent]
 })

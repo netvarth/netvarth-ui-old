@@ -286,6 +286,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   userEncId: string;
 
   bsModalRef: BsModalRef;
+  nonfirstCouponCount=0;
+  activeUser: any;
+  checkinProviderList: any=[];
   private subscriptions = new SubSink();
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -320,7 +323,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
 
@@ -354,8 +357,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.playstore = true;
       this.appstore = true;
     }
-    if (activeUser) {
-      this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    if (this.activeUser) {
+      this.isfirstCheckinOffer = this.activeUser.firstCheckIn;
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
@@ -850,6 +853,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.s3CouponList.JC = [];
     }
     this.firstChckinCuponCunt(this.s3CouponList);
+    this.nonfirstPresent(this.s3CouponList);
   }
 
   SetAccountStoreCoupons(res) {
@@ -859,6 +863,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.s3CouponList.OWN = [];
     }
     this.firstChckinCuponCunt(this.s3CouponList);
+    this.nonfirstPresent(this.s3CouponList);
   }
 
   setAccountVirtualFields(res) {
@@ -1364,6 +1369,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
   //   );
   // }
+  
+  isfirstCheckinOfferProvider() {
+    let firstCheckin = true;
+    if (this.activeUser) {
+      this.checkinProviderList = this.activeUser.checkedInProviders;
+      if (this.checkinProviderList.length > 0) {
+        if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
+          firstCheckin = false;
+          console.log('already taken');
+        } else {
+          firstCheckin = true;
+
+        }
+      } else {
+        firstCheckin = true;
+      }
+
+    }
+    return firstCheckin;
+  }
   getUserApptTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
