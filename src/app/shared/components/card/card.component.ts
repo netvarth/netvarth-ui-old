@@ -14,6 +14,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() terminology;
     @Input() loc;
     @Input() extras;
+    @Input() domain;
     @Output() actionPerformed = new EventEmitter<any>();
     @Output() noteClicked = new EventEmitter<any>();
     service: any;
@@ -36,7 +37,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
 
     ngOnInit() {
       console.log(this.item.type);
-
+console.log(this.domain)
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;

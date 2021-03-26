@@ -527,7 +527,7 @@
                             {{sps.departmentName}}
                         </h4>
                         <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                            <app-card [item]="sp" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
+                            <app-card [item]="sp" [domain] = "businessjson.serviceSector.domain" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                         <div class="clearfix"></div>
@@ -536,7 +536,7 @@
                 </ng-container>
                 <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
                     <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                        <app-card [item]="sp" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
+                        <app-card [item]="sp" [domain] = "businessjson.serviceSector.domain" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
                             (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                 </ng-container>

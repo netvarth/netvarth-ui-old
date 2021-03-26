@@ -25,9 +25,15 @@
                 <img class="card-img img-responsive" src="assets/images/donation.png" alt="Donation Image">
             </div>
             <div class="text-center service-image"
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService'"
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                 style="width: 140px !important;">
                 <img class="card-img img-responsive" src="assets/images/meeting_Artboard.png"
+                    alt="Physical Service Image">
+            </div>
+            <div class="text-center service-image"
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
+                style="width: 140px !important;">
+                <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg"
                     alt="Physical Service Image">
             </div>
         </div>
