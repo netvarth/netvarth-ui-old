@@ -146,6 +146,11 @@ export class PhomeComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
+    const a = document.getElementById("hubspot-messages-iframe-container");
+    if (a) {
+      a.classList.add('visible_chat');
+    }
+
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
@@ -213,6 +218,14 @@ export class PhomeComponent implements OnInit {
       }
     }, 200);
   }
+
+  ngOnDestroy() {
+    const a = document.getElementById("hubspot-messages-iframe-container");
+    if (a) {
+    a.classList.remove('visible_chat');
+    }
+  }
+
   handleScroll(target) {
     this.triggerScrollTo(target);
   }
