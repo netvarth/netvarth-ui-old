@@ -223,6 +223,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card-body">
+                    <app-questionnaire [questionnaireList]="questionnaireList"
+                    [source]="'customer-create'" (returnAnswers)="getQuestionAnswers($event)">
+                    </app-questionnaire>  
+                </div>
+
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-lg-6">

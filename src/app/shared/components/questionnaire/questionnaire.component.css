@@ -1,13 +1,13 @@
 .question-box {
     margin-top: 10px;
 }
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .quest-outer {
         width: 50%;
         float: left;
         height: 120px;
     }
-}
+} */
 .quest-outer {
     padding: 10px;
 }

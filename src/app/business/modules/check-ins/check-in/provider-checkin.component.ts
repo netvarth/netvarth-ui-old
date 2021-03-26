@@ -242,7 +242,8 @@ export class ProviderCheckinComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
-        private lStorageService: LocalStorageService) {
+        private lStorageService: LocalStorageService,
+        private providerService: ProviderServices) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -1242,7 +1243,7 @@ console.log(Object.keys(this.questionAnswers).length);
         console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+    this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
         if (this.settingsjson.showTokenId) {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
         } else {
@@ -2007,7 +2008,7 @@ console.log(Object.keys(this.questionAnswers).length);
         this.showQuestionnaire = !this.showQuestionnaire;
     }
     getProviderQuestionnaire() {
-        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
           console.log(data);
           this.questionnaireList = data;
         });

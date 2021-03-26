@@ -987,6 +987,7 @@ addApptAdvancePayment(param, body) {
   const url = 'consumer/appointment/advancePayment';
   return this.servicemeta.httpPut(url, body, null, param);
 }
+// Questionnaire Urls
 getConsumerQuestionnaire(serviceId, consumerId, accountId) {
   const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
   return this.servicemeta.httpGet(url);
@@ -999,24 +1000,12 @@ submitConsumerApptQuestionnaire(body, uuid, accountId) {
   const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
-resubmitConsumerQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
-submitProviderApptQuestionnaire(body, uuid) {
-  const url = 'provider/appointment/questionnaire/' + uuid;
+resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
-}
-resubmitProviderQuestionnaire(body, uuid) {
-  const url = 'provider/questionnaire/resubmit/' + uuid;
-  return this.servicemeta.httpPost(url, body);
-}
-submitProviderWaitlistQuestionnaire(body, uuid) {
-  const url = 'provider/waitlist/questionnaire/' + uuid;
-  return this.servicemeta.httpPost(url, body);
-}
-getProviderQuestionnaire(serviceId, consumerId, channel) {
-  const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
-  return this.servicemeta.httpGet(url);
 }
 }

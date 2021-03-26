@@ -141,8 +141,8 @@ export class ProviderServices {
     const url = 'provider/bill/coupons';
     return this.servicemeta.httpPut(url, data);
   }
-  publishCoupon(data,id){
-    const url = 'provider/bill/coupons/'+id+'/publish';
+  publishCoupon(data, id) {
+    const url = 'provider/bill/coupons/' + id + '/publish';
     return this.servicemeta.httpPut(url, data);
   }
 
@@ -1681,10 +1681,10 @@ export class ProviderServices {
     const url = 'provider/customers/bookings/history/' + id;
     return this.servicemeta.httpGet(url);
   }
-  getCustomerOrderVisit(id){
-      const url = 'provider/orders/customer/' + id;
-      return this.servicemeta.httpGet(url);
-   }
+  getCustomerOrderVisit(id) {
+    const url = 'provider/orders/customer/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   getMRAudits(id) {
     const url = 'provider/mr/auditLog/' + id;
     return this.servicemeta.httpGet(url);
@@ -1711,9 +1711,9 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   deleteLabelFromCustomer(data) {
-      const url = 'provider/customers/masslabel';
-      return this.servicemeta.httpDelete(url, data);
-   }
+    const url = 'provider/customers/masslabel';
+    return this.servicemeta.httpDelete(url, data);
+  }
   uploadCoverFoto(data) {
     return this.servicemeta.httpPost('provider/coverPicture', data);
   }
@@ -1911,7 +1911,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   updateDeliveryaddress(customerId, data) {
-    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
+    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress';
     return this.servicemeta.httpPut(url, data);
   }
   updateOrder(data) {
@@ -1920,28 +1920,57 @@ export class ProviderServices {
   }
 
   updateOrderItems(uid, data) {
-    const url ='provider/orders/item/' + uid;
+    const url = 'provider/orders/item/' + uid;
     return this.servicemeta.httpPut(url, data);
 
   }
-   deleteLabelFromMultipleCheckin(data) {
-      const url = 'provider/waitlist/masslabel';
-      return this.servicemeta.httpDelete(url, data);
-   }
-   deleteLabelFromMultipleAppt(data) {
-      const url = 'provider/appointment/masslabel';
-      return this.servicemeta.httpDelete(url, data);
-   }
-   getProviderorderlistHistroy(uuid) {
-      const url = 'provider/orders/states/' + uuid;
-      return this.servicemeta.httpGet(url);
-   }
-   uploadMRfiles(mrId, data) {
-      const url = 'provider/mr/uploadMR/' + mrId;
-      return this.servicemeta.httpPost(url, data);
-   }
-   getProviderUnreadCount(msgType, providerId) {
-     const url = 'provider/message/count/' + msgType + '/' + providerId;
-     return this.servicemeta.httpGet(url);
-   }
+  deleteLabelFromMultipleCheckin(data) {
+    const url = 'provider/waitlist/masslabel';
+    return this.servicemeta.httpDelete(url, data);
+  }
+  deleteLabelFromMultipleAppt(data) {
+    const url = 'provider/appointment/masslabel';
+    return this.servicemeta.httpDelete(url, data);
+  }
+  getProviderorderlistHistroy(uuid) {
+    const url = 'provider/orders/states/' + uuid;
+    return this.servicemeta.httpGet(url);
+  }
+  uploadMRfiles(mrId, data) {
+    const url = 'provider/mr/uploadMR/' + mrId;
+    return this.servicemeta.httpPost(url, data);
+  }
+  getProviderUnreadCount(msgType, providerId) {
+    const url = 'provider/message/count/' + msgType + '/' + providerId;
+    return this.servicemeta.httpGet(url);
+  }
+  // Questionnaire Urls
+  getProviderQuestionnaire(serviceId, consumerId, channel) {
+    const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
+    return this.servicemeta.httpGet(url);
+  }
+  submitProviderApptQuestionnaire(body, uuid) {
+    const url = 'provider/appointment/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderApptQuestionnaire(body, uuid) {
+    const url = 'provider/appointment/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  submitProviderWaitlistQuestionnaire(body, uuid) {
+    const url = 'provider/waitlist/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderWaitlistQuestionnaire(body, uuid) {
+    const url = 'provider/waitlist/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  getCustomerQuestionnaire() {
+    const url = 'provider/questionnaire/consumer';
+    return this.servicemeta.httpGet(url);
+  }
+  submitCustomerQuestionnaire(id) {
+    const url = 'provider/customers/questionnaire/' + id;
+    return this.servicemeta.httpGet(url);
+  }
 }

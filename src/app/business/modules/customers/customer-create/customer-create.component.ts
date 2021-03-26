@@ -125,6 +125,8 @@ export class CustomerCreateComponent implements OnInit {
   virtualServicemode;
   virtualServicenumber;
   group;
+  questionnaireList: any = [];
+  questionAnswers;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -167,12 +169,12 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
-        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' ||this.source==='order') {
+        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' || this.source === 'order') {
           this.getJaldeeIntegrationSettings();
           this.save_btn = 'Proceed';
         }
       } else {
-        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source==='order')) {
+        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'order')) {
           this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
           if (this.source === 'waitlist-block') {
             if (this.showToken) {
@@ -412,6 +414,7 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
   createForm() {
+    this.getCustomerQnr();
     if (!this.haveMobile) {
       this.amForm = this.fb.group({
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -591,7 +594,7 @@ export class CustomerCreateComponent implements OnInit {
                 }
               };
               this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-            }else if (this.source === 'order') {
+            } else if (this.source === 'order') {
               const navigationExtras: NavigationExtras = {
                 queryParams: {
                   ph: form_data.mobile_number,
@@ -989,5 +992,13 @@ export class CustomerCreateComponent implements OnInit {
   }
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;
+  }
+  getCustomerQnr() {
+    this.provider_services.getCustomerQuestionnaire().subscribe(data => {
+      this.questionnaireList = data;
+    });
+  }
+  getQuestionAnswers(event) {
+    this.questionAnswers = event;
   }
 }

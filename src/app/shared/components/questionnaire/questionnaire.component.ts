@@ -31,6 +31,7 @@ export class QuestionnaireComponent implements OnInit {
   params;
   fileuploadpreAnswers: any = {};
   loading = false;
+  buttonDisable = false;
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -98,7 +99,7 @@ export class QuestionnaireComponent implements OnInit {
         console.log(answ);
         if (answ.answer) {
           if (answ.question.fieldDataType !== 'FileUpload') {
-          this.answers[answ.answer.questionId] = answ.answer.answer;
+            this.answers[answ.answer.questionId] = answ.answer.answer;
           } else {
             this.fileuploadpreAnswers[answ.answer.questionId] = answ.answer.answer;
           }
@@ -121,7 +122,7 @@ export class QuestionnaireComponent implements OnInit {
     if (input) {
       for (const file of input) {
         console.log(file);
-        console.log(question.filePropertie.fileTypes);
+        console.log(question);
         console.log(question.filePropertie.fileTypes.indexOf(file.type));
         // if (question.filePropertie.fileTypes.indexOf(file.type) === -1) {
         //   this.apiError[index] = 'Selected image type not supported';
@@ -140,7 +141,7 @@ export class QuestionnaireComponent implements OnInit {
         imgname = imgname[0];
         const indx = this.selectedMessage.files.indexOf(file);
         console.log(indx);
-        this.answers[question.labelName][indx] = imgname;
+        this.answers[question.labelName][indx] = question.filePropertie.allowedDocuments[0];
         reader.readAsDataURL(file);
         // }
       }
@@ -178,7 +179,7 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   getProviderQuestionnaire() {
-    this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
+    this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
       this.loading = false;
@@ -275,23 +276,46 @@ export class QuestionnaireComponent implements OnInit {
     console.log(JSON.stringify(passData.answers));
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.source === 'consCheckin' || this.source === 'consAppt') {
-      this.resubmitConsumerQuestionnaire(dataToSend);
+    this.buttonDisable = true;
+    if (this.source === 'consCheckin') {
+      this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+    } else if (this.source === 'consAppt') {
+      this.resubmitConsumerApptQuestionnaire(dataToSend);
+    } else if (this.source === 'proCheckin') {
+      this.resubmitProviderWaitlistQuestionnaire(dataToSend);
     } else {
-      this.resubmitProviderQuestionnaire(dataToSend);
+      this.resubmitProviderApptQuestionnaire(dataToSend);
     }
   }
-  resubmitConsumerQuestionnaire(body) {
-    this.sharedService.resubmitConsumerQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+  resubmitConsumerWaitlistQuestionnaire(body) {
+    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
       this.router.navigate(['/consumer']);
     }, error => {
+      this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  resubmitProviderQuestionnaire(body) {
-    this.sharedService.resubmitProviderQuestionnaire(body, this.params.uuid).subscribe(data => {
+  resubmitConsumerApptQuestionnaire(body) {
+    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+      this.router.navigate(['/consumer']);
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitProviderWaitlistQuestionnaire(body) {
+    this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
       this.router.navigate(['/provider/appointments']);
     }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitProviderApptQuestionnaire(body) {
+    this.providerService.resubmitProviderApptQuestionnaire(body, this.params.uuid).subscribe(data => {
+      this.router.navigate(['/provider/appointments']);
+    }, error => {
+      this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }

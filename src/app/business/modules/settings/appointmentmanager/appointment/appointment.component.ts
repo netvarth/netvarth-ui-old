@@ -245,6 +245,7 @@ export class AppointmentComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
+        private providerService: ProviderServices,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -1186,7 +1187,7 @@ export class AppointmentComponent implements OnInit {
         console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+    this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
         this.router.navigate(['provider', 'appointments']);
     }, error => {
@@ -1931,7 +1932,7 @@ this.questionAnswers = event;
         this.showQuestionnaire = !this.showQuestionnaire;
     }  
      getProviderQuestionnaire() {
-        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
           console.log(data);
           this.questionnaireList = data;
         });
