@@ -106,10 +106,14 @@
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
 
-                                                        <button mat-menu-item *ngIf="his_wait.billStatus"
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.billStatus == 'Settled'"
                                                             (click)="getWaitlistBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Receipt</button>
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.billStatus !== 'Settled'"
+                                                            (click)="getWaitlistBill(his_wait)">
+                                                            <i class="bill-icon-history"></i>
+                                                            Bill</button>
                                                         <button class="custId-cursor" mat-menu-item
                                                             *ngIf="his_wait.prescShared"
                                                             (click)="viewprescription(his_wait)">
@@ -174,11 +178,16 @@
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
 
-                                                        <button mat-menu-item *ngIf="his_wait.billStatus"
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.billStatus == 'Settled'"
                                                             (click)="getApptBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             <!-- *ngIf="booking.prescShared" -->
                                                             Receipt</button>
+                                                            <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.billStatus !== 'Settled'"
+                                                            (click)="getApptBill(his_wait)">
+                                                            <i class="bill-icon-history"></i>
+                                                            <!-- *ngIf="booking.prescShared" -->
+                                                            Bill</button>
                                                         <button class="custId-cursor" mat-menu-item
                                                             *ngIf="his_wait.prescShared"
                                                             (click)="viewprescription(his_wait)">
@@ -252,10 +261,14 @@
                                                             [class.rated]="isRated(his_wait)"
                                                             (click)="rateOrderService(his_wait)">
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order</button>
-                                                        <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show'"
+                                                        <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus == 'Settled'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Receipt</button>
+                                                        <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus !== 'Settled'"
+                                                            (click)="getOrderBill(his_wait)">
+                                                            <i class="bill-icon-history"></i>
+                                                            Bill</button>
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
