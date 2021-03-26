@@ -2414,7 +2414,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OrderItem add to cart
   addToCart(itemObj) {
-    const item = itemObj.item;
+   //  const item = itemObj.item;
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
@@ -2422,7 +2422,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.orderList.push(itemObj);
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
-      this.getItemQty(item);
+      this.getItemQty(itemObj);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
@@ -2433,13 +2433,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.orderList.push(itemObj);
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
-          this.getItemQty(item);
+          this.getItemQty(itemObj);
         }
       } else {
         this.orderList.push(itemObj);
         this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
-        this.getItemQty(item);
+        this.getItemQty(itemObj);
       }
     }
 
@@ -2515,10 +2515,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          account_id: this.provider_bussiness_id
+          account_id: this.provider_bussiness_id,
+          unique_id: this.provider_id,
 
         }
-
+     
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
     }
