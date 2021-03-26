@@ -180,7 +180,7 @@
                                                                 <mat-menu #menu="matMenu">
                                                                     <button type="button" (click)="editCoupons(coupon)"
                                                                         mat-menu-item>
-                                                                        <i [ngClass]="coupon.couponRules.published?'fa fa-eye':'icon-edit'"></i>
+                                                                        <i [ngClass]="coupon.couponRules.published?'icon-info':'icon-edit'"></i>
                                                                         {{coupon.couponRules.published? 'View':'Edit'}}
                                                                     </button>
                                                                     <button type="button" (click)="publish(coupon)"
@@ -196,7 +196,7 @@
                                                                 </mat-menu>
                                                             </span>
                                                             <span class="mbt-mobile-show">
-                                                                <button class="editcls" type="button"
+                                                                <button [ngClass]="coupon.couponRules.published?'viewcls':'editcls'"  type="button"
                                                                     (click)="editCoupons(coupon)"> {{coupon.couponRules.published? 'View':'Edit'}}</button>
                                                                     <button class="publishcls" type="button"
                                                                     (click)="publish(coupon)">{{publish_btn}}</button>

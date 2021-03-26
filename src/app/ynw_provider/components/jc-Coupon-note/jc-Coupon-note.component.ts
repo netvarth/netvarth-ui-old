@@ -1,6 +1,6 @@
 import { OnInit, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-jc-coupon-note',
@@ -8,7 +8,7 @@ import { projectConstants } from '../../../app.component';
 })
 
 export class JcCouponNoteComponent implements OnInit {
-    coupon_notes = projectConstants.COUPON_NOTES;
+    coupon_notes = projectConstantsLocal.COUPON_NOTES;  
     jCouponMsg;
     couponName;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any

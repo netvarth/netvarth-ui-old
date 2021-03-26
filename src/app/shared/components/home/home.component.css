@@ -1,0 +1,37 @@
+.book_telgrm_btn {
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
+    outline: none !important;
+    vertical-align: middle;
+    margin-left: 20px;
+    padding: 0.85rem 0.75rem !important;
+    font-size: 0.925rem !important;
+    line-height: 1.35;
+    border-radius: 0.42rem !important;
+    border: 1px solid transparent !important;
+    text-align: center !important;
+    display: inline-block;
+    color: #1e4079;
+    background-color: #f1b51b;
+    border-color: #1e4079;
+    font-weight: 600;
+}
+.book_telgrm_btn:hover{
+    background-color: white !important;
+}
+.svg-icon {
+    margin-right: 0.35rem;
+}
+.svg-icon svg {
+    height: 16px;
+    width: 16px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.fa-telegram {
+    color: #1e4079 !important;
+  }
+
+#cons_home_n #welcome {
+    padding-top: 40px !important;
+}  

@@ -72,7 +72,7 @@
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <label>Coupon Name</label>
+                          <label>Coupon Name *</label>
                           <input type="text" class="form-control1 form-control-solid form-control-lg" id="name"
                             placeholder="Coupon Name*" formControlName="name" maxlength="50" />
                           <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'name')"
@@ -88,7 +88,7 @@
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <label>Coupon Code</label>
+                          <label>Coupon Code *</label>
                           <input type="text" class="form-control1 form-control-solid form-control-lg" id="couponCode"
                             placeholder="Coupon Code*" formControlName="couponCode" maxlength="50" />
                           <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'couponCode')" [errorMsgs]="fed_service.getErrorMessage(couponForm,'couponCode',
@@ -105,7 +105,7 @@
                       <div class="col-xl-12">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <label>Calculation Type&nbsp;&nbsp;</label>
+                          <label>Calculation Type *&nbsp;&nbsp;</label>
                           <mat-radio-group formControlName="calculationType" (change)="handleCalculationType($event)">
                             <mat-radio-button value="Fixed">Fixed</mat-radio-button>&nbsp;&nbsp;
                             <mat-radio-button value="Percentage">Percentage</mat-radio-button>
@@ -123,7 +123,7 @@
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <label>Coupon Amount</label>
+                          <label>Coupon Amount *</label>
                           <span *ngIf="calculationType == 'Fixed'" class="rupee-font">(₹)</span>
                           <span *ngIf="calculationType == 'Percentage'" class='rupee'>(%)</span>
                           <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"  (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="amount"
@@ -172,46 +172,48 @@
                   <div class="pb-5" *ngIf="step == 2" formGroupName="couponRules">
                     <h4 class="mb-10 font-weight-bold text-dark">Set Rules for this coupon</h4>
                     <div class="row">
-                      <div class="col-xl-6">
-                        <!--begin::Input-->
-                        <div class="form-group">
-                          <div class="input-group date">
-                            <label>Start Date <span>(Valid From)</span></label>
-                            <input #start class="form-control1 picker" type="date" [min]="mxDate" (change)="compareDate(0)"
-                              placeholder="Valid From" id="start" formControlName="startDate" />
-                          </div>
-                          <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
-                          errorMsg="Please choose Start Date">
-                      </app-field-error-display>
-                        
-                             <app-field-error-display style="color: #f24949 !important;"  [displayError]=startdateError
-                                        errorMsg="Please choose valid start Date">
-                                    </app-field-error-display> 
+                        <div class="col-lg-6">
+                        <div class="form-group normalpicker">
+                            <label for="last_name">Start Date * <span>(Valid From)</span></label>
+                            <div class="pickerouter">
+                                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                <mat-datepicker #startDate></mat-datepicker>
+                                <input class="form-control dtepicker" type="text" matInput
+                                    (click)="startDate.open()" [matDatepicker]="startDate" formControlName="startDate"
+                                    [min]="minday" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangeStartDate()">
+                            </div>
+                            <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
+                            errorMsg="Please choose Start Date">
+                        </app-field-error-display>
+                          
                         </div>
-                        <!--end::Input-->
-                      </div>
-                      <div class="col-xl-6">
-                        <!--begin::Input-->
-                        <div class="form-group">
-                          <div class="input-group date">
-                            <label>End Date <span>(Valid To)</span></label>
-                            <input class="form-control1 picker" [min]="mxDate" type="date" (change)="compareDate(1)"
-                              placeholder="Valid To" formControlName="endDate" />
-                          </div>
-                          <app-field-error-display [displayError]=endDaterequired
-                          errorMsg="Please choose End Date">
-                      </app-field-error-display>
-                          <app-field-error-display [displayError]=enddateError
-                                        errorMsg="Please enter date greater or equal to startdate">
-                                    </app-field-error-display>
                         </div>
-                        <!--end::Input-->
+
+                      <div class="col-xl-6">
+                     
+                        <div class="form-group normalpicker">
+                            <label for="last_name">End Date * <span>(Valid To)</span></label>
+                            <div class="pickerouter">
+                                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                <mat-datepicker #endDate></mat-datepicker>
+                                <input class="form-control dtepicker" type="text" matInput
+                                    (click)="endDate.open()" [matDatepicker]="endDate" formControlName="endDate"
+                                     [min]="minday" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangeEndDate()">
+                            </div>
+                            <app-field-error-display [displayError]=endDaterequired
+                            errorMsg="Please choose End Date">
+                        </app-field-error-display>
+                        <app-field-error-display [displayError]=endDateInvalidError
+                        errorMsg="End Date should be greater than  or equal to start Date">
+                    </app-field-error-display>
+                        </div>
                       </div>
+                  
                     </div>
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
-                          <label>Applicable Days</label><br>
+                          <label>Applicable Days *</label><br>
                           <span *ngFor="let wday of weekdays; index as i">
                             <mat-checkbox  *ngIf="i>0" (change)="handleDaychange(i)"
                               [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
@@ -223,35 +225,7 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-xl-6">
-                       
-                        <div class="form-group">
-                          <label>Available timewindow(s)</label>&nbsp;
-                          
-                          <a class="pointlist" *ngIf="timewindow_list.length > 0" (click)="showTimewindow()">
-                            <i class="fa fa-plus" style="color:blue" aria-hidden="true"></i>
-                          </a>
-                          <div *ngIf="timewindow_list.length == 0">
-                            Currently no timewindows are added&nbsp;
-                            <button type="button" (click)="showTimewindow()" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
-                              Add</button> 
-                        
-                          </div>
-                          <div *ngIf="timewindow_list.length > 0">
-                            <ul *ngFor="let window of timewindow_list;let i = index">
-                              <li>
-                                {{window.sTime}} - {{window.eTime}}&nbsp;
-                                <a class="pointlist" (click)="deletetimeslot(i)">
-                                  <i class="fa fa-trash" style="color: red;" aria-hidden="true"></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                       
-                      </div>
-                    </div> -->
+          
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
@@ -287,7 +261,7 @@
                     <div class="row">
                       <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="form-group">
-                          <label class="rupee-font">Minimum Bill Amount(₹)</label>
+                          <label class="rupee-font">Minimum Bill Amount(₹) *</label>
                           <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="minBillAmount"
                             placeholder="Enter minimum bill amount" formControlName="minBillAmount" />
                             <app-field-error-display [displayError]=minbillamountError
@@ -534,7 +508,7 @@
                     <div class="row">
                       <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                         <div class="form-group">
-                            <label>Terms and Conditions</label>
+                            <label>Terms and Conditions *</label>
                             <textarea type="text" class="form-control1 form-control-solid form-control-lg"
                             id="description" placeholder="Enter coupon terms and conditions" formControlName="termsConditions"
                            

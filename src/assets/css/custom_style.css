@@ -7046,7 +7046,7 @@ input.jdn_ip {
   border: none !important;
   white-space: nowrap !important;
   line-height: inherit !important;
-  -moz-user-select: none;
+  -moz-user-select: none; 
   z-index: 2;
   text-transform: uppercase;
   -webkit-border-radius: 3px !important;
@@ -9231,10 +9231,6 @@ owl-carousel .bt3.active {
 
 .pl5 {
   padding-left: 5px !important;
-}
-
-.widget-user-2 .widget-user-header, .widget-user-2 .widget-user-header {
-  /* padding: 10px !important; */
 }
 
 .settings_info {
@@ -12594,12 +12590,7 @@ input[type=number]::-webkit-outer-spin-button {
 .mrcreate:hover {
   border: 1px solid #00aef2!important;
 }
-@media only screen and (max-width: 767px){
-.sm {
-    padding: 5px 10px !important;;
-    height: auto;
-}
-}
+
 .word-hint {
   font-size: 0.8rem !important;
   color: #9d9a9a !important
@@ -14097,4 +14088,27 @@ width: 40px !important;
 }
 .position-absolute {
   position: absolute !important;
+}
+.join_nw_btn {
+  width: 100px;
+  background-color: #FFF4DE;
+  border-color: transparent;
+  font-weight: 600;
+  border: 2px solid #ffa800;
+  padding: 0.55rem 0.75rem !important;
+  font-size: 0.925rem !important;
+  line-height: 1.35;
+  border-radius: 0.42rem !important;
+  color: #1e4079;
+}
+.mgn-ntop-10 {
+  margin-top: -10px;
+}
+@media only screen and (max-width: 768px) {
+  .lctn-dtl-lp {
+padding-left: 15px !important;
+  }
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1) !important;
 }
