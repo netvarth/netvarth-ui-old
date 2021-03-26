@@ -23,7 +23,7 @@
         <div class="card p0">
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
-              <div class="cl1">
+              <div class="cl1 lctn-dtl-lp">
                 <span class="editbt" (click)="editLocation()"></span>
                 <div class="cop-l">
                   <span class="bse-lcn-label" *ngIf="location_data.baseLocation">{{base_loca_cap}}</span>
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="lbr col-sm-12 col-md-4 col-lg-4">
-              <div class="cr1">
+              <div class="cr1 lctn-dtl-lp">
                 <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 ||
                                     location_data.open24hours ||
                                     location_data.parkingType"></span>
@@ -97,7 +97,7 @@
       <div class="form-group m-0">
         <div class="row">
           <div class="col-lg-4">
-            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 200px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('googlemap')" name="locationradio" value="googlemap" [checked]="locationFind === 'GOOGLEMAP'"/>
@@ -107,17 +107,17 @@
               <span class="option-label">
                 <span class="option-head">
                   <span class="option-title">
-                   Google map location find
+                   Locate via Google Map
                   </span>
                 </span>
                 <span class="option-body">
-                  Find your location using google map
+                  Find your location on google map. On one click, your location coordinates will be ready to be saved.
                 </span>
               </span>
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey;  background: white; height: 200px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio" (click)="handlelocationfind('autodetect')" name="locationradio" value="autodetect" [checked]="locationFind === 'AUTODETECT'"/>
@@ -132,13 +132,13 @@
                  
                 </span>
                 <span class="option-body">
-               Automatically find your location coordinates.
+                  Your physical location will be automatically detected by the system ( not sure if it’s correct)
                 </span>
               </span>
             </label>
           </div>
           <div class="col-lg-4">
-            <label class="option pointer-cursor" style="border-color: grey; background: white; height: 150px;">
+            <label class="option pointer-cursor" style="border-color: grey; background: white; height: 200px;">
               <span class="option-control">
                 <span class="radio">
                   <input type="radio"  (click)="handlelocationfind('manual')" name="locationradio" value="manual" [checked]="locationFind === 'MANUAL'"/>
@@ -148,12 +148,12 @@
               <span class="option-label">
                 <span class="option-head">
                   <span class="option-title">
-                   Add address yourself
+                    Add address yourself
                   </span>
                  
                 </span>
                 <span class="option-body">
-                  Add your location coordinates manually.
+                  Use this method to manually enter your location coordinates. Make sure your entries are accurate as Jaldee search results will depend on the information you provide.
                 </span>
               </span>
             </label>
@@ -163,138 +163,139 @@
     </div>
 
 <!--begin::Section-->
-<div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view' && !api_loading">
-  <div class="card">
-      <div class="card-body">
-        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
-        <div class="row" style="text-align: center;">
-          <div class="col-xl-12">
-            <!--begin::Input-->
-            <div class="form-group">
-                <button type="button" (click)="showGooglemap()" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
-                  <i class="fa fa-map-marker-alt text-primary"></i>{{location_map_cap}}</button><br>
-                <span class="expl">{{location_map_message}}</span>
+  <div class=" container  mb-8" *ngIf = "locationFind == 'GOOGLEMAP' && action !== 'view' && !api_loading">
+    <div class="card">
+        <div class="card-body">
+          <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+  onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
+          <div class="row" style="text-align: center;">
+            <div class="col-xl-12">
+              <!--begin::Input-->
+              <div class="form-group">
+                  <button #googleradio type="button" (click)="showGooglemap()" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
+                    <i class="fa fa-map-marker-alt text-primary"></i>{{location_map_cap}}</button><br>
+                  <span class="expl">{{location_map_message}}</span>
+              </div>
+              <!--end::Input-->
             </div>
-            <!--end::Input-->
           </div>
-        </div>
-        <div class="row mgn-up-10">
-         
-          <div class="col-xl-6">
-            <!--begin::Input-->
-            <div class="form-group">
-              <label>Location Name</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="locname" autocomplete="off" maxlength="50"/>
-              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
-            {
-            'required' : 'Please enter the location name',
-            'pattern' : 'Please enter the location name'
-            })">
-                  </app-field-error-display>
-            </div>
-            <!--end::Input-->
-          </div>
-          <div class="col-xl-6">
-            <!--begin::Input-->
-            <div class="form-group">
-              <label>Full address</label>
-              <textarea type="text" class="form-control1 form-control-solid form-control-lg"
-              formControlName="locaddress" row="4"></textarea>
-              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
-            {
-            'required' : 'Please enter address',
-            'maxlength' : 'Please enter less than 200 characters'
-            })">
-                  </app-field-error-display>
-            </div>
-            <!--end::Input-->
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-6">
-            <!--begin::Input-->
-            <div class="form-group">
-              <label>Latitude</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclattitude" autocomplete="off"/>
-              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
-                    {
-                    'required' : 'Please enter the latitude',
-                    'pattern' : 'Please enter a valid latitude'
-                    })">
-                      </app-field-error-display>
-            </div>
-            <!--end::Input-->
-          </div>
-          <div class="col-xl-6">
-            <!--begin::Input-->
-            <div class="form-group">
-              <label>Longitude</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="loclongitude" autocomplete="off"/>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
-                    {
-                    'required' : 'Please enter the longitude',
-                    'pattern' : 'Please enter a valid longitude'
-                    })">
-                      </app-field-error-display>
-            </div>
-            <!--end::Input-->
-          </div>
-        </div>
-        <div class="row">
-         
-          <div class="col-xl-12">
-            <!--begin::Input-->
-            <div class="form-group">
-              <label>Google map URL</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
-              formControlName="locmapurl" autocomplete="off" tabindex="-1"/>
-            </div>
-            <!--end::Input-->
-          </div>
-         
-        </div>
-        <form [formGroup]="locamForm" class="ynw-common-form amenities-form">
-          <div class="row">
+          <div class="row mgn-up-10">
+           
             <div class="col-xl-6">
               <!--begin::Input-->
-              <label>Location Amenities</label>
-
               <div class="form-group">
-                <mat-checkbox class="smallFont" formControlName="open24hours">{{open_cap}}</mat-checkbox>
-              </div>
-              <div class="form-group" *ngFor="let badge of loc_badges">
-                <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">
-                  {{badge.displayName}}</mat-checkbox>
+                <label>Location Name</label>
+                <input  type="text" class="form-control1 form-control-solid form-control-lg" 
+                formControlName="locname" autocomplete="off" maxlength="50"/>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
+              {
+              'required' : 'Please enter the location name',
+              'pattern' : 'Please enter the location name'
+              })">
+                    </app-field-error-display>
               </div>
               <!--end::Input-->
             </div>
             <div class="col-xl-6">
-             <div class="form-group">
-              <label>Select Parking Type</label>
-              <select class="form-control1" formControlName="parkingType">
-                <option *ngFor="let ptype of parking_types" [value]="ptype.value">
-                  {{ptype.displayName }}
-                </option>
-              </select>
-             </div>
+              <!--begin::Input-->
+              <div class="form-group">
+                <label>Full address</label>
+                <textarea type="text" class="form-control1 form-control-solid form-control-lg"
+                formControlName="locaddress" row="4"></textarea>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
+              {
+              'required' : 'Please enter address',
+              'maxlength' : 'Please enter less than 200 characters'
+              })">
+                    </app-field-error-display>
+              </div>
+              <!--end::Input-->
             </div>
           </div>
+          <div class="row">
+            <div class="col-xl-6">
+              <!--begin::Input-->
+              <div class="form-group">
+                <label>Latitude</label>
+                <input type="text" class="form-control1 form-control-solid form-control-lg" 
+                formControlName="loclattitude" autocomplete="off"/>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
+                      {
+                      'required' : 'Please enter the latitude',
+                      'pattern' : 'Please enter a valid latitude'
+                      })">
+                        </app-field-error-display>
+              </div>
+              <!--end::Input-->
+            </div>
+            <div class="col-xl-6">
+              <!--begin::Input-->
+              <div class="form-group">
+                <label>Longitude</label>
+                <input type="text" class="form-control1 form-control-solid form-control-lg" 
+                formControlName="loclongitude" autocomplete="off"/>
+                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
+                      {
+                      'required' : 'Please enter the longitude',
+                      'pattern' : 'Please enter a valid longitude'
+                      })">
+                        </app-field-error-display>
+              </div>
+              <!--end::Input-->
+            </div>
+          </div>
+          <div class="row">
+           
+            <div class="col-xl-12">
+              <!--begin::Input-->
+              <div class="form-group">
+                <label>Google map URL</label>
+                <input type="text" class="form-control1 form-control-solid form-control-lg" 
+                formControlName="locmapurl" autocomplete="off" tabindex="-1"/>
+              </div>
+              <!--end::Input-->
+            </div>
+           
+          </div>
+          <form [formGroup]="locamForm" class="ynw-common-form amenities-form">
+            <div class="row">
+              <div class="col-xl-6">
+                <!--begin::Input-->
+                <label>Location Amenities</label>
+  
+                <div class="form-group">
+                  <mat-checkbox class="smallFont" formControlName="open24hours">{{open_cap}}</mat-checkbox>
+                </div>
+                <div class="form-group" *ngFor="let badge of loc_badges">
+                  <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">
+                    {{badge.displayName}}</mat-checkbox>
+                </div>
+                <!--end::Input-->
+              </div>
+              <div class="col-xl-6">
+               <div class="form-group">
+                <label>Select Parking Type</label>
+                <select class="form-control1" formControlName="parkingType">
+                  <option *ngFor="let ptype of parking_types" [value]="ptype.value">
+                    {{ptype.displayName }}
+                  </option>
+                </select>
+               </div>
+              </div>
+            </div>
+          </form>
+          <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
+            <button type="button" (click)="closeClick()" class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
+            <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
+            </button>
+          </div>
         </form>
-        <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
-          <button type="button" (click)="closeClick()" class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
-          <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
-          </button>
+  
+          
         </div>
-      </form>
-
-        
-      </div>
+    </div>
   </div>
-</div>
+
 <!--end::Section-->
 <!--Start Autolocation-->
 <div class=" container  mb-8" *ngIf = "locationFind == 'AUTODETECT' && action !== 'view'">
@@ -306,7 +307,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
           <div class="col-xl-12">
             <!--begin::Input-->
             <div class="form-group">
-                <button type="button" (click)="getCurrentLocation()" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
+                <button #autolocateradio type="button" (click)="getCurrentLocation()" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
                   <i class="fa fa-map-marker-alt text-primary"></i>Auto detect Location</button><br>
                 <span class="expl">You can automatically detect your location coordinates here.</span>
             </div>
@@ -319,7 +320,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <!--begin::Input-->
             <div class="form-group">
               <label>Location Name</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
+              <input  type="text" class="form-control1 form-control-solid form-control-lg" 
               formControlName="locname" autocomplete="off"  maxlength="50"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
@@ -439,7 +440,7 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             <!--begin::Input-->
             <div class="form-group">
               <label>Location Name</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
+              <input #manualradio type="text" class="form-control1 form-control-solid form-control-lg" 
               formControlName="locname" autocomplete="off" maxlength="50"/>
               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
@@ -549,4 +550,6 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
 
     <div class="clearfix"></div>
   </div>
+
 </section>
+

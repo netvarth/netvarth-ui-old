@@ -8,6 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../../../../../shared/services/datetime-processor.service';
 
 
 
@@ -25,16 +26,18 @@ export class PublishDialogComponent implements OnInit {
   api_success='';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   private subscriptions = new SubSink();
-  publishFromrequired=false;
-  startdateError=false;
-  enddateError=false;
 
+  startDaterequired: boolean;
+  endDaterequired: boolean;
+  endDateInvalidError: boolean;
+minDay=new Date();
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formbuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     private dialog: MatDialog,
     private provider_services: ProviderServices) {
       this.couponId=data.coupon.id;
@@ -42,6 +45,13 @@ export class PublishDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+  }
+  onChangePublishFromDate() {
+    this.startDaterequired=false;
+  }
+  onChangePublishToDate() {
+    this.endDaterequired=false;
+    this.endDateInvalidError=false;
   }
   createForm() {
     this.publishForm = this.formbuilder.group({
@@ -56,71 +66,33 @@ export class PublishDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
 }
-checkSameDay(date) {
-  if (moment(new Date(date)).isSame(moment(), 'day')) {
-    return true;
-  } else {
-    return false;
-  }
-}
-checkDayBeforeToday(date) {
-  if (moment(new Date(date)).isBefore(new Date(), 'day')) {
-    return true;
-  }
-  else { return false; }
-}
+
 checkDayisBeforeEndDate(sDate, eDate) {
-  if (moment(new Date(sDate),'day').isBefore(new Date(eDate),'day')) {
+  if (moment(new Date(sDate),'day').isSameOrBefore(new Date(eDate),'day')) {
     return true;
   } else {
     return false;
   }
 }
-compareDate( startOrend) {
-  this.startdateError = false;
-  this.enddateError = false;
-  const sDate = this.publishForm.get('couponRules').get('publishedFrom').value;
-  const eDate = this.publishForm.get('couponRules').get('publishedTo').value;
-  if (startOrend === 0) {
-    this.checkStartDateValid(sDate);
-    if(eDate!==null && eDate!==undefined && eDate!=='' ){
-      this.checkEndDateValid(eDate);
-      if(!this.checkDayisBeforeEndDate(sDate,eDate)){
-        return this.enddateError=true;
-      }
-    }
 
-  } else if (startOrend === 1) {
-    if(sDate!==null &&sDate!==undefined &&sDate!==''){
-      this.checkStartDateValid(sDate);
-      if(!this.checkDayisBeforeEndDate(sDate,eDate)){
-        return this.enddateError=true;
-      }
-     
-    }
-     this.checkEndDateValid(eDate);
-  
-    
-
-  }
-}
-checkStartDateValid(sDate){
-  if (this.checkSameDay(sDate)) {
-    return this.startdateError = false;
-  }
-  if (this.checkDayBeforeToday(sDate)) {
-    return this.startdateError = true;
-  }
-}
-checkEndDateValid(eDate){
-  if (this.checkSameDay(eDate)) {
-    return this.enddateError = false;
-  }
-  if (this.checkDayBeforeToday(eDate)) {
-    return this.enddateError = true;
-  }
-}
   onSubmit(){
+    this.startDaterequired=false;
+    this.endDateInvalidError=false;
+    this.endDaterequired=false;
+    const startDateVal = this.publishForm.get('couponRules').get('publishedFrom').value;
+    const endDateVal = this.publishForm.get('couponRules').get('publishedTo').value;
+    if (startDateVal == null || startDateVal == undefined || startDateVal == '') {
+      this.startDaterequired = true;
+    }
+    if (endDateVal == null || endDateVal == undefined || endDateVal == '') {
+      this.endDaterequired = true;
+    }
+    if(startDateVal!==''&&endDateVal!==''){
+    if(!this.checkDayisBeforeEndDate(startDateVal,endDateVal)){
+       this.endDateInvalidError=true;
+    }
+    }
+    if(!this.startDaterequired &&!this.endDaterequired&& !this.endDateInvalidError){
    const  msg = 'This Coupon wil be visible to consumers after publishing.Are you sure you want publish this coupon?';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -133,7 +105,17 @@ checkEndDateValid(eDate){
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-        const form_data=this.publishForm.value;
+        let publishedFrom ='';
+        let publishedTo='';
+        const form_data = this.publishForm.value;
+        if (form_data.couponRules.publishedFrom) {
+          publishedFrom = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.publishedFrom);
+          form_data.couponRules.publishedFrom=publishedFrom;
+        }
+        if (form_data.couponRules.publishedTo) {
+          publishedTo = this.dateTimeProcessor.transformToYMDFormat(form_data.couponRules.publishedTo);
+         form_data.couponRules.publishedTo=publishedTo;
+        }
         form_data.id=this.couponId;
         this.subscriptions.sink=this.provider_services.publishCoupon(form_data,this.couponId)
         .subscribe(result=>{
@@ -146,7 +128,7 @@ checkEndDateValid(eDate){
         })
       }
     });
-   
+  }
 
   }
   ngOnDestroy() {

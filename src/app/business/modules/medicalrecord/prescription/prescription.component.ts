@@ -107,7 +107,6 @@ export class PrescriptionComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          console.log(data);
           this.prescriptionShared = data.prescShared;
           this.prescriptionSharedTimestamp = data.lastSharedTime;
 
@@ -147,7 +146,6 @@ export class PrescriptionComponent implements OnInit {
      
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data) => {
-          console.log(data);
           this.digitalSign = true;
         },
           error => {
@@ -181,7 +179,6 @@ export class PrescriptionComponent implements OnInit {
   }
 
   getMrprescription(mrId) {
-    console.log(mrId);
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
         if (data === null) {
@@ -189,7 +186,6 @@ export class PrescriptionComponent implements OnInit {
         }
         if (data[0].keyName) {
           this.uploadlist = data;
-          console.log(this.uploadlist);
           this.image_list_popup = [];
           const imgobj = new Image(0,
             { // modal
@@ -197,7 +193,7 @@ export class PrescriptionComponent implements OnInit {
               description: this.uploadlist[0].caption || ''
             });
           this.image_list_popup.push(imgobj);
-          console.log(this.image_list_popup.length);
+
         } else {
           this.drugList = data;
           this.getDigitalSign();
@@ -209,8 +205,6 @@ export class PrescriptionComponent implements OnInit {
         });
   }
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup[0]);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -340,12 +334,12 @@ export class PrescriptionComponent implements OnInit {
     });
     this.imagesviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+
       }
     });
   }
   instructPopUp(drug) {
-    console.log(drug);
+
     this.instructiondialogRef = this.dialog.open(InstructionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -354,7 +348,7 @@ export class PrescriptionComponent implements OnInit {
     });
     this.instructiondialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+
       }
     });
   }

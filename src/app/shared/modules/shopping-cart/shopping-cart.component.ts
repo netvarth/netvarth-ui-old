@@ -242,10 +242,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     });
 
 
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
+
 
   }
   getItemQty(item) {
@@ -291,7 +288,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.couponvalid = true;
     this.api_cp_error = null;
   }
-
   gets3curl() {
     this.api_loading1 = true;
         let accountS3List = 'coupon,providerCoupon';
@@ -524,7 +520,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
       }
     }
-    subtotal = subtotal + this.price + deliveryCharge + this.totaltax;
+    subtotal = subtotal + this.price + deliveryCharge;
     return subtotal.toFixed(2);
   }
   confirmOrder() {
@@ -910,4 +906,5 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log(this.queue);
   }
 }
+
 

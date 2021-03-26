@@ -45,7 +45,6 @@ import { CouponsComponent } from './shared/components/coupons/coupons.component'
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
-import { AboutJaldeeModule } from './shared/modules/about-jaldee/about-jaldee.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
@@ -53,7 +52,6 @@ import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
@@ -103,6 +101,9 @@ import { DateTimeProcessor } from './shared/services/datetime-processor.service'
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { JaldeeTimeService } from './shared/services/jaldee-time-service';
+import { FileService } from './shared/services/file-service';
+import { LivetrackService } from './shared/services/livetrack-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -127,7 +128,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     AdminLoginComponent,
     ConsumerJoinComponent,
-    ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
     PaymentLinkComponent,
@@ -153,7 +153,6 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
-    ConsumerPaymentmodeComponent,
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
@@ -178,7 +177,6 @@ export function init_app(globalService: GlobalService) {
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
-    AboutJaldeeModule,
     MaintenanceModule,
     ScrollbarModule,
     OwlModule,
@@ -237,6 +235,9 @@ export function init_app(globalService: GlobalService) {
     SnackbarService,
     GroupStorageService,
     MeetService,
+    JaldeeTimeService,
+    FileService,
+    LivetrackService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

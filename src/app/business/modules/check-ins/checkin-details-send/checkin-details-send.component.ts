@@ -114,7 +114,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.qstarttime = this.data.qdata.queue.queueStartTime;
         this.qendtime = this.data.qdata.queue.queueEndTime;
 
-        this.location = this.data.qdata.queue.location.address;
+        this.location = this.data.qdata.queue.location.place;
         if (this.data.qdata.waitlistingFor[0].phoneNo) {
           this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
         }
@@ -130,7 +130,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         console.log(this.date)
         // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
-        this.location = this.data.qdata.location.address;
+        this.location = this.data.qdata.location.place;
         this.appttime = this.data.qdata.appmtFor[0].apptTime;
         this.appmtDate = this.data.qdata.appmtDate;
         this.schedulename =  this.data.qdata.schedule.name;

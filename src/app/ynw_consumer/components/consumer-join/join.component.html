@@ -1,7 +1,10 @@
 <!-- join Section starts -->
+
+
 <form [formGroup]="loginForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)">
-    <div class="mat-dialog-title"><!--  style="text-align: center;color: #3c8dbc !important; height: 40px !important;"> -->
+    <div class="mat-dialog-title">
+        <!--  style="text-align: center;color: #3c8dbc !important; height: 40px !important;"> -->
         <div class="title" *ngIf="step==1 && !phoneExists">Log-In/Sign-Up</div>
         <div class="title" *ngIf="step==1 && phoneExists">Log-In</div>
         <div class="title" *ngIf="step==2">Forgot Password ?</div>
@@ -19,10 +22,9 @@ onSubmit(loginForm.value)">
                 <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                     [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                     [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                    [selectFirstCountry]="false" [maxLength]="15"
-                    [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
-                    [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                    formControlName="phone">
+                    [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                    [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
+                    [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone">
                 </ngx-intl-tel-input>
                 <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
             </div>
@@ -78,7 +80,8 @@ onSubmit(loginForm.value)">
                     (keyup)="handlekeyup($event)">
                 <!-- </mat-form-field> -->
                 <div style="display: flex; justify-content: space-between;">
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
+                    <app-field-error-display
+                        [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
                         errorMsg="Password is required">
                     </app-field-error-display>
                     <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
@@ -92,8 +95,8 @@ onSubmit(loginForm.value)">
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
             </button>
-            <button class="cust-logpg-submt login-button" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
-                (click)="onSubmit(loginForm.value)">
+            <button class="cust-logpg-submt login-button" *ngIf="phoneExists" type="button" mat-button
+                [disabled]="api_loading" (click)="onSubmit(loginForm.value)">
                 <span *ngIf="!api_loading">Login</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
@@ -172,7 +175,8 @@ onSubmit(loginForm.value)">
                         Back
                     </span>
                 </div>
-                <button class="cust-logpg-submt signup-button" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
+                <button class="cust-logpg-submt signup-button" type="submit" mat-button [disabled]="api_loading"
+                    (click)="otpSend()">
                     <span *ngIf="!api_loading">Sign up</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
@@ -218,12 +222,15 @@ onSubmit(loginForm.value)">
         <mat-dialog-content class="pwd_cancel_scr">
             <p class="col-form-label no-padding" for="otp">{{close_message}}</p>
         </mat-dialog-content>
-        <mat-dialog-actions class="cust-logpge-txt-align" style="display: flex !important; justify-content: space-between !important;">
+        <mat-dialog-actions class="cust-logpge-txt-align"
+            style="display: flex !important; justify-content: space-between !important;">
             <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2 cancel-button">{{cancel_btn_cap}}</button>
-            <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete ok-button">{{ok_btn_cap}}</button>
+            <button tabindex="2" (click)="closePwdScreen()"
+                class="cs-btn bt1 reddelete ok-button">{{ok_btn_cap}}</button>
         </mat-dialog-actions>
     </div>
 </form>
+
 
 
 <!-- join section ends -->

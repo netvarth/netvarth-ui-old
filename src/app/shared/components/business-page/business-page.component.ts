@@ -1473,6 +1473,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
+ 
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
     this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
@@ -2477,6 +2478,18 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
+  nonfirstPresent(CouponList) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+  }
 
   claimBusiness() {
     const myidarr = this.businessjson.id;
@@ -2896,7 +2909,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.catalogimage_list_popup.push(imgobj);
           }
           this.catlogArry();
-
+         
 
           this.advance_amount = this.activeCatalog.advanceAmount;
           if (this.activeCatalog.pickUp) {
@@ -2933,7 +2946,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }
           this.orderItems = orderItems;
-
+         
         }
       );
     }
@@ -2942,7 +2955,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OrderItem add to cart
   addToCart(itemObj) {
-    const item = itemObj.item;
+   //  const item = itemObj.item;
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
@@ -2950,7 +2963,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.orderList.push(itemObj);
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
-      this.getItemQty(item);
+      this.getItemQty(itemObj);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
@@ -2961,13 +2974,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.orderList.push(itemObj);
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
-          this.getItemQty(item);
+          this.getItemQty(itemObj);
         }
       } else {
         this.orderList.push(itemObj);
         this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
-        this.getItemQty(item);
+        this.getItemQty(itemObj);
       }
     }
 
@@ -3043,10 +3056,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          account_id: this.provider_bussiness_id
+          account_id: this.provider_bussiness_id,
+          unique_id: this.provider_id,
 
         }
-
+     
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
     }

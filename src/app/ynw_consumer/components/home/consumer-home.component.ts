@@ -18,7 +18,6 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 import { ViewRxComponent } from './view-rx/view-rx.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -1462,20 +1461,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       data: {}
     });
     this.coupondialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  confirmSettleBill(waitlist) {
-    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'details': waitlist,
-        'origin': 'consumer'
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
     });
   }
   makeFailedPayment(waitlist) {

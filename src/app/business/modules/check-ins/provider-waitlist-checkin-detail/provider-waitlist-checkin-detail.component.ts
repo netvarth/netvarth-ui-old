@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -104,6 +105,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
+    private jaldeeTimeService: JaldeeTimeService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -368,7 +370,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     filter['location-eq'] = locId.id;
     filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
     const activeSlots = [];
-    const allSlots = this.shared_Functionsobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
+    const allSlots = this.jaldeeTimeService.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     if (this.pdtype === 1) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {

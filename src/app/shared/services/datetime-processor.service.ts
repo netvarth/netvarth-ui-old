@@ -10,7 +10,20 @@ import * as moment from 'moment';
  * Class which handles date/time related functions
  */
 export class DateTimeProcessor {
-  
+
+  REGION_LANGUAGE = "en-US";
+  TIME_ZONE_REGION = "Asia/Kolkata";
+  myweekdaysSchedule = [
+    "",
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
+  ];
+
   constructor() { }
 
   /**
@@ -122,6 +135,11 @@ export class DateTimeProcessor {
     return retstr;
   }
 
+  /**
+   * 
+   * @param mins 
+   * @returns 
+   */
   providerConvertMinutesToHourMinute(mins) {
     let rethr = '';
     let retmin = '';
@@ -147,6 +165,11 @@ export class DateTimeProcessor {
     }
     return rethr + retmin;
   }
+  /**
+   * 
+   * @param mins 
+   * @returns 
+   */
   convertMinutesToHourMinute(mins) {
     let rethr = '';
     let retmin = '';
@@ -172,6 +195,11 @@ export class DateTimeProcessor {
     }
     return rethr + retmin;
   }
+  /**
+   * 
+   * @param mins 
+   * @returns 
+   */
   convertMinutesToHourMinuteForCheckin(mins) {
     let rethr = '';
     let retmin = '';
@@ -197,6 +225,11 @@ export class DateTimeProcessor {
     }
     return rethr + retmin;
   }
+  /**
+   * 
+   * @param time 
+   * @returns 
+   */
   getDateFromTimeString(time) {
     const startTime = new Date();
     const parts = time.match(/(\d+):(\d+) (AM|PM)/);
@@ -211,6 +244,12 @@ export class DateTimeProcessor {
     }
     return startTime;
   }
+  /**
+   * 
+   * @param dt 
+   * @param mod 
+   * @returns 
+   */
   stringtoDate(dt, mod) {
     let dtsarr;
     if (dt) {
@@ -230,6 +269,11 @@ export class DateTimeProcessor {
       return;
     }
   }
+  /**
+   * 
+   * @param date 
+   * @returns 
+   */
   transformToYMDFormat(date) {
     const server = date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
@@ -240,9 +284,29 @@ export class DateTimeProcessor {
     const date1 = y + '-' + mm + '-' + dd;
     return date1;
   }
+  /**
+   * 
+   * @param dateStr 
+   * @returns 
+   */
   formatDateDisplay(dateStr) {
     const pubDate = new Date(dateStr);
     const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
     return obtshowdate;
+  }
+  /**
+   * 
+   * @returns 
+   */
+  getMoment() {
+    return moment;
+  }
+  /**
+   * 
+   * @param num 
+   * @returns 
+   */
+  getDay(num) {
+    return this.myweekdaysSchedule[num];
   }
 }

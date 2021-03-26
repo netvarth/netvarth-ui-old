@@ -228,8 +228,11 @@
                     </div>
                   </div>
                 </div>
-                <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
+                <!-- <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                </span> -->
+                <span *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'" (click)="uploadShoppingList()">
+                  <a class="uploadshoppinglist-btn">Upload Shopping List</a>
                 </span>
                 <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                   <div class="bill-section-content">
@@ -270,7 +273,7 @@
                                             <span class="item-name">{{item.name}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{item.quantity}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.showPromotionalPrice?item.promotionalPrice: item.price | currency:'&#8377;'}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.totalPrice | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 
@@ -309,6 +312,11 @@
                                   <div class="bill-labels">Coupon Discount </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.jaldeeCouponDiscount | currency:'&#8377;'}}</div>
+                                </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.providerCouponDiscount">
+                                  <div class="bill-labels">Provider Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.providerCouponDiscount | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jdnDiscount">
                                   <div class="bill-labels">JDN Discount </div>
@@ -353,7 +361,7 @@
                     <ng-container *ngFor="let file of image_list_popup;let i = index">
                         <li *ngIf="i<2" class="shoppinglist-li">
                             <div class="shoppinglistbx">
-                                <span class="shoppinglistmbt">
+                                <!-- <span class="shoppinglistmbt">
                                     <button type="button" mat-icon-button
                                         [matMenuTriggerFor]="menu">
                                         <mat-icon>more_vert</mat-icon>
@@ -365,7 +373,7 @@
                                             <span>delete</span>
                                         </button>
                                     </mat-menu>
-                                </span>
+                                </span> -->
                                 <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
                                         *ngIf="file.modal.img" />
@@ -380,7 +388,7 @@
                             <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
                                     *ngIf="image_list_popup[2].modal.img"
                                     [src]="image_list_popup[2].modal.img" /></div>
-                            <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                            <!-- <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
@@ -391,7 +399,7 @@
                                         <span>delete</span>
                                     </button>
                                 </mat-menu>
-                            </span>
+                            </span> -->
                             <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                                 *ngIf="(image_list_popup.length-3)==0">
                                 <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -401,10 +409,10 @@
                         </div>
                     </li>
                 </ul>
-                <a (click)="filed.click()" class="pointerlist">
+                <!-- <a (click)="filed.click()" class="pointerlist">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
-                </a>
-                 <!-- <a class="pointerlist" (click)="editshoppinglist()" class="popular_more">Add more</a> -->
+                </a> -->
+                 <a class="pointerlist" (click)="editshoppinglist()" >Update</a>
                 <div class="snd_msg_outer">
                     <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                   </div>

@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { JaldeeTimeService } from '../../services/jaldee-time-service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
@@ -199,6 +200,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   // };
   futureAllowed = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  checkinProviderList: any = [];
   private subs = new SubSink();
   constructor(private routerobj: Router,
     private location: Location,
@@ -212,6 +214,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dateTimeProcessor: DateTimeProcessor,
+    private jaldeeTimeService: JaldeeTimeService,
     private s3Processor: S3UrlProcessor,
     private dialog: MatDialog) {
     this.onResize();
@@ -243,12 +246,39 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       this.isfirstCheckinOffer = true;
     }
+
     this.nosearch_results = false;
     this.retscrolltop = this.groupService.getitemFromGroupStorage('sctop') || 0;
     this.lStorageService.setitemonLocalStorage('sctop', 0);
   }
   stringToInt(stringVal) {
     return parseInt(stringVal, 0);
+  }
+  isfirstCheckinOfferProvider(provider) {
+
+    let firstCheckin = true;
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (activeUser) {
+     
+      
+      this.checkinProviderList = activeUser.checkedInProviders;
+      const providerInfo = provider.split('-');
+      if (this.checkinProviderList && this.checkinProviderList.length > 0) {
+        console.log(providerInfo[0]);
+        if (this.checkinProviderList.includes(providerInfo[0])) {
+          console.log('fiststcheckinover');
+          
+          firstCheckin = false;
+        } else {
+          firstCheckin = true;
+
+        }
+      } else {
+        firstCheckin = true;
+      }
+
+    }
+    return firstCheckin;
   }
   ngOnDestroy() {
     if (this.checkindialogRef) {
@@ -1009,7 +1039,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                         });
                       }
                     }
-                    this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                    this.search_data.hits.hit[i].fields['display_schedule'] = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                   }
                 }
 
@@ -2206,8 +2236,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const couponObject: any = {};
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
-
-
     // const busname = obj.fields.title;
     // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     // this.shared_functions.getS3Url('provider')

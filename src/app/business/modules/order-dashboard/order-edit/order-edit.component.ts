@@ -213,7 +213,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           'email': this.orderDetails.email
 
         };
-        console.log(post_Data);
         this.confirmOrder(post_Data);
 
       }
@@ -231,14 +230,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'phoneNumber': this.orderDetails.phoneNumber,
         'email': this.orderDetails.email
       };
-      console.log(post_Data);
       this.confirmOrder(post_Data);
     }
   }
 
 
   onSubmit(form_data) {
-    console.log(JSON.stringify(form_data));
     const timeslot = this.nextAvailableTime.split(' - ');
     this.selectedAddress = form_data;
     const post_data = {
@@ -255,7 +252,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       'email': this.orderDetails.email
 
     };
-    console.log(post_data);
     this.closeModal.nativeElement.click();
 
     this.providerservice.updateProviderOrders(post_data)
@@ -307,7 +303,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   confirmOrder(post_data) {
-    console.log(post_data);
     this.providerservice.updateOrder(post_data)
     .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
@@ -529,7 +524,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
-    console.log(qty);
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
@@ -693,7 +687,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     
   }
   highlight(index, address) {
-    console.log('user_address');
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
@@ -987,8 +980,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
   EditAddress(selectedAddress) {
-    console.log(selectedAddress);
-
     this.addressDialogRef = this.dialog.open(AddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-waitlist-queues',
@@ -124,6 +125,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private snackbarService: SnackbarService,
+        private jaldeeTimeService: JaldeeTimeService,
         private wordProcessor: WordProcessor) { }
 
     ngOnInit() {
@@ -341,7 +343,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                                     schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
                                 }
                                 let display_schedule = [];
-                                display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                                display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                                 allQs[ii]['displayschedule'] = display_schedule;
                                 // replace instancequeue with new flag
                                 if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {

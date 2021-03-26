@@ -37,6 +37,7 @@ export class PaymentComponent implements OnInit {
     iconClass: string;
     prepayment;
     orderId: any;
+    paymentBtnDisabled=false;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -112,7 +113,7 @@ export class PaymentComponent implements OnInit {
             );
     }
     payuPayment(event) {
-        event.preventDefault();
+        this.paymentBtnDisabled=true;
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
@@ -132,9 +133,11 @@ export class PaymentComponent implements OnInit {
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
                 this.pGateway = pData.paymentGateway;
+                this.paymentBtnDisabled=false;
                 if (this.pGateway === 'RAZORPAY') {
                     this.paywithRazorpay(pData);
                 } else {
+                    console.log('not razorpay');
 
                     if (pData['response']) {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
@@ -152,7 +155,9 @@ export class PaymentComponent implements OnInit {
                 }
             },
                 error => {
+                    this.paymentBtnDisabled=false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    
                 });
     }
     paywithRazorpay(pData: any) {

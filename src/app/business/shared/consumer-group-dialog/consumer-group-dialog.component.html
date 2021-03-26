@@ -7,7 +7,7 @@
     <div *ngIf="consumer_group.length>0">
     <mat-dialog-content>
      <div> 
-      <mat-selection-list #groups [disabled]="mode==='view'"  [(ngModel)]="selectedGroups" (ngModelChange)="onGroupChange($event)" >
+      <mat-selection-list #groups  [(ngModel)]="selectedGroups" (ngModelChange)="onGroupChange($event)" >
 
         <mat-list-option checkboxPosition="before" *ngFor=" let group of consumer_group" [value] ="group" [selected]="isSelected(group)">
 
@@ -22,8 +22,8 @@
 
     <mat-dialog-actions>
         <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
-      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
-      <button  mat-button class="cs-btn bt1 style-button"  [disabled]="mode==='view'"  type="button" (click)="onConfirm(groups.selectedOptions)" >Confirm</button>
+      <button   type="button"  *ngIf="mode!='view'" class="cs-btn bt2 "(click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button"   *ngIf="mode!='view'"  type="button" (click)="onConfirm(groups.selectedOptions)" >Confirm</button>
     </div>
     </mat-dialog-actions>
   </div>

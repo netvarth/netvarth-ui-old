@@ -126,13 +126,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      {
-        className: 'fa fa-trash-o',
-        type: ButtonType.DELETE,
-        ariaLabel: 'custom plus aria label',
-        title: 'Delete',
-        fontSize: '20px'
-      },
+      // {
+      //   className: 'fa fa-trash-o',
+      //   type: ButtonType.DELETE,
+      //   ariaLabel: 'custom plus aria label',
+      //   title: 'Delete',
+      //   fontSize: '20px'
+      // },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -266,17 +266,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getCartDetails();
       }
       if (this.orderType === 'SHOPPINGLIST') {
+        this.imagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
         this.gets3curl();
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            source: this.imagelist
+            source: this.imagelist,
+            type: 'add'
           }
         });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
           if (result) {
+            this.selectedImagelist = {
+              files: [],
+              base64: [],
+              caption: []
+            };
             console.log(result);
             this.selectedImagelist = result;
             console.log(this.selectedImagelist.files);
@@ -382,7 +393,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       'orderItem': this.getOrderItems(),
       'homeDelivery': delivery,
-      'coupons': this.selected_coupons
+      'coupons': this.selected_coupons,
+      'orderDate': this.sel_checkindate
     };
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
@@ -1296,9 +1308,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   deleteTempImage(img, index) {
     this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
-    this.selectedImagelist.files.splice(img.id, 1);
-    this.selectedImagelist.base64.splice(img.id, 1);
-    this.selectedImagelist.caption.splice(img.id, 1);
+    this.selectedImagelist.files.splice(index, 1);
+    this.selectedImagelist.base64.splice(index, 1);
+    this.selectedImagelist.caption.splice(index, 1);
   }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
@@ -1326,6 +1338,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
+    this.selectedImagelist.caption.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
   }
   onButtonAfterHook() { }
@@ -1359,27 +1372,39 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   editshoppinglist() {
+    this.imagelist = {
+      files: [],
+      base64: [],
+      caption: []
+    };
     this.imagelist = this.selectedImagelist;
-    console.log(this.selectedImagelist);
     this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        source: this.imagelist
+        file: this.imagelist.files.slice(),
+        base: this.imagelist.base64.slice(),
+        caption:this.imagelist.caption.slice(),
+        type: 'edit'
       }
     });
     this.shoppinglistdialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        this.selectedImagelist = result;
+        this.selectedImagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
+       this.selectedImagelist = result;
         this.image_list_popup = [];
         if (this.selectedImagelist.files.length > 0) {
           for (let i = 0; i < this.selectedImagelist.files.length; i++) {
             const imgobj = new Image(i,
               {
                 img: this.selectedImagelist.base64[i],
-                description: ''
+                description: this.selectedImagelist.caption[i] || ''
               });
             this.image_list_popup.push(imgobj);
           }
@@ -1388,6 +1413,47 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  uploadShoppingList(){
+    this.imagelist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          source: this.imagelist,
+          type: 'add'
+        }
+      });
+      this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
+          console.log(result);
+          this.selectedImagelist = result;
+          console.log(this.selectedImagelist.files);
+          this.image_list_popup = [];
+          if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: this.selectedImagelist.caption[i] || ''
+                }, this.selectedImagelist.files[i].name);
+              this.image_list_popup.push(imgobj);
+            }
+            console.log(this.image_list_popup);
+
+          }
+        }
+      });
+    }
   handleQueueSelection(queue, index) {
     console.log(index);
     this.queue = queue;

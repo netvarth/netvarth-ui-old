@@ -664,7 +664,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             'itemPriceInfo': this.catalog.showPrice,
             'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
-            'advancePayment': this.catalog.advanceAmount || '',
+            'advancePayment': this.catalog.advanceAmount.toFixed(2) || '',
           //  'cancelationPolicyStatus': true,
            // 'cancelationPolicy': this.catalog.cancellationPolicy,
             'storepickup': orderpickUpstat,

@@ -130,11 +130,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     base64: [],
     caption: []
   };
-  imagelist = {
-    files: [],
-    base64: [],
-    caption: []
-  };
   shoppinglistdialogRef;
   image_list_popup: Image[];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -145,13 +140,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      {
-        className: 'fa fa-trash-o',
-        type: ButtonType.DELETE,
-        ariaLabel: 'custom plus aria label',
-        title: 'Delete',
-        fontSize: '20px'
-      },
+      // {
+      //   className: 'fa fa-trash-o',
+      //   type: ButtonType.DELETE,
+      //   ariaLabel: 'custom plus aria label',
+      //   title: 'Delete',
+      //   fontSize: '20px'
+      // },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -218,7 +213,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               this.show_customer = true;
             }
             this.jaldeeId = this.customer_data.jaldeeId;
-           
+            this.disabledNextbtn = false;
            
               console.log(this.jaldeeId);
               if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -1392,18 +1387,17 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
   }
 
-  deleteTempImage(img, index) {
-    console.log(img);
-    // this.image_list_popup.splice(index, 1);
-    //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
-    // console.log(idex);
-    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
-    this.selectedImagelist.files.splice(img.id, 1);
-    this.selectedImagelist.base64.splice(img.id, 1);
-    this.selectedImagelist.caption.splice(img.id, 1);
-    console.log(this.image_list_popup);
-    console.log(this.selectedImagelist.files);
-  }
+  // deleteTempImage(img, index) {
+  //   console.log(img);
+  //   const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
+  //     console.log(idex);
+  //   this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+  //   this.selectedImagelist.files.splice(index, 1);
+  //   this.selectedImagelist.base64.splice(index, 1);
+  //   this.selectedImagelist.caption.splice(index, 1);
+  //   console.log(this.image_list_popup);
+  //   console.log(this.selectedImagelist.files);
+  // }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -1420,9 +1414,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
     if (event.button.type === ButtonType.DELETE) {
 
-      console.log(event.image.plain);
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
       // this.deletemodelboxImage(event.image.plain);
       const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
       console.log(idex);
@@ -1431,20 +1422,14 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       this.selectedImagelist.base64.splice(idex, 1);
       this.selectedImagelist.caption.splice(idex, 1);
       // this.image_list_popup.splice(idex, 1);
-
-      console.log(this.selectedImagelist.files);
-      console.log(this.image_list_popup);
     }
 
   }
   deletemodelboxImage(name) {
-    console.log(name);
     const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
-    console.log(idex);
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
-    console.log(this.selectedImagelist.files);
     // this.image_list_popup = [];
     //   if (this.selectedImagelist.files.length > 0) {
     //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1462,21 +1447,32 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   onButtonAfterHook() { }
   uploadShoppingList(){
+    const imglist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
       this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          source: this.imagelist
+          source: imglist,
+          type: 'add'
         }
       });
       this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
         if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
           console.log(result);
           this.selectedImagelist = result;
-          console.log(this.selectedImagelist.files);
+          console.log(this.selectedImagelist);
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1489,6 +1485,54 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             }
             console.log(this.image_list_popup);
 
+          }
+        }
+      });
+    }
+
+    editshoppinglist() {
+      console.log(this.selectedImagelist);
+      let imglist = {
+        files: [],
+        base64: [],
+        caption: []
+      };
+      imglist = this.selectedImagelist;
+      console.log(imglist);
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          file: imglist.files.slice(),
+          base: imglist.base64.slice(),
+          caption:imglist.caption.slice(),
+          type: 'edit'
+        }
+      });
+      this.shoppinglistdialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        console.log(result);
+      //  console.log(JSON.parse(JSON.stringify(result)));
+        if (result) {
+          this.selectedImagelist = {
+            files: [],
+            base64: [],
+            caption: []
+          };
+         this.selectedImagelist = result;
+          this.image_list_popup = [];
+          if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: this.selectedImagelist.caption[i] || ''
+                });
+              this.image_list_popup.push(imgobj);
+            }
+  
           }
         }
       });

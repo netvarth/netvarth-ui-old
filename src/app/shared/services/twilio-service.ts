@@ -72,6 +72,7 @@ export class TwilioService {
                 if (_this.camDeviceCount > 0) {
                     _this.selectedVideoId = _this.cam1Device;
                     Video.createLocalTracks({
+                        audio:true,
                         video: { deviceId: _this.selectedVideoId }
                     }).then(localTracks => {
                         _this.previewTracks = localTracks;
@@ -265,11 +266,11 @@ export class TwilioService {
                 const attachedElements = publication.track.detach();
                 attachedElements.forEach(element => element.remove());
               });
-              const localElement = this.localVideo.nativeElement;
+              const localElement = _this.localVideo.nativeElement;
               while (localElement.firstChild) {
                   localElement.removeChild(localElement.firstChild);
               }
-              const remoteElement = this.remoteVideo.nativeElement;
+              const remoteElement = _this.remoteVideo.nativeElement;
               while (remoteElement.firstChild) {
                   remoteElement.removeChild(remoteElement.firstChild);
               }

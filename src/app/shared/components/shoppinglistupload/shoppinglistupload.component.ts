@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, EventEmitter, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -12,7 +12,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
     templateUrl: './shoppinglistupload.component.html'
 })
 
-export class ShoppinglistuploadComponent implements OnInit, OnChanges {
+export class ShoppinglistuploadComponent implements OnInit {
     header_caption = 'You can upload shopping list image now';
     select_image_cap = Messages.SELECT_IMAGE_CAP;
     delete_btn = Messages.DELETE_BTN;
@@ -45,11 +45,17 @@ export class ShoppinglistuploadComponent implements OnInit, OnChanges {
     ) {
 
     }
-    ngOnChanges() { }
     ngOnInit() {
-        if (this.data.source) {
+        if (this.data.type === 'add') {
             console.log(this.data.source);
+            if (this.data.source) {
             this.item_pic = this.data.source;
+        }
+      } else {
+        this.item_pic.files = this.data.file;
+        this.item_pic.base64 = this.data.base;
+        this.item_pic.caption = this.data.caption;
+
         }
     }
     resetVariables() {

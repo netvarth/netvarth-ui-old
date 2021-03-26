@@ -158,10 +158,10 @@
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
-                    <div class="order-label" *ngIf="catalog_details.taxPercentage">
+                    <!-- <div class="order-label" *ngIf="catalog_details.taxPercentage">
                       <div class="flex1">Tax</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
-                    </div>
+                    </div> -->
                     <ng-container *ngIf="orders.length!==0">
                     <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>
@@ -170,7 +170,7 @@
                   </ng-container>
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_loading &&catalog_details && catalog_details.showPrice">
-                    <div class="flex1">SUB TOTAL</div>
+                    <div class="flex1">SUB TOTAL<br><small>(Exclusive of all taxes)</small></div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
                   <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime" class="confm_btn">Confirm Order</button>

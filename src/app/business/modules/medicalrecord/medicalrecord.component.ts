@@ -254,7 +254,6 @@ export class MedicalrecordComponent implements OnInit {
         });
   }
   routerNavigate(event, routerId) {
-    console.log(event);
     event.target.classList.add('mat-tab-link-active');
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, routerId]);
 
@@ -311,7 +310,6 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
         this.uploadFiles = data;
-        console.log(data);
         this.image_list_popup = [];
         for (const pic of this.uploadFiles) {
           const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true , 'url': pic.url , 'type': pic.type};
@@ -323,7 +321,7 @@ export class MedicalrecordComponent implements OnInit {
             });
           this.image_list_popup.push(imgobj);
         }
-        console.log(this.selectedMessage.files);
+
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -331,8 +329,6 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   getMedicalRecordUsingId(mrId) {
-    console.log('mrId' + mrId);
-
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
@@ -343,7 +339,6 @@ export class MedicalrecordComponent implements OnInit {
           this.visitdate = data.mrConsultationDate;
           if (data.mrImages) {
             this.uploadFiles = data.mrImages;
-            console.log(data);
             this.image_list_popup = [];
             for (let i = 0; i < this.uploadFiles.length; i++) {
               const imgdet = { 'name': this.uploadFiles[i].originalName, 'keyName': this.uploadFiles[i].keyName, 'size': this.uploadFiles[i].imageSize, 'caption': this.uploadFiles[i].caption , 'url': this.uploadFiles[i].url , 'type': this.uploadFiles[i].type};
@@ -355,7 +350,6 @@ export class MedicalrecordComponent implements OnInit {
                 });
               this.image_list_popup.push(imgobj);
             }
-            console.log(this.selectedMessage.files);
           }
           if (data.department) {
             this.department = data.service.department;
@@ -391,7 +385,6 @@ export class MedicalrecordComponent implements OnInit {
         });
   }
   VisitList() {
-    console.log(this.patientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
       width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -410,7 +403,6 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   activitylogs() {
-    console.log(this.patientId);
     this.logsdialogRef = this.dialog.open(ActivityLogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -480,8 +472,6 @@ export class MedicalrecordComponent implements OnInit {
   }
 
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup[0]);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }

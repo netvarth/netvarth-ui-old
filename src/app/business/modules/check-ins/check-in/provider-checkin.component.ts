@@ -16,6 +16,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -242,6 +243,7 @@ export class ProviderCheckinComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
+        private jaldeeTimeService: JaldeeTimeService,
         private lStorageService: LocalStorageService,
         private providerService: ProviderServices) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -1857,7 +1859,7 @@ console.log(Object.keys(this.questionAnswers).length);
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         const _this = this;
-        const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
+        const allSlots = _this.jaldeeTimeService.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
         this.availableSlots = allSlots;
         const filter = {};
         const activeSlots = [];

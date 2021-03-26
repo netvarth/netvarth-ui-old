@@ -71,13 +71,21 @@ export class CouponsComponent implements OnInit{
     return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
 
-  toggle_adwordshowmore(i) {
+  toggle_adwordshowmore(type,i) {
+    if(type==='jc'){
     if (this.couponsList[i].adwordshowmore) {
       this.couponsList[i].adwordshowmore = false;
     } else {
       this.couponsList[i].adwordshowmore = true;
     }
+  }else if(type==='provider'){
+    if (this.providerCouponList[i].adwordshowmore) {
+      this.providerCouponList[i].adwordshowmore = false;
+    } else {
+      this.providerCouponList[i].adwordshowmore = true;
+    }
   }
+}
   formatPrice(price) {
     return this.shared_functions.print_PricewithCurrency(price);
   }

@@ -6,7 +6,7 @@
 
 <mat-dialog-content>
   <ng-container *ngIf="couponsList.length>0" >
-    <h6> Jaldee Coupons</h6>
+    <!-- <h6> Jaldee Coupons</h6> -->
     <div *ngFor="let coupon of couponsList let i=index">
     <div class="coupon">
       <div class="coupon-container">
@@ -20,10 +20,10 @@
             <!-- <div>Discount Value:<span *ngIf="coupon.discountType == 'AMOUNT'" class='rupee'>₹</span>{{coupon.discountValue}}
             <span *ngIf="coupon.discountType == 'PERCENTAGE'">%</span>
           </div> -->
-          <div *ngIf="coupon.discountType == 'PERCENTAGE'">Discount Value: {{coupon.discountValue}}%
+          <div *ngIf="coupon.discountType == 'PERCENTAGE'">Discount Value: <b class="bluefont"> {{coupon.discountValue}}% </b>
           </div>
           <div *ngIf="coupon.discountType == 'AMOUNT'">
-            <span class="rupee-font"> Discount Value:  {{coupon.discountValue | currency:'&#8377;'}} </span>
+            <span class="rupee-font"> Discount Value: <b class="bluefont"> {{coupon.discountValue | currency:'&#8377;'}}</b> </span>
             </div>
             <div class="outer4">
               <div class="coupon_validity">
@@ -33,7 +33,7 @@
               <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
-                    <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C Apply</div>
+                    <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore('jc',i)">T & C Apply</div>
                   </div>
                 </ng-container>
               </div>
@@ -50,7 +50,7 @@
   </ng-container>
   
   <ng-container *ngIf="providerCouponList.length>0">
-      <h6> Special Coupons </h6>
+      <!-- <h6> Special Coupons </h6> -->
     <div  *ngFor="let coupon of providerCouponList let i=index">
     <div class="coupon">
       <div class="coupon-container">
@@ -64,29 +64,32 @@
             <!-- <div>Discount Value:<span *ngIf="coupon.discountType == 'AMOUNT'" class='rupee'>₹</span>{{coupon.discountValue}}
             <span *ngIf="coupon.discountType == 'PERCENTAGE'">%</span>
           </div> -->
-          <div *ngIf="coupon.calculationType == 'Percentage'">Discount Value: {{coupon.amount}}%
+          <div *ngIf="coupon.calculationType == 'Percentage'">Discount Value: <b class="bluefont">{{coupon.amount}}%</b>
+            <span class="rupee-font">
+                (upto <b class="bluefont">{{coupon.couponRules.maxDiscountValue  | currency:'&#8377;'}}  MAX)</b>
+          </span>
           </div>
-          <div *ngIf="coupon.discountType == 'Fixed'">
-            <span class="rupee-font"> Discount Value:  {{coupon.amount | currency:'&#8377;'}} </span>
+          <div *ngIf="coupon.calculationType == 'Fixed'">
+            <span class="rupee-font "> Discount Value:  <b class="bluefont">{{coupon.amount | currency:'&#8377;'}}</b> </span>
             </div>
             <div class="outer4">
               <div class="coupon_validity">
                 <span class="expire">Valid Through: {{formatDateDisplay(coupon.couponRules.startDate)}} -
                   {{formatDateDisplay(coupon.couponRules.endDate)}}</span>
               </div>
-              <!-- <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
+              <div class="tnc" *ngIf="coupon.termsConditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
-                    <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C Apply</div>
+                    <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore('provider',i)">T & C Apply</div>
                   </div>
                 </ng-container>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
-          <div [innerHTML]="coupon.consumerTermsAndconditions | nl2br"></div>
-        </div> -->
+        <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
+          <div [innerHTML]="coupon.termsConditions | nl2br"></div>
+        </div>
       </div>
     </div>
   </div>

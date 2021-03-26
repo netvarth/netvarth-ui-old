@@ -372,6 +372,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
                 this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.appointment.appmtDate;
+                if (this.sel_checkindate !== this.todaydate) {
+                    this.isFuturedate = true;
+                }
                 this.sel_ser = this.appointment.service.id;
                 this.holdselectedTime = this.appointment.appmtTime;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -538,7 +541,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
-                        if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
+                        if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
@@ -547,7 +550,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
-                    if (this.appointment && this.appointment.appmtTime) {
+                    if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
