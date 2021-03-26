@@ -531,10 +531,15 @@
                 <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
                     <div>
                         <div class="no-padding">
-                            <h5 class="catalog-title mgn-bt-5 primary-color"><img
+                            <h5 class="catalog-title mgn-bt-5 primary-color"><!-- <img
                                 (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
                                 width="50" height="50" id="catalog-image1"
-                                class="rounded pointer-cursor"><div>{{activeCatalog.catalogName}}</div></h5>
+                                class="rounded pointer-cursor"> -->
+                                <img
+                                (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
+                                width="60" height="60" id="catalog-image1"
+                                class="rounded pointer-cursor">
+                                <div>{{activeCatalog.catalogName}}</div></h5>
                                 <!-- <p class="catalog-desc module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
                                     {{activeCatalog.catalogDesc}}</p>
                                 <p class="catalog-desc" *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p> -->
@@ -543,7 +548,8 @@
                         <div class="catalog-icons no-padding-small disp-flex">
                             <div class="home-delivery mgn-rt-10 disp-flex align-items-center"
                                 *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
-                                <img class="ordericon home" src="../../../../assets/images/Delivery.svg" />
+                                <!-- <img class="ordericon home" src="../../../../assets/images/Delivery.svg" /> -->
+                                <img class="ordericon home" src="../../../../assets/images/Home delivery.png" />
                                 <div class="mgn-lt-5">Home Delivery<div class="font-small "
                                         *ngIf="activeCatalog.homeDelivery.deliveryRadius">
                                         (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
@@ -551,7 +557,8 @@
                             </div>
                             <div class="store-pickup disp-flex align-items-center"
                                 *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails">
-                                <img class="ordericon pickup" src="../../../../assets/images/order/Storepickup.svg" />
+                                <!-- <img class="ordericon pickup" src="../../../../assets/images/order/Storepickup.svg" /> -->
+                                <img class="ordericon pickup" src="../../../../assets/images/Store pickup.png" />
                                 <div class="mgn-lt-5">Store Pickup</div>
                             </div>
                         </div>
