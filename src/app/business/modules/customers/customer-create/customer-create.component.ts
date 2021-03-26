@@ -127,6 +127,7 @@ export class CustomerCreateComponent implements OnInit {
   group;
   questionnaireList: any = [];
   questionAnswers;
+  qnrLoaded = false;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -996,6 +997,7 @@ export class CustomerCreateComponent implements OnInit {
   getCustomerQnr() {
     this.provider_services.getCustomerQuestionnaire().subscribe(data => {
       this.questionnaireList = data;
+      this.qnrLoaded = true;
     });
   }
   getQuestionAnswers(event) {

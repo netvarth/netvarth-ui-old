@@ -32,6 +32,7 @@ export class QuestionnaireComponent implements OnInit {
   fileuploadpreAnswers: any = {};
   loading = false;
   buttonDisable = false;
+  questions: any = [];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -72,10 +73,17 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedMessage = this.questionAnswers.files;
       }
     } else {
-      if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+      console.log(this.questionnaireList);
+      if (this.questionnaireList) {
+        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        this.questions = this.questionnaireList.labels;
         this.getAnswers(this.questionnaireList.labels);
+        } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
+          this.questions = this.questionnaireList[0].questions;
+        }
       }
     }
+    console.log(this.questions);
     console.log(this.source);
     console.log(this.params.uuid);
     if (this.params.uuid) {
@@ -172,6 +180,7 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
+      this.questions = this.questionnaireList.labels;
       this.loading = false;
       if (this.questionAnswers && this.questionAnswers.length > 0) {
         this.getAnswers(this.questionAnswers, 'get');
@@ -182,6 +191,7 @@ export class QuestionnaireComponent implements OnInit {
     this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
+      this.questions = this.questionnaireList.labels;
       this.loading = false;
       if (this.questionAnswers && this.questionAnswers.length > 0) {
         this.getAnswers(this.questionAnswers, 'get');
@@ -357,5 +367,12 @@ export class QuestionnaireComponent implements OnInit {
         }
         this.getProviderQuestionnaire();
       });
+  }
+  getQuestion(question) {
+    if (this.source === 'customer-create') {
+      return question;
+    } else {
+      return question.question;
+    } 
   }
 }
