@@ -1,0 +1,75 @@
+<form [formGroup]="publishForm" novalidate (ngSubmit)="onSubmit()" class="form">
+  <h1 class="mat-dialog-title">Publish Coupon
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="close()">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <mat-dialog-content>
+    <div class="mb-5">
+      <i class="fa fa-lightbulb-o" aria-hidden="true"></i> <a> Publish From and Publish to Dates should be within the
+        range of Coupon Validity date.</a>
+    </div>
+    <div class="row" formGroupName="couponRules">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+
+        <!-- <div class="form-group">
+          <div class="input-group date">
+            <label>Publish From  &nbsp;</label>
+            <input class="form-control1 picker" type="date" (dateChange)="compareDate(0)"
+              placeholder="Publish From" formControlName="publishedFrom" />
+          </div>
+          <app-field-error-display style="color: #f24949 !important;" [displayError]=startdateError
+            errorMsg="Please choose valid  Date">
+          </app-field-error-display>
+        </div> -->
+        <div class="form-group normalpicker">
+            <label for="Publish From">Publish From </label>
+            <div class="pickerouter">
+                <mat-datepicker-toggle matSuffix [for]="publishedTo"></mat-datepicker-toggle>
+                <mat-datepicker #publishedFrom></mat-datepicker>
+                <input class="form-control dtepicker" type="text" matInput
+                    (click)="publishedFrom.open()" [matDatepicker]="publishedFrom" formControlName="publishedFrom"
+                    [min]="minDay" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangePublishFromDate()">
+            </div>
+            <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
+            errorMsg="Please choose Start Date">
+        </app-field-error-display>
+          
+        </div>
+  
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+
+          <div class="form-group normalpicker">
+              <label for="Publish To">Publish To </label>
+              <div class="pickerouter">
+                  <mat-datepicker-toggle matSuffix [for]="publishedTo"></mat-datepicker-toggle>
+                  <mat-datepicker #publishedTo></mat-datepicker>
+                  <input class="form-control dtepicker" type="text" matInput
+                      (click)="publishedTo.open()" [matDatepicker]="publishedTo" formControlName="publishedTo"
+                      [min]="minDay" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangePublishToDate()">
+              </div>
+              <app-field-error-display  style="color: #f24949 !important;"  [displayError]=endDaterequired
+              errorMsg="Please choose Start Date">
+          </app-field-error-display>
+          <app-field-error-display [displayError]=endDateInvalidError
+          errorMsg="End Date should be greater than  or equal to start Date">
+      </app-field-error-display>
+            
+          </div>
+        
+      </div>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button type="button" class="cs-btn bt2 " (click)="close()"> Cancel</button>
+      <button type="submit" mat-button class="cs-btn bt1 style-button" [disabled]="!publishForm.valid ">Publish</button>
+    </div>
+  </mat-dialog-actions>
+</form>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">

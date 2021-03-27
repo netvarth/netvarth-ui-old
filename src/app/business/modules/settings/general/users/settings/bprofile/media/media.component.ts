@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from '@ks89/angular-modal-gallery';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
@@ -15,7 +15,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 @Component({
     selector: 'app-usermedia',
     templateUrl: './media.component.html',
-    styleUrls: ['./media.component.css']
+    styleUrls: ['./media.component.css', '../../../../../../../../../assets/css/style.bundle.css', '../../../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class MediaComponent implements OnInit, OnDestroy {
     bProfile = null;
@@ -25,6 +25,10 @@ export class MediaComponent implements OnInit, OnDestroy {
     socialdialogRef;
     gallerydialogRef;
     delgaldialogRef;
+    no_of_grids: number;
+    screenWidth: number;
+    hide_save_btn = false;
+
     social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
     add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
     no_social_media = Messages.NO_SOCIAL_MEDIA;
@@ -93,11 +97,30 @@ export class MediaComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor
     ) {
+        this.onResize();
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
         );
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1400) {
+            divider = divident / 5;
+        } else if (this.screenWidth > 1000 && this.screenWidth < 1400) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 375) {
+            divider = divident / 1;
+        }
+        this.no_of_grids = Math.round(divident / divider);
     }
     ngOnInit() {
         this.loading = true;
@@ -276,6 +299,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
+            this.hide_save_btn = true;
             this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -315,6 +339,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     keyPressed(index) {
         this.showSave[index] = true;
+        this.hide_save_btn = false;
     }
     showDelete(key) {
         const filteredList = this.social_arr.filter(social => social.Sockey === key);

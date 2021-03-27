@@ -68,18 +68,18 @@
   </mat-dialog-content>
 </ng-template>
 <ng-template [ngIf]="part==='privateCustomerDB'">
-  <h2 mat-dialog-title>Private Customer Database</h2>
+  <h2 mat-dialog-title><span *ngIf="type=='patients'">Patient</span><span *ngIf="type!='patients'">Customer</span> Relationship Management System</h2>
   <mat-dialog-content class="mat-typography">
     <ul>
       <li>Are you fed up managing your different customer contacts on multiple platforms or on paper? </li>
       <li>Jaldee offers a Private Secured Customer Database to save all your customer information.</li>
       <li>Maintain relationships with your customers regularly.</li>
-      <li>Collect and manage all your patients in one place.</li>
+      <li>Collect and manage all your <span *ngIf="type=='patients'">patients</span><span *ngIf="type!='patients'">customers</span> in one place.</li>
     </ul>
   </mat-dialog-content>
 </ng-template>
 <ng-template [ngIf]="part==='teleHealth'">
-  <h2 mat-dialog-title>Telehealth Consultation</h2>
+  <h2 mat-dialog-title><span *ngIf="type=='patients'">Telehealth </span>Video Consultations</h2>
   <mat-dialog-content class="mat-typography">
     <ul>
       <li>Jaldee Teleconsultation is the perfect solution for connecting with your patients or customers without any barrier</li>
@@ -255,6 +255,26 @@
     <ul>
       <li>Jaldee Dedicated Call Centers offers customized support through call centers to your  customers. Also, customers can book services through the call center.</li>
       <li>Give your customers a rich customer experience and boost customer satisfaction.</li>
+    </ul>
+  </mat-dialog-content>
+</ng-template>
+<ng-template [ngIf]="part==='customBrandLimits'">
+  <h2 mat-dialog-title>Custom Branded Website Limits</h2>
+  <mat-dialog-content class="mat-typography">
+    <ul>
+      <li>This plan gives you your very own Jaldee link and QR code (e.g. jaldee.com/mybusinessname) </li>
+      <li>You can share link and qr code with {{type}} to accept bookings</li>
+      <li>If you exceed the specific booking limit, you must upgrade to the next plan or pay a flat rate of "current plan's jaldee.com booking fee"</li>
+    </ul>
+  </mat-dialog-content>
+</ng-template>
+<ng-template [ngIf]="part==='jaldeeListing'">
+  <h2 mat-dialog-title>Jaldee.com listing - Online Bookings<span *ngIf="type!='patients'"> and Orders</span></h2>
+  <mat-dialog-content class="mat-typography">
+    <ul>
+      <li>This plan allows you to list your practice on Jaldee.com</li>
+      <li><span *ngIf="type=='patients'">Patients</span><span *ngIf="type!='patients'">Customers</span> searching for <span *ngIf="type=='patients'">doctors</span><span *ngIf="type!='patients'">providers</span> in their area on Jaldee.com can avail your service</li>
+      <li>Jaldee.com charges the specified flat rate for your plan on bookings coming through jaldee.com</li>
     </ul>
   </mat-dialog-content>
 </ng-template>

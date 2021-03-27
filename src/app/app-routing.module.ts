@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
-
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
@@ -16,10 +14,10 @@ import { CheckYourStatusComponent } from './shared/components/status-check/check
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { TwilioService } from './shared/services/twilio-service';
-// import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
-import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -41,25 +39,21 @@ const routes: Routes = [
     { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
-        // canActivate: [AuthGuardProvider]
     },
-    // { path: 'client', component: LiveChatClientComponent},
-    {path: 'video/:id',  component: LiveChatComponent},
-    { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
+    { path: 'meeting/provider/:id', component: MeetingRoomComponent },
+    { path: 'meeting/:phonenumber/:id', component: LiveChatComponent },
+    { path: 'meeting/:phonenumber', component: JaldeeVideoComponent },
     { path: 'maintenance', component: MaintenanceComponent },
-    { path: 'blog', component: JaldeeBlogComponent },
-    { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
-    // { path: 'appt/status/:id', component: CheckYourStatusComponent },
-      { path: 'consumer-join', component: ConsumerJoinComponent},
+    { path: 'consumer-join', component: ConsumerJoinComponent },
     { path: 'pay/:id', component: PaymentLinkComponent },
     { path: 'order/checkout', component: CheckoutSharedComponent },
-    { path: 'order/shoppingcart', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
-    { path: 'order/shoppingcart/checkout', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
-    { path: 'order/item-details', component: ItemDetailsSharedComponent},
-    { path: ':id/:userEncId', component: BusinessPageComponent}
-    // { path: '**', redirectTo: 'not-found' }
+    { path: 'order/shoppingcart', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
+    { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
+    { path: 'order/item-details', component: ItemDetailsSharedComponent },
+    { path: ':id', component: BusinessPageComponent },
+    { path: ':id/:userEncId', component: BusinessPageComponent }
 ];
 
 @NgModule({

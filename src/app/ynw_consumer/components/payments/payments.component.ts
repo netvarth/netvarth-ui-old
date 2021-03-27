@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { Subscription } from 'rxjs';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 
 
@@ -12,7 +14,8 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
     selector: 'app-consumer-payments',
     templateUrl: './payments.component.html'
 })
-export class ConsumerPaymentsComponent implements OnInit {
+export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
+ 
     payments: any;
     breadcrumbs;
     date_cap = Messages.DATE_CAP;
@@ -23,9 +26,11 @@ export class ConsumerPaymentsComponent implements OnInit {
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    subsription:Subscription
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         public dateformat: DateFormatPipe,
+        private dateTimeProcessor: DateTimeProcessor,
         private shared_services: SharedServices) {
 
     }
@@ -41,6 +46,9 @@ export class ConsumerPaymentsComponent implements OnInit {
         ];
         this.getPayments();
     }
+    ngOnDestroy(): void {
+        this.subsription.unsubscribe();
+    }
     stringtoDate(dt, mod) {
         let dtsarr;
         if (dt) {
@@ -55,7 +63,7 @@ export class ConsumerPaymentsComponent implements OnInit {
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
-                retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
+                retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
             }
             return retval;
             // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
@@ -64,7 +72,7 @@ export class ConsumerPaymentsComponent implements OnInit {
         }
     }
     getPayments() {
-        this.shared_services.getConsumerPayments().subscribe(
+       this.subsription= this.shared_services.getConsumerPayments().subscribe(
             (payments) => {
                 this.payments = payments;
             }

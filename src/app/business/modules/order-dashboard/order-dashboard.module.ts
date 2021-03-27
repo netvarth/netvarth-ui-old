@@ -20,7 +20,7 @@ import { AddressComponent } from './order-wizard/address/address.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { CustomerModule } from '../customer/customer.module';
+import { ContactInfoComponent } from './order-wizard/contact-info/contact-info.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { CustomerModule } from '../customer/customer.module';
     OrderItemsComponent,
     DisplaylabelpopupComponent,
     OrderWizardComponent,
-    AddressComponent
+    AddressComponent,
+    ContactInfoComponent
 
 
   ],
@@ -54,14 +55,7 @@ import { CustomerModule } from '../customer/customer.module';
     ModalGalleryModule,
     MatDialogModule,
     MatChipsModule,
-    MatDatepickerModule,
-    CustomerModule
-
-
-
-
-
-
+    MatDatepickerModule
   ],
   exports: [
     OrderDashboardComponent

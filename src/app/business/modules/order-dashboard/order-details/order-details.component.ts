@@ -12,6 +12,8 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-order-details',
@@ -55,21 +57,27 @@ export class OrderDetailsComponent implements OnInit {
       }
     ]
   };
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions,
     private wordProcessor: WordProcessor) {
-    this.activaterouter.params.subscribe(param => {
+    this.activaterouter.params
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(param => {
       this.uid = param.id;
       this.customerLabel = this.wordProcessor.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
-      console.log(this.uid);
       this.getorderHistory(this.uid);
       this.getOrderCommunications();
     });
   }
 
   ngOnInit() {
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -84,7 +92,9 @@ export class OrderDetailsComponent implements OnInit {
     this.loading = true;
     this.orderItems = [];
     this.image_list_popup = [];
-    this.providerservice.getProviderOrderById(uid).subscribe(data => {
+    this.providerservice.getProviderOrderById(uid)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
       this.orderDetails = data;
       if (this.orderDetails.homeDeliveryAddress) {
         this.delivery_address = this.orderDetails.homeDeliveryAddress;
@@ -125,7 +135,9 @@ export class OrderDetailsComponent implements OnInit {
         source: 'details'
       }
     });
-    actiondialogRef.afterClosed().subscribe(data => {
+    actiondialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
       this.getOrderDetails(this.uid);
     });
   }
@@ -151,14 +163,14 @@ export class OrderDetailsComponent implements OnInit {
         type: 'order-details'
       }
     });
-    notedialogRef.afterClosed().subscribe(result => {
+    notedialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result === 'reloadlist') {
       }
     });
   }
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -167,6 +179,7 @@ export class OrderDetailsComponent implements OnInit {
   }
   getOrderCommunications() {
     this.providerservice.getProviderInbox()
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           const history: any = data;
@@ -189,11 +202,10 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getorderHistory(uuid) {
-    console.log(uuid);
     this.providerservice.getProviderorderlistHistroy(uuid)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
-          console.log(data);
           this.orderlist_history = data;
         },
         () => {
@@ -231,7 +243,9 @@ for (const stat of this.orderstatus) {
         orderDetails: this.orderDetails
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result === 'reloadlist') {
       }
     });
@@ -239,7 +253,6 @@ for (const stat of this.orderstatus) {
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
-    console.log(timeDate);
     return timeDate;
   }
   onButtonBeforeHook() {

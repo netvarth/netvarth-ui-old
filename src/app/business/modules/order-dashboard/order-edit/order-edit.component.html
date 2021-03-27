@@ -1,7 +1,7 @@
 <section class="">
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{uid}}</i>
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit Order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
     </h5>
   </div>
 </section>
@@ -33,37 +33,6 @@
                     <!--begin::Card-->
                     <div class="">
 
-                      <!--begin::Engage Widget 15-->
-                      <div class="card card-custom mb-12">
-                        <div class="card-body rounded p-0 d-flex " style="background-color:#DAF0FD;">
-                          <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-10 p-md-20">
-                            <h1 class="font-weight-bolder text-dark ">Search Goods
-                            </h1>
-                            <div class="font-size-h4 mb-8">Get Amazing Gadgets</div>
-                            <!--begin::Form-->
-                            <form class="d-flex flex-center py-2 px-6 bg-white rounded">
-                              <span class="svg-icon svg-icon-lg svg-icon-primary">
-                                <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/General/Search.svg-->
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                                  version="1.1">
-                                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24" />
-                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                      fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                      fill="#000000" fill-rule="nonzero" />
-                                  </g>
-                                </svg>
-                                <!--end::Svg Icon-->
-                              </span>
-                              <input type="text" class="form-control border-0 font-weight-bold pl-2" placeholder="Search Goods" />
-                            </form>
-                            <!--end::Form-->
-                          </div>
-                          <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover" style="background-image: url(../../../../../../../../../../assets/media/products/progress.svg);">
-                          </div>
-                        </div>
-                      </div>
 
                       <!--end::Engage Widget 15-->
                       <!--begin::Section-->
@@ -71,21 +40,21 @@
                         <!--begin::Products-->
                         <div class="row">
                           <!--begin::Product-->
-                          <div class="card-body p-0">
+                          <div class="card-body p-0"  >
                             <ng-container *ngFor="let item of catalogItems">
-                              <div class="col-md-4 col-xxl-4 col-lg-12">
+                              <div class="col-md-4 col-xxl-4 col-lg-12 orderItems">
                                 <!--begin::Card-->
                                 <div class="card card-custom card-shadowless">
                                   <div class="card-body p-0">
                                     <!--begin::Image-->
                                     <div class="overlay">
-                                      <div class="add_qty">
+                                      <div class="add_qty" >
                                         <td class="text-center align-middle">
                                           <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
                                             <i class="ki ki-minus icon-xs"></i>
                                           </a>
                                           <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
-                                          <a class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                          <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
                                             <i class="ki ki-plus icon-xs"></i>
                                           </a>
                                         </td>
@@ -102,7 +71,9 @@
                                       </a>
                                       <span class="font-size-lg">{{ item.item.shortDesc }}</span>
                                     </div>
-                                    <div class="font-size-h6 text-muted font-weight-bolder">{{ item.item.price }}</div>
+                                    <div class="strikeMe " *ngIf="item.item.showPromotionalPrice rupee-font">₹ {{ item.item.price | currency:'':''}}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{(item.item.showPromotionalPrice ? item.item.promotionalPrice : item.item.price) |
+                                      currency:'':''}}</div>
                                     <!--end::Details-->
                                   </div>
                                 </div>
@@ -111,6 +82,8 @@
                             </ng-container>
                             <!--end::Product-->
                           </div>
+
+                          
                           <!--end::Products-->
                         </div>
                         <!--end::Section-->
@@ -137,17 +110,23 @@
                       </div>
                       <!--end::Header-->
 
-                      <div class="card-body p-0">
+                      <div class="card-body p-0 ">
+                         
+                          <div class="w-dta" >
+                              <div class="row">
+                                  <div class="copy width100">
                         <!--begin::Shopping Cart-->
-                        <!-- <ng-container *ngIf="orderDetails.catalog.orderType ==='SHOPPINGCART'"> -->
-                        <div class="table-responsive">
+                        
+                            <a href="javascript:;" class="addmoreitem" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'"  (click)="gotoPrev()">Add More Items</a>
+                         
+                        <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>
                               <tr>
                                 <th>Product</th>
                                 <th class="text-center">Qty</th>
-                                <th class="text-right">Price</th>
+                                <th class="text-right rupee-font">Price (₹)</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -156,7 +135,7 @@
                             <tbody>
                               <!--begin::Cart Content-->
                               <tr *ngFor="let item of orders">
-                                <td class="d-flex align-items-center font-weight-bolder">
+                                <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                   <!--begin::Symbol-->
                                   <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                     <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
@@ -166,31 +145,146 @@
                                   <a class="text-dark text-hover-primary">{{ item.item.displayName }}
                                   </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td  data-title="Qty" class="text-center align-middle">
                                   <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
                                     <i class="ki ki-minus icon-xs"></i>
                                   </a>
                                   <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
-                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>
-                                <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                  {{ getItemPrice(item) }}
+                                <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{ getItemPrice(item) }}
                                 </td>
-                                <td class="text-right align-middle" (click)="removeItemFromCart(item)">
-                                  <a class="btn btn-danger font-weight-bolder font-size-sm">
-                                    Remove
-                                  </a>
+                                <td data-title="" class="text-right align-middle"  (click)="removeItemFromCart(item)">
+                                  <i class="font-weight-bolder font-size-sm red icon-delete">
+                                  </i>
                                 </td>
                               </tr>
 
                             </tbody>
                           </table>
                         </div>
-                        <div>
-                       <a href="javascript:;" style="color:blueviolet"  (click)="gotoPrev()">Add More Items</a>
+                        
+                      <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'" >
+                        <table class="table">
+                          <!--begin::Cart Header-->
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th class="text-center">Qty</th>
+                              <th class="text-right rupee-font">Price (₹)</th>
+                            </tr>
+                          </thead>
+                          <!--end::Cart Header-->
+
+                          <tbody>
+                            <!--begin::Cart Content-->
+                            <tr *ngFor="let item of orderDetails.orderItem">
+                              <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
+                                <!--begin::Symbol-->
+                                <!-- <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                  <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                  </div>
+                                </div> -->
+                                <!--end::Symbol-->
+                                <a class="text-dark text-hover-primary">{{item.name}}
+                                </a>
+                              </td>
+                              <td data-title="Qty" class="text-center align-middle">
+                               
+                                <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
+                                
+                              </td>
+                              <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{item.totalPrice}}
+                              </td>
+                              
+                            </tr>
+
+                          </tbody>
+                        </table>
                       </div>
+                      </div>
+                              </div></div>
+                      <div   *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+       ></ks-modal-gallery>
+    </div>
+                        
+                    </div> 
+
+                    <div  *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+     ></ks-modal-gallery>
+
+
+    </div>
+                        
+                    </div> 
                     <!-- </ng-container> -->
                         <!-- begin: Invoice footer-->
                         <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
@@ -219,48 +313,58 @@
                               </div>
                               <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
-                            <div>
-                              <span *ngIf="!isFuturedate">Today ,</span>
-                              <span *ngIf="!isFuturedate">
-                                {{nextAvailableTime}}
+                            
+                            <div *ngIf="isfutureAvailableTime">
+                              
+                              <span >{{sel_checkindate | date: newDateFormat}},
                               </span>
-                              <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                              </span>
-                              <span *ngIf="isFuturedate">
+                              <span >
                                 {{nextAvailableTime}}
                               </span>
                             </div>
+                            <div *ngIf="!isfutureAvailableTime" class="red">
+                                <span>No timings are available</span>
+                              </div>
 
                             <!-- Home Address -->
                             <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                               <div>
-                                <div  class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
-                                    <div class="card card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
+                                <div  class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card " *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
+                                    <div class="card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
                                         <div class="card-body text-left pl-5 p-0 font-addrss">
-                                          <div class="adrs-data">
+                                          <div class="adrs-data mgn-up-minus-20">
+                                              <div class="pull-right">
+                                                  <i class="font-weight-bolder font-size-sm blue icon-edit"  (click)="editAddress()" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                                  </i></div>
                                             <div *ngIf="orderDetails.homeDeliveryAddress">
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
                                               </span><br>
                                               <span>
-                                                {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
+                                                {{orderDetails.homeDeliveryAddress.address}}&nbsp;, {{orderDetails.homeDeliveryAddress.landMark }}
                                               </span><br>
+                                            
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.city }} , {{orderDetails.homeDeliveryAddress.postalCode}}
                                               </span><br>
+                                      
                                               <span>
-                                                {{orderDetails.homeDeliveryAddress.landMark }}
+                                                {{orderDetails.homeDeliveryAddress.email}}
+                                              </span><br>
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
                                               </span><br>
                                             </div>
+                                            <!-- <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                              Edit</a> -->
                                           </div>
-                                          <button type="button" class="btn btn-success px-2 py-1"  (click)="editAddress();"data-toggle="modal" data-target="#exampleModalSizeDefault">
-                                            Edit</button>
+                                          
                                         </div>
                                       </div>
                                 </div>
 
-                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngIf="!orderDetails.homeDeliveryAddress ||orderDetails.homeDeliveryAddress==null">
-                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress || orderDetails.homeDeliveryAddress==null">
+                                  <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
                                         Add New </button>
@@ -281,9 +385,9 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
-                                              <span class="input-group-text" style="margin-top:auto;">+91</span>
+                                              <span class="input-group-text1 countrycode mob-prefix-border" style="margin-top:auto;">+91</span>
 
-                                              <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                                              <input type="text" class="form-control1 mob-field-border" style="border-bottom-left-radius: 0px !important; border-top-left-radius: 0px !important;" placeholder="Phone number*" formControlName="phoneNumber">
 
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
@@ -297,7 +401,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                            <input type="text" class="form-control1" placeholder="First name*" formControlName="firstName">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                                                                         {
                                                                                           'required' : 'First name is required',
@@ -309,7 +413,7 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                              <input type="text" class="form-control1" placeholder="Last name*" formControlName="lastName">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                                                                             {
                                                                                               'required' : 'Last name is required',
@@ -320,7 +424,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                              <input type="email" class="form-control1" placeholder="Email(user@xyz.com)*" formControlName="email">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                                                                             {
                                                                                               'required' : 'Email is required',
@@ -332,7 +436,7 @@
                                         </div>
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                            <input type="text" class="form-control1" placeholder="Address*" formControlName="address">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                     {
                                                                                       'required' : 'Please enter city name',
@@ -341,7 +445,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                            <input type="text" class="form-control1" placeholder="City*" formControlName="city">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                       {
                                                                                         'required' : 'Please enter city name',
@@ -353,7 +457,7 @@
 
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                            <input type="text" class="form-control1" placeholder="Postal Code /ZIP*" formControlName="postalCode">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                                                                           {
                                                                                             'required' : 'Please enter Postal Code ',
@@ -364,7 +468,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                            <input type="text" class="form-control1" placeholder="Landmark*" formControlName="landMark">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                                                                             {
                                                                                               'required' : 'Please enter landmark'
@@ -377,7 +481,7 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                      <button type="submit" [disabled]="!amForm.valid" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
                                     </div>
                                   </div>
                                 </form>
@@ -391,7 +495,29 @@
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
-                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                                  Choose Date
+                                                </div> -->
+                                            <div class="col-md-8 col-xs-12 col-sm-10 ">
+                                              <div class="lnk ">Choose Date</div>
+                                              <div class="pull-left brd-round brd-light mgn-up-10">
+                                                <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
+                                                <span
+                                                  class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
+                                                <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
+                                                <!-- </div>-->
+                                                <span class="datepicker">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                  <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                                  <input class="" style="visibility: hidden; width:1px" type="text"
+                                                    [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                                    (dateChange)="handleFutureDateChange($event)">
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                           Choose Date
                                         </div>
@@ -409,29 +535,29 @@
                                           <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                                         </div>
-                                      </div>
+                                      </div> -->
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
-                                                                          Timings  </div>
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
 
-
-                                                                          <div class="col-md-6 col-xs-12 col-sm-8 form-group" *ngIf="isfutureAvailableTime">
-
-                                                                            <mat-chip-list class="">
-                                                                              <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                                                                              (click)="handleQueueSelection(queue, i)">
-                                                                              <!-- [selected]="queue(i) === nextAvailableTime"> -->
-                                                                                  {{queue['sTime'] + ' - ' +
-                                                                                  queue['eTime']}}
-                                                                              </mat-chip>
-                                                                          </mat-chip-list>
-                                                                          </div>
-                                                                          <div  *ngIf="!isfutureAvailableTime">
-                                                                              <p>No timings are available</p>
-                                                                            </div>
-                                                                        </div>
-                                                                      </div>
+                                            <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
+                                              <div class="lnk ">{{timings_title}} </div>
+                                              <mat-chip-list class="">
+                                                <mat-chip *ngFor="let queu of nextAvailableTimeQueue, let i= index"
+                                                (click)="handleQueueSelection(queu, i)">
+                                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                                    {{queu['sTime'] + ' - ' +
+                                                    queu['eTime']}}
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                            </div>
+                                            <div  *ngIf="!isfutureAvailableTime">
+                                                <div class="lnk ">{{timings_title}} </div>
+                                                <p>No timings are available</p>
+                                              </div>
+                                          <!-- </div> -->
+                                        </div>
+                                                                      
 
                                     </div>
 
@@ -508,25 +634,47 @@
                         </div> -->
                          <!-- Coupon end -->
  <!-- Total summary -->
-                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
-                            <span class="mr-15 font-weight-bold">Price ( {{orders.length }}items)</span>
-                            <span class="text-right"> &#8377;{{getTotalItemPrice()}}</span>
+                            <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
+                            <span class="text-right price rupee-font">{{getTotalItemPrice() | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">&#8377; {{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                            <span class="text-right price rupee-font"> {{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">&#8377;{{getDeliveryCharge()}}</span>
+                            <span class="text-right price rupee-font">{{ getDeliveryCharge() | currency:'&#8377;'}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">&#8377; {{getSubTotal()}}</span>
+                            <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                          <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                          <div class="d-flex justify-content-between mb-3">
+                            <span class="mr-15 font-weight-bold">Price </span>
+                            <span class="text-right price rupee-font"> {{orderDetails.cartAmount | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.netTaxAmount">
+                            <span class="mr-15 font-weight-bold">Tax</span>
+                            <span class="text-right price rupee-font"> {{orderDetails.bill.netTaxAmount | currency:'&#8377;'}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3"  *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                            <span class="text-right price rupee-font">{{orderDetails.deliveryCharge | currency:'&#8377;'}}</span>
+                          </div>
+
+                          <div class="d-flex justify-content-between" *ngIf="orderDetails.bill">
+                            <span class="mr-15 font-weight-bold">Total Price</span>
+                            <span class="text-right price rupee-font"> {{getSuborderTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
 
@@ -550,13 +698,13 @@
                   </div> -->
                   <div>
 
-                    <button [disabled]="placeOrderDisabled" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
                       Update Order
                     </button>
-                    <button [disabled]='disabledNextbtn' *ngIf="step == 1 || step == 2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]='disabledNextbtn' *ngIf="step == 1 || step == 2" type="button" class="pull-right btn btn-primary font-weight-bold text-uppercase px-9 py-1"
                       (click)="gotoNext()">
-                      Checkout
+                      Next
                     </button>
                   </div>
                 </div>

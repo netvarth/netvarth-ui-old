@@ -45,12 +45,14 @@
               "src/assets/third-party/Admin-LTE/css/_all-skins.css"
             ],
             "scripts": [
-              "src/assets/third-party/jquery/dist/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/owl.carousel/dist/owl.carousel.js",
               "node_modules/crypto-js/crypto-js.js",
               "src/assets/third-party/Admin-LTE/js/app.js"
-            ]
+            ],
+            "allowedCommonJsDependencies": ["crypto-js","ngx-owl-carousel","@ks89/angular-modal-gallery","underscore","file-saver","twilio-video","xlsx","qrcode",
+              "@ckeditor/ckeditor5-build-decoupled-document","speak-tts"]
           },
           "configurations": {
             "production": {

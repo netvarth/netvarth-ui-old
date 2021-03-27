@@ -1,0 +1,35 @@
+
+    <h1 class="mat-dialog-title">  Consumer Labels
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <div *ngIf="consumer_labels.length>0">
+    <mat-dialog-content>
+      <!-- <div *ngIf="consumer_labels.length>0"> -->
+      <mat-selection-list #labels    [(ngModel)]="selectedLabels" (ngModelChange)="onLabelChange($event)" >
+
+        <mat-list-option checkboxPosition="before" *ngFor=" let label of consumer_labels" [value] ="label" [selected]="isSelected(label)">
+
+          {{label.displayName}}
+
+        </mat-list-option>
+
+      </mat-selection-list>
+    <!-- </div>
+    <div *ngIf="consumer_labels.length>0">
+      <p>No labels Found</p>
+    </div> -->
+    </mat-dialog-content>
+    
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "  *ngIf="mode!='view'" (click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button"  *ngIf="mode!='view'"  (click)="onConfirm(labels.selectedOptions)" >Confirm</button>
+    </div>
+    </mat-dialog-actions>
+  </div>
+    <div *ngIf="consumer_labels.length==0">
+      <p class="ml-5">No Labels Found</p>
+    </div>

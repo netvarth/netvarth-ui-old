@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-jcoupon-details',
   templateUrl: './provider-jcoupon-details.component.html',
@@ -62,11 +63,15 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   isCheckin;
   checkin_label = '';
   showToken = false;
+  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  selday_arr: any=[];
+  selallweekdays: boolean;
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
     private location: Location,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     private router: ActivatedRoute) { this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
@@ -82,6 +87,18 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(
       data => {
         this.jCoupon = data;
+        if (this.jCoupon.couponRules.targetDate && this.jCoupon.couponRules.targetDate.length > 0) {
+
+          for (let j = 0; j < this.jCoupon.couponRules.targetDate[0].repeatIntervals.length; j++) {
+            // pushing the day details to the respective array to show it in the page
+            this.selday_arr.push(Number(this.jCoupon.couponRules.targetDate[0].repeatIntervals[j]));
+          }
+          if (this.selday_arr.length === 7) {
+            this.selallweekdays = true;
+          } else {
+            this.selallweekdays = false;
+          }
+        }
       }
     );
     const breadcrumbs = [];
@@ -94,6 +111,15 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     this.breadcrumbs = breadcrumbs;
   }
 
+  check_existsinweek_array(arr, val) {
+    let ret = -1;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === val) {
+        ret = i;
+      }
+    }
+    return ret;
+  }
   formatPrice(price) {
     return this.shared_functions.print_PricewithCurrency(price);
   }
@@ -106,7 +132,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.shared_functions.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   redirecToJaldeeBilling() {
     this.location.back();

@@ -354,7 +354,7 @@ export class ProviderSharedFuctions {
 
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
     const uuids = [];
-    let type;    
+    let type;
     let ynwUuid;
     let uuid;
     let name;
@@ -366,7 +366,7 @@ export class ProviderSharedFuctions {
       for (const watlst of waitlist) {
         if (appt === 'appt') {
           uuids.push(watlst.uid);
-        } else if(appt === 'order-provider'){
+        } else if (appt === 'order-provider') {
           uuids.push(watlst.uid);
         } else {
           uuids.push(watlst.ynwUuid);
@@ -376,21 +376,42 @@ export class ProviderSharedFuctions {
       type = 'single';
       if (appt === 'appt') {
         uuid = waitlist[0].uid || null;
-        name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
-          waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
+        let fname = '';
+        let lname = '';
+        if (waitlist[0].appmtFor[0].firstName) {
+          fname = waitlist[0].appmtFor[0].firstName;
+        }
+        if (waitlist[0].appmtFor[0].lastName) {
+          lname = waitlist[0].appmtFor[0].lastName;
+        }
+        name = fname + ' ' + lname;
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
-      } else if(appt === 'order-provider') {
+      } else if (appt === 'order-provider') {
         console.log(waitlist);
         uuid = waitlist[0].uid || null;
-        name = waitlist[0].orderFor.firstName ? waitlist[0].orderFor.firstName : '' + ' ' +
-               waitlist[0].orderFor.lastName ? waitlist[0].orderFor.lastName : '';
+        let fname = '';
+        let lname = '';
+        if (waitlist[0].orderFor.firstName) {
+          fname = waitlist[0].orderFor.firstName;
+        }
+        if (waitlist[0].orderFor.lastName) {
+          lname = waitlist[0].orderFor.lastName;
+        }
+        name = fname + ' ' + lname;
         email = waitlist[0].email;
-        phone = waitlist[0].phoneNumber;   
-      } else { 
+        phone = waitlist[0].phoneNumber;
+      } else {
         uuid = waitlist[0].ynwUuid || null;
-        name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
-          waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';
+        let fname = '';
+        let lname = '';
+        if (waitlist[0].waitlistingFor[0].firstName) {
+          fname = waitlist[0].waitlistingFor[0].firstName;
+        }
+        if (waitlist[0].waitlistingFor[0].lastName) {
+          lname = waitlist[0].waitlistingFor[0].lastName;
+        }
+        name = fname + ' ' + lname;
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
         phone_history = waitlist[0].waitlistPhoneNumber;
@@ -436,6 +457,8 @@ export class ProviderSharedFuctions {
     let ynwcustid;
     let custid = [];
     let name;
+    let phone;
+    let email;
     if (customerlist.length > 1 || source === 'donation-list') {
       type = 'multiple';
       for (const custlst of customerlist) {
@@ -448,7 +471,11 @@ export class ProviderSharedFuctions {
     } else if (customerlist.length === 1 && source !== 'donation-list') {
       type = 'single';
       custid = customerlist[0].id || null;
-      name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
+      const fname = (customerlist[0].firstName) ? customerlist[0].firstName : '';
+      const lname = (customerlist[0].lastName) ? customerlist[0].lastName : '';
+      name = fname + ' ' + lname;
+      phone = customerlist[0].phoneNo;
+      email = customerlist[0].email;
     }
     if (type === 'single') {
       ynwcustid = custid;
@@ -467,7 +494,9 @@ export class ProviderSharedFuctions {
           source: source,
           type: 'send',
           terminologies: terminologies,
-          name: name
+          name: name,
+          email: email,
+          phone: phone,
         }
       });
 

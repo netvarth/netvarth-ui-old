@@ -254,3 +254,6 @@
     border: none !important;
     pointer-events: none !important;
 }
+.fa-cloud-download {
+    font-family: 'FontAwesome' !important;
+}

@@ -1,7 +1,7 @@
 <section class="container cons-inbox no-padding-small">
   <div class="content comn-cls m0 p0">
     <div class="panel panel-default">
-      <div class="panel-heading top-row ">
+      <div class="panel-heading top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
           <app-header *ngIf="shared_functions.checkLogin()"></app-header>
         </div>
@@ -16,19 +16,18 @@
             <div class="card p0">
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
-                <!--begin::Entry-->
+                <div class="d-flex flex-row minhgt-80" *ngIf="messages.length==0">
+                  <div class="no-msg-section">
+                      <div class="nomsg-img mgn-bt-20"></div>
+                      No messages till now
+                  </div>
+              </div>
                 <div class="d-flex flex-column-fluid">
-                  <!--begin::Chat-->
-                  <div class="d-flex flex-row">
-                    <!--begin::Aside-->
+                  <div class="d-flex flex-row" *ngIf="messages.length>0">
                     <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
-                      <!--begin::Card-->
                       <div class="card card-custom">
-                        <!--begin::Body-->
                         <div class="card-body">
-                          <!--begin:Users-->
-                          <div class="mt-7 scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 75}">
-                            <!--begin:User-->
+                          <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 75}">
                             <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder"
                               (click)="providerSelection(user)"
                               class="d-flex align-items-center justify-content-between pointer-cursor pad-5"
@@ -51,40 +50,27 @@
                                   *ngIf="getUnreadCount(user.value) > 0">{{getUnreadCount(user.value)}}</span>
                               </div>
                             </div>
-                            <!--end:User-->
                           </div>
-                          <!--end:Users-->
                         </div>
-                        <!--end::Body-->
                       </div>
-                      <!--end::Card-->
                     </div>
-                    <!--end::Aside-->
-                    <!--begin::Content-->
+                    <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
+                      *ngIf="selectedProvider == '' && !small_device_display">
+                      <div class="inbox-nullimg" [ngStyle]="{'height.vh': 40}"></div>
+                      <div class="null-text">Select a chat to start messaging</div>
+                    </div>
                     <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                       *ngIf="(selectedProvider != '' && !small_device_display) || (small_device_display && showChat)">
-                      <!--begin::Card-->
                       <div class="card card-custom">
-                        <!--begin::Header-->
                         <div class="card-header align-items-center px-4 py-3">
                           <div class="text-center flex-grow-1">
-                            <div class="text-left flex-grow-1">
-                              <!--begin::Aside Mobile Toggle-->
-                              <i (click)="showChatSection()" class="fa fa-arrow-left pointer-cursor d-md-none"></i>
-                              <!--end::Aside Mobile Toggle-->
-                            </div>
                             <div class="text-dark-75 font-weight-bold font-size-h5">
                               {{selectedProvider}}</div>
                           </div>
                         </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
                         <div class="card-body no-padding-small">
-                          <!--begin::Scroll-->
                           <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 50}">
-                            <!--begin::Messages-->
                             <div class="messages" *ngFor="let msg of selectedUserMessages">
-                              <!--begin::Message In-->
                               <div *ngIf="msg.owner.id!==userDet.id" class="d-flex flex-column mb-5 align-items-start">
                                 <div class="d-flex align-items-center">
                                   <div>
@@ -104,11 +90,8 @@
                                           [src]="getThumbUrl(attachment)" /></a>
                                     </ng-container>
                                   </div>
-
                                 </div>
                               </div>
-                              <!--end::Message In-->
-                              <!--begin::Message Out-->
                               <div *ngIf="msg.owner.id==userDet.id" class="d-flex flex-column mb-5 align-items-end">
                                 <div class="d-flex align-items-center">
                                   <div>
@@ -130,22 +113,16 @@
                                   </div>
                                 </div>
                               </div>
-                              <!--end::Message Out-->
                             </div>
-                            <!--end::Messages-->
                             <div class="loading" *ngIf="!scrollDone">
                               <app-common-innerloading-spinner></app-common-innerloading-spinner>
                             </div>
                           </div>
-                          <!--end::Scroll-->
                         </div>
-                        <!--end::Body-->
-                        <!--begin::Footer-->
                         <div class="card-footer align-items-center">
-                          <!--begin::Compose-->
                           <div class="d-flex align-items-center justify-content-between mt-5">
                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
-                              class="form-control border-0 p-0" placeholder="Type a message"
+                              class="form-control border-0 p-0" placeholder="Type a message *"
                               [(ngModel)]="message"></textarea>
                             <div class="">
                               <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
@@ -155,11 +132,11 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display"
+                                *ngIf="!small_device_display" [class.disabled]="message==''"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
-                                class="fa fa-paper-plane" aria-hidden="true"></i>
+                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
                             </div>
                           </div>
                           <div class="img-section mgn-up-20"
@@ -178,17 +155,11 @@
                               </li>
                             </ul>
                           </div>
-                          <!--begin::Compose-->
                         </div>
-                        <!--end::Footer-->
                       </div>
-                      <!--end::Card-->
                     </div>
-                    <!--end::Content-->
                   </div>
-                  <!--end::Chat-->
                 </div>
-                <!--end::Entry-->
               </div>
             </div>
           </div>

@@ -18,7 +18,6 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 import { ViewRxComponent } from './view-rx/view-rx.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -29,11 +28,13 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GalleryImportComponent } from '../../../shared/modules/gallery/import/gallery-import.component';
 import { GalleryService } from '../../../shared/modules/gallery/galery-service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image,ButtonType } from '@ks89/angular-modal-gallery';
-
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
+  styleUrls: ['./consumer-home.component.css'],
   animations: [
     trigger('hideShowAnimator', [
       state('true', style({ opacity: 1, height: '100%' })),
@@ -230,6 +231,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  private subs=new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -241,9 +243,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private galleryService: GalleryService,  
+    private dateTimeProcessor: DateTimeProcessor,
     public _sanitizer: DomSanitizer) {
     this.onResize();
-    this.activated_route.queryParams.subscribe(qparams => {
+    this.subs.sink=this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
         this.api_loading = true;
         setTimeout(() => {
@@ -348,25 +351,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
-    this.gets3curl();
+    // this.gets3curl();
+    this.getFavouriteProvider();
     this.getAppointmentToday();
     // this.getAppointmentFuture();
     // this.getTdyOrder();
-    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
+    this.subs.sink= observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
 
-    this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
+    this.subs.sink=  observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = observableInterval(this.refreshTime * 1000).subscribe(x => {
+    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackPolling();
     });
-    this.cronHandleApptTrack = observableInterval(this.refreshTime * 1000).subscribe(x => {
+    this.subs.sink= observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackApptPolling();
     });
 
-    this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
+    this.subs.sink = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
         case 'fromconsumer': {
           this.closeCounters();
@@ -374,7 +378,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.gallerysubscription = this.galleryService.getMessage().subscribe(input => {
+    this.subs.sink = this.galleryService.getMessage().subscribe(input => {
       console.log(input);
       if (input && input.accountId && input.uuid && input.type === 'appt') {
         console.log(input);
@@ -471,18 +475,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    if (this.cronHandle) {
-      this.cronHandle.unsubscribe();
-    }
-    if (this.countercronHandle) {
-      this.countercronHandle.unsubscribe();
-    }
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if(this.gallerysubscription){
-      this.gallerysubscription.unsubscribe();
-    }
+  
     if (this.notificationdialogRef) {
       this.notificationdialogRef.close();
     }
@@ -510,17 +503,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.remfavdialogRef) {
       this.remfavdialogRef.close();
     }
-    if (this.cronHandleTrack) {
-      this.cronHandleTrack.unsubscribe();
-    }
-    if (this.cronHandleApptTrack) {
-      this.cronHandleApptTrack.unsubscribe();
-    }
+  
+    this.subs.unsubscribe();
   }
   setSystemDate() {
     const _this = this;
     return new Promise<void>(function (resolve, reject) {
-      _this.shared_services.getSystemDate()
+     _this.subs.sink= _this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
@@ -536,11 +525,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getWaitlist() {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
-    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
     const params = {
       'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
-    this.consumer_services.getWaitlist(params)
+    this.subs.sink=this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
           this.waitlists = data;
@@ -654,7 +643,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
           appx_ret.date = '';
-          appx_ret.time = this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+          appx_ret.time = this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           appx_ret.autoreq = true;
         }
       }
@@ -679,7 +668,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.consumer_services.getApptlist(params)
+    this.subs.sink=this.consumer_services.getApptlist(params)
       .subscribe(
         data => {
           this.appointments = data;
@@ -810,7 +799,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    this.shared_services.getFavProvider()
+    this.subs.sink=this.shared_services.getFavProvider()
       .subscribe(
         data => {
           this.loadcomplete.fav_provider = true;
@@ -825,11 +814,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   setWaitlistTimeDetails() {
-    let k = 0;
+    // let k = 0;
     for (const x of this.fav_providers) {
       this.fav_providers_id_list.push(x.id);
-      this.toogleDetail(x, k);
-      k++;
+      // this.toogleDetail(x, k);
+      // k++;
     }
   }
 
@@ -857,7 +846,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.consumer_services.getApptTime(post_provids_locid)
+      this.subs.sink=this.consumer_services.getApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
@@ -907,7 +896,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+      this.subs.sink=this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
           // const locationjson: any = [];
@@ -964,13 +953,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
@@ -979,14 +968,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               }
             } else {
@@ -1073,7 +1062,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-    this.shared_services.addProvidertoFavourite(id)
+   this.subs.sink= this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
@@ -1253,7 +1242,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .then(
         res => {
           this.s3url = res;
-          this.getFavouriteProvider();
+          // this.getFavouriteProvider();
         },
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1269,7 +1258,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (modDateReq) {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
-    this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
+    this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         switch (section) {
           case 'settings': {
@@ -1294,7 +1283,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.server_date) {
       filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
     }
-    this.shared_services.getConsumerDonations(filter).subscribe(
+    this.subs.sink=this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
@@ -1318,7 +1307,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let server_time;
     let checkinTime;
     let currentTime;
-    this.shared_services.getSystemDate()
+    this.subs.sink=this.shared_services.getSystemDate()
       .subscribe(
         res => {
           server_time = res;
@@ -1335,7 +1324,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let server_time;
     let checkinTime;
     let currentTime;
-    this.shared_services.getSystemDate()
+    this.subs.sink=this.shared_services.getSystemDate()
       .subscribe(
         res => {
           server_time = res;
@@ -1355,13 +1344,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           if (this.waitlists[i].estimated_timeinmins === 0) {
             this.waitlists[i].estimated_time = 'Now';
           } else {
-            this.waitlists[i].estimated_time = this.shared_functions.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
+            this.waitlists[i].estimated_time = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
           }
         }
       }
     }
   }
-
+  btnJoinVideoClicked(checkin, event) {
+    event.stopPropagation();
+    if(checkin.uid) {
+      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+    } else {
+      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
+    }
+    
+  }
   viewBill(checkin, type, event) {
     event.stopPropagation();
     if (type === 'appointment') {
@@ -1385,7 +1382,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
     } else {
-      console.log('oder');
+     
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.uid,
@@ -1466,20 +1463,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.coupondialogRef.afterClosed().subscribe(result => {
     });
   }
-
-  confirmSettleBill(waitlist) {
-    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'details': waitlist,
-        'origin': 'consumer'
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
-    });
-  }
   makeFailedPayment(waitlist) {
     const navigationExtras: NavigationExtras = {
       queryParams: { account_id: waitlist.providerAccount.id }
@@ -1512,7 +1495,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passdata = {
       'travelMode': type
     };
-    this.shared_services.updateTravelMode(uid, id, passdata)
+   this.subs.sink= this.shared_services.updateTravelMode(uid, id, passdata)
       .subscribe(data => {
         this.changemode[i] = false;
         this.getWaitlist();
@@ -1536,10 +1519,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getMintuesToHour(time) {
-    return this.shared_functions.providerConvertMinutesToHourMinute(time);
+    return this.dateTimeProcessor.providerConvertMinutesToHourMinute(time);
   }
   statusOfLiveTrack(waitlist, i) {
-    this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
+    this.subs.sink=this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
       .subscribe(data => {
         this.statusOfTrack[i] = data;
         waitlist.trackStatus = data;
@@ -1550,7 +1533,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   statusOfApptLiveTrack(appointment, i) {
-    this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
+    this.subs.sink=this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
       .subscribe(data => {
         this.statusOfApptTrack[i] = data;
         appointment.appttrackStatus = data;
@@ -1607,7 +1590,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return deg * Math.PI / 180;
   }
   updateLatLong(uid, id, passdata) {
-    this.shared_services.updateLatLong(uid, id, passdata)
+    this.subs.sink=this.shared_services.updateLatLong(uid, id, passdata)
       .subscribe(data => {
       },
         error => {
@@ -1623,7 +1606,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   startTracking(uid, id, i) {
-    this.shared_services.startLiveTrack(uid, id)
+    this.subs.sink=this.shared_services.startLiveTrack(uid, id)
       .subscribe(data => {
         this.getWaitlist();
       },
@@ -1632,7 +1615,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   stopTracking(uid, id, i) {
-    this.shared_services.stopLiveTrack(uid, id)
+   this.subs.sink= this.shared_services.stopLiveTrack(uid, id)
       .subscribe(data => {
         this.getWaitlist();
       },
@@ -1648,7 +1631,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   startApptTracking(uid, id, i) {
-    this.shared_services.startApptLiveTrack(uid, id)
+    this.subs.sink=this.shared_services.startApptLiveTrack(uid, id)
       .subscribe(data => {
         this.getApptlist();
       },
@@ -1657,7 +1640,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   stopApptTracking(uid, id, i) {
-    this.shared_services.stopApptLiveTrack(uid, id)
+    this.subs.sink=this.shared_services.stopApptLiveTrack(uid, id)
       .subscribe(data => {
         this.getApptlist();
       },
@@ -1691,7 +1674,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
-                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
+                 _this.subs.sink= _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1699,7 +1682,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 }
               } else {
                 if (waitlist.trackStatus) {
-                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
+                _this.subs.sink=  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1730,7 +1713,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
-                  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
+                 _this.subs.sink= _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1738,7 +1721,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 }
               } else {
                 if (apptlist.appttrackStatus) {
-                  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
+                _this.subs.sink=  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1804,7 +1787,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getAppointmentToday() {
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.consumer_services.getAppointmentToday(params)
+    this.subs.sink=this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
           this.appointmentslist = data;
@@ -1818,7 +1801,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getAppointmentFuture() {
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.consumer_services.getAppointmentFuture(params)
+    this.subs.sink=this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
           this.future_appointments = data;
@@ -1842,7 +1825,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getWaitlistFuture() {
     const params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
-    this.consumer_services.getWaitlistFuture(params)
+    this.subs.sink=this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
           this.future_waitlists = data;
@@ -1886,7 +1869,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getMeetingDetails(details, source) {
     const passData = {
@@ -1955,7 +1938,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   getTimeToDisplay(min) {
-    return this.shared_functions.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   viewprescription(checkin) {
     this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
@@ -1975,11 +1958,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_tdy_order = [];
     this.todayOrderslst = [];
     this.todayOrderslst_more = [];
-    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
     const params = {
       'orderDate-eq': this.tDate
     };
-    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+   this.subs.sink= this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
       if (data) {
@@ -2010,7 +1993,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //   const params = {
     //     'orderDate-gt': this.tDate
     //   };
-    this.consumer_services.getConsumerFutOrders().subscribe(data => {
+    this.subs.sink=this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
@@ -2066,9 +2049,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (type === 'appt') {
       pass_ob['type'] = type;
       pass_ob['uuid'] = booking.uid;
-    } else {
+    } else if (type === 'checkin') {
       pass_ob['type'] = type;
       pass_ob['uuid'] = booking.ynwUuid;
+    } else {
+      pass_ob['type'] = type;
+      pass_ob['uuid'] = booking.uid;
     }
     this.addattachment(pass_ob);
   }
@@ -2092,14 +2078,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewAttachment(booking,type) {
-    this.image_list_popup_temp = [];
-    this.image_list_popup = [];
-    console.log(type);
    if (type === 'appt') {
     console.log(type);
-    this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid , booking.providerAccount.id).subscribe(
+   this.subs.sink= this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid , booking.providerAccount.id).subscribe(
       (communications: any) => {
-        console.log(communications);
+        this.image_list_popup_temp = [];
+        this.image_list_popup = [];
         let count = 0;
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
@@ -2128,11 +2112,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       },
       error => { }
     );
-    }  else 
-      if(type === 'checkin') {
-      this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
+    }  else if (type === 'checkin') {
+      this.subs.sink=this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
         (communications: any) => {
-          console.log(communications);
+          this.image_list_popup_temp = [];
+          this.image_list_popup = [];
           let count = 0;
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
             const thumbPath = communications[comIndex].thumbPath;
@@ -2172,4 +2156,29 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
+  gotoQuestionnaire(booking) {
+    console.log(booking);
+    let consumerId;
+    let uuid;
+    let type;
+    if (booking.waitlistingFor) {
+      consumerId = (booking.waitlistingFor[0].id === booking.consumer.id) ? 0 : booking.waitlistingFor[0].id;
+      uuid = booking.ynwUuid;
+      type = 'consCheckin';
+    } else {
+      consumerId = (booking.appmtFor[0].id === booking.consumer.id) ? 0 : booking.appmtFor[0].id;
+      uuid = booking.uid;
+      type = 'consAppt';
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: uuid,
+        providerId: booking.providerAccount.id,
+        serviceId: booking.service.id,
+        consumerId: consumerId,
+        type: type
+      }
+    };
+    this.router.navigate(['consumer', 'questionnaire'], navigationExtras);
+  }
 }

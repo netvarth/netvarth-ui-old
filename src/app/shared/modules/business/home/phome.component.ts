@@ -11,7 +11,6 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { projectConstants } from '../../../../app.component';
 import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
-import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
 import { SessionStorageService } from '../../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -142,32 +141,16 @@ export class PhomeComponent implements OnInit {
   scrollToTop() {
     this.handleScroll('prov_home_n');
   }
-  doForgotPassword() {
-    this.resetApiErrors();
-    this.api_loading = false;
 
-
-    const dialogRef = this.dialog.open(ForgotPasswordComponent, {
-      width: '50%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: 'true'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'showsignupfromlogin') {
-        this.doSignup(origin);
-      }
-    });
-
-
-  }
   cancelForgotPassword() {
     this.step = 1;
   }
   ngOnInit() {
+    const a = document.getElementById("hubspot-messages-iframe-container");
+    if (a) {
+      a.classList.add('visible_chat');
+    }
+
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
@@ -235,6 +218,14 @@ export class PhomeComponent implements OnInit {
       }
     }, 200);
   }
+
+  ngOnDestroy() {
+    const a = document.getElementById("hubspot-messages-iframe-container");
+    if (a) {
+    a.classList.remove('visible_chat');
+    }
+  }
+
   handleScroll(target) {
     this.triggerScrollTo(target);
   }
@@ -325,8 +316,9 @@ export class PhomeComponent implements OnInit {
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     // this.api_loading = true;
 
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
-    this.shared_functions.clearSessionStorage();
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+    // this.shared_functions.clearSessionStorage();
+    this.sessionStorageService.clearSessionStorage();
     this.shared_functions.providerLogin(post_data)
       .then(
         () => {
@@ -416,21 +408,5 @@ export class PhomeComponent implements OnInit {
     };
     this.router.navigate(['business'], navigationExtras);
   }
-  // doLoginpage() {
-  //   this.routerobj.navigate(['business/login']);
-  // }
-  // doForgotPassword() {
-  //   const dialogRef = this.dialog.open(ForgotPasswordComponent, {
-  //     width: '60%',
-  //     panelClass: 'forgotpasswordmainclass',
-  //     data: {
-  //       is_provider : this.is_provider
-  //     }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     // this.animal = result;
-  //   });
-  // }
 }
 

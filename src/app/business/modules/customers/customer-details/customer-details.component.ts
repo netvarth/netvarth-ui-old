@@ -12,6 +12,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/pr
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-customer-details',
@@ -71,6 +72,9 @@ export class CustomerDetailComponent implements OnInit {
     todayvisitDetails: any = [];
     futurevisitDetails: any = [];
     historyvisitDetails: any = [];
+    ordervisitDetails: any = [];
+    todayordervisitDetails: any = [];
+    futureordervisitDetails: any = [];
     customerAction = '';
     waitlistModes = {
         WALK_IN_CHECKIN: 'Walk in Check-in',
@@ -89,9 +93,13 @@ export class CustomerDetailComponent implements OnInit {
     communication_history: any = [];
     todayVisitDetailsArray: any = [];
     futureVisitDetailsArray: any = [];
+    todayorderVisitDetailsArray: any = [];
+    futureorderVisitDetailsArray: any = [];
     showMoreFuture = false;
-    showMoreToday = false;
+    showMoreToday = false;    
     showMoreHistory = false;
+    showMoreorderFuture = false;
+    showMoreorderToday = false;
     selectedDetailsforMsg: any = [];
     uid;
     customernotes = '';
@@ -105,6 +113,7 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor:DateTimeProcessor,
         private groupService: GroupStorageService) {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
@@ -147,6 +156,7 @@ export class CustomerDetailComponent implements OnInit {
                                         this.getCustomerTodayVisit();
                                         this.getCustomerFutureVisit();
                                         this.getCustomerHistoryVisit();
+                                        this.getCustomerOrderVisit();
                                     }
                                 }
                             );
@@ -237,6 +247,20 @@ export class CustomerDetailComponent implements OnInit {
             }
         );
     }
+    getCustomerOrderVisit() {
+        this.loading = true;
+        this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
+            (data: any) => {
+                this.ordervisitDetails = data;
+                this.todayorderVisitDetailsArray = data.todayOrders;
+                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = data.futureOrders;
+                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                console.log(this.ordervisitDetails);
+                this.loading = false;
+            }
+        );
+    }
     stopprop(event) {
         event.stopPropagation();
     }
@@ -290,8 +314,10 @@ export class CustomerDetailComponent implements OnInit {
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
             this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type } });
-        } else {
+        } else  if (visit.appointmnet) {
             this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type } });
+        } else {
+            this.router.navigate(['provider', 'orders', visit.uid], { queryParams: { timetype: time_type } });
         }
     }
     goBack() {
@@ -404,9 +430,27 @@ export class CustomerDetailComponent implements OnInit {
             this.showMoreFuture = false;
         }
     }
+    showorderMore(type) {
+        if (type === 'today') {
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray;
+            this.showMoreorderToday = true;
+        } else if (type === 'future') {
+            this.futureordervisitDetails = this.futureorderVisitDetailsArray;
+            this.showMoreorderFuture = true;
+        }
+    }
+    showorderLess(type) {
+        if (type === 'today') {
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+            this.showMoreorderToday = false;
+        } else if (type === 'future') {
+            this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+            this.showMoreorderFuture = false;
+        }
+    }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.shared_functions.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     showHistory() {
         this.showMoreHistory = !this.showMoreHistory;

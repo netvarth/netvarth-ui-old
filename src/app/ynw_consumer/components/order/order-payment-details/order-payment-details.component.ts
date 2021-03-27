@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-order-payment-details',
   templateUrl: './order-payment-details.component.html',
   styleUrls: ['./order-payment-details.component.css']
 })
-export class OrderPaymentDetailsComponent implements OnInit {
+export class OrderPaymentDetailsComponent implements OnInit ,OnDestroy{
+   
   payments: any;
   breadcrumbs;
   date_cap = Messages.DATE_CAP;
@@ -19,8 +22,10 @@ export class OrderPaymentDetailsComponent implements OnInit {
   status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
+  private subs=new SubSink();
   constructor(public shared_functions: SharedFunctions,
       private router: Router,
+      private dateTimeProcessor: DateTimeProcessor,
       private shared_services: SharedServices) {
 
   }
@@ -36,6 +41,9 @@ export class OrderPaymentDetailsComponent implements OnInit {
       ];
       this.getPayments();
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+}
   stringtoDate(dt, mod) {
       let dtsarr;
       if (dt) {
@@ -49,7 +57,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
           } else if (mod === 'time') {
               retval = dtsarr[1] + ' ' + dtsarr[2];
               const slots = retval.split('-');
-              retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
+              retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
           }
           return retval;
           // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
@@ -58,7 +66,7 @@ export class OrderPaymentDetailsComponent implements OnInit {
       }
   }
   getPayments() {
-      this.shared_services.getConsumerPayments().subscribe(
+     this.subs.sink= this.shared_services.getConsumerPayments().subscribe(
           (payments) => {
               this.payments = payments;
           }

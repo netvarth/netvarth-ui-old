@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
-import { SharedFunctions } from './shared/functions/shared-functions';
 import { LocalStorageService } from './shared/services/local-storage.service';
 export let projectConstants: any = {};
 @Component({
@@ -9,23 +8,41 @@ export let projectConstants: any = {};
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+/**
+ * Root class of Jaldee Application
+ */
 export class AppComponent implements OnInit {
+  
+  // not used
   title = 'app';
+
+  /**
+   * 
+   * @param globalService 
+   * @param lStorageService 
+   */
   constructor(
     private globalService: GlobalService,
-    private shared_functions: SharedFunctions,
     private lStorageService: LocalStorageService
   ) { }
 
+  /**
+   * Init Method
+   * if version is null or different this method clears local storage items from a list.
+   * sets the current version in the local storage
+   * @returns projectConstants which represents the constant variables used in jaldee UI
+   * 
+   */
   ngOnInit() {
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
     if (pVersion && pVersion !== cVersion) {
-      this.shared_functions.clearLocalstorage();
+      this.lStorageService.clearLocalstorage();
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     } else {
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     }
   }
 }
+

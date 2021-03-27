@@ -74,7 +74,7 @@
                     <div class="addrs">
                       <div>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</div>
                       <div *ngIf="storeContact.address">
-                        <i class="fa fa-map-marker"></i> {{storeContact.address}}
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContact.address}}
                       </div>
                       <div><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</div>
                       <div *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</div>
@@ -130,7 +130,7 @@
                       Date/Time
                       <div class="fl-right"><a (click)="changeTime()">Change</a></div>
                     </div>
-                    <div class="order-label mgn-bt-10">
+                    <div *ngIf="isfutureAvailableTime" class="order-label mgn-bt-10">
                       <span *ngIf="!isFuturedate">Today, </span>
                       <span *ngIf="!isFuturedate">
                         {{nextAvailableTime}}
@@ -141,8 +141,11 @@
                         {{nextAvailableTime}}
                       </span>
                     </div>
+                    <div *ngIf="!isfutureAvailableTime" class="red">
+                        <span>No timings are available</span>
+                      </div>
                   </div>
-                  <div class="order-label mt-2" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                  <div class="order-label mt-2" *ngIf="(s3CouponsList.JC.length > 0||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                     *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                   <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                       Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
@@ -155,10 +158,10 @@
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
-                    <div class="order-label" *ngIf="catalog_details.taxPercentage">
+                    <!-- <div class="order-label" *ngIf="catalog_details.taxPercentage">
                       <div class="flex1">Tax</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
-                    </div>
+                    </div> -->
                     <ng-container *ngIf="orders.length!==0">
                     <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>
@@ -167,10 +170,10 @@
                   </ng-container>
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_loading &&catalog_details && catalog_details.showPrice">
-                    <div class="flex1">SUB TOTAL</div>
+                    <div class="flex1">SUB TOTAL<br><small>(Exclusive of all taxes)</small></div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
-                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Confirm Order</button>
+                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime" class="confm_btn">Confirm Order</button>
                 </div>
               </div>
             </div>
@@ -212,7 +215,7 @@
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'home'">Delivery
                             Timings </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'store'">Store
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'store'"> Store Pickup
                               Timings  </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
                           <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime"> -->

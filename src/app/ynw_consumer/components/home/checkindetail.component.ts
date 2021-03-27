@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,12 +13,17 @@ import { ActionPopupComponent } from './action-popup/action-popup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+
 
 @Component({
   selector: 'app-checkindetail',
   templateUrl: './checkindetail.component.html'
 })
-export class CheckinDetailComponent implements OnInit {
+export class CheckinDetailComponent implements OnInit,OnDestroy {
+
+  private subs=new SubSink();
   elementType = 'url';
   waitlist: any;
   api_loading = true;
@@ -71,9 +76,10 @@ export class CheckinDetailComponent implements OnInit {
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
-    this.activated_route.queryParams.subscribe(
+    this.subs.sink=this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
@@ -87,7 +93,7 @@ export class CheckinDetailComponent implements OnInit {
   }
   ngOnInit() {
     this.getCommunicationHistory();
-    this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
+   this.subs.sink= this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
         this.generateQR();
@@ -127,6 +133,9 @@ export class CheckinDetailComponent implements OnInit {
     this.getFavouriteProvider();
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
   generateQR() {
     this.qr_value = this.path + 'status/' + this.waitlist.checkinEncId;
   }
@@ -157,7 +166,7 @@ export class CheckinDetailComponent implements OnInit {
     });
   }
   getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.providerId)
+    this.subs.sink=this.consumer_services.getConsumerCommunications(this.providerId)
       .subscribe(
         data => {
           const history: any = data;
@@ -204,7 +213,7 @@ export class CheckinDetailComponent implements OnInit {
   }
 
   getFavouriteProvider() {
-    this.sharedServices.getFavProvider()
+    this.subs.sink=this.sharedServices.getFavProvider()
       .subscribe(
         data => {
           this.fav_providers = data;
@@ -256,7 +265,7 @@ export class CheckinDetailComponent implements OnInit {
     if (!id) {
       return false;
     }
-    this.sharedServices.addProvidertoFavourite(id)
+    this.subs.sink=this.sharedServices.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
@@ -267,7 +276,7 @@ export class CheckinDetailComponent implements OnInit {
   }
 
   getWtlistHistory(uuid, accid) {
-    this.consumer_services.getWtlistHistory(uuid, accid)
+    this.subs.sink=this.consumer_services.getWtlistHistory(uuid, accid)
       .subscribe(
         data => {
           this.wthistory = data;
@@ -279,6 +288,6 @@ export class CheckinDetailComponent implements OnInit {
       );
   }
   getTimeToDisplay(min) {
-    return this.shared_functions.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
 }

@@ -1,0 +1,24 @@
+.question-box {
+    margin-top: 10px;
+}
+@media (min-width: 768px) {
+    .quest-outer {
+        width: 50%;
+        float: left;
+        height: 120px;
+    }
+}
+.quest-outer {
+    padding: 10px;
+}
+.error-msg {
+    color: red;
+}
+.upload-btn {
+    background: white;
+    border: 1px solid;
+    font-size: small;
+}
+::ng-deep .mat-checkbox-layout {
+    font-weight: normal !important;
+}

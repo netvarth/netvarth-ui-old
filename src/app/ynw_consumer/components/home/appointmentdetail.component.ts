@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,12 +13,16 @@ import { ActionPopupComponent } from './action-popup/action-popup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-appointmentdetail',
   templateUrl: './appointmentdetail.component.html'
 })
-export class ApptDetailComponent implements OnInit {
+export class ApptDetailComponent implements OnInit,OnDestroy {
+  
+  private subs=new SubSink();
   elementType = 'url';
   api_loading = true;
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
@@ -68,7 +72,8 @@ export class ApptDetailComponent implements OnInit {
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -83,7 +88,7 @@ export class ApptDetailComponent implements OnInit {
   }
   ngOnInit() {
     this.getCommunicationHistory();
-    this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
+    this.subs.sink=this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
         this.generateQR();
@@ -118,6 +123,9 @@ export class ApptDetailComponent implements OnInit {
       });
     this.getFavouriteProvider();
   }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+    }
   generateQR() {
     this.qr_value = this.path + 'status/' + this.appt.appointmentEncId;
   }
@@ -151,11 +159,11 @@ export class ApptDetailComponent implements OnInit {
   getSingleTime(slot) {
     if (slot) {
       const slots = slot.split('-');
-      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
   getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.providerId)
+    this.subs.sink=this.consumer_services.getConsumerCommunications(this.providerId)
       .subscribe(
         data => {
           const history: any = data;
@@ -202,7 +210,7 @@ export class ApptDetailComponent implements OnInit {
   }
 
   getFavouriteProvider() {
-    this.sharedServices.getFavProvider()
+    this.subs.sink=this.sharedServices.getFavProvider()
       .subscribe(
         data => {
           this.fav_providers = data;
@@ -254,7 +262,7 @@ export class ApptDetailComponent implements OnInit {
     if (!id) {
       return false;
     }
-    this.sharedServices.addProvidertoFavourite(id)
+   this.subs.sink= this.sharedServices.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
@@ -265,7 +273,7 @@ export class ApptDetailComponent implements OnInit {
   }
 
   getAppointmentHistory(u_id, accid) {
-    this.consumer_services.getApptHistory(u_id, accid)
+    this.subs.sink=this.consumer_services.getApptHistory(u_id, accid)
       .subscribe(
         data => {
           console.log(data);

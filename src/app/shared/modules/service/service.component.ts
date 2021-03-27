@@ -14,6 +14,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -152,6 +153,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
@@ -431,7 +433,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
-        this.savedisabled = true;
+        // this.savedisabled = true;
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
@@ -651,7 +653,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.serviceForm.get('serviceDuration').setValue(this.duration);
     }
     getAppxTime(waitlist) {
-        return this.sharedFunctons.providerConvertMinutesToHourMinute(waitlist);
+        return this.dateTimeProcessor.providerConvertMinutesToHourMinute(waitlist);
     }
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;

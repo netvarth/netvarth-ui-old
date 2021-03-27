@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, HostListener } from '@angular/core';
+import { Component, Inject, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -13,13 +13,15 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { ConsumerServices } from '../../../services/consumer-services.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit,OnDestroy {
+
   msgCount: number;
   communication_history: any[];
   titlename = 'Order Details';
@@ -70,6 +72,8 @@ buttons: [
   s3url;
   terminologiesjson: ArrayBuffer;
   provider_id;
+  delivery_address: any;
+  private subs=new SubSink();
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -82,7 +86,7 @@ buttons: [
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices
   ) {
-    this.activated_route.queryParams.subscribe(
+    this.subs.sink=this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
@@ -110,13 +114,18 @@ buttons: [
     }
     this.no_of_grids = Math.round(divident / divider);
   }
-
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
   ngOnInit() {
     this.getCommunicationHistory();
-    this.sharedServices.getOrderByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
+    this.subs.sink=this.sharedServices.getOrderByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
         console.log(this.waitlist);
+        if (this.waitlist.homeDeliveryAddress) {
+          this.delivery_address = this.waitlist.homeDeliveryAddress;
+        }
         this.provider_id = this.waitlist.providerAccount.uniqueId;
         this.gets3curl();
         this.image_list_popup = [];
@@ -159,7 +168,7 @@ buttons: [
     if (modDateReq) {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
-    this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         switch (section) {
           case 'terminologies': {
@@ -185,7 +194,7 @@ buttons: [
   }
 
   getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.providerId)
+    this.subs.sink=this.consumer_services.getConsumerCommunications(this.providerId)
       .subscribe(
         data => {
           console.log(JSON.stringify(data));
@@ -234,7 +243,7 @@ buttons: [
     return fav;
   }
   getFavouriteProvider() {
-    this.sharedServices.getFavProvider()
+   this.subs.sink= this.sharedServices.getFavProvider()
       .subscribe(
         data => {
           this.fav_providers = data;
@@ -271,7 +280,7 @@ buttons: [
     if (!id) {
       return false;
     }
-    this.sharedServices.addProvidertoFavourite(id)
+    this.subs.sink=this.sharedServices.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
@@ -305,7 +314,7 @@ buttons: [
   }
   getStoreContact() {
     console.log('store');
-    this.sharedServices.getStoreContact(this.providerId)
+    this.subs.sink=this.sharedServices.getStoreContact(this.providerId)
       .subscribe((data: any) => {
         console.log(data);
         this.storeContact = data;
@@ -327,9 +336,7 @@ buttons: [
     return image ? images.indexOf(image) : -1;
   }
 
-  onButtonBeforeHook() {
-  }
-  onButtonAfterHook() { }
+
 
   showCommunication() {
     const dialogRef = this.dialog.open(CommunicationComponent, {

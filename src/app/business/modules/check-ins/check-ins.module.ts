@@ -11,7 +11,6 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
-import { CustomerModule } from '../customer/customer.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
@@ -32,6 +31,7 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 
 
 @NgModule({
@@ -46,7 +46,6 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         LoadingSpinnerModule,
         Nl2BrPipeModule,
         InboxModule,
-        CustomerModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,
         NgbModule,
@@ -59,10 +58,10 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         ProviderWaitlistCheckInConsumerNoteModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
-        CustomerModule,
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        QuestionnaireModule
     ],
     declarations: [
         CheckInsComponent,

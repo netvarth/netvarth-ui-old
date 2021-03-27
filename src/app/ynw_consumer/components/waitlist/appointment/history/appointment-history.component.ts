@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../services/consumer-services.service';
@@ -13,6 +13,7 @@ import { ConsumerRateServicePopupComponent } from '../../../../../shared/compone
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 // import * as moment from 'moment';
 
 
@@ -22,7 +23,8 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
   templateUrl: './appointment-history.component.html'
 })
 
-export class ConsumerAppointmentHistoryComponent implements OnInit {
+export class ConsumerAppointmentHistoryComponent implements OnInit,OnDestroy {
+
 
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
@@ -50,20 +52,8 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
   rate_your_visit = Messages.RATE_YOU_VISIT;
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   loading = true;
-  // breadcrumbs = [
-  //   {
-  //     title: 'My Jaldee',
-  //     url: '/consumer'
-  //   },
-  //   //  {
-  //   //   title: 'Checkins'
-  //   // },
-  //   {
-  //     title: 'Appointment History'
-  //   }
-  // ];
-  // breadcrumb_moreoptions: any = [];
 
+private subs=new SubSink();
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
     public route: ActivatedRoute,
@@ -80,10 +70,12 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     this.getAppointmentHistory();
   }
 
-
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+  }
 
   getAppointmentHistoryCount() {
-    this.consumer_services.getAppointmentHistoryCount()
+   this.subs.sink= this.consumer_services.getAppointmentHistoryCount()
       .subscribe(
         data => {
           this.pagination.totalCnt = data;
@@ -133,7 +125,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     const params = {
       account: waitlist.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
+   this.subs.sink= this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
       .subscribe(
         data => {
           const bill_data = data;
@@ -235,7 +227,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     }
   }
   getAppointmentHistory() {
-    this.consumer_services.getAppointmentHistory()
+    this.subs.sink=this.consumer_services.getAppointmentHistory()
       .subscribe(
         data => {
           this.history = data;

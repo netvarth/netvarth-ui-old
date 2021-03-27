@@ -235,7 +235,9 @@
                                                                                                                 -
                                                                                                         </span>
                                                                                                         <span
-                                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span><br>
+                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.apptState =='EXPIRED'"><sup>*</sup>Schedule is expired, edit it to activate</span>
+                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.apptState =='DISABLED'"><sup>*</sup>Schedule is disabled, enable it to activate</span>
                                                                                                 </div>
                                                                                         </h3>
                                                                                 </div>

@@ -33,12 +33,16 @@ export class PricingComponent implements OnInit {
           items: 1,
           center: false
         },
-        600: {
+        500: {
           items: 2,
           center: false
         },
-        992: {
+        700: {
           items: 3,
+          center: false
+        },
+        992: {
+          items: 4,
           center: false,
         },
         1300: {
@@ -59,12 +63,16 @@ export class PricingComponent implements OnInit {
           items: 1,
           center: false
         },
-        600: {
+        500: {
           items: 2,
           center: false
         },
-        992: {
+        700: {
           items: 3,
+          center: false
+        },
+        992: {
+          items: 4,
           center: false,
         },
         1300: {
@@ -93,10 +101,11 @@ export class PricingComponent implements OnInit {
     };
     this._scrollToService.scrollTo(config);
   }
-    openDialog(partName) {
+    openDialog(partName, type) {
       const dialogRef = this.dialog.open(PricingContentDialog, {
         data: {
-          part: partName
+          part: partName,
+          type: type
         }
       });
       dialogRef.afterClosed().subscribe(result => {

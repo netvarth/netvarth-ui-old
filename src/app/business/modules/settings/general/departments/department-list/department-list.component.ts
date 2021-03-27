@@ -19,7 +19,7 @@ export class DepartmentListComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     loading = true;
     tooltipcls = projectConstants.TOOLTIP_CLS;
-    add_button = Messages.ADD_BUTTON;
+    add_button = Messages.ADD_DEPT;
     breadcrumbs = [
         {
             title: 'Settings',

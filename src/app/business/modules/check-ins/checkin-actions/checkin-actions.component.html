@@ -19,6 +19,19 @@
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+
+
+
+        <!-- <div class="action-box pointer-cursor"
+            (click)="gotoQuestionnaire(checkin)">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Questionnaire</div>
+            </div>
+        </div> -->
+
+
+
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>
@@ -43,7 +56,7 @@
                 <div class="icon-text">Unblock</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('STARTED')">
+        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="!buttonClicked && changeWaitlistStatus('STARTED')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Start Service</div>
@@ -67,26 +80,26 @@
                 </div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
+        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="!buttonClicked && changeWaitlistStatus('CANCEL')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel {{(checkin.showToken) ? 'token' : 'check-in'}}</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
+        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="!buttonClicked && changeWaitlistStatus('REPORT')">
             <div class="action-box-sub">
                 <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
-            (click)="changeWaitlistStatus('DONE')">
+            (click)="!buttonClicked && changeWaitlistStatus('DONE')">
             <div class="action-box-sub">
                 <span class="complete-icon"></span>
                 <div class="icon-text">Complete</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
+        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="!buttonClicked && changeWaitlistStatus('CHECK_IN')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Status change</div>
@@ -106,7 +119,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="sendimages()"
-            *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
+            *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked' && showAttachment">
             <div class="action-box-sub">
                 <span><i class="material-icons">attach_file</i></span>
                 <div class="icon-text">Send Attachments</div>

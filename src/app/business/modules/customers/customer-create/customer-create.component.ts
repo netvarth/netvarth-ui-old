@@ -13,6 +13,7 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-customer-create',
@@ -123,6 +124,7 @@ export class CustomerCreateComponent implements OnInit {
   showToken;
   virtualServicemode;
   virtualServicenumber;
+  group;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -135,7 +137,8 @@ export class CustomerCreateComponent implements OnInit {
     private router: Router,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService) {
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor) {
     // this.search_data = this.data.search_data;
     const customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
@@ -147,6 +150,9 @@ export class CustomerCreateComponent implements OnInit {
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
       console.log(JSON.stringify(qparams));
+      if (qparams.selectedGroup) {
+        this.group = qparams.selectedGroup;
+      }
       if (qparams.uid) {
         this.uid = qparams.uid;
       }
@@ -161,12 +167,12 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
-        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist') {
+        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' ||this.source==='order') {
           this.getJaldeeIntegrationSettings();
           this.save_btn = 'Proceed';
         }
       } else {
-        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block')) {
+        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source==='order')) {
           this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
           if (this.source === 'waitlist-block') {
             if (this.showToken) {
@@ -456,7 +462,7 @@ export class CustomerCreateComponent implements OnInit {
     this.disableButton = true;
     let datebirth;
     if (form_data.dob) {
-      datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+      datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
     if (this.action === 'add') {
       const post_data = {
@@ -534,7 +540,7 @@ export class CustomerCreateComponent implements OnInit {
               };
               this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
             } else {
-              this.router.navigate(['provider', 'customers']);
+              this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
             }
           },
           error => {
@@ -585,6 +591,17 @@ export class CustomerCreateComponent implements OnInit {
                 }
               };
               this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+            }else if (this.source === 'order') {
+              const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  ph: form_data.mobile_number,
+                  checkinType: this.checkin_type,
+                  haveMobile: this.haveMobile,
+                  id: data,
+                  type: this.type
+                }
+              };
+              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
             } else {
               this.router.navigate(['provider', 'customers']);
             }
@@ -968,7 +985,7 @@ export class CustomerCreateComponent implements OnInit {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;

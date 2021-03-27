@@ -1,12 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-meeting-details',
   templateUrl: './meeting-details.component.html'
 })
-export class MeetingDetailsComponent implements OnInit {
+export class MeetingDetailsComponent implements OnInit,OnDestroy {
+
   iconClass: string;
   showJaldeeVideo = false;
 
@@ -14,6 +16,7 @@ export class MeetingDetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<MeetingDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
   meetingDetails: any = [];
+  private subs=new SubSink();
   ngOnInit() {
   console.log(this.data);
     if (this.data.details.service.serviceType === 'virtualService') {
@@ -46,13 +49,16 @@ export class MeetingDetailsComponent implements OnInit {
       this.getWaitlistMeetingDetails();
     }
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+  }
   getWaitlistMeetingDetails() {
-    this.shared_services.getConsumerWaitlistMeetingDetails(this.data.details.ynwUuid, this.data.details.service.virtualCallingModes[0].callingMode, this.data.details.providerAccount.id).subscribe(data => {
+   this.subs.sink= this.shared_services.getConsumerWaitlistMeetingDetails(this.data.details.ynwUuid, this.data.details.service.virtualCallingModes[0].callingMode, this.data.details.providerAccount.id).subscribe(data => {
       this.meetingDetails = data;
     });
   }
   getApptMeetingDetails() {
-    this.shared_services.getConsumerApptMeetingDetails(this.data.details.uid, this.data.details.service.virtualCallingModes[0].callingMode, this.data.details.providerAccount.id).subscribe(data => {
+    this.subs.sink=this.shared_services.getConsumerApptMeetingDetails(this.data.details.uid, this.data.details.service.virtualCallingModes[0].callingMode, this.data.details.providerAccount.id).subscribe(data => {
       this.meetingDetails = data;
     });
   }

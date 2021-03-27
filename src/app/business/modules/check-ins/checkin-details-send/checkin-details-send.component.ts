@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-checkin-details-send',
@@ -58,10 +58,10 @@ export class CheckinDetailsSendComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
         private provider_servicesobj: ProviderServices,
-        private shared_functions: SharedFunctions,
         private dialog: MatDialog,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
@@ -114,7 +114,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.qstarttime = this.data.qdata.queue.queueStartTime;
         this.qendtime = this.data.qdata.queue.queueEndTime;
 
-        this.location = this.data.qdata.queue.location.address;
+        this.location = this.data.qdata.queue.location.place;
         if (this.data.qdata.waitlistingFor[0].phoneNo) {
           this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
         }
@@ -130,7 +130,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         console.log(this.date)
         // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
-        this.location = this.data.qdata.location.address;
+        this.location = this.data.qdata.location.place;
         this.appttime = this.data.qdata.appmtFor[0].apptTime;
         this.appmtDate = this.data.qdata.appmtDate;
         this.schedulename =  this.data.qdata.schedule.name;
@@ -159,7 +159,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     }
     getSingleTime(slot) {
       const slots = slot.split('-');
-      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     sendMessage() {
       if (this.chekintype === 'Waitlist') {

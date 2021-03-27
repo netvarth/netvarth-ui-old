@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, EventEmitter, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, OnChanges, ViewChild, ElementRef , OnDestroy} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
     templateUrl: './addcatalogimage.component.html'
 })
 
-export class AddcatalogimageComponent implements OnInit, OnChanges {
+export class AddcatalogimageComponent implements OnInit, OnChanges, OnDestroy {
     header_caption = 'Catalog created successfully,you can upload catalog image now';
     select_image_cap = Messages.SELECT_IMAGE_CAP;
     delete_btn = Messages.DELETE_BTN;
@@ -39,6 +40,7 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
     source_id;
     subscription: Subscription;
     @ViewChild('imagefile') fileInput: ElementRef;
+    private subscriptions = new SubSink();
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<AddcatalogimageComponent>,
         public sharedfunctionObj: SharedFunctions,
@@ -57,6 +59,9 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
             this.dialogRef.close();
         }
     }
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+      }
     resetVariables() {
         this.item_pic = {
             files: [],
@@ -126,13 +131,15 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
         };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
-        this.provider_services.uploadCatalogImages(this.source_id, submit_data).subscribe((data) => {
+        this.subscriptions.sink = this.provider_services.uploadCatalogImages(this.source_id, submit_data).subscribe((data) => {
             this.snackbarService.openSnackBar('Image uploaded successfully');
             this.close();
             this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
         },
             error => {
                 this.error_msg = this.wordProcessor.getProjectErrorMesssages(error);
+                this.savedisabled = false;
+                this.img_save_caption = 'Save';
             });
     }
     actionCompleted() {

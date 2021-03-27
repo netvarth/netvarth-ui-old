@@ -1,31 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
-import { projectConstants } from '../../app.component';
+// import { projectConstants } from '../../app.component';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { SessionStorageService } from '../services/session-storage.service';
+import { FileService } from '../services/file-service';
 @Injectable()
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp', 'qB']; // ['isBusinessOwner'];
+  // dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp', 'qB']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
+  tdata: any;
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
     private providerDataStorage: ProviderDataStorageService,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService,
+    private fileService: FileService
   ) { }
 
   logout() {
@@ -58,7 +62,7 @@ export class SharedFunctions {
 
   doLogout() {
     const promise = new Promise<void>((resolve, reject) => {
-      if (localStorage.getItem('isBusinessOwner') === 'true') {
+      if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
         this.providerLogout()
           .then(
             data => {
@@ -80,8 +84,9 @@ export class SharedFunctions {
     const promise = new Promise<void>((resolve, reject) => {
       this.shared_service.ConsumerLogout()
         .subscribe(data => {
-          this.clearLocalstorage();
-          this.clearSessionStorage();
+          this.lStorageService.clearLocalstorage();
+          this.sessionStorageService.clearSessionStorage();
+          // this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -97,8 +102,9 @@ export class SharedFunctions {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
           this.providerDataStorage.setWeightageArray([]);
-          this.clearLocalstorage();
-          this.clearSessionStorage();
+          this.lStorageService.clearLocalstorage();
+          this.sessionStorageService.clearSessionStorage();
+          // this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -109,7 +115,7 @@ export class SharedFunctions {
     return promise;
   }
   consumerLogin(post_data, moreParams?) {
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ConsumerLogin(post_data)
@@ -151,7 +157,7 @@ export class SharedFunctions {
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);
-            localStorage.setItem('popupShown', 'false');
+            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
           },
@@ -177,7 +183,7 @@ export class SharedFunctions {
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);
-            localStorage.setItem('popupShown', 'false');
+            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
             this.router.navigate(['/provider']);
@@ -225,42 +231,25 @@ export class SharedFunctions {
   }
 
   public setLoginData(data, post_data, mod) {
-    // localStorage.setItem('ynw-user', JSON.stringify(data));
     this.groupService.setitemToGroupStorage('ynw-user', data);
-    localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+    this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
     }
     delete post_data['password'];
-    localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
-  }
-
-  public clearLocalstorage() {
-    this.lStorageService.removeitemfromLocalStorage('ynw-credentials');
-    for (let index = 0; index < localStorage.length; index++) {
-      if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-        localStorage.removeItem(localStorage.key(index));
-        index = index - 1; // manage index after remove
-      }
-    }
-  }
-  public clearSessionStorage() {
-    for (let index = 0; index < sessionStorage.length; index++) {
-      sessionStorage.removeItem(sessionStorage.key(index));
-      index = index - 1; // manage index after remove
-    }
+    this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
   }
   public checkLogin() {
-    const login = (localStorage.getItem('ynw-credentials')) ? true : false;
+    const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
   }
 
   public isBusinessOwner(passtyp?) {
     let is_business_owner;
-    if (localStorage.getItem('isBusinessOwner')) {
+    if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
       if (passtyp === 'returntyp') {
-        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
       } else {
-        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
+        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? true : false;
       }
     } else {
       if (passtyp === 'returntyp') {
@@ -362,32 +351,32 @@ export class SharedFunctions {
 
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('s3Url')) {
-        resolve(localStorage.getItem('s3Url'));
-      } else {
+      // if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+      //   resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
+      // } else {
         this.shared_service.gets3url(src)
           .subscribe(
             data => {
-              localStorage.setItem('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data);
               resolve(data);
             },
             error => {
               reject(error);
             });
-      }
+      // }
     });
     return promise;
   }
 
   getCloudUrl() {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('cloudUrl')) {
-        resolve(localStorage.getItem('cloudUrl'));
+      if (this.lStorageService.getitemfromLocalStorage('cloudUrl')) {
+        resolve(this.lStorageService.getitemfromLocalStorage('cloudUrl'));
       } else {
         this.shared_service.getCloudUrl()
           .subscribe(
             data => {
-              localStorage.setItem('cloudUrl', data.toString());
+              this.lStorageService.setitemonLocalStorage('cloudUrl', data.toString());
               resolve(data);
             },
             error => {
@@ -470,8 +459,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
@@ -487,8 +474,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
@@ -522,15 +507,13 @@ export class SharedFunctions {
   }
 
   imageValidation(file ,source?) {
-   let file_types;
+    let file_types;
     if(source ==='attachment' || source ==='consumerimages' ){
-        file_types = projectConstants.FILETYPES_UPLOAD;
+        file_types = this.fileService.getSupportedFormats('file');
     } else{
-        file_types = projectConstants.IMAGE_FORMATS;
+        file_types = this.fileService.getSupportedFormats('image');
     }
-    //const file_types = projectConstants.IMAGE_FORMATS;
-    // const image_max_size = projectConstants.IMAGE_MAX_SIZE;
-    const image_max_size = 15000000;
+    const image_max_size = this.fileService.getMaximumImageSize();
     const error = [];
     let is_error = false;
     if (!file.type || (file.type && file_types.indexOf(file.type) === -1)) {
@@ -547,6 +530,28 @@ export class SharedFunctions {
       return error;
     }
   }
+
+
+  fileValidation(file ) {
+    // let file_types;
+    //  if (source === 'attachment' || source === 'consumerimages' ) {
+    //      file_types = projectConstants.FILETYPES_UPLOAD;
+    //  } else {
+    //      file_types = projectConstants.IMAGE_FORMATS;
+    //  }
+     const image_max_size = 15000000;
+     const error = [];
+     let is_error = false;
+     if (file.size && file.size > image_max_size) {
+       error['size'] = true;
+       is_error = true;
+     }
+     if (is_error === false) {
+       return true;
+     } else {
+       return error;
+     }
+   }
 
   getApiError(error) {
     if (error.error && typeof error.error === 'string') {
@@ -683,13 +688,13 @@ export class SharedFunctions {
     return /^\d*$/.test(val);
   }
 
-  repeatFunction(ob) {
-    setInterval(
-      () => {
-        ob.repeatFunctions();
-      }, projectConstants.INTERVAL_TIME
-    );
-  }
+  // repeatFunction(ob) {
+  //   setInterval(
+  //     () => {
+  //       ob.repeatFunctions();
+  //     }, projectConstants.INTERVAL_TIME
+  //   );
+  // }
 
   getminutesOfDay(m) {
     return parseInt(m.minute, 10) + parseInt(m.hour, 10) * 60;
@@ -710,68 +715,68 @@ export class SharedFunctions {
     }
     return schedule_arr;
   }
-  arrageScheduleforDisplay(schedule_arr) {
-    const timebase: any = [];
-    for (let i = 0; i < schedule_arr.length; i++) {
-      const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
-      if (timebase[timeindx] === undefined) {
-        timebase[timeindx] = new Array();
-        timebase[timeindx].push(schedule_arr[i]);
-      } else {
-        timebase[timeindx].push(schedule_arr[i]);
-      }
-    }
-    for (const obj in timebase) {
-      if (obj) {
-        const len = timebase[obj].length;
-        for (let i = 0; i < len; i++) {
-          for (let j = i + 1; j < len; j++) {
-            if (timebase[obj][j].day < timebase[obj][i].day) {
-              const tempobj = timebase[obj][i];
-              timebase[obj][i] = timebase[obj][j];
-              timebase[obj][j] = tempobj;
-            }
-          }
-        }
-      }
-    }
-    const displaysch = [];
-    let pday = 0;
-    for (const obj in timebase) {
-      if (obj) {
-        let curstr = '';
-        let gap = 0;
-        for (let i = 0; i < timebase[obj].length; i++) {
-          if (i === 0) {
-            curstr = this.getDay(timebase[obj][i].day);
-            pday = timebase[obj][i].day;
-          } else {
-            const diffs = timebase[obj][i].day - pday;
-            if (diffs > 1) {
-              if (gap >= 1) {
-                if (curstr.includes((this.getDay(pday)))) {
-                } else {
-                  curstr = curstr + ' - ' + this.getDay(pday);
-                }
-              }
-              curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
-            } else {
-              if (i === (timebase[obj].length - 1)) {
-                curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
-              }
-              gap++;
-            }
-            pday = timebase[obj][i].day;
-          }
-        }
-        displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
-      }
-    }
-    return displaysch;
-  }
-  getDay(num) {
-    return projectConstants.myweekdaysSchedule[num];
-  }
+  // arrageScheduleforDisplay(schedule_arr) {
+  //   const timebase: any = [];
+  //   for (let i = 0; i < schedule_arr.length; i++) {
+  //     const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
+  //     if (timebase[timeindx] === undefined) {
+  //       timebase[timeindx] = new Array();
+  //       timebase[timeindx].push(schedule_arr[i]);
+  //     } else {
+  //       timebase[timeindx].push(schedule_arr[i]);
+  //     }
+  //   }
+  //   for (const obj in timebase) {
+  //     if (obj) {
+  //       const len = timebase[obj].length;
+  //       for (let i = 0; i < len; i++) {
+  //         for (let j = i + 1; j < len; j++) {
+  //           if (timebase[obj][j].day < timebase[obj][i].day) {
+  //             const tempobj = timebase[obj][i];
+  //             timebase[obj][i] = timebase[obj][j];
+  //             timebase[obj][j] = tempobj;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   const displaysch = [];
+  //   let pday = 0;
+  //   for (const obj in timebase) {
+  //     if (obj) {
+  //       let curstr = '';
+  //       let gap = 0;
+  //       for (let i = 0; i < timebase[obj].length; i++) {
+  //         if (i === 0) {
+  //           curstr = this.getDay(timebase[obj][i].day);
+  //           pday = timebase[obj][i].day;
+  //         } else {
+  //           const diffs = timebase[obj][i].day - pday;
+  //           if (diffs > 1) {
+  //             if (gap >= 1) {
+  //               if (curstr.includes((this.getDay(pday)))) {
+  //               } else {
+  //                 curstr = curstr + ' - ' + this.getDay(pday);
+  //               }
+  //             }
+  //             curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
+  //           } else {
+  //             if (i === (timebase[obj].length - 1)) {
+  //               curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
+  //             }
+  //             gap++;
+  //           }
+  //           pday = timebase[obj][i].day;
+  //         }
+  //       }
+  //       displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
+  //     }
+  //   }
+  //   return displaysch;
+  // }
+  // getDay(num) {
+  //   return projectConstants.myweekdaysSchedule[num];
+  // }
 
   orderChangeWorkingHours(schedulearr) {
     const tmparr = schedulearr;
@@ -930,145 +935,6 @@ export class SharedFunctions {
         break;
     }
   }
-
-  getTimeSlotsFromQTimings(interval, startTime, endTime) {
-    const slotList = [];
-    // slotList.push(startTime);
-    const startTimeStr = moment(startTime, ['HH:mm A']).format('HH:mm A').toString();
-    let startingDTime = this.getDateFromTimeString(startTimeStr);
-    slotList.push(moment(startTime, ['HH:mm A']).format('hh:mm A').toString());
-    const endTimeStr = moment(endTime, ['HH:mm A']).format('HH:mm A').toString();
-    const endDTime = this.getDateFromTimeString(endTimeStr);
-    // tslint:disable-next-line:radix
-    const endDate = parseInt(moment(endDTime, ['DD']).format('DD').toString());
-    // let startingDTime = this.getDateFromTimeString(startTime);
-    let exitLoop = false;
-    while (!exitLoop) {
-      const nextTime = moment(startingDTime).add(interval, 'm');
-      // tslint:disable-next-line:radix
-      const nextDate = parseInt(nextTime.format('DD'));
-      const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['HH:mm A']).format('HH:mm A').toString());
-      if (nextDate === endDate) {
-        if (nextTimeDt.getTime() <= endDTime.getTime()) {
-          slotList.push(moment(nextTime, ['HH:mm A']).format('hh:mm A').toString());
-        } else {
-          exitLoop = true;
-        }
-      } else {
-        exitLoop = true;
-      }
-      startingDTime = nextTimeDt;
-    }
-    return slotList;
-  }
-
-  getDateFromTimeString(time) {
-    const startTime = new Date();
-    const parts = time.match(/(\d+):(\d+) (AM|PM)/);
-    if (parts) {
-      let hours = parseInt(parts[1], 0);
-      const minutes = parseInt(parts[2], 0);
-      const tt = parts[3];
-      if (tt === 'PM' && hours < 12) {
-        hours += 12;
-      }
-      startTime.setHours(hours, minutes, 0, 0);
-    }
-    return startTime;
-  }
-  convertMinutesToHourMinute(mins) {
-    let rethr = '';
-    let retmin = '';
-    if (mins > 0) {
-      const hr = Math.floor(mins / 60);
-      const min = Math.floor(mins % 60);
-      if (hr > 0) {
-        if (hr > 1) {
-          rethr = hr + ' hours';
-        } else {
-          rethr = hr + ' hour';
-        }
-      }
-      if (min > 0) {
-        if (min > 1) {
-          retmin = ' ' + min + ' minutes';
-        } else {
-          retmin = ' ' + min + ' minute';
-        }
-      }
-    } else {
-      retmin = '' + 0 + ' minutes';
-    }
-    return rethr + retmin;
-  }
-  convertMinutesToHourMinuteForCheckin(mins) {
-    let rethr = '';
-    let retmin = '';
-    if (mins > 0) {
-      const hr = Math.floor(mins / 60);
-      const min = Math.floor(mins % 60);
-      if (hr > 0) {
-        if (hr > 1) {
-          rethr = hr + 'Hrs';
-        } else {
-          rethr = hr + 'Hr';
-        }
-      }
-      if (min > 0) {
-        if (min > 1) {
-          retmin = ' ' + min + 'Mins';
-        } else {
-          retmin = ' ' + min + 'Min';
-        }
-      }
-    } else {
-      retmin = '' + 0 + 'Min';
-    }
-    return rethr + retmin;
-  }
-  providerConvertMinutesToHourMinute(mins) {
-    let rethr = '';
-    let retmin = '';
-    if (mins > 0) {
-      const hr = Math.floor(mins / 60);
-      const min = Math.floor(mins % 60);
-      if (hr > 0) {
-        if (hr > 1) {
-          rethr = hr + ' Hrs';
-        } else {
-          rethr = hr + ' Hr';
-        }
-      }
-      if (min > 0) {
-        if (min > 1) {
-          retmin = ' ' + min + ' Mins';
-        } else {
-          retmin = ' ' + min + ' Min';
-        }
-      }
-    } else {
-      retmin = '' + 0 + ' Min';
-    }
-    return rethr + retmin;
-  }
-  getdaysdifffromDates(date1, date2) {
-    let firstdate;
-    let seconddate;
-    if (date1 === 'now') {
-      firstdate = new Date();
-    } else {
-      firstdate = new Date(date1);
-    }
-    seconddate = new Date(date2);
-    // const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
-    const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
-    return { 'hours': hours };
-  }
-  getTimeAsNumberOfMinutes(time) {
-    const timeParts = time.split(':');
-    const timeInMinutes = (parseInt(timeParts[0], 10) * 60) + parseInt(timeParts[1], 10);
-    return timeInMinutes;
-  }
   Lbase64Encode(str) {
     let retstr = '';
     if (str !== '' && str !== undefined) {
@@ -1089,70 +955,16 @@ export class SharedFunctions {
       return str;
     }
   }
-  formatDate(psdate, params: any = []) { /* convert year-month-day to day-monthname-year*/
-    const monthNames = {
-      '01': 'Jan',
-      '02': 'Feb',
-      '03': 'Mar',
-      '04': 'Apr',
-      '05': 'May',
-      '06': 'Jun',
-      '07': 'Jul',
-      '08': 'Aug',
-      '09': 'Sep',
-      '10': 'Oct',
-      '11': 'Nov',
-      '12': 'Dec'
-    };
-    const darr = psdate.split('-');
-    if (params['rettype'] === 'monthname') {
-      darr[1] = monthNames[darr[1]];
-      return darr[1] + ' ' + darr[2];
-    } else if (params['rettype'] === 'fullarr') {
-      darr[1] = monthNames[darr[1]];
-      return darr;
-    } else {
-      return darr[1] + ' ' + darr[2];
-    }
-  }
-  addZero(i) {
-    if (i < 10) {
-      i = '0' + i;
-    }
-    return i;
-  }
-  convert24HourtoAmPm(time, secreq?) {
-    const timesp = time.split(':');
-    let hr = parseInt(timesp[0], 10);
-    const min = parseInt(timesp[1], 10);
-    const sec = parseInt(timesp[2], 10);
-    let ampm = '';
-    let retstr = '';
-    if (hr >= 12) {
-      hr = hr - 12;
-      if (hr === 0) {
-        hr = 12;
-        ampm = 'PM';
-      } else if (hr < 0) {
-        ampm = 'AM';
-      } else {
-        ampm = 'PM';
-      }
-    } else if (hr === 0) {
-      hr = 12;
-      ampm = 'AM';
-    } else {
-      ampm = 'AM';
-    }
-    retstr = this.addZero(hr) + ':' + this.addZero(min);
-    if (secreq) {
-      retstr += ':' + sec;
-    }
-    retstr += ' ' + ampm;
-    return retstr;
-  }
-
   doCancelWaitlist(waitlist, type, cthis?) {
+    let prepay = false;
+    if (waitlist.service.minPrePaymentAmount) {
+      if (waitlist.service.minPrePaymentAmount > 0) {
+        prepay = true;
+      }
+    }
+    
+
+
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
@@ -1165,16 +977,34 @@ export class SharedFunctions {
     } else if (type === 'order') {
       msg = 'Order';
     }
+
+    if (prepay) {
+      this.tdata = {
+        'message': 'Refund Policy',
+        'heading': 'Confirm',
+        'type': 'yes/no',
+        'cancelPolicy' : 'show',
+        'book': msg
+      }
+   } else {
+    this.tdata = {
+      'message': 'Do you want to cancel this ' + msg + '?',
+      'heading': 'Confirm',
+      'type': 'yes/no'
+    }
+   }
+
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
-        data: {
-          'message': 'Do you want to cancel this ' + msg + '?',
-          'heading': 'Confirm',
-          'type': 'yes/no'
-        }
+        // data: {
+        //   'message': 'Do you want to cancel this ' + msg + '?',
+        //   'heading': 'Confirm',
+        //   'type': 'yes/no'
+        // }
+        data : this.tdata
       });
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
@@ -1261,11 +1091,7 @@ export class SharedFunctions {
   roundToTwoDecimel(amt) {
     return Math.round(amt * 100) / 100; // for only two decimal
   }
-  formatDateDisplay(dateStr) {
-    const pubDate = new Date(dateStr);
-    const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-    return obtshowdate;
-  }
+
   isValid(evt) {
     // tslint:disable-next-line:radix
     const value = parseInt(evt.target.value);
@@ -1384,75 +1210,7 @@ export class SharedFunctions {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
   }
-  getLiveTrackStatusMessage(liveTrackInfo, businessName, mode) {
-    if (liveTrackInfo && liveTrackInfo.jaldeeDistanceTime) {
-      const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
-      const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
-      const travelTime = liveTrackInfo.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
-      const hours = Math.floor(travelTime / 60);
-      const minutes = travelTime % 60;
-      let message = '';
-      if (distance === 0) {
-        message += 'You are close to ' + businessName;
-      } else {
-        message += 'From your current location, you are ' + distance + ' ' + unit + ' away and will take around';
-        if (hours !== 0) {
-          message += ' ' + hours;
-          if (hours === 1) {
-            message += ' hr';
-          } else {
-            message += ' hrs';
-          }
-        }
-        if (minutes !== 0) {
-          message += ' ' + minutes;
-          if (minutes === 1) {
-            message += ' min';
-          } else {
-            message += ' mins';
-          }
-        }
-        if (mode === 'WALKING') {
-          message += ' walk';
-        } else if (mode === 'DRIVING') {
-          message += ' drive';
-        } else if (mode === 'BICYCLING') {
-          message += ' ride';
-        }
-        message += ' to reach ' + businessName;
-      }
-      return message;
-    }
-  }
-  stringtoDate(dt, mod) {
-    let dtsarr;
-    if (dt) {
-      dtsarr = dt.split(' ');
-      const dtarr = dtsarr[0].split('-');
-      let retval = '';
-      if (mod === 'all') {
-        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
-      } else if (mod === 'date') {
-        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
-      } else if (mod === 'time') {
-        retval = dtsarr[1] + ' ' + dtsarr[2];
-      }
-      return retval;
-      // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
-    } else {
-      return;
-    }
-  }
-  transformToYMDFormat(date) {
-    const server = date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const serverdate = moment(server).format();
-    const newdate = new Date(serverdate);
-    const dd = newdate.getDate();
-    const mm = newdate.getMonth() + 1;
-    const y = newdate.getFullYear();
-    const date1 = y + '-' + mm + '-' + dd;
-    return date1;
-  }
+    
   setFilter() {
     setTimeout(() => {
       const sidebar = document.getElementById('filterContainer');
@@ -1465,9 +1223,7 @@ export class SharedFunctions {
 
   getBase64Image() {
     const promise = new Promise(function (resolve, reject) {
-
       const img = new Image();
-
       // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
       img.crossOrigin = 'Anonymous';
       img.onload = function () {

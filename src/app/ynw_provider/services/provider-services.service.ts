@@ -133,6 +133,19 @@ export class ProviderServices {
   addCoupon(data) {
     return this.servicemeta.httpPost('provider/bill/coupons', data);
   }
+  createCoupon(data) {
+    const url = 'provider/bill/coupons';
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateCoupon(data) {
+    const url = 'provider/bill/coupons';
+    return this.servicemeta.httpPut(url, data);
+  }
+  publishCoupon(data,id){
+    const url = 'provider/bill/coupons/'+id+'/publish';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   editCoupon(data) {
     return this.servicemeta.httpPut('provider/bill/coupons', data);
@@ -1668,6 +1681,10 @@ export class ProviderServices {
     const url = 'provider/customers/bookings/history/' + id;
     return this.servicemeta.httpGet(url);
   }
+  getCustomerOrderVisit(id){
+      const url = 'provider/orders/customer/' + id;
+      return this.servicemeta.httpGet(url);
+   }
   getMRAudits(id) {
     const url = 'provider/mr/auditLog/' + id;
     return this.servicemeta.httpGet(url);
@@ -1693,10 +1710,10 @@ export class ProviderServices {
     const url = 'provider/customers/label';
     return this.servicemeta.httpPost(url, data);
   }
-  deleteLabelFromCustomer(id, label) {
-    const url = 'provider/customers/' + id + '/label/' + label;
-    return this.servicemeta.httpDelete(url);
-  }
+  deleteLabelFromCustomer(data) {
+      const url = 'provider/customers/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
   uploadCoverFoto(data) {
     return this.servicemeta.httpPost('provider/coverPicture', data);
   }
@@ -1901,6 +1918,7 @@ export class ProviderServices {
     const url = 'provider/orders';
     return this.servicemeta.httpPut(url, data);
   }
+
   updateOrderItems(uid, data) {
     const url ='provider/orders/item/' + uid;
     return this.servicemeta.httpPut(url, data);
@@ -1921,5 +1939,9 @@ export class ProviderServices {
    uploadMRfiles(mrId, data) {
       const url = 'provider/mr/uploadMR/' + mrId;
       return this.servicemeta.httpPost(url, data);
+   }
+   getProviderUnreadCount(msgType, providerId) {
+     const url = 'provider/message/count/' + msgType + '/' + providerId;
+     return this.servicemeta.httpGet(url);
    }
 }

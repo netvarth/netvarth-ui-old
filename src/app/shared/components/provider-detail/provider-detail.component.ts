@@ -26,7 +26,10 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery'; 
+import * as $ from 'jquery';
+import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
+
 
 @Component({
   selector: 'app-provider-detail',
@@ -77,6 +80,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   get_token_btn = Messages.GET_TOKEN;
   people_ahead = Messages.PEOPLE_AHEAD_CAP;
   jaldee_coupon = Messages.JALDEE_COUPON;
+  coupon=Messages.COUPONS_CAP;
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   history_cap = Messages.HISTORY_CAP;
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
@@ -187,7 +191,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList: any = [];
+  s3CouponList :any= {
+  JC:[],OWN:[]
+  };
+ //  s3CouponList: any[] =[{'JC':[]}],[{'OWN':[]}];
   isfirstCheckinOffer;
   server_date;
   isCheckinEnabled = true;
@@ -273,9 +280,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
   accountEncId: string;
   userEncId: string;
-
+  locId;
   bsModalRef: BsModalRef;
-
+  qrdialogRef: any;
+  wndw_path = projectConstants.PATH;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+  checkinProviderList: any;
+  activeUser: any;
+  nonfirstCouponCount=0;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -291,12 +303,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     public wordProcessor: WordProcessor,
     private domainConfigService: DomainConfigGenerator,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private dateTimeProcessor: DateTimeProcessor
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+    // this.s3CouponList=new Array[2];
   }
   ngOnInit() {
     this.api_loading = true;
@@ -305,7 +319,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     const isMobile = {
@@ -338,10 +352,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.playstore = true;
       this.appstore = true;
     }
-    if (activeUser) {
-      this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    if (this.activeUser) {
+      this.isfirstCheckinOffer = this.activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.userId) {
@@ -350,9 +364,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (qparams.src) {
         this.pSource = qparams.src;
       }
-      // if (qparams.pId) {
-      //   this.businessid = qparams.pId;
-      // }
+      if (qparams.locId) {
+        this.locId = qparams.locId;
+      }
       this.businessjson = [];
       this.servicesjson = [];
       this.apptServicesjson = [];
@@ -429,13 +443,33 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           resolve(id);
         },
         error => {
-          console.error(error);
           resolve(encId);
         }
       );
     });
   }
-  ngOnDestroy() {
+
+  isfirstCheckinOfferProvider(){
+  let firstCheckin = true;
+    if (this.activeUser) {
+      this.checkinProviderList = this.activeUser.checkedInProviders;
+      if (this.checkinProviderList.length > 0) {
+        if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
+          firstCheckin = false;
+          console.log('already taken');
+        } else {
+          firstCheckin = true;
+
+        }
+      } else {
+        firstCheckin = true;
+      }
+
+    }
+    return firstCheckin;
+
+} 
+ ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
     }
@@ -473,11 +507,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   gets3curl() {
     this.retval = this.sharedFunctionobj.getS3Url('provider')
       .then(
-        res => {
+        (res:any) => {
           this.s3url = res;
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
-          // this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('providerCoupon', true);
           // this.getbusinessprofiledetails_json('jaldeediscount', true);
           if (this.userId) {
             this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
@@ -503,7 +538,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
+      .subscribe((res :any)=> {
         switch (section) {
           case 'businessProfile': {
             this.onlinePresence = res['onlinePresence'];
@@ -677,6 +712,25 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
+            let apptTimearr = [];
+            let waitTimearr = [];
+            if (this.deptUsers && this.deptUsers.length > 0) {
+              for (let dept of this.deptUsers) {
+                if (!this.showDepartments) {
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                } else {
+                  if (dept.users && dept.users.length > 0) {
+                    for (let user of dept.users) {
+                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                    }
+                  }
+                }
+              }
+            }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
             this.location_exists = true;
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
@@ -690,7 +744,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               }
             }
-            this.changeLocation(this.locationjson[0]);
+     
+            if (this.locId) {
+              const location = this.locationjson.filter(loc => loc.id === JSON.parse(this.locId));
+              this.changeLocation(location[0]);
+            } else {
+              this.changeLocation(this.locationjson[0]);
+            }
             this.api_loading = false;
             break;
           }
@@ -699,8 +759,23 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'coupon': {
-            this.s3CouponList = res;
+            if(res!==undefined){
+              this.s3CouponList.JC=res;
+            }else{
+              this.s3CouponList.JC=[];
+            }
             this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
+            break;
+          }
+          case 'providerCoupon': {
+            if(res!==undefined){
+              this.s3CouponList.OWN=res;
+            }else{
+              this.s3CouponList.OWN=[];
+            }
+            this.firstChckinCuponCunt(this.s3CouponList);
+            this.nonfirstPresent(this.s3CouponList);
             break;
           }
           case 'virtualFields': {
@@ -759,11 +834,127 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.bLogo = '../../../assets/images/img-null.svg';
             }
           }
+          if (section === 'coupon') {
+            this.s3CouponList.JC=[];
+          }
+          if (section === 'providerCoupon') {
+            this.s3CouponList.OWN=[];
+          }
+        
+       
         }
       );
   }
+  getUserApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            if (this.appttime_arr[i]['availableSlots']) {
+              this.appttime_arr[i]['caption'] = 'Next Available Time';
+              if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
+                this.appttime_arr[i]['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+              } else {
+                this.appttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                  + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+              }
+            }
+          }
+        });
+    }
+  }
+  getUserWaitingTime(provids) {
+    if (provids.length > 0) {
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+        post_provids.push(provids[i].locid);
+      }
+      if (post_provids.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
+        .subscribe(data => {
+          this.waitlisttime_arr = data;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+            if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+              if (!this.waitlisttime_arr[i]['nextAvailableQueue']['openNow']) {
+                this.waitlisttime_arr[i]['caption'] = 'Next Available Time ';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  } else {
+                    this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                      + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  }
+                } else {
+                  this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
+              } else {
+                this.waitlisttime_arr[i]['caption'] = 'Est Wait Time'; // 'Estimated Waiting Time';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                  this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                } else {
+                  this.waitlisttime_arr[i]['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  } else {
+                    this.waitlisttime_arr[i]['date'] = this.dateTimeProcessor.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                      + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  }
+                }
+              }
+            }
+          }
+        });
+    }
+  }
   getTimeToDisplay(min) {
-    return this.sharedFunctionobj.convertMinutesToHourMinute(min);
+    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   getAvailibilityForCheckin(date, serviceTime) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -787,7 +978,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (dtoday === date) {
       return ('Today' + ', ' + serviceTime);
     } else {
-      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+      return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
         + serviceTime);
     }
   }
@@ -813,7 +1004,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (dtoday === date) {
       return ('Today' + ', ' + this.getSingleTime(time));
     } else {
-      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+      return (this.dateTimeProcessor.formatDate(date, { 'rettype': 'monthname' }) + ', '
         + this.getSingleTime(time));
     }
   }
@@ -1137,12 +1328,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   openImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   openCatalogImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
     this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -1259,7 +1448,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        caption: 'Enquiry',
+        // caption: 'Enquiry',
         user_id: provid,
         source: 'consumer-common',
         type: 'send',
@@ -1362,7 +1551,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showCheckin(location.id, location.place, service.serviceAvailability.availableDate, service, 'consumer');
+      this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1405,7 +1594,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1448,7 +1637,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1457,7 +1646,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1489,7 +1678,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1497,18 +1686,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
         }
       }
     });
   }
-  showCheckin(locid, locname, curdate, service: any, origin?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?) {
 
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
+      googleMapUrl: gMapUrl,
       sel_date: curdate,
       cur: this.changedate_req,
       unique_id: this.provider_id,
@@ -1525,13 +1716,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, curdate, service: any, origin?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?) {
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
+      googleMapUrl: gMapUrl,
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
@@ -1611,15 +1804,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
 
-/*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    }); */
-    
+    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+          disableClose: true,
+          data: servData
+        });
+        this.servicedialogRef.afterClosed().subscribe(() => {
+        }); */
+
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -1662,11 +1855,29 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList.length; index++) {
-      if (CouponList[index].firstCheckinOnly === true) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
+        this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+      }
+    }
+  }
+  nonfirstPresent(CouponList) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
+        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+      }
+    }
+    
   }
 
   claimBusiness() {
@@ -1724,7 +1935,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
-    return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getAvailableSlot(slots) {
     let slotAvailable = '';
@@ -1908,6 +2119,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   }
                   if (!this.userId) {
                     for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+                      const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+                      this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
                       this.userCount++;
                     }
@@ -1947,6 +2162,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   }
                 }
                 for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+                  this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+                  this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
                   servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
                   this.userCount++;
                 }
@@ -2018,10 +2235,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
-    console.log(account_Id);
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
-    const orderItems = [];
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
@@ -2069,34 +2284,40 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
               const showpric = this.activeCatalog.showPrice;
               if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
                 this.itemCount++;
               }
             }
-            this.orderItems = orderItems;
+            // this.orderItems = orderItems;
           }
         });
+    }
   }
-}
 
 
 
-// OrderItem add to cart
-addToCart(itemObj) {
-  const item = itemObj.item;
-  const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
-  if (spId === null) {
-    this.orderList = [];
-    this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
-    this.orderList.push(itemObj);
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.getTotalItemAndPrice();
-    this.getItemQty(item);
-  } else {
-    if (this.orderList !== null && this.orderList.length !== 0) {
-      if (spId !== this.provider_bussiness_id) {
-        if (this.getConfirmation()) {
-          this.lStorageService.removeitemfromLocalStorage('order');
+  // OrderItem add to cart
+  addToCart(itemObj) {
+    const item = itemObj.item;
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.orderList = [];
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.orderList.push(itemObj);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.getTotalItemAndPrice();
+      this.getItemQty(item);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+          if (this.getConfirmation()) {
+            this.lStorageService.removeitemfromLocalStorage('order');
+          }
+        } else {
+          this.orderList.push(itemObj);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          this.getTotalItemAndPrice();
+          this.getItemQty(item);
         }
       } else {
         this.orderList.push(itemObj);
@@ -2104,80 +2325,102 @@ addToCart(itemObj) {
         this.getTotalItemAndPrice();
         this.getItemQty(item);
       }
-    } else {
-      this.orderList.push(itemObj);
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      this.getTotalItemAndPrice();
-      this.getItemQty(item);
     }
+
   }
 
-}
 
-
-getConfirmation() {
-  let can_remove = false;
-  const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-    disableClose: true,
-    data: {
-      'message': '  All added items in your cart for different Provider will be removed ! '
-    }
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      can_remove = true;
-      this.orderList = [];
-      this.lStorageService.removeitemfromLocalStorage('order_sp');
-      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-      this.lStorageService.removeitemfromLocalStorage('order_spId');
-      this.lStorageService.removeitemfromLocalStorage('order');
-      return true;
-    } else {
-      can_remove = false;
-
-    }
-  });
-  return can_remove;
-}
-removeFromCart(itemObj) {
-  const item = itemObj.item;
-
-  for (const i in this.orderList) {
-    if (this.orderList[i].item.itemId === item.itemId) {
-      this.orderList.splice(i, 1);
-      if (this.orderList.length > 0 && this.orderList !== null) {
-        this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      } else {
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+        this.orderList = [];
         this.lStorageService.removeitemfromLocalStorage('order_sp');
         this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
         this.lStorageService.removeitemfromLocalStorage('order_spId');
         this.lStorageService.removeitemfromLocalStorage('order');
-      }
+        return true;
+      } else {
+        can_remove = false;
 
-      break;
+      }
+    });
+    return can_remove;
+  }
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
+
+    for (const i in this.orderList) {
+      if (this.orderList[i].item.itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        if (this.orderList.length > 0 && this.orderList !== null) {
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        } else {
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
+        }
+
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+  }
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      const totalPrice = this.price + item_price;
+      this.price = totalPrice;
+      this.order_count = this.order_count + 1;
     }
   }
-  this.getTotalItemAndPrice();
-}
-getTotalItemAndPrice() {
-  this.price = 0;
-  this.order_count = 0;
-  for (const itemObj of this.orderList) {
-    let item_price = itemObj.item.price;
-    if (itemObj.item.showPromotionalPrice) {
-      item_price = itemObj.item.promotionalPrice;
+  checkout() {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account_id: this.provider_bussiness_id,
+          unique_id: this.provider_id,
+        }
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
+
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
     }
-    const totalPrice = this.price + item_price;
-    this.price = totalPrice;
-    this.order_count = this.order_count + 1;
+
+
   }
-}
-checkout() {
-  this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-  console.log(this.userType);
-  if (this.userType === 'consumer') {
+  itemDetails(item) {
     let blogoUrl;
     if (this.businessjson.logo) {
       blogoUrl = this.businessjson.logo.url;
@@ -2193,120 +2436,114 @@ checkout() {
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        account_id: this.provider_bussiness_id,
-        unique_id: this.provider_id,
-      }
-    };
-    this.router.navigate(['order/shoppingcart'], navigationExtras);
-
-  } else if (this.userType === '') {
-    const passParam = { callback: 'order' };
-    this.doLogin('consumer', passParam);
-  }
-
-
-}
-itemDetails(item) {
-  console.log(JSON.stringify(item));
-  const businessObject = {
-    'bname': this.businessjson.businessName,
-    'blocation': this.locationjson[0].place
-  };
-  this.lStorageService.setitemonLocalStorage('order', this.orderList);
-  this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-      item: JSON.stringify(item),
-      providerId: this.provider_bussiness_id,
-      showpric: this.activeCatalog.showPrice,
-      businessDetails: businessObject
-
-    }
-
-  };
-  this.router.navigate(['order', 'item-details'], navigationExtras);
-  // this.router.navigate(['consumer', 'order', 'item-details']);
-}
-increment(item) {
-  this.addToCart(item);
-}
-
-decrement(item) {
-  this.removeFromCart(item);
-}
-getItemQty(itemObj) {
-  let qty = 0;
-  if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
-    qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
-  }
-  return qty;
-}
-catlogArry() {
-  if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
-    this.orderList = this.lStorageService.getitemfromLocalStorage('order');
-  }
-  this.getTotalItemAndPrice();
-}
-
-reset() {
-
-}
-showOrderFooter() {
-  let showFooter = false;
-  this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
-  if (this.spId_local_id !== null) {
-    if (this.orderList !== null && this.orderList.length !== 0) {
-      if (this.spId_local_id !== this.provider_bussiness_id) {
-        showFooter = false;
-      } else {
-        showFooter = true;
-      }
-    }
-
-  }
-  return showFooter;
-}
-
-shoppinglistupload() {
-  const chosenDateTime = {
-    delivery_type: this.choose_type,
-    catlog_id: this.activeCatalog.id,
-    nextAvailableTime: this.nextAvailableTime,
-    order_date: this.sel_checkindate,
-    advance_amount: this.advance_amount,
-    account_id: this.provider_bussiness_id
-
-  };
-  this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-  this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-  console.log(this.userType);
-  if (this.userType === 'consumer') {
-    let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
-      blogoUrl = '';
-    }
-    const businessObject = {
-      'bname': this.businessjson.businessName,
-      'blocation': this.locationjson[0].place,
-      'logo': blogoUrl
-    };
-    // this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-
+        item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
+        showpric: this.activeCatalog.showPrice,
+        businessDetails: businessObject
+
       }
 
     };
-    this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
-  } else if (this.userType === '') {
-    const passParam = { callback: 'order' };
-    this.doLogin('consumer', passParam);
+    this.router.navigate(['order', 'item-details'], navigationExtras);
+    // this.router.navigate(['consumer', 'order', 'item-details']);
   }
-}
+  increment(item) {
+    this.addToCart(item);
+  }
+
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+  getItemQty(itemObj) {
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
+      qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
+    }
+    return qty;
+  }
+  catlogArry() {
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
+    }
+    this.getTotalItemAndPrice();
+  }
+
+  reset() {
+
+  }
+  showOrderFooter() {
+    let showFooter = false;
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (this.spId_local_id !== null) {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (this.spId_local_id !== this.provider_bussiness_id) {
+          showFooter = false;
+        } else {
+          showFooter = true;
+        }
+      }
+
+    }
+    return showFooter;
+  }
+
+  shoppinglistupload() {
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.activeCatalog.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.advance_amount,
+      account_id: this.provider_bussiness_id
+
+    };
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
+  }
+
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        path: this.wndw_path,
+        businessName: this.businessjson.businessName
+      }
+    });
+
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
 
 }
-

@@ -163,7 +163,7 @@ export class ProvidersignupComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private titleService: Title) {
-      this.titleService.setTitle('Jaldee Business - Signup');
+    this.titleService.setTitle('Jaldee Business - Signup');
     this.activatedRoute.queryParams.subscribe(params => {
       this.claimDetails = params;
     });
@@ -843,5 +843,8 @@ export class ProvidersignupComponent implements OnInit {
   handleSubDomainSelection() {
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.active_step = 2;
+  }
+  gotoTerms() {
+    window.open('business/terms', '_blank');
   }
 }

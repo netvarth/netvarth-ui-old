@@ -43,7 +43,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   checkedin_cnt = 0;
   tot_checkin_count = 0;
   customer_label = '';
-  frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
+  // frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
   disableButton = false;
   instantQueue;
   breadcrumbs;
@@ -80,6 +80,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  FRM_LEVEL_ADJ_DELAY_MSG_CNGE = '';
 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -98,6 +99,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   ngOnInit() {
+    this.FRM_LEVEL_ADJ_DELAY_MSG_CNGE = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE.replace('[customer]', this.customer_label);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -550,6 +552,8 @@ export class AdjustqueueDelayComponent implements OnInit {
       .subscribe(
         (data) => {
           this.queuejson = data;
+          console.log(this.queuejson);
+          this.queuejson = this.queuejson.filter(q => q.queueState !== 'EXPIRED');
           console.log(this.queuejson);
           if (this.queuejson.length === 1) {
             this.getTodayCheckIn(this.queuejson[0].id);

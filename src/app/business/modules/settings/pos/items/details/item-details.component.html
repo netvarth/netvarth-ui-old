@@ -198,7 +198,7 @@
                                 })">
                                     </app-field-error-display>
                                 </div>
-                                 <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-6">
                                     <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="itemCode"
                                             placeholder="Item Code" formControlName="itemCode" autocomplete="off">
@@ -223,7 +223,7 @@
                                     <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="itemCode"
                                             placeholder="Item Code" formControlName="itemCode" autocomplete="off">
-                                    </mat-form-field> -->
+                                    </mat-form-field>-->
                                     <div class="">
                                         <label class="form-control-label">
                                             Item Code
@@ -239,7 +239,7 @@
                                   'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
-                                </div>
+                                </div>                                
                                 <div class="form-group col-sm-6">
                                     <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="shortDec"
@@ -423,10 +423,17 @@
                                             <label class="form-control-label">
                                                 Custom Label
                                             </label>
-                                            <input type="text" class="form-control" id="customlabel"
+                                            <input type="text" class="form-control number-ip-sm" id="customlabel"
                                                 placeholder="Enter the custom label" formControlName="customlabel"
                                                 autocomplete="off">
                                         </div>
+                                        <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'customlabel')" errorMsg=""
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'customlabel',
+                                {
+                                  'maxlength' : 'Price can have only ' + maxNumberslabl + ' digits'
+                                })">
+                                    </app-field-error-display>
                                     </div>
                                 </div> 
                                 

@@ -568,10 +568,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             [ngModelOptions]="{standalone: true}" maxlength="20">
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
-        <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
-          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
+        <div class="infotext mgn-bt-20 mgn-up-20">
+          <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
             [ngModelOptions]="{standalone: true}">
-          </ckeditor>
+          </ckeditor> -->
+          <textarea [(ngModel)]="preInfoText" rows="10"
+          [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>
     </div>
@@ -591,10 +593,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             [ngModelOptions]="{standalone: true}" maxlength="20">
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
-        <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
-          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
+        <div class="infotext mgn-bt-20 mgn-up-20">
+          <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
             [ngModelOptions]="{standalone: true}">
-          </ckeditor>
+          </ckeditor> -->
+          <textarea [(ngModel)]="postInfoText" rows="10"
+          [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>
     </div>

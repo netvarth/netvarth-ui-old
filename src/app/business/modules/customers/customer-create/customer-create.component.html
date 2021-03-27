@@ -156,19 +156,33 @@
                                     </app-field-error-display>
                         </div>
                         <div class="col-lg-6">
-                            <label>Date of birth</label>
+
+                            <div class="form-group normalpicker">
+                                <label for="last_name">Date of birth</label>
+                                <div class="pickerouter">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input class="form-control dtepicker" type="text" matInput
+                                        (click)="picker.open()" [matDatepicker]="picker" formControlName="dob"
+                                        [max]="tday" [min]="minday" placeholder="DD/MM/YYYY" readonly>
+                                </div>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                    errorMsg="Please select the date of birth.">
+                                </app-field-error-display>
+                            </div>
+                            <!-- <label>Date of birth</label>
                             <div class="input-group">
-                                <input class="form-control pad-19" type="date" value="2011-08-19" id="example-date-input"
+                                <input class="form-control" type="date"  id="dob"
                                 formControlName="dob" [max]="tday" [min]="minday"/>
                             </div>
                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                         errorMsg="Please select the date of birth.">
-                                    </app-field-error-display>
+                                    </app-field-error-display> -->
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-6">
-                            <label>Adress</label>
+                            <label>Address</label>
                             <div class="input-group">
                                 <div class="input-group-prepend"></div>
                                 <textarea type="text" class="form-control" id="address" placeholder="Address"
@@ -176,7 +190,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <label>Gender</label>
+                            <!-- <label>Gender</label>
                             <div class="radio-inline">
                                 <label class="radio radio-solid">
                                     <input type="radio" name="example_2" checked="checked" value="2"/>
@@ -193,9 +207,20 @@
                                     <span></span>
                                     Others
                                 </label>
-                            </div>
+                                
+                            </div> -->
+                            <label class="col-form-label" for="gender">{{gender_cap}}</label>
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="female">
+                                    {{female_cap}}</mat-radio-button>
+                                <mat-radio-button class="mat-radio-button-createpatient" value="others">Others
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                                errorMsg="Please select the gender.">
+                            </app-field-error-display>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="card-footer">

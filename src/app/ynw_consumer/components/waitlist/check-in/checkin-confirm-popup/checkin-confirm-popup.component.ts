@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 // import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
     templateUrl: './checkin-confirm-popup.component.html',
     styleUrls: ['./checkin-confirm-popup.component.css']
 })
-export class CheckinConfirmPopupComponent implements OnInit {
+export class CheckinConfirmPopupComponent implements OnInit,OnDestroy {
 
     service_det;
     waitlist_for;
@@ -58,7 +59,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     countryCode;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
-
+ private subs=new SubSink();
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -94,7 +95,9 @@ export class CheckinConfirmPopupComponent implements OnInit {
     ngOnInit() {
         this.getProfile();
     }
-
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+       }
 
     close() {
         this.dialogRef.close();
@@ -102,7 +105,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-            _this.provider_services.getWaitlistMgr()
+          _this.subs.sink=  _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -131,7 +134,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     }
     addCheckInConsumer() {
         // this.api_loading = true;
-        this.shared_services.addCheckin(this.account_id, this.post_Data)
+        this.subs.sink=this.shared_services.addCheckin(this.account_id, this.post_Data)
             .subscribe(data => {
                 const retData = data;
                 let retUUID;
@@ -207,7 +210,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
         // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
         //     dataToSend)
         for( const uuid of uuids){
-        this.shared_services.addConsumerWaitlistAttachment(this.account_id,uuid,dataToSend)    
+            this.subs.sink=this.shared_services.addConsumerWaitlistAttachment(this.account_id,uuid,dataToSend)    
             .subscribe(
                 () => {
                 },
@@ -233,7 +236,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     'email': this.payEmail.trim() || ''
                 };
                 const passtyp = 'consumer';
-                this.shared_services.updateProfile(post_data, passtyp)
+                this.subs.sink= this.shared_services.updateProfile(post_data, passtyp)
                     .subscribe(
                         () => {
                             this.action = '';

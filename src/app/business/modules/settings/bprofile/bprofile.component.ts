@@ -17,7 +17,6 @@ import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
-import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
@@ -193,6 +192,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
+  @ViewChild('closebutton') closebutton;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
   show_cover_options = false;
@@ -1346,13 +1346,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // Change pro pic
   changeProPic(image) {
     console.log(image);
+    console.log(this.blogo);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'userdata': this.bProfile,
-        img_type: image
+        img_type: image,
+        'logoExist': (this.blogo[0]) ? true : false
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -1365,28 +1367,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
-
-  // Social Media
-  handleSocialmedia(key?) {
-    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        bprofile: this.bProfile,
-        editkey: key || ''
-      }
-    });
-    this.socialdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      }
-    });
-  }
-
   getSocialdet(key, field) {
     const retdet = this.orgsocial_list.filter(
       soc => soc.key === key);
@@ -1394,9 +1374,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     return returndet;
   }
 
-  editSocialmedia(key) {
-    this.handleSocialmedia(key);
-  }
   deleteSocialmedia(sockey) {
     const post_data: any = [];
     for (let i = 0; i < this.social_arr.length; i++) {
@@ -1454,6 +1431,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      console.log(this.qrCodePath);
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
         { property: 'og:image', content: this.imageUrl },
@@ -1622,11 +1600,18 @@ uploadLogo(passdata) {
                 this.sharedfunctionobj.sendMessage(pdata);
                 this.api_success = Messages.BPROFILE_LOGOUPLOADED;
                 this.spinner_load = false;
+                setTimeout(() => {
+                  this.closeGroupDialog();
+                }, 2000);
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
+}
+closeGroupDialog() {
+  this.closebutton.nativeElement.click();
+  this.api_success = '';
 }
 
 rotateLeft() {

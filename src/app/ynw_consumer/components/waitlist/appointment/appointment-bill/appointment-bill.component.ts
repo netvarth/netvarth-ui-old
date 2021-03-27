@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -17,13 +17,15 @@ import { RazorpayService } from '../../../../../shared/services/razorpay.service
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
     templateUrl: './appointment-bill.component.html'
 
 })
-export class ConsumerAppointmentBillComponent implements OnInit {
+export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
+  
     @ViewChild('itemservicesearch') item_service_search;
     tooltipcls = '';
     new_cap = Messages.NEW_CAP;
@@ -91,7 +93,10 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     showPaidlist = false;
     showJCouponSection = false;
     jCoupon = '';
-    couponList: any = [];
+    couponList : any={
+        JC:[],OWN:[]
+      };
+ 
     refund_value;
     discountDisplayNotes = false;
     billNoteExists = false;
@@ -116,6 +121,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     s3url;
     terminologiesjson;
     provider_id;
+    private subs=new SubSink();
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -132,7 +138,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService
     ) {
-        this.activated_route.queryParams.subscribe(
+        this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
                 if (params.accountId) {
                     this.accountId = params.accountId;
@@ -147,31 +153,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                     this.source = params.source;
                 }
                 this.getAppointment();
-                // if (this.source === 'history') {
-                //     this.breadcrumbs = [
-                //         {
-                //             title: 'My Jaldee',
-                //             url: 'consumer'
-                //         },
-                //         {
-                //             title: 'Appointment History',
-                //             url: 'consumer/appointment/history'
-                //         },
-                //         {
-                //             title: 'Bill'
-                //         }
-                //     ];
-                // } else {
-                //     this.breadcrumbs = [
-                //         {
-                //             title: 'My Jaldee',
-                //             url: 'consumer'
-                //         },
-                //         {
-                //             title: 'Bill'
-                //         }
-                //     ];
-                // }
+            
                 if (params.type) {
                     this.checkIn_type = params.type;
                 }
@@ -192,15 +174,19 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     }
     ngOnInit() {
     }
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
     getAppointment() {
         const params = {
             account: this.accountId
         };
-        this.consumer_services.getAppointmentDetail(this.uuid, params)
+        this.subs.sink=this.consumer_services.getAppointmentDetail(this.uuid, params)
             .subscribe(
                 data => {
                     this.checkin = data;
                     this.getCouponList();
+                    this.getproviderCouponList();
                     this.getAppointmentBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
@@ -239,7 +225,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         if (modDateReq) {
             UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
         }
-        this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+       this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
             .subscribe(res => {
                 switch (section) {
                     case 'terminologies': {
@@ -286,7 +272,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         const params = {
             account: this.accountId
         };
-        this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
+       this.subs.sink= this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
             .subscribe(
                 data => {
                     this.bill_data = data;
@@ -323,7 +309,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         const params = {
             account: this.accountId
         };
-        this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
+        this.subs.sink=this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
             .subscribe(
                 data => {
                     this.pre_payment_log = data;
@@ -338,7 +324,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
      */
     getPaymentModes() {
         this.paytmEnabled = false;
-        this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.subs.sink=this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
                     this.payment_options = data;
@@ -375,7 +361,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             this.pay_data.amount !== 0) {
             this.api_success = Messages.PAYMENT_REDIRECT;
             this.gateway_redirection = true;
-            this.sharedServices.consumerPayment(this.pay_data)
+            this.subs.sink=this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
                     (data: any) => {
                         this.origin = 'consumer';
@@ -409,7 +395,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             this.pay_data.amount !== 0) {
             this.api_success = Messages.PAYMENT_REDIRECT;
             this.gateway_redirection = true;
-            this.sharedServices.consumerPayment(this.pay_data)
+            this.subs.sink=this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
                     (data: any) => {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
@@ -463,7 +449,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
      */
     applyAction(action, uuid) {
         return new Promise<void>((resolve, reject) => {
-            this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
+            this.subs.sink=this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
                 (billInfo => {
                     this.bill_data = billInfo;
                     this.getAppointmentBill();
@@ -716,16 +702,34 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         this.sharedfunctionObj.getS3Url()
             .then(
                 s3Url => {
-                    this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+                    this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
                         .subscribe(res => {
-                            this.couponList = res;
+                            
+                            this.couponList.JC = res;
+                        });
+                });
+    }
+    getproviderCouponList() {
+        const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        this.sharedfunctionObj.getS3Url()
+            .then(
+                s3Url => {
+                    this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
+                        .subscribe(res => {
+                            this.couponList.OWN = res;
                         });
                 });
     }
     checkCouponValid(couponCode) {
         let found = false;
-        for (let couponIndex = 0; couponIndex < this.couponList.length; couponIndex++) {
-            if (this.couponList[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+        for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {
+            if (this.couponList.JC[couponIndex].jaldeeCouponCode.trim() === couponCode.trim()) {
+                found = true;
+                break;
+            }
+        }
+        for (let couponIndex = 0; couponIndex < this.couponList.OWN.length; couponIndex++) {
+            if (this.couponList.OWN[couponIndex].couponCode.trim() === couponCode.trim()) {
                 found = true;
                 break;
             }

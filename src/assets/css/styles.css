@@ -413,6 +413,7 @@
     content: "\4b";
 }
 
+
 .icon-info:before {
     content: "\42";
 }
@@ -1363,7 +1364,10 @@ body { font-size: 1rem !important}
     }
 }
 
-.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls {
+.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .publishcls
+  {
     position: relative;
     border: none;
     background: transparent;
@@ -1373,7 +1377,9 @@ body { font-size: 1rem !important}
     cursor: pointer;
 }
 
-.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls:before, .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before {
+.content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .editcls:before,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .deletecls:before,
+ .content.see-pages .outer-card .card .d-tbl .table tbody tr td.mre .mbt-mobile-show .publishcls:before {
     font-family: "custom-ynw" !important;
     content: "\78";
     position: absolute;
@@ -3683,7 +3689,7 @@ body { font-size: 1rem !important}
     justify-content: flex-end;
 }
 
-.table-outer table tbody tr td.action .mbt-mobile-show .editcls, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls {
+.table-outer table tbody tr td.action .mbt-mobile-show .editcls, .table-outer table tbody tr td.action .mbt-mobile-show .deletecls ,.table-outer table tbody tr td.action .mbt-mobile-show .publishcls,.table-outer table tbody tr td.action .mbt-mobile-show .viewcls{
     position: relative;
     border: none;
     background: transparent;
@@ -3700,6 +3706,21 @@ body { font-size: 1rem !important}
     left: 0;
     font-size: .875rem;
 }
+.table-outer table tbody tr td.action .mbt-mobile-show .publishcls:before {
+    font-family: "custom-ynw" !important;
+    content: "\2e";
+    position: absolute;
+    left: 0;
+    font-size: .875rem;
+}
+.table-outer table tbody tr td.action .mbt-mobile-show .viewcls:before {
+    font-family: "custom-ynw" !important;
+    content: "\42";
+    position: absolute;
+    left: 0;
+    font-size: .875rem;
+}
+
 
 .table-outer table tbody tr td.action .mbt-mobile-show .deletecls {
     margin-right: 0;
@@ -5318,6 +5339,12 @@ body { font-size: 1rem !important}
 
 .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .deletecls:before {
     content: "\4b";
+}
+.content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .publishcls:before {
+    content: "\2e";
+}
+.content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .ctd .mbt-mobile-show .viewcls:before {
+    content: "\42";
 }
 
 @media (min-width: 768px) and (max-width: 991px) {

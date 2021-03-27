@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../../../../../../shared/services/gro
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
+import { JaldeeTimeService } from '../../../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-userwaitlist-schedules',
@@ -31,7 +32,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     customer_label = '';
     locations;
     api_loading = true;
-    add_button = Messages.ADD_BUTTON;
+    add_button =  'Click to create a schedule';
     // tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     tooltip_queueedit = Messages.SCHEDULENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
@@ -126,6 +127,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         public fed_service: FormMessageDisplayService,
         private activatedRoot: ActivatedRoute,
         private dialog: MatDialog,
+        private jaldeeTimeService: JaldeeTimeService,
         private fb: FormBuilder) {
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
@@ -356,7 +358,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].apptSchedule);
                             }
                             let display_schedule = [];
-                            display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                            display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                             allQs[ii]['displayschedule'] = display_schedule;
                             // replace instancequeue with new flag
                             if (allQs[ii].isAvailableToday && allQs[ii].apptState === 'ENABLED') {

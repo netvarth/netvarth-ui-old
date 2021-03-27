@@ -504,5 +504,52 @@
 .hide_qty {
   visibility: hidden !important;
 }
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  padding: 0rem !important;
+  background-color: none !important;
+}
+.tab-selected h3,
+.tab-selected i {
+  color: #3699FF !important;
+}
+.tab-selected .step-icon {
+  background: #3699FF !important;
+}
+.padding-lg-10 {
+  padding: 1rem !important;
 
+}
+input.picker[type="date"] {
+  position: relative !important;
+}
 
+input.picker[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100%!important;
+  height: 100%!important;
+  padding: 0!important;
+  color: transparent!important;
+  background: transparent!important;
+}
+.mbt{
+  position: absolute!important;
+   right: 0!important; 
+   top: 0!important;
+  }
+.galbx{
+  position: relative!important;
+  width: 50%!important;
+}
+.cataimglist{
+list-style: none!important;
+width: 80%!important;
+}
+.cataimg{
+  width: 100%;
+  height: 100%;
+} 
+/* .cataimg:hover{
+  opacity: .5;
+} */

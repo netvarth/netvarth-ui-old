@@ -42,7 +42,6 @@ export class LastVisitComponent implements OnInit {
     this.PatientId = this.data.patientId;
     if (this.data.back_type) {
       this.back_type = this.data.back_type;
-      console.log(this.back_type);
     }
     if (this.data.customerDetail) {
       this.customerDetails = this.data.customerDetail;
@@ -78,7 +77,6 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitListCount(this.PatientId)
       .subscribe((data: any) => {
         this.visitcount = data;
-        console.log(this.visitcount);
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -88,7 +86,6 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
-        console.log(this.lastVisit_dataSource);
         this.loading = false;
       },
         error => {
@@ -141,7 +138,6 @@ export class LastVisitComponent implements OnInit {
     // this.selectedRowIndex = visitDetails.mrId;
 
     if (visitDetails.waitlist) {
-      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;

@@ -8,17 +8,20 @@ import { projectConstants } from '../../../../app.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { AddressComponent } from '../order-wizard/address/address.component';
 
 
 @Component({
@@ -77,6 +80,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   totaltax = 0;
   // choose_type = 'store';
   choose_type;
+  timings_title:string;
   advance_amount: any;
   account_id: any;
   storeChecked = true;
@@ -118,8 +122,29 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   disabledNextbtn = false;
   amForm: FormGroup;
   nextAvailableTimeQueue: any;
+  image_list_popup: Image[];
+  imagelist: any = [];
+  orderNumber:any;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -127,15 +152,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-    public providerservice: ProviderServices,
+        public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService,
     public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
-    this.route.params.subscribe(
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor) {
+    this.route.params.pipe(takeUntil(this.onDestroy$))
+    .subscribe(
       params => {
-        console.log(params);
         this.account_id = this.groupService.getitemFromGroupStorage('accountId');
         this.uid = params.id;
         // this.getOrderDetails(this.uid);
@@ -159,14 +185,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     });
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
   confirm() {
     this.placeOrderDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.choose_type === 'home') {
-      console.log(this.added_address);
-      if (this.added_address === null || this.added_address.length === 0) {
+      if (this.selectedAddress === '' ) {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
@@ -179,13 +207,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
             'sTime': timeslot[0],
             'eTime': timeslot[1]
           },
-          'orderDate': this.orderDetails.orderDate,
+          'orderDate':  this.sel_checkindate,
           'countryCode': this.orderDetails.countryCode,
           'phoneNumber': this.orderDetails.phoneNumber,
           'email': this.orderDetails.email
 
         };
-        console.log(post_Data);
         this.confirmOrder(post_Data);
 
       }
@@ -198,19 +225,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           'sTime': timeslot[0],
           'eTime': timeslot[1]
         },
-        'orderDate': this.orderDetails.orderDate,
+        'orderDate': this.sel_checkindate,
         'countryCode': this.orderDetails.countryCode,
         'phoneNumber': this.orderDetails.phoneNumber,
         'email': this.orderDetails.email
       };
-      console.log(post_Data);
       this.confirmOrder(post_Data);
     }
   }
 
 
   onSubmit(form_data) {
-    console.log(JSON.stringify(form_data));
     const timeslot = this.nextAvailableTime.split(' - ');
     this.selectedAddress = form_data;
     const post_data = {
@@ -221,16 +246,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'sTime': timeslot[0],
         'eTime': timeslot[1]
       },
-      'orderDate': this.orderDetails.orderDate,
+      'orderDate':  this.sel_checkindate,
       'countryCode': this.orderDetails.countryCode,
       'phoneNumber': this.orderDetails.phoneNumber,
       'email': this.orderDetails.email
 
     };
-    console.log(post_data);
     this.closeModal.nativeElement.click();
 
     this.providerservice.updateProviderOrders(post_data)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           this.disableSave = false;
@@ -278,16 +303,21 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   confirmOrder(post_data) {
-    console.log(post_data);
     this.providerservice.updateOrder(post_data)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
+        if(this.orderDetails && this.orderDetails.orderItem){
         this.updateOrderItems().then(res => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order updated successfully');
           this.orderList = [];
           this.router.navigate(['provider', 'orders']);
         });
-
+      } else {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Your Order updated successfully');
+          this.router.navigate(['provider', 'orders']);
+      }
       },
         error => {
           this.placeOrderDisabled = false;
@@ -297,10 +327,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       );
   }
   updateOrderItems() {
-    console.log('inside');
     const items = this.getOrderItems();
     const orderId = this.orderDetails.uid;
-    console.log(orderId);
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.providerservice.updateOrderItems(orderId, items)
@@ -330,31 +358,44 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.step = this.step - 1;
   }
 
-  ngOnDestroy() {
 
-  }
   // fetch orderdetails using order id
   getOrderDetails(uid) {
-    this.providerservice.getProviderOrderById(uid).subscribe(data => {
+    this.orderList = [];
+    this.providerservice.getProviderOrderById(uid)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
       this.orderDetails = data;
-
+      this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
-      if (this.orderDetails && this.orderDetails.orderItem) {
-        console.log(this.orderDetails.orderItem);
+      if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
-          console.log('itemObj' + JSON.stringify(orderItem.item));
           const itemObject = orderItem.item;
-          for (let i = 0; i <= itemqty; i++) {
+          for (let i = 0; i < itemqty; i++) {
             this.orderList.push({ 'item': itemObject });
           }
 
         }
+        this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
+      this.orderCount = this.orders.length;
+      }  
+      if (this.orderDetails && this.orderDetails.shoppingList) {
+        this.image_list_popup = [];
+        this.imagelist = this.orderDetails.shoppingList;
+        for (let i = 0; i < this.imagelist.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+              img: this.imagelist[i].s3path,
+              description: this.imagelist[i].caption || ''
+            });
+          this.image_list_popup.push(imgobj);
+        }
       }
 
-      console.log(JSON.stringify(this.orderList));
       if (this.orderDetails.storePickup) {
         this.choose_type = 'store';
         this.store_pickup = true;
@@ -366,14 +407,13 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       }
       if (this.orderDetails.orderFor) {
         this.customerId = this.orderDetails.orderFor.id;
-       // this.getDeliveryAddress();
+        this.getDeliveryAddress();
       }
-      this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
-      console.log(JSON.stringify(this.orders));
-      this.orderCount = this.orders.length;
+      
 
 
       this.sel_checkindate = this.orderDetails.orderDate;
+      this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
       this.loading = false;
     });
@@ -381,23 +421,18 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
   goBackToSummary(selectesTimeslot, queue) {
-
-    console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
-    console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     this.datepickerModal.nativeElement.click();
 
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
     this.queue = queue;
   }
   // Fetch catalog of this account using accountId
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
       this.catalogItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
@@ -406,7 +441,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         const showpric = this.catalog_details.showPrice;
         this.catalogItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(this.catalogItems);
       }
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
@@ -414,6 +448,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
+            this.timings_title="Store Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -424,6 +459,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
             if (!this.store_pickup) {
               this.choose_type = 'home';
+              this.timings_title="Delivery Timings";
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -510,11 +546,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.removeFromCart(item);
   }
   addToCart(Item) {
-    console.log(JSON.stringify(Item));
-    console.log(JSON.stringify(this.orderList));
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
+    this.orders = [...new Map(this.orderList.map(orderItem => [orderItem.item['itemId'], orderItem])).values()];
 
   }
   checkCouponExists(couponCode) {
@@ -536,6 +571,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(res => {
         this.s3CouponsList = res;
         if (this.s3CouponsList.length > 0) {
@@ -585,7 +621,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   }
   getTotalItemPrice() {
-    console.log(this.orderList);
     this.price = 0;
     for (const itemObj of this.orderList) {
       let item_price = itemObj.item.price;
@@ -622,7 +657,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge;
+    return deliveryCharge.toFixed(2);
   }
   getSubTotal() {
     let subtotal = 0;
@@ -635,27 +670,23 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     subtotal = subtotal + this.price + deliveryCharge;
     return subtotal.toFixed(2);
   }
-  getDeliveryAddress() {
-    this.providerservice.getDeliveryAddress(this.customerId)
-      .subscribe(data => {
-        if (data !== null) {
-          this.added_address = data;
-          if (this.added_address.length > 0 && this.added_address !== null) {
-            this.highlight(0, this.added_address[0]);
-            if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
-              this.orderAddress();
-            }
-          }
 
-        }
-      },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+  getSuborderTotal() {
+    let subtotal = 0;
+    let deliveryCharge = 0;
+      if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+        deliveryCharge = this.orderDetails.deliveryCharge;
+      }
+    subtotal = subtotal + this.orderDetails.bill.netTotal + deliveryCharge;
+    return subtotal.toFixed(2);
+  }
+  getDeliveryAddress() {
+    if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
+      this.orderAddress();
+    }
+    
   }
   highlight(index, address) {
-    console.log('user_address');
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
@@ -667,17 +698,11 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.selectedAddress = this.orderDetails.homeDeliveryAddress;
 
   }
-  addAddress() {
-
-  }
-  updateAddress(address, index) {
-
-  }
+  
 
   getItemImg(item) {
     if (item.itemImages) {
       const img = item.itemImages.filter(image => image.displayImage);
-      console.log(img);
       if (img[0]) {
         return img[0].url;
       } else {
@@ -699,12 +724,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
+    if(this.step === 2){
+      this.step = this.step + 1;
+    } else {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
       this.location.back();
     }
   }
+}
 
   changeTime() {
     this.action = 'timeChange';
@@ -745,17 +774,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
-    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
   }
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
     const seldate = new Date(seldate2);
-    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
     const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
     const strtDt = new Date(strtDt2);
-    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
       return true;
     } else {
@@ -798,6 +827,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
+      this.timings_title="Store Pickup Timings";
       this.storeChecked = true;
       if (this.orderDetails.storePickup) {
         this.sel_checkindate = this.orderDetails.orderDate;
@@ -810,6 +840,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
+      this.timings_title="Delivery Timings";
       this.storeChecked = false;
       if (this.orderDetails.homeDelivery) {
         this.sel_checkindate = this.orderDetails.orderDate;
@@ -831,6 +862,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -843,6 +875,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -868,7 +901,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -877,7 +912,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -893,32 +930,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
   }
-  addNotes(item, index) {
-    this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: item
-
-    });
-    this.addItemNotesdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.orderList.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-        this.orders.map((Item, i) => {
-          if (Item.item.itemId === item.item.itemId) {
-            Item['consumerNote'] = result;
-          }
-        });
-      }
-      // console.log(this.orderList);
-    });
-  }
   deleteNotes(item, index) {
-    console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -927,22 +939,16 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'message': 'Do you want to Delete this Note?',
       }
     });
-    this.canceldialogRef.afterClosed().subscribe(result => {
+    this.canceldialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result) {
-        console.log(this.orderList);
         this.orderList.map((Item, i) => {
           if (Item.item.itemId === item.item.itemId) {
-            console.log(Item.consumerNote);
             Item['consumerNote'] = Item.consumerNote.splice;
           }
         });
-        // this.orders.map((Item, i) => {
-        //   if (Item.item.itemId === item.item.itemId) {
-        //     Item['consumerNote'] = Item.consumerNote.splice;
-        //   }
-        // });
-        console.log(this.orderList);
-
+       
       }
     });
   }
@@ -950,10 +956,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.showSide = !this.showSide;
   }
 
-  // resetDateTime() {
-  //   this.action = '';
-  //   this.fetchCatalog();
-  // }
+
 
   closeNav() {
     this.showSide = false;
@@ -967,35 +970,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
       }
     });
-    additemsdialogRef.afterClosed().subscribe(data => {
+    additemsdialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
 
     });
   }
 
-  // addAddress() {
-  //   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       source: 'provider',
-  //       type: 'Add'
-
-  //     }
-  //   });
-  //   this.addressDialogRef.afterClosed().subscribe(result => {
-  //     console.log(result);
-  //     this.storeaddress = result;
-  //     this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
-  //     console.log(this.selectedAddress);
-  //   });
-  // }
 
 
   EditAddress(selectedAddress) {
-    console.log(selectedAddress);
-
-    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -1005,14 +990,22 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         update_address: this.storeaddress
       }
     });
-    this.addressDialogRef.afterClosed().subscribe(result => {
-      // this.getaddress();
-      console.log(result);
+    this.addressDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       this.storeaddress = result;
       this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
-      console.log(this.selectedAddress);
+      
     });
   }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+
 
 }
 

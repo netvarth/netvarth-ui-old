@@ -6,7 +6,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
     selector: 'app-search-form',
-    templateUrl: './search-form.component.html'
+    templateUrl: './search-form.component.html',
+    styleUrls: ['./search-form.component.css']
 })
 export class SearchFormComponent implements OnInit, OnDestroy {
     @Input() headerTitle: string;

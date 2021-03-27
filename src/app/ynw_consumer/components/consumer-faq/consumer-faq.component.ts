@@ -23,22 +23,7 @@ export class ConsumerFaqComponent implements  OnInit {
   ) { }
   ngOnInit() {
     this.activeMenu = 'searchh';
-    // this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    // this.domain = this.active_user.sector;
-    // if (this.target) {
-    //   // this.triggerScrollTo(this.target);
-    // }
-    // this.activated_route.paramMap
-    //   .subscribe(params => {
-    //     const group = params.get('parent').split('->');
-    //     this.parent = group[0];
-    //     if (group.length > 1) {
-    //       this.child = group[1];
-    //     } else {
-    //       this.child = this.parent;
-    //     }
-    //     this.handleScroll(this.child, this.parent);
-    //   });
+ 
   }
   scroll() {
   }

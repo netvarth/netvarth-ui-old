@@ -24,9 +24,9 @@
 .card-width {
     width: 350px;
 }
-@media(max-width: 340px) {
+@media(max-width: 600px) {
     .card-width {
-        width: 300px;
+        width: 100%;
     }
 }
 .msg-body {
@@ -92,4 +92,42 @@ textarea {
 }
 .loading {
     margin-top: -50px
+}
+.fa-paper-plane {
+    color: #1e4079;
+    font-size: 1.8rem;
+}
+.fa-times {
+    color: black !important;
+}
+.grey {
+    color: lightgrey !important;
+}
+.btn.btn-primary.disabled {
+    background: #ccc !important;
+    border-color: #ccc !important;
+}
+.null-img {
+    margin: auto;
+}
+.null-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #1e4079;
+}
+.label.label-sm {
+    height: 20px !important;
+    width: 20px !important;
+}
+.minhgt-80 {
+    min-height: 80vh;
+}
+.panel {
+    margin-bottom: 0px !important;
+}
+.no-msg-section {
+    margin: auto;
+    text-align: center;
 }

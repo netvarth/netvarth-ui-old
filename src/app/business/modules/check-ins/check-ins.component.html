@@ -2,7 +2,7 @@
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
-  <div class="pull-right">
+  <div class="pull-right"  *ngIf="time_type !==3">
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
       <div class="navbar-custom-menu width100pc">
         <ul class="nav navbar-nav width100pc">
@@ -459,7 +459,7 @@
                       </td>
                       <td class="q-actions td-four">
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('started', 'STARTED', checkin)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -487,7 +487,7 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('started', 'DONE', checkin)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                           *ngIf="checkin.waitlistStatus == 'started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
@@ -693,7 +693,7 @@
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -721,7 +721,7 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                           *ngIf="checkin.waitlistStatus == 'started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
@@ -1024,7 +1024,7 @@
                     </td>
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                         *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1052,7 +1052,7 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'DONE', checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                         *ngIf="checkin.waitlistStatus == 'started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
@@ -1439,7 +1439,7 @@
                     </td>
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                         *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1467,7 +1467,7 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'DONE', checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                         *ngIf="checkin.waitlistStatus == 'started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span

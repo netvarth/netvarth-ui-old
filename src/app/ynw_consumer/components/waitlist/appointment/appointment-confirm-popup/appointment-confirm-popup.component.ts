@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 // import { Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -17,7 +19,8 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
     templateUrl: './appointment-confirm-popup.component.html',
     styleUrls: ['./appointment-confirm-popup.component.css']
 })
-export class AppointmentConfirmPopupComponent implements OnInit {
+export class AppointmentConfirmPopupComponent implements OnInit,OnDestroy{
+
 
     service_det;
     waitlist_for;
@@ -56,7 +59,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
 
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
-
+ private subs=new SubSink();
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -65,6 +68,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         public dateformat: DateFormatPipe,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
         this.service_det = data.service_details;
         this.waitlist_for = data.waitlist_for;
@@ -89,7 +93,9 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         this.getProfile();
 
     }
-
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
 
     close() {
         this.dialogRef.close();
@@ -97,7 +103,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-            _this.provider_services.getWaitlistMgr()
+          _this.subs.sink=  _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -123,7 +129,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     }
     addCheckInConsumer() {
         // this.api_loading = true;
-        this.shared_services.addCustomerAppointment(this.account_id, this.post_Data)
+        this.subs.sink=this.shared_services.addCustomerAppointment(this.account_id, this.post_Data)
             .subscribe(data => {
                 const retData = data;
                 if (this.waitlist_for.length !== 0) {
@@ -190,7 +196,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         dataToSend.append('captions', blobPropdata);
         // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
         //     dataToSend)
-        this.shared_services.addConsumerAppointmentAttachment(this.account_id,uuid,dataToSend)
+        this.subs.sink=this.shared_services.addConsumerAppointmentAttachment(this.account_id,uuid,dataToSend)
             .subscribe(
                 () => {
                 },
@@ -201,7 +207,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     addConsumeremail(){
         this.action = 'addEmail'
@@ -222,7 +228,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                     'email': this.payEmail.trim() || ''
                 };
                 const passtyp = 'consumer';
-                this.shared_services.updateProfile(post_data, passtyp)
+                this.subs.sink=this.shared_services.updateProfile(post_data, passtyp)
                     .subscribe(
                         () => {
                             this.action = '';

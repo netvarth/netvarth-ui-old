@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { DOCUMENT } from '@angular/common';
@@ -20,9 +20,12 @@ import { GroupStorageService } from '../../../../../../../../shared/services/gro
 import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageTransform } from './interfaces/index';
 @Component({
   selector: 'app-aboutme',
-  templateUrl: './aboutme.component.html'
+  templateUrl: './aboutme.component.html',
+  styleUrls: ['./aboutme.component.css', '../../../../../../../../../assets/css/style.bundle.css', '../../../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
@@ -92,6 +95,16 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   logoExist = false;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   provider_label = '';
+  loadSymbol = false;
+  imageChangedEvent: any;
+  imgType = false;
+  fileToReturn: any;
+  croppedImage: any;
+  canvasRotation = 0;
+  scale = 1;
+  transform: ImageTransform = {};
+  spinner_load = false;
+  @ViewChild('closebutton') closebutton;
   constructor(
     private fb: FormBuilder,
     private service: QuestionService,
@@ -120,7 +133,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     // this.getBusinessProfile();
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('provider'));
-this.business_name_cap = this.provider_label + '\'s  Name *';
+    this.business_name_cap = this.provider_label + '\'s  Name *';
     this.domain = user.sector;
     this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     // const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -248,8 +261,8 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
           this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_UPDATED');
           this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
-          if ( this.domain_fields_mandatory.length !== 0 &&  this.domain_fields_mandatory.some(domain => (domain.value === '') || (domain.value === undefined))
-           || this.subdomain_fields_mandatory.length !== 0 && this.subdomain_fields_mandatory.some(subdomain => (subdomain.value === '') || (subdomain.value === undefined))) {
+          if (this.domain_fields_mandatory.length !== 0 && this.domain_fields_mandatory.some(domain => (domain.value === '') || (domain.value === undefined))
+            || this.subdomain_fields_mandatory.length !== 0 && this.subdomain_fields_mandatory.some(subdomain => (subdomain.value === '') || (subdomain.value === undefined))) {
             this.showVirtualFields = true;
           } else {
             this.redirecToBprofile();
@@ -559,20 +572,20 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
   }
   deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
     const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
-        JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subDomain]));
+      JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subDomain]));
     const grid_list = pre_value[field_name] || [];
     if (grid_list.length === 1 && index === 0) {
-        delete pre_value[field_name];
+      delete pre_value[field_name];
     } else {
-        grid_list.splice(index, 1);
-        pre_value[field_name] = grid_list;
+      grid_list.splice(index, 1);
+      pre_value[field_name] = grid_list;
     }
     if (type === 'domain_questions') {
-        this.onDomainFormSubmit(pre_value);
+      this.onDomainFormSubmit(pre_value);
     } else if (type === 'subdomain_questions') {
-        this.onSubDomainFormSubmit(pre_value);
+      this.onSubDomainFormSubmit(pre_value);
     }
-}
+  }
 
   showDynamicFieldPopup(field, type, grid_row_index = null) {
     this.dynamicdialogRef = this.dialog.open(ProviderUserBprofileSearchDynamicComponent, {
@@ -655,9 +668,9 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
     this.provider_services.getUserBussinessProfile(this.userId)
       .subscribe(
         logodata => {
-         this.logoDetails = logodata;
-          if ( this.logoDetails.logo) {
-            this.blogo[0] =  this.logoDetails.logo;
+          this.logoDetails = logodata;
+          if (this.logoDetails.logo) {
+            this.blogo[0] = this.logoDetails.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
@@ -671,13 +684,18 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
             this.user_datastorage.updateProfilePicWeightage(false);
           }
         });
-      }
+  }
 
   uploadLogo(passdata) {
     // this.provider_services.uploadLogo(passdata)
     this.provider_services.uploaduserLogo(passdata, this.userId)
       .subscribe(
         data => {
+          this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                this.spinner_load = false;
+                setTimeout(() => {
+                  this.closeGroupDialog();
+                }, 2000);
           this.getBusinessProfileLogo();
         },
         error => {
@@ -702,23 +720,166 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
   }
-  changeProPic(image) {
-    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        'userId': this.userId,
-        'userdata': this.user_arr,
-        img_type : image
-      }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      this.getBusinessProfileLogo();
-    });
-  }
+
+  // changeProPic(image) {
+  //   this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'userId': this.userId,
+  //       'userdata': this.user_arr,
+  //       img_type : image,
+  //       'logoExist': (this.blogo[0]) ? true : false
+  //     }
+  //   });
+  //   this.notedialogRef.afterClosed().subscribe(result => {
+  //     this.getBusinessProfileLogo();
+  //   });
+  // }
+
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
+
+  imageSelect1(event: any): void {
+    this.loadSymbol = true;
+    this.imageChangedEvent = event;
+  }
+  clearModalData(source?) {
+    this.imageChangedEvent = '';
+    if (source) {
+      this.imgType = true;
+    }
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.loadSymbol = false;
+    this.fileToReturn = '';
+    this.croppedImage = event.base64; // preview
+    this.fileToReturn = this.base64ToFile(
+      event.base64,
+      this.imageChangedEvent.target.files[0].name,
+    );
+    return this.fileToReturn;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  base64ToFile(imgdata, filename) {
+    const arr = imgdata.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  rotateLeft() {
+    this.canvasRotation--;
+    this.flipAfterRotate();
+  }
+  rotateRight() {
+    this.canvasRotation++;
+    this.flipAfterRotate();
+  }
+  zoomOut() {
+    this.scale -= .1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale
+    };
+  }
+  zoomIn() {
+    this.scale += .1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale
+    };
+  }
+  private flipAfterRotate() {
+    const flippedH = this.transform.flipH;
+    const flippedV = this.transform.flipV;
+    this.transform = {
+      ...this.transform,
+      flipH: flippedV,
+      flipV: flippedH
+    };
+  }
+
+    // Save pro pic
+    saveImages() {
+      console.log('save imgsss');
+      this.spinner_load = true;
+      const file = this.fileToReturn;
+      this.success_error = null;
+      this.error_list = [];
+      this.error_msg = '';
+      if (file) {
+        console.log('inside file');
+          this.success_error = this.sharedfunctionobj.imageValidation(file);
+          if (this.success_error === true) {
+            console.log('inside success err');
+              const reader = new FileReader();
+              this.item_pic.files = file;
+              this.selitem_pic = file;
+              const fileobj = file;
+              reader.onload = (e) => {
+                  this.item_pic.base64 = e.target['result'];
+              };
+              reader.readAsDataURL(fileobj);
+              console.log(this.bProfile);
+              console.log(this.user_arr);
+              if (this.user_arr.status === 'ACTIVE' || this.user_arr.status === 'INACTIVE') { // case now in bprofile edit page
+                  // generating the data to be submitted to change the logo
+                  console.log('inside bprofile');
+                  const submit_data: FormData = new FormData();
+                  submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                  const propertiesDet = {
+                      'caption': 'Logo'
+                  };
+                  const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                  submit_data.append('properties', blobPropdata);
+                  if (this.imgType) {
+                      console.log('cover');
+                  } else {
+                      // if (this.data.userId) {
+                      //     this.uploadUserLogo(submit_data);
+                      // } else {
+                      //     this.uploadLogo(submit_data);
+                      // }
+                      console.log('propic');
+                     this.uploadLogo(submit_data);
+                  }
+              }
+          } else {
+              this.error_list.push(this.success_error);
+              if (this.error_list[0].type) {
+                  this.error_msg = 'Selected image type not supported';
+              } else if (this.error_list[0].size) {
+                  this.error_msg = 'Please upload images with size less than 15mb';
+              }
+              this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+          }
+      } else {
+          this.error_msg = 'Selected image type not supported';
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+      }
+  }
+  
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+    this.api_success = '';
+  }
+
 }

@@ -36,6 +36,9 @@
 }
 .main-sec {
     padding: 0 10px 10px 15px;
+    // min-height: 180px !important;
+    max-height: 180px !important;
+
 }
 .main-sec .datetime {
     font-size: 1.2rem;
@@ -61,6 +64,11 @@
 .darkblue {
     color: #334b99 !important;
 }
+.darkred {
+    color: red!important;
+    font-size: 0.9rem;
+  font-weight: 600;
+  }
 .darkorange {
     color: rgba(255 ,166,0,0.89)!important;
 }
@@ -78,7 +86,7 @@
         height: 550px !important;
     }
 }
-::ng-deep .count-section [class^="icon-"]:before, [class*=" icon-"]:before {
+::ng-deep .icon-2x:before{
     font-family: Flaticon2 !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -111,4 +119,7 @@
     font-weight: 600;
     margin-right: auto;
     margin-left: auto;
+}
+.darkerred{
+    color: darkred !important;
 }

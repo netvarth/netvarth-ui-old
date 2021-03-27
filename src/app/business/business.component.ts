@@ -29,6 +29,10 @@ export class BusinessComponent implements OnInit {
   subscription: Subscription;
   contactInfo: any = [];
   profile: any = [];
+  iswiz = false;
+  smallMenuSection = false;
+  screenWidth;
+  bodyHeight = 700;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -41,8 +45,8 @@ export class BusinessComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private titleService: Title ) {
-      this.titleService.setTitle('Jaldee Business');
+    private titleService: Title) {
+    this.titleService.setTitle('Jaldee Business');
     router.events.subscribe(
       (event: RouterEvent): void => {
         this._navigationInterceptor(event);
@@ -89,6 +93,13 @@ export class BusinessComponent implements OnInit {
           this.activeSkin = message.selectedSkin;
           this.lStorageService.setitemonLocalStorage('activeSkin', this.activeSkin);
           break;
+        case 'hidemenus':
+          this.iswiz = message.value;
+          this.onResize();
+          break;
+        case 'smallMenu':
+          this.smallMenuSection = message.value;
+          break;
       }
     });
   }
@@ -110,8 +121,33 @@ export class BusinessComponent implements OnInit {
   handleScrollhide(ev) {
     this.outerscroller = ev;
   }
-
+  // @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    if (this.iswiz) {
+      this.bodyHeight = screenHeight - 50;
+    } else {
+      if (this.screenWidth <= 991) {
+        this.bodyHeight = screenHeight - 160;
+      } else {
+        this.bodyHeight = screenHeight - 120;
+      }
+    }
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
+    this.screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    if (this.screenWidth <= 991) {
+      this.bodyHeight = screenHeight - 160;
+    } else {
+      this.bodyHeight = screenHeight - 120;
+    }
     this.getBusinessProfile();
     this.getLicenseMetaData();
     this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');
@@ -201,7 +237,7 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
-          if (!localStorage.getItem('newProvider')) {
+          if (!this.lStorageService.getitemfromLocalStorage('newProvider')) {
             this.getAccountContactInfo();
           }
           this.groupService.setitemToGroupStorage('accountId', bProfile.id);
@@ -242,5 +278,8 @@ export class BusinessComponent implements OnInit {
     this.provider_services.getLicenseMetadata().subscribe(data => {
       this.lStorageService.setitemonLocalStorage('license-metadata', data);
     });
+  }
+  showMenu() {
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: false });
   }
 }

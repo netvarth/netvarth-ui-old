@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-user-services',
@@ -71,6 +72,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public router: Router,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
+        private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
@@ -196,7 +198,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             );
     }
     getAppxTime(waitlist) {
-        return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
+        return this.dateTimeProcessor.providerConvertMinutesToHourMinute(waitlist);
     }
 
     getServiceCount() {

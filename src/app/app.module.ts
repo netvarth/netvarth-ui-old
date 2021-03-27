@@ -45,16 +45,13 @@ import { CouponsComponent } from './shared/components/coupons/coupons.component'
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
-import { AboutJaldeeModule } from './shared/modules/about-jaldee/about-jaldee.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
@@ -65,7 +62,6 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
-import { GlobalFunctions } from './shared/functions/global-functions';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
@@ -80,7 +76,6 @@ import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
-import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
@@ -88,6 +83,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { CookieProcessor } from './shared/services/cookie-processor.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -97,11 +93,17 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { TwilioService } from './shared/services/twilio-service';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { JaldeeTimeService } from './shared/services/jaldee-time-service';
+import { FileService } from './shared/services/file-service';
+import { LivetrackService } from './shared/services/livetrack-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -126,7 +128,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     AdminLoginComponent,
     ConsumerJoinComponent,
-    ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
     PaymentLinkComponent,
@@ -134,10 +135,11 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
-    JaldeeBlogComponent,
+    JaldeeVideoComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent,
+    MeetingRoomComponent,
     CommunicationComponent
   ],
   entryComponents: [
@@ -151,7 +153,6 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
-    ConsumerPaymentmodeComponent,
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
@@ -176,14 +177,12 @@ export function init_app(globalService: GlobalService) {
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
-    AboutJaldeeModule,
     MaintenanceModule,
     ScrollbarModule,
     OwlModule,
     ProviderAppModule,
     LoadingSpinnerModule,
     LazyModule,
-    SearchProviderModule,
     ScrollToModule.forRoot(),
     DateFormatPipeModule,
     DisplayboardLayoutContentModule,
@@ -196,7 +195,8 @@ export function init_app(globalService: GlobalService) {
     CardModule,
     MatStepperModule,
     NgxIntlTelInputModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ShareIconsModule
   ],
   providers: [
     BsModalService,
@@ -216,9 +216,9 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     SharedServices,
-    GlobalFunctions,
     GlobalService,
     SharedFunctions,
+    TwilioService,
     FormMessageDisplayService,
     ErrorMessagingService,
     SearchDetailServices,
@@ -234,6 +234,10 @@ export function init_app(globalService: GlobalService) {
     DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
+    MeetService,
+    JaldeeTimeService,
+    FileService,
+    LivetrackService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

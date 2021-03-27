@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -16,10 +16,15 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SharedServices } from '../../../../../../shared/services/shared-services';
+import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
   selector: 'app-location-details',
-  templateUrl: './location-details.component.html'
+  templateUrl: './location-details.component.html',
+  styleUrls: ['../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
+
 })
 
 export class LocationDetailsComponent implements OnInit, OnDestroy {
@@ -89,6 +94,18 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   checked_sel_badges = false;
   params;
   src: any;
+  locationFind = 'GOOGLEMAP';
+  api_error = '';
+  lat_lng = {
+    latitude: 12.9715987,
+    longitude: 77.5945627
+  };
+  mapaddress;
+  locationName;
+  @ViewChild('googleradio',{static:false}) googleradio:ElementRef;
+  @ViewChild('autolocateradio',{static:false}) autolocateradio:ElementRef;
+  @ViewChild('manualradio',{static:false}) manualradio:ElementRef;
+
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -102,6 +119,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    public shared_service: SharedServices,
+    private jaldeeTimeService: JaldeeTimeService,
     private dialog: MatDialog) {
     this.activated_route.params.subscribe(params => {
       this.location_id = params.id;
@@ -218,7 +237,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             }
           }
           for (let i = 0; i < this.active_Schedules.length; i++) {
-            this.schedule_ar.push(this.shared_Functionsobj.arrageScheduleforDisplay(this.active_Schedules[i]));
+            this.schedule_ar.push(this.jaldeeTimeService.arrageScheduleforDisplay(this.active_Schedules[i]));
           }
           this.display_schedule = [];
           for (let i = 0; i < this.schedule_ar.length; i++) {
@@ -288,7 +307,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queues[ii].queueSchedule);
               }
               let display_schedule = [];
-              display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+              display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
               this.queues[ii]['displayschedule'] = display_schedule;
             }
           },
@@ -582,4 +601,122 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   backPage() {
     this._location.back();
   }
+  handlelocationfind(val) {
+    this.locationFind = '';
+    if (val === 'googlemap') {
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to detect location using google map?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'GOOGLEMAP';
+            setTimeout(() => {
+              this.googleradio.nativeElement.focus();
+            }, 100);
+            this.clearFormFields();
+          }
+         });
+
+    } else if (val === 'autodetect') {
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to detect location automatically?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'AUTODETECT';
+            setTimeout(() => {
+              this.autolocateradio.nativeElement.focus();
+            }, 100);
+            this.clearFormFields();
+          }         });
+    } else if(val === 'manual'){
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to add location manually?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'MANUAL';
+            setTimeout(() => {
+              this.manualradio.nativeElement.focus();
+            }, 100);
+            this.clearFormFields();
+          }
+         });
+
+    }
+}
+clearFormFields(){
+  this.amForm.setValue({
+    locname: '',
+    locaddress: '',
+    loclattitude: '',
+    loclongitude: '',
+    locmapurl: ''
+  });
+  // this.locamForm.setValue({
+  //   open24hours: '',
+  //   parkingType: ''
+  // });
+}
+getCurrentLocation() {
+  if (navigator) {
+    navigator.geolocation.getCurrentPosition(pos => {
+     console.log(pos)
+     this.amForm.controls.loclattitude.setValue(pos.coords.latitude);
+     this.amForm.controls.loclongitude.setValue(pos.coords.longitude);
+     this.lat_lng.longitude = +pos.coords.longitude;
+     this.lat_lng.latitude = +pos.coords.latitude;
+     this.getAddressfromLatLong();
+    },
+      error => {
+          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+          this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+
+      });
+  }
+  
+}
+getAddressfromLatLong() {
+  console.log(this.lat_lng)
+  this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
+    const currentAddress = this.shared_service.getFormattedAddress(data);
+    console.log(data)
+    this.mapaddress = [];
+    this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
+    this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
+    if(data['area'] == undefined){
+      this.locationName = data['district'];
+      console.log(data['district'])
+    } else {
+      this.locationName = data['area'];
+      console.log(data['area'])
+
+    }
+    this.amForm.controls.locname.setValue(this.locationName);
+  });
+}
 }

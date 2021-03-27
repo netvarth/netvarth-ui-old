@@ -1,0 +1,45 @@
+
+    <h1 class="mat-dialog-title">  Services
+      <button  mat-dialog-close  tabindex="-1" class="modal_close">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    
+    </h1>
+    <app-common-innerloading-spinner    *ngIf="loading"></app-common-innerloading-spinner>
+    <div *ngIf="!loading && service_list.length>0">
+    <mat-dialog-content>
+
+      <mat-selection-list   #services [(ngModel)]="selectedServices" (ngModelChange)="onServiceChange($event)" >
+
+        <mat-list-option checkboxPosition="before" *ngFor=" let service of service_list" [value] ="service" [selected]="isSelected(service)">
+ 
+            <span class="dash">
+                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                class="fa wtsapaud-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                class="fa wtsapvid-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                class="fa zoom-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                class="fa meet-icon"></i>
+              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                class="fa phon-icon" aria-hidden="true"></i>
+              {{service.name | capitalizeFirst}}
+            </span>
+         
+        </mat-list-option>
+
+      </mat-selection-list>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "(click)="close();"  *ngIf="mode!='view'"  > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button"  *ngIf="mode!='view'"  (click)="onConfirm(services.selectedOptions)" >Confirm</button>
+    </div>
+    </mat-dialog-actions>
+    </div>
+    <div  *ngIf="!loading && service_list.length==0">
+      <p class="ml-5"> No Services Found</p>
+      </div>
+

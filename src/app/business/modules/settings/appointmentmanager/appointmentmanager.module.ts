@@ -15,6 +15,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -30,14 +31,12 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
         Nl2BrPipeModule,
         OwlModule,
         CapitalizeFirstPipeModule,
-        CheckinAddMemberModule
+        CheckinAddMemberModule,
+        QuestionnaireModule
     ],
     declarations: [
         AppointmentmanagerComponent,
         AppointmentComponent
-    ],
-    entryComponents: [
-       // AddProviderNonworkingdaysComponent
     ],
     exports: [AppointmentmanagerComponent]
 })

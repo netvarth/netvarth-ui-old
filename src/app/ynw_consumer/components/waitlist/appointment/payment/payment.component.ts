@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
@@ -12,13 +12,15 @@ import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpa
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-consumer-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.css'],
 })
-export class ConsumerAppointmentPaymentComponent implements OnInit {
+export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
+
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
@@ -46,6 +48,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     consumer_name: any;
     iconClass: string;
     prepayment;
+    private subs=new SubSink();
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -59,11 +62,11 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         private lStorageService:LocalStorageService,
         private wordProcessor: WordProcessor
     ) {
-        this.route.params.subscribe(
+       this.subs.sink= this.route.params.subscribe(
             params => {
                 this.uuid = params.id;
             });
-        this.route.queryParams.subscribe(
+        this.subs.sink=this.route.queryParams.subscribe(
             params => {
                 this.checkIn_type = params.type_check;
                 this.accountId = params.account_id;
@@ -75,7 +78,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.router.navigate(['/consumer']);
     }
     ngOnInit() {
-        this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
+        this.subs.sink=this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
                 if (this.activeWt.service.serviceType === 'virtualService') {
@@ -121,10 +124,13 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
             }
         );
     }
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
     getPaymentStatus(pid) {
         this.lStorageService.removeitemfromLocalStorage('acid');
         this.lStorageService.removeitemfromLocalStorage('uuid');
-        this.shared_services.getPaymentStatus('consumer', pid)
+        this.subs.sink=this.shared_services.getPaymentStatus('consumer', pid)
             .subscribe(
                 data => {
                     this.status = data;
@@ -165,7 +171,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.lStorageService.setitemonLocalStorage('uuid', this.uuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink=this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
                 this.pGateway = pData.paymentGateway;

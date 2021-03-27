@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
@@ -52,7 +53,8 @@ export class CheckYourStatusComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
       qparams => {
         // this.type = qparams.type;
@@ -173,7 +175,7 @@ export class CheckYourStatusComponent implements OnInit {
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
           appx_ret.date = '';
-          appx_ret.time = this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+          appx_ret.time = this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           appx_ret.autoreq = true;
         }
       }
@@ -206,15 +208,15 @@ export class CheckYourStatusComponent implements OnInit {
         appx_ret.date = waitlist.appmtDate;
         appx_ret.date_type = 'date';
         const timeSchedules = waitlist.appmtTime.split('-');
-        const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
-        const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
+        const queueStartTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[0]);
+        const queueEndTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[1]);
         appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
       } else {
         appx_ret.date = 'Today';
         appx_ret.date_type = 'string';
         const timeSchedules = waitlist.appmtTime.split('-');
-        const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
-        const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
+        const queueStartTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[0]);
+        const queueEndTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[1]);
         appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
       }
     } else {
@@ -224,8 +226,8 @@ export class CheckYourStatusComponent implements OnInit {
       appx_ret.caption = 'Appointment for ';
       appx_ret.date = waitlist.date;
       const timeSchedules = waitlist.appmtTime.split('-');
-      const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
-      const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
+      const queueStartTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[0]);
+      const queueEndTime = this.dateTimeProcessor.convert24HourtoAmPm(timeSchedules[1]);
       appx_ret.time = queueStartTime + ' - ' + queueEndTime;
       appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
@@ -260,6 +262,7 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
+          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
@@ -309,7 +312,7 @@ export class CheckYourStatusComponent implements OnInit {
   getSingleTime(slot) {
     if (slot) {
       const slots = slot.split('-');
-      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
   getWaitTime(waitlist) {
@@ -319,7 +322,7 @@ export class CheckYourStatusComponent implements OnInit {
         if (waitlist.appxWaitingTime === 0) {
           return 'Now';
         } else if (waitlist.appxWaitingTime !== 0) {
-          return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+          return this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
         }
       }
     } else {
@@ -333,6 +336,7 @@ export class CheckYourStatusComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.statusInfo = data;
+          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           this.foundDetails = true;
@@ -427,5 +431,14 @@ export class CheckYourStatusComponent implements OnInit {
     this.shared_services.getStoreContact(accountId).subscribe(data => {
       this.storeContactInfo = data;
     });
+  }
+  isuser(user){
+    console.log(user)
+   const firstname = user.filter(obj => obj.firstName);
+   console.log(firstname);
+   if(firstname.length > 0){
+   return true
+   } 
+   return false
   }
 }

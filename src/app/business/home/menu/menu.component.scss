@@ -1,3 +1,45 @@
 li.right{
     float: right;
 }
+a, .aside-menu i {
+    color: #a2a3b7cc !important;
+}
+.flex-row-auto {
+    background-color: #1e1e2d !important;
+    height: 100vh;   
+    color: white
+}
+.menu-icon {
+    width: 20px;
+}
+.active-menu, .active-menu i, .active-menu {
+    color: white !important;
+}
+.aside-minimize {
+    width: 70px !important;
+}
+.aside-menu {
+    height: 90vh;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.aside-menu::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.aside-menu {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+@media (max-width: 991px) {
+    .aside-menu {
+        height: 100vh;
+    }
+}
+.bg-green, .bg-orange {
+    border-radius: unset !important;
+}
+.img-section img {
+    width: 150px;
+}

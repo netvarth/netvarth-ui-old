@@ -23,20 +23,22 @@
                 <span class=" mgn-lt-10 amount">Go to cart</span>
               </h5>
             </div>
-
-            <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action==''">
+            <div class="card" *ngIf="loading">
+              <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+            </div>
+            <div  class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action=='' &&!loading">
               <div class="col-md-12 no-padding-small mgn-up-30">
 
                 <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
-                  <mat-step label="Step1" [completed]="isLoggedIn()" >
-                    <!-- <ng-template matStepperIcon="edit">
+                  <!-- <mat-step label="Step1" [completed]="isLoggedIn()" >
+                   <ng-template matStepperIcon="edit">
                       <mat-icon></mat-icon>
-                    </ng-template> -->
+                    </ng-template>
                     <ng-template matStepLabel>Account</ng-template>
                     <form [formGroup]="loginForm" >
-                      <!-- <mat-form-field>
+                      <mat-form-field>
                         <input  formControlName="phone" readonly="true">
-                      </mat-form-field> -->
+                      </mat-form-field> 
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="phone" required >
                         <label class="ph-label">Mobile number</label>
@@ -46,8 +48,8 @@
                       <button  #firstStep type="button" class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
 
-                  </mat-step>
-                  <mat-step label="Step 2">
+                  </mat-step> -->
+                  <mat-step label="Step 1">
                     <ng-template matStepLabel>Delivery options</ng-template>
                     <div>
                       <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>
@@ -72,7 +74,7 @@
                           (click)="changeTime()" >Change
                             </a></span>
                     </div>
-                    <div>
+                    <div *ngIf="isfutureAvailableTime">
                         <h4>
                             <span *ngIf="!isFuturedate">Today, </span>
                             <span *ngIf="!isFuturedate">
@@ -86,6 +88,10 @@
 
                         </h4>
                     </div>
+                    <div [hidden]="isfutureAvailableTime" class="red">
+                        <span>No timings are available</span>
+                      </div>
+                    
                   </div>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
@@ -148,12 +154,28 @@
                         <label for="youridhere" class="static-value">+91</label>
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
                         </div>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'phone')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'phone',
+                        {
+                          'required' : 'Mobile number is required',
+                          'minlength' : 'Enter a 10 digit mobile number',
+                          'maxlength' : 'Enter a 10 digit mobile number',
+                          'pattern' : 'Only numbers are allowed'
+                        })">
+</app-field-error-display>
                       </div>
+                
+                   
 
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="email">
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
                       </div>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'email')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'email',
+                      {
+                        'required' : 'Email is required',
+                        'pattern' : 'Please enter valid email'
+                      })">
+</app-field-error-display>
                       <!-- <mat-form-field class="example-full-width">
                        <mat-label>Contact Email</mat-label>
                         <input matInput placeholder="Enter your email" value=""formControlName="email">
@@ -175,7 +197,7 @@
                   <div class="addrs">
                     <span>{{storeContactNw.firstName}}&nbsp;{{storeContactNw.lastName}}</span>
                     <span *ngIf="storeContactNw.address">
-                      <i class="fa fa-map-marker"></i> {{storeContactNw.address}}
+                      <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContactNw.address}}
                     </span>
                     <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}} {{storeContactNw.phone}}</span>
                     <span *ngIf= "storeContactNw.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.secCountryCode}} {{storeContactNw.alternatePhone}}</span>
@@ -206,8 +228,11 @@
                     </div>
                   </div>
                 </div>
-                <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
+                <!-- <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                </span> -->
+                <span class="mgn-up-20" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'" (click)="uploadShoppingList()">
+                  <a class="uploadshoppinglist-btn">Upload Shopping List</a>
                 </span>
                 <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                   <div class="bill-section-content">
@@ -248,7 +273,7 @@
                                             <span class="item-name">{{item.name}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{item.quantity}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.showPromotionalPrice?item.promotionalPrice: item.price | currency:'&#8377;'}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.totalPrice | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 
@@ -288,6 +313,11 @@
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.jaldeeCouponDiscount | currency:'&#8377;'}}</div>
                                 </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.providerCouponDiscount">
+                                  <div class="bill-labels">Provider Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.providerCouponDiscount | currency:'&#8377;'}}</div>
+                                </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jdnDiscount">
                                   <div class="bill-labels">JDN Discount </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
@@ -304,7 +334,7 @@
                                   <div class="price rupee-font">{{cartDetails.deliveryCharge | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="hr-line-pitch-blk mgn-up-20"></div>
-                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle" aria-hidden="true"></i>An advance of {{cartDetails.advanceAmount | currency:'&#8377;'}} required</span>
+                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}} </span>required</span>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
@@ -320,7 +350,7 @@
 
                         </div>
                       </div>
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 </div>
@@ -331,7 +361,7 @@
                     <ng-container *ngFor="let file of image_list_popup;let i = index">
                         <li *ngIf="i<2" class="shoppinglist-li">
                             <div class="shoppinglistbx">
-                                <span class="shoppinglistmbt">
+                                <!-- <span class="shoppinglistmbt">
                                     <button type="button" mat-icon-button
                                         [matMenuTriggerFor]="menu">
                                         <mat-icon>more_vert</mat-icon>
@@ -343,7 +373,7 @@
                                             <span>delete</span>
                                         </button>
                                     </mat-menu>
-                                </span>
+                                </span> -->
                                 <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
                                         *ngIf="file.modal.img" />
@@ -358,7 +388,7 @@
                             <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
                                     *ngIf="image_list_popup[2].modal.img"
                                     [src]="image_list_popup[2].modal.img" /></div>
-                            <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                            <!-- <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
@@ -369,7 +399,7 @@
                                         <span>delete</span>
                                     </button>
                                 </mat-menu>
-                            </span>
+                            </span> -->
                             <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                                 *ngIf="(image_list_popup.length-3)==0">
                                 <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -379,10 +409,10 @@
                         </div>
                     </li>
                 </ul>
-                <a (click)="filed.click()" class="pointerlist">
+                <!-- <a (click)="filed.click()" class="pointerlist">
                   <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
-                </a>
-                 <!-- <a class="pointerlist" (click)="editshoppinglist()" class="popular_more">Add more</a> -->
+                </a> -->
+                 <a class="pointerlist" (click)="editshoppinglist()" >Update</a>
                 <div class="snd_msg_outer">
                     <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                   </div>
@@ -395,7 +425,7 @@
                     <!-- <div (click)="filed.click()">
                         <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist
                       </div> --><br>
-                      <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                      <div class="order-label" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                         *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                       <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                            Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
@@ -404,7 +434,7 @@
 
 
                     <div *ngIf="selectedImagelist.files.length > 0">
-                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
+                        <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>
                     </div>
                   </div>
                 <!-- <div class="cr1">
@@ -506,7 +536,7 @@
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'home'">Delivery
                           Timings  </div>
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'store'">Store
+                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="delivery_type === 'store'"> Store Pickup
                             Timings  </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
                           <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">

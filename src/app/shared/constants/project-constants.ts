@@ -252,6 +252,18 @@ export const projectConstantsLocal = {
     insurance: { help: '', iconClass: 'veterinarydoctor_doc' }
   },
   SOCIAL_MEDIA: [
+    { key: 'facebook', iconClass: 'socicon-facebook text-danger', iconImg: 'facebook.png', displayName: 'Facebook' },
+    { key: 'twitter', iconClass: 'socicon-twitter', iconImg: 'twitter.png', displayName: 'Twitter' },
+    { key: 'youtube', iconClass: 'socicon-youtube', iconImg: 'youtube.png', displayName: 'Youtube' },
+    { key: 'linkedin', iconClass: 'socicon-linkedin', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
+    { key: 'pinterest', iconClass: 'socicon-pinterest', iconImg: 'pinterest.png', displayName: 'Pinterest' },
+    { key: 'instagram', iconClass: 'socicon-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
+    { key: 'website', iconClass: 'flaticon2-world', iconImg: 'website.png', displayName: 'Website' },
+    { key: 'googleplus', iconClass: 'socicon-googleplus', displayName: 'Google+' }
+
+  ],
+  SOCIAL_MEDIA_CONSUMER: [
     { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook' },
     { key: 'twitter', iconClass: 'fa fa-twitter-square tw', iconImg: 'twitter.png', displayName: 'Twitter' },
     { key: 'youtube', iconClass: 'youTube youtube', iconImg: 'youtube.png', displayName: 'Youtube' },
@@ -259,7 +271,8 @@ export const projectConstantsLocal = {
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
     { key: 'instagram', iconClass: 'instagram insta', iconImg: 'instagram.png', displayName: 'Instagram' },
     { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
-    { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
+    { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' },
+    { key: 'googleplus', iconClass: 'socicon-googleplus', displayName: 'Google+' }
   ],
   PRIVACY_PERMISSIONS: {
     'all': 'Public (All can see)',
@@ -280,7 +293,8 @@ export const projectConstantsLocal = {
   VALIDATOR_BLANK_FALSE: /^((?!\s{2,}).)*$/,
   VALIDATOR_BLANK: /^\s*$/,
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
-  VALIDATOR_NUMBERONLY: /^\d+$/,
+  VALIDATOR_NUMBERONLY: /^\d+$/, 
+  VALIDATOR_ONLYNUMBER:/^[0-9]+$/, 
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
   VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
@@ -425,7 +439,18 @@ export const projectConstantsLocal = {
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
     ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
     ONLINE_CHECKIN_REQUIRED: 'Online check-in required',
-    CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons'
+    CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons',
+    CONSUMER_CAN_NOT_APPLY_COUPON:'Coupon cannot be applied.',
+    PROVIDER_COUPON_NOT_APPLICABLE_SERVICE:'Provider coupon not applicable for this service',
+    PROVIDER_COUPON_NOT_APPLICABLE_USER:'Provider coupon not applicable for this user',
+    PROVIDER_COUPON_NOT_APPLICABLE_GROUP:'Provider coupon not applicable for this group',
+    PROVIDER_COUPON_NOT_APPLICABLE_ITEM:'Provider coupon not applicable for this item',
+    PROVIDER_COUPON_NOT_APPLICABLE_CATALOG:'Provider coupon not applicable for this catalog',
+    PROVIDER_COUPON_NOT_APPLICABLE_LABEL:'Provider coupon not applicable for this label',
+    PROVIDER_COUPON_NOT_APPLICABLE_BOOKING_MODE:'Provider coupon not applicable for this booking mode',
+    PROVIDER_COUPON_NOT_APPLICABLE  : 'Provider coupon not applicable on this day',
+    PROVIDER_COUPON_NOT_APPLICABLE_NOW : 'Provider coupon not applicable now',
+    JC_NOT_APPLICABLE_DAY : 'Jaldee Coupon not applicable on this day'
   },
   CHECK_IN_STATUSES: {
     Done: 'Completed',
@@ -755,6 +780,11 @@ export const projectConstantsLocal = {
     { displayName: 'Payment', value: 'PAYMENT' },
 
   ],
+  BOOKING_MODE: [
+    { displayName: 'Walk-in ', value: 'WALK_IN' },
+    { displayName: 'Online', value: 'ONLINE' },
+    { displayName: 'Phone-in', value: 'PHONE_IN' },
+  ],
 
   REPORT_TRANSACTION_TYPE: [
     { displayName: 'Check-in/Token', value: 'Waitlist' },
@@ -848,7 +878,7 @@ export const projectConstantsLocal = {
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
-  PATH: 'https://' + window.location.host + '/',
+  // PATH: 'https://' + window.location.host + '/',
   ORDER_STATUSES_FILTER: [
     { displayName: 'Accepted', value: 'Accepted' },
     { displayName: 'Rejected', value: 'Rejected' },

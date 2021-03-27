@@ -235,7 +235,7 @@ export class JDNComponent implements OnInit {
     handlejdn_status(status) {
         let confirm_msg = '';
         if (status === 'DISABLED') {
-            confirm_msg = 'You are joining JDN (Jaldee Discount Network) lifetime membership of ₹ 499. Please visit learnmore for more info';
+            confirm_msg = 'You are joining JDN (Jaldee Discount Network) lifetime membership of   ₹ 499. Please visit learnmore for more info';
         } else {
             confirm_msg = 'Are you sure to unsubscribe your JDN lifetime membership? If you wish to resubscribe you have to pay again';
         }
@@ -245,7 +245,9 @@ export class JDNComponent implements OnInit {
             disableClose: true,
             data: {
                 'message': confirm_msg,
-                'heading': 'Confirm'
+                'heading': 'Confirm',
+                'type':'JDN'
+
             }
         });
         confirmdialog.afterClosed().subscribe(result => {

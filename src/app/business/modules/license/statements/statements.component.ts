@@ -347,16 +347,6 @@ export class StatementsComponent implements OnInit {
         }
       };
       this.router.navigate(['provider', 'license', 'payments'], navigationExtras);
-      // const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-      //   width: '50%',
-      //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      //   disableClose: true,
-      //   data: {
-      //     'details': this.pay_data,
-      //     'origin': 'provider',
-      //   }
-      // });
-      // dialogrefd.close();
     }
   }
   getgst() {

@@ -27,7 +27,7 @@
 
                                             <li>
                                                 <p class="textcenter"><span>{{this.businessname}}</span><br><span>
-                                                        {{this.location}}</span><br>{{billtime}}, {{billdate}}</p>
+                                                        {{this.location}}</span><br>{{billtime}}, {{bill_data.createdDate | date : 'mediumDate'}}</p>
                                                 <br><br>
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
@@ -79,7 +79,7 @@
                                                                                     {{this.firstname}}
                                                                                 </span> <span
                                                                                     class="columns rightalign"><span
-                                                                                        class="dynamic">{{billdate}}
+                                                                                        class="dynamic">{{bill_data.createdDate | date : 'mediumDate'}}
                                                                                         {{billtime}}</span>
                                                                                 </span> <span class="columns"
                                                                                     *ngIf="billnumber"> <span
@@ -466,7 +466,7 @@
             </section>
         </div>
         <div style="text-align: center;" *ngIf="paidStatus == 'true'">
-            <div class="rupee-font" style="padding-bottom: 10px"><b>&#8377;{{this.amountDue}}</b></div>
+            <div class="rupee-font" style="padding-bottom: 10px"><b>{{amountDue| currency:'&#8377;'}}</b></div>
             <i class="fa fa-check-circle" style="color: green;"><span style="font-size: large;">Paid Successfully</span>
             </i><br>
             <div style="font-size:14px;" class="ivc">

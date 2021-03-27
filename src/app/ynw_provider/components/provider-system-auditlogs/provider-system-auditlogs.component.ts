@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -10,6 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'
@@ -74,11 +74,11 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private locationobj: Location,
     private shared_services: SharedServices,
     private routerobj: Router,
-    private shared_functions: SharedFunctions,
     public date_format: DateFormatPipe,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor
   ) { }
 
   ngOnInit() {
@@ -175,7 +175,7 @@ redirecToHelp() {
     }
     let seldate = '';
     if (this.holdlogSeldate) {
-      seldate = this.shared_functions.transformToYMDFormat(this.holdlogSeldate);
+      seldate = this.dateTimeProcessor.transformToYMDFormat(this.holdlogSeldate);
     }
     /*if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
       this.snackbarService.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});

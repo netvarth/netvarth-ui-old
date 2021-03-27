@@ -38,6 +38,7 @@ export class ProPicPopupComponent implements OnInit {
     transform: ImageTransform = {};
     scale = 1;
     imgType: any;
+    heading;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -51,6 +52,7 @@ export class ProPicPopupComponent implements OnInit {
     ngOnInit() {
         this.bProfile = this.data.userdata;
         this.imgType = this.data.img_type;
+        this.heading = (this.data.logoExist) ? 'Update Profile Picture' : 'Upload Profile Picture';
     }
 
     imageSelect(event: any): void {
@@ -225,6 +227,7 @@ export class ProPicPopupComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_error = error.error;
+                    this.dialogRef.close();
                 }
             );
     }

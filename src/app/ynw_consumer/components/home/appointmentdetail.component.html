@@ -48,8 +48,8 @@
                                             <div *ngIf="appt.provider" class="mgn-up-10 usr-name">
                                                 <span>Provider : </span>
                                                 <span>
-                                                    {{appt.provider.firstName | capitalizeFirst}}
-                                                    {{appt.provider.lastName | capitalizeFirst}}
+                                                    {{appt.provider.businessName | capitalizeFirst}}
+                                                    <!-- {{appt.provider.lastName | capitalizeFirst}} -->
                                                 </span>
                                             </div>
                                             <div class="mgn-up-10">
@@ -84,7 +84,7 @@
                                             </div>
                                             <div class="each-item" *ngIf="appt.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
-                                                <span class="item-label-val price rupee-font"> &#8377;{{appt.amountPaid}}</span>
+                                                <span class="item-label-val price rupee-font"> {{appt.amountPaid| currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">

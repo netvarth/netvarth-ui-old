@@ -9,6 +9,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-consumer-waitlist',
@@ -47,7 +48,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   remfavdialogRef;
 
   public searchfields: SearchFields = new SearchFields();
-
+private subs=new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_functions: SharedFunctions,
     private router: Router,
@@ -57,7 +58,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    this.route.params
+    this.subs.sink=this.route.params
       .subscribe((data) => {
         this.provider_id = data.provider_id;
         this.waitlist_id = data.uuid;
@@ -82,7 +83,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     const params = {
       account: this.provider_id
     };
-    this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
+    this.subs.sink=this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
       .subscribe(
         data => {
           this.waitlist_detail = data;
@@ -171,7 +172,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.shared_services.addProvidertoFavourite(id)
+    this.subs.sink=this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         () => {
 
@@ -184,7 +185,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
 
 
   getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
+    this.subs.sink=this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
       .subscribe(
         data => {
           const history: any = data;

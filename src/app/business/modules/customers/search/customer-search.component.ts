@@ -232,7 +232,7 @@ export class CustomerSearchComponent implements OnInit {
     foundMultiCustomer = false;
     multiCustomerData: any;
     display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
-
+    group;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -250,6 +250,9 @@ export class CustomerSearchComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.isFrom) {
                 this.isFrom = qparams.isFrom;
+            }
+            if (qparams.selectedGroup) {
+                this.group = qparams.selectedGroup;
             }
             if (qparams.scheduleId) {
                 this.appointmentScheduleId = qparams.scheduleId;
@@ -595,6 +598,9 @@ export class CustomerSearchComponent implements OnInit {
             'source': 'clist',
             'id': 'add'
         }
+        if (this.group) {
+            filter['selectedGroup'] = this.group;
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: filter
         };
@@ -714,6 +720,9 @@ export class CustomerSearchComponent implements OnInit {
                         filter['source'] = 'clist';
                         filter['id'] = 'add';
                         filter['type'] = 'create';
+                        if (this.group) {
+                            filter['selectedGroup'] = this.group;
+                        }
                         const navigationExtras: NavigationExtras = {
                             queryParams: filter
                         };

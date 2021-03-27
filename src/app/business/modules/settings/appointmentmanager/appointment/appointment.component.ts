@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -117,6 +118,7 @@ export class AppointmentComponent implements OnInit {
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '', 'jaldeeid': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;
@@ -228,6 +230,10 @@ export class AppointmentComponent implements OnInit {
     virtualServicenumber;
     emptyFielderror = false;
     provider_label = '';
+    showQuestionnaire = false;
+    questionnaireList: any = [];
+    channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -238,6 +244,7 @@ export class AppointmentComponent implements OnInit {
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -262,6 +269,7 @@ export class AppointmentComponent implements OnInit {
                 } else {
                     this.appt_title = 'Appointment';
                 }
+                this.channel = (this.apptType === 'PHONE_IN_APPOINTMENT') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.thirdParty) {
                 this.thirdParty = qparams.thirdParty;
@@ -573,7 +581,7 @@ export class AppointmentComponent implements OnInit {
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
@@ -776,6 +784,8 @@ export class AppointmentComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(this.sel_ser);
+        this.getProviderQuestionnaire();
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -1039,6 +1049,9 @@ export class AppointmentComponent implements OnInit {
         }
         // }
         this.showEditView = false;
+        if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+            this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+        }
         const post_Data = {
             'schedule': {
                 'id': this.sel_queue_id
@@ -1137,17 +1150,23 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                    this.submitQuestionnaire(retUuid);
+                    } else {                
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+
+                        this.router.navigate(['provider', 'appointments']);
+                    }
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
                 // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                 // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
                 //    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
                 // }
                 this.showCheckin = false;
                 this.searchForm.reset();
-                this.router.navigate(['provider', 'appointments']);
+                // this.router.navigate(['provider', 'appointments']);
             },
                 error => {
                     // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
@@ -1155,6 +1174,25 @@ export class AppointmentComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+        this.router.navigate(['provider', 'appointments']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1212,11 +1250,12 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
+        this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName, apptTime: this.apptTime });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
         } else {
             let exists = false;
             let existindx = -1;
@@ -1411,17 +1450,17 @@ export class AppointmentComponent implements OnInit {
         const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -1475,7 +1514,7 @@ export class AppointmentComponent implements OnInit {
     handleDeptSelction(obj) {
         this.users = [];
         this.queuejson = [];
-        this.api_error = '';
+        this.api_error = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
@@ -1833,7 +1872,7 @@ export class AppointmentComponent implements OnInit {
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
-        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     showOtherSection(value?) {
         if (value) {
@@ -1884,4 +1923,17 @@ export class AppointmentComponent implements OnInit {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
+    }  
+     getProviderQuestionnaire() {
+        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        //   console.log(data);
+        //   this.questionnaireList = data;
+        // });
+      }
 }

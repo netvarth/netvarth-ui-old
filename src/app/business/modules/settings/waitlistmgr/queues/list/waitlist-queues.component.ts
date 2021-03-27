@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-waitlist-queues',
@@ -31,6 +32,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     locations;
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
+    add_queue =  'Click to create a queue';
     tooltipcls = projectConstants.TOOLTIP_CLS;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
@@ -123,6 +125,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private snackbarService: SnackbarService,
+        private jaldeeTimeService: JaldeeTimeService,
         private wordProcessor: WordProcessor) { }
 
     ngOnInit() {
@@ -340,7 +343,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                                     schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
                                 }
                                 let display_schedule = [];
-                                display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                                display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                                 allQs[ii]['displayschedule'] = display_schedule;
                                 // replace instancequeue with new flag
                                 if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
@@ -612,11 +615,15 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         } else if (!this.shared_Functionsobj.checkIsInteger(instantQ.qserveonce)) {
             const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+        } else if (JSON.parse(instantQ.qserveonce) === 0) {
+            const error = this.customer_label + 's' + ' ' + 'served  at a time should greter than Zero';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
+        } else if ((JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
             const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.customer_label + 's served.';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
-        } else {
+        }else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);
             } else {

@@ -19,6 +19,7 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalogitempopup.component';
 import { AddcatalogimageComponent } from './addcatalogimage/addcatalogimage.component';
 import { TimewindowPopupComponent } from './timewindowpopup/timewindowpopup.component';
+import { CreateItemPopupComponent } from './createItem/createitempopup.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TimewindowPopupComponent } from './timewindowpopup/timewindowpopup.comp
         AddItemsComponent,
         EditcatalogitemPopupComponent,
         AddcatalogimageComponent,
-        TimewindowPopupComponent
+        TimewindowPopupComponent,
+        CreateItemPopupComponent
       ],
     imports: [
         CatalogRoutingModule,

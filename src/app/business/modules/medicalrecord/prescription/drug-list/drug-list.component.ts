@@ -105,7 +105,6 @@ export class DrugListComponent implements OnInit {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)
         .subscribe((data) => {
-          console.log(data);
           this.digitalSign = true;
         },
           error => {
@@ -143,7 +142,6 @@ export class DrugListComponent implements OnInit {
     });
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         for (const det of result) {
           this.drugList.push(det);
         }
@@ -169,14 +167,12 @@ export class DrugListComponent implements OnInit {
           this.drugList.push(det);
         }
       }
-      console.log(this.drugList);
+
     });
   }
 
   deleteDrug(index) {
-    console.log(this.drugList);
     this.showSave = true;
-
     this.removedrugdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -192,7 +188,6 @@ export class DrugListComponent implements OnInit {
           if (this.mrId) {
             this.provider_services.updateMRprescription(this.drugList, this.mrId).
               subscribe(res => {
-                console.log(this.drugList);
               });
           }
         }
@@ -206,7 +201,6 @@ export class DrugListComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {
-          console.log(this.drugList);
           this.showSave = false;
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
         },
@@ -310,7 +304,6 @@ export class DrugListComponent implements OnInit {
     });
     this.instructiondialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }
@@ -327,7 +320,6 @@ export class DrugListComponent implements OnInit {
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }

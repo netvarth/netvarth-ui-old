@@ -13,6 +13,7 @@ import { ProviderDataStorageService } from '../../../../../../../../ynw_provider
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-addservice',
@@ -85,6 +86,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
+        private dateTimeProcessor: DateTimeProcessor,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.serviceSubscription = this.servicesService.initService.subscribe(
@@ -311,7 +313,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.serviceForm.get('serviceDuration').setValue(this.duration);
     }
     getAppxTime(waitlist) {
-        return this.sharedFunctons.providerConvertMinutesToHourMinute(waitlist);
+        return this.dateTimeProcessor.providerConvertMinutesToHourMinute(waitlist);
     }
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;

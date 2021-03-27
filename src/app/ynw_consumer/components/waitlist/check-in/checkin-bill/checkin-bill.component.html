@@ -11,7 +11,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 no-padding">
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="col-md-12 no-padding" *ngIf="!api_loading">
             <div class="w-dta">
                 <div class="row">
                     <div class="panel panel-default">
@@ -79,6 +80,8 @@
                                                                             <span
                                                                                 class="dynamic">{{checkin.provider.businessName}}</span>
                                                                         </span>
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red" *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                        Cancelled</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -102,15 +105,12 @@
                                                                                             [matTooltip]="'Taxable'"
                                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                                     </div>
-                                                                                    <div class="quantity" *ngIf="checkin.waitlistStatus !== 'cancelled'">{{qnty_cap}}
+                                                                                    <div class="quantity">{{qnty_cap}}
                                                                                         {{service.quantity}}</div>
-                                                                                    <div class="price rupee-font" *ngIf="checkin.waitlistStatus !== 'cancelled'">
+                                                                                    <div class="price rupee-font">
                                                                                         {{(service.quantity *
                                                                                         service.price) |
                                                                                         currency:'&#8377; '}}</div>
-                                                                                        <div class="price"
-                                                                                            style="color: red;font-size: smaller;" *ngIf="checkin.waitlistStatus === 'cancelled'">
-                                                                                            Cancelled</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two">
                                                                                     <div class="discount-row two-col"
@@ -214,15 +214,21 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngFor="let coupon of bill_data.providerCoupon">
+                                                                                    *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
-                                                                                            {{coupon.name}}
+                                                                                            {{coupon.key}}
                                                                                         </div>
                                                                                         <div class="price rupee-font">
-                                                                                            (-){{coupon.couponValue |
-                                                                                            currency:'&#8377; '}}</div>
-                                                                                    </div>
+                                                                                                <span>(-)</span>
+                                                                                                <span
+                                                                                                    (click)="showJCCouponNote(coupon)"
+                                                                                                    [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value
+                                                                                                    |
+                                                                                                    currency:'&#8377;
+                                                                                                    '}}</span>
+                                                                                            </div>
+                                                                                </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
                                                                                     *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
@@ -354,12 +360,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="section-three other-section">
+                                                        <div class="section-three other-section" *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled' && (bill_data.amountDue > 0)">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf="this.couponList.length > 0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                                                                *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
-                                                                    <span class="">Jaldee Coupon</span>
+                                                                    <span class=""> Coupon</span>
                                                                 </div>
                                                                 <div
                                                                     class="col-md-12 col-sm-12 col-xs-12 no-padding jc-sec-bill">

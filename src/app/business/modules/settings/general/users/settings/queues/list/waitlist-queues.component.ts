@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../../../../../../shared/services/gro
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { JaldeeTimeService } from '../../../../../../../../shared/services/jaldee-time-service';
 
 @Component({
     selector: 'app-userwaitlist-queues',
@@ -31,6 +32,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     locations;
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
+    add_queue = 'Click to create a queue';
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     tooltipcls = '';
     breadcrumb_moreoptions: any = [];
@@ -128,6 +130,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private jaldeeTimeService: JaldeeTimeService,
         private fb: FormBuilder) {
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
@@ -369,7 +372,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                                 schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
                             }
                             let display_schedule = [];
-                            display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                            display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
                             allQs[ii]['displayschedule'] = display_schedule;
                             // replace instancequeue with new flag
                             if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
@@ -511,7 +514,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line:radix
         this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
         this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
-        if (!this.qAvailability.availableNow) {
+        if (!this.qAvailability.availableNow || this.queuedata.length === 0) {
             this.fromDateCaption = 'Now';
             if (this.qAvailability.timeRange) {
                 this.toDateCaption = this.qAvailability.timeRange.eTime;
@@ -642,11 +645,16 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         } else if (isNaN(instantQ.qserveonce)) {
             const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
-            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          return;
-        } else {
+        } else if (JSON.parse(instantQ.qserveonce) === 0) {
+            const error = this.customer_label + 's' + ' ' + 'served  at a time should greter than Zero';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
+        } else if ((JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.customer_label + 's served.';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);
             } else {

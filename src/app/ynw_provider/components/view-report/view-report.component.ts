@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { Location } from '@angular/common';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-view-report',
@@ -48,6 +49,7 @@ export class ViewReportComponent implements OnInit {
     private shared_services: SharedServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     public location: Location) { }
   ngOnInit() {
     this.router.params
@@ -87,7 +89,7 @@ export class ViewReportComponent implements OnInit {
   }
 
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   goBack() {
     this.location.back();

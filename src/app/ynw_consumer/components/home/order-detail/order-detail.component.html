@@ -34,11 +34,11 @@
                                         <div class="addrs">
                                           <span>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</span>
                                           <span *ngIf="storeContact.address">
-                                            <i class="fa fa-map-marker"></i> {{storeContact.address}}
+                                            <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContact.address}}
                                           </span>
-                                          <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</span>
+                                          <span *ngIf= "storeContact.phone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</span>
                                           <span *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</span>
-                                          <span class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                                          <span  *ngIf= "storeContact.email"class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
                                           <span *ngIf= "storeContact.alternateEmail" class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.alternateEmail}}</span>
                                           <span *ngIf= "storeContact.whatsappNo"><i class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}} {{storeContact.whatsappNo}}</span>
                                         </div>
@@ -76,6 +76,22 @@
                                                         <div class="bold font11 mgn-bt-10"> {{waitlist.orderDate | date: display_dateFormat}},
                                                             {{waitlist.orderTimeWindow.timeSlots[0].sTime}} -
                                                             {{waitlist.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                            <div *ngIf="waitlist.homeDeliveryAddress && waitlist.homeDelivery "class="bold font11 mgn-bt-10"><i class="fa fa-address-card-o" aria-hidden="true"></i> Delivery Address</div>
+                                                            <address *ngIf="waitlist.homeDeliveryAddress"> 
+                                                                <span>
+                                                                  {{delivery_address.firstName }} &nbsp;{{delivery_address.lastName}}
+                                                                </span><br>
+                                                                <span>
+                                                                    {{delivery_address.address }}, {{delivery_address.landMark }}
+                                                                  </span><br>
+                                                                <span>
+                                                                  {{delivery_address.city }} , {{delivery_address.postalCode}}
+                                                                </span><br>
+                                                             
+                                                                <span>
+                                                                    {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
+                                                                  </span>
+                                                                </address>
                                                         <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
                                                             <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
                                                         </div>
@@ -192,6 +208,8 @@
                                                         [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
 
                                                     </div>
+                                                    <div class="lst-img default_img" *ngIf="!item.itemImages">
+                                                    </div>
                                                 </div>
                                                 <div *ngIf="noteIndex === i && showNteSection" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                     <div class="snd_msg_outer">
@@ -238,8 +256,7 @@
                                             <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                                             [plainGalleryConfig]="customPlainGalleryRowConfig"
                                             [buttonsConfig]="customButtonsFontAwesomeConfig"
-                                            (buttonBeforeHook)="onButtonBeforeHook()"
-                                            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                           ></ks-modal-gallery>
 
 
                                         </div>

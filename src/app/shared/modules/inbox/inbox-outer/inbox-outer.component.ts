@@ -8,6 +8,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -54,21 +56,32 @@ export class InboxOuterComponent implements OnInit {
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
   scrollDone = false;
+  cronHandle: Subscription;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
     private location: Location, private snackbarService: SnackbarService,
-    public shared_services: SharedServices) { }
+    public shared_services: SharedServices,
+    private dateTimeProcessor: DateTimeProcessor) { }
   ngOnInit() {
     this.onResize();
     this.loading = true;
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.getInboxMessages();
+    });
+  }
+  ngOnDestroy() {
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
@@ -84,6 +97,12 @@ export class InboxOuterComponent implements OnInit {
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
+            if (unreadMsgs.length > 0) {
+              const ids = unreadMsgs.map(msg => msg.messageId);
+              const messageids = ids.toString();
+              this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
+            }
             setTimeout(() => {
               this.scrollToElement();
             }, 100);
@@ -98,7 +117,11 @@ export class InboxOuterComponent implements OnInit {
       );
   }
   goBack() {
-    this.location.back();
+    if (this.small_device_display && this.showChat) {
+      this.showChat = false;
+    } else {
+      this.location.back();
+    }
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
@@ -117,15 +140,15 @@ export class InboxOuterComponent implements OnInit {
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
-    const obtdate = new Date(pubDate.getFullYear() + '-' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '-' + this.shared_functions.addZero(pubDate.getDate()));
-    const obtshowdate = this.shared_functions.addZero(pubDate.getDate()) + '/' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-    const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
+    const obtshowdate = this.dateTimeProcessor.addZero(pubDate.getDate()) + '/' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.dateTimeProcessor.addZero(pubDate.getHours()) + ':' + this.dateTimeProcessor.addZero(pubDate.getMinutes());
     const today = new Date();
-    const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
+    const todaydate = new Date(today.getFullYear() + '-' + this.dateTimeProcessor.addZero((today.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(today.getDate()));
     if (obtdate.getTime() === todaydate.getTime()) {
-      retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     } else {
-      retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = obtshowdate + ' ' + this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     }
     return retdate;
   }
@@ -154,6 +177,7 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
+
     });
   }
   sendMessage() {
@@ -200,9 +224,11 @@ export class InboxOuterComponent implements OnInit {
     };
   }
   getUserName(user) {
+    const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
     const name = user.split(' ');
+    const pattern = userPattern.test(name[0]);
     let nameShort = name[0].charAt(0);
-    if (name.length > 1) {
+    if (name.length > 1 && pattern) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
     return nameShort.toUpperCase();

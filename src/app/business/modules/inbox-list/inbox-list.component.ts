@@ -1,5 +1,5 @@
 
-import { Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
@@ -11,7 +11,8 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { KeyValue } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -76,6 +77,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgHeight;
   // @ViewChildren("userMsg") userMsg: QueryList<ElementRef>;
   scrollDone = false;
+  showEnquiry = false;
+  enquiries: any = [];
+  qParams;
+  customer_label;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -84,9 +90,20 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private router: Router) { }
+    private dateTimeProcessor: DateTimeProcessor,
+    private router: Router, private activateRoute: ActivatedRoute) {
+    this.activateRoute.queryParams.subscribe(params => {
+      this.qParams = params;
+      if (this.qParams.enquiry) {
+        this.showEnquiry = true;
+      }
+    });
+  }
+  ngOnChanges() {
+  }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -107,19 +124,34 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
       );
     this.loading = true;
-    this.onResize();
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.getInboxMessages();
+    });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
+    if (this.screenWidth <= 600) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    this.userHeight = screenHeight - 250;
-    this.msgHeight = screenHeight - 375;
+    if (this.screenWidth <= 991) {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 303;
+      } else {
+        this.userHeight = screenHeight - 234;
+      }
+      this.msgHeight = screenHeight - 425;
+    } else {
+      if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
+        this.userHeight = screenHeight - 264;
+      } else {
+        this.userHeight = screenHeight - 208;
+      }
+      this.msgHeight = screenHeight - 410;
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -153,15 +185,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
-    const obtdate = new Date(pubDate.getFullYear() + '-' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '-' + this.shared_functions.addZero(pubDate.getDate()));
-    const obtshowdate = this.shared_functions.addZero(pubDate.getDate()) + '/' + this.shared_functions.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
-    const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
+    const obtshowdate = this.dateTimeProcessor.addZero(pubDate.getDate()) + '/' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.dateTimeProcessor.addZero(pubDate.getHours()) + ':' + this.dateTimeProcessor.addZero(pubDate.getMinutes());
     const today = new Date();
-    const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
+    const todaydate = new Date(today.getFullYear() + '-' + this.dateTimeProcessor.addZero((today.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(today.getDate()));
     if (obtdate.getTime() === todaydate.getTime()) {
-      retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     } else {
-      retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
+      retdate = obtshowdate + ' ' + this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
     }
     return retdate;
   }
@@ -179,8 +211,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
         data => {
           this.messages = data;
           this.scrollDone = true;
-          console.log(this.messages);
-          this.setMessages();
+          if (this.showEnquiry) {
+            const inbox = this.generateCustomInbox(this.messages);
+            this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
+          } else {
+            this.setMessages();
+          }
           this.loading = false;
         },
         () => {
@@ -189,30 +225,21 @@ export class InboxListComponent implements OnInit, OnDestroy {
       );
   }
   setMessages() {
-    console.log(this.inboxList);
-    console.log(this.selectedUser);
-    console.log(this.messages)
     this.inboxList = this.generateCustomInbox(this.messages);
-    console.log(this.inboxList);
-    console.log(this.selectedUser.userType);
     if (this.userDet.accountType === 'BRANCH') {
       const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
       Object.keys(group).forEach(key => {
         const group2 = this.shared_functions.groupBy(group[key], 'accountName');
         group[key] = group2;
       });
-      console.log(group);
-      console.log(Object.keys(group));
       this.userWithMsgCount = Object.keys(group).length;
-      console.log(this.userWithMsgCount);
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
         } else {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastsName];
+          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
         }
-        console.log(this.groupedMsgs);
       } else {
         let arr = [];
         Object.keys(group).forEach(key => {
@@ -223,21 +250,23 @@ export class InboxListComponent implements OnInit, OnDestroy {
           });
         });
         this.groupedMsgs = arr;
-        console.log(this.groupedMsgs);
       }
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
-      console.log(this.groupedMsgs)
     }
-    console.log(this.selectedCustomer);
-    console.log(this.selectedUserMessages);
+    this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
+      if (unreadMsgs.length > 0) {
+        const ids = unreadMsgs.map(msg => msg.messageId);
+        const messageids = ids.toString();
+        this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
+      }
       setTimeout(() => {
         this.scrollToElement();
       }, 100);
     }
-    console.log(this.selectedUserMessages);
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
@@ -278,7 +307,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName) ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -330,11 +359,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       caption: []
     };
   }
-  getUser(user, type?) {
-    if (!type) {
-      user = user.split('=');
-      user = user[0];
-    }
+  getUserShort(user) {
+    user = user.split('=');
+    user = user[0];
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
@@ -375,10 +402,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     //   setTimeout(() => {
     //     this.userMsg.toArray().forEach(element => {
     //       if (element.nativeElement.innerHTML.trim() === this.selectedCustomer.trim()) {
-    //         console.log(element.nativeElement);
 
     // var height = element.nativeElement.offsetHeight;
-    // console.log(height);
     //     window.scroll({
     //         top: height,
     //         left: 0,
@@ -442,7 +467,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   customerSelection(msgs) {
     this.type = 'all';
     this.message = '';
-    console.log(msgs);
     this.clearImg();
     this.selectedCustomer = msgs.key;
     this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
@@ -450,12 +474,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.showChat = true;
     }
     const unreadMsgs = msgs.value.filter(msg => !msg.read && msg.messagestatus === 'in');
-    console.log(unreadMsgs);
     if (unreadMsgs.length > 0) {
       const ids = unreadMsgs.map(msg => msg.messageId);
       const messageids = ids.toString();
-      console.log(unreadMsgs[0].accountId);
-      console.log(unreadMsgs[0].providerId);
       this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
     }
     setTimeout(() => {
@@ -492,7 +513,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       const filter = {};
-      console.log(this.selectedUserMessages);
       if (this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
       }
@@ -518,7 +538,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   userSelection(user) {
     this.selectedUser = user;
-    console.log(this.selectedUser);
     this.selectedCustomer = '';
     this.selectedUserMessages = this.tempSelectedUserMessages = [];
     this.setMessages();
@@ -558,13 +577,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
   changeMsgType(type) {
     this.type = type;
     this.message = '';
-    console.log(this.tempSelectedUserMessages);
     if (this.type === 'all') {
       this.selectedUserMessages = this.tempSelectedUserMessages;
     } else {
       this.selectedUserMessages = this.getEnquiry();
     }
-    console.log(this.selectedUserMessages);
     setTimeout(() => {
       this.scrollToElement();
     }, 100);
@@ -572,5 +589,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
   getEnquiry() {
     const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
     return msgs;
+  }
+  getMsgType(msg) {
+    return 'chat';
+  }
+  gotoCustomers() {
+    this.router.navigate(['/provider/customers']);
   }
 }

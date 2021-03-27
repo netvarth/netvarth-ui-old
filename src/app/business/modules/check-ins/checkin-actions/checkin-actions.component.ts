@@ -22,6 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class CheckinActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    showAttachment = false;
     domain;
     customer_label = '';
     showmrrx = false;
@@ -99,8 +101,9 @@ export class CheckinActionsComponent implements OnInit {
     checkinsByLabel: any = [];
     labelsforRemove: any = [];
     showApply = false;
+    buttonClicked = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
-        private shared_functions: SharedFunctions, private provider_services: ProviderServices,
+        private provider_services: ProviderServices,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -110,6 +113,7 @@ export class CheckinActionsComponent implements OnInit {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
+        private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -189,6 +193,8 @@ export class CheckinActionsComponent implements OnInit {
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+            } else {
+                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.checkin.consumer.jaldeeId + '</td></tr>';
             }
             if (this.checkin.service && this.checkin.service.deptName) {
                 checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
@@ -249,7 +255,7 @@ export class CheckinActionsComponent implements OnInit {
                         }
                         this.sel_queue_id = this.queuejson[selindx].id;
                         this.sel_queue_indx = selindx;
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
@@ -315,11 +321,11 @@ export class CheckinActionsComponent implements OnInit {
         const seldate1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
         const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -329,7 +335,7 @@ export class CheckinActionsComponent implements OnInit {
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
         this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
@@ -459,15 +465,14 @@ export class CheckinActionsComponent implements OnInit {
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
-            this.dialogRef.close();
-            if (result === 'reloadlist') {
-            }
+            this.dialogRef.close('reload');
         });
     }
     changeWaitlistStatus(action) {
-        // if (action === 'CANCEL') {
-        //     this.dialogRef.close();
-        // }
+        if (action !== 'CANCEL') {
+            // this.dialogRef.close();
+            this.buttonClicked = true;
+        }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -475,8 +480,11 @@ export class CheckinActionsComponent implements OnInit {
             .then(
                 result => {
                     this.dialogRef.close('reload');
-                }
-            );
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
     }
     getDisplayboardCount() {
         let layout_list: any = [];
@@ -525,6 +533,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
             this.showmrrx = true;
+        }
+        if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
+            this.showAttachment = true;
         }
     }
     getLabel() {
@@ -852,5 +863,28 @@ export class CheckinActionsComponent implements OnInit {
         this.galleryDialog.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
         })
+    }
+    gotoQuestionnaire(booking) {
+        this.dialogRef.close();
+        console.log(booking);
+        let channel;
+        if (booking.waitlistMode === 'WALK_IN_CHECKIN') {
+            channel = 'WALKIN';
+        } else if (booking.waitlistMode === 'PHONE_CHECKIN') {
+            channel = 'PHONEIN';
+        } else {
+            channel = 'ONLINE';
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                uuid: booking.ynwUuid,
+                providerId: booking.providerAccount.id,
+                serviceId: booking.service.id,
+                consumerId: booking.waitlistingFor[0].id,
+                type: 'proCheckin',
+                channel: channel
+            }
+        };
+        this.router.navigate(['provider', 'check-ins', 'questionnaire'], navigationExtras);
     }
 }

@@ -10,6 +10,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-system-alerts',
   templateUrl: './provider-system-alerts.component.html'
@@ -39,7 +40,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   holdalertSelAck = null;
   holdalertStartdate = null;
   holdalertEnddate = null;
-  filterapplied;
+  filterapplied = true;
   filter_sidebar = false;
   open_filter = false;
   api_loading = true;
@@ -60,23 +61,21 @@ export class ProviderSystemAlertComponent implements OnInit {
   isCheckin;
   breadcrumb_moreoptions: any = [];
   filters: any = {
-    // 'ack_status': false,
     'date': false
   };
   ackStatus;
-  notAckStatus;
+  notAckStatus = true;;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
     private routerobj: Router,
-    private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     public date_format: DateFormatPipe,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor
   ) { }
   ngOnInit() {
-    // this.getAlertList();
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.alertSelAck = []; // default becuase maximise from footer alert panel
@@ -146,7 +145,6 @@ export class ProviderSystemAlertComponent implements OnInit {
   }
   resetFilter() {
     this.filters = {
-      // 'ack_status': false,
       'date': false
     };
     this.alertEnddate = null;
@@ -190,42 +188,17 @@ export class ProviderSystemAlertComponent implements OnInit {
     let startseldate = '';
     let endseldate = '';
     if (this.holdalertStartdate) {
-      // const mon = this.holdalertSeldate['_i']['month'] + 1;
-      // let mn = '';
-      // if (mon < 10) {
-      //   mn = '0' + mon;
-      // } else {
-      //   mn = mon;
-      // }
-      // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
-      startseldate = this.shared_functions.transformToYMDFormat(this.holdalertStartdate);
+      startseldate = this.dateTimeProcessor.transformToYMDFormat(this.holdalertStartdate);
     }
     if (this.holdalertEnddate) {
-      // const mon = this.holdalertSeldate['_i']['month'] + 1;
-      // let mn = '';
-      // if (mon < 10) {
-      //   mn = '0' + mon;
-      // } else {
-      //   mn = mon;
-      // }
-      // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
-      endseldate = this.shared_functions.transformToYMDFormat(this.holdalertEnddate);
+      endseldate = this.dateTimeProcessor.transformToYMDFormat(this.holdalertEnddate);
     }
-    /*if (pagecall === false && this.holdalertSelAck === '' && seldate === '') {
-      this.snackbarService.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
-    } else {*/
-
-    // if (pagecall === false) {
-    //   this.getAlertListTotalCnt(this.holdalertSelAck || '', seldate);
-    // } else {
     this.getAlertList(this.holdalertSelAck || '', startseldate, endseldate);
-    // }
-    if (endseldate !== '' || startseldate !== '' || this.holdalertSelAck !== 'false') {
+    if (endseldate !== '' || startseldate !== '' || this.notAckStatus || this.ackStatus) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
-    // }
   }
   redirecToHelp() {
     this.routerobj.navigate(['/provider/' + this.domain + '/alert']);
@@ -244,29 +217,15 @@ export class ProviderSystemAlertComponent implements OnInit {
     return this.startpageval;
   }
   alertAcknowledge(obj) {
-    // this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
     this.provider_servicesobj.acknowledgeAlert(obj.id)
       .subscribe(() => {
         this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
         this.getAlertListTotalCnt('false', this.holdalertStartdate, this.holdalertEnddate);
-        // this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount' });
       },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-
-  // filterClicked(value) {
-  //   this.filters[value] = !this.filters[value];
-  //   if (!this.filters[value]) {
-  //     if (value === 'date') {
-  //       this.alertSeldate = null;
-  //     } else if (value === 'ack_status') {
-  //       this.alertSelAck = [];
-  //     }
-  //     this.do_search(false);
-  //   }
-  // }
   showFilterSidebar() {
     this.filter_sidebar = true;
   }

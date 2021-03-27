@@ -1,7 +1,8 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
     Select an action to perform
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-            aria-hidden="true"></i></button></h1>
+            aria-hidden="true"></i></button>
+</h1>
 <div class="action-section col-md-12 no-padding" *ngIf="action === ''">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
         <div class="action-box pointer-cursor" (click)="editCustomer()">
@@ -62,7 +63,8 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'label'">
     Labels
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-            aria-hidden="true"></i></button></h1>
+            aria-hidden="true"></i></button>
+</h1>
 <div *ngIf="action === 'label'">
     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-30 no-padding queue-outer" *ngIf="loading">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -80,7 +82,8 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
-        <a class="" (click)="gotoLabel()">Manage labels</a>
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+        <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
 </div>

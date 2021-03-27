@@ -9,7 +9,8 @@ import { Messages } from '../../constants/project-messages';
 
 @Component({
   selector: 'app-otp-form',
-  templateUrl: './otp-form.component.html'
+  templateUrl: './otp-form.component.html',
+  styleUrls: ['./otp-form.component.css']
 })
 export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -40,6 +41,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   cronHandle: Subscription;
   refreshTime = 30;
   otp_mobile = null;
+  terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   @Input() actionstarted;
   @Input() submitdata;
   @Input() country_code;

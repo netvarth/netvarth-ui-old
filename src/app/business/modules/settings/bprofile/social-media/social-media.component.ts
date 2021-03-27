@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -12,16 +12,40 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
     styleUrls: ['./social-media.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class SocialMediaComponent implements OnInit {
-
-    constructor(public routerobj: Router,
-        public provider_services: ProviderServices,
-        public shared_functions: SharedFunctions,
-        private snackbarService: SnackbarService) { }
     orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     socialLink: any = [];
     social_arr: any = [];
     bProfile: any = [];
     showSave: any = [];
+    screenWidth: number;
+    no_of_grids: number;
+    hide_save_btn = false;
+    constructor(public routerobj: Router,
+        public provider_services: ProviderServices,
+        public shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService) {
+            this.onResize();
+         }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1400) {
+            divider = divident / 5;
+        } else if (this.screenWidth > 1000 && this.screenWidth < 1400) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 375) {
+            divider = divident / 1;
+        }
+        this.no_of_grids = Math.round(divident / divider);
+    }
+
     ngOnInit() {
         this.getBusinessProfile();
     }
@@ -33,6 +57,7 @@ export class SocialMediaComponent implements OnInit {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
+            this.hide_save_btn = true;
             this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -92,6 +117,7 @@ export class SocialMediaComponent implements OnInit {
     }
     keyPressed(index) {
         this.showSave[index] = true;
+        this.hide_save_btn = false;
     }
     deleteSocialmedia(sockey) {
         console.log(this.social_arr);

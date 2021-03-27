@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConsumerServices } from '../../services/consumer-services.service';
@@ -11,13 +11,16 @@ import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-priv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { SubSink } from 'subsink';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
   styleUrls: ['./myfavourites.component.css']
 })
-export class MyfavouritesComponent implements OnInit {
+export class MyfavouritesComponent implements OnInit,OnDestroy {
+  
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
   fav_providers;
   fav_providers_id_list: any[];
@@ -52,7 +55,7 @@ export class MyfavouritesComponent implements OnInit {
   not_allowed_cap = Messages.NOT_ALLOWED_CAP;
   addnotedialogRef: any;
   privacydialogRef: MatDialogRef<unknown, any>;
-
+private subs=new SubSink();
   constructor(
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
@@ -61,7 +64,8 @@ export class MyfavouritesComponent implements OnInit {
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor
   ) { }
 
   ngOnInit() {
@@ -70,12 +74,15 @@ export class MyfavouritesComponent implements OnInit {
     this.gets3curl();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
   }
+  ngOnDestroy(): void {
+    // this.subs.unsubscribe();
+  }
 
   // Get system date
   setSystemDate() {
     const _this = this;
     return new Promise<void>(function (resolve, reject) {
-      _this.shared_services.getSystemDate()
+      _this.subs.sink=_this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
@@ -92,7 +99,7 @@ export class MyfavouritesComponent implements OnInit {
   // Get Fav Providers
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    this.shared_services.getFavProvider()
+   this.subs.sink= this.shared_services.getFavProvider()
       .subscribe(
         data => {
           this.loadcomplete.fav_provider = true;
@@ -164,7 +171,7 @@ export class MyfavouritesComponent implements OnInit {
     if (modDateReq) {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
-    this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
+    this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         switch (section) {
           case 'settings': {
@@ -191,7 +198,7 @@ export class MyfavouritesComponent implements OnInit {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+      this.subs.sink=this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
           // const locationjson: any = [];
@@ -246,13 +253,13 @@ export class MyfavouritesComponent implements OnInit {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
@@ -261,14 +268,14 @@ export class MyfavouritesComponent implements OnInit {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.dateTimeProcessor.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
                     + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.dateTimeProcessor.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
               }
             } else {
@@ -291,7 +298,7 @@ export class MyfavouritesComponent implements OnInit {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.consumer_services.getApptTime(post_provids_locid)
+      this.subs.sink=this.consumer_services.getApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;

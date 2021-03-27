@@ -26,6 +26,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -335,6 +336,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   addCustomerTooltip = '';
   qloading: boolean;
   firstTime = true;
+  statusChangeClicked = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -347,6 +349,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -836,7 +839,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.dateTimeProcessor.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.dateTimeProcessor.transformToYMDFormat(servdate)) {
       this.filter.futurecheckin_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
@@ -893,20 +896,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getDefaultViewQs(allQueues) {
-    console.log(allQueues);
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
-      console.log(allQueues.length);
       for (let qIndex = 0; qIndex < allQueues.length; qIndex++) {
-        console.log(allQueues[qIndex]);
-        console.log(loggedUser.id);
         if (allQueues[qIndex].provider && (allQueues[qIndex].provider.id === loggedUser.id)) {
           userQs.push(allQueues[qIndex]);
         }
       }
-      console.log(userQs);
       return userQs;
     } else {
       return allQueues;
@@ -975,8 +972,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         self.queues = queues;
         self.initViews(queues, '').then(
           (view) => {
-            console.log('view:');
-            console.log(view);
             self.initView(view, 'changeLocation');
           }
         );
@@ -985,7 +980,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
-    console.log(view);
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
@@ -996,11 +990,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < queues.length; qIndex++) {
-          console.log(queues[qIndex]);
-          console.log(loggedUser.id);
           if (queues[qIndex].provider && (queues[qIndex].provider.id === loggedUser.id)) {
             qs.push(queues[qIndex]);
           }
@@ -1066,8 +1057,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
-        // if (activeQ && activeQ.id) {
-        //   this.selQIds.push(activeQ.id);
         if (qids && qids.length > 0) {
           this.selQIds = qids;
           this.groupService.setitemToGroupStorage('selQ', this.selQIds);
@@ -1079,7 +1068,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
-    // this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -1087,7 +1075,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const cday = new Date();
     const currentday = (cday.getDay() + 1);
     const curtime = this.provider_shared_functions.formatTime(cday.getHours(), cday.getMinutes());
-    // const curtime = '21:00:00';
     let stime;
     let etime;
     const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
@@ -1501,6 +1488,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.selQIds.length !== 0) {
     //   Mfilter['queue-eq'] = this.selQIds.toString();
     // }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+      const qids = this.activeQs.map(q => q.id);
+      Mfilter['queue-eq'] = qids.toString();
+    }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
@@ -1734,6 +1725,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.waitlist_status === 'all' && this.firstTime) {
       Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     }
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+      const qids = this.activeQs.map(q => q.id);
+      Mfilter['queue-eq'] = qids.toString();
+    }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1956,11 +1951,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
-        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
         // api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
-        api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
+        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
       // if (this.filter.futurecheckin_date != null && this.time_type === 2) {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
@@ -2534,35 +2529,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       queue: false,
       listeners: {
         onstart: () => {
-          console.log('Start utterance');
         },
         onend: () => {
-          console.log('End utterance');
           count++;
           if (count !== 3) {
             _this.playSound(checkin, count);
           }
         },
         onresume: () => {
-          console.log('Resume utterance');
         },
         onboundary: event => {
-          console.log(
-            event.name +
-            ' boundary reached after ' +
-            event.elapsedTime +
-            ' milliseconds.'
-          );
         }
       }
     }).then(() => {
-      console.log('Success !');
     }).catch(e => {
-      console.error('An error occurred :', e);
     });
   }
   callingWaitlist(checkin) {
-    console.log(checkin);
     if (checkin.showToken) {
       if (!checkin.callingStatus) {
         const speechSupported = this.lStorageService.getitemfromLocalStorage('speech');
@@ -2786,10 +2769,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.statusChangeClicked = true;
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
+          this.statusChangeClicked = false;
           this.loadApiSwitch(result);
+        }, error => {
+          this.statusChangeClicked = false;
         }
       );
   }
@@ -2928,37 +2915,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAttachmentGallery(checkin) {
-    // this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
     this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
-        console.log(communications);
         this.image_list_popup_temp = [];
         this.image_list_popup = [];
         let count = 0;
-        // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-        //   if (communications[comIndex].attachements) {
-        //     for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-        //       const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
-        //       let imagePath = thumbPath;
-        //       const description = communications[comIndex].attachements[attachIndex].s3path;
-        //       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-        //       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-        //         console.log(comIndex);
-        //         imagePath = communications[comIndex].attachements[attachIndex].s3path;
-        //       }
-        //       const imgobj = new Image(
-        //         count,
-        //         { // modal
-        //           img: imagePath,
-        //           description: description
-        //         },
-        //       );
-        //       console.log(imgobj);
-        //       this.image_list_popup_temp.push(imgobj);
-        //       count++;
-        //     }
-        //   }
-        // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
            let imagePath = thumbPath;
@@ -3197,17 +3158,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           // 'splitSentences': false,
           listeners: {
             onvoiceschanged: voices => {
-              console.log('Voices changed', voices);
             }
           }
         })
         .then(data => {
-          console.log('Speech is ready', data);
           // _addVoicesList(data.voices);
           // _prepareSpeakButton(speech);
         })
         .catch(e => {
-          console.error('An error occured while initializing : ', e);
         });
     }
   }

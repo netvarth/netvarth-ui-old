@@ -34,7 +34,7 @@ export class CorporateSettingsComponent implements OnInit {
     loading: boolean;
     corpInfo;
     corpType;
-    corpId;
+    corpId = '';
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -60,23 +60,27 @@ export class CorporateSettingsComponent implements OnInit {
         );
     }
     onSubmitJoinCorp(corpId) {
-        this.shared_services.joinCorp(corpId).subscribe(
-            (data) => {
-                const user = this.groupService.getitemFromGroupStorage('ynw-user');
-                user['accountType'] = 'BRANCH';
-                this.groupService.setitemToGroupStorage('ynw-user', user);
-                this.accountType = 'BRANCH';
-                this.snackbarService.openSnackBar(Messages.JOINCORP_SUCCESS);
-                this.corpType = '';
-                this.corpId = '';
-                this.getCorporateDetails();
-                const pdata = { 'ttype': 'upgradelicence' };
-                this.shared_functions.sendMessage(pdata);
-            },
-            (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-        );
+        if (this.corpId.trim() === '') {
+            this.snackbarService.openSnackBar('Please enter corporate uid', { 'panelClass': 'snackbarerror' });
+        } else {
+            this.shared_services.joinCorp(corpId).subscribe(
+                (data) => {
+                    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+                    user['accountType'] = 'BRANCH';
+                    this.groupService.setitemToGroupStorage('ynw-user', user);
+                    this.accountType = 'BRANCH';
+                    this.snackbarService.openSnackBar(Messages.JOINCORP_SUCCESS);
+                    this.corpType = '';
+                    this.corpId = '';
+                    this.getCorporateDetails();
+                    const pdata = { 'ttype': 'upgradelicence' };
+                    this.shared_functions.sendMessage(pdata);
+                },
+                (error) => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+        }
     }
     onSubmitCreateCorp(corpName, corpCode) {
         if (!corpName || corpName === '') {
@@ -117,7 +121,7 @@ export class CorporateSettingsComponent implements OnInit {
         }
     }
     redirecToMiscellaneous() {
-        this.routerobj.navigate(['provider', 'settings' , 'miscellaneous']);
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);

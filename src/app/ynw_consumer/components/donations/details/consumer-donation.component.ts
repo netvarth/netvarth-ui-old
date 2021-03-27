@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,18 +17,20 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SubSink } from 'subsink';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
     styleUrls: ['./consumer-donation.component.css']
 })
-export class ConsumerDonationComponent implements OnInit {
-    checkinSubscribtion: Subscription;
+export class ConsumerDonationComponent implements OnInit,OnDestroy {
+   
+
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
     no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
@@ -157,8 +158,8 @@ export class ConsumerDonationComponent implements OnInit {
 
     users = [];
     emailExist = false;
-    payEmail;
-    payEmail1;
+    payEmail = '';
+    payEmail1 = '';
     emailerror = null;
     email1error = null;
     phoneerror = '';
@@ -185,7 +186,7 @@ export class ConsumerDonationComponent implements OnInit {
     provider_id: any;
     isfirstCheckinOffer: any;
     s3CouponsList: any = [];
-    subscription: Subscription;
+ 
     showCouponWB: boolean;
     change_date: any;
     liveTrack = false;
@@ -209,13 +210,13 @@ export class ConsumerDonationComponent implements OnInit {
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
-    TooltipLabel = TooltipLabel;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;
     dialCode;
     uid;
+    private subs = new SubSink();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -234,7 +235,7 @@ export class ConsumerDonationComponent implements OnInit {
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private location: Location) {
-        this.route.queryParams.subscribe(
+        this.subs.sink=this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
@@ -243,6 +244,9 @@ export class ConsumerDonationComponent implements OnInit {
                 this.sel_ser = JSON.parse(params.service_id);
                 // this.action = params.action;
             });
+    }
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
     ngOnInit() {
         this.getServicebyLocationId(this.sel_loc);
@@ -298,7 +302,7 @@ export class ConsumerDonationComponent implements OnInit {
     getWaitlistMgr() {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
-            _this.provider_services.getWaitlistMgr()
+           _this.subs.sink= _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
@@ -313,7 +317,7 @@ export class ConsumerDonationComponent implements OnInit {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getBussinessProfile()
+          _this.subs.sink= _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
                         resolve(data);
@@ -326,9 +330,9 @@ export class ConsumerDonationComponent implements OnInit {
     }
     getFamilyMembers() {
         this.api_loading1 = true;
-        let fn;
+    
         let self_obj;
-        fn = this.shared_services.getConsumerFamilyMembers();
+        
         self_obj = {
             'userProfile': {
                 'id': this.customer_data.id,
@@ -336,7 +340,7 @@ export class ConsumerDonationComponent implements OnInit {
                 'lastName': this.customer_data.lastName
             }
         };
-        fn.subscribe(data => {
+        this.subs.sink=this.shared_services.getConsumerFamilyMembers().subscribe((data:any) => {
             this.familymembers = [];
             this.familymembers.push(self_obj);
             for (const mem of data) {
@@ -517,7 +521,7 @@ export class ConsumerDonationComponent implements OnInit {
     }
     addDonationConsumer(post_Data, paymentWay) {
         this.api_loading = true;
-        this.shared_services.addCustomerDonation(post_Data, this.account_id)
+        this.subs.sink=this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
                 const payInfo = {
@@ -532,7 +536,7 @@ export class ConsumerDonationComponent implements OnInit {
                 this.lStorageService.setitemonLocalStorage('uuid', data['uid']);
                 this.lStorageService.setitemonLocalStorage('acid', this.account_id);
                 this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
-                this.shared_services.consumerPayment(payInfo)
+                this.subs.sink=this.shared_services.consumerPayment(payInfo)
                     .subscribe((pData: any) => {
                         this.checkIn_type = 'donations';
                         this.origin = 'consumer';
@@ -580,47 +584,43 @@ export class ConsumerDonationComponent implements OnInit {
         this.resetApi();
         let post_data;
         let passtyp;
-        if (this.payEmail) {
-            const stat = this.validateEmail(this.payEmail);
-            if (!stat) {
+        const stat = this.validateEmail(this.payEmail);
+        const stat1 = this.validateEmail(this.payEmail1);
+        if (this.payEmail === '' || !stat) {
                 this.emailerror = 'Please enter a valid email.';
-                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
-            }
         }
-        if (this.payEmail1) {
-            const stat1 = this.validateEmail(this.payEmail1);
-            if (!stat1) {
+        if (this.payEmail1 === '' || !stat1) {
                 this.email1error = 'Please enter a valid email.';
-                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
-            }
         }
         // return new Promise((resolve) => {
-        if (this.payEmail === this.payEmail1) {
-            post_data = {
-                'id': this.userData.userProfile.id || null,
-                'firstName': this.userData.userProfile.firstName || null,
-                'lastName': this.userData.userProfile.lastName || null,
-                'dob': this.userData.userProfile.dob || null,
-                'gender': this.userData.userProfile.gender || null,
-                'email': this.payEmail || ''
-            };
-            passtyp = 'consumer';
-            if (this.payEmail) {
-                this.shared_services.updateProfile(post_data, passtyp)
-                    .subscribe(
-                        () => {
-                            this.getProfile();
-                            // this.hideFilterSidebar();
-                            this.action = '';
-                        },
-                        error => {
-                            this.api_error = error.error;
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
+        if (stat && stat1) {
+            if (this.payEmail === this.payEmail1) {
+                post_data = {
+                    'id': this.userData.userProfile.id || null,
+                    'firstName': this.userData.userProfile.firstName || null,
+                    'lastName': this.userData.userProfile.lastName || null,
+                    'dob': this.userData.userProfile.dob || null,
+                    'gender': this.userData.userProfile.gender || null,
+                    'email': this.payEmail || ''
+                };
+                passtyp = 'consumer';
+                if (this.payEmail) {
+                    this.subs.sink=this.shared_services.updateProfile(post_data, passtyp)
+                        .subscribe(
+                            () => {
+                                this.getProfile();
+                                // this.hideFilterSidebar();
+                                this.action = '';
+                            },
+                            error => {
+                                this.api_error = error.error;
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            });
+                }
+            } else {
+                this.email1error = 'Email and Re-entered Email do not match';
+                // this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
-        } else {
-            this.email1error = 'Email and Re-entered Email do not match';
-            this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
     }
     goBack() {
@@ -781,7 +781,7 @@ export class ConsumerDonationComponent implements OnInit {
             let fn;
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
-            fn.subscribe(() => {
+            this.subs.sink=fn.subscribe(() => {
                 this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
@@ -831,7 +831,7 @@ export class ConsumerDonationComponent implements OnInit {
     getServicebyLocationId(locid) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services.getConsumerDonationServices(this.account_id)
+        this.subs.sink=this.shared_services.getConsumerDonationServices(this.account_id)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;
@@ -851,7 +851,7 @@ export class ConsumerDonationComponent implements OnInit {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
         // const captions = {};
-        this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+       this.subs.sink= this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
             .subscribe(
                 () => {
@@ -911,7 +911,7 @@ export class ConsumerDonationComponent implements OnInit {
         if (modDateReq) {
             UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
         }
-        this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+        this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
             .subscribe(res => {
                 switch (section) {
                     case 'settings':
