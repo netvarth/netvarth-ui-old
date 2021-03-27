@@ -622,7 +622,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'services': {
@@ -807,6 +806,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'departmentProviders': {
             this.deptUsers = res;
+            this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'jaldeediscount':
@@ -1019,6 +1019,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'providerBusinessProfile': {
             this.socialMedialist = [];
             this.businessjson = res;
+            console.log(this.businessjson)
             const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
             this.subDomainList = dom[0].subDomains;
             const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
@@ -1102,6 +1103,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.virtualfieldsSubdomainjson = [];
             if (this.virtualfieldsjson.domain) {
               this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
+              console.log(this.virtualfieldsDomainjson)
             }
             if (this.virtualfieldsjson.subdomain) {
               this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
