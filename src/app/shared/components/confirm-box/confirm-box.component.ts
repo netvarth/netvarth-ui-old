@@ -21,6 +21,7 @@ export class ConfirmBoxComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    console.log(this.data);
     if (this.data.type) {
       this.ok_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;

@@ -21,6 +21,7 @@ export class SharedFunctions {
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
+  tdata: any;
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
@@ -458,8 +459,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
@@ -475,8 +474,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
@@ -959,6 +956,15 @@ export class SharedFunctions {
     }
   }
   doCancelWaitlist(waitlist, type, cthis?) {
+    let prepay = false;
+    if (waitlist.service.minPrePaymentAmount) {
+      if (waitlist.service.minPrePaymentAmount > 0) {
+        prepay = true;
+      }
+    }
+    
+
+
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
@@ -971,16 +977,34 @@ export class SharedFunctions {
     } else if (type === 'order') {
       msg = 'Order';
     }
+
+    if (prepay) {
+      this.tdata = {
+        'message': 'Refund Policy',
+        'heading': 'Confirm',
+        'type': 'yes/no',
+        'cancelPolicy' : 'show',
+        'book': msg
+      }
+   } else {
+    this.tdata = {
+      'message': 'Do you want to cancel this ' + msg + '?',
+      'heading': 'Confirm',
+      'type': 'yes/no'
+    }
+   }
+
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
-        data: {
-          'message': 'Do you want to cancel this ' + msg + '?',
-          'heading': 'Confirm',
-          'type': 'yes/no'
-        }
+        // data: {
+        //   'message': 'Do you want to cancel this ' + msg + '?',
+        //   'heading': 'Confirm',
+        //   'type': 'yes/no'
+        // }
+        data : this.tdata
       });
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
