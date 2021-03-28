@@ -554,9 +554,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
-            if (this.account_Type === 'BRANCH') {
-              this.getbusinessprofiledetails_json('departmentProviders', true);
-            }
             this.business_exists = true;
 
             this.provider_bussiness_id = this.businessjson.id;
@@ -622,6 +619,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
+            this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'services': {
@@ -711,25 +709,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
-            let apptTimearr = [];
-            let waitTimearr = [];
-            if (this.deptUsers && this.deptUsers.length > 0) {
-              for (let dept of this.deptUsers) {
-                if (!this.showDepartments) {
-                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-                } else {
-                  if (dept.users && dept.users.length > 0) {
-                    for (let user of dept.users) {
-                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-                    }
-                  }
-                }
-              }
+            if (this.account_Type === 'BRANCH') {
+              this.getbusinessprofiledetails_json('departmentProviders', true);
             }
-            this.getUserWaitingTime(waitTimearr);
-            this.getUserApptTime(apptTimearr);
             this.location_exists = true;
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
@@ -806,7 +788,25 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'departmentProviders': {
             this.deptUsers = res;
-            this.getbusinessprofiledetails_json('location', true);
+            let apptTimearr = [];
+            let waitTimearr = [];
+            if (this.deptUsers && this.deptUsers.length > 0) {
+              for (let dept of this.deptUsers) {
+                if (!this.showDepartments) {
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                } else {
+                  if (dept.users && dept.users.length > 0) {
+                    for (let user of dept.users) {
+                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                    }
+                  }
+                }
+              }
+            }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
             break;
           }
           case 'jaldeediscount':
@@ -1019,7 +1019,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'providerBusinessProfile': {
             this.socialMedialist = [];
             this.businessjson = res;
-            console.log(this.businessjson)
             const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
             this.subDomainList = dom[0].subDomains;
             const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
@@ -1103,7 +1102,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.virtualfieldsSubdomainjson = [];
             if (this.virtualfieldsjson.domain) {
               this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
-              console.log(this.virtualfieldsDomainjson)
             }
             if (this.virtualfieldsjson.subdomain) {
               this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);

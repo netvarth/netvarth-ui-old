@@ -534,9 +534,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
               this.branch_id = this.businessjson.branchId;
               this.account_Type = this.businessjson.accountType;
-              if (this.account_Type === 'BRANCH') {
-                this.getbusinessprofiledetails_json('departmentProviders', true);
-              }
               this.business_exists = true;
               this.provider_bussiness_id = this.businessjson.id;
               if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -679,26 +676,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
-            if (!this.userId) {
-              let apptTimearr = [];
-              let waitTimearr = [];
-              if (this.deptUsers && this.deptUsers.length > 0) {
-                for (let dept of this.deptUsers) {
-                  if (!this.showDepartments) {
-                    apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-                    waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-                  } else {
-                    if (dept.users && dept.users.length > 0) {
-                      for (let user of dept.users) {
-                        apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                        waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-                      }
-                    }
-                  }
-                }
-              }
-              this.getUserWaitingTime(waitTimearr);
-              this.getUserApptTime(apptTimearr);
+            if (this.account_Type === 'BRANCH') {
+              this.getbusinessprofiledetails_json('departmentProviders', true);
             }
             this.location_exists = true;
             for (let i = 0; i < this.locationjson.length; i++) {
@@ -774,6 +753,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           case 'departmentProviders': {
             this.deptUsers = res;
+            if (!this.userId) {
+              let apptTimearr = [];
+              let waitTimearr = [];
+              if (this.deptUsers && this.deptUsers.length > 0) {
+                for (let dept of this.deptUsers) {
+                  if (!this.showDepartments) {
+                    apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                    waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                  } else {
+                    if (dept.users && dept.users.length > 0) {
+                      for (let user of dept.users) {
+                        apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                        waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                      }
+                    }
+                  }
+                }
+              }
+              this.getUserWaitingTime(waitTimearr);
+              this.getUserApptTime(apptTimearr);
+            }
             break;
           }
           case 'jaldeediscount':
