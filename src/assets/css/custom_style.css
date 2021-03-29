@@ -14112,3 +14112,16 @@ padding-left: 15px !important;
 .local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1) !important;
 }
+.paybill {
+    margin-left: 10px;
+    background: #f24949;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: .875rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: inherit;
+    transition: all .3s;
+    border-radius: 3px;
+}
