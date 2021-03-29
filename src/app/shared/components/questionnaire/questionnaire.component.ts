@@ -33,6 +33,8 @@ export class QuestionnaireComponent implements OnInit {
   loading = false;
   buttonDisable = false;
   questions: any = [];
+  selectedDocs: any = [];
+  documentsToUpload = {};
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -64,6 +66,13 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.questionAnswers);
+    if (this.questionnaireList) {
+      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        this.questions = this.questionnaireList.labels;
+      } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
+        this.questions = this.questionnaireList[0].questions;
+      }
+    }
     if (this.questionAnswers) {
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answer, 'init');
@@ -76,13 +85,11 @@ export class QuestionnaireComponent implements OnInit {
       console.log(this.questionnaireList);
       if (this.questionnaireList) {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-        this.questions = this.questionnaireList.labels;
-        this.getAnswers(this.questionnaireList.labels);
-        } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
-          this.questions = this.questionnaireList[0].questions;
+          this.getAnswers(this.questionnaireList.labels);
         }
       }
     }
+
     console.log(this.questions);
     console.log(this.source);
     console.log(this.params.uuid);
@@ -123,7 +130,7 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.fileuploadpreAnswers);
     console.log(Object.keys(this.fileuploadpreAnswers).length);
   }
-  filesSelected(event, index, question) {
+  filesSelected(event, index, question, document?) {
     const input = event.target.files;
     this.apiError[index] = null;
     this.answers[question.labelName] = {};
@@ -145,11 +152,10 @@ export class QuestionnaireComponent implements OnInit {
           this.selectedMessage.base64.push(e.target['result']);
         };
         console.log(file.name);
-        let imgname = file.name.split('.');
-        imgname = imgname[0];
         const indx = this.selectedMessage.files.indexOf(file);
         console.log(indx);
-        this.answers[question.labelName][indx] = question.filePropertie.allowedDocuments[0];
+        this.answers[question.labelName][indx] = (document) ? document : question.filePropertie.allowedDocuments[0];
+        console.log(this.answers[question.labelName]);
         reader.readAsDataURL(file);
         // }
       }
@@ -373,6 +379,16 @@ export class QuestionnaireComponent implements OnInit {
       return question;
     } else {
       return question.question;
-    } 
+    }
+  }
+  selectUploadDocuments(question, option) {
+    if (!this.documentsToUpload[question]) {
+      this.documentsToUpload[question] = [];
+    }
+    if (this.documentsToUpload[question] && this.documentsToUpload[question].indexOf(option) === -1) {
+    this.documentsToUpload[question].push(option);
+    }
+    console.log(this.documentsToUpload);
+    console.log(this.selectedDocs);
   }
 }

@@ -24,6 +24,9 @@
                         <div class="d-flex flex-row" *ngIf="messages.length>0">
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                                 <div class="card card-custom">
+                                    <div class="pad-10">
+                                        <button mat-flat-button class="mgn-rt-10 normal-btn width-100" (click)="gotoEnquiry()">Enquiry</button>
+                                    </div>
                                     <div class="top-buttons"
                                         *ngIf="userDet && userDet.accountType === 'BRANCH' && users.length > 0 && userWithMsgCount > 1">
                                         <button mat-flat-button class="mgn-rt-10" (click)="changemsgDisplayType('all')"

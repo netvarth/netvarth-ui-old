@@ -22,7 +22,7 @@
                             {{enquiry.providerName}}
                         </div>
                         <div class="cont4">
-                            {{formatDateDisplay(enquiry.timeStamp)}}
+                            {{enquiry.timeStamp | date : newTimeDateFormat}}
                         </div>
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>

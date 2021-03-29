@@ -606,4 +606,7 @@ const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
 console.log(replyMsg);
 return replyMsg[0].msg;
   }
+  gotoEnquiry() {
+    this.router.navigate(['/enquiry']);
+  }
 }

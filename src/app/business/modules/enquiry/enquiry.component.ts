@@ -5,6 +5,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-enquiry',
@@ -18,6 +19,7 @@ export class EnquiryComponent implements OnInit {
   users: any = [];
   userDet: any = [];
   loading = true;
+  newTimeDateFormat = projectConstantsLocal.DATE_FORMAT_WITH_TIME;
   constructor(private shared_functions: SharedFunctions,
     private inbox_services: InboxServices,
     private groupService: GroupStorageService,

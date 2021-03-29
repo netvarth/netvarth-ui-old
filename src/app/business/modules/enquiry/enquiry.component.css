@@ -12,6 +12,7 @@
     display: flex;
     margin-bottom: 20px;
     padding: 10px;
+    border-left: 5px solid #ccc;
     box-shadow: 0 0px 0px 0 rgb(0 0 0/20%),0 0px 10px 0 rgb(0 0 0/19%);
     cursor: pointer;
 }
@@ -49,4 +50,11 @@
 .enq-box:hover .fa-arrow-right{
     display: inline-block !important;
     background: white;
+}
+.enq-box:hover .fa-arrow-right{
+    display: inline-block !important;
+    background: white;
+}
+.enq-box:hover {
+    border-left: 5px solid darkblue;
 }
