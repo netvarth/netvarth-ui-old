@@ -957,14 +957,20 @@ export class SharedFunctions {
   }
   doCancelWaitlist(waitlist, type, cthis?) {
     let prepay = false;
+    if(type === 'checkin' || type === 'appointment'){
     if (waitlist.service.minPrePaymentAmount) {
       if (waitlist.service.minPrePaymentAmount > 0) {
         prepay = true;
       }
+    }  
+   }
+    if(type === 'order'){
+      if (waitlist.advanceAmountPaid) {
+        if (waitlist.advanceAmountPaid > 0) {
+          prepay = true;
+        }
+      }
     }
-    
-
-
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
