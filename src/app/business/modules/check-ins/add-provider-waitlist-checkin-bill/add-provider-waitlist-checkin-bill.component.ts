@@ -239,6 +239,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedItem: any;
   refund_show;
   btn_hide = false;
+  is_policy = false;
 
 
   constructor(
@@ -608,6 +609,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.coupons = data;
+            this.coupons=this.coupons.filter(obj=> obj.status==='ACTIVE');
             resolve();
           },
           error => {
@@ -1852,4 +1854,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.btn_hide = false;
     }
   }
+
+  refundPolicy() {
+    this.is_policy = true;
+  }
+  refundBack() {
+    this.is_policy = false;
+  }
+
 }

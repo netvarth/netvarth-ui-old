@@ -2630,5 +2630,4 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 }

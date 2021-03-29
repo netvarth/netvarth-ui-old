@@ -1107,13 +1107,19 @@ ul.bus-actions li.more_less a.lnk {
 .catalog-icons {
   font-size: 0.9rem !important;
 }
-img.ordericon.pickup {
+/* img.ordericon.pickup {
   width: 35px;
   height: 35px;
 }
 img.ordericon.home {
   width: 35px;
   height: 35px;
+} */
+img.ordericon.pickup {
+  height: 60px;
+}
+img.ordericon.home {
+  height: 60px;
 }
 .line-clamp {
   display: -webkit-box !important;
@@ -1744,10 +1750,17 @@ img.ordericon.home {
 
 .serv-head.order-serv-head .catalog-icons {
   /* color: gold !important; */
-  min-width: 310px !important;
+  /* min-width: 310px !important; */
+  min-width: 440px !important;
   color: darkslategrey !important;
   font-weight: 700 !important;
   justify-content: flex-end !important;
+}
+
+@media (max-width: 991px) {
+  .serv-head.order-serv-head .catalog-icons {
+    min-width: 250px !important;
+  }
 }
 
 .serv-head.order-serv-head .catalog-icons .store-pickup div,
@@ -1757,6 +1770,13 @@ img.ordericon.home {
 
 .serv-head.order-serv-head .catalog-icons .home-delivery div .font-small {
   font-size: 13.5px !important;
+}
+
+@media (max-width: 991px) {
+  .serv-head.order-serv-head .catalog-icons .store-pickup,
+  .serv-head.order-serv-head .catalog-icons .home-delivery {
+    flex-direction: column !important;
+  }
 }
 
 @media (max-width: 650px) {
@@ -1804,15 +1824,50 @@ img.ordericon.home {
 }
 
 @media (max-width: 650px) {
-  #catalog-image1 {
+  /* #catalog-image1 {
     width: 35px !important;
     height: 35px !important;
+  } */
+  #catalog-image1 {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+@media (max-width: 525px) {
+  .serv-head.order-serv-head .catalog-icons .store-pickup,
+  .serv-head.order-serv-head .catalog-icons .home-delivery {
+    flex-direction: row !important;
+  }
+
+  .serv-head.order-serv-head > div:nth-child(1) {
+    flex-direction: column !important;
+  }
+
+  .serv-head.order-serv-head > div:nth-child(1) > div:nth-child(1){
+    align-self: center !important;
+  }
+
+  .serv-head.order-serv-head .catalog-icons {
+    min-width: 100% !important;
+    justify-content: space-between !important;
   }
 }
 
 @media (max-width: 350px) {
   .serv-head.order-serv-head .catalog-title div{
     font-size: 13.5px !important;
+  }
+}
+
+@media (max-width: 325px) {
+  .serv-head.order-serv-head .catalog-icons .store-pickup,
+  .serv-head.order-serv-head .catalog-icons .home-delivery {
+    flex-direction: column !important;
+  }
+  .serv-head.order-serv-head .catalog-icons {
+    min-width: 100% !important;
+    justify-content: space-around !important;
   }
 }
 

@@ -1477,6 +1477,20 @@ body.modal-open {
 .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
   display: none !important;
 }
+.refund_policy {
+  color: #3c8dbc !important;
+  font-size: 0.9rem !important;
+}
+.refundpol .modal-footer{
+  padding: 0.5rem !important;
+}
+.refundpol .btn {
+  line-height: 0.8  !important;
+}
+.refundpol .refund_size {
+  font-size: 0.9rem !important;
+  text-align: left !important;
+}
 .loading-hgt {
   height: 85vh;
 }
