@@ -1175,7 +1175,11 @@ export class ProviderCheckinComponent implements OnInit {
                     if (this.waitlist_for.length === 0) {
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
                     } else {
+                        this.validateQnr().then(data => { 
                     this.addCheckInProvider(post_Data);
+                        }, error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                          });
                     }
                 } else {
                     this.addWaitlistBlock(post_Data);
@@ -2013,6 +2017,20 @@ console.log(Object.keys(this.questionAnswers).length);
         this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
           console.log(data);
           this.questionnaireList = data;
+        });
+      }
+      validateQnr() {
+        console.log(this.questionAnswers.answers);
+        return new Promise((resolve, reject) => {
+          if (this.questionAnswers && this.questionAnswers.answers) {
+          this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
+            resolve(data);
+          }, error => {
+            reject(error);
+          });  
+        } else {
+          resolve(true);
+          }
         });
       }
 }

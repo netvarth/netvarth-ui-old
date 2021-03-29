@@ -1969,8 +1969,16 @@ export class ProviderServices {
     const url = 'provider/questionnaire/consumer';
     return this.servicemeta.httpGet(url);
   }
-  submitCustomerQuestionnaire(id) {
+  submitProviderCustomerQuestionnaire(id, body) {
     const url = 'provider/customers/questionnaire/' + id;
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderCustomerQuestionnaire(id, body) {
+    const url = 'provider/customers/questionnaire/resubmit/' + id;
+    return this.servicemeta.httpPut(url, body);
+  }
+  validateProviderQuestionnaire(body) {
+    const url = 'provider/questionnaire/validate';
+    return this.servicemeta.httpPut(url, body);
   }
 }

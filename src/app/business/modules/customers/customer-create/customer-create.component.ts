@@ -468,6 +468,7 @@ export class CustomerCreateComponent implements OnInit {
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
+    this.validateQnr().then(data => {
     if (this.action === 'add') {
       const post_data = {
         //   'userProfile': {
@@ -499,6 +500,9 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
             const qParams = {};
             qParams['pid'] = data;
+            if (this.questionAnswers) {
+              this.submitQnr(data);
+            }
             if (this.source === 'checkin' || this.source === 'token') {
               const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -579,6 +583,9 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar('Updated Successfully');
             const qParams = {};
             qParams['pid'] = data;
+            if (this.questionAnswers) {
+              this.submitQnr(data);
+            }
             if (this.source === 'checkin' || this.source === 'token') {
               const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -615,6 +622,9 @@ export class CustomerCreateComponent implements OnInit {
             this.disableButton = false;
           });
     }
+  }, error => {
+    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  });
   }
   confirmApptBlock(id) {
     const post_data = {
@@ -1002,5 +1012,47 @@ export class CustomerCreateComponent implements OnInit {
   }
   getQuestionAnswers(event) {
     this.questionAnswers = event;
+  }
+  submitQnr(id) {
+    console.log(this.questionAnswers);
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+      for (const pic of this.questionAnswers.files.files) {
+        dataToSend.append('files', pic, pic['name']);
+      }
+    }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    if (this.action === 'add') {
+      this.AddQnr(id, dataToSend);
+    } else {
+      this.updateQnr(id, dataToSend);
+    }
+  }
+  updateQnr(id, dataToSend) {
+    this.provider_services.submitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+    }, error => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
+  AddQnr(id, dataToSend) {
+    this.provider_services.resubmitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+    }, error => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
+  validateQnr() {
+    console.log(this.questionAnswers.answers);
+    return new Promise((resolve, reject) => {
+      if (this.questionAnswers && this.questionAnswers.answers) {
+      this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });  
+    } else {
+      resolve(true);
+      }
+    });
   }
 }

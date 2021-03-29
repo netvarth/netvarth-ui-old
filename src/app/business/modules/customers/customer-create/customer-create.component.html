@@ -226,7 +226,7 @@
                 </div>
                 <div class="card-body">
                     <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-create'"
-                        (returnAnswers)="getQuestionAnswers($event)">
+                        (returnAnswers)="getQuestionAnswers($event)" [customerDetails]="customer">
                     </app-questionnaire>
                 </div>
                 <div class="card-footer">

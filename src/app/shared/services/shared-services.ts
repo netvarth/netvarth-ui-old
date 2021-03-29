@@ -1008,4 +1008,8 @@ resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
   const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
+validateConsumerQuestionnaire(body) {
+  const url = 'consumer/questionnaire/validate';
+  return this.servicemeta.httpPut(url, body);
+}
 }

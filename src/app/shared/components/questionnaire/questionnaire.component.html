@@ -9,10 +9,10 @@
                     class="fa fa-arrow-left"></i></a></h5>
     </div>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="questions" [class.card]="params.uuid">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="!loading && questions" [class.card]="params.uuid">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <div class="quest-outer" *ngFor="let question of questions;let i = index">
-                <div class="">{{getQuestion(question).labelName}}</div>
+                <div class="">{{getQuestion(question).labelName}} <span *ngIf="getQuestion(question).mandatory">*</span> </div>
                 <span class="form-level-settings"
                     *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">{{getQuestion(question).label}}</span>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'List'">
@@ -23,13 +23,13 @@
                 </div>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
                     <input type="text" matInput autocomplete="off" placeholder="{{getQuestion(question).label}}"
-                        [(ngModel)]="answers[getQuestion(question).labelName]" (keyup)="onSubmit();"
+                        [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
                         [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                         [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter">
                 </div>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'Number'">
                     <input type="number" matInput autocomplete="off" placeholder="{{getQuestion(question).label}}"
-                        [(ngModel)]="answers[getQuestion(question).labelName]" (keyup)="onSubmit();"
+                        [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
                         [min]="getQuestion(question).numberPropertie.start"
                         [max]="getQuestion(question).numberPropertie.end">
                 </div>
@@ -39,16 +39,15 @@
                  
                     <button class="upload-btn" (click)="logofile.click()"
                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile == 1">Upload File</button>
-                    <div *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
-   
 
+
+                    <!-- <div *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
                         <mat-select placeholder="Catalogue" [(ngModel)]="selectedDocs" [multiple]="true">
                             <mat-option *ngFor="let option of getQuestion(question).filePropertie.allowedDocuments"
                             (click)="selectUploadDocuments(getQuestion(question).labelName, option)">
                             {{option}}
                         </mat-option>
                           </mat-select>
-                        
                     </div>
                     <div
                         *ngIf="documentsToUpload[getQuestion(question).labelName] && documentsToUpload[getQuestion(question).labelName].length > 0">
@@ -58,8 +57,10 @@
                             (change)="filesSelected($event, i, getQuestion(question), document)">
                             <button class="upload-btn" (click)="logofile1.click()">Upload File</button>
                         </div>
-                    </div>
-                    <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div>
+                    </div> -->
+
+
+                    <!-- <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div> -->
                     <div *ngFor="let img of selectedMessage.files;let i = index">
                         {{img.name}}
                         <i class="fa fa-times-circle" aria-hidden="true"

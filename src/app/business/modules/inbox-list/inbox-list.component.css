@@ -190,19 +190,43 @@ textarea {
     display: flex;
     margin-bottom: 10px;
 }
-.reply-section .reply-msg {
-    padding: 10px;
-    background: #eeeeeecf;
-    width: 100%;
-    color: #999999 !important;
+.reply-msg {
     font-size: .9rem;
-    margin-right: 10px;
-}
-.replymsg {
-    background: #cccc;
-    padding: 10px;
-    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
     overflow: hidden;
-    white-space: nowrap;
-    height: 50px;
 }
+.mt-2 .reply-msg {
+    background: #ccc;
+    padding: 5px 20px 5px 0;
+    cursor: pointer;
+}
+.reply-section .username {
+    color: darkblue;
+}
+.reply-section .close {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+.reply-section .main-sec {
+    width: 100%;
+}
+
+.element {
+    width: 100%;
+    height: 100%;
+    animation: pulse 5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      background-color: #001F3F;
+    }
+    100% {
+      background-color: #FF4136;
+    }
+  }

@@ -801,7 +801,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
-        this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.userData.userProfile.email && this.waitlist_for[0]) {
@@ -1861,6 +1860,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
+        });
+    }
+    validateQuestionnaire() {
+        console.log(this.questionAnswers.answers);
+        this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers).subscribe(data => {
+            this.bookStep++;
+        }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     }
 }

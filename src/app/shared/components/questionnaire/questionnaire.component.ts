@@ -20,6 +20,7 @@ export class QuestionnaireComponent implements OnInit {
   @Input() accountId;
   @Input() channel;
   @Input() questionAnswers;
+  @Input() customerDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
   selectedMessage = {
@@ -107,28 +108,25 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getAnswers(answerData, type?) {
-    console.log(answerData);
-    console.log(type);
     if (!type || type === 'get') {
       for (let answ of answerData) {
         console.log(answ);
         if (answ.answer) {
           if (answ.question.fieldDataType !== 'FileUpload') {
-            this.answers[answ.answer.questionId] = answ.answer.answer;
+            this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
-            this.fileuploadpreAnswers[answ.answer.questionId] = answ.answer.answer;
+            this.fileuploadpreAnswers[answ.answer.labelName] = answ.answer.answer;
           }
         }
       }
     } else {
+      console.log(answerData);
       for (let answ of answerData) {
-        console.log(answ);
-        this.answers[answ.questionId] = answ.answer;
+        this.answers[answ.labelName] = answ.answer;
       }
     }
     console.log(this.answers);
     console.log(this.fileuploadpreAnswers);
-    console.log(Object.keys(this.fileuploadpreAnswers).length);
   }
   filesSelected(event, index, question, document?) {
     const input = event.target.files;
@@ -136,9 +134,9 @@ export class QuestionnaireComponent implements OnInit {
     this.answers[question.labelName] = {};
     if (input) {
       for (const file of input) {
-        console.log(file);
-        console.log(question);
-        console.log(question.filePropertie.fileTypes.indexOf(file.type));
+        // console.log(file);
+        // console.log(question);
+        // console.log(question.filePropertie.fileTypes.indexOf(file.type));
         // if (question.filePropertie.fileTypes.indexOf(file.type) === -1) {
         //   this.apiError[index] = 'Selected image type not supported';
         // } else if (file.size > question.filePropertie.minSize) {
@@ -151,40 +149,39 @@ export class QuestionnaireComponent implements OnInit {
         reader.onload = (e) => {
           this.selectedMessage.base64.push(e.target['result']);
         };
-        console.log(file.name);
         const indx = this.selectedMessage.files.indexOf(file);
-        console.log(indx);
+        // console.log(indx);
         this.answers[question.labelName][indx] = (document) ? document : question.filePropertie.allowedDocuments[0];
-        console.log(this.answers[question.labelName]);
+        // console.log(this.answers[question.labelName]);
         reader.readAsDataURL(file);
         // }
       }
-      console.log(this.selectedMessage);
-      console.log(this.apiError);
-      console.log(this.answers);
+      // console.log(this.selectedMessage);
+      // console.log(this.apiError);
+      // console.log(this.answers);
     }
     this.onSubmit();
   }
   deleteTempImage(i, label) {
     let imgname = this.selectedMessage.files[i].name.split('.');
     imgname = imgname[0];
-    console.log(this.selectedMessage.files[i].name);
-    console.log(this.answers[label]);
+    // console.log(this.selectedMessage.files[i].name);
+    // console.log(this.answers[label]);
     delete this.answers[label][i];
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
-    console.log(this.answers);
+    // console.log(this.answers);
     this.onSubmit();
   }
   deletePreImage(i, label) {
     delete this.fileuploadpreAnswers[label][i];
-    console.log(this.fileuploadpreAnswers);
-    console.log(this.fileuploadpreAnswers[label].length);
+    // console.log(this.fileuploadpreAnswers);
+    // console.log(this.fileuploadpreAnswers[label].length);
   }
   getConsumerQuestionnaire() {
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.questionnaireList = data;
       this.questions = this.questionnaireList.labels;
       this.loading = false;
@@ -195,7 +192,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   getProviderQuestionnaire() {
     this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.questionnaireList = data;
       this.questions = this.questionnaireList.labels;
       this.loading = false;
@@ -208,13 +205,11 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.answers);
     let data = [];
     Object.keys(this.answers).forEach(key => {
-      console.log(key);
       console.log(this.answers[key]);
-      console.log(this.answers[key].length);
-      console.log(Object.keys(this.answers[key]).length);
-      if (this.answers[key] && Object.keys(this.answers[key]).length > 0) {
+      console.log(Object.keys(this.answers[key]).length > 0);
+      if (this.answers[key]) {
         data.push({
-          'questionId': key,
+          'labelName': key,
           'answer': this.answers[key]
         });
       }
@@ -225,7 +220,6 @@ export class QuestionnaireComponent implements OnInit {
         'questionnaireId': this.questionnaireList.id,
         'answer': data
       }
-      console.log(this.selectedMessage);
       console.log(postData);
       const passData = { 'answers': postData, 'files': this.selectedMessage };
       if (type) {
@@ -239,7 +233,6 @@ export class QuestionnaireComponent implements OnInit {
     return new Date(this.datepipe.transformTofilterDate(date));
   }
   listChange(ev, value, question) {
-    console.log(this.answers);
     if (ev.checked) {
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = [];
@@ -247,10 +240,11 @@ export class QuestionnaireComponent implements OnInit {
       this.answers[question.labelName].push(value);
     } else {
       const indx = this.answers[question.labelName].indexOf(value);
-      console.log(indx);
       this.answers[question.labelName].splice(indx, 1);
     }
-    console.log(this.answers);
+    if (this.answers[question.labelName].length > 0) {
+      delete this.answers[question.labelName];
+    }
     this.onSubmit();
   }
   booleanChange(ev, question) {
@@ -277,7 +271,6 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   dateChange(ev, question) {
-    console.log(ev);
     this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
     this.onSubmit();
   }

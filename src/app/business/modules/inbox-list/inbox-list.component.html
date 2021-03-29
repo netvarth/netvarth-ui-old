@@ -161,7 +161,7 @@
                                                             </button>
                                                         </mat-menu>
                                                         
-                                                        <div class="replymsg" *ngIf="msg.replyMsgId">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
+                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
                                                         <div [innerHTML]="msg.msg | nl2br"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
@@ -203,8 +203,8 @@
                                                             </button>
                                                         </mat-menu>
 
-                                                        <div class="replymsg" *ngIf="msg.replyMsgId">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
-                                                        <div [innerHTML]="msg.msg | nl2br"></div>
+                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
+                                                        <div [innerHTML]="msg.msg | nl2br" #msgId></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
@@ -228,8 +228,13 @@
                                     <div class="card-footer align-items-center">
 
 <div class="reply-section" *ngIf="replyMsg" #reply>
+    <div class="main-sec">
+    <div class="username">{{(replyMsg.messagestatus === 'out') ? 'You' : replyMsg.accountName}}</div>
    <div class="reply-msg"> {{replyMsg.msg}}</div>
-    <i class="fa fa-times" aria-hidden="true" (click)="closeReply()"></i>
+</div>
+<div class="close">
+<svg (click)="closeReply()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"></path></svg>
+</div>
 </div>
 
                                         <div class="d-flex align-items-center justify-content-between">
