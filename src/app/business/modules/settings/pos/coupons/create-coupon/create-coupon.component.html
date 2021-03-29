@@ -508,7 +508,7 @@
                     <div class="row">
                       <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                         <div class="form-group">
-                            <label>Terms and Conditions *</label>
+                            <label>Terms and Conditions </label>
                             <textarea type="text" class="form-control1 form-control-solid form-control-lg"
                             id="description" placeholder="Enter coupon terms and conditions" formControlName="termsConditions"
                            
@@ -542,7 +542,7 @@
                     </div>
                     <div>
                       <button type="button" *ngIf="step == 3" [hidden]="hideSubmitbtn"
-                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="couponForm.invalid ||published">
+                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="published">
                         Submit
                       </button>
                       <button type="button" *ngIf="step == 1 || step == 2"
