@@ -1,4 +1,198 @@
 <section class="cons-inbox no-padding-small" [class.container]="params.uuid">
+
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <!--begin::Card-->
+            <div class="" id="kt_page_sticky_card">
+                <div class="">
+                    <!--begin::Form-->
+                    <div class="form" id="kt_form">
+                        <div class="row">
+                            <div class="col-xl-10">
+                                <div class="my-5">
+                                    <div class="form-group row" *ngFor="let question of questions;let i = index">
+                                        <label class="col-4">{{getQuestion(question).labelName}}
+                                            <span *ngIf="getQuestion(question).mandatory">*</span>
+                                        </label>
+
+                                        <!-- for checkbox -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'List'">
+                                            <!-- <input class="form-control form-control-solid" type="text" value="Nick"> -->
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox"
+                                                    *ngFor="let value of getQuestion(question).labelValues">
+                                                    <input type="checkbox"
+                                                        [checked]="isChecked(value, getQuestion(question))"
+                                                        (change)="listChange($event, value, getQuestion(question))">
+                                                    <span></span>
+                                                    {{value}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- for Text -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                            <input placeholder="{{getQuestion(question).label}}"
+                                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                (input)="onSubmit();"
+                                                [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
+                                                [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
+                                                class="form-control1 form-control-solid" type="text">
+                                        </div>
+
+                                        <!-- for Number -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                            <!-- <input placeholder="{{getQuestion(question).label}}"
+                                            [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
+                                            [min]="getQuestion(question).numberPropertie.start"
+                                            [max]="getQuestion(question).numberPropertie.end" class="form-control1 form-control-solid" type="number"> -->
+                                        </div>
+
+                                        <!-- for Date -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Date'">
+                                            <!-- <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
+                                                placeholder="{{getQuestion(question).label}}" readonly (click)="picker.open()"
+                                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                (dateChange)="dateChange($event.value, getQuestion(question))"
+                                                [min]="getDate(getQuestion(question).dateProperties.startDate)"
+                                                [max]="getDate(getQuestion(question).dateProperties.endDate)">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker [disabled]="false"></mat-datepicker> -->
+                                            <input class="form-control1" type="date" value="2011-08-19" id="example-date-input">
+                                        </div>
+
+                                        <!-- for toggel btn(boolean) -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
+                                     
+                                            <!-- <mat-slide-toggle class="example-margin"
+                                                [checked]="isBooleanChecked(getQuestion(question))"
+                                                (change)="booleanChange($event, getQuestion(question))">
+                                            </mat-slide-toggle> -->
+                                            <span class="switch switch-sm switch-icon">
+                                                <label>
+                                                    <input type="checkbox" checked="isBooleanChecked(getQuestion(question))" (change)="booleanChange($event, getQuestion(question))">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!-- <div class="form-group row">
+                                        <label class="col-3">Medical Conditions</label>
+                                        <div class="col-9">
+                                                <div class="checkbox-inline">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox">
+                                                        <span></span>
+                                                        BP
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox">
+                                                        <span></span>
+                                                        Diabetes
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox">
+                                                        <span></span>
+                                                        Chroma
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">Company Name</label>
+                                        <div class="col-9">
+                                            <input class="form-control form-control-solid" type="text"
+                                                value="Loop Inc.">
+                                            <span class="form-text text-muted">If you want your invoices addressed to a
+                                                company. Leave blank to use your full name.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">Contact Phone</label>
+                                        <div class="col-9">
+                                            <div class="input-group input-group-solid">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i
+                                                            class="la la-phone"></i></span></div>
+                                                <input type="text" class="form-control form-control-solid"
+                                                    value="+45678967456" placeholder="Phone">
+                                            </div>
+                                            <span class="form-text text-muted">We'll never share your email with anyone
+                                                else.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">Email Address</label>
+                                        <div class="col-9">
+                                            <div class="input-group input-group-solid">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i
+                                                            class="la la-at"></i></span></div>
+                                                <input type="text" class="form-control form-control-solid"
+                                                    value="nick.watson@loop.com" placeholder="Email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">Company Site</label>
+                                        <div class="col-9">
+                                            <div class="input-group input-group-solid">
+                                                <input type="text" class="form-control form-control-solid"
+                                                    placeholder="Username" value="loop">
+                                                <div class="input-group-append"><span
+                                                        class="input-group-text">.com</span></div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                                <div class="separator separator-dashed my-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Form-->
+                </div>
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="panel-heading top-row " *ngIf="params.uuid">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
             <app-header></app-header>
@@ -12,9 +206,12 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="!loading && questions" [class.card]="params.uuid">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <div class="quest-outer" *ngFor="let question of questions;let i = index">
-                <div class="">{{getQuestion(question).labelName}} <span *ngIf="getQuestion(question).mandatory">*</span> </div>
+                <div class="">{{getQuestion(question).labelName}} 1<span
+                        *ngIf="getQuestion(question).mandatory">*</span>
+                </div>
                 <span class="form-level-settings"
-                    *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">{{getQuestion(question).label}}</span>
+                    *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">{{getQuestion(question).label}}
+                    2</span>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'List'">
                     <mat-checkbox class="mgn-rt-10" [checked]="isChecked(value, getQuestion(question))"
                         *ngFor="let value of getQuestion(question).labelValues"
@@ -36,7 +233,7 @@
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
                     <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                         (change)="filesSelected($event, i, getQuestion(question))">
-                 
+
                     <button class="upload-btn" (click)="logofile.click()"
                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile == 1">Upload File</button>
 
@@ -76,6 +273,7 @@
                         </div>
                     </ng-container>
                 </div>
+
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'Date'">
                     <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
                         placeholder="{{getQuestion(question).label}}" readonly (click)="picker.open()"

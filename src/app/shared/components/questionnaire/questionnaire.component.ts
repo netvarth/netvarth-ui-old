@@ -10,7 +10,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 @Component({
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+  styleUrls: ['./questionnaire.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../assets/css/style.bundle.css']
 })
 export class QuestionnaireComponent implements OnInit {
   @Input() questionnaireList;
@@ -364,6 +364,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getQuestion(question) {
+    // console.log(question);
     if (this.source === 'customer-create') {
       return question;
     } else {

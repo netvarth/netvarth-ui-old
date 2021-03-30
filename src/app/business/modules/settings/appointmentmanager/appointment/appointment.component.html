@@ -689,9 +689,18 @@
             </div>
 
             <div class="card" *ngIf="showQuestionnaire">
-                <div class="mgn-bt-10 quest-head pad-10">
+                <!-- <div class="mgn-bt-10 quest-head pad-10">
                     Please provide us with a little more information complete your booking
+                </div> -->
+                <div class="card-header" style="">
+                    <div class="card-title">
+                        <h3 class="card-label">
+                            Please provide us with a little more information complete your booking<i class="mr-2"></i>
+                        </h3>
+                    </div>
                 </div>
+
+
                 <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
                 [source]="'proAppt'" [consumerId]="waitlist_for[0].id"
                 [serviceId]="sel_ser" [channel]="channel" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
