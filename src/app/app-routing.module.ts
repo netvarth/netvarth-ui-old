@@ -12,11 +12,9 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
-import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
-import { TwilioService } from './shared/services/twilio-service';
+// import { TwilioService } from './shared/services/twilio-service';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
-import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
@@ -41,8 +39,7 @@ const routes: Routes = [
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
     },
     { path: 'meeting/provider/:id', component: MeetingRoomComponent },
-    { path: 'meeting/:phonenumber/:id', component: LiveChatComponent },
-    { path: 'meeting/:phonenumber', component: JaldeeVideoComponent },
+    { path: 'meeting/:phonenumber', loadChildren: () => import('./shared/modules/tele-home/tele-home.module').then(m => m.TeleHomeModule)},
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
@@ -60,9 +57,9 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
     })],
-    providers: [
-        TwilioService
-    ],
+    // providers: [
+    //     TwilioService
+    // ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

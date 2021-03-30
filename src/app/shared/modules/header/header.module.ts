@@ -11,7 +11,7 @@ import { LazyModule } from '../../modules/lazy-load/lazy.module';
 
 import { HeaderComponent } from './header.component';
 // import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [

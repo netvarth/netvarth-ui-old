@@ -14007,38 +14007,6 @@ width: 40px !important;
 .pro-settings-list .box {
   box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 5%) !important;
 }
-/* 
-.videocontainer .hide{
-  display: none;
-}
-.local video, .local-zeroPs video, .previewContainer video {
-  transform: scaleX(-1);
-}
-.videocontainer .join-vid-btn button {
-  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
-  padding: 5px 20px;
-  border-radius: 20px;
-  color: #fff;
-}
-
-@media only screen and (max-width: 575px) {
-  .video_small {
-    display: none !important;
-  }
-}
-.local-zeroPs video{
-  height: 99vh !important;
-} 
-.remote video {
-  height: 100% !important;
-}
-.local video {
-  width: 100px;
-  height: auto;
-} */
-.previewContainer video {
-  border-radius: 25px !important;
-}
 .modal-backdrop {
   z-index: 0 !important;
   opacity: 0 !important;
@@ -14111,6 +14079,10 @@ padding-left: 15px !important;
 }
 .local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1) !important;
+}
+.previewContainer video {
+  border-radius: 10px !important;
+  border: 1px solid #000 !important;
 }
 .paybill {
     margin-left: 10px;

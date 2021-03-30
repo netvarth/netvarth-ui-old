@@ -3,7 +3,7 @@ import { LicenseComponent } from './license.component';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
 import { LicenseRoutingModule } from './license.routing.module';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider/components/provider-bprofile-search-adwords/provider-bprofile-search-adwords.component';
 import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';

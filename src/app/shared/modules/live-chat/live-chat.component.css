@@ -1,0 +1,105 @@
+.video-container, .local, .remote, .local-zeroPs {
+  background: #000 !important;
+}
+@media screen and (min-width: 992px) {
+.videocontainer, .previewDiv {
+  /* width: 100% !important; */
+  /* height: 90vh; */
+  display: flex;
+  align-items: center;
+}
+}
+.videocontainer .hide{
+  display: none;
+}
+.previewContainer {
+  padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* border: 2px solid #000 !important; */
+  border-radius: 10px;
+  /* background: #000; */
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1) !important;
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+.full-height {
+  height: 100vh;
+}
+.remote {
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  background: #000 !important;
+}
+.remote-hide {
+  display: none;
+}
+.local {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+}
+.local-zeroPs {
+  height: 100vh;
+  width:100%;
+  text-align: center;
+}
+.round {
+  border: 1px solid #ddd;
+  border-radius: 50% !important;
+  background: #fff;
+  margin: 8px;
+}
+.round.mute {
+  padding:15px 20px 15px 18px;
+}
+.round.video {
+  padding:15px 15px 15px 15px;
+}
+.round.novideo {
+  padding:11px 6px 12px 6px;
+}
+
+.round.stop {
+  padding:14px 15px 14px 18px;
+}
+.icons {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  text-align: center;
+  font-size: 1.30rem;
+  background-color: #fff !important;
+}
+
+.join-vid-btn button.disabled {
+  background: #ddd !important;
+}
+.main-header .logo img {
+  padding: 0 !important;
+  height:54px !important;
+}
+.main-header .logo {
+  text-align: left !important;
+  padding: 0 !important;
+}
+header {
+  padding: 5px !important;
+  background-color: #Fff !important;
+}
+
+.rem-video {
+  width: 100% !important;
+  height: 100% !important;
+}
+

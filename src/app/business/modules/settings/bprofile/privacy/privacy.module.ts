@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrivacyRoutingModule } from './privacy.routing.module';
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
-import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';

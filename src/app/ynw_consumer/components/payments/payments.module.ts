@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { ConsumerPaymentDetailsComponent } from './payment-details/payment-details.component';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
 @NgModule({
     declarations: [

@@ -7,7 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../../../shared/modules/common/material.module';
 import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../../../shared/modules/form-message-display/form-message-display.module';

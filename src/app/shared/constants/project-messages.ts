@@ -64,8 +64,9 @@ export const Messages = {
   'FRM_LVL_CUSTMR_NOTIFY_MODE': 'Specify the mode of channel through which the notification should be send to [customer]s.',
 
   // Common
-  'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
-  'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
+  // 'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
+  'API_ERROR': 'There was a problem while connecting to our server. Please try again.',
+  'NETWORK_ERROR': 'Looks like you are offline. Check your connection and try again?',
   // profie
   'Profile_Created': 'Profile created successfully',
   'UserProfileID': 'Enter Provider linkProfileId',

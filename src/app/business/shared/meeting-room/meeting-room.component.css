@@ -28,11 +28,6 @@
   border-radius: 10px;
   background: #000;
 } */
-.previewContainer video {
-  /* border: 1px solid #000 !important;
-  border-radius: 10px; */
-  border-radius: 25px !important;
-}
 .local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1);
 }
