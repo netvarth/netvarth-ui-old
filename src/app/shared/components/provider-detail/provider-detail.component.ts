@@ -805,8 +805,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
               }
             }
-            this.getUserWaitingTime(waitTimearr);
             this.getUserApptTime(apptTimearr);
+            this.getUserWaitingTime(waitTimearr);
             break;
           }
           case 'jaldeediscount':

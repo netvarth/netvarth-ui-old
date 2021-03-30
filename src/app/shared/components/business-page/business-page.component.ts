@@ -771,8 +771,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }
               }
-              this.getUserWaitingTime(waitTimearr);
               this.getUserApptTime(apptTimearr);
+              this.getUserWaitingTime(waitTimearr);
             }
             break;
           }
