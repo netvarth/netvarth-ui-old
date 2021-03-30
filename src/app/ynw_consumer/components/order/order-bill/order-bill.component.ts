@@ -118,6 +118,8 @@ export class OrderBillComponent implements OnInit,OnDestroy {
   razorpayDetails: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   billTitle='Bill';
+  provider_id: any;
+  terminologiesjson: any;
 private subs=new SubSink();
   constructor(
     //   private consumer_services: ConsumerServices,
@@ -135,7 +137,8 @@ private subs=new SubSink();
       public prefillmodel: RazorpayprefillModel,
       public winRef: WindowRefService,
       private cdRef: ChangeDetectorRef,
-      private location: Location
+      private location: Location,
+      private s3Processor: S3UrlProcessor
   ) {
      this.subs.sink= this.activated_route.queryParams.subscribe(
           params => {
