@@ -2608,7 +2608,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       let blogoUrl;
-      if (this.businessjson.logo) {
+      if (this.businessjson.logo) { 
         blogoUrl = this.businessjson.logo.url;
       } else {
         blogoUrl = '';
@@ -2619,7 +2619,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         'logo': blogoUrl
       };
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);
