@@ -11,7 +11,7 @@ import { FormMessageDisplayModule } from '../shared/modules/form-message-display
 import { FooterModule } from '../shared/modules/footer/footer.module';
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
-import { LoadingSpinnerModule } from './components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
 import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-note.component';
 
 @NgModule({

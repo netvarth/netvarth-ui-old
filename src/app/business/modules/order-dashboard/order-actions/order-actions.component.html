@@ -105,8 +105,9 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
         <!-- <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</span>
         <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage labels</span> -->
-        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
-        <a class="" (click)="gotoLabel()">Manage labels</a>
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')"  *ngIf="!showApply">Create new</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
+        <a class="" (click)="gotoLabel()"  *ngIf="!showApply">Manage labels</a>
     </div>
 </div>
 

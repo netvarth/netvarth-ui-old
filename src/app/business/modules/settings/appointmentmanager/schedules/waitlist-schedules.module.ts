@@ -5,7 +5,7 @@ import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/bread
 import { WaitlistSchedulesComponent } from './list/waitlist-schedules.component';
 import { WaitlistSchedulesDetailComponent } from './details/waitlist-schedulesdetail.component';
 import { WaitlistSchedulesRoutingModule } from './waitlist-schedules.routing.module';
-import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';

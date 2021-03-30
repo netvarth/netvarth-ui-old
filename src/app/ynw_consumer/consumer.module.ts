@@ -35,7 +35,7 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 import { projectConstants } from '../app.component';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
 import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
 import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
 import { ConsumerDonationModule } from './components/donations/consumer-donation.module';

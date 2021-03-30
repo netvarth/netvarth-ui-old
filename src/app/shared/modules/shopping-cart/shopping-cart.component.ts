@@ -541,8 +541,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
 
       };
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_id,
+        }
+
+      };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
     }
 
   }

@@ -14,11 +14,19 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
-  styleUrls: ['./myfavourites.component.css']
+  styleUrls: ['./myfavourites.component.css'],
+  animations: [
+    trigger('hideShowAnimator', [
+      state('true', style({ opacity: 1, height: '100%' })),
+      state('false', style({ opacity: 0, height: 0 })),
+      transition('0 <=> 1', animate('.5s ease-out'))
+    ])
+  ] 
 })
 export class MyfavouritesComponent implements OnInit,OnDestroy {
   
@@ -435,4 +443,3 @@ private subs=new SubSink();
     }
   }
 }
-

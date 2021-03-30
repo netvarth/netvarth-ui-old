@@ -1870,14 +1870,18 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   addLabeltoMultipleOrder(data) {
-    const url = 'provider/orders/labelBatch';
+    const url = 'provider/orders/labelsBatch';
     return this.servicemeta.httpPost(url, data);
   }
-  deleteLabelfromOrder(uuid, label) {
-    const url = 'provider/orders/label/' + uuid + '/' + label;
-    return this.servicemeta.httpDelete(url);
-  }
-  // Customer Grouping
+  // deleteLabelfromOrder(uuid, label) {
+  //   const url = 'provider/orders/label/' + uuid + '/' + label;
+  //   return this.servicemeta.httpDelete(url);
+  // }
+  // Customer
+  deleteLabelfromOrder(data) {
+    const url = 'provider/orders/masslabel';
+    return this.servicemeta.httpDelete(url,data);
+  } 
   createCustomerGroup(data) {
     const url = 'provider/customers/group';
     return this.servicemeta.httpPost(url, data);

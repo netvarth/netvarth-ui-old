@@ -21,156 +21,153 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 
 @Component({
-    selector: 'app-order-bill',
-    templateUrl: './order-bill.component.html',
-    styleUrls: ['./order-bill.component.css']
+  selector: 'app-order-bill',
+  templateUrl: './order-bill.component.html',
+  styleUrls: ['./order-bill.component.css']
 })
-export class OrderBillComponent implements OnInit, OnDestroy {
+export class OrderBillComponent implements OnInit,OnDestroy {
+   
 
+  @ViewChild('itemservicesearch') item_service_search;
+  tooltipcls = '';
+  new_cap = Messages.NEW_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  date_cap = Messages.DATE_CAP;
+  time_cap = Messages.TIME_CAP;
+  bill_no_cap = Messages.BILL_NO_CAP;
+  gstin_cap = Messages.GSTIN_CAP;
+  ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
+  no_cap = Messages.NO_CAP;
+  available_cap = Messages.AVAILABLE_CAP;
+  qty_cap = Messages.QTY_CAPITAL_CAP;
+  add_btn_cap = Messages.ADD_BTN;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  qnty_cap = Messages.QTY_CAP;
+  select_discount_cap = Messages.SEL_DISC_CAP;
+  select_coupon_cap = Messages.SEL_COUPON_CAP;
+  done_btn_cap = Messages.DONE_BTN;
+  discount_cap = Messages.DISCOUNT_CAP;
+  coupon_cap = Messages.COUPON_CAP;
+  sub_tot_cap = Messages.SUB_TOT_CAP;
+  dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
+  delete_btn_cap = Messages.DELETE_BTN;
+  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+  bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
+  tax_cap = Messages.TAX_CAP;
+  amount_paid_cap = Messages.AMNT_PAID_CAP;
+  amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
+  back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+  payment_logs_cap = Messages.PAY_LOGS_CAP;
+  amount_cap = Messages.AMOUNT_CAP;
+  refundable_cap = Messages.REFUNDABLE_CAP;
+  status_cap = Messages.PAY_STATUS;
+  mode_cap = Messages.MODE_CAP;
+  refunds_cap = Messages.REFUNDS_CAP;
+  coupon_notes = projectConstants.COUPON_NOTES;
+  api_error = null;
+  api_success = null;
+  checkin = null;
+  bill_data = null;
+  message = '';
+  items: any = [];
+  pre_payment_log: any = [];
+  payment_options: any = [];
+  close_msg = 'close';
+  bname = '';
+  billdate = '';
+  billtime = '';
+  gstnumber = '';
+  billnumber = '';
+  bill_load_complete = 0;
+  item_service_tax: any = 0;
+  uuid;
+  gateway_redirection = false;
+  payModesExists = false;
+  payModesQueried = false;
+  pay_data = {
+      'uuid': null,
+      'paymentMode': null,
+      'amount': 0,
+      'accountId': null,
+      'purpose': null
+  };
+  payment_popup = null;
+  showPaidlist = false;
+  showJCouponSection = false;
+  jCoupon = '';
+  couponList : any={
+    JC:[],OWN:[]
+  };
+  refund_value;
+  discountDisplayNotes = false;
+  billNoteExists = false;
+  showBillNotes = false;
+  paytmEnabled = false;
+  type;
+  accountId;
+  pid;
+  breadcrumbs;
+  source;
+  pGateway: any;
+  razorModel: any;
+  origin: string;
+  paidStatus = 'false';
+  checkIn_type: any;
+  razorpay_order_id: any;
+  razorpay_payment_id: any;
+  razorpayDetails: any = [];
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  billTitle='Bill';
+private subs=new SubSink();
+  constructor(
+    //   private consumer_services: ConsumerServices,
+      public consumer_checkin_history_service: CheckInHistoryServices,
+      public sharedfunctionObj: SharedFunctions,
+      public sharedServices: SharedServices,
+      public _sanitizer: DomSanitizer,
+      private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+      private activated_route: ActivatedRoute,
+      private dialog: MatDialog,
+      private locationobj: Location,
+      @Inject(DOCUMENT) public document,
+      public razorpayService: RazorpayService,
+      public prefillmodel: RazorpayprefillModel,
+      public winRef: WindowRefService,
+      private cdRef: ChangeDetectorRef,
+      private location: Location
+  ) {
+     this.subs.sink= this.activated_route.queryParams.subscribe(
+          params => {
+              console.log(params);
+              if (params.accountId) {
+                  this.accountId = params.accountId;
+                  console.log(this.accountId);
+              }
+              if (params.paidStatus) {
+                  this.paidStatus = params.paidStatus;
+              }
+              if (params.uuid) {
+                  this.uuid = params.uuid;
+                  console.log(this.uuid);
 
-    @ViewChild('itemservicesearch') item_service_search;
-    tooltipcls = '';
-    new_cap = Messages.NEW_CAP;
-    bill_cap = Messages.BILL_CAPTION;
-    date_cap = Messages.DATE_CAP;
-    time_cap = Messages.TIME_CAP;
-    bill_no_cap = Messages.BILL_NO_CAP;
-    gstin_cap = Messages.GSTIN_CAP;
-    ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
-    no_cap = Messages.NO_CAP;
-    available_cap = Messages.AVAILABLE_CAP;
-    qty_cap = Messages.QTY_CAPITAL_CAP;
-    add_btn_cap = Messages.ADD_BTN;
-    cancel_btn_cap = Messages.CANCEL_BTN;
-    qnty_cap = Messages.QTY_CAP;
-    select_discount_cap = Messages.SEL_DISC_CAP;
-    select_coupon_cap = Messages.SEL_COUPON_CAP;
-    done_btn_cap = Messages.DONE_BTN;
-    discount_cap = Messages.DISCOUNT_CAP;
-    coupon_cap = Messages.COUPON_CAP;
-    sub_tot_cap = Messages.SUB_TOT_CAP;
-    dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
-    delete_btn_cap = Messages.DELETE_BTN;
-    gross_amnt_cap = Messages.GROSS_AMNT_CAP;
-    bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
-    tax_cap = Messages.TAX_CAP;
-    amount_paid_cap = Messages.AMNT_PAID_CAP;
-    amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
-    back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
-    payment_logs_cap = Messages.PAY_LOGS_CAP;
-    amount_cap = Messages.AMOUNT_CAP;
-    refundable_cap = Messages.REFUNDABLE_CAP;
-    status_cap = Messages.PAY_STATUS;
-    mode_cap = Messages.MODE_CAP;
-    refunds_cap = Messages.REFUNDS_CAP;
-    coupon_notes = projectConstants.COUPON_NOTES;
-    api_error = null;
-    api_success = null;
-    checkin = null;
-    bill_data = null;
-    message = '';
-    items: any = [];
-    pre_payment_log: any = [];
-    payment_options: any = [];
-    close_msg = 'close';
-    bname = '';
-    billdate = '';
-    billtime = '';
-    gstnumber = '';
-    billnumber = '';
-    bill_load_complete = 0;
-    item_service_tax: any = 0;
-    uuid;
-    gateway_redirection = false;
-    payModesExists = false;
-    payModesQueried = false;
-    pay_data = {
-        'uuid': null,
-        'paymentMode': null,
-        'amount': 0,
-        'accountId': null,
-        'purpose': null
-    };
-    payment_popup = null;
-    showPaidlist = false;
-    showJCouponSection = false;
-    jCoupon = '';
-    couponList: any = {
-        JC: [], OWN: []
-    };
-    refund_value;
-    discountDisplayNotes = false;
-    billNoteExists = false;
-    showBillNotes = false;
-    paytmEnabled = false;
-    type;
-    accountId;
-    pid;
-    breadcrumbs;
-    source;
-    pGateway: any;
-    razorModel: any;
-    origin: string;
-    paidStatus = 'false';
-    checkIn_type: any;
-    razorpay_order_id: any;
-    razorpay_payment_id: any;
-    razorpayDetails: any = [];
-    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-    billTitle = 'Bill';
-    private subs = new SubSink();
-    provider_id: any;
-    terminologiesjson: any;
-    constructor(
-        //   private consumer_services: ConsumerServices,
-        public consumer_checkin_history_service: CheckInHistoryServices,
-        public sharedfunctionObj: SharedFunctions,
-        public sharedServices: SharedServices,
-        public _sanitizer: DomSanitizer,
-        private wordProcessor: WordProcessor,
-        private snackbarService: SnackbarService,
-        private activated_route: ActivatedRoute,
-        private dialog: MatDialog,
-        private locationobj: Location,
-        @Inject(DOCUMENT) public document,
-        public razorpayService: RazorpayService,
-        public prefillmodel: RazorpayprefillModel,
-        public winRef: WindowRefService,
-        private cdRef: ChangeDetectorRef,
-        private location: Location,
-        private s3Processor: S3UrlProcessor
-    ) {
-        this.subs.sink = this.activated_route.queryParams.subscribe(
-            params => {
-                console.log(params);
-                if (params.accountId) {
-                    this.accountId = params.accountId;
-                    console.log(this.accountId);
-                }
-                if (params.paidStatus) {
-                    this.paidStatus = params.paidStatus;
-                }
-                if (params.uuid) {
-                    this.uuid = params.uuid;
-                    console.log(this.uuid);
-
-                }
-                if (params.source) {
-                    this.source = params.source;
-                }
-                this.getWaitlist();
-                if (this.source === 'history') {
-                    this.checkIn_type = 'checkin_historybill';
-                }
-                if (params.type) {
-                    this.checkIn_type = params.type;
-                }
-                if (params.details) {
-                    this.razorpayDetails = JSON.parse(params.details);
-                    this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
-                    this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
-                    this.cdRef.detectChanges();
-                }
+              }
+              if (params.source) {
+                  this.source = params.source;
+              }
+              this.getWaitlist();
+              if (this.source === 'history') {
+                  this.checkIn_type = 'checkin_historybill';
+              }
+              if (params.type) {
+                  this.checkIn_type = params.type;
+              }
+              if (params.details) {
+                  this.razorpayDetails = JSON.parse(params.details);
+                  this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
+                  this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
+                  this.cdRef.detectChanges();
+              }
 
             });
     }

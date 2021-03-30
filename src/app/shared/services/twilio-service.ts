@@ -5,7 +5,7 @@ export class TwilioService {
     remoteVideo: ElementRef;
     localVideo: ElementRef;
     previewContainer: ElementRef;
-    previewing: boolean;
+    // previewing = false;
     microphone = true;
     video = true;
     preview = true;
@@ -65,17 +65,22 @@ export class TwilioService {
      * Method for Preview Camera before entering to the meeting room
     */
     previewMedia() {
+        this.preview = true;
         const _this = this;
         _this.loadDevices().then(
             (videoDevices: any) => {
+                console.log("Video Devices");
+                console.log(videoDevices);
                 _this.camDeviceCount = videoDevices.length;
                 if (_this.camDeviceCount > 0) {
                     _this.selectedVideoId = _this.cam1Device;
                     Video.createLocalTracks({
-                        audio:true,
+                        audio: true,
                         video: { deviceId: _this.selectedVideoId }
                     }).then(localTracks => {
                         _this.previewTracks = localTracks;
+                        console.log("Preview Tracks");
+                        console.log(_this.previewTracks);
                         localTracks.forEach(localTrack => {
                             _this.addPreviewTrackToDom(localTrack);
                         })
@@ -84,8 +89,8 @@ export class TwilioService {
             }
         );
     }
-    
-    addPreviewTrackToDom (previewTrack) {
+
+    addPreviewTrackToDom(previewTrack) {
         const _this = this;
         const element = previewTrack.attach();
         _this.renderer.addClass(element, 'rem-video');
@@ -125,40 +130,46 @@ export class TwilioService {
             _this.selectedVideoId = _this.cam1Device;
         }
         const localParticipant = _this.activeRoom.localParticipant;
-          const tracks = Array.from(localParticipant.videoTracks.values()).map(
-            function(trackPublication) {
-              return trackPublication['track'];
+        const tracks = Array.from(localParticipant.videoTracks.values()).map(
+            function (trackPublication) {
+                return trackPublication['track'];
             }
-          );
-          localParticipant.unpublishTracks(tracks);
-          console.log(localParticipant.identity + ' removed track: ' + tracks[0].kind);
-          _this.detachTracks(tracks);
-          _this.stopTracks(tracks);
-          const videoid = _this.selectedVideoId;
-          Video.createLocalVideoTrack({
+        );
+        localParticipant.unpublishTracks(tracks);
+        console.log(localParticipant.identity + ' removed track: ' + tracks[0].kind);
+        _this.detachTracks(tracks);
+        _this.stopTracks(tracks);
+        const videoid = _this.selectedVideoId;
+        Video.createLocalVideoTrack({
             deviceId: { exact: videoid }
-          }).then(function(localVideoTrack) {
+        }).then(function (localVideoTrack) {
             localParticipant.publishTrack(localVideoTrack);
             console.log(localParticipant.identity + ' added track: ' + localVideoTrack.kind);
             _this.attachTracks([localVideoTrack], _this.localVideo.nativeElement, _this.activeRoom);
-          });
+        });
     }
 
     connectToRoom(accessToken, options): void {
         const _this = this;
+        console.log("In Connect Room");
+        console.log(_this.previewTracks);
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
         }
+        console.log("Options");
+        console.log(options);
+        
         Video.connect(accessToken, options).then(
             (room: any) => {
                 _this.preview = false;
                 _this.activeRoom = room;
-                if (!_this.previewing && options['video']) {
+                // !_this.previewing && 
+                if (options['video']) {
                     if (!_this.localVideo.nativeElement.querySelector('video')) {
                         console.log("in connect method");
-                         _this.attachParticipantTracks(room.localParticipant, _this.localVideo.nativeElement, room);
+                        _this.attachParticipantTracks(room.localParticipant, _this.localVideo.nativeElement, room);
                     }
-                    _this.previewing = true;
+                    // _this.previewing = true;
                 }
                 _this.roomJoined(room);
             }
@@ -169,7 +180,7 @@ export class TwilioService {
         const _this = this;
         console.log("attachTracks");
         tracks.forEach(function (track) {
-            if (track) {                
+            if (track) {
                 console.log(track);
                 const element = track.attach();
                 _this.renderer.data.id = track.sid;
@@ -177,12 +188,12 @@ export class TwilioService {
                 _this.renderer.addClass(element, 'rem-video');
                 _this.renderer.appendChild(container, element);
             }
-        });        
+        });
     }
 
 
     // Attach the Participant's Tracks to the DOM.
-    attachParticipantTracks(participant, container,room) {
+    attachParticipantTracks(participant, container, room) {
         const _this = this;
         var tracks = Array.from(participant.tracks.values()).map(function (trackPublication) {
             return trackPublication['track'];
@@ -223,8 +234,8 @@ export class TwilioService {
     roomJoined(room) {
         const _this = this;
         // Attach the Tracks of the Room's Participants.
-        room.participants.forEach( (participant) => {
-            console.log("Already in Room: '" + participant.identity + "'");           
+        room.participants.forEach((participant) => {
+            console.log("Already in Room: '" + participant.identity + "'");
             _this.attachParticipantTracks(participant, _this.remoteVideo.nativeElement, room);
             _this.participantsCount = room.participants.size;
             console.log('first:' + this.participantsCount);
@@ -234,7 +245,7 @@ export class TwilioService {
         room.on('participantConnected', function (participant) {
             console.log("Joining: '" + participant.identity + "'");
             _this.participantsCount = room.participants.size;
-            console.log("connected:"+ room.participants.size);
+            console.log("connected:" + room.participants.size);
         });
 
         // When a Participant adds a Track, attach it to the DOM.
@@ -251,11 +262,11 @@ export class TwilioService {
         });
 
         // When a Participant leaves the Room, detach its Tracks.
-        room.on('participantDisconnected', function (participant) {            
+        room.on('participantDisconnected', function (participant) {
             console.log("Participant '" + participant.identity + "' left the room");
             _this.detachParticipantTracks(participant, room, _this);
             _this.participantsCount = room.participants.size;
-            console.log("disConnected:"+ room.participants.size);
+            console.log("disConnected:" + room.participants.size);
         });
 
         // Once the LocalParticipant leaves the room, detach the Tracks
@@ -265,15 +276,20 @@ export class TwilioService {
             room.localParticipant.tracks.forEach(publication => {
                 const attachedElements = publication.track.detach();
                 attachedElements.forEach(element => element.remove());
-              });
-              const localElement = _this.localVideo.nativeElement;
-              while (localElement.firstChild) {
-                  localElement.removeChild(localElement.firstChild);
-              }
-              const remoteElement = _this.remoteVideo.nativeElement;
-              while (remoteElement.firstChild) {
-                  remoteElement.removeChild(remoteElement.firstChild);
-              }
+            });
+            if (_this.localVideo) {
+                const localElement = _this.localVideo.nativeElement;
+                while (localElement.firstChild) {
+                    localElement.removeChild(localElement.firstChild);
+                }
+            }
+            if (_this.remoteVideo) {
+                const remoteElement = _this.remoteVideo.nativeElement;
+                while (remoteElement.firstChild) {
+                    remoteElement.removeChild(remoteElement.firstChild);
+                }
+            }
+
             // if (_this.previewTracks) {
             //     _this.previewTracks.forEach(function (track) {
             //         track.stop();
@@ -288,9 +304,23 @@ export class TwilioService {
         });
     }
     disconnect() {
+        if (this.previewTracks) {
+            this.previewTracks.forEach(localTrack => {
+                localTrack.stop();
+            });
+        }
+        this.previewTracks = null;
+        if (this.activeRoom && this.activeRoom.localParticipant && this.activeRoom.localParticipant.localTracks) {
+            this.activeRoom.localParticipant.localTracks.forEach(localTrack => {
+                localTrack.stop();
+            });
+        }
         if (this.activeRoom && this.activeRoom !== null) {
             this.activeRoom.disconnect();
             this.activeRoom = null;
+            this.cam1Device = null;
+            this.cam2Device = null;
+            this.selectedVideoId = null;    
         }
     }
 }
