@@ -6,8 +6,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../../modules/header/header.module';
+import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 import { QuestionnaireComponent } from './questionnaire.component';
 import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
 
