@@ -7,21 +7,41 @@
     </div>
 </section>
 <section>
-    <div class="content w-manager settings comn-cls">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                <div class="card">
-                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="!loading">
-                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
-                            {{questionnaire.questionnaireId}}
-                        </div>
-                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
-                            {{questionnaire.transactionType}}
-                        </div>
-                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
-                            {{questionnaire.channel}}
-                        </div>
+    <div class="content loc-list">
+        <div class="card">
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div class="copy" *ngIf="!loading">
+                <div class="c-ot">
+                    <div class="item">
+                        <span class="ttle">questionnaireId</span>
+                        <span>{{questionnaire.questionnaireId}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="ttle">transactionType</span>
+                        <span> {{questionnaire.transactionType}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="ttle">channel</span>
+                        <span>{{questionnaire.channel}}</span>
+                    </div>
+
+                </div>
+                <div class="c-ot" *ngFor="let question of questionnaire.questions">
+                    <div class="item">
+                        <span class="ttle">labelName</span>
+                        <span>{{question.labelName}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="ttle">label</span>
+                        <span>{{question.label}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="ttle">fieldDataType</span>
+                        <span>{{question.fieldDataType}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="ttle">fieldScope</span>
+                        <span>{{question.fieldScope}}</span>
                     </div>
                 </div>
             </div>
