@@ -113,41 +113,70 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.savedisabled = true;
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
+        let passdata = {};
+        let file;
         let i = 0;
         for (const pic of this.item_pic.files) {
-          console.log(pic);
-          submit_data.append('files', pic, pic['name']);
-          const properties = {
-            'caption': this.item_pic.caption[i] || ''
-          };
-          propertiesDetob[i] = properties;
-          i++;
-        }
-        const propertiesDet = {
-          'propertiesMap': propertiesDetob
-        };
-        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        submit_data.append('properties', blobPropdata);
-        if (this.mrId) {
-            this.uploadMrfiles(this.mrId, submit_data);
-          } else {
-            let passingId ;
-            if (this.bookingType === 'FOLLOWUP') {
-              passingId = this.patientId;
-            } else {
-              passingId = this.bookingId;
+             console.log(pic);
+             file = pic;
+             passdata = {
+              "url": pic['name'],
+              "type": pic['type'],
+            "imageSize": pic['size']
+            };
             }
-            this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
-              .then((data: number) => {
-                this.mrId = data;
-                console.log(this.mrId);
-                this.uploadMrfiles(data, submit_data);
+           
+            this.provider_services.videoaudioUploadurl(this.mrId, passdata)
+            .subscribe((data) => {
+              console.log(data);
+              let details = data['url'];
+              console.log(details);
+              this.provider_services.videoaudioS3Upload(file, details)
+              .subscribe((data) => {
+                console.log(data);
+               
               },
                 error => {
-                  this.savedisabled = false;
                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
-          }
+            },
+              error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              });
+        // for (const pic of this.item_pic.files) {
+        //   console.log(pic);
+        //   submit_data.append('files', pic, pic['name']);
+        //   const properties = {
+        //     'caption': this.item_pic.caption[i] || ''
+        //   };
+        //   propertiesDetob[i] = properties;
+        //   i++;
+        // }
+        // const propertiesDet = {
+        //   'propertiesMap': propertiesDetob
+        // };
+        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        // submit_data.append('properties', blobPropdata);
+        // if (this.mrId) {
+        //     this.uploadMrfiles(this.mrId, submit_data);
+        //   } else {
+        //     let passingId ;
+        //     if (this.bookingType === 'FOLLOWUP') {
+        //       passingId = this.patientId;
+        //     } else {
+        //       passingId = this.bookingId;
+        //     }
+        //     this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
+        //       .then((data: number) => {
+        //         this.mrId = data;
+        //         console.log(this.mrId);
+        //         this.uploadMrfiles(data, submit_data);
+        //       },
+        //         error => {
+        //           this.savedisabled = false;
+        //           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        //         });
+        //   }
         
     }
 

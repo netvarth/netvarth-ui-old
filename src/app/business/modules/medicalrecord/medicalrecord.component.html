@@ -63,7 +63,7 @@
         <hr>
       </div>
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-          <!-- <span class="normal-sz mgn-bt-10">For uploading files </span> <button (click)="uploadFileforMr()">Click here</button><br> -->
+          <span class="normal-sz mgn-bt-10">For uploading files </span> <button (click)="uploadFileforMr()">Click here</button><br>
 <span  *ngIf="selectedMessage.files && selectedMessage.files.length > 0"><a class="pointlist" (click)="isShowtable()"><u>{{selectedMessage.files.length}} files are uploaded</u></a></span>
           <div class="w-dta" *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showtable" >
               <div class="row">

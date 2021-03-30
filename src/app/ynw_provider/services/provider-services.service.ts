@@ -1997,4 +1997,11 @@ export class ProviderServices {
     const url = 'provider/questionnaire/change/' + status + '/' + id;
     return this.servicemeta.httpPut(url);
   }
+  videoaudioUploadurl(id,data){
+    const url = 'provider/mr/upload/url/' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+  videoaudioS3Upload(file,url){
+    return this.servicemeta.httpPut(url,file);
+  }
 }
