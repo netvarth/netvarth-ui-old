@@ -1292,6 +1292,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
+}
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
       .subscribe((data: any) => {
