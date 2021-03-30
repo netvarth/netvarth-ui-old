@@ -1609,7 +1609,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.bookStep++;
+                        if (this.bookStep === 2) {
+                            this.validateQuestionnaire();
+                        } else {
+                            this.bookStep++;
+                        }
                     } else {
                         this.bookStep = 3;
                     }
@@ -1769,5 +1773,17 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.questionnaireLoaded = true;
             
         });
+    }
+    validateQuestionnaire() {
+        console.log(this.questionAnswers.answers);
+        if (this.questionAnswers && this.questionAnswers.answers) {
+            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe(data => {
+                this.bookStep++;
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        } else {
+            this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+        }
     }
 }

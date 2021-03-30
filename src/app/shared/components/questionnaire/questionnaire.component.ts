@@ -242,7 +242,7 @@ export class QuestionnaireComponent implements OnInit {
       const indx = this.answers[question.labelName].indexOf(value);
       this.answers[question.labelName].splice(indx, 1);
     }
-    if (this.answers[question.labelName].length > 0) {
+    if (this.answers[question.labelName].length === 0) {
       delete this.answers[question.labelName];
     }
     this.onSubmit();
@@ -286,14 +286,10 @@ export class QuestionnaireComponent implements OnInit {
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
-    if (this.source === 'consCheckin') {
-      this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
-    } else if (this.source === 'consAppt') {
-      this.resubmitConsumerApptQuestionnaire(dataToSend);
-    } else if (this.source === 'proCheckin') {
-      this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+    if (this.source === 'consCheckin' || this.source === 'consAppt') {
+      this.validateConsumerQuestionnaire(passData.answers, dataToSend);
     } else {
-      this.resubmitProviderApptQuestionnaire(dataToSend);
+      this.validateProviderQuestionnaire(passData.answers, dataToSend);
     }
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
@@ -379,9 +375,35 @@ export class QuestionnaireComponent implements OnInit {
       this.documentsToUpload[question] = [];
     }
     if (this.documentsToUpload[question] && this.documentsToUpload[question].indexOf(option) === -1) {
-    this.documentsToUpload[question].push(option);
+      this.documentsToUpload[question].push(option);
     }
     console.log(this.documentsToUpload);
     console.log(this.selectedDocs);
+  }
+
+  validateConsumerQuestionnaire(answers, dataToSend) {
+    console.log(answers);
+    this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe(data => {
+      if (this.source === 'consCheckin') {
+        this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+      } else {
+        this.resubmitConsumerApptQuestionnaire(dataToSend);
+      }
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+
+  validateProviderQuestionnaire(answers, dataToSend) {
+    console.log(answers);
+    this.providerService.validateProviderQuestionnaire(answers).subscribe(data => {
+      if (this.source === 'proCheckin') {
+        this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+      } else {
+        this.resubmitProviderApptQuestionnaire(dataToSend);
+      }
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
   }
 }

@@ -1,0 +1,30 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Questionnaire Details
+        </h5>
+    </div>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card">
+                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="!loading">
+                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
+                            {{questionnaire.questionnaireId}}
+                        </div>
+                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
+                            {{questionnaire.transactionType}}
+                        </div>
+                        <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
+                            {{questionnaire.channel}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -152,7 +152,7 @@
             <div class="c-details">
               <h2>Questionnaire</h2>
               <div class="quest-answ-box" *ngFor="let question of waitlist_data.questionnaire">
-                <div class="question">{{question.answer.questionId}}</div>
+                <div class="question">{{question.answer.labelName}}</div>
                 <div class="answer"
                   *ngIf="question.question.fieldDataType !== 'Boolean' && question.question.fieldDataType !== 'Date'">
                   {{question.answer.answer}}</div>

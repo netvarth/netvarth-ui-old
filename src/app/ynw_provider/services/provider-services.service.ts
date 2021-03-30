@@ -1981,4 +1981,16 @@ export class ProviderServices {
     const url = 'provider/questionnaire/validate';
     return this.servicemeta.httpPut(url, body);
   }
+  getAllQuestionnaire() {
+    const url = 'provider/questionnaire';
+    return this.servicemeta.httpGet(url);
+  }
+  getQuestionnairebyId(id) {
+    const url = 'provider/questionnaire/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+  changeQuestionnaireStatus(status, id) {
+    const url = 'provider/questionnaire/change/' + status + '/' + id;
+    return this.servicemeta.httpPut(url);
+  }
 }

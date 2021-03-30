@@ -801,6 +801,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
+        this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.userData.userProfile.email && this.waitlist_for[0]) {
@@ -836,6 +837,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         }
         this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
+        this.getConsumerQuestionnaire();
     }
     ismoreMembersAllowedtopush() {
         if (this.maxsize > this.waitlist_for.length) {
@@ -1200,22 +1202,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 (accountS3s) => {
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
-                      }
-                      if (accountS3s['terminologies']) {
+                    }
+                    if (accountS3s['terminologies']) {
                         this.processS3s('terminologies', accountS3s['terminologies']);
-                      }
-                      if (accountS3s['coupon']) {
+                    }
+                    if (accountS3s['coupon']) {
                         this.processS3s('coupon', accountS3s['coupon']);
-                      }
-                      if (accountS3s['providerCoupon']) {
+                    }
+                    if (accountS3s['providerCoupon']) {
                         this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                      }
-                      if (accountS3s['departmentProviders']) {
+                    }
+                    if (accountS3s['departmentProviders']) {
                         this.processS3s('departmentProviders', accountS3s['departmentProviders']);
-                      }
-                      if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']); 
-                      }                                     
+                    }
+                    if (accountS3s['businessProfile']) {
+                        this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    }
                 }
             );
     }
@@ -1715,7 +1717,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.bookStep++;
+                        if (this.bookStep === 2) {
+                            this.validateQuestionnaire();
+                        } else {
+                            this.bookStep++;
+                        }
                     } else {
                         this.bookStep = 3;
                     }
@@ -1863,12 +1869,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     validateQuestionnaire() {
-        console.log(this.questionAnswers.answers);
-        this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers).subscribe(data => {
-            this.bookStep++;
-        }, error => {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
+        if (this.questionAnswers && this.questionAnswers.answers) {
+            console.log(this.questionAnswers.answers);
+            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe(data => {
+                this.bookStep++;
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        } else {
+            this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+        }
     }
 }
 

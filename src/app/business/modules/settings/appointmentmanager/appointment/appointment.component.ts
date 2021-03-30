@@ -1116,7 +1116,11 @@ export class AppointmentComponent implements OnInit {
             //   post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
                 if (this.thirdParty === '') {
-                    this.addAppointmentInProvider(post_Data);
+                    this.validateQnr().then(data => { 
+                        this.addAppointmentInProvider(post_Data);
+                            }, error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                              });
                 } else {
                     this.addAppointmentBlock(post_Data);
                 }
@@ -1935,6 +1939,20 @@ this.questionAnswers = event;
         this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
           console.log(data);
           this.questionnaireList = data;
+        });
+      }
+      validateQnr() {
+        console.log(this.questionAnswers.answers);
+        return new Promise((resolve, reject) => {
+          if (this.questionAnswers && this.questionAnswers.answers) {
+          this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
+            resolve(data);
+          }, error => {
+            reject(error);
+          });  
+        } else {
+          resolve(true);
+          }
         });
       }
 }
