@@ -5,7 +5,7 @@ import { QuestionnaireDetailsComponent } from './questionnaire-details/questionn
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../.../../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [
