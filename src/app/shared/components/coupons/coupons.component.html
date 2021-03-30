@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">Available Coupons
+<h1 class="mat-dialog-title coupon-title">Available Coupons
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
@@ -10,37 +10,71 @@
       <div class="coupon-container">
         <div class="servicedet_outer">
           <div class="outer">
-            <h6><b>{{coupon.couponName}}</b></h6>
-            <span> {{coupon.couponDescription}}</span>
-            <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}} </span> <span class="help">Apply this
-                coupon code while Booking</span>
+            <h6 class="coupon-name"><b>{{coupon.couponName}}</b></h6>
+            <span class="coupon-desc"> {{coupon.couponDescription}}</span>
+            <div class="t-and-c" *ngIf="coupon.consumerTermsAndconditions">
+              <div class="t-and-c-title">T & C:&nbsp;</div>
+              <div class="t-and-c-text" [innerHTML]="coupon.consumerTermsAndconditions | nl2br"></div>
             </div>
+            <div class="coupon-valid-through">
+              <div class="coupon-valid-through-title">Valid Through:&nbsp;</div>
+              <div class="coupon-valid-through-text">
+                <div>{{coupon.startDate | date: 'mediumDate' }}</div>
+                -
+                <div>{{coupon.endDate | date: 'mediumDate' }}</div>
+              </div>
+            </div>
+            <div class="coupon-main">
+              <div>
+                <div *ngIf="coupon.discountType == 'PERCENTAGE'">
+                  <div class="coupon-discount-title">Discount Value:&nbsp;</div>
+                  <div class="coupon-discount-text">{{coupon.discountValue}}%</div>
+                </div>
+                <div *ngIf="coupon.discountType == 'AMOUNT'">
+                  <div class="coupon-discount-title">Discount Value:&nbsp;</div>
+                  <div class="coupon-discount-text"><i class="fa fa-inr"></i>&nbsp;{{coupon.discountValue | currency:'':''}}</div>
+                </div>
+              </div>
+              <div>
+                <div [id]="'jaldee-cc-'+ coupon.jaldeeCouponCode" class="jaldee-coupon-code">{{coupon.jaldeeCouponCode}}</div>
+                <div (click)="copyText('jaldee-cc-', 'jaldee-cc-tooltip-', coupon.jaldeeCouponCode)"
+                  (mouseout)="resetTooltip('jaldee-cc-tooltip-', coupon.jaldeeCouponCode)" class="ttip">
+                  <span class="tooltiptext" [id]="'jaldee-cc-tooltip-'+ coupon.jaldeeCouponCode">Copy</span>
+                  <i class="fa fa-clone" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}} </span> <span class="help">Apply this
+                coupon code while Booking</span>
+            </div> -->
             <!-- <div>Discount Value:<span *ngIf="coupon.discountType == 'AMOUNT'" class='rupee'>₹</span>{{coupon.discountValue}}
             <span *ngIf="coupon.discountType == 'PERCENTAGE'">%</span>
           </div> -->
-          <div *ngIf="coupon.discountType == 'PERCENTAGE'">Discount Value: {{coupon.discountValue}}%
+          <!-- <div *ngIf="coupon.discountType == 'PERCENTAGE'">Discount Value: {{coupon.discountValue}}%
           </div>
           <div *ngIf="coupon.discountType == 'AMOUNT'">
             <span class="rupee-font"> Discount Value:  {{coupon.discountValue | currency:'&#8377;'}} </span>
-            </div>
-            <div class="outer4">
-              <div class="coupon_validity">
-                <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
-                  {{formatDateDisplay(coupon.endDate)}}</span>
-              </div>
-              <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
+            </div> -->
+            <!-- <div class="outer4"> -->
+              <!-- <div class="coupon_validity"> -->
+                <!-- <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
+                  {{formatDateDisplay(coupon.endDate)}}</span> -->
+                <!-- <span class="expire">Valid Through: {{coupon.startDate | date: 'mediumDate' }} -
+                  {{coupon.endDate | date: 'mediumDate' }}</span>
+              </div> -->
+              <!-- <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
                     <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C Apply</div>
                   </div>
                 </ng-container>
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
           </div>
         </div>
-        <div class="card" *ngIf="couponsList[i].adwordshowmore">
+        <!-- <div class="card" *ngIf="couponsList[i].adwordshowmore">
           <div [innerHTML]="coupon.consumerTermsAndconditions | nl2br"></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </ng-container>
