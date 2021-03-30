@@ -192,6 +192,7 @@ private subs=new SubSink();
                   }
                   console.log(this.checkin);
                   this.getCouponList();
+                  this.getproviderCouponList();
                   this.getWaitlistBill();
                   this.getPrePaymentDetails();
                   this.getPaymentModes();
@@ -679,7 +680,7 @@ private subs=new SubSink();
     this.sharedfunctionObj.getS3Url()
         .then(
             s3Url => {
-               this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+               this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
                     .subscribe(res => {
                         this.couponList.OWN = res;
                     });
