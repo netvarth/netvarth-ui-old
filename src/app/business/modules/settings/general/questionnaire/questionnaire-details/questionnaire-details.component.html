@@ -2,43 +2,38 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Questionnaire Details
+            {{questionnaire.questionnaireId}}
         </h5>
     </div>
 </section>
 <section>
-    <div class="content loc-list">
+    <div class="content">
         <div class="card">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div class="copy" *ngIf="!loading">
-                <div class="c-ot">
+                <div class="qnrdetails">
                     <div class="item">
-                        <span class="ttle">questionnaireId</span>
-                        <span>{{questionnaire.questionnaireId}}</span>
+                        {{questionnaire.questionnaireId}}
                     </div>
                     <div class="item">
-                        <span class="ttle">transactionType</span>
-                        <span> {{questionnaire.transactionType}}</span>
+                         {{questionnaire.transactionType}}
                     </div>
                     <div class="item">
-                        <span class="ttle">channel</span>
-                        <span>{{questionnaire.channel}}</span>
+                        {{questionnaire.channel}}
                     </div>
 
                 </div>
-                <div>
+                <div class="mgn-up-20 pad-10">
                     <h4> Questions</h4>
                 </div>
-                <div class="c-ot" *ngFor="let question of questionnaire.questions">
-                    <div class="item">
-                        <span class="ttle">labelName</span>
+                <div class="question" *ngFor="let question of questionnaire.questions">
+                    <div class="question-item">
                         <span>{{question.labelName}}</span>
                     </div>
-                    <div class="item">
-                        <span class="ttle">fieldDataType</span>
+                    <div class="">
                         <span>{{question.fieldDataType}}</span>
                     </div>
-                    <div data-toggle="modal" data-target="#exampleModalCenter" (click)="selectQuesstion(question)">
+                    <div class="details-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="selectQuesstion(question)">
                         <span class="tooltiptext">Details</span>
                     </div>
                 </div>
@@ -48,10 +43,14 @@
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body" *ngIf="selectedQuestion">
                             <div>
-                            {{selectedQestion.labelName}}
+                                {{selectedQuestion.labelName}}
+                            </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                                #closebutton>Cancel</button>
                         </div>
                     </div>
                 </div>

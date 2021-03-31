@@ -131,9 +131,10 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.answers);
     console.log(this.fileuploadpreAnswers);
   }
-  filesSelected(event, index, question, document?) {
+  filesSelected(event, question, document?) {
     const input = event.target.files;
-    this.apiError[index] = null;
+    console.log(question);
+    console.log(document);
     this.answers[question.labelName] = {};
     if (input) {
       for (const file of input) {
@@ -159,6 +160,7 @@ export class QuestionnaireComponent implements OnInit {
         reader.readAsDataURL(file);
         // }
       }
+      console.log(this.answers);
       console.log(this.selectedMessage);
       // console.log(this.apiError);
       // console.log(this.answers);
@@ -209,7 +211,6 @@ export class QuestionnaireComponent implements OnInit {
     let data = [];
     Object.keys(this.answers).forEach(key => {
       console.log(this.answers[key]);
-      console.log(Object.keys(this.answers[key]).length > 0);
       if (this.answers[key]) {
         data.push({
           'labelName': key,
@@ -236,7 +237,10 @@ export class QuestionnaireComponent implements OnInit {
     return new Date(this.datepipe.transformTofilterDate(date));
   }
   listChange(ev, value, question) {
-    if (ev.checked) {
+    console.log(ev);
+    console.log(value);
+    console.log(question.labelName);
+    if (ev.target.checked) {
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = [];
       }
@@ -248,10 +252,14 @@ export class QuestionnaireComponent implements OnInit {
     if (this.answers[question.labelName].length === 0) {
       delete this.answers[question.labelName];
     }
+    console.log(this.answers);
     this.onSubmit();
   }
   booleanChange(ev, question) {
-    this.answers[question.labelName] = ev.checked;
+    console.log(ev);
+    console.log(question.labelName);
+    this.answers[question.labelName] = ev.target.checked;
+    console.log(this.answers);
     this.onSubmit();
   }
   isChecked(value, question) {
@@ -274,6 +282,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   dateChange(ev, question) {
+    console.log(ev);
     this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
     this.onSubmit();
   }
@@ -334,36 +343,60 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.getCheckinByConsumerUUID(this.params.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          this.questionAnswers = data.questionnaire;
+          // this.questionAnswers = data.questionnaire;
+          this.questionnaireList = data.questionnaire;
+          this.questions = this.questionnaireList;
+          this.loading = false;
+          if (this.questionnaireList && this.questionnaireList.length > 0) {
+            this.getAnswers(this.questionnaireList, 'get');
+          }
         }
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
       });
   }
   getConsumerApptDetails() {
     this.sharedService.getAppointmentByConsumerUUID(this.params.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          this.questionAnswers = data.questionnaire;
+          // this.questionAnswers = data.questionnaire;
+          this.questionnaireList = data.questionnaire;
+          this.questions = this.questionnaireList;
+          this.loading = false;
+          if (this.questionnaireList && this.questionnaireList.length > 0) {
+            this.getAnswers(this.questionnaireList, 'get');
+          }
         }
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
       });
   }
   getCheckinDetailsProvider() {
     this.providerService.getProviderWaitlistDetailById(this.params.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          this.questionAnswers = data.questionnaire;
+          // this.questionAnswers = data.questionnaire;
+          this.questionnaireList = data.questionnaire;
+          this.questions = this.questionnaireList;
+          this.loading = false;
+          if (this.questionnaireList && this.questionnaireList.length > 0) {
+            this.getAnswers(this.questionnaireList, 'get');
+          }
         }
-        this.getProviderQuestionnaire();
+        // this.getProviderQuestionnaire();
       });
   }
   getApptDetailsProvider() {
     this.providerService.getAppointmentById(this.params.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          this.questionAnswers = data.questionnaire;
+          // this.questionAnswers = data.questionnaire;
+          this.questionnaireList = data.questionnaire;
+          this.questions = this.questionnaireList;
+          this.loading = false;
+          if (this.questionnaireList && this.questionnaireList.length > 0) {
+            this.getAnswers(this.questionnaireList, 'get');
+          }
         }
-        this.getProviderQuestionnaire();
+        // this.getProviderQuestionnaire();
       });
   }
   getQuestion(question) {

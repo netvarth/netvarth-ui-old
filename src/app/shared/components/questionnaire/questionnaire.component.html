@@ -1,8 +1,8 @@
-<section class="cons-inbox no-padding-small" [class.container]="params.uuid">
+<section class="cons-inbox no-padding-small" [class.container]="params.uuid && (source === 'consCheckin' || source === 'consAppt')">
 
 
 
-    <div class="panel-heading top-row " *ngIf="params.uuid">
+    <div class="panel-heading top-row " *ngIf="params.uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
             <app-header></app-header>
         </div>
@@ -45,7 +45,7 @@
                                                         class="input-group-text"><i
                                                             class=" text-dark-50 flaticon-attachment"></i></span></div>
                                                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                                                (change)="filesSelected($event, i, getQuestion(question))">
+                                                (change)="filesSelected($event, getQuestion(question))">
                                             </div> -->
                                             <mat-form-field appearance="fill" class="w_100">
                                                 <mat-select [formControl]="toppings" multiple #deptsel
@@ -115,11 +115,11 @@
                                         </div>
 
                                         <!-- for Number -->
-                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
-                                            <!-- <input placeholder="{{getQuestion(question).label}}"
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Number'">
+                                            <input placeholder="{{getQuestion(question).label}}"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
                                         [min]="getQuestion(question).numberPropertie.start"
-                                        [max]="getQuestion(question).numberPropertie.end" class="form-control1 form-control-solid" type="number"> -->
+                                        [max]="getQuestion(question).numberPropertie.end" class="form-control1 form-control-solid" type="number">
                                         </div>
 
                                         <!-- for Date -->
@@ -132,8 +132,8 @@
                                             [max]="getDate(getQuestion(question).dateProperties.endDate)">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker [disabled]="false"></mat-datepicker> -->
-                                            <input class="form-control1" type="date" value="2011-08-19"
-                                                id="example-date-input">
+                                            <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                id="example-date-input" (dateChange)="dateChange($event, getQuestion(question))">
                                         </div>
 
                                         <!-- for toggel btn(boolean) -->
@@ -146,7 +146,7 @@
                                             <span class="switch switch-sm switch-icon">
                                                 <label>
                                                     <input type="checkbox"
-                                                        checked="isBooleanChecked(getQuestion(question))"
+                                                        [checked]="isBooleanChecked(getQuestion(question))"
                                                         (change)="booleanChange($event, getQuestion(question))">
                                                     <span></span>
                                                 </label>
@@ -229,7 +229,7 @@
                 </div>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
                     <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                        (change)="filesSelected($event, i, getQuestion(question))">
+                        (change)="filesSelected($event, getQuestion(question))">
 
                     <button class="upload-btn" (click)="logofile.click()"
                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile == 1">Upload File</button>
