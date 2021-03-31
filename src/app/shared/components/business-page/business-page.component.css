@@ -1539,16 +1539,19 @@ img.ordericon.home {
 }
 
 .content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header {
-  color: darkslategrey !important;
+  /* color: darkslategrey !important; */
   font-weight: 700 !important;
-  font-style: italic !important;
-  font-size: 15px !important;
+  /* font-style: italic !important; */
+  /* font-size: 15px !important; */
+  color: #777 !important;
+  font-size: 13px !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 {
   color: #073B4C !important;
   font-size: 14px !important;
   font-weight: 700 !important;
+  font-style: italic !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 .more {
@@ -1560,10 +1563,12 @@ img.ordericon.home {
 }
 
 .content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header {
-  color: darkslategrey !important;
+  /* color: darkslategrey !important; */
   font-weight: 700 !important;
-  font-style: italic !important;
-  font-size: 15px !important;
+  /* font-style: italic !important; */
+  /* font-size: 15px !important; */
+  color: #777 !important;
+  font-size: 13px !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1 {
@@ -1571,6 +1576,7 @@ img.ordericon.home {
   font-size: 14px !important;
   font-weight: 700 !important;
   margin-bottom: 6px !important;
+  font-style: italic !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1 .more {
@@ -1589,7 +1595,8 @@ img.ordericon.home {
 @media (min-width: 351px) and (max-width: 500px) {
   .content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
   .content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header {
-    font-size: 16px !important;
+    /* font-size: 16px !important; */
+    font-size: 14px !important;
   }
 
   .content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
@@ -1606,7 +1613,8 @@ img.ordericon.home {
 @media (max-width: 350px) {
   .content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
   .content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header {
-    font-size: 14px !important;
+    /* font-size: 14px !important; */
+    font-size: 12px !important;
   }
 
   .content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
@@ -1846,10 +1854,12 @@ img.ordericon.home {
 }
 
 .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-header {
-  color: darkslategrey !important;
+  /* color: darkslategrey !important; */
   font-weight: 700 !important;
-  font-style: italic !important;
-  font-size: 15px !important;
+  /* font-style: italic !important; */
+  /* font-size: 15px !important; */
+  color: #777 !important;
+  font-size: 13px !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
@@ -1857,6 +1867,7 @@ img.ordericon.home {
   color: #073B4C !important;
   font-size: 14px !important;
   font-weight: 700 !important;
+  font-style: italic !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1 .more {
@@ -1873,7 +1884,8 @@ img.ordericon.home {
 
 @media (min-width: 351px) and (max-width: 500px) {
   .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-header {
-    font-size: 16px !important;
+    /* font-size: 16px !important; */
+    font-size: 14px !important;
   }
 
   .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
@@ -1888,7 +1900,8 @@ img.ordericon.home {
 
 @media (max-width: 350px) {
   .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-header {
-    font-size: 14px !important;
+    /* font-size: 14px !important; */
+    font-size: 12px !important;
   }
 
   .content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
