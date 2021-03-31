@@ -374,7 +374,7 @@ font-weight: 500;
 
 .booking-card-user .card-img {
     border: none !important;
-    margin: 5px !important;
+    margin: 0px !important;
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -853,4 +853,7 @@ button.fxmenu {
     overflow: hidden !important;
     text-overflow: ellipsis;
     width: 175px;
+}
+.user-available {
+    height: 60px !important;
 }
