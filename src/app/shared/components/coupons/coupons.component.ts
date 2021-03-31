@@ -89,4 +89,19 @@ export class CouponsComponent implements OnInit{
   formatPrice(price) {
     return this.shared_functions.print_PricewithCurrency(price);
   }
+  copyText(baseid, baseidtooltip, mainid) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(baseid+mainid));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+
+    var tooltip = document.getElementById(baseidtooltip+mainid);
+    tooltip.innerHTML = "Copied";
+  }
+  resetTooltip(basetooltipid, mainid) {
+    var tooltip = document.getElementById(basetooltipid+mainid);
+    tooltip.innerHTML = "Copy";
+  }
 }
