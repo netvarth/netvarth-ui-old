@@ -213,7 +213,7 @@
                 <div class="tp-r">
                     <div class="tc1"
                         [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
-                        <div class="topsignouter ">
+                        <div class="topsignouter">
                             <button class="join_nw_btn mgn-rt-10" (click)="doLogin('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
                             <button class="join_nw_btn " (click)="doSignup('consumer')"

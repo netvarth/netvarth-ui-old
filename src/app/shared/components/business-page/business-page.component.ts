@@ -2817,12 +2817,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
         });
-    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
-      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-        this.serviceCount++;
-      }
-    }
   }
   /**
    * Order Related Code
@@ -2918,6 +2912,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
+    }
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
     }
    }
   getCatalogs(locationId) {

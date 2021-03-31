@@ -725,6 +725,7 @@ export class CustomersListComponent implements OnInit {
     } else {
       this.groupName = this.selectedGroup.groupName;
       this.groupDescription = this.selectedGroup.description;
+      this.groupIdEdit = this.selectedGroup.id;
     }
   }
   customerGroupAction() {

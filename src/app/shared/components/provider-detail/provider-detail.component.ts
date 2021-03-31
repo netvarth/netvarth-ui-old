@@ -2178,12 +2178,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
         });
-    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
-      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-        this.serviceCount++;
-      }
-    }
   }
   setServiceUserDetails() {
     this.servicesAndProviders = [];
@@ -2276,6 +2270,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
+    }
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
     }
   }
   changeLocation(loc) {
