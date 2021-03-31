@@ -111,11 +111,11 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.error_list = [];
         this.img_save_caption = 'Uploading .. ';
         this.savedisabled = true;
-        const submit_data: FormData = new FormData();
-        const propertiesDetob = {};
+       // const submit_data: FormData = new FormData();
+      //  const propertiesDetob = {};
         let passdata = {};
         let file;
-        let i = 0;
+      //  let i = 0;
         for (const pic of this.item_pic.files) {
              console.log(pic);
              file = pic;
