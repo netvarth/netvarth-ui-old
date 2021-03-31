@@ -37,8 +37,8 @@
 
 
                                         <!-- for file upload -->
-                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
-                                            <div class="input-group">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
+                                            <!-- <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Upload Document"
                                                     aria-describedby="basic-addon2">
                                                 <div class="input-group-append" (click)="logofile.click()"><span
@@ -46,13 +46,32 @@
                                                             class=" text-dark-50 flaticon-attachment"></i></span></div>
                                                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                                                 (change)="filesSelected($event, i, getQuestion(question))">
+                                            </div> -->
+                                            <mat-form-field appearance="fill" class="w_100">
+                                                <mat-select [formControl]="toppings" multiple #deptsel
+                                                (selectionChange)="takeDoc(deptsel.value)">
+                                                  <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+
+                                              <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
+                                                <div class="dropzone dropzone-default dropzone-primary dz-clickable" style="cursor:auto">
+                                                   <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete">  
+                                                    <div class="dz-image">
+                                                       <img class="img_fit" src="https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                                                    </div>
+                                                    <div class="dz-error-mark">   
+                                                        <a class="btn btn-icon btn-light-success btn-circle mr-2" style="cursor: pointer;"><i class="text-dark-50 flaticon-upload"></i></a>
+                                                     </div>
+                                                </div>
+                                                </div>
                                             </div>
                                         </div>
 
 
 
                                         <!-- for checkbox -->
-                                        <div class="col-7" *ngIf="getQuestion(question).fieldDataType === 'List'">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'List'">
                                         <div class="checkbox-list">
                                             <label class="checkbox"
                                                 *ngFor="let value of getQuestion(question).labelValues">
@@ -86,7 +105,7 @@
 
                                     
                                         <!-- for Text -->
-                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
                                             <input placeholder="{{getQuestion(question).label}}"
                                                 [(ngModel)]="answers[getQuestion(question).labelName]"
                                                 (input)="onSubmit();"
@@ -96,7 +115,7 @@
                                         </div>
 
                                         <!-- for Number -->
-                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
                                             <!-- <input placeholder="{{getQuestion(question).label}}"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
                                         [min]="getQuestion(question).numberPropertie.start"
@@ -104,7 +123,7 @@
                                         </div>
 
                                         <!-- for Date -->
-                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Date'">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Date'">
                                             <!-- <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
                                             placeholder="{{getQuestion(question).label}}" readonly (click)="picker.open()"
                                             [(ngModel)]="answers[getQuestion(question).labelName]"
@@ -118,7 +137,7 @@
                                         </div>
 
                                         <!-- for toggel btn(boolean) -->
-                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
+                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
 
                                             <!-- <mat-slide-toggle class="example-margin"
                                             [checked]="isBooleanChecked(getQuestion(question))"

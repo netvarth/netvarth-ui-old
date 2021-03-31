@@ -6,6 +6,7 @@ import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-questionnaire',
@@ -36,6 +37,8 @@ export class QuestionnaireComponent implements OnInit {
   questions: any = [];
   selectedDocs: any = [];
   documentsToUpload = {};
+  toppings = new FormControl();
+  toppingList: string[] = ['Aadhar', 'PAN card', 'Voter ID', 'Bank book'];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -408,5 +411,9 @@ export class QuestionnaireComponent implements OnInit {
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
+  }
+
+  takeDoc(doc) {
+    console.log(doc);
   }
 }

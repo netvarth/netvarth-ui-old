@@ -47,3 +47,10 @@
     border-bottom-left-radius: 0;
     cursor: pointer;
 }
+.w_100 {
+    width: 100%;
+}
+.img_fit {
+    width: 120px;
+    height: 120px;
+}
