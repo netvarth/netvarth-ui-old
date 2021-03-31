@@ -147,27 +147,27 @@
     
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
+                                                    <div (click)="replyForMobile()"
+                                                        class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-right msg-width">
 
                                                         <button class="reply-btn" mat-icon-button
-                                                            [matMenuTriggerFor]="menu"
+                                                            [matMenuTriggerFor]="menu" *ngIf="showReply"
                                                             aria-label="Example icon-button with a menu">
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                         </button>
-                                                        <mat-menu #menu="matMenu" (click)="replytoMsg(msg)">
+                                                        <mat-menu #menu="matMenu" (click)="stopprop($event);replytoMsg(msg)">
                                                             <button mat-menu-item>
                                                                 <span>Reply</span>
                                                             </button>
                                                         </mat-menu>
                                                         
-                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
-                                                        <div [innerHTML]="msg.msg | nl2br"></div>
+                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId" (click)="stopprop($event);gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId).msg}}</div>
+                                                        <div [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
-                                                                <a (click)="openImage(msg.attachements, i)"
+                                                                <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                                                     *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
@@ -189,7 +189,7 @@
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                                         </div>
                                                     </div>
-                                                    <div
+                                                    <div (click)="replyForMobile()"
                                                         class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
 
                                                         <button class="reply-btn" mat-icon-button
@@ -198,18 +198,18 @@
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                         </button>
                                                         <mat-menu #menu="matMenu">
-                                                            <button mat-menu-item (click)="replytoMsg(msg)">
+                                                            <button mat-menu-item (click)="stopprop($event);replytoMsg(msg)">
                                                                 <span>Reply</span>
                                                             </button>
                                                         </mat-menu>
 
-                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId)}}</div>
-                                                        <div [innerHTML]="msg.msg | nl2br" #msgId></div>
+                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="stopprop($event);gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId).msg}}</div>
+                                                        <div [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
-                                                                <a (click)="openImage(msg.attachements, i)"
+                                                                <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                                                     *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"

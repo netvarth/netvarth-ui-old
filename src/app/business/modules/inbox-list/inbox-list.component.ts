@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -79,7 +79,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
   customer_label;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
+  showReply = false;
   @ViewChild('reply') replyFrame: ElementRef;
+  @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
+  @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -130,8 +133,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
       this.small_device_display = true;
+      this.showReply = false;
     } else {
       this.small_device_display = false;
+      this.showReply = true;
     }
     const screenHeight = window.innerHeight;
  	if (this.screenWidth <= 991) {
@@ -591,22 +596,64 @@ export class InboxListComponent implements OnInit, OnDestroy {
   replytoMsg(msg) {
 this.replyMsg = msg;
 console.log(this.replyMsg);
-setTimeout(() => {
-var height = this.replyFrame.nativeElement.offsetHeight;
-console.log(height);
-}, 100);
+// setTimeout(() => {
+// var height = this.replyFrame.nativeElement.offsetHeight;
+// console.log(height);
+// }, 100);
   }
   closeReply() {
     this.replyMsg = null;
   }
   getReplyMsgbyId(msgId) {
-    console.log(msgId);
-    console.log(this.messages);
 const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
-console.log(replyMsg);
-return replyMsg[0].msg;
+return replyMsg[0];
+  }
+  gotoReplyMsgSection(msgId) {
+console.log(this.getReplyMsgbyId(msgId));
+let msgs;
+if (this.getReplyMsgbyId(msgId).messagestatus==='out') {
+  msgs = this.outmsgIds;
+} else {
+  msgs = this.inmsgId;
+}
+console.log(msgs);
+msgs.toArray().forEach(element => {
+  if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+    // element.nativeElement.classList.add(' blinkelem');
+    // console.log(element);
+
+    // const a = document.getElementsByClassName('mt-2');
+    const b = document.getElementsByClassName('selmsg');
+    // console.log(a);
+    console.log(b);
+    for (let i = 0; i < b.length; i++) {
+      console.log(b[i].innerHTML.trim());
+      console.log(this.getReplyMsgbyId(msgId).msg.trim());
+      if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        b[i].classList.add('blinkelem');
+      }
+    }
+    element.nativeElement.scrollIntoViewIfNeeded();
+    return false;
+  }
+});
+setTimeout(() => {
+  const b = document.getElementsByClassName('selmsg');
+  console.log(b);
+  for (let i = 0; i < b.length; i++) {
+      b[i].classList.remove('blinkelem');
+  }
+}, 2000);
   }
   gotoEnquiry() {
-    this.router.navigate(['/enquiry']);
+    this.router.navigate(['provider/enquiry']);
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
+  replyForMobile() {
+    if (this.small_device_display) {
+    this.showReply = !this.showReply;
+    }
   }
 }
