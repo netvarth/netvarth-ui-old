@@ -540,7 +540,7 @@
                             (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="donationServices && donationServices.length > 0">
+                <ng-container *ngIf="donationServices && donationServices.length >0">
                     <div class="bus-item-N" *ngFor="let sp of donationServices">
                         <app-card [item]="sp" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
                             (actionPerformed)="cardClicked($event)"></app-card>
