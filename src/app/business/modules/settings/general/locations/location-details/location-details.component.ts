@@ -227,7 +227,15 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         data => {
           this.location_data = data;
           this.locationType = this.location_data.locationType;
-          console.log(this.locationType);
+          if(this.location_data.locationType === 'googleMap') {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          if(this.location_data.locationType === 'manual') {
+            this.locationFind = 'MANUAL';
+          }
+          if(this.location_data.locationType === 'automatic') {
+            this.locationFind = 'AUTODETECT';
+          }
           this.api_loading = false;
           let schedule_arr = [];
           this.active_Schedules = [];
