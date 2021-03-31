@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { MedicalrecordService } from '../../medicalrecord.service';
+// import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
@@ -47,7 +47,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<MrfileuploadpopupComponent>,
         public sharedfunctionObj: SharedFunctions,
-        private medicalrecord_service: MedicalrecordService,
+        // private medicalrecord_service: MedicalrecordService,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor

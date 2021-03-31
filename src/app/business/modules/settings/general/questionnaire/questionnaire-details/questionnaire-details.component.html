@@ -26,25 +26,37 @@
                     </div>
 
                 </div>
+                <div>
+                    <h4> Questions</h4>
+                </div>
                 <div class="c-ot" *ngFor="let question of questionnaire.questions">
                     <div class="item">
                         <span class="ttle">labelName</span>
                         <span>{{question.labelName}}</span>
                     </div>
                     <div class="item">
-                        <span class="ttle">label</span>
-                        <span>{{question.label}}</span>
-                    </div>
-                    <div class="item">
                         <span class="ttle">fieldDataType</span>
                         <span>{{question.fieldDataType}}</span>
                     </div>
-                    <div class="item">
-                        <span class="ttle">fieldScope</span>
-                        <span>{{question.fieldScope}}</span>
+                    <div data-toggle="modal" data-target="#exampleModalCenter" (click)="selectQuesstion(question)">
+                        <span class="tooltiptext">Details</span>
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div>
+                            {{selectedQestion.labelName}}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

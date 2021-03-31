@@ -11,6 +11,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 export class QuestionnaireDetailsComponent implements OnInit {
   questionnaire: any = [];
   loading = true;
+  selectedQestion;
   constructor(private providerservices: ProviderServices,
     private activated_route: ActivatedRoute,
     private location: Location) { }
@@ -28,5 +29,8 @@ export class QuestionnaireDetailsComponent implements OnInit {
   }
   goBack() {
     this.location.back();
+  }
+  selectQuesstion(question) {
+    this.selectedQestion = question;
   }
 }

@@ -839,8 +839,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.getUserWaitingTime(waitTimearr);
-    this.getUserApptTime(apptTimearr);
+    this.getUserApptTime(apptTimearr, waitTimearr);
     this.location_exists = true;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;

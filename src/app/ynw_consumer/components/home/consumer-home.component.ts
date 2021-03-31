@@ -824,8 +824,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   setWaitlistTimeDetailsProvider(provider, k) {
     if (this.s3url) {
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
     }
     const locarr = [];
     let i = 0;
@@ -2162,11 +2162,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let uuid;
     let type;
     if (booking.waitlistingFor) {
-      consumerId = (booking.waitlistingFor[0].id === booking.consumer.id) ? 0 : booking.waitlistingFor[0].id;
+      consumerId = (booking.waitlistingFor[0].jaldeeFamilyMemberId) ? booking.waitlistingFor[0].jaldeeFamilyMemberId : 0;
       uuid = booking.ynwUuid;
       type = 'consCheckin';
     } else {
-      consumerId = (booking.appmtFor[0].id === booking.consumer.id) ? 0 : booking.appmtFor[0].id;
+      consumerId = (booking.appmtFor[0].jaldeeFamilyMemberId) ? booking.appmtFor[0].jaldeeFamilyMemberId : 0;
       uuid = booking.uid;
       type = 'consAppt';
     }

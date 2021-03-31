@@ -8,7 +8,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 @Component({
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+  styleUrls: ['./questionnaire.component.css', '../../../../../../assets/css/style.bundle.css']
 })
 export class QuestionnaireComponent implements OnInit {
   questionnaire: any = [];

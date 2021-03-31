@@ -28,7 +28,7 @@ export class QuestionnaireComponent implements OnInit {
     base64: [],
     caption: []
   };
-  apiError = [];
+  apiError;
   params;
   fileuploadpreAnswers: any = {};
   loading = false;
@@ -156,7 +156,7 @@ export class QuestionnaireComponent implements OnInit {
         reader.readAsDataURL(file);
         // }
       }
-      // console.log(this.selectedMessage);
+      console.log(this.selectedMessage);
       // console.log(this.apiError);
       // console.log(this.answers);
     }
@@ -385,6 +385,7 @@ export class QuestionnaireComponent implements OnInit {
   validateConsumerQuestionnaire(answers, dataToSend) {
     console.log(answers);
     this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe(data => {
+      this.apiError = data;
       if (this.source === 'consCheckin') {
         this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
       } else {
@@ -398,6 +399,7 @@ export class QuestionnaireComponent implements OnInit {
   validateProviderQuestionnaire(answers, dataToSend) {
     console.log(answers);
     this.providerService.validateProviderQuestionnaire(answers).subscribe(data => {
+      this.apiError = data;
       if (this.source === 'proCheckin') {
         this.resubmitProviderWaitlistQuestionnaire(dataToSend);
       } else {
