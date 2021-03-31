@@ -37,16 +37,17 @@
 
 
                                         <!-- for file upload -->
-                                        <!-- <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'List'">
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Upload Document"
                                                     aria-describedby="basic-addon2">
-                                                <div class="input-group-append" (click)="filed.click()"><span
+                                                <div class="input-group-append" (click)="logofile.click()"><span
                                                         class="input-group-text"><i
                                                             class=" text-dark-50 flaticon-attachment"></i></span></div>
-                                                <input type="file"  accept="image/*"  #filed style="display: none;">
+                                                <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
+                                                (change)="filesSelected($event, i, getQuestion(question))">
                                             </div>
-                                        </div> -->
+                                        </div>
 
 
 
