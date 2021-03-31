@@ -17,7 +17,10 @@
                                 <ng-container *ngIf="this.activeWt">
                                     <div class="mainouter checkin-page ">
                                         <div class="servicefor-outer btborder">
-                                            <div class="successmsg">Your check-in for {{activeWt.service.name}} is
+                                            <div *ngIf="!activeWt.token" class="successmsg">Your check-in for {{activeWt.service.name}} is
+                                                successful !!
+                                            </div>
+                                            <div *ngIf="activeWt.token" class="successmsg">Your token for {{activeWt.service.name}} is
                                                 successful !!
                                             </div>
                                             <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
