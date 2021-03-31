@@ -1,6 +1,6 @@
 <section class="cons-inbox no-padding-small" [class.container]="params.uuid">
 
-    
+
 
     <div class="panel-heading top-row " *ngIf="params.uuid">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -15,39 +15,44 @@
 
 
 
-<!-- NEW CODE -->
-<div class="d-flex flex-column-fluid">
-    <!--begin::Container-->
-    <div class=" container ">
-        <!--begin::Card-->
-        <div class="">
+    <!-- NEW CODE -->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <!--begin::Card-->
             <div class="">
-                <!--begin::Form-->
-                <div class="form" >
-                    <div class="row">
-                        <div class="col-xl-12 force_center">
-                            <div class="my-5">
-                                <div class="form-group row card" *ngFor="let question of questions;let i = index">
-                                    <label class="col-5">{{getQuestion(question).labelName}}
-                                        <span *ngIf="getQuestion(question).mandatory">*</span>
-                                        <div class="form-level-settings"
-                                        *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">{{getQuestion(question).label}}</div>
-                                    </label>
+                <div class="">
+                    <!--begin::Form-->
+                    <div class="form">
+                        <div class="row">
+                            <div class="col-xl-12 force_center">
+                                <div class="my-5">
+                                    <div class="form-group row card" *ngFor="let question of questions;let i = index">
+                                        <label class="col-12">{{getQuestion(question).labelName}}
+                                            <span style="color: red;" *ngIf="getQuestion(question).mandatory">*</span>
+                                            <div class="form-level-settings"
+                                                *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">
+                                                {{getQuestion(question).label}}</div>
+                                        </label>
 
 
-                                    <!-- for file upload -->
-                                    <!-- <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'List'">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
-                                            <div class="input-group-append"><span class="input-group-text"><i class="la la-group icon-lg"></i></span></div>
-                                        </div>
-                                    </div> -->
+                                        <!-- for file upload -->
+                                        <!-- <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'List'">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Upload Document"
+                                                    aria-describedby="basic-addon2">
+                                                <div class="input-group-append" (click)="filed.click()"><span
+                                                        class="input-group-text"><i
+                                                            class=" text-dark-50 flaticon-attachment"></i></span></div>
+                                                <input type="file"  accept="image/*"  #filed style="display: none;">
+                                            </div>
+                                        </div> -->
 
 
 
-                                    <!-- for checkbox -->
-                                    <div class="col-7" *ngIf="getQuestion(question).fieldDataType === 'List'">
-                                        <div class="checkbox-inline">
+                                        <!-- for checkbox -->
+                                        <div class="col-7" *ngIf="getQuestion(question).fieldDataType === 'List'">
+                                        <div class="checkbox-list">
                                             <label class="checkbox"
                                                 *ngFor="let value of getQuestion(question).labelValues">
                                                 <input type="checkbox"
@@ -58,7 +63,7 @@
                                             </label>
                                         </div>
 
-                                        <!-- <div class="radio-inline">
+                                        <!-- <div class="radio-list">
                                             <label class="radio">
                                                 <input type="radio" name="radios2">
                                                 <span></span>
@@ -78,27 +83,28 @@
 
                                     </div>
 
-                                    <!-- for Text -->
-                                    <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
-                                        <input placeholder="{{getQuestion(question).label}}"
-                                            [(ngModel)]="answers[getQuestion(question).labelName]"
-                                            (input)="onSubmit();"
-                                            [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
-                                            [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
-                                            class="form-control1 form-control-solid" type="text">
-                                    </div>
+                                    
+                                        <!-- for Text -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                            <input placeholder="{{getQuestion(question).label}}"
+                                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                (input)="onSubmit();"
+                                                [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
+                                                [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
+                                                class="form-control1 form-control-solid" type="text">
+                                        </div>
 
-                                    <!-- for Number -->
-                                    <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
-                                        <!-- <input placeholder="{{getQuestion(question).label}}"
+                                        <!-- for Number -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                            <!-- <input placeholder="{{getQuestion(question).label}}"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
                                         [min]="getQuestion(question).numberPropertie.start"
                                         [max]="getQuestion(question).numberPropertie.end" class="form-control1 form-control-solid" type="number"> -->
-                                    </div>
+                                        </div>
 
-                                    <!-- for Date -->
-                                    <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Date'">
-                                        <!-- <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
+                                        <!-- for Date -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Date'">
+                                            <!-- <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
                                             placeholder="{{getQuestion(question).label}}" readonly (click)="picker.open()"
                                             [(ngModel)]="answers[getQuestion(question).labelName]"
                                             (dateChange)="dateChange($event.value, getQuestion(question))"
@@ -106,40 +112,43 @@
                                             [max]="getDate(getQuestion(question).dateProperties.endDate)">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker [disabled]="false"></mat-datepicker> -->
-                                        <input class="form-control1" type="date" value="2011-08-19" id="example-date-input">
-                                    </div>
+                                            <input class="form-control1" type="date" value="2011-08-19"
+                                                id="example-date-input">
+                                        </div>
 
-                                    <!-- for toggel btn(boolean) -->
-                                    <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
-                                 
-                                        <!-- <mat-slide-toggle class="example-margin"
+                                        <!-- for toggel btn(boolean) -->
+                                        <div class="col-8" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
+
+                                            <!-- <mat-slide-toggle class="example-margin"
                                             [checked]="isBooleanChecked(getQuestion(question))"
                                             (change)="booleanChange($event, getQuestion(question))">
                                         </mat-slide-toggle> -->
-                                        <span class="switch switch-sm switch-icon">
-                                            <label>
-                                                <input type="checkbox" checked="isBooleanChecked(getQuestion(question))" (change)="booleanChange($event, getQuestion(question))">
-                                                <span></span>
-                                            </label>
-                                        </span>
+                                            <span class="switch switch-sm switch-icon">
+                                                <label>
+                                                    <input type="checkbox"
+                                                        checked="isBooleanChecked(getQuestion(question))"
+                                                        (change)="booleanChange($event, getQuestion(question))">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+
                                     </div>
 
-                                </div>
 
+                                </div>
+                                <div class="separator separator-dashed my-10"></div>
 
                             </div>
-                            <div class="separator separator-dashed my-10"></div>
-
                         </div>
                     </div>
+                    <!--end::Form-->
                 </div>
-                <!--end::Form-->
             </div>
+            <!--end::Card-->
         </div>
-        <!--end::Card-->
+        <!--end::Container-->
     </div>
-    <!--end::Container-->
-</div>
 
 
 
@@ -160,11 +169,12 @@
 
 
 
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 rounded-0 mt-5" *ngIf="!loading && questions" [class.card]="params.uuid">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 rounded-0 mt-5" *ngIf="!loading && questions"
+        [class.card]="params.uuid">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
 
 
-            
+
 
 
 
@@ -174,12 +184,11 @@
 
 
             <div class="quest-outer" *ngFor="let question of questions;let i = index">
-                <div class="">{{getQuestion(question).labelName}} <span
-                        *ngIf="getQuestion(question).mandatory">*</span>
+                <div class="">{{getQuestion(question).labelName}} <span *ngIf="getQuestion(question).mandatory">*</span>
                 </div>
                 <span class="form-level-settings"
                     *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">{{getQuestion(question).label}}
-                    </span>
+                </span>
                 <div class="question-box" *ngIf="getQuestion(question).fieldDataType === 'List'">
                     <mat-checkbox class="mgn-rt-10" [checked]="isChecked(value, getQuestion(question))"
                         *ngFor="let value of getQuestion(question).labelValues"
