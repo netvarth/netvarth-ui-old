@@ -41,14 +41,14 @@
             <div class="module line-clamp m-0"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
                 <h4 class="card-title font-weight-bold service-title">
-                    <a>{{service.name | capitalizeFirst | limitTo: [14, '...']}}</a>
+                    <a>{{service.name | capitalizeFirst}}</a>
                 </h4>
             </div>
             <!-- </div>
         <div class="card-content"> -->
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6> -->
-            <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
-            <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6> 
+            <!-- <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
+            <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>  -->
             <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                 <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount|
                     currency:'':''}}</span>
@@ -192,8 +192,8 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst | limitTo: [14, '...']}}</a> -->
         </h4>
-        <h6 class="qualification" *ngIf="user.qualifications && user.qualifications.length>0">
-            {{user.qualifications[0] | limitTo: [11, '...']}}
+        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
+            {{user.qualifications[0] | limitTo: [20, '...']}}
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>

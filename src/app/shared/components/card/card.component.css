@@ -235,6 +235,7 @@ font-weight: 500;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
+    padding: 0 10px;
 }
 
 .booking-card.card.order .module1 {
@@ -856,4 +857,10 @@ button.fxmenu {
 }
 .user-available {
     height: 60px !important;
+}
+.font-normal {
+    font-weight: normal !important;
+}
+.service-details .module {
+    height: 45px;
 }
