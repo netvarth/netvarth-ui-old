@@ -6,7 +6,7 @@ import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-questionnaire',
@@ -244,7 +244,11 @@ export class QuestionnaireComponent implements OnInit {
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = [];
       }
+      if (question.listPropertie.maxAnswers > 1) {
       this.answers[question.labelName].push(value);
+      } else {
+        this.answers[question.labelName][0] = value;
+      }
     } else {
       const indx = this.answers[question.labelName].indexOf(value);
       this.answers[question.labelName].splice(indx, 1);
@@ -282,8 +286,9 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   dateChange(ev, question) {
-    console.log(ev);
-    this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
+    // console.log(ev);
+    console.log(this.answers[question.labelName]);
+    // this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
     this.onSubmit();
   }
   submitQuestionnaire(passData) {

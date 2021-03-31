@@ -1,4 +1,5 @@
-<section class="cons-inbox no-padding-small" [class.container]="params.uuid && (source === 'consCheckin' || source === 'consAppt')">
+<section class="cons-inbox no-padding-small"
+    [class.container]="params.uuid && (source === 'consCheckin' || source === 'consAppt')">
 
 
 
@@ -37,8 +38,9 @@
 
 
                                         <!-- for file upload -->
-                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
-                                            <!-- <div class="input-group">
+                                        <div class="col-12"
+                                            *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
+                                            <div class="input-group" *ngIf="getQuestion(question).filePropertie.maxNoOfFile === 1">
                                                 <input type="text" class="form-control" placeholder="Upload Document"
                                                     aria-describedby="basic-addon2">
                                                 <div class="input-group-append" (click)="logofile.click()"><span
@@ -46,24 +48,30 @@
                                                             class=" text-dark-50 flaticon-attachment"></i></span></div>
                                                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                                                 (change)="filesSelected($event, getQuestion(question))">
-                                            </div> -->
-                                            <mat-form-field appearance="fill" class="w_100">
+                                            </div>
+                                            <mat-form-field appearance="fill" class="w_100" *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
                                                 <mat-select [formControl]="toppings" multiple #deptsel
-                                                (selectionChange)="takeDoc(deptsel.value)">
-                                                  <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                                    (selectionChange)="takeDoc(deptsel.value)">
+                                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">
+                                                        {{topping}}</mat-option>
                                                 </mat-select>
-                                              </mat-form-field>
+                                            </mat-form-field>
 
-                                              <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
-                                                <div class="dropzone dropzone-default dropzone-primary dz-clickable" style="cursor:auto">
-                                                   <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete">  
-                                                    <div class="dz-image">
-                                                       <img class="img_fit" src="https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                                            <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
+                                                <div class="dropzone dropzone-default dropzone-primary dz-clickable"
+                                                    style="cursor:auto">
+                                                    <div
+                                                        class="dz-preview dz-processing dz-image-preview dz-error dz-complete">
+                                                        <div class="dz-image">
+                                                            <img class="img_fit"
+                                                                src="https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                                                        </div>
+                                                        <div class="dz-error-mark">
+                                                            <a class="btn btn-icon btn-light-success btn-circle mr-2"
+                                                                style="cursor: pointer;"><i
+                                                                    class="text-dark-50 flaticon-upload"></i></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="dz-error-mark">   
-                                                        <a class="btn btn-icon btn-light-success btn-circle mr-2" style="cursor: pointer;"><i class="text-dark-50 flaticon-upload"></i></a>
-                                                     </div>
-                                                </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,39 +79,35 @@
 
 
                                         <!-- for checkbox -->
-                                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'List'">
-                                        <div class="checkbox-list">
-                                            <label class="checkbox"
-                                                *ngFor="let value of getQuestion(question).labelValues">
-                                                <input type="checkbox"
-                                                    [checked]="isChecked(value, getQuestion(question))"
-                                                    (change)="listChange($event, value, getQuestion(question))">
-                                                <span></span>
-                                                {{value}}
-                                            </label>
+                                        <div class="col-12"
+                                            *ngIf="getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers > 1">
+                                            <div class="checkbox-list">
+                                                <label class="checkbox"
+                                                    *ngFor="let value of getQuestion(question).labelValues">
+                                                    <input type="checkbox"
+                                                        [checked]="isChecked(value, getQuestion(question))"
+                                                        (change)="listChange($event, value, getQuestion(question))">
+                                                    <span></span>
+                                                    {{value}}
+                                                </label>
+                                            </div>
+
                                         </div>
 
-                                        <!-- <div class="radio-list">
-                                            <label class="radio">
-                                                <input type="radio" name="radios2">
-                                                <span></span>
-                                                Option 1
-                                            </label>
-                                            <label class="radio">
-                                                <input type="radio" name="radios2">
-                                                <span></span>
-                                                Option 2
-                                            </label>
-                                            <label class="radio">
-                                                <input type="radio" name="radios2">
-                                                <span></span>
-                                                Option 3
-                                            </label>
-                                        </div> -->
+                                        <div class="col-12"
+                                            *ngIf="getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers === 1">
+                                            <div class="radio-list">
+                                                <label class="radio"
+                                                    *ngFor="let value of getQuestion(question).labelValues">
+                                                    <input type="radio" name="radios2"
+                                                        [checked]="isChecked(value, getQuestion(question))"
+                                                        (change)="listChange($event, value, getQuestion(question))">
+                                                    <span></span>
+                                                    {{value}}
+                                                </label>
+                                            </div>
+                                        </div>
 
-                                    </div>
-
-                                    
                                         <!-- for Text -->
                                         <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
                                             <input placeholder="{{getQuestion(question).label}}"
@@ -117,9 +121,11 @@
                                         <!-- for Number -->
                                         <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Number'">
                                             <input placeholder="{{getQuestion(question).label}}"
-                                        [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit();"
-                                        [min]="getQuestion(question).numberPropertie.start"
-                                        [max]="getQuestion(question).numberPropertie.end" class="form-control1 form-control-solid" type="number">
+                                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                (input)="onSubmit();"
+                                                [min]="getQuestion(question).numberPropertie.start"
+                                                [max]="getQuestion(question).numberPropertie.end"
+                                                class="form-control1 form-control-solid" type="number">
                                         </div>
 
                                         <!-- for Date -->
@@ -132,8 +138,12 @@
                                             [max]="getDate(getQuestion(question).dateProperties.endDate)">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker [disabled]="false"></mat-datepicker> -->
-                                            <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                                id="example-date-input" (dateChange)="dateChange($event, getQuestion(question))">
+                                            <input class="form-control1" type="date"
+                                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                                id="example-date-input"
+                                                (input)="onSubmit()"
+                                                min="{{getDate(getQuestion(question).dateProperties.startDate) | date:'yyyy-MM-dd'}}"
+                                            max="{{getDate(getQuestion(question).dateProperties.endDate) | date:'yyyy-MM-dd'}}">
                                         </div>
 
                                         <!-- for toggel btn(boolean) -->
