@@ -56,7 +56,7 @@
                 <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.maxDonationAmount|
                     currency:'':''}}</span>
             </p>
-            <p class="card-text peopleAhead" *ngIf="personsAheadText">{{personsAheadText}}</p>
+            <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
             <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
             <p class="card-text availability" *ngIf="timings">{{timingCaption}}
                 <br /><b>{{timings}}</b>
