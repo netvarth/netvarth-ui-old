@@ -190,23 +190,45 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   // Non working days
-  getProviderNonworkingdays(id?) {
-    if (id) {
-      return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
-    } else {
-      return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
-    }
+  // getProviderNonworkingdays(id?) {
+  //   if (id) {
+  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
+  //   } else {
+  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
+  //   }
+  // }
+  // addHoliday(data) {
+  //   return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
+  // }
+  // deleteHoliday(id) {
+  //   const path = 'provider/settings/nonBusinessDays/' + id;
+  //   return this.servicemeta.httpDelete(path);
+  // }
+  // editHoliday(data) {
+  //   return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
+  // }
+
+  // Non working days new Url's
+getProviderNonworkingdays(id?) {
+  if (id) {
+    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday/' + id);
+  } else {
+    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday');
   }
-  addHoliday(data) {
-    return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
-  }
-  deleteHoliday(id) {
-    const path = 'provider/settings/nonBusinessDays/' + id;
-    return this.servicemeta.httpDelete(path);
-  }
-  editHoliday(data) {
-    return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
-  }
+}
+addHoliday(data) {
+  return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
+}
+Holidaywaitlist(id) {
+  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
+}
+deleteHoliday(id) {
+  const path = 'provider/settings/nonBusinessDays/holiday/' + id;
+  return this.servicemeta.httpDelete(path);
+}
+editHoliday(data) {
+  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday', data);
+}
   // business profile Primary fields
   getParkingtypes() {
     return this.servicemeta.httpGet('ynwConf/parkingTypes');
