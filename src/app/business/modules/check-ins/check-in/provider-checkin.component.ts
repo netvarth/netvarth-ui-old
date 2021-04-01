@@ -811,7 +811,9 @@ export class ProviderCheckinComponent implements OnInit {
     }
     setServiceDetails(curservid) {
         console.log(this.sel_ser);
+        if (this.waitlist_for[0] && this.waitlist_for[0].id) {
         this.getProviderQuestionnaire();
+        }
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {

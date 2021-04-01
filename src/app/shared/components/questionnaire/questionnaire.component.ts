@@ -71,6 +71,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    console.log(this.customerDetails);
     console.log(this.questionAnswers);
     console.log(this.questionnaireList);
     if (this.questionnaireList) {
@@ -80,7 +81,11 @@ export class QuestionnaireComponent implements OnInit {
       //   this.questions = this.questionnaireList[0].questions;
       // }
       if (this.source === 'customer-create') {
+        if (this.customerDetails && this.customerDetails.questionnaire) {
+          this.questions = this.customerDetails.questionnaire.questionnaire;
+        } else {
         this.questions = this.questionnaireList.labels[0].questions;
+        }
       } else {
         this.questions = this.questionnaireList.labels;
       }
