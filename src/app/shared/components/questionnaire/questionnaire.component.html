@@ -52,8 +52,8 @@
                                             <mat-form-field appearance="fill" class="w_100" *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
                                                 <mat-select [formControl]="toppings" multiple #deptsel
                                                     (selectionChange)="takeDoc(deptsel.value)">
-                                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">
-                                                        {{topping}}</mat-option>
+                                                    <mat-option *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments" [value]="document">
+                                                        {{document}}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
 

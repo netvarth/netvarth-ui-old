@@ -1112,9 +1112,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.processS3s('departmentProviders', accountS3s['departmentProviders']);
                     }
                     if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);  
+                        this.processS3s('businessProfile', accountS3s['businessProfile']);
                     }
-                    this.api_loading1 = false;          
+                    this.api_loading1 = false;
                 }
             );
     }
@@ -1187,7 +1187,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     // gets3curl() {
-        
+
     //     this.retval = this.sharedFunctionobj.getS3Url()
     //         .then(
     //             res => {
@@ -1771,14 +1771,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
-            
+
         });
     }
     validateQuestionnaire() {
-        console.log(this.questionAnswers.answers);
         if (this.questionAnswers && this.questionAnswers.answers) {
+            console.log(this.questionAnswers.answers);
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe(data => {
                 this.bookStep++;
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });

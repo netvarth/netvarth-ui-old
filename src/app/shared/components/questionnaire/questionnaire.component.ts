@@ -7,6 +7,8 @@ import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-questionnaire',
@@ -38,13 +40,14 @@ export class QuestionnaireComponent implements OnInit {
   selectedDocs: any = [];
   documentsToUpload = {};
   toppings = new FormControl();
-  toppingList: string[] = ['Aadhar', 'PAN card', 'Voter ID', 'Bank book'];
+  // toppingList: string[] = ['Aadhar', 'PAN card', 'Voter ID', 'Bank book'];
+  subscription: Subscription;
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private router: Router,
+    private router: Router, private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
@@ -66,8 +69,19 @@ export class QuestionnaireComponent implements OnInit {
         this.channel = this.params.channel;
       }
     });
+    this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
+      switch (message.type) {
+        case 'qnrValidateError':
+          this.setValidateError(message.value);
+          break;
+      }
+    });
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     console.log(this.questionAnswers);
     if (this.questionnaireList) {
@@ -109,6 +123,12 @@ export class QuestionnaireComponent implements OnInit {
         this.getApptDetailsProvider();
       }
     }
+  }
+  setValidateError(errors) {
+    console.log(errors);
+
+    // this.apiError = message.value;
+    // console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
     if (!type || type === 'get') {
@@ -350,7 +370,7 @@ export class QuestionnaireComponent implements OnInit {
         if (data && data.questionnaire) {
           // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList;
+          this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questionnaireList && this.questionnaireList.length > 0) {
             this.getAnswers(this.questionnaireList, 'get');
@@ -365,7 +385,7 @@ export class QuestionnaireComponent implements OnInit {
         if (data && data.questionnaire) {
           // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList;
+          this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questionnaireList && this.questionnaireList.length > 0) {
             this.getAnswers(this.questionnaireList, 'get');
@@ -380,7 +400,7 @@ export class QuestionnaireComponent implements OnInit {
         if (data && data.questionnaire) {
           // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList;
+          this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questionnaireList && this.questionnaireList.length > 0) {
             this.getAnswers(this.questionnaireList, 'get');
@@ -395,7 +415,7 @@ export class QuestionnaireComponent implements OnInit {
         if (data && data.questionnaire) {
           // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList;
+          this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questionnaireList && this.questionnaireList.length > 0) {
             this.getAnswers(this.questionnaireList, 'get');
