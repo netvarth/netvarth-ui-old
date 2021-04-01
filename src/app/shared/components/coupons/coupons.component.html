@@ -90,40 +90,80 @@
       <div class="coupon-container">
         <div class="servicedet_outer">
           <div class="outer">
-            <h6><b>{{coupon.name}}</b></h6>
-            <span> {{coupon.description}}</span>
-            <div> Coupon Code: <span class="code">{{coupon.couponCode}} </span> <span class="help">Apply this
-                coupon code while Booking</span>
+            <h6 class="coupon-name"><b>{{coupon.name}}</b></h6>
+            <span class="coupon-desc"> {{coupon.description}}</span>
+            <div class="t-and-c" *ngIf="coupon.termsConditions">
+              <div class="t-and-c-title">T & C:&nbsp;</div>
+              <div class="t-and-c-text" [innerHTML]="coupon.termsConditions | nl2br"></div>
             </div>
+            <div class="coupon-valid-through">
+              <div class="coupon-valid-through-title">Valid Through:&nbsp;</div>
+              <div class="coupon-valid-through-text">
+                <div>{{coupon.couponRules.startDate | date: 'mediumDate' }}</div>
+                -
+                <div>{{coupon.couponRules.endDate | date: 'mediumDate' }}</div>
+              </div>
+            </div>
+            <div class="coupon-max-discount" *ngIf="coupon.calculationType == 'Percentage'">
+              <div class="coupon-max-discount-title">Max. Discount:&nbsp;</div>
+              <div class="coupon-max-discount-text">
+                <b><i class="fa fa-inr"></i>&nbsp;{{coupon.couponRules.maxDiscountValue  | currency:'':''}}</b>
+              </div>
+            </div>
+            <div class="coupon-main">
+              <div>
+                <div *ngIf="coupon.calculationType == 'Percentage'">
+                  <div class="coupon-discount-title">Discount Value:&nbsp;</div>
+                  <div class="coupon-discount-text">
+                    {{coupon.amount}}%
+                  </div>
+                </div>
+                <div *ngIf="coupon.calculationType == 'Fixed'">
+                  <div class="coupon-discount-title">Discount Value:&nbsp;</div>
+                  <div class="coupon-discount-text"><i class="fa fa-inr"></i>&nbsp;{{coupon.amount | currency:'':''}}</div>
+                </div>
+              </div>
+              <div>
+                <div [id]="'cc-'+ coupon.couponCode" class="jaldee-coupon-code">{{coupon.couponCode}}</div>
+                <div (click)="copyText('cc-', 'cc-tooltip-', coupon.couponCode)"
+                  (mouseout)="resetTooltip('cc-tooltip-', coupon.couponCode)" class="ttip">
+                  <span class="tooltiptext" [id]="'cc-tooltip-'+ coupon.couponCode">Copy</span>
+                  <i class="fa fa-clone" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <div> Coupon Code: <span class="code">{{coupon.couponCode}} </span> <span class="help">Apply this
+                coupon code while Booking</span>
+            </div> -->
             <!-- <div>Discount Value:<span *ngIf="coupon.discountType == 'AMOUNT'" class='rupee'>₹</span>{{coupon.discountValue}}
             <span *ngIf="coupon.discountType == 'PERCENTAGE'">%</span>
           </div> -->
-          <div *ngIf="coupon.calculationType == 'Percentage'">Discount Value: <b class="bluefont">{{coupon.amount}}%</b>
+          <!-- <div *ngIf="coupon.calculationType == 'Percentage'">Discount Value: <b class="bluefont">{{coupon.amount}}%</b>
             <span class="rupee-font">
                 (upto <b class="bluefont">{{coupon.couponRules.maxDiscountValue  | currency:'&#8377;'}}  MAX)</b>
           </span>
-          </div>
-          <div *ngIf="coupon.calculationType == 'Fixed'">
+          </div> -->
+          <!-- <div *ngIf="coupon.calculationType == 'Fixed'">
             <span class="rupee-font "> Discount Value:  <b class="bluefont">{{coupon.amount | currency:'&#8377;'}}</b> </span>
-            </div>
-            <div class="outer4">
+            </div> -->
+            <!-- <div class="outer4">
               <div class="coupon_validity">
                 <span class="expire">Valid Through: {{formatDateDisplay(coupon.couponRules.startDate)}} -
                   {{formatDateDisplay(coupon.couponRules.endDate)}}</span>
-              </div>
-              <div class="tnc" *ngIf="coupon.termsConditions">
+              </div> -->
+              <!-- <div class="tnc" *ngIf="coupon.termsConditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
                     <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore('provider',i)">T & C Apply</div>
                   </div>
                 </ng-container>
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
           </div>
         </div>
-        <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
+        <!-- <div class="card" *ngIf="providerCouponList[i].adwordshowmore">
           <div [innerHTML]="coupon.termsConditions | nl2br"></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

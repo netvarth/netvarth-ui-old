@@ -573,6 +573,7 @@
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
 												class="form-control" [(ngModel)]="selOrderProviderjCoupon">
+												<option value="" disabled selected hidden>Select Jaldee Coupon</option>
 												<option *ngFor="let jcoupon of jCouponsList; let i = index"
 													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}
 												</option>
