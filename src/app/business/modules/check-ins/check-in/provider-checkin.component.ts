@@ -1175,11 +1175,11 @@ export class ProviderCheckinComponent implements OnInit {
                     if (this.waitlist_for.length === 0) {
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
                     } else {
-                        this.validateQnr().then(data => { 
-                    this.addCheckInProvider(post_Data);
-                        }, error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                          });
+                        if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                            this.validateQnr(post_Data);
+                        } else {
+                            this.addCheckInProvider(post_Data);
+                        }
                     }
                 } else {
                     this.addWaitlistBlock(post_Data);
@@ -1211,8 +1211,8 @@ export class ProviderCheckinComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
-                this.submitQuestionnaire(retUuid);
+                if (this.questionAnswers) {
+                    this.submitQuestionnaire(retUuid);
                 } else {
                     this.router.navigate(['provider', 'check-ins']);
                     if (this.settingsjson.showTokenId) {
@@ -1236,30 +1236,30 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-        
-console.log(this.questionAnswers);
-console.log(Object.keys(this.questionAnswers).length);
+
+        console.log(this.questionAnswers);
+        console.log(Object.keys(this.questionAnswers).length);
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-          for (const pic of this.questionAnswers.files.files) {
-            dataToSend.append('files', pic, pic['name']);
-          }
+            for (const pic of this.questionAnswers.files.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
         }
         console.log(this.questionAnswers.answers);
         console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
-        if (this.settingsjson.showTokenId) {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-        } else {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
-        }
-        this.router.navigate(['provider', 'check-ins']);
-    }, error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-        }
+        this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+            if (this.settingsjson.showTokenId) {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+            } else {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+            }
+            this.router.navigate(['provider', 'check-ins']);
+        }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -2006,31 +2006,33 @@ console.log(Object.keys(this.questionAnswers).length);
         }
     }
     getQuestionAnswers(event) {
-console.log(event);
-this.questionAnswers = event;
-console.log(Object.keys(this.questionAnswers).length);
+        console.log(event);
+        this.questionAnswers = event;
+        console.log(Object.keys(this.questionAnswers).length);
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
     }
     getProviderQuestionnaire() {
         this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
+            console.log(data);
+            this.questionnaireList = data;
         });
-      }
-      validateQnr() {
-        console.log(this.questionAnswers.answers);
-        return new Promise((resolve, reject) => {
-          if (this.questionAnswers && this.questionAnswers.answers) {
-          this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
-            resolve(data);
-          }, error => {
-            reject(error);
-          });  
+    }
+    validateQnr(post_Data) {
+        if (this.questionAnswers && this.questionAnswers.answers) {
+            console.log(this.questionAnswers.answers);
+            this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+               console.log(data.length);
+                if (data.length === 0) {
+                this.addCheckInProvider(post_Data);
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
         } else {
-          resolve(true);
-          }
-        });
-      }
+            this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+        }
+    }
 }

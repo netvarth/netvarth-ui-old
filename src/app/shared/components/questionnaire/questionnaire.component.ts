@@ -72,11 +72,17 @@ export class QuestionnaireComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this.questionAnswers);
+    console.log(this.questionnaireList);
     if (this.questionnaireList) {
-      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+      // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+      //   this.questions = this.questionnaireList.labels;
+      // } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
+      //   this.questions = this.questionnaireList[0].questions;
+      // }
+      if (this.source === 'customer-create') {
+        this.questions = this.questionnaireList.labels[0].questions;
+      } else {
         this.questions = this.questionnaireList.labels;
-      } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
-        this.questions = this.questionnaireList[0].questions;
       }
     }
     if (this.questionAnswers) {
@@ -340,7 +346,7 @@ for (let error of errors) {
   }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
-      this.router.navigate(['/provider/appointments']);
+      this.router.navigate(['/provider/check-ins']);
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -442,6 +448,7 @@ for (let error of errors) {
       this.setValidateError(data);
       // this.apiError = data;
       console.log(this.apiError);
+      this.buttonDisable = false;
       if (data.length === 0) {
       if (this.source === 'consCheckin') {
         this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
@@ -450,6 +457,7 @@ for (let error of errors) {
       }
     }
     }, error => {
+      this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
@@ -460,6 +468,7 @@ for (let error of errors) {
       this.setValidateError(data);
       // this.apiError = data;
       console.log(this.apiError);
+      this.buttonDisable = false;
       if (data.length === 0) {
       if (this.source === 'proCheckin') {
         this.resubmitProviderWaitlistQuestionnaire(dataToSend);
@@ -468,6 +477,7 @@ for (let error of errors) {
       }
     }
     }, error => {
+      this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }

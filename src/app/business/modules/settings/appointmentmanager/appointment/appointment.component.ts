@@ -1116,11 +1116,11 @@ export class AppointmentComponent implements OnInit {
             //   post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
                 if (this.thirdParty === '') {
-                    this.validateQnr().then(data => { 
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.validateQnr(post_Data);
+                    } else {
                         this.addAppointmentInProvider(post_Data);
-                            }, error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                              });
+                    }
                 } else {
                     this.addAppointmentBlock(post_Data);
                 }
@@ -1155,7 +1155,7 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                if (this.questionAnswers) {
                     this.submitQuestionnaire(retUuid);
                     } else {                
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
@@ -1941,18 +1941,19 @@ this.questionAnswers = event;
           this.questionnaireList = data;
         });
       }
-      validateQnr() {
-        console.log(this.questionAnswers.answers);
-        return new Promise((resolve, reject) => {
-          if (this.questionAnswers && this.questionAnswers.answers) {
-          this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
-            resolve(data);
-          }, error => {
-            reject(error);
-          });  
+      validateQnr(post_Data) {
+        if (this.questionAnswers && this.questionAnswers.answers) {
+            console.log(this.questionAnswers.answers);
+            this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                if (data.length === 0) {
+                this.addAppointmentInProvider(post_Data);
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
         } else {
-          resolve(true);
-          }
-        });
-      }
+            this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+        }
+    }
 }

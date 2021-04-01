@@ -464,11 +464,18 @@ export class CustomerCreateComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
+if (this.questionnaireList && this.questionnaireList.labels) {
+this.validateQnr(form_data);
+} else {
+  this.customerActions(form_data);
+}
+
+  }
+  customerActions(form_data) {
     let datebirth;
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
-    this.validateQnr().then(data => {
     if (this.action === 'add') {
       const post_data = {
         //   'userProfile': {
@@ -622,9 +629,6 @@ export class CustomerCreateComponent implements OnInit {
             this.disableButton = false;
           });
     }
-  }, error => {
-    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  });
   }
   confirmApptBlock(id) {
     const post_data = {
@@ -703,6 +707,7 @@ export class CustomerCreateComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+    this.disableButton = false;
   }
   onFieldBlur(key) {
     this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
@@ -1012,6 +1017,7 @@ export class CustomerCreateComponent implements OnInit {
   }
   getQuestionAnswers(event) {
     this.questionAnswers = event;
+    this.disableButton = false;
   }
   submitQnr(id) {
     console.log(this.questionAnswers);
@@ -1041,18 +1047,21 @@ export class CustomerCreateComponent implements OnInit {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
-  validateQnr() {
-    console.log(this.questionAnswers.answers);
-    return new Promise((resolve, reject) => {
-      if (this.questionAnswers && this.questionAnswers.answers) {
-      this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe(data => {
-        resolve(data);
+  validateQnr(form_data) {
+    if (this.questionAnswers && this.questionAnswers.answers) {
+      console.log(this.questionAnswers.answers);
+      this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+        if (data.length === 0) {
+  this.customerActions(form_data);
+        }
+        this.shared_functions.sendMessage({ type: 'qnrValidateError', value: data });
       }, error => {
-        reject(error);
-      });  
+        this.disableButton = false;
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
     } else {
-      resolve(true);
-      }
-    });
+      this.disableButton = false;
+      this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+    }
   }
 }
