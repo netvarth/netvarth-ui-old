@@ -841,4 +841,15 @@ export class AppointmentActionsComponent implements OnInit {
             this.deleteLabel();
         }
     }
+    gotoQuestionnaire(booking) {
+        this.dialogRef.close();
+        console.log(booking);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                uuid: booking.uid,
+                type: 'proAppt'
+            }
+        };
+        this.router.navigate(['provider', 'appointments', 'questionnaire'], navigationExtras);
+    }
 }

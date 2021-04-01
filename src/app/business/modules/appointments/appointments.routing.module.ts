@@ -10,6 +10,7 @@ const routes: Routes = [
         children: [
             { path: 'adjustdelay', component: AdjustscheduleDelayComponent },
             { path: ':id', component: ProviderAppointmentDetailComponent },
+            { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
         ]
     }
 ];

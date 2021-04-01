@@ -867,22 +867,10 @@ export class CheckinActionsComponent implements OnInit {
     gotoQuestionnaire(booking) {
         this.dialogRef.close();
         console.log(booking);
-        let channel;
-        if (booking.waitlistMode === 'WALK_IN_CHECKIN') {
-            channel = 'WALKIN';
-        } else if (booking.waitlistMode === 'PHONE_CHECKIN') {
-            channel = 'PHONEIN';
-        } else {
-            channel = 'ONLINE';
-        }
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 uuid: booking.ynwUuid,
-                providerId: booking.providerAccount.id,
-                serviceId: booking.service.id,
-                consumerId: booking.waitlistingFor[0].id,
-                type: 'proCheckin',
-                channel: channel
+                type: 'proCheckin'
             }
         };
         this.router.navigate(['provider', 'check-ins', 'questionnaire'], navigationExtras);

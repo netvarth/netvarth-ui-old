@@ -53,20 +53,8 @@ export class QuestionnaireComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
       console.log(this.params);
-      if (this.params.providerId) {
-        this.accountId = this.params.providerId;
-      }
-      if (this.params.serviceId) {
-        this.serviceId = this.params.serviceId;
-      }
-      if (this.params.consumerId) {
-        this.consumerId = this.params.consumerId;
-      }
       if (this.params.type) {
         this.source = this.params.type;
-      }
-      if (this.params.channel) {
-        this.channel = this.params.channel;
       }
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
@@ -209,28 +197,28 @@ for (let error of errors) {
     // console.log(this.fileuploadpreAnswers);
     // console.log(this.fileuploadpreAnswers[label].length);
   }
-  getConsumerQuestionnaire() {
-    this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
-      // console.log(data);
-      this.questionnaireList = data;
-      this.questions = this.questionnaireList.labels;
-      this.loading = false;
-      if (this.questionAnswers && this.questionAnswers.length > 0) {
-        this.getAnswers(this.questionAnswers, 'get');
-      }
-    });
-  }
-  getProviderQuestionnaire() {
-    this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
-      // console.log(data);
-      this.questionnaireList = data;
-      this.questions = this.questionnaireList.labels;
-      this.loading = false;
-      if (this.questionAnswers && this.questionAnswers.length > 0) {
-        this.getAnswers(this.questionAnswers, 'get');
-      }
-    });
-  }
+  // getConsumerQuestionnaire() {
+  //   this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
+  //     // console.log(data);
+  //     this.questionnaireList = data;
+  //     this.questions = this.questionnaireList.labels;
+  //     this.loading = false;
+  //     if (this.questionAnswers && this.questionAnswers.length > 0) {
+  //       this.getAnswers(this.questionAnswers, 'get');
+  //     }
+  //   });
+  // }
+  // getProviderQuestionnaire() {
+  //   this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
+  //     // console.log(data);
+  //     this.questionnaireList = data;
+  //     this.questions = this.questionnaireList.labels;
+  //     this.loading = false;
+  //     if (this.questionAnswers && this.questionAnswers.length > 0) {
+  //       this.getAnswers(this.questionAnswers, 'get');
+  //     }
+  //   });
+  // }
   onSubmit(type?) {
     console.log(this.answers);
     let data = [];
