@@ -30,7 +30,8 @@ export class PublishDialogComponent implements OnInit {
   startDaterequired: boolean;
   endDaterequired: boolean;
   endDateInvalidError: boolean;
-minDay=new Date();
+  minDay=new Date();
+  customer_label = '';
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,6 +45,7 @@ minDay=new Date();
      }
 
   ngOnInit(): void {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.createForm();
   }
   onChangePublishFromDate() {
@@ -93,7 +95,8 @@ checkDayisBeforeEndDate(sDate, eDate) {
     }
     }
     if(!this.startDaterequired &&!this.endDaterequired&& !this.endDateInvalidError){
-   const  msg = 'This Coupon wil be visible to consumers after publishing.Are you sure you want publish this coupon?';
+  //  const  msg = 'This Coupon wil be visible to consumers after publishing.Are you sure you want publish this coupon?';
+   const  msg = 'This Coupon wil be visible to'  + '  ' + this.customer_label + 's'+ ' '+ 'after publishing.Are you sure you want publish this coupon?'; 
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
