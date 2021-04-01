@@ -126,10 +126,13 @@ export class QuestionnaireComponent implements OnInit {
   }
   setValidateError(errors) {
     console.log(errors);
+    this.apiError = [];
+    if (errors.length > 0) {
 for (let error of errors) {
   this.apiError[error.questionField] = [];
   this.apiError[error.questionField].push(error.error);
 }
+    }
     console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
@@ -447,13 +450,17 @@ for (let error of errors) {
 
   validateConsumerQuestionnaire(answers, dataToSend) {
     console.log(answers);
-    this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe(data => {
-      this.apiError = data;
+    this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe((data: any) => {
+      this.setValidateError(data);
+      // this.apiError = data;
+      console.log(this.apiError);
+      if (data.length === 0) {
       if (this.source === 'consCheckin') {
         this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
       } else {
         this.resubmitConsumerApptQuestionnaire(dataToSend);
       }
+    }
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
@@ -461,13 +468,17 @@ for (let error of errors) {
 
   validateProviderQuestionnaire(answers, dataToSend) {
     console.log(answers);
-    this.providerService.validateProviderQuestionnaire(answers).subscribe(data => {
-      this.apiError = data;
+    this.providerService.validateProviderQuestionnaire(answers).subscribe((data: any) => {
+      this.setValidateError(data);
+      // this.apiError = data;
+      console.log(this.apiError);
+      if (data.length === 0) {
       if (this.source === 'proCheckin') {
         this.resubmitProviderWaitlistQuestionnaire(dataToSend);
       } else {
         this.resubmitProviderApptQuestionnaire(dataToSend);
       }
+    }
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
