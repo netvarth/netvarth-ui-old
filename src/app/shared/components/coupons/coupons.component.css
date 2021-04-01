@@ -97,6 +97,7 @@ mat-dialog-content .coupon .coupon-desc {
 
 mat-dialog-content .coupon .t-and-c,
 mat-dialog-content .coupon .coupon-valid-through,
+mat-dialog-content .coupon .coupon-max-discount,
 mat-dialog-content .coupon .coupon-main {
     display: flex !important;
     padding-bottom: 6px !important;
@@ -123,6 +124,7 @@ mat-dialog-content .coupon .coupon-main > div:nth-child(1) > div {
 }
 
 mat-dialog-content .coupon .t-and-c .t-and-c-title,
+mat-dialog-content .coupon .coupon-max-discount .coupon-max-discount-title,
 mat-dialog-content .coupon .coupon-valid-through .coupon-valid-through-title,
 mat-dialog-content .coupon .coupon-main .coupon-discount-title {
     font-family: Helvatica, sans-serif !important;
@@ -131,6 +133,7 @@ mat-dialog-content .coupon .coupon-main .coupon-discount-title {
 }
 
 mat-dialog-content .coupon .t-and-c .t-and-c-text,
+mat-dialog-content .coupon .coupon-max-discount .coupon-max-discount-text,
 mat-dialog-content .coupon .coupon-valid-through .coupon-valid-through-text,
 mat-dialog-content .coupon .coupon-main .coupon-discount-text {
     flex: 1 !important;
@@ -158,12 +161,14 @@ mat-dialog-content .coupon .coupon-main .coupon-discount-text i {
 
 @media (max-width: 575px) {
     mat-dialog-content .coupon .t-and-c .t-and-c-title,
+    mat-dialog-content .coupon .coupon-max-discount .coupon-max-discount-title,
     mat-dialog-content .coupon .coupon-valid-through .coupon-valid-through-title,
     mat-dialog-content .coupon .coupon-main .coupon-discount-title {
         font-size: 13.5px !important;
     }
 
     mat-dialog-content .coupon .t-and-c .t-and-c-text,
+    mat-dialog-content .coupon .coupon-max-discount .coupon-max-discount-text,
     mat-dialog-content .coupon .coupon-valid-through .coupon-valid-through-text,
     mat-dialog-content .coupon .coupon-main .coupon-discount-text {
         font-size: 13.5px !important;
