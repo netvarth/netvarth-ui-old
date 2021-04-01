@@ -7,10 +7,19 @@
         <ul class="galul">
         <li *ngFor="let file of item_pic.files;let i = index ">
           <div class="galimg_outer">
-          <div class="gal_img">
+          <div class="gal_img" *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ||file.type =='image/jpeg'||file.type == 'image/webp'" >
             <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
           </div>
-          <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div>
+          <div class="gal_img"  *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'">
+            <img [src]="item_pic.base64[i]">
+          </div>
+          <div class="gal_img"  *ngIf="file.type == '.mp4'|| file.type == 'video/mp4' || file.type == 'video/mpeg'||file.type == 'video/quicktime'">
+            <img [src]="item_pic.base64[i]">
+          </div>
+          <div class="gal_img"  *ngIf="file.type == '.mp3'|| file.type == 'audio/mpeg'|| file.type == 'audio/mp3'">
+            <img [src]="item_pic.base64[i]">
+          </div>
+          <!-- <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div> -->
           <div class="gal_action"  *ngIf="!canceldisabled">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
                   <mat-icon>more_vert</mat-icon>
@@ -29,7 +38,7 @@
    
  
 
-  <div class="upload-doc" (click)="filed.click()"  *ngIf="!canceldisabled">
+  <div class="upload-doc" (click)="filed.click()"  *ngIf="!canceldisabled && item_pic.files.length === 0">
     <label class="col-form-label">{{select_image_cap}}</label>
     <span class="select-wrapper ">
          <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">

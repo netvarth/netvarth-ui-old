@@ -2026,4 +2026,8 @@ editHoliday(data) {
   videoaudioS3Upload(file,url){
     return this.servicemeta.httpPut(url,file);
   }
+  videoaudioUploadconfirm(id,data){
+    const url = 'provider/mr/upload/url/' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

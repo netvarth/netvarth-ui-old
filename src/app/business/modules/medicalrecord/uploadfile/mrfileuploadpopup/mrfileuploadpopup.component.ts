@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-// import { MedicalrecordService } from '../../medicalrecord.service';
+import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
@@ -47,7 +47,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<MrfileuploadpopupComponent>,
         public sharedfunctionObj: SharedFunctions,
-        // private medicalrecord_service: MedicalrecordService,
+        private medicalrecord_service: MedicalrecordService,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor
@@ -82,6 +82,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
+              console.log(file);
                 this.success_error = this.sharedfunctionObj.fileValidation(file);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
@@ -110,87 +111,70 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.error_msg = '';
         this.error_list = [];
         this.img_save_caption = 'Uploading .. ';
-        this.savedisabled = true;
-       // const submit_data: FormData = new FormData();
-      //  const propertiesDetob = {};
-        let passdata = {};
-        let file;
-      //  let i = 0;
-        for (const pic of this.item_pic.files) {
-             console.log(pic);
-             file = pic;
-             passdata = {
-              "url": pic['name'],
-              "type": pic['type'],
-            "imageSize": pic['size']
-            };
+        this.savedisabled = true;        
+        if (this.mrId) {
+            this.uploadMrfiles();
+          } else {
+            let passingId ;
+            if (this.bookingType === 'FOLLOWUP') {
+              passingId = this.patientId;
+            } else {
+              passingId = this.bookingId;
             }
-           
-            this.provider_services.videoaudioUploadurl(this.mrId, passdata)
-            .subscribe((data) => {
-              console.log(data);
-              let details = data['url'];
-              console.log(details);
-              this.provider_services.videoaudioS3Upload(file, details)
-              .subscribe((data) => {
-                console.log(data);
-               
+            this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
+              .then((data: number) => {
+                this.mrId = data;
+                console.log(this.mrId);
+                this.uploadMrfiles();
               },
                 error => {
+                  this.savedisabled = false;
                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
-            },
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              });
-        // for (const pic of this.item_pic.files) {
-        //   console.log(pic);
-        //   submit_data.append('files', pic, pic['name']);
-        //   const properties = {
-        //     'caption': this.item_pic.caption[i] || ''
-        //   };
-        //   propertiesDetob[i] = properties;
-        //   i++;
-        // }
-        // const propertiesDet = {
-        //   'propertiesMap': propertiesDetob
-        // };
-        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        // submit_data.append('properties', blobPropdata);
-        // if (this.mrId) {
-        //     this.uploadMrfiles(this.mrId, submit_data);
-        //   } else {
-        //     let passingId ;
-        //     if (this.bookingType === 'FOLLOWUP') {
-        //       passingId = this.patientId;
-        //     } else {
-        //       passingId = this.bookingId;
-        //     }
-        //     this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
-        //       .then((data: number) => {
-        //         this.mrId = data;
-        //         console.log(this.mrId);
-        //         this.uploadMrfiles(data, submit_data);
-        //       },
-        //         error => {
-        //           this.savedisabled = false;
-        //           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        //         });
-        //   }
+          }
         
     }
 
-    uploadMrfiles(id, submit_data) {
-        this.provider_services.uploadMRfiles(id, submit_data)
-          .subscribe((data) => {
-            this.snackbarService.openSnackBar('files uploaded successfully');
-            this.dialogRef.close(this.item_pic);
-          },
-            error => {
-              this.savedisabled = false;
-              this.img_save_caption = 'Save';
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            });
+    uploadMrfiles() {
+      let passdata = {};
+      let file;
+      for (const pic of this.item_pic.files) {
+           file = pic;
+           console.log(file)
+           passdata = {
+            "url": pic['name'],
+            "type": pic['type'],
+          "imageSize": pic['size']
+          };
+       }
+      this.provider_services.videoaudioUploadurl(this.mrId, passdata)
+      .subscribe((data) => {
+      let details = data['url'];
+      let uid = {"uid":data['uid']};
+      this.provider_services.videoaudioS3Upload(file, details)
+      .subscribe(() => {
+      this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
+      .subscribe((data) => {
+        this.dialogRef.close(this.item_pic);
+       console.log(data)
+       },
+       error => {
+        this.savedisabled = false;
+        this.img_save_caption = 'Save';
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+         });
+       },
+       error => {
+        this.savedisabled = false;
+        this.img_save_caption = 'Save';
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+         });
+       },
+       error => {
+        this.savedisabled = false;
+        this.img_save_caption = 'Save';
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+       });
       }
     actionCompleted() {
         this.savedisabled = false;
