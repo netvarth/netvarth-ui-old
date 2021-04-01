@@ -2001,7 +2001,7 @@ editHoliday(data) {
   }
   resubmitProviderCustomerQuestionnaire(id, body) {
     const url = 'provider/customers/questionnaire/resubmit/' + id;
-    return this.servicemeta.httpPut(url, body);
+    return this.servicemeta.httpPost(url, body);
   }
   validateProviderQuestionnaire(body) {
     const url = 'provider/questionnaire/validate';

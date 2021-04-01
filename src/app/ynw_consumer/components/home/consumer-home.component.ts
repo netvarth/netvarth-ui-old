@@ -2158,15 +2158,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   onButtonAfterHook() { }
   gotoQuestionnaire(booking) {
     console.log(booking);
-    let consumerId;
     let uuid;
     let type;
     if (booking.waitlistingFor) {
-      consumerId = (booking.waitlistingFor[0].jaldeeFamilyMemberId) ? booking.waitlistingFor[0].jaldeeFamilyMemberId : 0;
       uuid = booking.ynwUuid;
       type = 'consCheckin';
     } else {
-      consumerId = (booking.appmtFor[0].jaldeeFamilyMemberId) ? booking.appmtFor[0].jaldeeFamilyMemberId : 0;
       uuid = booking.uid;
       type = 'consAppt';
     }
@@ -2174,8 +2171,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams: {
         uuid: uuid,
         providerId: booking.providerAccount.id,
-        serviceId: booking.service.id,
-        consumerId: consumerId,
         type: type
       }
     };

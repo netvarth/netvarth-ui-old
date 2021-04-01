@@ -838,9 +838,7 @@
                                             Please provide us with a little more information complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList"
-                                            [questionAnswers]="questionAnswers" [source]="'consCheckin'"
-                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
-                                            [serviceId]="sel_ser" [accountId]="account_id"
+                                            [questionAnswers]="questionAnswers" [source]="'consCheckin'" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
 
                                             <div

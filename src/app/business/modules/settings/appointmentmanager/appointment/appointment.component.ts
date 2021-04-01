@@ -234,6 +234,8 @@ export class AppointmentComponent implements OnInit {
     questionnaireList: any = [];
     channel;
     questionAnswers;
+    serviceId;
+    bookingMode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -262,6 +264,12 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.uid) {
                 this.virtualServicenumber = qparams.virtualServicenumber;
+            }
+            if (qparams.serviceId) {
+                this.serviceId = qparams.serviceId;
+            }
+            if (qparams.apptMode) {
+                this.bookingMode = qparams.apptMode;
             }
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
@@ -392,6 +400,8 @@ export class AppointmentComponent implements OnInit {
         if (this.source === 'appt-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
+            this.qParams['serviceId'] = this.serviceId;
+            this.qParams['bookingMode'] = this.bookingMode;
             if (this.virtualServicemode && this.virtualServicenumber) {
                 this.qParams['virtualServicemode'] = this.virtualServicemode;
                 this.qParams['virtualServicenumber'] = this.virtualServicenumber;

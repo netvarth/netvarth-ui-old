@@ -232,6 +232,8 @@ export class ProviderCheckinComponent implements OnInit {
     questionnaireList: any = [];
     channel;
     questionAnswers;
+    serviceId;
+    bookingMode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -252,6 +254,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
+            }
+            if (qparams.serviceId) {
+                this.serviceId = qparams.serviceId;
+            }
+            if (qparams.waitlistMode) {
+                this.bookingMode = qparams.waitlistMode;
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
@@ -412,6 +420,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.qParams['checkinType'] = this.checkinType;
         if (this.source === 'waitlist-block') {
             this.qParams['source'] = this.source;
+            this.qParams['serviceId'] = this.serviceId;
+            this.qParams['bookingMode'] = this.bookingMode;
             this.qParams['uid'] = this.uid;
             this.qParams['showtoken'] = this.showtoken;
             if (this.virtualServicemode && this.virtualServicenumber) {
@@ -1209,12 +1219,14 @@ export class ProviderCheckinComponent implements OnInit {
                 this.api_loading = false;
                 const retData = data;
                 let retUuid;
+                let parentUid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
+                    parentUid = retData['parent_uuid'];;
                 });
                 if (this.questionAnswers) {
-                    this.submitQuestionnaire(retUuid);
+                    this.submitQuestionnaire(parentUid);
                 } else {
                     this.router.navigate(['provider', 'check-ins']);
                     if (this.settingsjson.showTokenId) {

@@ -56,7 +56,7 @@
 <section class="createCustomer">
     <div class="content loc-list p-checkin pad-20 col-lg-8">
         <div class="card card-custom gutter-b example example-compact rounded-0 p-0">
-            <div class="card-header">
+            <div class="card-header" *ngIf="!showBookingQnr">
                 <h3 class="card-title">
 
                 </h3>
@@ -75,7 +75,7 @@
             </div>
             <form *ngIf="!loading && !viewCustomer && qnrLoaded" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
             onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="form" id="customer_creation">
-                <div class="card-body">
+                <div class="card-body" *ngIf="!showBookingQnr">
                     <div class="form-group row">
                         <div class="col-lg-6" *ngIf="haveMobile">
                             <label>Mobile</label>
@@ -225,17 +225,26 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-create'"
+                    <app-questionnaire [questionnaireList]="questionnaireList" [source]="qnrSource"
                         (returnAnswers)="getQuestionAnswers($event)" [customerDetails]="customer">
                     </app-questionnaire>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer" *ngIf="!showBookingQnr">
                     <div class="row">
                         <div class="col-lg-6">
                             <button (click)="onCancel()" type="reset" class="btn btn-secondary"
                                 [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
                             <button type="submit" [disabled]="!amForm.valid || disableButton"
                                 class="btn btn-primary mr-2">{{save_btn}}</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-footer" *ngIf="showBookingQnr">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button (click)="validateQnr()" class="btn btn-primary mr-2">{{save_btn}}</button>
                         </div>
 
                     </div>

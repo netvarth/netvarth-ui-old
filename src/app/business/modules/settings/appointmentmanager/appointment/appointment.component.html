@@ -702,8 +702,7 @@
 
 
                 <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-                [source]="'proAppt'" [consumerId]="waitlist_for[0].id"
-                [serviceId]="sel_ser" [channel]="channel" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                 <div class="waitlist-action mgn-bt-20 mgn-up-30"> <button mat-button class="cs-btn bt1"
                     [class.confirmbtn]="step == 1" (click)="saveCheckin()"
                     [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>

@@ -18,10 +18,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 export class QuestionnaireComponent implements OnInit {
   @Input() questionnaireList;
   @Input() source;
-  @Input() consumerId;
-  @Input() serviceId;
   @Input() accountId;
-  @Input() channel;
   @Input() questionAnswers;
   @Input() customerDetails;
   @Output() returnAnswers = new EventEmitter<any>();
@@ -59,6 +56,9 @@ export class QuestionnaireComponent implements OnInit {
       if (this.params.type) {
         this.source = this.params.type;
       }
+      if (this.params.providerId) {
+        this.accountId = this.params.providerId;
+      }
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
       switch (message.type) {
@@ -77,22 +77,6 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.customerDetails);
     console.log(this.questionAnswers);
     console.log(this.questionnaireList);
-    if (this.questionnaireList) {
-      // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-      //   this.questions = this.questionnaireList.labels;
-      // } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
-      //   this.questions = this.questionnaireList[0].questions;
-      // }
-      if (this.source === 'customer-create') {
-        if (this.customerDetails && this.customerDetails.questionnaire) {
-          this.questions = this.customerDetails.questionnaire.questionnaire;
-        } else {
-        this.questions = this.questionnaireList.labels[0].questions;
-        }
-      } else {
-        this.questions = this.questionnaireList.labels;
-      }
-    }
     if (this.questionAnswers) {
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answer, 'init');
@@ -107,6 +91,24 @@ export class QuestionnaireComponent implements OnInit {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.getAnswers(this.questionnaireList.labels);
         }
+      }
+    }
+    if (this.questionnaireList) {
+      // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+      //   this.questions = this.questionnaireList.labels;
+      // } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
+      //   this.questions = this.questionnaireList[0].questions;
+      // }
+      if (this.source === 'customer-create') {
+        if (this.customerDetails && this.customerDetails.questionnaire) {
+          // this.questionnaireList = this.customerDetails.questionnaire;
+          // this.questions = this.customerDetails.questionnaire.questionnaire;
+          this.getAnswers(this.customerDetails.questionnaire.questionnaire);
+        }
+        this.questions = this.questionnaireList.labels[0].questions;
+        
+      } else {
+        this.questions = this.questionnaireList.labels;
       }
     }
 
@@ -138,7 +140,7 @@ for (let error of errors) {
     console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
-    if (!type || type === 'get') {
+    if (!type) {
       for (let answ of answerData) {
         console.log(answ);
         if (answ.answer) {
@@ -211,28 +213,7 @@ for (let error of errors) {
     // console.log(this.fileuploadpreAnswers);
     // console.log(this.fileuploadpreAnswers[label].length);
   }
-  // getConsumerQuestionnaire() {
-  //   this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
-  //     // console.log(data);
-  //     this.questionnaireList = data;
-  //     this.questions = this.questionnaireList.labels;
-  //     this.loading = false;
-  //     if (this.questionAnswers && this.questionAnswers.length > 0) {
-  //       this.getAnswers(this.questionAnswers, 'get');
-  //     }
-  //   });
-  // }
-  // getProviderQuestionnaire() {
-  //   this.providerService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
-  //     // console.log(data);
-  //     this.questionnaireList = data;
-  //     this.questions = this.questionnaireList.labels;
-  //     this.loading = false;
-  //     if (this.questionAnswers && this.questionAnswers.length > 0) {
-  //       this.getAnswers(this.questionAnswers, 'get');
-  //     }
-  //   });
-  // }
+  
   onSubmit(type?) {
     console.log(this.answers);
     let data = [];
@@ -380,7 +361,7 @@ for (let error of errors) {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
+            this.getAnswers(this.questions);
           }
         }
         // this.getConsumerQuestionnaire();
@@ -395,7 +376,7 @@ for (let error of errors) {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
+            this.getAnswers(this.questions);
           }
         }
         // this.getConsumerQuestionnaire();
@@ -410,7 +391,7 @@ for (let error of errors) {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
+            this.getAnswers(this.questions);
           }
         }
         // this.getProviderQuestionnaire();
@@ -425,7 +406,7 @@ for (let error of errors) {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
+            this.getAnswers(this.questions);
           }
         }
         // this.getProviderQuestionnaire();

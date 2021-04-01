@@ -623,8 +623,7 @@
           Please provide us with a little more information complete your booking
       </div>
         <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-        [source]="'proCheckin'" [consumerId]="waitlist_for[0].id"
-        [serviceId]="sel_ser" [channel]="channel" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+        [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
         
         
           <div class="waitlist-action mgn-bt-20 mgn-up-10">

@@ -128,6 +128,11 @@ export class CustomerCreateComponent implements OnInit {
   questionnaireList: any = [];
   questionAnswers;
   qnrLoaded = false;
+  serviceId;
+  bookingMode;
+  showBookingQnr = false;
+  newCustomerId;
+  qnrSource = 'customer-create';
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -161,6 +166,12 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.type) {
         this.type = qparams.type;
+      }
+      if (qparams.bookingMode) {
+        this.bookingMode = qparams.bookingMode;
+      }
+      if (qparams.serviceId) {
+        this.serviceId = qparams.serviceId;
       }
       if (qparams.virtualServicemode) {
         this.virtualServicemode = qparams.virtualServicemode;
@@ -464,6 +475,7 @@ export class CustomerCreateComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
+    this.showBookingQnr = false;
 if (this.questionnaireList && this.questionnaireList.labels) {
 this.validateQnr(form_data);
 } else {
@@ -507,55 +519,19 @@ this.validateQnr(form_data);
             this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
             const qParams = {};
             qParams['pid'] = data;
+            this.newCustomerId = data;
+            console.log(this.source);
+            console.log(this.questionAnswers);
             if (this.questionAnswers) {
-              this.submitQnr(data);
-            }
-            if (this.source === 'checkin' || this.source === 'token') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  thirdParty: this.thirdParty
-                }
-              };
-              this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-            } else if (this.source === 'appointment') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  timeslot: this.timeslot,
-                  scheduleId: this.comingSchduleId,
-                  date: this.date,
-                  thirdParty: this.thirdParty,
-                  serviceId: this.serviceIdParam,
-                  userId: this.userId,
-                  deptId: this.deptId,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-            } else if (this.source === 'appt-block') {
-              this.confirmApptBlock(data);
-            } else if (this.source === 'waitlist-block') {
-              this.confirmWaitlistBlock(data);
-            } else if (this.source === 'order') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+              this.submitQnr(form_data, data);
             } else {
-              this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
+              if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+                console.log(this.serviceId);
+                console.log(this.bookingMode);
+                this.getProviderQuestionnaire(form_data);
+              } else {
+              this.goBackAfterAdd(form_data, data);
+              }
             }
           },
           error => {
@@ -591,43 +567,96 @@ this.validateQnr(form_data);
             const qParams = {};
             qParams['pid'] = data;
             if (this.questionAnswers) {
-              this.submitQnr(data);
-            }
-            if (this.source === 'checkin' || this.source === 'token') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type
-                }
-              };
-              this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-            } else if (this.source === 'appointment') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type
-                }
-              };
-              this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-            } else if (this.source === 'order') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+              this.submitQnr(form_data, data);
             } else {
-              this.router.navigate(['provider', 'customers']);
+              this.goBackAfterEdit(form_data, data);
             }
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           });
+    }
+  }
+  goBackAfterAdd(form_data, data) {
+    if (this.source === 'checkin' || this.source === 'token') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          thirdParty: this.thirdParty
+        }
+      };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    } else if (this.source === 'appointment') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          timeslot: this.timeslot,
+          scheduleId: this.comingSchduleId,
+          date: this.date,
+          thirdParty: this.thirdParty,
+          serviceId: this.serviceIdParam,
+          userId: this.userId,
+          deptId: this.deptId,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+    } else if (this.source === 'appt-block') {
+      this.confirmApptBlock(data);
+    } else if (this.source === 'waitlist-block') {
+      this.confirmWaitlistBlock(data);
+    } else if (this.source === 'order') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+    } else {
+      this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
+    }
+  }
+  goBackAfterEdit(form_data, data) {
+    if (this.source === 'checkin' || this.source === 'token') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type
+        }
+      };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    } else if (this.source === 'appointment') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type
+        }
+      };
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+    } else if (this.source === 'order') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+    } else {
+      this.router.navigate(['provider', 'customers']);
     }
   }
   confirmApptBlock(id) {
@@ -1015,11 +1044,28 @@ this.validateQnr(form_data);
       this.qnrLoaded = true;
     });
   }
+  getProviderQuestionnaire(form_data) {
+    this.bookingMode = (this.bookingMode === 'WALK_IN_APPOINTMENT' || this.bookingMode === 'WALK_IN_CHECKIN') ? 'WALKIN' : 'PHONEIN';
+    this.provider_services.getProviderQuestionnaire(this.serviceId, this.newCustomerId, this.bookingMode).subscribe(data => {
+        console.log(data);
+        this.questionnaireList = data;
+        if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+          this.showBookingQnr = true;
+          if (this.source === 'waitlist-block') {
+            this.qnrSource = 'proCheckin';
+          } else {
+            this.qnrSource = 'proAppt';
+          }
+        } else {
+          this.goBackAfterAdd(form_data, data);
+        }
+    });
+}
   getQuestionAnswers(event) {
     this.questionAnswers = event;
     this.disableButton = false;
   }
-  submitQnr(id) {
+  submitQnr(form_data, id) {
     console.log(this.questionAnswers);
     const dataToSend: FormData = new FormData();
     if (this.questionAnswers.files) {
@@ -1030,29 +1076,51 @@ this.validateQnr(form_data);
     const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     if (this.action === 'add') {
-      this.AddQnr(id, dataToSend);
+      this.AddQnr(id, dataToSend, form_data);
     } else {
-      this.updateQnr(id, dataToSend);
+      this.updateQnr(id, dataToSend, form_data);
     }
   }
-  updateQnr(id, dataToSend) {
+  AddQnr(id, dataToSend, form_data) {
     this.provider_services.submitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+      if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+        console.log(this.serviceId);
+        console.log(this.bookingMode);
+        this.getProviderQuestionnaire(form_data);
+      } else {
+      this.goBackAfterAdd(form_data, id);
+      }
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
-  AddQnr(id, dataToSend) {
+  updateQnr(id, dataToSend, form_data) {
     this.provider_services.resubmitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+      if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+        console.log(this.serviceId);
+        console.log(this.bookingMode);
+        this.getProviderQuestionnaire(form_data);
+      } else {
+      this.goBackAfterEdit(form_data, id);
+      }
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
-  validateQnr(form_data) {
+  validateQnr(form_data?) {
     if (this.questionAnswers && this.questionAnswers.answers) {
       console.log(this.questionAnswers.answers);
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
+          if (this.showBookingQnr) {
+          if (this.source === 'appt-block') {
+            this.confirmApptBlock(this.newCustomerId);
+          } else if (this.source === 'waitlist-block') {
+            this.confirmWaitlistBlock(this.newCustomerId);
+          } 
+        } else {
   this.customerActions(form_data);
+          }
         }
         this.shared_functions.sendMessage({ type: 'qnrValidateError', value: data });
       }, error => {
