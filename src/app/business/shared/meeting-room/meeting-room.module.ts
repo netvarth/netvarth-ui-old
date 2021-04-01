@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { TwilioService } from "src/app/shared/services/twilio-service";
+import { TwilioService } from "../../../shared/services/twilio-service";
 import { MeetingRoomComponent } from "./meeting-room.component";
 
 @NgModule({

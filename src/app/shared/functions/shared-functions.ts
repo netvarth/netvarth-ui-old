@@ -1005,11 +1005,6 @@ export class SharedFunctions {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
-        // data: {
-        //   'message': 'Do you want to cancel this ' + msg + '?',
-        //   'heading': 'Confirm',
-        //   'type': 'yes/no'
-        // }
         data: this.tdata
       });
 

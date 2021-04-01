@@ -2,8 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, Render
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
-import { Location } from '@angular/common';
-import { interval as observableInterval, Subscription } from 'rxjs';
+import { interval as observableInterval } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
@@ -28,7 +27,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     meetObj;
     loading = true;
     consumerReady = false;
-    cronHandle: Subscription;
     subs = new SubSink();
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
@@ -36,7 +34,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
-        private _location: Location,
         private meetService: MeetService,
         private titleService: Title,
         private snackbarService: SnackbarService,
@@ -96,9 +93,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                     _this.consumerReady = true;
                     console.log(this.meetObj);
                     _this.status = 'Ready..';
-                    if (_this.cronHandle) {
-                        _this.cronHandle.unsubscribe();
-                    }
+                   _this.subs.unsubscribe();
                 } else {
                     _this.loading = false;
                     _this.consumerReady = false;
@@ -107,11 +102,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 }
             }, error => {
                 _this.loading = false;
-                _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                _this.cronHandle.unsubscribe();
-                setTimeout(() => {
-                    _this._location.back();
-                }, 3000);
+                _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });               
+                _this.subs.unsubscribe();
+                _this.disconnect();
+                
             });
     }
 
@@ -121,7 +115,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         console.log("ngAfterViewInit");
         this.cd.detectChanges();
-        this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+        this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
             this.isConsumerReady();
         });
         this.twilioService.previewContainer = this.previewContainer;
@@ -131,9 +125,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * invokes when the page destroys
      */
     ngOnDestroy() {
-        if (this.cronHandle) {
-            this.cronHandle.unsubscribe();
-        }
+        // if (this.cronHandle) {
+        //     this.cronHandle.unsubscribe();
+        // }
         this.subs.unsubscribe();
     }
     /**
@@ -141,10 +135,14 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     disconnect() {
         this.twilioService.disconnect();
+        let type = this.type;
+        if (this.type==='wl') {
+            type = 'checkin'
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: {
               waiting_id: this.uuid,
-              type: this.type
+              type: type
             }
           };
           this.router.navigate(['provider', 'telehealth'], navigationExtras);

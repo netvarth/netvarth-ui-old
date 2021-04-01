@@ -1,6 +1,8 @@
 import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/core';
 import * as Video from 'twilio-video';
-@Injectable()
+@Injectable({
+    providedIn: 'any'
+})
 export class TwilioService {
     remoteVideo: ElementRef;
     localVideo: ElementRef;

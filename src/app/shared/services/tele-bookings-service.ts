@@ -19,10 +19,15 @@ export class TeleBookingService {
                 (appointments: any) => {
                     for (let i = 0; i < appointments.length; i++) {
                         let busName = "";
+                        let busId = ""
+                        let userName;
+                        let userId;
                         if (appointments[i].provider) {
-                            busName = appointments[i].provider.firstName + ' ' + appointments[i].provider.lastName;
+                            userName = appointments[i].provider.firstName + ' ' + appointments[i].provider.lastName;
+                            userId = appointments[i].provider.id;
                         } else {
                             busName = appointments[i].providerAccount.businessName;
+                            busId = appointments[i].providerAccount.id;
                         }
                         let consumerName = "";
                         if (appointments[i].appmtFor[0].firstName) {
@@ -43,11 +48,17 @@ export class TeleBookingService {
                         bookingWindow = appointments[i].schedule.apptSchedule.timeSlots[0].sTime + " - " +
                             appointments[i].schedule.apptSchedule.timeSlots[0].eTime;
                         let bookingTime = this.getSingleTime(appointments[i].appmtTime);
+                        
+                        let bookingStatus = appointments[i].apptStatus;
+
+                        if (appointments[i].apptStatus === 'Started') {
+                            bookingStatus = 'is waiting for you';
+                        }
 
                         let booking = new TeleBooking(appointments[i].appmtDate, bookingTime, '',
                             bookingWindow, appointments[i].appointmentEncId, 'appt', appointments[i].service.name,
-                            busName, appointments[i].uid, appointments[i].service.virtualCallingModes[0].callingMode,
-                            teleMode, teleUrl, appointments[i].apptStatus, '', consumerName, appointments[i].location.place,
+                            busName, busId, userName, userId, appointments[i].uid, appointments[i].service.virtualCallingModes[0].callingMode,
+                            teleMode, teleUrl, bookingStatus, '', consumerName, appointments[i].location.place,
                             appointments[i].location.googleMapUrl);
                         bookings.push(booking);
                     }
@@ -70,10 +81,15 @@ export class TeleBookingService {
                                     bookingTime = checkins[i].serviceTime;
                                 } 
                                 let busName = "";
+                                let busId = "";
+                                let userId;
+                                let userName;
                                 if (checkins[i].provider) {
-                                    busName = checkins[i].provider.firstName + ' ' + checkins[i].provider.lastName;
+                                    userName = checkins[i].provider.firstName + ' ' + checkins[i].provider.lastName;
+                                    userId = checkins[i].provider.id;
                                 } else {
                                     busName = checkins[i].providerAccount.businessName;
+                                    busId = checkins[i].providerAccount.id;
                                 }
                                 let consumerName = "";
                                 if (checkins[i].waitlistingFor[0].firstName) {
@@ -94,10 +110,15 @@ export class TeleBookingService {
                                 bookingWindow = checkins[i].queue.queueStartTime + " - " +
                                     checkins[i].queue.queueEndTime;
 
+                                let bookingStatus = checkins[i].waitlistStatus;
+                                if (checkins[i].waitlistStatus === 'started') {
+                                    bookingStatus = 'Doctor is waiting for you';
+                                }
+
                                 let booking = new TeleBooking(checkins[i].date, bookingTime,
                                      bookingWindow, token, checkins[i].checkinEncId, 'wl', checkins[i].service.name,
-                                    busName, checkins[i].ynwUuid, checkins[i].service.virtualCallingModes[0].callingMode,
-                                    teleMode, teleUrl, checkins[i].waitlistStatus, '', consumerName, checkins[i].queue.location.place,
+                                    busName, busId, userName, userId, checkins[i].ynwUuid, checkins[i].service.virtualCallingModes[0].callingMode,
+                                    teleMode, teleUrl, bookingStatus, '', consumerName, checkins[i].queue.location.place,
                                     checkins[i].queue.location.googleMapUrl);
                                 bookings.push(booking);
                             }
