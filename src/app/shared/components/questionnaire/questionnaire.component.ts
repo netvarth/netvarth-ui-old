@@ -31,7 +31,7 @@ export class QuestionnaireComponent implements OnInit {
     base64: [],
     caption: []
   };
-  apiError;
+  apiError: any = [];
   params;
   fileuploadpreAnswers: any = {};
   loading = false;
@@ -126,9 +126,11 @@ export class QuestionnaireComponent implements OnInit {
   }
   setValidateError(errors) {
     console.log(errors);
-
-    // this.apiError = message.value;
-    // console.log(this.apiError);
+for (let error of errors) {
+  this.apiError[error.questionField] = [];
+  this.apiError[error.questionField].push(error.error);
+}
+    console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
     if (!type || type === 'get') {
@@ -241,7 +243,7 @@ export class QuestionnaireComponent implements OnInit {
     console.log(data);
     if (data.length > 0) {
       const postData = {
-        'questionnaireId': this.questionnaireList.id,
+        'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answer': data
       }
       console.log(postData);
@@ -372,8 +374,8 @@ export class QuestionnaireComponent implements OnInit {
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
-          if (this.questionnaireList && this.questionnaireList.length > 0) {
-            this.getAnswers(this.questionnaireList, 'get');
+          if (this.questions && this.questions.length > 0) {
+            this.getAnswers(this.questions, 'get');
           }
         }
         // this.getConsumerQuestionnaire();
@@ -387,8 +389,8 @@ export class QuestionnaireComponent implements OnInit {
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
-          if (this.questionnaireList && this.questionnaireList.length > 0) {
-            this.getAnswers(this.questionnaireList, 'get');
+          if (this.questions && this.questions.length > 0) {
+            this.getAnswers(this.questions, 'get');
           }
         }
         // this.getConsumerQuestionnaire();
@@ -402,8 +404,8 @@ export class QuestionnaireComponent implements OnInit {
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
-          if (this.questionnaireList && this.questionnaireList.length > 0) {
-            this.getAnswers(this.questionnaireList, 'get');
+          if (this.questions && this.questions.length > 0) {
+            this.getAnswers(this.questions, 'get');
           }
         }
         // this.getProviderQuestionnaire();
@@ -417,8 +419,8 @@ export class QuestionnaireComponent implements OnInit {
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
-          if (this.questionnaireList && this.questionnaireList.length > 0) {
-            this.getAnswers(this.questionnaireList, 'get');
+          if (this.questions && this.questions.length > 0) {
+            this.getAnswers(this.questions, 'get');
           }
         }
         // this.getProviderQuestionnaire();

@@ -1873,6 +1873,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             console.log(this.questionAnswers.answers);
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe(data => {
                 this.bookStep++;
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });

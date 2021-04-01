@@ -168,7 +168,9 @@
 
                                 </div>
                                 <div class="separator separator-dashed my-10"></div>
-
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="params.uuid">
+                                    <button mat-button class="cs-btn bt1" (click)="!buttonDisable && onSubmit('submit')">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,20 +201,9 @@
 
 
 
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 rounded-0 mt-5" *ngIf="!loading && questions"
+    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 rounded-0 mt-5" *ngIf="!loading && questions"
         [class.card]="params.uuid">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-
-
-
-
-
-
-
-
-
-
-
             <div class="quest-outer" *ngFor="let question of questions;let i = index">
                 <div class="">{{getQuestion(question).labelName}} <span *ngIf="getQuestion(question).mandatory">*</span>
                 </div>
@@ -245,26 +236,8 @@
                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile == 1">Upload File</button>
 
 
-                    <!-- <div *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
-                        <mat-select placeholder="Catalogue" [(ngModel)]="selectedDocs" [multiple]="true">
-                            <mat-option *ngFor="let option of getQuestion(question).filePropertie.allowedDocuments"
-                            (click)="selectUploadDocuments(getQuestion(question).labelName, option)">
-                            {{option}}
-                        </mat-option>
-                          </mat-select>
-                    </div>
-                    <div
-                        *ngIf="documentsToUpload[getQuestion(question).labelName] && documentsToUpload[getQuestion(question).labelName].length > 0">
-                        <div *ngFor="let document of documentsToUpload[getQuestion(question).labelName]">
-                            {{document}}
-                            <input #logofile1 type="file" accept="/*;capture=camera" style="display:none;"
-                            (change)="filesSelected($event, i, getQuestion(question), document)">
-                            <button class="upload-btn" (click)="logofile1.click()">Upload File</button>
-                        </div>
-                    </div> -->
+              
 
-
-                    <!-- <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div> -->
                     <div *ngFor="let img of selectedMessage.files;let i = index">
                         {{img.name}}
                         <i class="fa fa-times-circle" aria-hidden="true"
@@ -302,5 +275,5 @@
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="params.uuid">
             <button mat-button class="cs-btn bt1" (click)="!buttonDisable && onSubmit('submit')">Submit</button>
         </div>
-    </div>
+    </div> -->
 </section>
