@@ -41,13 +41,27 @@
                                         <div class="col-12"
                                             *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
                                             <div class="input-group" *ngIf="getQuestion(question).filePropertie.maxNoOfFile === 1">
-                                                <input type="text" class="form-control" placeholder="Upload Document"
+                                                <!-- <input type="text" class="form-control" placeholder="Upload Document"
                                                     aria-describedby="basic-addon2">
                                                 <div class="input-group-append" (click)="logofile.click()"><span
                                                         class="input-group-text"><i
                                                             class=" text-dark-50 flaticon-attachment"></i></span></div>
                                                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
+                                                (change)="filesSelected($event, getQuestion(question))"> -->
+                                                <a (click)="logofile.click()" class="btn btn-light btn-text-primary btn-hover-text-primary font-weight-bold mr-2">
+                                                    <i class="text-dark-50 flaticon-upload"></i>
+                                                    Upload File</a>
+                                                <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                                                 (change)="filesSelected($event, getQuestion(question))">
+
+
+
+
+                                                <div class="mt-3" *ngFor="let img of selectedMessage.files;let i = index">
+                                                    {{img.name}}
+                                                    <i class="fa fa-times-circle" aria-hidden="true"
+                                                        (click)="deleteTempImage(i, getQuestion(question).labelName)"></i>
+                                                </div>
                                             </div>
                                             <mat-form-field appearance="fill" class="w_100" *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
                                                 <mat-select [formControl]="toppings" multiple #deptsel
@@ -74,6 +88,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
 
@@ -91,6 +106,7 @@
                                                     {{value}}
                                                 </label>
                                             </div>
+                                            <div class="mt-2 text-danger">Please fill the fields</div>
 
                                         </div>
 
@@ -106,6 +122,7 @@
                                                     {{value}}
                                                 </label>
                                             </div>
+                                            <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
                                         <!-- for Text -->
@@ -116,6 +133,7 @@
                                                 [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                                                 [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
                                                 class="form-control1 form-control-solid" type="text">
+                                                <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
                                         <!-- for Number -->
@@ -126,6 +144,7 @@
                                                 [min]="getQuestion(question).numberPropertie.start"
                                                 [max]="getQuestion(question).numberPropertie.end"
                                                 class="form-control1 form-control-solid" type="number">
+                                                <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
                                         <!-- for Date -->
@@ -144,6 +163,7 @@
                                                 (input)="onSubmit()"
                                                 min="{{getDate(getQuestion(question).dateProperties.startDate) | date:'yyyy-MM-dd'}}"
                                             max="{{getDate(getQuestion(question).dateProperties.endDate) | date:'yyyy-MM-dd'}}">
+                                            <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
                                         <!-- for toggel btn(boolean) -->
@@ -161,6 +181,7 @@
                                                     <span></span>
                                                 </label>
                                             </span>
+                                            <div class="mt-2 text-danger">Please fill the fields</div>
                                         </div>
 
                                     </div>
@@ -276,4 +297,7 @@
             <button mat-button class="cs-btn bt1" (click)="!buttonDisable && onSubmit('submit')">Submit</button>
         </div>
     </div> -->
+
+
+
 </section>
