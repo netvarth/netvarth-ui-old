@@ -42,6 +42,9 @@ export class QuestionnaireComponent implements OnInit {
   toppings = new FormControl();
   // toppingList: string[] = ['Aadhar', 'PAN card', 'Voter ID', 'Bank book'];
   subscription: Subscription;
+  docu: any = [];
+  show_adhar = false;
+  show_rCard = false;
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -488,6 +491,25 @@ for (let error of errors) {
   }
 
   takeDoc(doc) {
-    console.log(doc);
+    this.show_adhar = false;
+    this.show_rCard = false;
+    this.docu = [];
+    for(let i = 0; i < doc.length; i++) {
+      console.log(doc[i]);
+      this.docu.push(doc[i]);
+    }
+    console.log(this.docu);
+    for(let j = 0; j < this.docu.length; j++) {
+      console.log(this.docu[j]);
+      switch(this.docu[j]) {
+      
+        case 'Adhar Card':
+            this.show_adhar = true;
+            break;
+        case ' Ration Card':
+            this.show_rCard = true;
+            break;
+      }
+    }
   }
 }

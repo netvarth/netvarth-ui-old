@@ -73,12 +73,25 @@
 
                                             <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
                                                 <div class="dropzone dropzone-default dropzone-primary dz-clickable"
-                                                    style="cursor:auto">
+                                                    style="cursor:auto" *ngIf="docu.length > 0">
                                                     <div
-                                                        class="dz-preview dz-processing dz-image-preview dz-error dz-complete">
+                                                        class="dz-preview dz-processing dz-image-preview dz-error dz-complete" *ngIf="show_adhar">
                                                         <div class="dz-image">
                                                             <img class="img_fit"
                                                                 src="https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                                                        </div>
+                                                        <div class="dz-error-mark">
+                                                            <a class="btn btn-icon btn-light-success btn-circle mr-2"
+                                                                style="cursor: pointer;"><i
+                                                                    class="text-dark-50 flaticon-upload"></i></a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        class="dz-preview dz-processing dz-image-preview dz-error dz-complete" *ngIf="show_rCard">
+                                                        <div class="dz-image">
+                                                            <img class="img_fit"
+                                                                src="https://cdn.pixabay.com/photo/2015/04/19/08/33/flower-729512__340.jpg">
                                                         </div>
                                                         <div class="dz-error-mark">
                                                             <a class="btn btn-icon btn-light-success btn-circle mr-2"
