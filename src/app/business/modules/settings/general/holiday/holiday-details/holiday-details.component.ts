@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-holiday-details',
@@ -61,6 +63,7 @@ export class HolidayDetailsComponent implements OnInit {
   action;
   holiday: any;
   selectedDate;
+  confirm_data: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -70,7 +73,8 @@ export class HolidayDetailsComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private dialog: MatDialog,
   ) {
     {
       this.activated_route.params.subscribe(
@@ -96,7 +100,7 @@ export class HolidayDetailsComponent implements OnInit {
                   this.getholiday(this.holiday_id).then(
                     (item) => {
                       this.holiday = item;
-                      this.selectedDate = this.holiday.startDay;
+                      this.selectedDate = this.holiday.holidaySchedule.startDay;
                       if (this.action === 'edit') {
                         this.createForm();
                       }
@@ -117,6 +121,7 @@ export class HolidayDetailsComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       selectdate: [{ value: '', disabled: (this.action === 'edit') ? true : false }, Validators.compose([Validators.required])],
+      enddate:[{ value: '', disabled: (this.action === 'edit') ? true : false }, Validators.compose([Validators.required])],
       reason: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDesc)])],
       starttime: [{ hour: 9, minute: 0 }, Validators.compose([Validators.required])],
       endtime: [{ hour: 18, minute: 0 }, Validators.compose([Validators.required])]
@@ -130,12 +135,13 @@ export class HolidayDetailsComponent implements OnInit {
 
   updateForm() {
     this.amForm.setValue({
-      'selectdate': this.holiday.startDay || null,
+      'selectdate': this.holiday.holidaySchedule.startDate || null,
       'reason': this.holiday.description || null,
+      'enddate':this.holiday.holidaySchedule.terminator.endDate || null,
       // tslint:disable-next-line:radix
-      'starttime': { hour: parseInt(moment(this.holiday.nonWorkingHours.sTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.holiday.nonWorkingHours.sTime, ['h:mm A']).format('mm')) },
+      'starttime': { hour: parseInt(moment(this.holiday.holidaySchedule.timeSlots[0].sTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.holiday.holidaySchedule.timeSlots[0].sTime, ['h:mm A']).format('mm')) },
       // tslint:disable-next-line:radix
-      'endtime': { hour: parseInt(moment(this.holiday.nonWorkingHours.eTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.holiday.nonWorkingHours.eTime, ['h:mm A']).format('mm')) }
+      'endtime': { hour: parseInt(moment(this.holiday.holidaySchedule.timeSlots[0].eTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.holiday.holidaySchedule.timeSlots[0].eTime, ['h:mm A']).format('mm')) }
     });
   }
 
@@ -159,16 +165,26 @@ export class HolidayDetailsComponent implements OnInit {
   }
 
   onSubmit(form_data) {
+    console.log(form_data);
     this.resetApiErrors();
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
     const today_curtime = curday.getHours() + ':' + curday.getMinutes();
     let startdate;
+    let end_date;
     if (this.action === 'edit') {
-      startdate = this.holiday.startDay;
+      // startdate = form_data.selectdate;
+      // end_date = form_data.enddate;
+      startdate =  this.holiday.holidaySchedule.startDate;
+      end_date = this.holiday.holidaySchedule.terminator.endDate;
     } else {
       startdate = form_data.selectdate;
+      end_date = form_data.enddate;
     }
+    // convert end-date to required format    
+    const e_date = new Date(end_date);
+    const enddate_format = moment(e_date).format('YYYY-MM-DD');
+
     // convert date to required format
     const date = new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
@@ -203,14 +219,30 @@ export class HolidayDetailsComponent implements OnInit {
       return;
     }
     const post_data = {
-      'nonWorkingHours': {
-        'sTime': starttime_format,
-        'eTime': endtime_format
-      },
-      'startDay': date_format,
-      'description': reason
+      // 'nonWorkingHours': {
+      //   'sTime': starttime_format,
+      //   'eTime': endtime_format
+      // },
+      // 'startDay': date_format,
+      // 'description': reason
+      'holidaySchedule': {
+        "recurringType": "Weekly",
+        "repeatIntervals": [1, 2, 3, 4, 5, 6, 7],
+        'startDate':  date_format,
+        'terminator': {
+        "endDate": enddate_format,
+        "noOfOccurance": 0
+        },
+        "timeSlots": [{
+        "sTime": starttime_format,
+        "eTime": endtime_format
+        }]
+        },
+        'description': reason
+
     };
     if (this.action === 'edit') {
+      console.log(post_data);
       this.editHoliday(post_data);
     } else if (this.action === 'add') {
       this.addHoliday(post_data);
@@ -221,11 +253,39 @@ export class HolidayDetailsComponent implements OnInit {
     this.resetApiErrors();
     this.api_loading = true;
     this.provider_services.addHoliday(post_data)
-      .subscribe(
-        () => {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_CREATED'));
-          this.api_loading = false;
-          this.router.navigate(['provider', 'settings', 'general', 'holidays']);
+      .subscribe((data: any) => {
+        console.log(data);
+        this.confirm_data = data
+        if(this.confirm_data.apptCount >0 || this.confirm_data.waitlistCount >0 ){
+        const canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+       width: '50%',
+       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+       disableClose: true,
+       data: {
+         'message': data.msg,
+         'heading': 'Confirm',
+         'type': 'yes/no'
+       }
+     });
+     canceldialogRef.afterClosed().subscribe(result => {
+      let status = 0;
+      status = result;
+      if (status === 1) {
+        console.log(result);
+        this.provider_services.Holidaywaitlist(this.confirm_data.holidayId)
+          .subscribe(
+            () => {
+                   },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
+    });
+    }
+    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_CREATED'));
+    this.api_loading = false;
+    this.router.navigate(['provider', 'settings', 'general', 'holidays']);
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -238,6 +298,7 @@ export class HolidayDetailsComponent implements OnInit {
     this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.holiday.id;
+    console.log(post_data);
     this.provider_services.editHoliday(post_data)
       .subscribe(
         () => {

@@ -117,7 +117,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-    const date = new Date(holiday.startDay);
+    const date = new Date(holiday.holidaySchedule.startDate);
     // const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
     const date_format = this.dateformat.transformToMonthlyDate(date);
     this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
