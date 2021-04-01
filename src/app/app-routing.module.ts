@@ -12,7 +12,6 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
-// import { TwilioService } from './shared/services/twilio-service';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
@@ -57,9 +56,6 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
     })],
-    // providers: [
-    //     TwilioService
-    // ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -34,3 +34,25 @@ button.menu-icon:hover {
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
   }
+
+  .tele-img {
+      width: 80%;
+  }
+
+  .consumer-dash .fit_in {
+      cursor: default !important;
+  }
+
+  .w-100 {
+      width: 100% !important;
+  }
+  .pad-5 {
+      padding:5px !important;
+  }
+  .no-bookings {
+      padding:25px !important;
+  }
+  .no-bookings h4 {
+    line-height: 1.5;
+    text-align: center;
+  }

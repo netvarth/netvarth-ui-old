@@ -8,7 +8,10 @@ export class TeleBooking implements Deserializable {
     encId: string;
     bookingType: string;
     service: string;
-    provider: string;
+    userName: string;
+    userId: string;
+    businessName: string;
+    businessId: string;
     id: string;
     teleMedia: string;
     teleMode: string;
@@ -20,7 +23,7 @@ export class TeleBooking implements Deserializable {
     mapUrl: string;
 
     constructor(bookingDate: string, bookingTime: string, bookingWindow: string, token: string, encId: string, bookingType: string,
-        service: string, provider: string, id: string, teleMedia: string, teleMode: string, teleUrl: string, 
+        service: string, businessName: string, businessId: string, userName: string, userId: string, id: string, teleMedia: string, teleMode: string, teleUrl: string, 
         bookingStatus: string, description: string, bookingFor: string, location: string, mapUrl: string) {
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
@@ -28,7 +31,10 @@ export class TeleBooking implements Deserializable {
         this.encId = encId;
         this.bookingType = bookingType;
         this.service = service;
-        this.provider = provider;
+        this.userName = userName;
+        this.userId = userId;
+        this.businessName = businessName;
+        this.businessId = businessId;
         this.id = id;
         this.teleMedia = teleMedia;
         this.teleMode = teleMode;
@@ -39,6 +45,7 @@ export class TeleBooking implements Deserializable {
         this.location = location;
         this.mapUrl = mapUrl;
         this.token = token;
+        
     }
 
     deserialize(input: any) {

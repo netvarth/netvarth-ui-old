@@ -9,169 +9,28 @@
 
 </header>
 <section *ngIf="isLoggedIn">
-    <div class="content settings  checkin-details">
-        <div class="row card">
+    <div class="content settings container checkin-details">
+        <div class="card no-padding-small">
             <div class="col-md-12 no-padding">
-                <div class="col-md-12">                    
+                <div class="col-md-12 ">
                     <!-- graphics -->
-                    <div class="graphics-div">                        
+                    <div class="graphics-div">
                         <span>
                             <img class="myjaldee-bg" _ngcontent-ywv-c30="" src="assets/images/myjaldee/Group92.png"
                                 style="width: 200px;">
                         </span>
-                    </div> 
-                    <h1 class="tel-serv-a mgn-up-20">Your Meeting Room</h1>       
-                    <p>List all of your schedule meetings</p>                               
+                    </div>
+                    <h1 class="tel-serv-a mgn-up-20">Tele Home</h1>
+                    <p>List all of your virtual scheduled meetings</p>
                 </div>
                 <div class="col-md-12 no-padding">
-                    <hr/>
+                    <hr />
                 </div>
-                <div class="col-md-7 col-xs-12 col-sm-12  no-padding-small" *ngIf="showMeetngDetails">
-                    <section class="no-padding-small cust-book-details">
-                        <div class="content p0 comn-cls">
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <!-- <div class="panel-heading top-row ">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                    
-                                        </div>
-                                    </div> -->
-                                    <div class="panel-body no-padding">
-                                        <div class="c-outer m0">
-                                            <div
-                                                class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                <!-- Title with back option -->
-                                                <div class="card title-gb">
-                                                    <h5 class="mgn-up-10 index-head">Booking Details
-                                                        <!-- <a
-                                                            class="pull-left mgn-rt-20 back-btn" (click)="gotoPrev()"><i
-                                                                class="fa fa-arrow-left"></i></a> -->
-                                                    </h5>
-                                                </div>
-                                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                    <div class="card" *ngIf="!api_loading">
-                                                        <app-common-innerloading-spinner>
-                                                        </app-common-innerloading-spinner>
-                                                    </div>
-                                                    <div class="card" *ngIf="api_loading">
+                <div class="col-md-12 no-padding">                   
+                    <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small consumer-dash">
+                        <div class="grid-card">
 
-                                                        <!-- Header -->
-                                                        <div class="mgn-bt-20 temp-style index-head">
-                                                            <div class="pad-10">
-                                                                <!-- (click)="providerDetail(selectedBooking.provider)" -->
-                                                                <h3 class="custId-cursor head-color disp-flex"
-                                                                    >
-                                                                    {{selectedBooking.provider | capitalizeFirst}}
-                                                                </h3>
-                                                                <a class="loc-cls" [href]="selectedBooking.mapUrl"
-                                                                    target="_blank">
-                                                                    <i class="fa fa-map-marker"></i>
-                                                                    {{selectedBooking.location | capitalizeFirst}}
-                                                                </a>
-                                                                <!-- <div *ngIf="selectedBooking.provider"
-                                                                    class="mgn-up-10 usr-name">
-                                                                    <span>Provider : </span>
-                                                                    <span>
-                                                                        {{selectedBooking.provider | capitalizeFirst}}
-                                                                    </span>
-                                                                </div> -->
-                                                                <div class="mgn-up-10">
-                                                                    <i class="iconClass"></i>
-                                                                    <span class="serv-name">
-                                                                        {{selectedBooking.service | capitalizeFirst}}
-                                                                        <!-- <span
-                                                                            *ngIf="selectedBooking.service.deptName">({{selectedBooking.service.deptName}})
-                                                                        </span> -->
-                                                                        <!-- href="{{selectedBooking.service.virtualCallingModes[0].value}}" -->
-                                                                        <a *ngIf="selectedBooking.bookingStatus !== 'Cancelled' && (selectedBooking.teleMedia == 'GoogleMeet' || selectedBooking.service.teleMedia == 'Zoom')"
-                                                                            class="joinMeeting" [href]="selectedBooking.teleUrl" target="blank">Join
-                                                                            Meeting</a>
-                                                                        <a *ngIf="selectedBooking.bookingStatus !== 'Cancelled' &&  selectedBooking.teleMedia == 'VideoCall'"
-                                                                        class="joinMeeting" (click)="joinJaldeeVideo(selectedBooking)">Join
-                                                                        Meeting</a>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Content -->
-                                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
-                                                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
-                                                                <div class="each-item">
-                                                                    <span class="item-head">Booking for</span>
-                                                                    <span
-                                                                        class="item-label-val">{{selectedBooking.bookingFor
-                                                                        |
-                                                                        capitalizeFirst}}</span>
-                                                                </div>
-                                                                <div class="each-item">
-                                                                    <span class="item-head">Booking id</span>
-                                                                    <span
-                                                                        class="item-label-val">{{selectedBooking.encId}}</span>
-                                                                </div>
-                                                                <div class="each-item"
-                                                                    *ngIf="selectedBooking.phoneNumber">
-                                                                    <span class="item-head">Phone No</span>
-                                                                    <span
-                                                                        class="item-label-val">{{selectedBooking.countryCode}}
-                                                                        {{selectedBooking.phoneNumber}}</span>
-                                                                </div>                                                               
-                                                            </div>
-                                                            <div
-                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
-                                                                <span class="item-head chk-stats">Check your status <i
-                                                                        class="fa fa-hand-o-down"></i></span>
-                                                                <div class="mgn-up-10">
-                                                                     <ngx-qrcode id="print-section"
-                                                                        [elementType]="elementType" [value]="qr_value">
-                                                                    </ngx-qrcode>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Status and Date, Queue -->
-                                                        <div
-                                                            class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
-                                                            <div class="col-md-4 col-lg-4 col-xs-5 stats-item">
-                                                                <span class="status-label">STATUS</span>
-                                                                <span>
-                                                                    <div class="item-label-val">
-                                                                        {{selectedBooking.bookingStatus}}
-                                                                        <!-- {{check_in_statuses[selectedBooking.apptStatus |
-                                                                        capitalizeFirst]}} -->
-                                                                    </div>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-md-4 col-lg-4 col-xs-7 stats-item">
-                                                                <span class="status-label">DATE & TIME-WINDOW</span>
-                                                                <span
-                                                                    class="item-label-val">{{selectedBooking.bookingDate
-                                                                    |
-                                                                    date:newDateFormat}}</span>
-                                                                <span
-                                                                    class="item-label-val">{{selectedBooking.bookingWindow}}
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-md-2 col-lg-2 col-xs-6 stats-item">
-                                                                <span class="status-label">TIME</span>
-                                                                <span class="item-label-val">{{selectedBooking.bookingTime}}</span>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-5 col-xs-12 col-sm-12 no-padding-small consumer-dash">
-                    <div class="grid-card">
-
-                        <div class="lc4-1 stats-bar">
+                            <!-- <div class="lc4-1 stats-bar">
                             <div class="lt mgn-bt-10">
                                 <div>
                                     <span class="amount">
@@ -179,129 +38,159 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <div *ngFor="let gBooking of gBookings | keyvalue">
-                            <div class="lc4-1">
-                                <div class="lt mgn-bt-10 mgn-up-10">
-                                    <div>
-                                        <span class="amount">
-                                            <strong>{{gBooking.key | date: newDateFormat}}</strong>
-                                        </span>
+                        </div> -->
+                            <div *ngFor="let gBooking of gBookings | keyvalue; let i = index">
+                                <div class="lc4-1 stats-bar card">
+                                    <div class="lt mgn-bt-10 mgn-up-10">
+                                        <div>
+                                            <span class="amount" *ngIf="!isToday || i!=0">
+                                                <strong>{{gBooking.key | date: newDateFormat}}</strong>
+                                            </span>
+                                            <span class="amount" *ngIf="i == 0 && isToday">
+                                                <strong>Today</strong>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card pad-5">
-                                <mat-grid-list cols="1" rowHeight="240px" [gutterSize]="'10px'">
-                                    <mat-grid-tile *ngFor="let booking of gBookings[gBooking.key]" (click)="showMeetingDetails(booking)">
-                                        <ng-container >
-                                            <div
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-                                                <div *ngIf="booking.bookingType==='wl' && booking.token!==''" class="ribbon">&nbsp;&nbsp;Token
-                                                    {{booking.token}}
-                                                </div>
-                                                <!-- Icon -->
+                                <div class="card no-padding">
+                                    <mat-grid-list cols="1" rowHeight="240px" [gutterSize]="'10px'">
+                                        <mat-grid-tile *ngFor="let booking of gBookings[gBooking.key]">
+                                            <ng-container>
                                                 <div
-                                                    class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                    <div>
-                                                        <i style="width: 4rem;" class="fa appt-icon"
-                                                            [matTooltip]="'Appointment'" *ngIf="booking.bookingType==='appt'"></i>
-                                                        <i *ngIf="booking.token=='' && booking.bookingType==='wl'" style="width: 3.8rem;"
-                                                            class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
-                                                        <i *ngIf="booking.token!='' && booking.bookingType==='wl'" style="width: 3.8rem;"
-                                                            class="fa token-icon" [matTooltip]="'Token'"></i>
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                                    <div *ngIf="booking.bookingType==='wl' && booking.token!==''"
+                                                        class="ribbon">&nbsp;&nbsp;Token
+                                                        {{booking.token}}
                                                     </div>
-                                                </div>
-
-                                                <!-- more options -->
-                                                <div class="more_opt">
-                                                    <!-- (click)="stopprop($event)" -->
-                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                        class="menu-icon">
-                                                        <mat-icon>more_horiz</mat-icon>
-                                                    </button>
-                                                    <mat-menu #appMenu="matMenu">
-                                                        <!-- (click)="doCancelWaitlist(booking,'appointment')"  -->
-                                                        <button mat-menu-item
-                                                            *ngIf="booking.bookingStatus == 'Confirmed' || booking.bookingStatus == 'Arrived' || booking.bookingStatus=='prepaymentPending'">
-                                                            <i class="fa cross-icon"></i>
-                                                            Cancel</button>
-                                                        <!-- (click)="addWaitlistMessage(booking,'appt')" -->
-                                                        <button mat-menu-item>
-                                                            <i class="fa chat-icon"></i>
-                                                            <!-- {{send_msg_cap}} -->Send Message
-                                                        </button>
-                                                        <!-- (click)="getMeetingDetails(booking,'appt')"                                                                                                                              -->
-                                                        <button mat-menu-item *ngIf="booking.bookingStatus !== 'Completed'
-                                                && booking.bookingStatus !== 'Cancelled'">
-                                                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                                            Meeting details
-                                                        </button>
-                                                    </mat-menu>
-                                                </div>
-
-                                                <!-- Basic info -->
-                                                <div
-                                                    class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                    <div class="ordr_no font-size-9" *ngIf="booking.bookingType==='appt'">{{booking.bookingTime}}</div>
-                                                    <div class="ordr_no font-size-9" *ngIf="booking.bookingType!=='appt'">{{booking.bookingWindow}}</div>
-                                                    <div class="sp_name wrap_txt">
-                                                        {{booking.provider || '' | capitalizeFirst}}</div>
-                                                </div>
-
-                                                <!-- Extra Info -->
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                                    <!-- Icon -->
                                                     <div
-                                                        class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                        <div class="pull-left col-xs-6 no-padding">
-                                                            <div class="prov_lbl">Service</div>
-                                                            <div class="mgn-tp-8 prov_nme disply-flex ">
-                                                                <span class="module line-clamp-1">
-                                                                    <span>
-                                                                        <i class="fa phon-icon"
-                                                                            *ngIf="booking.teleMedia === 'Phone'"></i>
-                                                                        <i class="fa meet-icon"
-                                                                            *ngIf="booking.teleMedia === 'GoogleMeet'"></i>
-                                                                        <i class="fa zoom-icon"
-                                                                            *ngIf="booking.teleMedia === 'Zoom'"></i>
-                                                                        <i class="fa wtsapaud-icon"
-                                                                            *ngIf="booking.teleMedia === 'WhatsApp' && booking.teleMode ==='audio'"></i>
-                                                                        <i class="fa wtsapvid-icon"
-                                                                            *ngIf="booking.teleMedia === 'WhatsApp' && booking.teleMode ==='video'"></i>
-                                                                    </span>
-                                                                    {{booking.service | capitalizeFirst}}</span>
+                                                        class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
+                                                        <div>
+                                                            <i style="width: 4rem;" class="fa appt-icon"
+                                                                [matTooltip]="'Appointment'"
+                                                                *ngIf="booking.bookingType==='appt'"></i>
+                                                            <i *ngIf="booking.token=='' && booking.bookingType==='wl'"
+                                                                style="width: 3.8rem;" class="fa chckn-icon"
+                                                                [matTooltip]="'Check-in'"></i>
+                                                            <i *ngIf="booking.token!='' && booking.bookingType==='wl'"
+                                                                style="width: 3.8rem;" class="fa token-icon"
+                                                                [matTooltip]="'Token'"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- more options -->
+                                                    <div class="more_opt">
+                                                        <!-- (click)="stopprop($event)" -->
+                                                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                            class="menu-icon">
+                                                            <mat-icon>more_horiz</mat-icon>
+                                                        </button>
+                                                        <mat-menu #appMenu="matMenu">
+                                                            <!-- (click)="doCancelWaitlist(booking,'appointment')"  -->
+                                                            <!-- <button mat-menu-item
+                                                                *ngIf="booking.bookingStatus == 'Confirmed' || booking.bookingStatus == 'Arrived' || booking.bookingStatus=='prepaymentPending'">
+                                                                <i class="fa cross-icon"></i>
+                                                                Cancel</button> -->
+                                                            <!-- (click)="addWaitlistMessage(booking,'appt')" -->
+                                                            <button mat-menu-item (click)="sendMessage(booking)">
+                                                                <i class="fa chat-icon"></i>
+                                                                <!-- {{send_msg_cap}} -->Send Message
+                                                            </button>
+                                                            <button mat-menu-item (click)="viewBooking(booking)">
+                                                                <i class="fa eye-icon"></i>
+                                                                <!-- {{send_msg_cap}} -->View Details
+                                                            </button>
+                                                            <!-- (click)="getMeetingDetails(booking,'appt')"                                                                                                                              -->
+                                                            <!-- <button mat-menu-item *ngIf="booking.bookingStatus !== 'Completed'
+                                                && booking.bookingStatus !== 'Cancelled'">
+                                                                <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                                                Meeting details
+                                                            </button> -->
+                                                        </mat-menu>
+                                                    </div>
+
+                                                    <!-- Basic info -->
+                                                    <div
+                                                        class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                        <div class="ordr_no font-size-9"
+                                                            *ngIf="booking.bookingType==='appt'">{{booking.bookingTime}}
+                                                        </div>
+                                                        <div class="ordr_no font-size-9"
+                                                            *ngIf="booking.bookingType!=='appt'">
+                                                            {{booking.bookingWindow}}</div>
+                                                        <div class="sp_name wrap_txt">
+                                                            {{booking.businessName || '' | capitalizeFirst}}</div>
+                                                    </div>
+
+                                                    <!-- Extra Info -->
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                                        <div
+                                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                            <div class="pull-left col-xs-6 no-padding">
+                                                                <div class="prov_lbl">Service</div>
+                                                                <div class="mgn-tp-8 prov_nme disply-flex ">
+                                                                    <span class="module line-clamp-1">
+                                                                        <span>
+                                                                            <i class="fa phon-icon"
+                                                                                *ngIf="booking.teleMedia === 'Phone'"></i>
+                                                                            <i class="fa meet-icon"
+                                                                                *ngIf="booking.teleMedia === 'GoogleMeet'"></i>
+                                                                            <i class="fa zoom-icon"
+                                                                                *ngIf="booking.teleMedia === 'Zoom'"></i>
+                                                                            <i class="fa wtsapaud-icon"
+                                                                                *ngIf="booking.teleMedia === 'WhatsApp' && booking.teleMode ==='audio'"></i>
+                                                                            <i class="fa wtsapvid-icon"
+                                                                                *ngIf="booking.teleMedia === 'WhatsApp' && booking.teleMode ==='video'"></i>
+                                                                        </span>
+                                                                        {{booking.service | capitalizeFirst}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="pull-right col-xs-6">
+                                                                <div class="prov_lbl">Appointment for</div>
+                                                                <div class="prov_nme"> {{booking.bookingFor}}</div>
                                                             </div>
                                                         </div>
-                                                        <div class="pull-right col-xs-6">
-                                                            <div class="prov_lbl">Appointment for</div>
-                                                            <div class="prov_nme"> {{booking.bookingFor}}</div>
+                                                        <div
+                                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5" >
+                                                            <div class="pull-left col-xs-6 no-padding" *ngIf="booking.userName">
+                                                                <div class="prov_lbl">Provider</div>
+                                                                <div class="prov_nme">{{booking.userName}}</div>
+                                                            </div>
+                                                            <div class="col-xs-6 " [class.no-padding]="!booking.userName">
+                                                                <div class="prov_lbl">Status</div>
+                                                                <div class="prov_nme">{{booking.bookingStatus}}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
-                                                        <div class="pull-left">
-                                                            <div class="prov_lbl">Provider</div>
-                                                            <div class="prov_nme">{{booking.provider}}</div>
+
+                                                    <!-- Actions and status -->
+                                                    <mat-grid-tile-footer>
+                                                        <!-- [class]="getBookingStatusClass(booking.bookingStatus)" -->
+                                                        <div class="book_stats mgn-up-20 w-100">
+                                                            <!-- <span *ngIf="booking.bookingStatus !== 'Arrived'">{{booking.bookingStatus}}</span> -->
+                                                            <span class="pull-right" *ngIf="booking.teleMedia=== 'VideoCall' || booking.teleMedia=== 'GoogleMeet' || booking.teleMedia=== 'Zoom'">
+                                                                <a  *ngIf="booking.teleMedia=== 'VideoCall'">
+                                                                    <button mat-flat-button class="btns pad-5" (click)="joinJaldeeVideo(booking)">Join Video Consultation</button>
+                                                                </a>
+                                                                <a *ngIf="booking.teleMedia=== 'Zoom' || booking.teleMedia=== 'GoogleMeet'" [href]="booking.teleUrl" target="_blank">
+                                                                    <button mat-flat-button class="btns pad-5" >Join Video Consultation</button>
+                                                                </a>
+                                                            </span>
                                                         </div>
-                                                    </div>
+                                                    </mat-grid-tile-footer>
                                                 </div>
-
-                                                <!-- Actions and status -->
-                                                <mat-grid-tile-footer>
-                                                    <!-- [class]="getBookingStatusClass(booking.bookingStatus)" -->
-                                                    <div class="book_stats mgn-up-20">
-                                                        <span
-                                                            *ngIf="booking.bookingStatus !== 'Arrived'">{{booking.bookingStatus}}</span>
-                                                    </div>
-                                                </mat-grid-tile-footer>
-
-                                            </div>
-                                        </ng-container>
-                                        <!-- Checkins -->
-                                    </mat-grid-tile>
-                                </mat-grid-list>
+                                            </ng-container>
+                                            <!-- Checkins -->
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
+                                </div>
                             </div>
+                            <div *ngIf="noBookings" class="col-md-12 no-bookings"><h4>Currently you have no scheduled meetings</h4></div>
                         </div>
-                    </div>
+                    </div>  
+                    <div class="col-md-6 col-xs-12 col-sm-12  no-padding-small text-center">
+                        <img src="../../../../assets/images/video-conference.png" class="tele-img">
+                    </div>                  
                 </div>
             </div>
         </div>

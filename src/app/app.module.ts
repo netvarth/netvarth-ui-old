@@ -102,6 +102,7 @@ import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
+import { BookingService } from './shared/services/booking-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -234,6 +235,7 @@ export function init_app(globalService: GlobalService) {
     FileService,
     LivetrackService,
     TeleBookingService,
+    BookingService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
