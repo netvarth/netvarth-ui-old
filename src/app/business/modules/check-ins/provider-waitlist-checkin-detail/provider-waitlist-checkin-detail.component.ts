@@ -18,7 +18,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
-  templateUrl: './provider-waitlist-checkin-detail.component.html'
+  templateUrl: './provider-waitlist-checkin-detail.component.html',
+  styleUrls: ['./provider-details.component.css']
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
