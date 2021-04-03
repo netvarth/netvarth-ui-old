@@ -5,7 +5,8 @@ import {  Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-qrcodegenerator',
-  templateUrl: './qrcodegeneratordetail.component.html'
+  templateUrl: './qrcodegeneratordetail.component.html',
+  styleUrls: ['./qrcodegeneratordetail.component.css']
 })
 export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   elementType = 'url';
