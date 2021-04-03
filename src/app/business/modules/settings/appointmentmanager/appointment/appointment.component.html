@@ -48,10 +48,10 @@
                                             <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                                                 <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value,selectedMode)"></i> -->
-                                                <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3"
+                                                <button class="create_new_button cs-btn bt3"
                                                     (click)="searchCustomer(searchForm.value)">Find</button>
-                                                <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
-                                                    (click)="confirmApptBlock()">Confirm</button>
+                                                <!-- <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
+                                                    (click)="confirmApptBlock()">Confirm</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +66,46 @@
                                     here.</a>
                             </div> -->
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
+                                <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
+                                    <thead>
+                                      <tr class="text-left text-uppercase">
+                                        <th style="min-width: 100px;">Name</th>
+                                        <th style="min-width: 100px;">Id</th>
+                                        <th style="min-width: 100px;">Phone</th>
+                                        <th style="min-width: 100px;" class="hiddencontent">Email</th>
+                                        <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr class="row_data border-bottom pointer-cursor" (click)="getProviderQuestionnaire()">
+                                        <td>
+                                          <span class="text-dark-75 d-block">{{customer_data.firstName}}
+                                            {{customer_data.lastName}}</span>
+                                        </td>
+                                        <td>
+                                          <span class="text-dark-75 d-block" *ngIf="customer_data.jaldeeId">
+                                            {{customer_data.jaldeeId}}
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <span class="text-dark-75 d-block" *ngIf="customer_data.phoneNo">
+                                            {{customer_data.countryCode}} {{customer_data.phoneNo}}
+                                          </span>
+                                        </td>
+                                        <td class="hiddencontent">
+                                          <span class="text-dark-75 d-block" *ngIf="customer_data.email">
+                                            {{customer_data.email}}
+                                          </span>
+                                        </td>
+                                        <td class="hiddencontent">
+                                          <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
+                                            {{customer_data.dob | date:dateFormat}}
+                                          </span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                <!-- <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
                                     *ngIf="customer_data.jaldeeId">
                                     <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
                                     <div>{{customer_data.jaldeeId}}</div>
@@ -90,7 +129,7 @@
                                     *ngIf="customer_data.dob">
                                     <div><b>DOB</b></div>
                                     <div>{{customer_data.dob | date : dobFormat}}</div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                                 <div class="or-style">OR</div>
@@ -703,10 +742,12 @@
 
                 <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
                 [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-                <div class="waitlist-action mgn-bt-20 mgn-up-30"> <button mat-button class="cs-btn bt1"
-                    [class.confirmbtn]="step == 1" (click)="saveCheckin()"
-                    [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>
-            </div>
+                <div class="waitlist-action mgn-bt-20 mgn-up-10">
+                    <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
+                      [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+                      <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="validateQnr()"
+                      [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+                  </div>
               </div>
         </div>
         <div class="clearfix"></div>

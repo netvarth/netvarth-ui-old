@@ -17,10 +17,13 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-provider-checkin',
-    templateUrl: './provider-checkin.component.html'
+    templateUrl: './provider-checkin.component.html',
+    styleUrls: ['../../../../../assets/css/style.bundle.css']
 })
 export class ProviderCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;
@@ -232,13 +235,13 @@ export class ProviderCheckinComponent implements OnInit {
     questionnaireList: any = [];
     channel;
     questionAnswers;
-    serviceId;
     bookingMode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
+        private dialog: MatDialog,
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices,
         private snackbarService: SnackbarService,
@@ -256,10 +259,11 @@ export class ProviderCheckinComponent implements OnInit {
                 this.source = qparams.source;
             }
             if (qparams.serviceId) {
-                this.serviceId = qparams.serviceId;
+                this.sel_ser = qparams.serviceId;
             }
             if (qparams.waitlistMode) {
                 this.bookingMode = qparams.waitlistMode;
+                this.channel = (this.bookingMode === 'PHONE_CHECKIN') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
@@ -420,8 +424,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.qParams['checkinType'] = this.checkinType;
         if (this.source === 'waitlist-block') {
             this.qParams['source'] = this.source;
-            this.qParams['serId'] = this.serviceId;
-            this.qParams['bookingMode'] = this.bookingMode;
+            this.qParams['serId'] = this.sel_ser;
+            this.qParams['bookingMode'] = this.channel;
             this.qParams['uid'] = this.uid;
             this.qParams['showtoken'] = this.showtoken;
             if (this.virtualServicemode && this.virtualServicenumber) {
@@ -537,6 +541,22 @@ export class ProviderCheckinComponent implements OnInit {
                 );
         }
     }
+    confirmWaitlistBlockPopup() {
+        const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Are you sure want to add',
+              'type': 'yes/no'
+            }
+          });
+          removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.confirmWaitlistBlock();
+            }
+        });
+    }
     confirmWaitlistBlock() {
         const post_data = {
             'ynwUuid': this.uid,
@@ -555,7 +575,11 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'check-ins']);
+                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.uid);
+                    } else {
+                        this.router.navigate(['provider', 'check-ins']);
+                    }
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -2021,6 +2045,7 @@ export class ProviderCheckinComponent implements OnInit {
     }
     getQuestionAnswers(event) {
         console.log(event);
+        this.questionAnswers = null;
         this.questionAnswers = event;
         console.log(Object.keys(this.questionAnswers).length);
     }
@@ -2028,18 +2053,35 @@ export class ProviderCheckinComponent implements OnInit {
         this.showQuestionnaire = !this.showQuestionnaire;
     }
     getProviderQuestionnaire() {
-        this.providerService.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        let consumerId;
+        if (this.showBlockHint) {
+            consumerId = this.customer_data.id;
+        } else {
+            consumerId = this.waitlist_for[0].id;
+        }
+        this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
             console.log(data);
             this.questionnaireList = data;
+            if (this.showBlockHint) {
+            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                this.showQuestionnaire = true;
+            } else {
+                this.confirmWaitlistBlockPopup();
+            }
+        }
         });
     }
-    validateQnr(post_Data) {
+    validateQnr(post_Data?) {
         if (this.questionAnswers && this.questionAnswers.answers) {
             console.log(this.questionAnswers.answers);
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                console.log(data.length);
                 if (data.length === 0) {
+                    if (!this.showBlockHint) {
                 this.addCheckInProvider(post_Data);
+                    } else {
+this.confirmWaitlistBlock();
+                    }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

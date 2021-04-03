@@ -10,11 +10,11 @@
 </section>
 <section>
   <div class="content loc-list p-checkin ynw-common-form-nm">
-    <div class="col-md-12 no-padding">
+    <div class="col-md-12">
       <div class="row">
         <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
           <div class="copy locd">
-            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+            <div class="lbl col-sm-12 col-md-12 col-lg-12">
               <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -34,18 +34,57 @@
                           {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3"
+                        <button class="create_new_button cs-btn bt3"
                           (click)="searchCustomer(searchForm.value)">Find</button>
-                        <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
-                          (click)="confirmWaitlistBlock()">Confirm</button>
+                        <!-- <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
+                          (click)="confirmWaitlistBlock()">Confirm</button> -->
                       </div>
                     </div>
                   </div>
                 </div>
               </form>
               <div class="clearfix"></div>
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
-                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.jaldeeId">
+              <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
+                <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
+                  <thead>
+                    <tr class="text-left text-uppercase">
+                      <th style="min-width: 100px;">Name</th>
+                      <th style="min-width: 100px;">Id</th>
+                      <th style="min-width: 100px;">Phone</th>
+                      <th style="min-width: 100px;" class="hiddencontent">Email</th>
+                      <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="row_data border-bottom pointer-cursor" (click)="getProviderQuestionnaire()">
+                      <td>
+                        <span class="text-dark-75 d-block">{{customer_data.firstName}}
+                          {{customer_data.lastName}}</span>
+                      </td>
+                      <td>
+                        <span class="text-dark-75 d-block" *ngIf="customer_data.jaldeeId">
+                          {{customer_data.jaldeeId}}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="text-dark-75 d-block" *ngIf="customer_data.phoneNo">
+                          {{customer_data.countryCode}} {{customer_data.phoneNo}}
+                        </span>
+                      </td>
+                      <td class="hiddencontent">
+                        <span class="text-dark-75 d-block" *ngIf="customer_data.email">
+                          {{customer_data.email}}
+                        </span>
+                      </td>
+                      <td class="hiddencontent">
+                        <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
+                          {{customer_data.dob | date:newDateFormat}}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.jaldeeId">
                   <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
                   <div>{{customer_data.jaldeeId}}</div>
                 </div>
@@ -65,7 +104,7 @@
                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.dob">
                   <div><b>DOB</b></div>
                   <div>{{customer_data.dob | date: dobFormat}}</div>
-                </div>
+                </div> -->
               </div>
               <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                 <div class="or-style">OR</div>
@@ -112,8 +151,8 @@
                 </div>
               </div>
             </div>
-            <div class="lbr col-sm-12 col-md-4 col-lg-4">
-            </div>
+            <!-- <div class="lbr col-sm-12 col-md-4 col-lg-4">
+            </div> -->
           </div>
         </div>
       </div>
@@ -429,8 +468,9 @@
             <ng-container *ngIf="checkinLabel && queuejson.length > 0 && servicesjson.length > 0">
               <div class="waitlist-action mgn-bt-20 mgn-up-10">
                 <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="showQnr()"
-                  [disabled]="api_loading" *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
-                  <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
+                  [disabled]="api_loading"
+                  *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
+                <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
                   [disabled]="api_loading" *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
               </div>
             </ng-container>
@@ -621,16 +661,18 @@
       <div class="card" *ngIf="showQuestionnaire">
         <div class="mgn-bt-10 quest-head pad-10">
           Please provide us with a little more information complete your booking
-      </div>
+        </div>
         <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-        [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-        
-        
-          <div class="waitlist-action mgn-bt-20 mgn-up-10">
-            <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
-              [disabled]="api_loading">{{showCheckinButtonCaption()}}</button>
-          </div>
-          
+          [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+
+
+        <div class="waitlist-action mgn-bt-20 mgn-up-10">
+          <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
+            [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+            <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="validateQnr()"
+            [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+        </div>
+
       </div>
     </div>
     <div class="clearfix"></div>

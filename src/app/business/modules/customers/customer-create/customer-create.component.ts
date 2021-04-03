@@ -1048,7 +1048,7 @@ this.validateQnr(form_data);
   getProviderQuestionnaire(form_data) {
     this.loaded = false;
     this.questionnaireList = [];
-    this.bookingMode = (this.bookingMode === 'WALK_IN_APPOINTMENT' || this.bookingMode === 'WALK_IN_CHECKIN') ? 'WALKIN' : 'PHONEIN';
+    // this.bookingMode = (this.bookingMode === 'WALK_IN_APPOINTMENT' || this.bookingMode === 'WALK_IN_CHECKIN') ? 'WALKIN' : 'PHONEIN';
     this.provider_services.getProviderQuestionnaire(this.serviceId, this.newCustomerId, this.bookingMode).subscribe(data => {
         console.log(data);
         this.questionnaireList = data;

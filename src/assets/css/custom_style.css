@@ -14097,3 +14097,8 @@ padding-left: 15px !important;
     transition: all .3s;
     border-radius: 3px;
 }
+@media(max-width: 600px) {
+  .hiddencontent {
+    display: none;
+  }
+}
