@@ -23,6 +23,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 
 
 @Component({
@@ -162,6 +163,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('firstStep',{static: false}) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
+  couponStatuses: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -395,6 +397,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           console.log(data);
           this.cartDetails = data;
+        //   if(this.cartDetails.systemNote){
+        //   this.couponStatuses = JSON.parse(this.cartDetails.systemNote);
+        //   console.log(this.couponStatuses); 
+        // }
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -506,38 +512,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
       if (found) {
-        // if (this.orderType !== 'SHOPPINGLIST') {
-        //   let delivery = false;
-        //   if (this.delivery_type === 'home') {
-        //     delivery = true;
-        //   } else {
-        //     delivery = false;
-        //   }
-        //   const passdata = {
-        //     'catalog': {
-        //       'id': this.catalog_Id
-        //     },
-        //     'orderItem': this.getOrderItems(),
-        //     'homeDelivery': delivery,
-        //     'coupons': this.selected_coupons,
-        //     'orderDate': this.sel_checkindate
-        //   };
-        //   this.shared_services.getCartdetails(this.account_id, passdata)
-        //     .subscribe(
-        //       data => {
-        //         console.log(data);
-        //         this.cartDetails = data;
-        //         console.log(this.cartDetails.systemNote);                
-        //       },
-        //       error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //       }
-        //     );
-        // }else{
         this.couponvalid = true;
-        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+       // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
         this.action = '';
-     // }
+        if (this.orderType !== 'SHOPPINGLIST') {
+        this.getCartDetails();
+        }
       } else {
         this.api_cp_error = 'Coupon invalid';
       }
@@ -549,6 +529,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   removeJCoupon(i) {
     this.selected_coupons.splice(i, 1);
     this.couponsList.splice(i, 1);
+    if (this.orderType !== 'SHOPPINGLIST') {
+      this.getCartDetails();
+      }
   }
   removeCoupons() {
     this.selected_coupons = [];
@@ -1396,6 +1379,22 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   handleQueueSelection(queue, index) {
     this.queue = queue;
+  }
+
+  showJCCouponNote(coupon) {
+    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+    } else {
+      if (coupon.value.value === '0.0') {
+        this.dialog.open(JcCouponNoteComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+          disableClose: true,
+          data: {
+            jCoupon: coupon
+          }
+        });
+      }
+    }
   }
 }
 
