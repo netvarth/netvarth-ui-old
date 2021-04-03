@@ -271,6 +271,8 @@ export class AppointmentComponent implements OnInit {
             if (qparams.apptMode) {
                 this.bookingMode = qparams.apptMode;
             }
+            console.log(this.serviceId);
+            console.log(this.bookingMode);
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
                 if (this.apptType === 'PHONE_IN_APPOINTMENT') {
@@ -400,7 +402,7 @@ export class AppointmentComponent implements OnInit {
         if (this.source === 'appt-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
-            this.qParams['serviceId'] = this.serviceId;
+            this.qParams['serId'] = this.serviceId;
             this.qParams['bookingMode'] = this.bookingMode;
             if (this.virtualServicemode && this.virtualServicenumber) {
                 this.qParams['virtualServicemode'] = this.virtualServicemode;

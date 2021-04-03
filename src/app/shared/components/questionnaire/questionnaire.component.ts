@@ -140,6 +140,8 @@ for (let error of errors) {
     console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
+    this.answers = {};
+    console.log(this.answers);
     if (!type) {
       for (let answ of answerData) {
         console.log(answ);

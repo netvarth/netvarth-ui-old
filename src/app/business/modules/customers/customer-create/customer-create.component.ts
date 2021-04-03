@@ -133,6 +133,7 @@ export class CustomerCreateComponent implements OnInit {
   showBookingQnr = false;
   newCustomerId;
   qnrSource = 'customer-create';
+  loaded = true;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -170,8 +171,8 @@ export class CustomerCreateComponent implements OnInit {
       if (qparams.bookingMode) {
         this.bookingMode = qparams.bookingMode;
       }
-      if (qparams.serviceId) {
-        this.serviceId = qparams.serviceId;
+      if (qparams.serId) {
+        this.serviceId = qparams.serId;
       }
       if (qparams.virtualServicemode) {
         this.virtualServicemode = qparams.virtualServicemode;
@@ -475,7 +476,6 @@ export class CustomerCreateComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-    this.showBookingQnr = false;
 if (this.questionnaireList && this.questionnaireList.labels) {
 this.validateQnr(form_data);
 } else {
@@ -1039,25 +1039,29 @@ this.validateQnr(form_data);
     this.showMoreHistory = !this.showMoreHistory;
   }
   getCustomerQnr() {
+    this.questionnaireList = [];
     this.provider_services.getCustomerQuestionnaire().subscribe(data => {
       this.questionnaireList = data;
       this.qnrLoaded = true;
     });
   }
   getProviderQuestionnaire(form_data) {
+    this.loaded = false;
+    this.questionnaireList = [];
     this.bookingMode = (this.bookingMode === 'WALK_IN_APPOINTMENT' || this.bookingMode === 'WALK_IN_CHECKIN') ? 'WALKIN' : 'PHONEIN';
     this.provider_services.getProviderQuestionnaire(this.serviceId, this.newCustomerId, this.bookingMode).subscribe(data => {
         console.log(data);
         this.questionnaireList = data;
         if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.showBookingQnr = true;
+          this.loaded = true;
           if (this.source === 'waitlist-block') {
             this.qnrSource = 'proCheckin';
           } else {
             this.qnrSource = 'proAppt';
           }
         } else {
-          this.goBackAfterAdd(form_data, data);
+          this.goBackAfterAdd(form_data, this.newCustomerId);
         }
     });
 }
@@ -1086,6 +1090,7 @@ this.validateQnr(form_data);
       if (this.source === 'appt-block' || this.source === 'waitlist-block') {
         console.log(this.serviceId);
         console.log(this.bookingMode);
+        this.questionAnswers = null;
         this.getProviderQuestionnaire(form_data);
       } else {
       this.goBackAfterAdd(form_data, id);
@@ -1099,6 +1104,7 @@ this.validateQnr(form_data);
       if (this.source === 'appt-block' || this.source === 'waitlist-block') {
         console.log(this.serviceId);
         console.log(this.bookingMode);
+        this.questionAnswers = null;
         this.getProviderQuestionnaire(form_data);
       } else {
       this.goBackAfterEdit(form_data, id);
@@ -1108,10 +1114,12 @@ this.validateQnr(form_data);
     });
   }
   validateQnr(form_data?) {
+    console.log(form_data);
     if (this.questionAnswers && this.questionAnswers.answers) {
       console.log(this.questionAnswers.answers);
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
+          console.log(this.showBookingQnr);
           if (this.showBookingQnr) {
           if (this.source === 'appt-block') {
             this.confirmApptBlock(this.newCustomerId);

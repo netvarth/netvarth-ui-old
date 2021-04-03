@@ -56,7 +56,7 @@
 <section class="createCustomer">
     <div class="content loc-list p-checkin pad-20 col-lg-8">
         <div class="card card-custom gutter-b example example-compact rounded-0 p-0">
-            <div class="card-header" *ngIf="!showBookingQnr">
+            <!-- <div class="card-header" *ngIf="!showBookingQnr">
                 <h3 class="card-title">
 
                 </h3>
@@ -68,9 +68,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!--begin::Form-->
-            <div class="card-body" *ngIf="!qnrLoaded">
+            <div class="card-body" *ngIf="!qnrLoaded || !loaded">
                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
             <form *ngIf="!loading && !viewCustomer && qnrLoaded" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
@@ -224,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" *ngIf="loaded">
                     <app-questionnaire [questionnaireList]="questionnaireList" [source]="qnrSource"
                         (returnAnswers)="getQuestionAnswers($event)" [customerDetails]="customer">
                     </app-questionnaire>
