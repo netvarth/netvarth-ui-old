@@ -657,22 +657,18 @@
           </div>
         </div>
       </div>
-
       <div class="card" *ngIf="showQuestionnaire">
         <div class="mgn-bt-10 quest-head pad-10">
           Please provide us with a little more information complete your booking
         </div>
         <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
           [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-
-
         <div class="waitlist-action mgn-bt-20 mgn-up-10">
           <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
             [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
-            <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="validateQnr()"
+          <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="validateQnr()"
             [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
         </div>
-
       </div>
     </div>
     <div class="clearfix"></div>

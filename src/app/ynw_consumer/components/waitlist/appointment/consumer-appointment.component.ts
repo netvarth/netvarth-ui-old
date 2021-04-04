@@ -1035,7 +1035,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
-        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1048,7 +1047,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
-                    console.log(true);
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1749,7 +1747,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files.files) {
+            for (const pic of this.questionAnswers.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
@@ -1776,7 +1774,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     validateQuestionnaire() {
         if (this.questionAnswers && this.questionAnswers.answers) {
-            console.log(this.questionAnswers.answers);
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;

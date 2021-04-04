@@ -728,7 +728,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.prepayAmount = retData['_prepaymentAmount'];
                     } else {
                         this.trackUuid = retData[key];
-                        this.uuidList.push(retData[key]);
+                        if (key !== 'parent_uuid') {
+                            this.uuidList.push(retData[key]);
+                        }
                     }
                     parentUid = retData['parent_uuid'];
                 });
@@ -764,7 +766,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files.files) {
+            for (const pic of this.questionAnswers.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
@@ -1872,11 +1874,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     validateQuestionnaire() {
         if (this.questionAnswers && this.questionAnswers.answers) {
-            console.log(this.questionAnswers.answers);
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
-               if (data.length === 0) {
-                this.bookStep++;
-            }
+                if (data.length === 0) {
+                    this.bookStep++;
+                }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1886,4 +1887,3 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
 }
-

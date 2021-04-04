@@ -547,11 +547,11 @@ export class ProviderCheckinComponent implements OnInit {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-              'message': 'Are you sure want to add',
-              'type': 'yes/no'
+                'message': 'Are you sure want to add',
+                'type': 'yes/no'
             }
-          });
-          removeitemdialogRef.afterClosed().subscribe(result => {
+        });
+        removeitemdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.confirmWaitlistBlock();
             }
@@ -713,8 +713,8 @@ export class ProviderCheckinComponent implements OnInit {
                 for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
                     if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
                         if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            if(_this.departments.indexOf(_this.departmentlist['departments'][i]) == -1) {
-                               _this.departments.push(_this.departmentlist['departments'][i]);
+                            if (_this.departments.indexOf(_this.departmentlist['departments'][i]) == -1) {
+                                _this.departments.push(_this.departmentlist['departments'][i]);
                             }
                         }
                     }
@@ -846,9 +846,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
-        console.log(this.sel_ser);
         if (this.waitlist_for[0] && this.waitlist_for[0].id) {
-        this.getProviderQuestionnaire();
+            this.getProviderQuestionnaire();
         }
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
@@ -1115,7 +1114,6 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     saveCheckin() {
-        console.log(this.waitlist_for);
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
@@ -1134,14 +1132,11 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                console.log(this.countryCode);
                 if (this.countryCode) {
                     const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
-                    console.log(this.callingModes)
                 }
             } else {
-                console.log("third party")
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
             }
@@ -1276,17 +1271,12 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-
-        console.log(this.questionAnswers);
-        console.log(Object.keys(this.questionAnswers).length);
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files.files) {
+            for (const pic of this.questionAnswers.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
@@ -2009,7 +1999,9 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     goBack() {
-        if (this.showCheckin) {
+        if (this.showQuestionnaire) {
+            this.showQuestionnaire = false;
+        } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
             if (this.showtoken) {
@@ -2046,10 +2038,8 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     getQuestionAnswers(event) {
-        console.log(event);
         this.questionAnswers = null;
         this.questionAnswers = event;
-        console.log(Object.keys(this.questionAnswers).length);
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
@@ -2062,27 +2052,24 @@ export class ProviderCheckinComponent implements OnInit {
             consumerId = this.waitlist_for[0].id;
         }
         this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
-            console.log(data);
             this.questionnaireList = data;
             if (this.showBlockHint) {
-            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                this.showQuestionnaire = true;
-            } else {
-                this.confirmWaitlistBlockPopup();
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.showQuestionnaire = true;
+                } else {
+                    this.confirmWaitlistBlockPopup();
+                }
             }
-        }
         });
     }
     validateQnr(post_Data?) {
         if (this.questionAnswers && this.questionAnswers.answers) {
-            console.log(this.questionAnswers.answers);
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
-               console.log(data.length);
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
-                this.addCheckInProvider(post_Data);
+                        this.addCheckInProvider(post_Data);
                     } else {
-this.confirmWaitlistBlock();
+                        this.confirmWaitlistBlock();
                     }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });

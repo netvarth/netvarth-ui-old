@@ -506,13 +506,11 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
-                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
                             } else {
                                 this.countryCode = '+91';
                             }
-                            // this.countryCode = this.customer_data.countryCode;
-                            console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;
                                 this.heading = 'Confirm your Appointment';
@@ -528,17 +526,17 @@ export class AppointmentComponent implements OnInit {
                 );
         }
     }
-     confirmApptBlockPopup() {
+    confirmApptBlockPopup() {
         const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-              'message': 'Are you sure want to add',
-              'type': 'yes/no'
+                'message': 'Are you sure want to add',
+                'type': 'yes/no'
             }
-          });
-          removeitemdialogRef.afterClosed().subscribe(result => {
+        });
+        removeitemdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.confirmApptBlock();
             }
@@ -591,7 +589,6 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-            console.log(this.waitlist_for)
         }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -758,9 +755,7 @@ export class AppointmentComponent implements OnInit {
             // };
             fn.subscribe(data => {
                 this.familymembers = [];
-                console.log(this.familymembers)
                 this.familymembers.push(this.customer_data);
-                console.log(this.familymembers)
                 for (const mem of data) {
                     if (mem.id !== this.customer_data.id) {
                         this.familymembers.push(mem);
@@ -819,7 +814,6 @@ export class AppointmentComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
-        console.log(this.sel_ser);
         if (this.waitlist_for[0] && this.waitlist_for[0].id) {
             this.getProviderQuestionnaire();
         }
@@ -1073,15 +1067,12 @@ export class AppointmentComponent implements OnInit {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else if(!this.thirdParty) {
+            } else if (!this.thirdParty) {
                 const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode+''+this.callingModes;
-                console.log(this.callingModes)
-                // this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-            }else {
-                console.log("third party")
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+            } else {
                 const thirdparty_countrycode = '91';
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode+''+this.callingModes;
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
             }
         }
         // }
@@ -1193,11 +1184,11 @@ export class AppointmentComponent implements OnInit {
                 });
                 if (this.questionAnswers) {
                     this.submitQuestionnaire(retUuid);
-                    } else {                
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
 
-                        this.router.navigate(['provider', 'appointments']);
-                    }
+                    this.router.navigate(['provider', 'appointments']);
+                }
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
@@ -1216,24 +1207,21 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-        
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-          for (const pic of this.questionAnswers.files.files) {
-            dataToSend.append('files', pic, pic['name']);
-          }
+            for (const pic of this.questionAnswers.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-        this.router.navigate(['provider', 'appointments']);
-    }, error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-        }
+        this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+            this.router.navigate(['provider', 'appointments']);
+        }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1798,7 +1786,7 @@ export class AppointmentComponent implements OnInit {
         // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
         // this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
         //     .subscribe(
-       this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
+        this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1940,7 +1928,9 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     goBack() {
-        if (this.showCheckin) {
+        if (this.showQuestionnaire) {
+            this.showQuestionnaire = false;
+        } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
             this.heading = 'Create an Appointment';
@@ -1951,56 +1941,53 @@ export class AppointmentComponent implements OnInit {
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getProviderAvailableDatessByLocationService(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.availableSlots);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getProviderAvailableDatessByLocationService(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.availableSlots);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getQuestionAnswers(event) {
-console.log(event);
-this.questionAnswers = null;
-this.questionAnswers = event;
+        this.questionAnswers = null;
+        this.questionAnswers = event;
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
-    }  
-     getProviderQuestionnaire() {
-         let consumerId;
+    }
+    getProviderQuestionnaire() {
+        let consumerId;
         if (this.showBlockHint) {
             consumerId = this.customer_data.id;
         } else {
             consumerId = this.waitlist_for[0].id;
         }
         this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
-          if (this.showBlockHint) {
-            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                this.showQuestionnaire = true;
-            } else {
-                this.confirmApptBlockPopup();
+            this.questionnaireList = data;
+            if (this.showBlockHint) {
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.showQuestionnaire = true;
+                } else {
+                    this.confirmApptBlockPopup();
+                }
             }
-        }
         });
-      }
-      validateQnr(post_Data?) {
+    }
+    validateQnr(post_Data?) {
         if (this.questionAnswers && this.questionAnswers.answers) {
-            console.log(this.questionAnswers.answers);
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addAppointmentInProvider(post_Data);
-                            } else {
-        this.confirmApptBlock();
-                            }
+                    } else {
+                        this.confirmApptBlock();
+                    }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

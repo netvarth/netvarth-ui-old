@@ -6,7 +6,6 @@ import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
-import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
 
@@ -23,11 +22,7 @@ export class QuestionnaireComponent implements OnInit {
   @Input() customerDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
-  selectedMessage = {
-    files: [],
-    base64: [],
-    caption: []
-  };
+  selectedMessage: any = [];
   apiError: any = [];
   params;
   fileuploadpreAnswers: any = {};
@@ -35,13 +30,10 @@ export class QuestionnaireComponent implements OnInit {
   buttonDisable = false;
   questions: any = [];
   selectedDocs: any = [];
-  documentsToUpload = {};
-  toppings = new FormControl();
-  // toppingList: string[] = ['Aadhar', 'PAN card', 'Voter ID', 'Bank book'];
+  documentsToUpload: any = [];
   subscription: Subscription;
-  docu: any = [];
-  show_adhar = false;
-  show_rCard = false;
+  uploadFilesTemp: any = [];
+  filestoUpload: any = [];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -52,7 +44,6 @@ export class QuestionnaireComponent implements OnInit {
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
-      console.log(this.params);
       if (this.params.type) {
         this.source = this.params.type;
       }
@@ -74,47 +65,33 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    console.log(this.customerDetails);
-    console.log(this.questionAnswers);
-    console.log(this.questionnaireList);
     if (this.questionAnswers) {
-      if (this.questionAnswers.answers) {
-        this.getAnswers(this.questionAnswers.answers.answer, 'init');
-        console.log(this.answers);
-      }
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
       }
+      if (this.questionAnswers.filestoUpload) {
+        this.filestoUpload = this.questionAnswers.filestoUpload;
+      }
+      if (this.questionAnswers.answers) {
+        this.getAnswers(this.questionAnswers.answers.answer, 'init');
+      }
     } else {
-      console.log(this.questionnaireList);
       if (this.questionnaireList) {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-          this.getAnswers(this.questionnaireList.labels);
         }
       }
     }
     if (this.questionnaireList) {
-      // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-      //   this.questions = this.questionnaireList.labels;
-      // } else if (this.questionnaireList[0] && this.questionnaireList[0].questions && this.questionnaireList[0].questions.length > 0) {
-      //   this.questions = this.questionnaireList[0].questions;
-      // }
       if (this.source === 'customer-create') {
-        if (this.customerDetails && this.customerDetails.questionnaire) {
-          // this.questionnaireList = this.customerDetails.questionnaire;
-          // this.questions = this.customerDetails.questionnaire.questionnaire;
-          this.getAnswers(this.customerDetails.questionnaire.questionnaire);
+        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
+          this.getAnswers(this.customerDetails[0].questionnaire.questionnaire);
         }
         this.questions = this.questionnaireList.labels[0].questions;
-        
+
       } else {
         this.questions = this.questionnaireList.labels;
       }
     }
-
-    console.log(this.questions);
-    console.log(this.source);
-    console.log(this.params.uuid);
     if (this.params.uuid) {
       this.loading = true;
       if (this.source === 'consCheckin') {
@@ -129,98 +106,117 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   setValidateError(errors) {
-    console.log(errors);
     this.apiError = [];
     if (errors.length > 0) {
-for (let error of errors) {
-  this.apiError[error.questionField] = [];
-  this.apiError[error.questionField].push(error.error);
-}
+      for (let error of errors) {
+        this.apiError[error.questionField] = [];
+        this.apiError[error.questionField].push(error.error);
+      }
     }
-    console.log(this.apiError);
   }
   getAnswers(answerData, type?) {
-    this.answers = {};
-    console.log(this.answers);
+    this.answers = new Object();
     if (!type) {
+      this.selectedMessage = [];
       for (let answ of answerData) {
-        console.log(answ);
         if (answ.answer) {
           if (answ.question.fieldDataType !== 'FileUpload') {
             this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
-            this.fileuploadpreAnswers[answ.answer.labelName] = answ.answer.answer;
+            for (let i = 0; i < answ.answer.answer.length; i++) {
+              this.selectedMessage.push(answ.answer.answer[i]);
+              if (!this.filestoUpload[answ.answer.labelName]) {
+                this.filestoUpload[answ.answer.labelName] = {};
+              }
+              if (!this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption]) {
+                this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption] = {};
+              }
+              this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption] = answ.answer.answer[i];
+            }
           }
         }
       }
     } else {
-      console.log(answerData);
       for (let answ of answerData) {
         this.answers[answ.labelName] = answ.answer;
       }
     }
-    console.log(this.answers);
-    console.log(this.fileuploadpreAnswers);
+    Object.keys(this.filestoUpload).forEach(key => {
+      Object.keys(this.filestoUpload[key]).forEach(key1 => {
+        if (this.filestoUpload[key][key1]) {
+          if (!this.uploadFilesTemp[key]) {
+            this.uploadFilesTemp[key] = [];
+          }
+          this.uploadFilesTemp[key].push(key1);
+        }
+      });
+    });
+    this.onSubmit();
   }
   filesSelected(event, question, document?) {
     const input = event.target.files;
-    console.log(question);
-    console.log(document);
-    this.answers[question.labelName] = {};
+    if (!document) {
+      document = question.filePropertie.allowedDocuments[0];
+    }
+    if (!this.answers[question.labelName]) {
+      this.answers[question.labelName] = {};
+    }
+    if (!this.filestoUpload[question.labelName]) {
+      this.filestoUpload[question.labelName] = {};
+    }
+    if (!this.filestoUpload[question.labelName][document]) {
+      this.filestoUpload[question.labelName][document] = {};
+    }
     if (input) {
       for (const file of input) {
-        // console.log(file);
-        // console.log(question);
-        // console.log(question.filePropertie.fileTypes.indexOf(file.type));
-        // if (question.filePropertie.fileTypes.indexOf(file.type) === -1) {
-        //   this.apiError[index] = 'Selected image type not supported';
-        // } else if (file.size > question.filePropertie.minSize) {
-        //   this.apiError[index] = 'Please upload images with size > ' + question.filePropertie.minSize + 'mb';
-        // } else if (file.size > question.filePropertie.maxSize) {
-        //   this.apiError[index] = 'Please upload images with size < ' + question.filePropertie.maxSize + 'mb';
-        // } else {
-        this.selectedMessage.files.push(file);
+        if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+          const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+          if (index !== -1) {
+            this.selectedMessage.splice(index, 1);
+            delete this.filestoUpload[question.labelName][document];
+            delete this.answers[question.labelName][index];
+          }
+        }
+        this.selectedMessage.push(file);
+        const indx = this.selectedMessage.indexOf(file);
+        this.filestoUpload[question.labelName][document] = file;
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.selectedMessage.base64.push(e.target['result']);
+          this.selectedMessage[indx]['path'] = e.target['result'];
         };
-        const indx = this.selectedMessage.files.indexOf(file);
-        // console.log(indx);
-        this.answers[question.labelName][indx] = (document) ? document : question.filePropertie.allowedDocuments[0];
-        // console.log(this.answers[question.labelName]);
         reader.readAsDataURL(file);
-        // }
       }
-      console.log(this.answers);
-      console.log(this.selectedMessage);
-      // console.log(this.apiError);
-      // console.log(this.answers);
+      this.onSubmit();
+    }
+  }
+  deleteTempImage(question) {
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
+      const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
+      if (index !== -1) {
+        this.selectedMessage.splice(index, 1);
+        delete this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]];
+      }
     }
     this.onSubmit();
   }
-  deleteTempImage(i, label) {
-    let imgname = this.selectedMessage.files[i].name.split('.');
-    imgname = imgname[0];
-    // console.log(this.selectedMessage.files[i].name);
-    // console.log(this.answers[label]);
-    delete this.answers[label][i];
-    this.selectedMessage.files.splice(i, 1);
-    this.selectedMessage.base64.splice(i, 1);
-    this.selectedMessage.caption.splice(i, 1);
-    // console.log(this.answers);
-    this.onSubmit();
-  }
-  deletePreImage(i, label) {
-    delete this.fileuploadpreAnswers[label][i];
-    // console.log(this.fileuploadpreAnswers);
-    // console.log(this.fileuploadpreAnswers[label].length);
-  }
-  
   onSubmit(type?) {
-    console.log(this.answers);
+    Object.keys(this.filestoUpload).forEach(key => {
+      this.answers[key] = {};
+      if (Object.keys(this.filestoUpload[key]).length > 0) {
+        Object.keys(this.filestoUpload[key]).forEach(key1 => {
+          if (this.filestoUpload[key][key1]) {
+            const indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
+            if (indx !== -1) {
+              this.answers[key][indx] = key1;
+            }
+          }
+        });
+      } else {
+        delete this.answers[key];
+      }
+    });
     let data = [];
     Object.keys(this.answers).forEach(key => {
-      console.log(this.answers[key]);
       if (this.answers[key]) {
         data.push({
           'labelName': key,
@@ -228,14 +224,12 @@ for (let error of errors) {
         });
       }
     });
-    console.log(data);
     if (data.length > 0) {
       const postData = {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answer': data
       }
-      console.log(postData);
-      const passData = { 'answers': postData, 'files': this.selectedMessage };
+      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
       if (type) {
         this.submitQuestionnaire(passData);
       } else {
@@ -247,15 +241,12 @@ for (let error of errors) {
     return new Date(this.datepipe.transformTofilterDate(date));
   }
   listChange(ev, value, question) {
-    console.log(ev);
-    console.log(value);
-    console.log(question.labelName);
     if (ev.target.checked) {
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = [];
       }
       if (question.listPropertie.maxAnswers > 1) {
-      this.answers[question.labelName].push(value);
+        this.answers[question.labelName].push(value);
       } else {
         this.answers[question.labelName][0] = value;
       }
@@ -266,14 +257,10 @@ for (let error of errors) {
     if (this.answers[question.labelName].length === 0) {
       delete this.answers[question.labelName];
     }
-    console.log(this.answers);
     this.onSubmit();
   }
   booleanChange(ev, question) {
-    console.log(ev);
-    console.log(question.labelName);
     this.answers[question.labelName] = ev.target.checked;
-    console.log(this.answers);
     this.onSubmit();
   }
   isChecked(value, question) {
@@ -295,21 +282,13 @@ for (let error of errors) {
       return false;
     }
   }
-  dateChange(ev, question) {
-    // console.log(ev);
-    console.log(this.answers[question.labelName]);
-    // this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
-    this.onSubmit();
-  }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
     if (passData.files) {
-      for (const pic of passData.files.files) {
-        dataToSend.append('files', pic, pic['name']);
+      for (const pic of passData.files) {
+        dataToSend.append('files', pic);
       }
     }
-    console.log(passData.answers);
-    console.log(JSON.stringify(passData.answers));
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
@@ -358,7 +337,6 @@ for (let error of errors) {
     this.sharedService.getCheckinByConsumerUUID(this.params.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
@@ -366,14 +344,12 @@ for (let error of errors) {
             this.getAnswers(this.questions);
           }
         }
-        // this.getConsumerQuestionnaire();
       });
   }
   getConsumerApptDetails() {
     this.sharedService.getAppointmentByConsumerUUID(this.params.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
@@ -381,14 +357,12 @@ for (let error of errors) {
             this.getAnswers(this.questions);
           }
         }
-        // this.getConsumerQuestionnaire();
       });
   }
   getCheckinDetailsProvider() {
     this.providerService.getProviderWaitlistDetailById(this.params.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
@@ -396,14 +370,12 @@ for (let error of errors) {
             this.getAnswers(this.questions);
           }
         }
-        // this.getProviderQuestionnaire();
       });
   }
   getApptDetailsProvider() {
     this.providerService.getAppointmentById(this.params.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
-          // this.questionAnswers = data.questionnaire;
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
@@ -411,87 +383,73 @@ for (let error of errors) {
             this.getAnswers(this.questions);
           }
         }
-        // this.getProviderQuestionnaire();
       });
   }
   getQuestion(question) {
-    // console.log(question);
     if (this.source === 'customer-create') {
       return question;
     } else {
       return question.question;
     }
   }
-  selectUploadDocuments(question, option) {
-    if (!this.documentsToUpload[question]) {
-      this.documentsToUpload[question] = [];
-    }
-    if (this.documentsToUpload[question] && this.documentsToUpload[question].indexOf(option) === -1) {
-      this.documentsToUpload[question].push(option);
-    }
-    console.log(this.documentsToUpload);
-    console.log(this.selectedDocs);
-  }
-
   validateConsumerQuestionnaire(answers, dataToSend) {
-    console.log(answers);
     this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe((data: any) => {
       this.setValidateError(data);
-      // this.apiError = data;
-      console.log(this.apiError);
       this.buttonDisable = false;
       if (data.length === 0) {
-      if (this.source === 'consCheckin') {
-        this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
-      } else {
-        this.resubmitConsumerApptQuestionnaire(dataToSend);
+        if (this.source === 'consCheckin') {
+          this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+        } else {
+          this.resubmitConsumerApptQuestionnaire(dataToSend);
+        }
       }
-    }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-
   validateProviderQuestionnaire(answers, dataToSend) {
-    console.log(answers);
     this.providerService.validateProviderQuestionnaire(answers).subscribe((data: any) => {
       this.setValidateError(data);
-      // this.apiError = data;
-      console.log(this.apiError);
       this.buttonDisable = false;
       if (data.length === 0) {
-      if (this.source === 'proCheckin') {
-        this.resubmitProviderWaitlistQuestionnaire(dataToSend);
-      } else {
-        this.resubmitProviderApptQuestionnaire(dataToSend);
+        if (this.source === 'proCheckin') {
+          this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+        } else {
+          this.resubmitProviderApptQuestionnaire(dataToSend);
+        }
       }
-    }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-
-  takeDoc(doc) {
-    this.show_adhar = false;
-    this.show_rCard = false;
-    this.docu = [];
-    for(let i = 0; i < doc.length; i++) {
-      console.log(doc[i]);
-      this.docu.push(doc[i]);
+  takeDoc(question, document) {
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      if (indx !== -1) {
+        this.selectedMessage.splice(indx, 1);
+        delete this.filestoUpload[question.labelName][document];
+      }
     }
-    console.log(this.docu);
-    for(let j = 0; j < this.docu.length; j++) {
-      console.log(this.docu[j]);
-      switch(this.docu[j]) {
-      
-        case 'Adhar Card':
-            this.show_adhar = true;
-            break;
-        case ' Ration Card':
-            this.show_rCard = true;
-            break;
+    this.onSubmit();
+  }
+  getImg(question, document) {
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      if (indx !== -1) {
+        const path = (this.selectedMessage[indx].path) ? this.selectedMessage[indx].path : this.selectedMessage[indx].s3path;
+        return path;
+      } else {
+        return '../../assets/images/pdf.png';
+      }
+    }
+  }
+  getImgName(question) {
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
+      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
+      if (indx !== -1) {
+        return (this.selectedMessage[indx].name) ? this.selectedMessage[indx].name : this.selectedMessage[indx].caption;
       }
     }
   }

@@ -2922,22 +2922,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         let count = 0;
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
-           let imagePath = thumbPath;
-           const description = communications[comIndex].s3path;
-           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-           if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-             imagePath = communications[comIndex].s3path;
-           }
-           const imgobj = new Image(
-             count,
-             { // modal
-               img: imagePath,
-               description: description
-             },
-           );
-           this.image_list_popup_temp.push(imgobj);
-           count++;
-     }
+          let imagePath = thumbPath;
+          const description = communications[comIndex].s3path;
+          const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+          if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            imagePath = communications[comIndex].s3path;
+          }
+          const imgobj = new Image(
+            count,
+            { // modal
+              img: imagePath,
+              description: description
+            },
+          );
+          this.image_list_popup_temp.push(imgobj);
+          count++;
+        }
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
           setTimeout(() => {

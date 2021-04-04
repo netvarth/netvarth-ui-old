@@ -158,7 +158,6 @@ export class CustomerCreateComponent implements OnInit {
       this.subdomain = user.subSector;
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
-      console.log(JSON.stringify(qparams));
       if (qparams.selectedGroup) {
         this.group = qparams.selectedGroup;
       }
@@ -476,11 +475,11 @@ export class CustomerCreateComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-if (this.questionnaireList && this.questionnaireList.labels) {
-this.validateQnr(form_data);
-} else {
-  this.customerActions(form_data);
-}
+    if (this.questionnaireList && this.questionnaireList.labels) {
+      this.validateQnr(form_data);
+    } else {
+      this.customerActions(form_data);
+    }
 
   }
   customerActions(form_data) {
@@ -520,17 +519,13 @@ this.validateQnr(form_data);
             const qParams = {};
             qParams['pid'] = data;
             this.newCustomerId = data;
-            console.log(this.source);
-            console.log(this.questionAnswers);
             if (this.questionAnswers) {
               this.submitQnr(form_data, data);
             } else {
               if (this.source === 'appt-block' || this.source === 'waitlist-block') {
-                console.log(this.serviceId);
-                console.log(this.bookingMode);
                 this.getProviderQuestionnaire(form_data);
               } else {
-              this.goBackAfterAdd(form_data, data);
+                this.goBackAfterAdd(form_data, data);
               }
             }
           },
@@ -567,7 +562,7 @@ this.validateQnr(form_data);
             const qParams = {};
             qParams['pid'] = data;
             if (this.questionAnswers) {
-              this.submitQnr(form_data, data);
+              this.submitQnr(form_data, this.customerId);
             } else {
               this.goBackAfterEdit(form_data, data);
             }
@@ -862,9 +857,7 @@ this.validateQnr(form_data);
     event.stopPropagation();
   }
   medicalRecord(visitDetails) {
-    console.log(visitDetails);
     if (visitDetails.waitlist) {
-      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -887,9 +880,7 @@ this.validateQnr(form_data);
     }
   }
   prescription(visitDetails) {
-    console.log(visitDetails);
     if (visitDetails.waitlist) {
-      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -1048,32 +1039,29 @@ this.validateQnr(form_data);
   getProviderQuestionnaire(form_data) {
     this.loaded = false;
     this.questionnaireList = [];
-    // this.bookingMode = (this.bookingMode === 'WALK_IN_APPOINTMENT' || this.bookingMode === 'WALK_IN_CHECKIN') ? 'WALKIN' : 'PHONEIN';
     this.provider_services.getProviderQuestionnaire(this.serviceId, this.newCustomerId, this.bookingMode).subscribe(data => {
-        console.log(data);
-        this.questionnaireList = data;
-        if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-          this.showBookingQnr = true;
-          this.loaded = true;
-          if (this.source === 'waitlist-block') {
-            this.qnrSource = 'proCheckin';
-          } else {
-            this.qnrSource = 'proAppt';
-          }
+      this.questionnaireList = data;
+      if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        this.showBookingQnr = true;
+        this.loaded = true;
+        if (this.source === 'waitlist-block') {
+          this.qnrSource = 'proCheckin';
         } else {
-          this.goBackAfterAdd(form_data, this.newCustomerId);
+          this.qnrSource = 'proAppt';
         }
+      } else {
+        this.goBackAfterAdd(form_data, this.newCustomerId);
+      }
     });
-}
+  }
   getQuestionAnswers(event) {
     this.questionAnswers = event;
     this.disableButton = false;
   }
   submitQnr(form_data, id) {
-    console.log(this.questionAnswers);
     const dataToSend: FormData = new FormData();
     if (this.questionAnswers.files) {
-      for (const pic of this.questionAnswers.files.files) {
+      for (const pic of this.questionAnswers.files) {
         dataToSend.append('files', pic, pic['name']);
       }
     }
@@ -1088,12 +1076,10 @@ this.validateQnr(form_data);
   AddQnr(id, dataToSend, form_data) {
     this.provider_services.submitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
       if (this.source === 'appt-block' || this.source === 'waitlist-block') {
-        console.log(this.serviceId);
-        console.log(this.bookingMode);
         this.questionAnswers = null;
         this.getProviderQuestionnaire(form_data);
       } else {
-      this.goBackAfterAdd(form_data, id);
+        this.goBackAfterAdd(form_data, id);
       }
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1102,32 +1088,27 @@ this.validateQnr(form_data);
   updateQnr(id, dataToSend, form_data) {
     this.provider_services.resubmitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
       if (this.source === 'appt-block' || this.source === 'waitlist-block') {
-        console.log(this.serviceId);
-        console.log(this.bookingMode);
         this.questionAnswers = null;
         this.getProviderQuestionnaire(form_data);
       } else {
-      this.goBackAfterEdit(form_data, id);
+        this.goBackAfterEdit(form_data, id);
       }
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
   }
   validateQnr(form_data?) {
-    console.log(form_data);
     if (this.questionAnswers && this.questionAnswers.answers) {
-      console.log(this.questionAnswers.answers);
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
-          console.log(this.showBookingQnr);
           if (this.showBookingQnr) {
-          if (this.source === 'appt-block') {
-            this.confirmApptBlock(this.newCustomerId);
-          } else if (this.source === 'waitlist-block') {
-            this.confirmWaitlistBlock(this.newCustomerId);
-          } 
-        } else {
-  this.customerActions(form_data);
+            if (this.source === 'appt-block') {
+              this.confirmApptBlock(this.newCustomerId);
+            } else if (this.source === 'waitlist-block') {
+              this.confirmWaitlistBlock(this.newCustomerId);
+            }
+          } else {
+            this.customerActions(form_data);
           }
         }
         this.shared_functions.sendMessage({ type: 'qnrValidateError', value: data });
