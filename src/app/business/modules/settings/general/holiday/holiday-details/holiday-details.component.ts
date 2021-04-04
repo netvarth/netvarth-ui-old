@@ -120,8 +120,8 @@ export class HolidayDetailsComponent implements OnInit {
 
   createForm() {
     this.amForm = this.fb.group({
-      selectdate: [{ value: '', disabled: (this.action === 'edit') ? true : false }, Validators.compose([Validators.required])],
-      enddate:[{ value: '', disabled: (this.action === 'edit') ? true : false }, Validators.compose([Validators.required])],
+      selectdate: [ '' , Validators.compose([Validators.required])],
+      enddate:['', Validators.compose([Validators.required])],
       reason: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDesc)])],
       starttime: [{ hour: 9, minute: 0 }, Validators.compose([Validators.required])],
       endtime: [{ hour: 18, minute: 0 }, Validators.compose([Validators.required])]
@@ -165,7 +165,6 @@ export class HolidayDetailsComponent implements OnInit {
   }
 
   onSubmit(form_data) {
-    console.log(form_data);
     this.resetApiErrors();
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
@@ -173,10 +172,8 @@ export class HolidayDetailsComponent implements OnInit {
     let startdate;
     let end_date;
     if (this.action === 'edit') {
-      // startdate = form_data.selectdate;
-      // end_date = form_data.enddate;
-      startdate =  this.holiday.holidaySchedule.startDate;
-      end_date = this.holiday.holidaySchedule.terminator.endDate;
+      startdate = form_data.selectdate;
+      end_date = form_data.enddate;
     } else {
       startdate = form_data.selectdate;
       end_date = form_data.enddate;
@@ -242,7 +239,6 @@ export class HolidayDetailsComponent implements OnInit {
 
     };
     if (this.action === 'edit') {
-      console.log(post_data);
       this.editHoliday(post_data);
     } else if (this.action === 'add') {
       this.addHoliday(post_data);
@@ -254,7 +250,6 @@ export class HolidayDetailsComponent implements OnInit {
     this.api_loading = true;
     this.provider_services.addHoliday(post_data)
       .subscribe((data: any) => {
-        console.log(data);
         this.confirm_data = data
         if(this.confirm_data.apptCount >0 || this.confirm_data.waitlistCount >0 ){
         const canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -271,7 +266,6 @@ export class HolidayDetailsComponent implements OnInit {
       let status = 0;
       status = result;
       if (status === 1) {
-        console.log(result);
         this.provider_services.Holidaywaitlist(this.confirm_data.holidayId)
           .subscribe(
             () => {
@@ -298,7 +292,6 @@ export class HolidayDetailsComponent implements OnInit {
     this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.holiday.id;
-    console.log(post_data);
     this.provider_services.editHoliday(post_data)
       .subscribe(
         () => {

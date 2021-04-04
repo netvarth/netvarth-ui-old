@@ -10,7 +10,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-viewprevstatement',
-    templateUrl: './viewprevstatement.component.html'
+    templateUrl: './viewprevstatement.component.html',
+    styleUrls: ['./statements.component.css']
 })
 export class ViewPrevStatementComponent implements OnInit {
     amount_cap = Messages.AMOUNT_CAP;
