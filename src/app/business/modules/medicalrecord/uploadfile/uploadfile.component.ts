@@ -72,6 +72,8 @@ export class UploadFileComponent implements OnInit {
     ]
   };
   customer_label = '';
+  msgDisplay = 'media';
+  loading = false;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
@@ -303,6 +305,21 @@ export class UploadFileComponent implements OnInit {
   somethingChanged() {
     this.showSave = true;
   }
-  
+  changemsgDisplayType(type) {
+    this.msgDisplay = type;
+    
+  }
+   scrollToTop() {
+    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  tabChange(event) {
+   
+    this.loading = true;
+  }
 
 }

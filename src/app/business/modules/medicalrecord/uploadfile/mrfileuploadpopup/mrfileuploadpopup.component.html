@@ -11,13 +11,13 @@
             <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
           </div>
           <div class="gal_img"  *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'">
-            <img [src]="item_pic.base64[i]">
+            <img src="assets/images/pdf.png">
           </div>
           <div class="gal_img"  *ngIf="file.type == '.mp4'|| file.type == 'video/mp4' || file.type == 'video/mpeg'||file.type == 'video/quicktime'">
-            <img [src]="item_pic.base64[i]">
+            <img src="assets/images/videoimages.jpeg">
           </div>
           <div class="gal_img"  *ngIf="file.type == '.mp3'|| file.type == 'audio/mpeg'|| file.type == 'audio/mp3'">
-            <img [src]="item_pic.base64[i]">
+            <img src="assets/images/videoimages.jpeg">
           </div>
           <!-- <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div> -->
           <div class="gal_action"  *ngIf="!canceldisabled">

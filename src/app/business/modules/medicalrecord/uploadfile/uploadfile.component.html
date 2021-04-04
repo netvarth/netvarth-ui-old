@@ -5,10 +5,7 @@
             {{heading}}
           </h5>
         </div>
-        <!-- </section>
-              <section> -->
-        <!-- <div class="content loc-list">
-                      <div class="col-md-12 no-padding-small">-->
+        
         <div class="card title-gb">
           <div class="mgn-up-10">
            <label>{{customer_label | capitalizeFirst}} Name</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
@@ -26,11 +23,56 @@
               </button>
             </div>
           </div>
-      <!-- <div>
-          <img  style="width:30%;height: 30%;" [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]">
-      </div> -->
          
          
         </div>
       </section>
+     
       
+     
+     
+      <section class="dashboard content pro-dash" >
+        <div class="col-md-12 no-padding-small" >
+          <div class="row">
+            <div class="card p0 w-dta">
+             
+              <div class="head mgn-up-5 mgn-bt-5" 
+                id="qHeader">
+                
+              </div>
+              <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" >
+                <mat-tab label="Today ">
+                  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
+                    <div>
+                     
+                    </div>
+                   
+                    
+                  </div>
+                </mat-tab>
+                <mat-tab label="Future ">
+                  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                  <div *ngIf="!loading">
+                    
+                   
+                   
+                  </div>
+                </mat-tab>
+               
+              </mat-tab-group>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div *ngIf="apiloading" style="margin-top: 100px;">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+          </div>
+        </div>
+       
+        <div class="clearfix"></div>
+        <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
+          <button (click)="scrollToTop()">
+            <i class="fa fa-chevron-up"></i>
+          </button>
+        </div>
+      </section>
