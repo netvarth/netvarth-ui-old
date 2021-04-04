@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { projectConstants } from '../../../../app.component';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -74,6 +74,8 @@ export class UploadFileComponent implements OnInit {
   customer_label = '';
   msgDisplay = 'media';
   loading = false;
+  windowScrolled: boolean;
+  topHeight = 0;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
@@ -92,6 +94,32 @@ export class UploadFileComponent implements OnInit {
     //   }
     // });
 
+  }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('qHeader').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('tabHeader').offsetHeight;
+    }
+    this.topHeight = qHeader + tabHeader;
+    if (header) {
+      // if (window.pageYOffset > (this.topHeight + 50)) {
+      //   header.classList.add('sticky');
+      // } else {
+      //   header.classList.remove('sticky');
+      // }
+
+    }
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
   }
 
   ngOnInit() {
