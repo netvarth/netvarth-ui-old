@@ -19,7 +19,8 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 
 @Component({
   selector: 'app-checkindetail',
-  templateUrl: './checkindetail.component.html'
+  templateUrl: './checkindetail.component.html',
+  styleUrls: ['./consumer-home.component.css']
 })
 export class CheckinDetailComponent implements OnInit,OnDestroy {
 

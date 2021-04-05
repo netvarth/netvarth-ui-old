@@ -18,7 +18,8 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 
 @Component({
   selector: 'app-appointmentdetail',
-  templateUrl: './appointmentdetail.component.html'
+  templateUrl: './appointmentdetail.component.html',
+  styleUrls: ['./consumer-home.component.css']
 })
 export class ApptDetailComponent implements OnInit,OnDestroy {
   
