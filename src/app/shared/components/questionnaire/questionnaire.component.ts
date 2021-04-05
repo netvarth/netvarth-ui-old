@@ -169,22 +169,34 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (input) {
       for (const file of input) {
-        if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-          const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-          if (index !== -1) {
-            this.selectedMessage.splice(index, 1);
-            delete this.filestoUpload[question.labelName][document];
-            delete this.answers[question.labelName][index];
+        const size = file.size / 1000;
+        let type = file.type.split('/');
+        type = type[1];
+        this.apiError[question.labelName] = [];
+        if (question.filePropertie.fileTypes.indexOf(type) === -1) {
+          // this.apiError[question.labelName].push('Selected image type not supported');
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (size > question.filePropertie.maxSize) {
+          // this.apiError[question.labelName].push('Please upload images with size < ' + question.filePropertie.maxSize + 'kb');
+          this.snackbarService.openSnackBar('Please upload images with size < ' + question.filePropertie.maxSize + 'kb', { 'panelClass': 'snackbarerror' });
+        } else {
+          if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+            const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+            if (index !== -1) {
+              this.selectedMessage.splice(index, 1);
+              delete this.filestoUpload[question.labelName][document];
+              delete this.answers[question.labelName][index];
+            }
           }
+          this.selectedMessage.push(file);
+          const indx = this.selectedMessage.indexOf(file);
+          this.filestoUpload[question.labelName][document] = file;
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage[indx]['path'] = e.target['result'];
+          };
+          reader.readAsDataURL(file);
         }
-        this.selectedMessage.push(file);
-        const indx = this.selectedMessage.indexOf(file);
-        this.filestoUpload[question.labelName][document] = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedMessage[indx]['path'] = e.target['result'];
-        };
-        reader.readAsDataURL(file);
       }
       this.onSubmit();
     }
@@ -218,6 +230,7 @@ export class QuestionnaireComponent implements OnInit {
     let data = [];
     Object.keys(this.answers).forEach(key => {
       if (this.answers[key]) {
+        this.apiError[key] = [];
         data.push({
           'labelName': key,
           'answer': this.answers[key]
@@ -443,6 +456,8 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         return '../../assets/images/pdf.png';
       }
+    } else {
+      return '../../assets/images/pdf.png';
     }
   }
   getImgName(question) {
