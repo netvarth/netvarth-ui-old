@@ -65,7 +65,7 @@
               </a>
             </li>
             <li class="dropdown notifications-menu pull-left">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar"  *ngIf="loadComplete && donations.length !== 0">
                 <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations()"/>
                 &nbsp;&nbsp;Select all
               </a>
