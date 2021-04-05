@@ -202,11 +202,11 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -223,7 +223,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl">Appointment for</div>
                                                         <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
                                                             {{booking.appmtFor[0].lastName}}</div>
@@ -413,11 +413,11 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -434,7 +434,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
                                                         <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
                                                         </div>
@@ -620,12 +620,12 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
 
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -642,7 +642,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl">Appointment for</div>
                                                         <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
                                                             {{booking.appmtFor[0].lastName}}</div>
@@ -829,12 +829,12 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width ">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
 
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -852,7 +852,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
                                                         <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
                                                         </div>
