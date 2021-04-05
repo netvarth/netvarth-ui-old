@@ -182,12 +182,12 @@
                     </span>
                     <span>{{question.answer.labelName}}</span>
                   </div>
-                  <div class="answer"
+                  <div class="answer ansr"
                     *ngIf="question.question.fieldDataType !== 'Boolean' && question.question.fieldDataType !== 'Date' && question.question.fieldDataType !== 'FileUpload'">
                     {{question.answer.answer}}</div>
-                  <div class="answer" *ngIf="question.question.fieldDataType === 'Boolean'">{{(question.answer.answer) ?
+                  <div class="answer ansr" *ngIf="question.question.fieldDataType === 'Boolean'">{{(question.answer.answer) ?
                     'Yes' : 'No'}}</div>
-                  <div class="answer" *ngIf="question.question.fieldDataType === 'Date'">{{question.answer.answer |
+                  <div class="answer ansr" *ngIf="question.question.fieldDataType === 'Date'">{{question.answer.answer |
                     date:newDateFormat}}</div>
                   <div class="answer ansr" *ngIf="question.question.fieldDataType === 'FileUpload'">
                     <div class="qnr-img" *ngFor="let img of question.answer.answer; let i = index">
