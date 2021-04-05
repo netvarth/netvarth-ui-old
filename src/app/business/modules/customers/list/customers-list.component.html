@@ -22,7 +22,7 @@
           [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20">
-            {{group.groupName}}
+            <span class="pull-left group-name">{{group.groupName}}</span>   
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
