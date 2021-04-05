@@ -17,7 +17,9 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-provider-appointment-detail',
-  templateUrl: './provider-appointment-detail.component.html'
+  templateUrl: './provider-appointment-detail.component.html',
+  styleUrls: ['./provider-app.component.css']
+
 })
 
 export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
