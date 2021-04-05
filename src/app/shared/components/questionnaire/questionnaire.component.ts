@@ -107,12 +107,21 @@ export class QuestionnaireComponent implements OnInit {
   }
   setValidateError(errors) {
     this.apiError = [];
+    if (errors === 'required') {
+for (let question of this.questions) {
+  if (this.getQuestion(question).mandatory) {
+    this.apiError[this.getQuestion(question).labelName] = [];
+    this.apiError[this.getQuestion(question).labelName].push('Mandatory field');
+  }
+}
+    } else {
     if (errors.length > 0) {
       for (let error of errors) {
         this.apiError[error.questionField] = [];
         this.apiError[error.questionField].push(error.error);
       }
     }
+  }
   }
   getAnswers(answerData, type?) {
     this.answers = new Object();

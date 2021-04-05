@@ -1118,7 +1118,8 @@ export class CustomerCreateComponent implements OnInit {
       });
     } else {
       this.disableButton = false;
-      this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+      // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+      this.shared_functions.sendMessage({ type: 'qnrValidateError', value: 'required' });
     }
   }
 }

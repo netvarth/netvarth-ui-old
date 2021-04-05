@@ -2077,7 +2077,8 @@ export class ProviderCheckinComponent implements OnInit {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         } else {
-            this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
     }
 }
