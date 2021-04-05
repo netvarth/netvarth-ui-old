@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="businessjson">
-                        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
+                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding">
                             <div class="no-padding right-padding-md-15"
                                 [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
@@ -224,7 +224,7 @@
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div> -->
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-1 no-padding">
                             <div class="verify hidden-xs hidden-sm">
                                 <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                         class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
@@ -234,14 +234,14 @@
                                 <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
-                            <ul class="bus-actions no-padding mgn-up-10 visible-md visible-lg"
-                                *ngIf="settings_exists && business_exists">
+                            <!-- <ul class="bus-actions no-padding mgn-up-10 visible-md visible-lg"
+                                *ngIf="settings_exists && business_exists"> -->
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
                                     </a>
                                 </li> -->
-                                <li class="message">
+                                <!-- <li class="message">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-comments-o" aria-hidden="true"></i>
@@ -275,7 +275,7 @@
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
                                 <li class="more_less more-less-button centeralign pull-right" *ngIf="showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="coupons bus-actions bus-actions-horiz no-padding">
@@ -285,6 +285,50 @@
                                 <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 "><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{coupon}}</span></li> -->
+                            </ul>
+                        </div>
+                        <div style="position: absolute !important; bottom: 0 !important; right: 0 !important;">
+                            <ul class="bus-actions bus-actions-large no-padding mgn-up-10 visible-md visible-lg"
+                                *ngIf="settings_exists && business_exists">
+                                <!-- <li *ngIf="!isInFav && !userId">
+                                    <a class='like-btn' (click)="handle_Fav('add')">
+                                        {{add_to_fav_cap}}
+                                    </a>
+                                </li> -->
+                                <li class="message" [matTooltip]="send_msgs_cap">
+                                    <a class="like-btn" (click)="communicateHandler()">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                            <!-- {{send_msgs_cap}} -->
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="share" [matTooltip]="'Share'">
+                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <!-- Share -->
+                                        </span>
+                                    </a>
+                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <!-- Share -->
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="coup" [matTooltip]="coupon" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
+                                    <a class="like-btn">
+                                        <span class="pointer-cursor" (click)="openCoupons()">
+                                            <i class="fa fa-tags"></i>
+                                            <!-- {{coupon}} -->
+                                        </span>
+                                    </a>
+                                </li>
+                                <li  [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right" *ngIf="!showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()"><!-- More Info -->...</a></li>
+                                <li [matTooltip]="'Less Info'" class="more_less more-less-button centeralign pull-right" *ngIf="showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()"><!-- Less Info -->...</a></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
