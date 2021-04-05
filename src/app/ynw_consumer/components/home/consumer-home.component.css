@@ -1,6 +1,18 @@
 .mgl-auto {
     margin-left: auto !important;
 }
+.serv-name {
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.serv-width {
+    max-width: 40%;
+}
+.con-width {
+    max-width: 60%;
+}
 .bg-cover {
     height: 200px;
     background-attachment: fixed;

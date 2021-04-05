@@ -332,9 +332,19 @@
                                                                     *ngIf="selected_coupons.length > 0"
                                                                     (click)="applyPromocode()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">
-                                                                    Promocode applied</a>
+                                                                    Promocode added</a>
                                                                 {{selected_coupons.toString()}}
                                                             </div>
+                                                            <div class="disp-flex width-100 amount-details" *ngFor="let coupon of paymentDetails.jCouponList | keyvalue">
+                                                                <div class="bill-labels">{{coupon.key}} </div>&nbsp;
+                                                                <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
+                                                                currency:'&#8377;'}}</div>
+                                                              </div>
+                                                              <div class="disp-flex width-100 amount-details" *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                                <div class="bill-labels">{{coupon.key}} </div>&nbsp;
+                                                                <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
+                                                                currency:'&#8377;'}}</div>
+                                                              </div>
                                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">

@@ -1033,6 +1033,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    if(this.couponsList.length > 0 && this.orderType !== 'SHOPPINGLIST'){
+     this.getCartDetails();
+    }
   }
   changeTime() {
     this.action = 'timeChange';

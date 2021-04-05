@@ -632,7 +632,7 @@ export class CustomersListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Are you sure want to remove?',
+        'message': 'Are you sure you want to remove?',
         'type': 'yes/no'
       }
     });
