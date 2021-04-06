@@ -340,6 +340,8 @@
                                                                             </td>
                                                                             <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
                                                                                 ₹ {{ getItemPrice(item) }}
+                                                                                <sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+                                                                                *ngIf="item.item.taxable">Tax</sup>
                                                                             </td>
                                                                             <td data-title="" class="text-right align-middle" (click)="removeItemFromCart(item)">
                                                                                 <i class="font-weight-bolder font-size-sm red icon-delete">
