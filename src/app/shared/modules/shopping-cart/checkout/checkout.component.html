@@ -289,11 +289,18 @@
                               <div class="order-label" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)">
                                 <a (click)="applyPromocode()"*ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                               <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">Promo code {{selected_coupons.toString()}} added.</a>
-                                <!-- Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}} -->
                             </div>
-
+                            <div *ngIf="selected_coupons.length > 0" style="text-align: initial;">
+                              <div  *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
+                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>
+                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                </div>
+                               <div  *ngFor="let coupon of cartDetails.proCouponList | keyvalue">
+                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>
+                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                               </div>
                             </div>
-
+                            </div>
                           </div>
 
                           <div class="" *ngIf="catalog_details.showPrice" >
@@ -313,7 +320,7 @@
                                   <!-- <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.taxAmount | currency:'&#8377;'}}</div>
                                 </div>
-                                <div class="disp-flex width-100 amount-details" *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
+                                <!-- <div class="disp-flex width-100 amount-details" *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
                                   <div class="bill-labels">{{coupon.key}} </div>
                                   <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                   currency:'&#8377;'}}</div>
@@ -322,7 +329,7 @@
                                   <div class="bill-labels">{{coupon.key}} </div>
                                   <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                   currency:'&#8377;'}}</div>
-                                </div>
+                                </div> -->
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jaldeeCouponDiscount">
                                   <div class="bill-labels">Coupon Discount </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
@@ -369,7 +376,7 @@
                                     <!-- <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div> -->
                                     <div class="price rupee-font">{{cartDetails.taxAmount | currency:'&#8377;'}}</div>
                                   </div>
-                                  <div class="disp-flex width-100 amount-details" *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
+                                  <!-- <div class="disp-flex width-100 amount-details" *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
                                     <div class="bill-labels">{{coupon.key}} </div>
                                     <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                     currency:'&#8377;'}}</div>
@@ -378,7 +385,7 @@
                                     <div class="bill-labels">{{coupon.key}} </div>
                                     <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                     currency:'&#8377;'}}</div>
-                                  </div>
+                                  </div> -->
                                   <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jaldeeCouponDiscount">
                                     <div class="bill-labels">Coupon Discount </div>
                                     <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
