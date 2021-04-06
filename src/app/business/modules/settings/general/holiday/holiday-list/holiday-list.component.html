@@ -46,6 +46,8 @@
                                         <tbody>
                                             <tr *ngFor="let nonworking of nonworking_list">
                                                 <td data-title="Date" class="td1">{{nonworking.holidaySchedule.startDate | date: newDateFormat
+                                                }} -
+                                                {{nonworking.holidaySchedule.terminator.endDate | date: newDateFormat
                                                 }}</td>
                                                 <td data-title="Reason" clas="td2">{{nonworking.description}}</td>
                                                 <td data-title="Time" clas="td3">{{nonworking.holidaySchedule.timeSlots[0].sTime}} -

@@ -86,6 +86,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   @ViewChild('startDate', { static: false }) startDatePicker: ElementRef;
   endDateInvalidError = false;
   dialogMode='edit';
+  customer_label = '';
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -112,6 +113,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.getCatalogs();
     // this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
   }
   ngOnDestroy() {
