@@ -190,7 +190,7 @@
                                                 <button class="btn btn-primary" (click)="publish();"> Publish</button>
                                             </div>
                                             <div class="row" *ngIf="coupon.couponRules.published ==true">
-                                                <p><b style="color:green">Coupon published From <span
+                                                <p><b style="color:green">Coupon is published and is valid from<span
                                                             style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span>
                                                         to <span
                                                             style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b>
