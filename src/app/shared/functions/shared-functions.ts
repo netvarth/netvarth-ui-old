@@ -985,7 +985,7 @@ export class SharedFunctions {
       msg = 'Order';
     }
 
-    if (prepay) {
+    if (prepay && type !== 'order') {
       this.tdata = {
         'message': 'Refund Policy',
         'heading': 'Confirm',
