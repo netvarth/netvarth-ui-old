@@ -791,7 +791,7 @@
                               <div class="form-group">
                                 <label>Delivery range(km)</label>
                                 <input type="text" class="form-control1 form-control-solid form-control-lg"
-                                  (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
+                                  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverykms"
                                   placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
                                   maxlength="50" />
                               </div>
