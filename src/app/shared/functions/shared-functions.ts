@@ -956,6 +956,7 @@ export class SharedFunctions {
     }
   }
   doCancelWaitlist(waitlist, type, cthis?) {
+    console.log(waitlist);
     let prepay = false;
     if (type === 'checkin' || type === 'appointment') {
       if (waitlist.service.minPrePaymentAmount) {
@@ -990,7 +991,8 @@ export class SharedFunctions {
         'heading': 'Confirm',
         'type': 'yes/no',
         'cancelPolicy': 'show',
-        'book': msg
+        'book': msg,
+        'wtlist': waitlist
       }
     } else {
       this.tdata = {
