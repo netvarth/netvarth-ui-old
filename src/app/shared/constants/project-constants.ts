@@ -690,6 +690,22 @@ export const projectConstantsLocal = {
     'image/jpeg',
     'application/pdf'
   ],
+  MRFILETYPES_UPLOAD: [
+    'image/jpg',
+    'image/png',
+    'image/jpeg',
+    'image/bmp',
+    'image/gif',
+    'image/webp',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/pdf',
+    'video/quicktime',
+    'video/mp4',
+    'video/mpeg',
+    'audio/mpeg',
+    'audio/mp3',
+    'audio/ogg'
+  ],
   LIVETRACK_CONST: {
     'KILOMETER': 'km'
   },

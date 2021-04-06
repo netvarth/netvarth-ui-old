@@ -14,7 +14,7 @@
            <label *ngIf="patientDetails.gender">Gender &nbsp;</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
             <hr>
           </div>
-          <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+          <!-- <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
             <h5 class="heading3b ln-hgt-24"> By clicking upload  you will have choice of uploading a file or
               taking picture</h5>
             <div class="mgn-bt-10">
@@ -22,7 +22,7 @@
                 <a class="pointer-cursor" style="color: whitesmoke" (click)="uploadpopup()">Upload Files</a>
               </button>
             </div>
-          </div>
+          </div> -->
          
          
         </div>
@@ -41,22 +41,30 @@
                 
               </div>
               <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" >
-                <mat-tab label="Today ">
-                  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
-                    <div>
-                     
+                <mat-tab label="Media">
+                  <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                  <div class="uploaddiv" *ngFor="let file of uploadFiles;let i = index " >
+                    <div class="uploadcard" >
+                      <img src="assets/images/pdf.png" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <span (click)="showFile(file)">{{file.uid}}</span>
+                      </div>
                     </div>
-                   
+                  
                     
                   </div>
                 </mat-tab>
-                <mat-tab label="Future ">
-                  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                  <div *ngIf="!loading">
+                <mat-tab label="Documents">
+                  <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                  <div class="uploaddiv" *ngFor="let file of uploadFiles;let i = index " >
+                    <div class="uploadcard" >
+                      <img src="assets/images/pdf.png" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <span (click)="showFile(file)">{{file.uid}}</span>
+                      </div>
+                    </div>
+                  
                     
-                   
-                   
                   </div>
                 </mat-tab>
                
@@ -65,7 +73,7 @@
             <div class="clearfix"></div>
           </div>
           <div style="margin-top: 100px;">
-            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            <!-- <app-common-innerloading-spinner></app-common-innerloading-spinner> -->
           </div>
         </div>
        

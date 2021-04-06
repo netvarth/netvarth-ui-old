@@ -7,6 +7,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 // import { Router } from '@angular/router';
 
 
@@ -81,27 +82,23 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.error_list = [];
         const input = event.target.files;
         if (input) {
-            for (const file of input) {
-              console.log(file);
-                this.success_error = this.sharedfunctionObj.fileValidation(file);
-                if (this.success_error === true) {
-                    this.item_pic.files.push(file);
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.item_pic.base64.push(e.target['result']);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    this.error_list.push(this.success_error);
-                   if (this.error_list[0].size) {
-                        this.error_msg = 'Please upload images with size < 15mb';
-                    }
-                }
+          for (const file of input) {
+            if (projectConstantsLocal.MRFILETYPES_UPLOAD.indexOf(file.type) === -1) {
+              this.error_msg ='Selected file type not supported';
+            } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
+              this.error_msg ='Please upload images with size < 10mb';
+            } else {
+              this.item_pic.files.push(file);
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                this.item_pic.base64.push(e.target['result']);
+              reader.readAsDataURL(file);
             }
-            console.log(this.item_pic.files);
+          }
         }
+      }
     }
-
+   
     deleteTempImage(i) {
         this.item_pic.files.splice(i, 1);
         this.item_pic.base64.splice(i, 1);

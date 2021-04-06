@@ -1,0 +1,16 @@
+<h1 class="mat-dialog-title"> view
+    <button #locte mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <mat-dialog-content>
+        <img  style="width:100%;margin-top: -20px;" [src]="details.url" *ngIf="details.type && details.type == 'png'|| details.type =='jpg'"/>  
+        <video width="320" height="240" controls *ngIf="details.type && details.type == 'video/mp4'">
+            <source [src]="details.url" type="video/mp4">
+          </video>  
+</mat-dialog-content>
+
+  <!-- <mat-dialog-actions>
+
+    <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
+  </mat-dialog-actions> -->
