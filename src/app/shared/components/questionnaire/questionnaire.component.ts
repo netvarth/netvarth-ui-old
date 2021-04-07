@@ -34,6 +34,8 @@ export class QuestionnaireComponent implements OnInit {
   subscription: Subscription;
   uploadFilesTemp: any = [];
   filestoUpload: any = [];
+  changeHappened = false;
+  uploadedFiles: any = [];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -122,7 +124,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   getAnswers(answerData, type?) {
     this.answers = new Object();
-    if (!type) {
+    if (!type || type === 'get') {
       this.selectedMessage = [];
       for (let answ of answerData) {
         if (answ.answer) {
@@ -142,6 +144,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
       }
+this.uploadedFiles = this.filestoUpload;
     } else {
       for (let answ of answerData) {
         this.answers[answ.labelName] = answ.answer;
@@ -157,7 +160,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       });
     });
-    this.onSubmit();
+    this.onSubmit('getanswer');
   }
   filesSelected(event, question, document?) {
     const input = event.target.files;
@@ -218,11 +221,15 @@ export class QuestionnaireComponent implements OnInit {
     this.onSubmit();
   }
   onSubmit(type?) {
+    console.log(this.changeHappened);
+    console.log(this.uploadedFiles);
+    console.log(this.filestoUpload);
     Object.keys(this.filestoUpload).forEach(key => {
-      this.answers[key] = {};
       if (Object.keys(this.filestoUpload[key]).length > 0) {
+        this.answers[key] = {};
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
-          if (this.filestoUpload[key][key1]) {
+          console.log(this.uploadedFiles[key][key1]);
+          if (this.filestoUpload[key][key1] && !this.uploadedFiles[key][key1]) {
             const indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
             if (indx !== -1) {
               this.answers[key][indx] = key1;
@@ -230,18 +237,19 @@ export class QuestionnaireComponent implements OnInit {
           }
         });
       } else {
-        delete this.answers[key];
+        // delete this.answers[key];
+        this.answers[key] = "";
       }
     });
     let data = [];
     Object.keys(this.answers).forEach(key => {
-      if (this.answers[key]) {
+      // if (this.answers[key]) {
         this.apiError[key] = [];
         data.push({
           'labelName': key,
-          'answer': this.answers[key]
+          'answer': (this.answers[key]) ? this.answers[key] : ''
         });
-      }
+      // }
     });
     if (data.length > 0) {
       const postData = {
@@ -250,11 +258,19 @@ export class QuestionnaireComponent implements OnInit {
       }
       const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
       console.log(this.selectedMessage);
+      if (type !== 'getanswer') {
       if (type) {
+        console.log(this.changeHappened);
+        if (this.changeHappened) {
         this.submitQuestionnaire(passData);
+        } else {
+          this.location.back();
+        }
       } else {
+        this.changeHappened = true;
         this.returnAnswers.emit(passData);
       }
+    }
     }
   }
   getDate(date) {
@@ -275,7 +291,7 @@ export class QuestionnaireComponent implements OnInit {
       this.answers[question.labelName].splice(indx, 1);
     }
     if (this.answers[question.labelName].length === 0) {
-      delete this.answers[question.labelName];
+      this.answers[question.labelName] =  '';
     }
     this.onSubmit();
   }
@@ -319,9 +335,9 @@ export class QuestionnaireComponent implements OnInit {
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
-      this.validateConsumerQuestionnaire(passData.answers, dataToSend);
+      this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
     } else {
-      this.validateProviderQuestionnaire(passData.answers, dataToSend);
+      this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
     }
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
@@ -367,7 +383,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions);
+            this.getAnswers(this.questions, 'get');
           }
         }
       });
@@ -380,7 +396,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions);
+            this.getAnswers(this.questions, 'get');
           }
         }
       });
@@ -393,7 +409,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions);
+            this.getAnswers(this.questions, 'get');
           }
         }
       });
@@ -406,7 +422,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
           if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions);
+            this.getAnswers(this.questions, 'get');
           }
         }
       });
@@ -418,24 +434,8 @@ export class QuestionnaireComponent implements OnInit {
       return question.question;
     }
   }
-  validateConsumerQuestionnaire(answers, dataToSend) {
-    this.sharedService.validateConsumerQuestionnaire(answers, this.accountId).subscribe((data: any) => {
-      this.setValidateError(data);
-      this.buttonDisable = false;
-      if (data.length === 0) {
-        if (this.source === 'consCheckin') {
-          this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
-        } else {
-          this.resubmitConsumerApptQuestionnaire(dataToSend);
-        }
-      }
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  validateProviderQuestionnaire(answers, dataToSend) {
-    this.providerService.validateProviderQuestionnaire(answers).subscribe((data: any) => {
+  validateProviderQuestionnaireResubmit(answers, dataToSend) {
+    this.providerService.validateProviderQuestionnaireResbmit(answers).subscribe((data: any) => {
       this.setValidateError(data);
       this.buttonDisable = false;
       if (data.length === 0) {
@@ -443,6 +443,22 @@ export class QuestionnaireComponent implements OnInit {
           this.resubmitProviderWaitlistQuestionnaire(dataToSend);
         } else {
           this.resubmitProviderApptQuestionnaire(dataToSend);
+        }
+      }
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  validateConsumerQuestionnaireResubmit(answers, dataToSend) {
+    this.sharedService.validateConsumerQuestionnaireResbumit(answers, this.accountId).subscribe((data: any) => {
+      this.setValidateError(data);
+      this.buttonDisable = false;
+      if (data.length === 0) {
+        if (this.source === 'consCheckin') {
+          this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+        } else {
+          this.resubmitConsumerApptQuestionnaire(dataToSend);
         }
       }
     }, error => {

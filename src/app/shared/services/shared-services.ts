@@ -1012,4 +1012,8 @@ validateConsumerQuestionnaire(body, accountId) {
   const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
   return this.servicemeta.httpPut(url, body);
 }
+validateConsumerQuestionnaireResbumit(body, accountId) {
+  const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
+  return this.servicemeta.httpPut(url, body);
+}
 }

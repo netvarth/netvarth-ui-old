@@ -2007,6 +2007,10 @@ editHoliday(data) {
     const url = 'provider/questionnaire/validate';
     return this.servicemeta.httpPut(url, body);
   }
+  validateProviderQuestionnaireResbmit(body) {
+    const url = 'provider/questionnaire/resubmit/validate';
+    return this.servicemeta.httpPut(url, body);
+  }
   getAllQuestionnaire() {
     const url = 'provider/questionnaire';
     return this.servicemeta.httpGet(url);
