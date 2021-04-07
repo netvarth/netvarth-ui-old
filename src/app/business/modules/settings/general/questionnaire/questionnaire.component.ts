@@ -6,7 +6,7 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 
 @Component({
-  selector: 'app-questionnaire',
+  selector: 'app-questionnaire-list',
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.css', '../../../../../../assets/css/style.bundle.css']
 })
@@ -43,6 +43,6 @@ export class QuestionnaireComponent implements OnInit {
     this.location.back();
   }
   stopprop(ev) {
-ev.stopPropagation();
+    ev.stopPropagation();
   }
 }

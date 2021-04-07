@@ -16,46 +16,17 @@
                         {{questionnaire.questionnaireId}}
                     </div>
                     <div class="item">
-                         {{questionnaire.transactionType}}
+                        {{questionnaire.transactionType}}
                     </div>
                     <div class="item">
                         {{questionnaire.channel}}
                     </div>
-
                 </div>
                 <div class="mgn-up-20 pad-10">
                     <h4> Questions</h4>
                 </div>
-                <div class="question" *ngFor="let question of questionnaire.questions">
-                    <div class="question-item">
-                        <span>{{question.labelName}}</span>
-                    </div>
-                    <div class="">
-                        <span>{{question.fieldDataType}}</span>
-                    </div>
-                    <div class="details-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="selectQuesstion(question)">
-                        <span class="tooltiptext">Details</span>
-                    </div>
-                </div>
+                <app-questionnaire [questionnaireList]="questionnaire" [source]="'qnrDetails'"></app-questionnaire>
             </div>
-
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body" *ngIf="selectedQuestion">
-                            <div>
-                                {{selectedQuestion.labelName}}
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                                #closebutton>Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>

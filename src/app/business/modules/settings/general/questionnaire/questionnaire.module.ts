@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { LoadingSpinnerModule } from '../../.../../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { QuestionnaireModule } from '../../.../../../../../shared/components/questionnaire/questionnaire.module';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { LoadingSpinnerModule } from '../../.../../../../../shared/modules/loadi
         CommonModule,
         MatMenuModule,
         MatIconModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        QuestionnaireModule
     ],
     declarations: [
         QuestionnaireComponent,
@@ -23,5 +25,5 @@ import { LoadingSpinnerModule } from '../../.../../../../../shared/modules/loadi
         QuestionnaireComponent
     ]
 })
-export class QuestionnaireModule {}
+export class QuestionnaireListModule { }
 

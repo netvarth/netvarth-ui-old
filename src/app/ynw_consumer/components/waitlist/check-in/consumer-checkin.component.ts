@@ -1055,7 +1055,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
                     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id, 'init');
-                    if (this.type !='waitlistreschedule') {
+                    if (this.type != 'waitlistreschedule') {
                         this.getConsumerQuestionnaire();
                     } else {
                         this.questionnaireLoaded = true;
@@ -1473,7 +1473,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (found) {
                 this.couponvalid = true;
-               // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
@@ -1972,16 +1972,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             if (coupon.value.value === '0.0') {
                 this.dialog.open(JcCouponNoteComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
-                disableClose: true,
-                data: {
-                    jCoupon: coupon
-                }
+                    width: '50%',
+                    panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+                    disableClose: true,
+                    data: {
+                        jCoupon: coupon
+                    }
                 });
             }
         }
-      }
+    }
     validateQuestionnaire() {
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {

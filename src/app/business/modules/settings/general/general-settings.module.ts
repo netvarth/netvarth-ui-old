@@ -13,7 +13,7 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentDetailComponent } from './departments/details/department.details.component';
 import { DepartmentListComponent } from './departments/department-list/department-list.component';
-import { QuestionnaireModule } from './questionnaire/questionnaire.module';
+import { QuestionnaireListModule } from './questionnaire/questionnaire.module';
 
 @NgModule({
     imports: [
@@ -28,7 +28,7 @@ import { QuestionnaireModule } from './questionnaire/questionnaire.module';
         LoadingSpinnerModule,
         BreadCrumbModule,
         GeneralSettingsRoutingModule,
-        QuestionnaireModule
+        QuestionnaireListModule
     ],
     declarations: [
         GeneralSettingsComponent,
@@ -40,5 +40,4 @@ import { QuestionnaireModule } from './questionnaire/questionnaire.module';
         GeneralSettingsComponent
     ]
 })
-export class GeneralSettingsModule {}
-
+export class GeneralSettingsModule { }

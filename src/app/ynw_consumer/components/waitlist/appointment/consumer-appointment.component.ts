@@ -1352,7 +1352,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             if (found) {
                 this.couponvalid = true;
-               // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
@@ -1845,30 +1845,30 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
         }
-    const param = { 'account': this.account_id };
-    this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
-        .subscribe(data => {
-            this.paymentDetails = data;
-        },
-            error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            });
-}
-showJCCouponNote(coupon) {
-    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
-    } else {
-        if (coupon.value.value === '0.0') {
-            this.dialog.open(JcCouponNoteComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
-            disableClose: true,
-            data: {
-                jCoupon: coupon
+        const param = { 'account': this.account_id };
+        this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
+            .subscribe(data => {
+                this.paymentDetails = data;
+            },
+                error => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+    }
+    showJCCouponNote(coupon) {
+        if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+        } else {
+            if (coupon.value.value === '0.0') {
+                this.dialog.open(JcCouponNoteComponent, {
+                    width: '50%',
+                    panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+                    disableClose: true,
+                    data: {
+                        jCoupon: coupon
+                    }
+                });
             }
-            });
         }
     }
-  }
     validateQuestionnaire() {
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {

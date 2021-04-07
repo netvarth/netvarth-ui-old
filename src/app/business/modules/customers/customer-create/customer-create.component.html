@@ -224,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body" *ngIf="loaded">
+                <div class="card-body no-padding" *ngIf="loaded">
                     <app-questionnaire [questionnaireList]="questionnaireList" [source]="qnrSource"
                         (returnAnswers)="getQuestionAnswers($event)" [customerDetails]="customer">
                     </app-questionnaire>

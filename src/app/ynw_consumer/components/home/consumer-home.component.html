@@ -103,8 +103,8 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div><i style="width: 4rem;"
-                                                        class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                                <div><i style="width: 4rem;" class="fa appt-icon"
+                                                        [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
@@ -181,7 +181,9 @@
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
                                                         prescription</button>
-                                                        <button class="custId-cursor" *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" mat-menu-item (click)="gotoQuestionnaire(booking)">
+                                                    <button class="custId-cursor"
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        mat-menu-item (click)="gotoQuestionnaire(booking)">
                                                         <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
@@ -267,7 +269,8 @@
                                                             *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
                                                             (click)="viewBill(booking,'appointment',$event)">Receipt</button>
                                                     </span>
-                                                    <span *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')" >
+                                                    <span
+                                                        *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
                                                     </span>
@@ -304,7 +307,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                       (click)="gotoWaitlistReschedule(booking)">
+                                                        (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -316,8 +319,7 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item
-                                                        (click)="sendAttachment(booking,'checkin')">
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
@@ -366,8 +368,10 @@
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
                                                         prescription</button>
-                                                        <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
-                                                            <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
+                                                        <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
 
@@ -495,7 +499,8 @@
                                                             *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
                                                             (click)="viewBill(booking,'checkin',$event)">Receipt</button>
                                                     </span>
-                                                    <span *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'STARTED' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')" >
+                                                    <span
+                                                        *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'STARTED' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
                                                     </span>
@@ -555,7 +560,7 @@
                                                         Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"
-                                                     (click)="viewAttachment(booking,'appt')">
+                                                        (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
                                                     </button>
@@ -599,7 +604,9 @@
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
                                                         prescription</button>
-                                                        <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
                                                         <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
@@ -684,7 +691,8 @@
                                                             *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
                                                             (click)="viewBill(booking,'appointment',$event)">Receipt</button>
                                                     </span>
-                                                    <span *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')" >
+                                                    <span
+                                                        *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
                                                     </span>
@@ -721,7 +729,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                      (click)="gotoWaitlistReschedule(booking)">
+                                                        (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -782,7 +790,9 @@
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
                                                         prescription</button>
-                                                        <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
                                                         <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
@@ -902,7 +912,7 @@
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
-                                                       {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
+                                                        {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
                                                         {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
@@ -913,7 +923,8 @@
                                                             *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
                                                             (click)="viewBill(booking,'checkin',$event)">Receipt</button>
                                                     </span>
-                                                    <span *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'STARTED' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')" >
+                                                    <span
+                                                        *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'STARTED' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
                                                     </span>
@@ -956,8 +967,8 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div><i style="width: 4rem;"
-                                                        class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                                <div><i style="width: 4rem;" class="fa appt-icon"
+                                                        [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
@@ -984,11 +995,11 @@
                                                         {{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'appt')">
-                                                       <i class="material-icons">attach_file</i>
+                                                        <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"
-                                                    (click)="viewAttachment(booking,'appt')">
+                                                        (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
                                                     </button>
@@ -1009,8 +1020,10 @@
                                                             (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourites</span>
                                                     </button>
-                                                    <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
-                                                    <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
+                                                        <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
 
@@ -1020,7 +1033,7 @@
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
                                                 </div> -->
                                                 <div class="ordr_no font-size-9">{{booking.appmtDate | date:
-                                                 monthFormat}},
+                                                    monthFormat}},
                                                     {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
@@ -1132,7 +1145,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item 
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -1147,17 +1160,17 @@
                                                         {{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
-                                                      <i class="material-icons">attach_file</i>
+                                                        <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"
-                                                     (click)="viewAttachment(booking,'checkin')">
+                                                        (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'"
-                                                     (click)="rateService(booking,'checkin')" >
-                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                        (click)="rateService(booking,'checkin')">
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
                                                     <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
@@ -1195,7 +1208,9 @@
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
                                                         prescription</button>
-                                                        <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
                                                         <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
@@ -1358,7 +1373,7 @@
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
                                                 <div><i style="width: 4rem;" class="fa appt-icon"
-                                                         [matTooltip]="'Appointment'"></i>
+                                                        [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
@@ -1388,8 +1403,8 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
-                                                    � (click)="viewAttachment(booking,'appt')">
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" �
+                                                        (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
                                                     </button>
@@ -1410,8 +1425,10 @@
                                                             (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourites</span>
                                                     </button>
-                                                    <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
-                                                    <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
+                                                        <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
 
@@ -1421,7 +1438,7 @@
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
                                                 </div> -->
                                                 <div class="ordr_no font-size-9">{{booking.appmtDate | date:
-                                                 monthFormat}},
+                                                    monthFormat}},
                                                     {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
@@ -1436,7 +1453,7 @@
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
-                                                         class="prov_nme disply-flex">
+                                                            class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1476,18 +1493,18 @@
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                 <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
-                                                    <span *ngIf="booking.isRescheduled">
-                                                            <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
-                                                        </span>
+                                                <span *ngIf="booking.isRescheduled">
+                                                    <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
+                                                </span>
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
-                                                  {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
+                                                    {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
-                                                   {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
+                                                    {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1512,7 +1529,7 @@
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 fit_in no-padding">
                                             <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token
-                                             {{booking.token}}
+                                                {{booking.token}}
                                             </div>
 
                                             <!-- icon -->
@@ -1548,17 +1565,17 @@
                                                         {{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
-                                                     <i class="material-icons">attach_file</i>
+                                                        <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"
-                                                     (click)="viewAttachment(booking,'checkin')">
+                                                        (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'"
-                                                     (click)="rateService(booking,'checkin')" >
-                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                        (click)="rateService(booking,'checkin')">
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
                                                     <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
@@ -1595,8 +1612,10 @@
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
                                                         <i class="mr-rx-icon-customer"></i>view
-                                                         prescription</button>
-                                                        <button class="custId-cursor" mat-menu-item *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0" (click)="gotoQuestionnaire(booking)">
+                                                        prescription</button>
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="booking.questionnaire && booking.questionnaire.questionnaire && booking.questionnaire.questionnaire.length > 0"
+                                                        (click)="gotoQuestionnaire(booking)">
                                                         <i class="mr-rx-icon-customer"></i>Update Questionnaire</button>
                                                 </mat-menu>
                                             </div>
@@ -1646,7 +1665,7 @@
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
-                                                         class="prov_nme disply-flex">
+                                                            class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1697,8 +1716,8 @@
                                                         | capitalizeFirst}}</span>
                                                 </span>
 
-                                                <span  [class]="getBookingStatusClass(booking.waitlistStatus)"
-                                                 *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)"
+                                                    *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                         Checked-in
@@ -1795,7 +1814,7 @@
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
-                                                    <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
                                                     <span class="icon-favourite-filled"
                                                         (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
                                                 </button>
@@ -1850,7 +1869,8 @@
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                             [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
-                                            {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                            {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
+                                            confirmation':oder.orderStatus| capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -1889,9 +1909,9 @@
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
                                                     </button>
-                                                    <button mat-menu-item  *ngIf="oder.orderStatus !='Cancelled'"
-                                                     (click)="rateService(oder,'order')" >
-                                                            <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                                    <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
+                                                        (click)="rateService(oder,'order')">
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
                                                         <!-- <span class="rate-service" [class.rated]="isRated(oder)"
                                                             (click)="rateService(oder,'order')"><i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</span> -->
                                                     </button>
@@ -1950,7 +1970,8 @@
                                             </div>
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                                 [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
-                                                {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                                {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
+                                                confirmation':oder.orderStatus| capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
@@ -2019,7 +2040,7 @@
                                                 <span class="sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
                                                     {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                 <!-- <div class="userName">
@@ -2052,9 +2073,10 @@
                                             </span>
 
                                         </div>
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                             [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
-                                            {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                            {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
+                                            confirmation':oder.orderStatus| capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -2121,7 +2143,7 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
-                                                        <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
                                                         {{oder.orderTimeWindow.timeSlots[0].sTime}} -
                                                         {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
@@ -2151,7 +2173,8 @@
                                             </div>
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                                 [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
-                                                {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                                {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
+                                                confirmation':oder.orderStatus| capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
@@ -2164,9 +2187,10 @@
                         <!-- end revamp order -->
                     </div>
 
-                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
-                        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-                        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
+                        [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
 
 
                 </div>

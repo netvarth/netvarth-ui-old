@@ -185,7 +185,8 @@
                   <div class="answer ansr"
                     *ngIf="question.question.fieldDataType !== 'Boolean' && question.question.fieldDataType !== 'Date' && question.question.fieldDataType !== 'FileUpload'">
                     {{question.answer.answer}}</div>
-                  <div class="answer ansr" *ngIf="question.question.fieldDataType === 'Boolean'">{{(question.answer.answer) ?
+                  <div class="answer ansr" *ngIf="question.question.fieldDataType === 'Boolean'">
+                    {{(question.answer.answer) ?
                     'Yes' : 'No'}}</div>
                   <div class="answer ansr" *ngIf="question.question.fieldDataType === 'Date'">{{question.answer.answer |
                     date:newDateFormat}}</div>

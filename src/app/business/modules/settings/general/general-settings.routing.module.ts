@@ -16,7 +16,7 @@ const routes: Routes = [
     { path: 'departments', component: DepartmentsComponent },
     { path: 'departments/list', component: DepartmentListComponent },
     { path: 'department/:id', component: DepartmentDetailComponent },
-    { path: 'questionnaire', loadChildren: () => import('../../settings/general/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
+    { path: 'questionnaire', loadChildren: () => import('../../settings/general/questionnaire/questionnaire.module').then(m => m.QuestionnaireListModule) },
 ];
 
 @NgModule({

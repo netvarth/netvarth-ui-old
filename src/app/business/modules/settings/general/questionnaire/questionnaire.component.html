@@ -15,13 +15,14 @@
                     <thead>
                         <tr class="text-left text-uppercase">
                             <th style="min-width: 50px">Name</th>
-                            <th style="min-width: 50px">Type</th>
                             <th style="min-width: 10px">Channel</th>
+                            <th style="min-width: 50px">Status</th>
                             <th style="min-width: 10px"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="row_data border-bottom pointer-cursor" *ngFor="let qnr of questionnaire" (click)="gotoDetails(qnr)">
+                        <tr class="row_data border-bottom pointer-cursor" *ngFor="let qnr of questionnaire"
+                            (click)="gotoDetails(qnr)">
                             <td class="hide_th">
                                 <span class="text-dark-75 d-block ">
                                     {{qnr.questionnaireId}}
@@ -29,12 +30,13 @@
                             </td>
                             <td class="hide_th">
                                 <span class="text-dark-75 d-block">
-                                    {{qnr.transactionType}}
+                                    {{qnr.channel}}
                                 </span>
                             </td>
                             <td class="hide_th">
-                                <span class="text-dark-75 d-block">
-                                    {{qnr.channel}}
+                                <span class="d-block" [class.greenc]="qnr.status === 'ACTIVE'"
+                                    [class.red]="qnr.status === 'INACTIVE'">
+                                    {{(qnr.status === 'ACTIVE') ? 'Enabled' : 'Disabled'}}
                                 </span>
                             </td>
                             <td class="pr-0 text-right">

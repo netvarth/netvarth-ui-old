@@ -75,11 +75,6 @@ export class QuestionnaireComponent implements OnInit {
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answer, 'init');
       }
-    } else {
-      if (this.questionnaireList) {
-        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-        }
-      }
     }
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
@@ -88,6 +83,8 @@ export class QuestionnaireComponent implements OnInit {
         }
         this.questions = this.questionnaireList.labels[0].questions;
 
+      } else if (this.source === 'qnrDetails') {
+        this.questions = this.questionnaireList.questions;
       } else {
         this.questions = this.questionnaireList.labels;
       }
@@ -311,8 +308,8 @@ export class QuestionnaireComponent implements OnInit {
     if (passData.files) {
       for (let pic of passData.files) {
         if (pic.s3path) {
-        pic = new File([pic], pic.keyName, { lastModified:Date.now(), type: pic.type});
-        console.log(pic);
+          pic = new File([pic], pic.keyName, { lastModified: Date.now(), type: pic.type });
+          console.log(pic);
         }
         dataToSend.append('files', pic);
       }
@@ -415,7 +412,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getQuestion(question) {
-    if (this.source === 'customer-create') {
+    if (this.source === 'customer-create' || this.source === 'qnrDetails') {
       return question;
     } else {
       return question.question;
