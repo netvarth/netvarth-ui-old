@@ -55,6 +55,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     api_error = null;
     api_success = null;
+  patientid: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -143,6 +144,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         }
         if (this.data.qdata.providerConsumer.email) {
           this.consumer_email = this.data.qdata.providerConsumer.email;
+        }
+        if(this.data.qdata.appmtFor[0].memberJaldeeId){
+          this.patientid = this.data.qdata.appmtFor[0].memberJaldeeId;
         }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
