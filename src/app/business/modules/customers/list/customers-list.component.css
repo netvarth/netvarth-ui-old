@@ -148,3 +148,13 @@
   font-size: 0.7rem !important;
   color: green !important;
  }
+ .group-name {
+  text-overflow: ellipsis;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.search-input-mgn-rt {
+margin-right: 30px;
+width: 200px;
+}

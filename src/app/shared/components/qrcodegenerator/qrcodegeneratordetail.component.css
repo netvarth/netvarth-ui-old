@@ -1,0 +1,186 @@
+.mat-dialog-title.qrcodegeneratordetail-title {
+    background-color: #098cf6 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    font-size: 18px !important;
+}
+
+@media (max-width: 575px) {
+    .mat-dialog-title.qrcodegeneratordetail-title {
+        font-size: 16px !important;
+    }
+}
+
+.mat-dialog-title.qrcodegeneratordetail-title button.modal_close {
+    color: white !important;
+}
+
+.mat-dialog-title.qrcodegeneratordetail-title button.modal_close i {
+    display: inline-block !important;
+}
+
+@media (max-width: 575px) {
+    .mat-dialog-title.qrcodegeneratordetail-title button.modal_close i {
+        margin-top: 0 !important;
+    }
+}
+
+mat-dialog-content {
+    background-color: #098cf6 !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #257BC2 !important; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1A67A7 !important; 
+}
+
+mat-dialog-content > div.coupon-outer {
+    padding: 0 !important;
+}
+
+mat-dialog-content .download-btn {
+    /* background: transparent !important;
+    border: 1px solid white !important;
+    width: 35% !important;
+    border-radius: 4px !important; */
+    padding: 6px 10px !important;
+    background: rgba(255, 255, 255, 0.20) !important;
+    border-radius: 50px !important;
+    /* width: 40% !important; */
+    width: 200px !important;
+    border: 0 !important;
+    box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px !important;
+}
+
+mat-dialog-content .download-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+mat-dialog-content .download-btn a {
+    font-size: 17px !important;
+}
+
+mat-dialog-content .download-btn a.active, 
+mat-dialog-content .download-btn a:active, 
+mat-dialog-content .download-btn a:focus, 
+mat-dialog-content .download-btn a:hover {
+    color: white !important;
+}
+
+mat-dialog-content .jaldee-provider-id,
+mat-dialog-content .jaldee-link {
+    text-align: center !important;
+}
+
+mat-dialog-content .jaldee-link {
+    margin-bottom: 15px;
+}
+
+mat-dialog-content .jaldee-provider-id {
+    margin-bottom: 10px !important;
+}
+
+mat-dialog-content .share-links label,
+mat-dialog-content .jaldee-provider-id > div:nth-child(1),
+mat-dialog-content .jaldee-link > div:nth-child(1) {
+    color: #e6eaef !important;
+    font-size: 15.5px !important;
+}
+
+mat-dialog-content .jaldee-provider-id > div:nth-child(2),
+mat-dialog-content .jaldee-link > div:nth-child(2) {
+    font-style: italic !important;
+    color: white !important;
+    font-size: 17px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 750px) {
+    mat-dialog-content .share-links label,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(1),
+    mat-dialog-content .jaldee-link > div:nth-child(1) {
+        font-size: 15px !important;
+    }
+
+    mat-dialog-content .download-btn a,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(2),
+    mat-dialog-content .jaldee-link > div:nth-child(2) {
+        font-size: 15.5px !important;
+    }
+}
+
+@media (max-width: 475px) {
+    mat-dialog-content .share-links label,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(1),
+    mat-dialog-content .jaldee-link > div:nth-child(1) {
+        font-size: 14px !important;
+    }
+
+    mat-dialog-content .download-btn a,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(2),
+    mat-dialog-content .jaldee-link > div:nth-child(2) {
+        font-size: 14.5px !important;
+    }
+}
+
+@media (max-width: 425px) {
+    mat-dialog-content .share-links label,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(1),
+    mat-dialog-content .jaldee-link > div:nth-child(1) {
+        font-size: 13px !important;
+    }
+
+    mat-dialog-content .download-btn a,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(2),
+    mat-dialog-content .jaldee-link > div:nth-child(2) {
+        font-size: 13.5px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    mat-dialog-content .share-links label,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(1),
+    mat-dialog-content .jaldee-link > div:nth-child(1) {
+        font-size: 12.5px !important;
+    }
+
+    mat-dialog-content .download-btn a,
+    mat-dialog-content .jaldee-provider-id > div:nth-child(2),
+    mat-dialog-content .jaldee-link > div:nth-child(2) {
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 350px) {
+    .display-less-than-350 {
+        display: block !important;
+    }
+
+    .display-more-than-350 {
+        display: none !important;
+    }
+}
+
+@media (min-width: 351px) {
+    .display-less-than-350 {
+        display: none !important;
+    }
+
+    .display-more-than-350 {
+        display: block !important;
+    }
+}
+
+share-buttons.display-less-than-350 {
+    margin: 0 -20px !important;
+}
+
+::ng-deep .qrcodegeneratordetail-content share-buttons .sb-circles-light .sb-wrapper .sb-text {
+    color: white !important;
+    font-weight: 500 !important;
+}
