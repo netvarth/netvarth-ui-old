@@ -56,10 +56,11 @@
                                                 <i *ngIf="waitlist.service.serviceType === 'virtualService'"
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
-                                                    {{waitlist.service.name | capitalizeFirst}} <span
+                                                    {{waitlist.service.name | capitalizeFirst}} 
+                                                    <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
-                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{waitlist.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
                                                     </span>
+                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{waitlist.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
                                                 </span>
                                             </div>
                                         </div>
