@@ -21,7 +21,6 @@ export class MeetService {
         const path = 'provider/appointment/video/status/' + uuid;
         return this.servicemeta.httpGet(path);
     }
-
     
     // getVideoList(countrycode,phonenumber) {
     //     const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;

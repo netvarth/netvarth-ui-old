@@ -221,3 +221,4 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         // }
     }
 }
+

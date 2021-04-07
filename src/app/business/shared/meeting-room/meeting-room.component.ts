@@ -51,7 +51,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             }
         )
     }
-
     /**
      * Init method
      */
