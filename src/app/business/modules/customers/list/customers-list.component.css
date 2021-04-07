@@ -154,3 +154,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
+.search-input-mgn-rt {
+margin-right: 30px;
+width: 200px;
+}
