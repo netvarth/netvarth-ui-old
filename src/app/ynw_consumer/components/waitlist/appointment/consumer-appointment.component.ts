@@ -764,7 +764,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.waitlist_for.length === 0) {
@@ -996,6 +996,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id, 'init');
                     if (this.type != 'reschedule') {
                         this.getConsumerQuestionnaire();
+                    } else {
+                        this.questionnaireLoaded = true;
                     }
                 }
                 this.api_loading1 = false;

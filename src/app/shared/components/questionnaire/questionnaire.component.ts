@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
@@ -39,7 +39,7 @@ export class QuestionnaireComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private router: Router, private sharedFunctionobj: SharedFunctions,
+    private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
@@ -108,20 +108,20 @@ export class QuestionnaireComponent implements OnInit {
   setValidateError(errors) {
     this.apiError = [];
     if (errors === 'required') {
-for (let question of this.questions) {
-  if (this.getQuestion(question).mandatory) {
-    this.apiError[this.getQuestion(question).labelName] = [];
-    this.apiError[this.getQuestion(question).labelName].push('Mandatory field');
-  }
-}
+      for (let question of this.questions) {
+        if (this.getQuestion(question).mandatory) {
+          this.apiError[this.getQuestion(question).labelName] = [];
+          this.apiError[this.getQuestion(question).labelName].push('Mandatory field');
+        }
+      }
     } else {
-    if (errors.length > 0) {
-      for (let error of errors) {
-        this.apiError[error.questionField] = [];
-        this.apiError[error.questionField].push(error.error);
+      if (errors.length > 0) {
+        for (let error of errors) {
+          this.apiError[error.questionField] = [];
+          this.apiError[error.questionField].push(error.error);
+        }
       }
     }
-  }
   }
   getAnswers(answerData, type?) {
     this.answers = new Object();
@@ -132,15 +132,15 @@ for (let question of this.questions) {
           if (answ.question.fieldDataType !== 'FileUpload') {
             this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
-            for (let i = 0; i < answ.answer.answer.length; i++) {
-              this.selectedMessage.push(answ.answer.answer[i]);
+            for (let i = 0; i < answ.answer.attachment.length; i++) {
+              this.selectedMessage.push(answ.answer.attachment[i]);
               if (!this.filestoUpload[answ.answer.labelName]) {
                 this.filestoUpload[answ.answer.labelName] = {};
               }
-              if (!this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption]) {
-                this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption] = {};
+              if (!this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption]) {
+                this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
               }
-              this.filestoUpload[answ.answer.labelName][answ.answer.answer[i].caption] = answ.answer.answer[i];
+              this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
             }
           }
         }
@@ -252,6 +252,7 @@ for (let question of this.questions) {
         'answer': data
       }
       const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
+      console.log(this.selectedMessage);
       if (type) {
         this.submitQuestionnaire(passData);
       } else {
@@ -305,12 +306,18 @@ for (let question of this.questions) {
     }
   }
   submitQuestionnaire(passData) {
+    console.log(passData);
     const dataToSend: FormData = new FormData();
     if (passData.files) {
-      for (const pic of passData.files) {
+      for (let pic of passData.files) {
+        if (pic.s3path) {
+        pic = new File([pic], pic.keyName, { lastModified:Date.now(), type: pic.type});
+        console.log(pic);
+        }
         dataToSend.append('files', pic);
       }
     }
+    console.log(dataToSend);
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
@@ -322,7 +329,7 @@ for (let question of this.questions) {
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
     this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
-      this.router.navigate(['/consumer']);
+      this.location.back();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -330,7 +337,7 @@ for (let question of this.questions) {
   }
   resubmitConsumerApptQuestionnaire(body) {
     this.sharedService.resubmitConsumerApptQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
-      this.router.navigate(['/consumer']);
+      this.location.back();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -338,7 +345,7 @@ for (let question of this.questions) {
   }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
-      this.router.navigate(['/provider/check-ins']);
+      this.location.back();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -346,7 +353,7 @@ for (let question of this.questions) {
   }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.params.uuid).subscribe(data => {
-      this.router.navigate(['/provider/appointments']);
+      this.location.back();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -473,7 +480,7 @@ for (let question of this.questions) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
       if (indx !== -1) {
-        return (this.selectedMessage[indx].name) ? this.selectedMessage[indx].name : this.selectedMessage[indx].caption;
+        return (this.selectedMessage[indx].name) ? this.selectedMessage[indx].name : this.selectedMessage[indx].originalName;
       }
     }
   }

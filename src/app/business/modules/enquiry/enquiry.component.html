@@ -10,7 +10,8 @@
         <div class="col-md-12 no-padding-small">
             <div class="card p0">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small" *ngIf="!loading">
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small"
+                    *ngIf="!loading && enquiries.length > 0">
                     <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)">
                         <div class="user-name">
                             {{getUser(enquiry.accountName)}}
@@ -26,6 +27,10 @@
                         </div>
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
+                </div>
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small"
+                    *ngIf="!loading && enquiries.length === 0">
+                    No enquiries
                 </div>
             </div>
         </div>

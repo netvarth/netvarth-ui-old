@@ -270,10 +270,10 @@
                                                 <div class="answer ansr"
                                                     *ngIf="question.question.fieldDataType === 'FileUpload'">
                                                     <div class="qnr-img"
-                                                        *ngFor="let img of question.answer.answer; let i = index">
+                                                        *ngFor="let img of question.answer.attachment; let i = index">
                                                         {{img.caption}}
                                                         <div class="pointer-cursor"
-                                                            (click)="openImage(question.answer.answer, i)">
+                                                            (click)="openImage(question.answer.attachment, i)">
                                                             <img [src]="img.s3path">
                                                         </div>
                                                     </div>

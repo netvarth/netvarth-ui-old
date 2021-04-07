@@ -60,3 +60,8 @@
 .dropzone .dropzone-default {
     border: 1px dashed #EBEDF3 !important;
 }
+.select-box {
+    padding: 10px !important;
+    border: 1px solid #E4E6EF !important;
+    border-radius: 0.42rem !important;
+}

@@ -46,18 +46,17 @@
                                                         (click)="deleteTempImage(getQuestion(question))"></i>
                                                 </div>
                                             </div>
-                                            <mat-form-field appearance="fill" class="w_100"
-                                                *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
-                                                <mat-select multiple #deptsel
-                                                    [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]">
-                                                    <mat-option
-                                                        *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
-                                                        [value]="document"
-                                                        (click)="takeDoc(getQuestion(question), document)">
-                                                        {{document}}</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12"
+                                            <mat-select multiple #deptsel
+                                                *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1"
+                                                [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]"
+                                                class="select-box">
+                                                <mat-option
+                                                    *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
+                                                    [value]="document"
+                                                    (click)="takeDoc(getQuestion(question), document)">
+                                                    {{document}}</mat-option>
+                                            </mat-select>
+                                            <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
                                                 *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && uploadFilesTemp[getQuestion(question).labelName] && uploadFilesTemp[getQuestion(question).labelName].length > 0">
                                                 <div class="dropzone dropzone-default dropzone-primary dz-clickable"
                                                     style="cursor:auto">
@@ -165,9 +164,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="separator separator-dashed my-10"></div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="params.uuid">
-                                    <button mat-button class="cs-btn bt1"
+                                    <button class="normal-btn" mat-flat-button
                                         (click)="!buttonDisable && onSubmit('submit')">Submit</button>
                                 </div>
                             </div>

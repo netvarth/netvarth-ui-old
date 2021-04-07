@@ -806,7 +806,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.userData.userProfile.email && this.waitlist_for[0]) {
@@ -842,7 +842,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         }
         this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
     }
     ismoreMembersAllowedtopush() {
         if (this.maxsize > this.waitlist_for.length) {
@@ -1055,7 +1055,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
                     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id, 'init');
-                    this.getConsumerQuestionnaire();
+                    if (this.type !='waitlistreschedule') {
+                        this.getConsumerQuestionnaire();
+                    } else {
+                        this.questionnaireLoaded = true;
+                    }
                 }
                 this.api_loading1 = false;
             },

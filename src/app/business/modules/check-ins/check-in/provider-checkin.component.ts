@@ -1348,7 +1348,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        this.getProviderQuestionnaire();
+        // this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
