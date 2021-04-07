@@ -24,7 +24,8 @@ import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-appointments',
-  templateUrl: './appointments.component.html'
+  templateUrl: './appointments.component.html',
+  styleUrls: ['appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   elementType = 'url';
