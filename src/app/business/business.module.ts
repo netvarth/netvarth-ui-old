@@ -53,6 +53,10 @@ import { UsersListDialogComponent } from './shared/users-list-dialog/users-list-
 import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/consumer-group-dialog.component';
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
+import { DshortcutsComponent } from './modules/dshortcuts/dshortcuts.component';
+import { DcalanderComponent } from './modules/dcalander/dcalander.component';
+import { DstatsComponent } from './modules/dstats/dstats.component';
+import { DfeedsComponent } from './modules/dfeeds/dfeeds.component';
 
 @NgModule({
     declarations: [
@@ -81,7 +85,11 @@ import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/con
         UsersListDialogComponent,
         ConsumerGroupDialogComponent,
         ItemListDialogComponent,
-        ConsumerLabelDialogComponent
+        ConsumerLabelDialogComponent,
+        DshortcutsComponent,
+        DcalanderComponent,
+        DstatsComponent,
+        DfeedsComponent
     ],
     imports: [
         BusinessRoutingModule,
