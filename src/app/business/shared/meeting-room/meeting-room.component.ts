@@ -85,7 +85,13 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     isConsumerReady() {
         const _this = this;
-        _this.subs.sink = _this.meetService.isConsumerReady(_this.uuid)
+        const post_data = {
+            uuid: _this.uuid,
+            recordingFlag: 'true',
+         
+         };
+       
+        _this.subs.sink = _this.meetService.isConsumerReady(post_data)
             .subscribe(data => {     
                 if (data) {
                     _this.loading = false;

@@ -7,14 +7,16 @@ import { ServiceMeta } from "./service-meta";
 export class MeetService {
     constructor(private servicemeta: ServiceMeta) { }
 
-    isProviderReady(uuid) {
-        const url = 'consumer/appointment/videocall/ready/' + uuid;
-        return this.servicemeta.httpPut(url);
+    isProviderReady(post_data) {
+        return this.servicemeta.httpPut('consumer/appointment/videocall/ready', post_data);
     }
-    isConsumerReady(uuid) {
-        const path = 'provider/appointment/videocall/ready/' + uuid;
-        return this.servicemeta.httpPut(path);
-    }
+    // isConsumerReady(post_data) {
+    //     const path = 'provider/appointment/videocall/ready/' , post_data;
+    //     return this.servicemeta.httpPut(path);
+    // }
+    isConsumerReady(post_data) {
+        return this.servicemeta.httpPut('provider/appointment/videocall/ready', post_data);
+      }
     getStatus(uuid) {
         const path = 'provider/appointment/video/status/' + uuid;
         return this.servicemeta.httpGet(path);
