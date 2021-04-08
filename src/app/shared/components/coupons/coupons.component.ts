@@ -98,10 +98,12 @@ export class CouponsComponent implements OnInit{
     window.getSelection().removeAllRanges();
 
     var tooltip = document.getElementById(baseidtooltip+mainid);
-    tooltip.innerHTML = "Copied";
+    tooltip.innerHTML = "Copied to Clipboard";
+    tooltip.classList.add("copied-text");
   }
   resetTooltip(basetooltipid, mainid) {
     var tooltip = document.getElementById(basetooltipid+mainid);
     tooltip.innerHTML = "Copy";
+    tooltip.classList.remove("copied-text");
   }
 }
