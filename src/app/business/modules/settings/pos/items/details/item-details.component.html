@@ -193,7 +193,7 @@
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
                                 {
-                                  'required' : 'Enter the name that your customers want to see',
+                                  'required' : 'Enter the name that your ' + customer_label + '  want to see',
                                   'maxlength' : 'Display name can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
@@ -208,7 +208,7 @@
                                             Item Local Name
                                         </label>
                                         <input type="text" class="form-control" id="itemNameInLocal"
-                                            placeholder="Enter item code" formControlName="itemNameInLocal" 
+                                            placeholder="Enter item local name" formControlName="itemNameInLocal" 
                                             autocomplete="off">
                                     </div>
                                     <app-field-error-display
