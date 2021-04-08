@@ -11,7 +11,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 })
 export class CouponsComponent implements OnInit{
   couponsList: any = [];
-  type=false;
+  // type=false;
   tempCouponList: any = [];
   providerCouponList: any=[];
   ownCoupons: any = [] ;
@@ -27,9 +27,9 @@ export class CouponsComponent implements OnInit{
     if (this.data.couponsList.OWN) {
       this.ownCoupons = this.data.couponsList.OWN;
     }
-    if (this.data.type) {
-      this.type = this.data.type;
-    }
+    // if (this.data.type) {
+    //   this.type = this.data.type;
+    // }
     this.showCoupons();
   }
 
@@ -39,29 +39,35 @@ export class CouponsComponent implements OnInit{
     this.providerCouponList = [];
 
       for (let index = 0; index < this.tempCouponList.length; index++) {
-        if (this.type) {
-          if (this.tempCouponList[index].firstCheckinOnly === true) {
-            this.couponsList.push(this.tempCouponList[index]);
-          }
-        } else {
-          if (this.tempCouponList[index].firstCheckinOnly === false) {
-            this.couponsList.push(this.tempCouponList[index]);
-          }
-        }
+        this.couponsList.push(this.tempCouponList[index]);
+        console.log(this.couponsList)
+
+        // if (this.type) {
+        //   if (this.tempCouponList[index].firstCheckinOnly === true) {
+        //     this.couponsList.push(this.tempCouponList[index]);
+        //   }
+        // } else {
+        //   if (this.tempCouponList[index].firstCheckinOnly === false) {
+        //     this.couponsList.push(this.tempCouponList[index]);
+        //   }
+        // }
       }
     
 
     for (let index = 0; index < this.ownCoupons.length; index++) {
-      if (this.type) {
-        if (this.ownCoupons[index].couponRules.firstCheckinOnly === true) {
-          this.providerCouponList.push(this.ownCoupons[index]);
-        }
-      } else {
-        if (this.ownCoupons[index].couponRules.firstCheckinOnly === false) {
-          this.providerCouponList.push(this.ownCoupons[index]);
-          console.log(this.providerCouponList);
-        }
-      }
+      this.providerCouponList.push(this.ownCoupons[index]);
+      console.log(this.providerCouponList)
+
+      // if (this.type) {
+      //   if (this.ownCoupons[index].couponRules.firstCheckinOnly === true) {
+      //     this.providerCouponList.push(this.ownCoupons[index]);
+      //   }
+      // } else {
+      //   if (this.ownCoupons[index].couponRules.firstCheckinOnly === false) {
+      //     this.providerCouponList.push(this.ownCoupons[index]);
+      //     console.log(this.providerCouponList);
+      //   }
+      // }
     
   }
   

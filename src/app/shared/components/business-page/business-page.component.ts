@@ -502,16 +502,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
+            if (accountS3s['location']) {
+              this.processS3s('location', accountS3s['location']);
+            }
             if (accountS3s['coupon']) {
               this.processS3s('coupon', accountS3s['coupon']);
             }
             if (accountS3s['providerCoupon']) {
               this.processS3s('providerCoupon', accountS3s['providerCoupon']);
             }
-            if (accountS3s['location']) {
-              this.processS3s('location', accountS3s['location']);
-            }
-
             this.s3Processor.getJsonsbyTypes(this.provider_id, this.userId, userS3List).subscribe(
               (userS3s) => {
                 if (userS3s['providerBusinessProfile']) {
@@ -535,12 +534,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
+            if (accountS3s['location']) {
+              this.processS3s('location', accountS3s['location']);
+            }
             if (accountS3s['coupon']) {
               this.processS3s('coupon', accountS3s['coupon']);
             }
             if (accountS3s['providerCoupon']) {
               this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            }            
+            } 
+                       
             if (accountS3s['businessProfile']) {
               this.processS3s('businessProfile', accountS3s['businessProfile']);
               this.titleService.setTitle(this.businessjson.businessName);
@@ -550,9 +553,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 // {name: 'robots', content: 'index, follow'}
               ]);
             }
-            if (accountS3s['location']) {
-              this.processS3s('location', accountS3s['location']);
-            }
+            
             if (accountS3s['virtualFields']) {
               this.processS3s('virtualFields', accountS3s['virtualFields']);
             }
@@ -848,6 +849,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setAccountCoupons(res) {
+
     if (res !== undefined) {
       this.s3CouponList.JC = res;
     } else {
@@ -1375,7 +1377,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     let firstCheckin = true;
     if (this.activeUser) {
       this.checkinProviderList = this.activeUser.checkedInProviders;
-      if (this.checkinProviderList.length > 0) {
+      if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
           console.log('already taken');

@@ -512,15 +512,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
-            if (accountS3s['coupon']) {
-              this.processS3s('coupon', accountS3s['coupon']);
-            }
-            if (accountS3s['location']) {
-              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            }
             if (accountS3s['location']) {
               this.processS3s('location', accountS3s['location']);
             }
+            if (accountS3s['coupon']) {
+              this.processS3s('coupon', accountS3s['coupon']);
+            }
+            if (accountS3s['providerCoupon']) {
+              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            }
+           
             // this.processS3s('settings', accountS3s['settings']);
             // this.processS3s('terminologies', accountS3s['terminologies']);
             // this.processS3s('coupon', accountS3s['coupon']);
@@ -550,11 +551,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
-            if (accountS3s['businessProfile']) {
-              this.processS3s('businessProfile', accountS3s['businessProfile']);
-            }
             if (accountS3s['location']) {
               this.processS3s('location', accountS3s['location']);
+            }
+            if (accountS3s['coupon']) {
+              this.processS3s('coupon', accountS3s['coupon']);
+            }
+            if (accountS3s['providerCoupon']) {
+              this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+            }
+            if (accountS3s['businessProfile']) {
+              this.processS3s('businessProfile', accountS3s['businessProfile']);
             }
             if (accountS3s['virtualFields']) {
               this.processS3s('virtualFields', accountS3s['virtualFields']);
@@ -867,10 +874,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   setAccountCoupons(res) {
+    this.s3CouponList.JC = [];
     if (res !== undefined) {
       this.s3CouponList.JC = res;
-    } else {
-      this.s3CouponList.JC = [];
     }
     this.firstChckinCuponCunt(this.s3CouponList);
   }
@@ -878,8 +884,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   SetAccountStoreCoupons(res) {
     if (res !== undefined) {
       this.s3CouponList.OWN = res;
+      console.log(this.s3CouponList)
+
     } else {
       this.s3CouponList.OWN = [];
+      console.log(this.s3CouponList)
+
     }
     this.firstChckinCuponCunt(this.s3CouponList);
   }
