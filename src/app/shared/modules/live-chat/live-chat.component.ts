@@ -76,7 +76,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     isProviderReady() {
         const _this = this;
-        _this.subs.sink = _this.meetService.isProviderReady(_this.uuid)
+        const post_data = {
+            uuid: _this.uuid,
+         };
+        _this.subs.sink = _this.meetService.isProviderReady(post_data)
             .subscribe(data => {
                if(data){
                    console.log(data);
@@ -218,3 +221,4 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         // }
     }
 }
+

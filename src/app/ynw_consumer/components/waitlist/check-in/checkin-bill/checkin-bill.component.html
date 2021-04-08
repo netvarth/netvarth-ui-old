@@ -57,8 +57,7 @@
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
-                                                                                class="dynamic">{{bill_data.createdDate
-                                                                                | date:'mediumDate'}}
+                                                                                class="dynamic">{{billdate | date:newDateFormat_date}}
                                                                                 {{billtime}}</span>
                                                                         </span> <span class="columns"
                                                                             *ngIf="billnumber"> <span

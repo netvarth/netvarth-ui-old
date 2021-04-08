@@ -116,6 +116,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     provider_label = '';
     api_loading=true;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+    newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     retval;
     // s3url;
     terminologiesjson;
@@ -293,8 +294,9 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             this.billdate = this.bill_data.createdDate;
             const datearr = this.bill_data.createdDate.split(' ');
             const billdatearr = datearr[0].split('-');
-            this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-            this.billtime = datearr[1] + ' ' + datearr[2];
+            // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+            this.billtime = datearr[1] + ' ' + datearr[2];        
+            this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
         }
         if (this.bill_data.hasOwnProperty('gstNumber')) {
             this.gstnumber = this.bill_data.gstNumber;
