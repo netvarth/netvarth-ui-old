@@ -85,8 +85,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   startDate;
   @ViewChild('startDate', { static: false }) startDatePicker: ElementRef;
   endDateInvalidError = false;
-  dialogMode='edit';
+  dialogMode = 'edit';
   customer_label = '';
+  hidemeItems = true;
+  maxdiscountRequired=false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -170,10 +172,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         (couponDetails: any) => {
           if (couponDetails.couponRules.published) {
             this.coupon_title = 'View Coupon';
-            this.dialogMode='view';
+            this.dialogMode = 'view';
             this.hideSubmitbtn = true;
-          }else{
-            this.dialogMode='edit';
+          } else {
+            this.dialogMode = 'edit';
           }
           this.updateForm(couponDetails);
         }
@@ -181,7 +183,9 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }
 
   }
+
   updateForm(coupon) {
+    this.hidemeItems = false;
     this.couponDetails = coupon;
     if (coupon.calculationType === 'Fixed') {
       this.calculationType = 'Fixed';
@@ -323,6 +327,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.endDateInvalidError = false;
     this.weekdayError = false;
     this.minbillamountError = false;
+    this.maxdiscountRequired=false;
     if (this.action === 'edit' && this.couponDetails.couponRules.published) {
       this.step = this.step + 1;
     } else {
@@ -348,9 +353,15 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         const startDateVal = this.couponForm.get('couponRules').get('startDate').value;
         const endDateVal = this.couponForm.get('couponRules').get('endDate').value;
         const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
+        const calculationType = this.couponForm.get('calculationType').value;
         console.log(startDateVal);
         console.log(endDateVal);
-
+        if (calculationType === 'Percentage') {
+          const maxdiscountvalue = this.couponForm.get('couponRules').get('maxDiscountValue').value;
+          if (maxdiscountvalue === 0 || maxdiscountvalue == null || maxdiscountvalue === undefined || maxdiscountvalue =='') {
+            this.maxdiscountRequired = true;
+          }
+        }
         if (startDateVal == null || startDateVal == undefined || startDateVal == '') {
           this.startDaterequired = true;
         }
@@ -369,7 +380,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false &&this.maxdiscountRequired == false) {
           this.step = this.step + 1;
         }
       }
@@ -377,6 +388,23 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
 
 
+  }
+  changeService(event) {
+    if (event.checked === false && this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value == false) {
+      this.hidemeItems = true;
+    } else if (event.checked === true || this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value == true) {
+      this.hidemeItems = false;
+    }
+  }
+  changeCatalog(event) {
+    if (event.checked === false) {
+      this.couponForm.get('couponRules').get('policies').get('catalogues').setValue([]);
+    }
+    if (event.checked === false && this.couponForm.get('couponRules').get('policies').get('isServiceBased').value == false) {
+      this.hidemeItems = true;
+    } else if (event.checked === true || this.couponForm.get('couponRules').get('policies').get('isServiceBased').value == true) {
+      this.hidemeItems = false;
+    }
   }
   onChangeStartDate() {
     this.startDaterequired = false;
@@ -427,14 +455,14 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
 
   openServiceDialog() {
-    
+
     this.servicedialogRef = this.dialog.open(ServiceListDialogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'services': this.services,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -451,7 +479,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'items': this.items,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -469,7 +497,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'departments': this.departments,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -486,7 +514,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'groups': this.customer_groups,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -504,7 +532,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'labels': this.customer_labels,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -522,7 +550,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'users': this.users,
-        'mode':this.dialogMode
+        'mode': this.dialogMode
       }
 
     });
@@ -577,12 +605,12 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         form_data.couponRules.policies.services = this.services;
       }
 
-      if ( this.couponForm.get('couponRules').get('policies').get('isDepartment').value) {
+      if (isService && this.couponForm.get('couponRules').get('policies').get('isDepartment').value) {
         form_data.couponRules.policies.departments = this.departments;
 
       }
 
-      if ( this.couponForm.get('couponRules').get('policies').get('isUser').value) {
+      if (isService && this.couponForm.get('couponRules').get('policies').get('isUser').value) {
         form_data.couponRules.policies.users = this.users;
 
       }
@@ -591,13 +619,13 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         form_data.couponRules.policies.items = this.items;
 
       }
-      if (this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value) {
+      if (isService && this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value) {
         form_data.couponRules.policies.consumerGroups = this.customer_groups;
 
       }
-      if (this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value) {
+      if (isService && this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value) {
         console.log(this.customer_labels);
-        
+
         form_data.couponRules.policies.consumerLabels = this.customer_labels;
 
       }
@@ -667,7 +695,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       }
     }
     if (isCatalog) {
-      
+
       let catalog = this.couponForm.get('couponRules').get('policies').get('catalogues').value;
       if (catalog == '' || catalog == undefined || catalog == null) {
         this.snackbarService.openSnackBar('Please choose the catalog', { 'panelClass': 'snackbarerror' });
@@ -678,6 +706,3 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     return policiesEntered;
   }
 }
-
-
-
