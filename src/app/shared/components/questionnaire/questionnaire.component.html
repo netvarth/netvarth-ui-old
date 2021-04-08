@@ -92,7 +92,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <div class="col-12"
-                                    *ngIf="getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers === 1">
+                                    *ngIf="(getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers === 1) || getQuestion(question).fieldDataType === 'Boolean'">
                                     <div class="radio-list">
                                         <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
                                             <input type="radio" name="radios2"
@@ -135,7 +135,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <!-- for toggel btn(boolean) -->
-                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
+                                <!-- <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
                                     <span class="switch switch-sm switch-icon">
                                         <label>
                                             <input type="checkbox" [checked]="isBooleanChecked(getQuestion(question))"
@@ -145,7 +145,7 @@
                                     </span>
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="params.uuid">

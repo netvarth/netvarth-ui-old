@@ -36,6 +36,7 @@ export class QuestionnaireComponent implements OnInit {
   filestoUpload: any = [];
   changeHappened = false;
   uploadedFiles: any = [];
+  uploadedImages: any = [];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -126,40 +127,65 @@ export class QuestionnaireComponent implements OnInit {
     this.answers = new Object();
     if (!type || type === 'get') {
       this.selectedMessage = [];
+      this.uploadedImages = [];
+      this.uploadedFiles = [];
       for (let answ of answerData) {
         if (answ.answer) {
           if (answ.question.fieldDataType !== 'FileUpload') {
             this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
             for (let i = 0; i < answ.answer.attachment.length; i++) {
-              this.selectedMessage.push(answ.answer.attachment[i]);
-              if (!this.filestoUpload[answ.answer.labelName]) {
-                this.filestoUpload[answ.answer.labelName] = {};
+              if (type === 'get') {
+                this.uploadedImages.push(answ.answer.attachment[i]);
+                if (!this.uploadedFiles[answ.answer.labelName]) {
+                  this.uploadedFiles[answ.answer.labelName] = {};
+                }
+                if (!this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption]) {
+                  this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
+                }
+                this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
+              } else {
+                this.selectedMessage.push(answ.answer.attachment[i]);
+                if (!this.filestoUpload[answ.answer.labelName]) {
+                  this.filestoUpload[answ.answer.labelName] = {};
+                }
+                if (!this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption]) {
+                  this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
+                }
+                this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
               }
-              if (!this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption]) {
-                this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
-              }
-              this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
             }
           }
         }
       }
-this.uploadedFiles = this.filestoUpload;
     } else {
       for (let answ of answerData) {
         this.answers[answ.labelName] = answ.answer;
       }
     }
-    Object.keys(this.filestoUpload).forEach(key => {
-      Object.keys(this.filestoUpload[key]).forEach(key1 => {
-        if (this.filestoUpload[key][key1]) {
-          if (!this.uploadFilesTemp[key]) {
-            this.uploadFilesTemp[key] = [];
+    if (type === 'get') {
+      Object.keys(this.uploadedFiles).forEach(key => {
+        Object.keys(this.uploadedFiles[key]).forEach(key1 => {
+          if (this.uploadedFiles[key][key1]) {
+            if (!this.uploadFilesTemp[key]) {
+              this.uploadFilesTemp[key] = [];
+            }
+            this.uploadFilesTemp[key].push(key1);
           }
-          this.uploadFilesTemp[key].push(key1);
-        }
+        });
       });
-    });
+    } else {
+      Object.keys(this.filestoUpload).forEach(key => {
+        Object.keys(this.filestoUpload[key]).forEach(key1 => {
+          if (this.filestoUpload[key][key1]) {
+            if (!this.uploadFilesTemp[key]) {
+              this.uploadFilesTemp[key] = [];
+            }
+            this.uploadFilesTemp[key].push(key1);
+          }
+        });
+      });
+    }
     this.onSubmit('getanswer');
   }
   filesSelected(event, question, document?) {
@@ -200,11 +226,13 @@ this.uploadedFiles = this.filestoUpload;
           this.selectedMessage.push(file);
           const indx = this.selectedMessage.indexOf(file);
           this.filestoUpload[question.labelName][document] = file;
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage[indx]['path'] = e.target['result'];
-          };
-          reader.readAsDataURL(file);
+          if (indx !== -1) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.selectedMessage[indx]['path'] = e.target['result'];
+            };
+            reader.readAsDataURL(file);
+          }
         }
       }
       this.onSubmit();
@@ -217,6 +245,13 @@ this.uploadedFiles = this.filestoUpload;
         this.selectedMessage.splice(index, 1);
         delete this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]];
       }
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
+      const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
+      if (index !== -1) {
+        delete this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]];
+        this.filestoUpload[question.labelName] = {};
+        this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]] = {};
+      }
     }
     this.onSubmit();
   }
@@ -225,11 +260,12 @@ this.uploadedFiles = this.filestoUpload;
     console.log(this.uploadedFiles);
     console.log(this.filestoUpload);
     Object.keys(this.filestoUpload).forEach(key => {
+      console.log(key);
+      console.log(Object.keys(this.filestoUpload[key]).length);
       if (Object.keys(this.filestoUpload[key]).length > 0) {
         this.answers[key] = {};
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
-          console.log(this.uploadedFiles[key][key1]);
-          if (this.filestoUpload[key][key1] && !this.uploadedFiles[key][key1]) {
+          if (this.filestoUpload[key][key1]) {
             const indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
             if (indx !== -1) {
               this.answers[key][indx] = key1;
@@ -238,17 +274,21 @@ this.uploadedFiles = this.filestoUpload;
         });
       } else {
         // delete this.answers[key];
-        this.answers[key] = "";
+        console.log(this.uploadedFiles[key]);
+        if (Object.keys(this.uploadedFiles[key]).length === 0) {
+          this.answers[key] = '';
+        }
       }
     });
     let data = [];
+    console.log(this.answers);
     Object.keys(this.answers).forEach(key => {
       // if (this.answers[key]) {
-        this.apiError[key] = [];
-        data.push({
-          'labelName': key,
-          'answer': (this.answers[key]) ? this.answers[key] : ''
-        });
+      this.apiError[key] = [];
+      data.push({
+        'labelName': key,
+        'answer': (this.answers[key]) ? this.answers[key] : ''
+      });
       // }
     });
     if (data.length > 0) {
@@ -257,20 +297,18 @@ this.uploadedFiles = this.filestoUpload;
         'answer': data
       }
       const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
-      console.log(this.selectedMessage);
       if (type !== 'getanswer') {
-      if (type) {
-        console.log(this.changeHappened);
-        if (this.changeHappened) {
-        this.submitQuestionnaire(passData);
+        if (type) {
+          if (this.changeHappened) {
+            this.submitQuestionnaire(passData);
+          } else {
+            this.location.back();
+          }
         } else {
-          this.location.back();
+          this.changeHappened = true;
+          this.returnAnswers.emit(passData);
         }
-      } else {
-        this.changeHappened = true;
-        this.returnAnswers.emit(passData);
       }
-    }
     }
   }
   getDate(date) {
@@ -281,7 +319,7 @@ this.uploadedFiles = this.filestoUpload;
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = [];
       }
-      if (question.listPropertie.maxAnswers > 1) {
+      if (question.listPropertie && question.listPropertie.maxAnswers && question.listPropertie.maxAnswers > 1) {
         this.answers[question.labelName].push(value);
       } else {
         this.answers[question.labelName][0] = value;
@@ -291,7 +329,7 @@ this.uploadedFiles = this.filestoUpload;
       this.answers[question.labelName].splice(indx, 1);
     }
     if (this.answers[question.labelName].length === 0) {
-      this.answers[question.labelName] =  '';
+      this.answers[question.labelName] = '';
     }
     this.onSubmit();
   }
@@ -321,16 +359,11 @@ this.uploadedFiles = this.filestoUpload;
   submitQuestionnaire(passData) {
     console.log(passData);
     const dataToSend: FormData = new FormData();
-    if (passData.files) {
+    if (passData.files && passData.files.length > 0) {
       for (let pic of passData.files) {
-        if (pic.s3path) {
-          pic = new File([pic], pic.keyName, { lastModified: Date.now(), type: pic.type });
-          console.log(pic);
-        }
         dataToSend.append('files', pic);
       }
     }
-    console.log(dataToSend);
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
@@ -473,6 +506,13 @@ this.uploadedFiles = this.filestoUpload;
         this.selectedMessage.splice(indx, 1);
         delete this.filestoUpload[question.labelName][document];
       }
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
+      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
+      if (indx !== -1) {
+        delete this.uploadedFiles[question.labelName][document];
+        this.filestoUpload[question.labelName] = {};
+        this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]] = {};
+      }
     }
     this.onSubmit();
   }
@@ -480,7 +520,15 @@ this.uploadedFiles = this.filestoUpload;
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        const path = (this.selectedMessage[indx].path) ? this.selectedMessage[indx].path : this.selectedMessage[indx].s3path;
+        const path = this.selectedMessage[indx].path;
+        return path;
+      } else {
+        return '../../assets/images/pdf.png';
+      }
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
+      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
+      if (indx !== -1) {
+        const path = this.uploadedImages[indx].s3path;
         return path;
       } else {
         return '../../assets/images/pdf.png';
@@ -493,7 +541,12 @@ this.uploadedFiles = this.filestoUpload;
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
       if (indx !== -1) {
-        return (this.selectedMessage[indx].name) ? this.selectedMessage[indx].name : this.selectedMessage[indx].originalName;
+        return this.selectedMessage[indx].name;
+      }
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
+      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
+      if (indx !== -1) {
+        return this.uploadedImages[indx].originalName;
       }
     }
   }
