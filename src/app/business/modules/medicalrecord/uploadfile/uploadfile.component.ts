@@ -45,7 +45,7 @@ export class UploadFileComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Upload file';
+  heading = 'Uploaded files';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
@@ -148,13 +148,24 @@ export class UploadFileComponent implements OnInit {
   }
 
   getMedicalRecordUsingId(mrId) {
+    this.loading = true;
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          this.loading = false;
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
             console.log(this.uploadFiles);
+            for (let file of this.uploadFiles) {
+              let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'image' || type[0] == 'video' || type[0] =='audio'){
+                this.mediafiles.push(file);
+              } else {
+                this.docfiles.push(file);
+              }
+          }
+          this.loading = false;
           }
         }
       },
@@ -219,7 +230,7 @@ showFile(file){
   }
   tabChange(event) {
    
-    this.loading = true;
+    //this.loading = true;
   }
 
 }

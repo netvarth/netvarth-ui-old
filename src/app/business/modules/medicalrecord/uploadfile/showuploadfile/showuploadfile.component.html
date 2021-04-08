@@ -4,10 +4,14 @@
     </button>
   </h1>
   <mat-dialog-content>
-        <img  style="width:100%;margin-top: -20px;" [src]="details.url" *ngIf="details.type && details.type == 'png'|| details.type =='jpg'"/>  
-        <video width="320" height="240" controls *ngIf="details.type && details.type == 'video/mp4'">
-            <source [src]="details.url" type="video/mp4">
+        <img  style="width:100%;margin-top: -20px;" [src]="details.url" *ngIf="details.type && details.type == 'image/bmp'|| details.type =='image/png'|| details.type == 'image/gif' || details.type == 'image/jpg' ||details.type =='image/jpeg'||details.type == 'image/webp'"/>  
+        <video style="width:100%;margin-top: -20px;" controls *ngIf="details.type && details.type == 'video/mp4' || details.type == 'video/mpeg'||details.type == 'video/quicktime'">
+            <source [src]="details.url" />
           </video>  
+          <audio style="width:100%;margin-top: -20px;" controls *ngIf="details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3'">
+           
+            <source [src]="details.url"/>
+         </audio>
 </mat-dialog-content>
 
   <!-- <mat-dialog-actions>

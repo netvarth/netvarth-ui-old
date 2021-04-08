@@ -83,15 +83,18 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         const input = event.target.files;
         if (input) {
           for (const file of input) {
+            console.log(file);
             if (projectConstantsLocal.MRFILETYPES_UPLOAD.indexOf(file.type) === -1) {
               this.error_msg ='Selected file type not supported';
             } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
               this.error_msg ='Please upload images with size < 10mb';
             } else {
               this.item_pic.files.push(file);
+              console.log(this.item_pic.files);
               const reader = new FileReader();
               reader.onload = (e) => {
                 this.item_pic.base64.push(e.target['result']);
+                console.log(this.item_pic.base64);
               reader.readAsDataURL(file);
             }
           }
