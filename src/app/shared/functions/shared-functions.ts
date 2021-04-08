@@ -654,7 +654,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': msg,
-        'heading': 'Business profile'
+        'heading': 'Business profile',
+        'buttons': 'okCancel'
       }
     });
 
@@ -673,7 +674,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': 'Do you want to remove your profile picture?',
-        'heading': 'Delete Confirmation'
+        'heading': 'Delete Confirmation',
+        'buttons': 'okCancel'
       }
     });
 
