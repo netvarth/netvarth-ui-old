@@ -333,12 +333,12 @@
                                                                 {{selected_coupons.toString()}}
                                                             </div>
                                                             <div  *ngFor="let coupon of paymentDetails.jCouponList | keyvalue" style="text-align: initial;">
-                                                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>
-                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                                                 </div>
                                                                <div  *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
-                                                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>
-                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                                                </div>
                                                             <!-- <div class="disp-flex width-100 amount-details" *ngFor="let coupon of paymentDetails.jCouponList | keyvalue">
                                                                 <div class="bill-labels">{{coupon.key}} </div>&nbsp;
