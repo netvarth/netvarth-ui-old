@@ -183,215 +183,113 @@
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
               <div>
-                <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-                    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                      <span class="filter-head-title">Filter</span>
-                      <!-- <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Close filter window'"></i> -->
-                      <i class="fa fa-angle-double-right ng-star-inserted pointer-cursor pull-right"
+                <aside class="filterSidebar" *ngIf="filter_sidebar">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Close filter window'"></i>
                       <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
                     </div>
-                    <ul class="sidebar-menu accordion" id="accordion1">
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
-                              Name
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseName1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div class="filterTextinput filter-text-input">
-                              <li class="filterli filter-li">
-                                <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                              </li>
-                            </div>
-                            <div class="filterTextinput filter-text-input">
-                              <li class="filterli filter-li">
-                                <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseId1" aria-expanded="false">
-                              {{customerIdTooltip | capitalizeFirst}}
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseId1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div class="filterTextinput filter-text-input">
-                              <li class="filterli filter-li">
-                                <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                  (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
-                                  placeholder="{{customerIdTooltip | capitalizeFirst}}">
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseBNo1" aria-expanded="false">
-                              Booking Number
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseBNo1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div class="filterTextinput filter-text-input">
-                              <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
-                                  (keyup)="keyPressed($event)" class="filterTextbox filter-textbox" placeholder="Booking No">
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox"
+                            placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseServices1" aria-expanded="false">
-                              Services
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseServices1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div *ngIf="service_list.length > 0">
-                              <label class="filterHeaders">Services</label>
-                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allServiceSelected"
-                                  (change)="setFilterDataCheckbox('service', 'all', $event)">
-                                  All</mat-checkbox>
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox *ngFor="let service of service_list"
-                                  [checked]="services.indexOf(service.id) !== -1"
-                                  (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                    class="fa meet-icon"></i>
-                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                    class="fa zoom-icon"></i>
-                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                    class="fa phon-icon"></i>
-                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                    class="fa wtsapaud-icon"></i>
-                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                    class="fa wtsapvid-icon"></i>{{service.name}}
-                                </mat-checkbox>
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Booking No">
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsePayStatus1" aria-expanded="false">
-                              Payment Status
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapsePayStatus1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div>
-                              <label class="filterHeaders">Payment Status</label>
-                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allPayStatusSelected"
-                                  (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
-                                  All</mat-checkbox>
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                *ngFor="let pay_status of payStatusList">
-                                <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
-                                  (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
-                                  {{pay_status.value}}</mat-checkbox>
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                      <div *ngIf="service_list.length > 0">
+                        <label class="filterHeaders">Services</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allServiceSelected"
+                            (change)="setFilterDataCheckbox('service', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of service_list"
+                            [checked]="services.indexOf(service.id) !== -1"
+                            (change)="setFilterDataCheckbox('service', service.id, $event)">
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                              class="fa meet-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                              class="fa zoom-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                              class="fa phon-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                              class="fa wtsapaud-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                              class="fa wtsapvid-icon"></i>{{service.name}}
+                          </mat-checkbox>
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseAMode1" aria-expanded="false">
-                              Appointment Mode
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseAMode1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div>
-                              <label class="filterHeaders">Appointment Mode</label>
-                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected"
-                                  (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
-                                  All</mat-checkbox>
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                *ngFor="let mode of appointmentModes">
-                                <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
-                                  (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
-                                  {{mode.value}}</mat-checkbox>
-                              </li>
-                            </div>
-                          </div>
-                        </div>
+                      <div>
+                        <label class="filterHeaders">Payment Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allPayStatusSelected"
+                            (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let pay_status of payStatusList">
+                          <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                            (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                            {{pay_status.value}}</mat-checkbox>
+                        </li>
                       </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLabels1" aria-expanded="false">
-                              Labels
-                              <i class="fa fa-angle-down"></i>
-                            </button>
-                          </h2>
-                        </div>
-                        <div id="collapseLabels1" class="collapse" data-parent="#accordion1">
-                          <div class="card-body">
-                            <div *ngIf="providerLabels.length > 0">
-                              <div>
-                                <label class="filterHeaders">Labels</label>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
-                                    All</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                  *ngFor="let lbl of providerLabels">
-                                  <mat-checkbox
-                                    [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
-                                    (change)="setLabelFilter(lbl, $event)">
-                                    {{lbl.displayName}}</mat-checkbox>
-                                </li>
-                              </div>
-                            </div>
-                          </div>
+                      <div>
+                        <label class="filterHeaders">Appointment Mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of appointmentModes">
+                          <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div *ngIf="providerLabels.length > 0">
+                        <div>
+                          <label class="filterHeaders">Labels</label>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let lbl of providerLabels">
+                            <mat-checkbox
+                              [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                              (change)="setLabelFilter(lbl, $event)">
+                              {{lbl.displayName}}</mat-checkbox>
+                          </li>
                         </div>
                       </div>
                     </ul>
