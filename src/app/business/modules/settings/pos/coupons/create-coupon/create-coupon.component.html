@@ -276,6 +276,9 @@
                           <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000"  (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg"
                             id="maxDiscountValue" placeholder="Enter discount value" formControlName="maxDiscountValue"
                             />
+                            <app-field-error-display [displayError]=maxdiscountRequired
+                            errorMsg="Please enter value">
+                        </app-field-error-display>
                         </div>
                       </div>
                     </div>
@@ -291,7 +294,7 @@
                         <div class="row">
                           <div class="col-xl-12">
                             <div class="form-group">
-                              <mat-checkbox class="example-margin" formControlName="isServiceBased">Limit coupon to
+                              <mat-checkbox class="example-margin" formControlName="isServiceBased" (change)="changeService($event)">Limit coupon to
                                 services
                               </mat-checkbox>
                             </div>
@@ -430,7 +433,7 @@
                         <div class="row">
                           <div class="col-xl-12">
                             <div class="form-group">
-                              <mat-checkbox class="example-margin" formControlName="isCatalogBased">Limit coupon to
+                              <mat-checkbox class="example-margin" formControlName="isCatalogBased" (change)="changeCatalog($event)">Limit coupon to
                                 catalog
                               </mat-checkbox>
                             </div>
@@ -458,7 +461,7 @@
                           </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" [hidden]="hidemeItems">
                           <div class="col-xl-12">
                             <div class="form-group">
                               <mat-checkbox class="example-margin" formControlName="isItem">Limit coupon to
@@ -472,7 +475,7 @@
 
                         </div>
                         <div class="row"
-                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isItem').value==false">
+                          [hidden]="this.couponForm.get('couponRules').get('policies').get('isItem').value==false || hidemeItems">
                           <div class="col-xl-12">
                             <div class="form-group">
                               <button mat-raised-button type="button" class="dialogbtn"

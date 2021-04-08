@@ -363,12 +363,12 @@
                                                                     *ngIf="selected_coupons.length === 0"
                                                                     (click)="applyPromocode()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Apply
-                                                                    Promocode</a>
+                                                                    Coupon Code</a>
                                                                 <a class="lnk pointer-cursor action"
                                                                     *ngIf="selected_coupons.length > 0"
                                                                     (click)="applyPromocode()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">
-                                                                    Promocode added</a>
+                                                                    Coupon code added</a>
                                                                 {{selected_coupons.toString()}}
                                                             </div>
                                                             <div  *ngFor="let coupon of paymentDetails.jCouponList | keyvalue" style="text-align: initial;">
@@ -720,7 +720,7 @@
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                                     Apply
-                                                                    promocode
+                                                                    Coupon Code
                                                                 </div>
                                                                 <div
                                                                     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">

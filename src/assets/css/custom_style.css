@@ -14020,6 +14020,11 @@ width: 40px !important;
 .wizardstyle app-footernew .main-footer {
   margin-left: 0px !important;
 }
+.main-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 .cont-outer {
     padding-bottom: 20px;
 }
