@@ -95,3 +95,6 @@ color: #0707eca1 !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
 }
+.address-height {
+  height: auto !important;
+}
