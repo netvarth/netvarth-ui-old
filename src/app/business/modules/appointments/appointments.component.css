@@ -9,6 +9,7 @@
 
 .filter-sidebar .filter-container {
     height: -webkit-fill-available !important;
+    overflow: auto !important;
 }
 
 .filter-sidebar .filter-container .filter-head {
@@ -115,4 +116,52 @@
     background-color: #e3e3e3 !important;
     border: 0 !important;
     border-radius: 5px !important;
+
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: darkslategrey !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox::placeholder {
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    color: #777 !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input {
+    padding: 15px 0 !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input li.filterli {
+    margin: 0 15px !important;
+}
+
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container {
+    height: 20px !important;
+    width: 20px !important;
+}
+
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame {
+    border-radius: 50% !important;
+    border-color: #888 !important;
+}
+
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background {
+    border-radius: 50% !important;
+    background-color: #1E4079 !important;
+}
+
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: darkslategrey !important;
+}
+
+.filter-sidebar .filter-container .filter-head .reset-filter {
+    background-color: white !important;
+    padding: 5px 8px !important;
+    border-radius: 3px !important;
+    color: #1E4079 !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
 }
