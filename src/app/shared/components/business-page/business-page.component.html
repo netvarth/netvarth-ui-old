@@ -529,64 +529,69 @@
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
-                    <h6 class="question-header">Book online now and save your time
+                    <h6 *ngIf="servicesAndProviders.length !== 0" class="question-header">Book online now and save your time
                     </h6>
-                </div>
-                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
-                    [class.mgn-bt-10]="!showDepartments">
-                    <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
-                    </h5>
-                    <h6 class="question-header">{{dotor_specialization_hint}}
+                    <h6 *ngIf="servicesAndProviders.length == 0" class="question-header"> No services or consultations in this location.
                     </h6>
-                </div>
-                <div class="clearfix"></div>
-                <!-- *ngFor="let loc of locationjson; let i = index">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding loc-card"
-                        *ngIf="locationjson.length > 1">
-                        <div class="loc-accor">
-                            <div class="location-accord">
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20">
-                                    <h3 *ngIf="!isPlaceisSame"><a [href]="loc.googleMapUrl" target="_blank"
-                                            *ngIf="loc.googleMapUrl!=''"><i
-                                                class="fa fa-map-marker"></i>&nbsp;{{loc.place | capitalizeFirst}}</a>
-                                    </h3>
-                                    <h3 *ngIf="isPlaceisSame"><a [href]="loc.googleMapUrl" target="_blank"
-                                            *ngIf="loc.googleMapUrl!=''"><i class="fa fa-map-marker"></i>
-                                            {{loc.address.substr(0, loc.address.split(',', 2).join(',').length)}}</a>
-                                    </h3>
+
+
+                    <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
+                        [class.mgn-bt-10]="!showDepartments">
+                        <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
+                        </h5>
+                        <h6 class="question-header">{{dotor_specialization_hint}}
+                        </h6>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- *ngFor="let loc of locationjson; let i = index">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding loc-card"
+                            *ngIf="locationjson.length > 1">
+                            <div class="loc-accor">
+                                <div class="location-accord">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20">
+                                        <h3 *ngIf="!isPlaceisSame"><a [href]="loc.googleMapUrl" target="_blank"
+                                                *ngIf="loc.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker"></i>&nbsp;{{loc.place | capitalizeFirst}}</a>
+                                        </h3>
+                                        <h3 *ngIf="isPlaceisSame"><a [href]="loc.googleMapUrl" target="_blank"
+                                                *ngIf="loc.googleMapUrl!=''"><i class="fa fa-map-marker"></i>
+                                                {{loc.address.substr(0, loc.address.split(',', 2).join(',').length)}}</a>
+                                        </h3>
+                                    </div>
                                 </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div> -->
+                    <!-- Departments True-->
+                    <ng-container *ngIf="showDepartments && !this.userId">
+                        <ng-container *ngFor="let sps of servicesAndProviders">
+                            <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
+                                *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
+                                {{sps.departmentName}}
+                            </h4>
+                            <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
+                                <app-card [item]="sp" [domain] = "businessjson.serviceSector.domain" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                                    (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
                             <div class="clearfix"></div>
-                        </div>
-                    </div> -->
-                <!-- Departments True-->
-                <ng-container *ngIf="showDepartments && !this.userId">
-                    <ng-container *ngFor="let sps of servicesAndProviders">
-                        <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
-                            *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
-                            {{sps.departmentName}}
-                        </h4>
-                        <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
+                            <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
+                        <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                             <app-card [item]="sp" [domain] = "businessjson.serviceSector.domain" [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
-                        <div class="clearfix"></div>
-                        <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
                     </ng-container>
-                </ng-container>
-                <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                    <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                        <app-card [item]="sp" [domain] = "businessjson.serviceSector.domain" [terminology]='terminologiesjson' [loc]="selectedLocation"
-                            (actionPerformed)="cardClicked($event)"></app-card>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="donationServices.length >0">
-                    <div class="bus-item-N" *ngFor="let sp of donationServices">
-                        <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
-                            (actionPerformed)="cardClicked($event)"></app-card>
-                    </div>
-                </ng-container>
-
+                    <ng-container *ngIf="donationServices.length >0">
+                        <div class="bus-item-N" *ngFor="let sp of donationServices">
+                            <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                                (actionPerformed)="cardClicked($event)"></app-card>
+                        </div>
+                    </ng-container>
+    
+                </div>
+                
                 <!-- Order Catalog-->
                 <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
                     <div>
