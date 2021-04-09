@@ -1063,3 +1063,6 @@ input[type=checkbox]:not(old):checked + label > span:before {
 .mgn-lt-15{
   margin-left: 15px;
 }
+.spinner.spinner-right:before {
+  right: .3rem !important;
+}
