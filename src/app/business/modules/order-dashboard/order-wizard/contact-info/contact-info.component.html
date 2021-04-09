@@ -10,11 +10,11 @@
             <!-- <div class="row"> -->
                 <div class="form-group ">
                     <!-- <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
-                    <label>Mobile #</label>
+                    <label>Mobile *</label>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text1 mgn-up-10">+91</span></div>
                         <input type="text" class="form-control" (keypress)="isNumeric($event)" id="phone"
-                            placeholder="Mobile Number" formControlName="phone" autocomplete="off" maxlength=10 />
+                            placeholder="Mobile #" formControlName="phone" autocomplete="off" maxlength=10 />
                     </div>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(contantInfo,'phone')" [errorMsgs]="fed_service.getErrorMessage(contantInfo,'phone',
 {
@@ -33,7 +33,7 @@
           <!-- <div class="row"> -->
                 <div class="form-group  ">
                     <!-- <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
-                    <label for="email">Email</label>
+                    <label for="email">Email *</label>
                     <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
                 <!-- </div> -->
                 <app-field-error-display [displayError]="fed_service.isFieldValid(contantInfo,'email')" [errorMsgs]="fed_service.getErrorMessage(contantInfo,'email',
