@@ -14,9 +14,9 @@
       <ul>
         <b>Cancellation Policies</b>
         <li>
-            You can cancel your booking any time till {{data.wtlist.date}}. You have to contact your provider, {{data.wtlist.providerAccount.businessName}} when system doesn’t permit cancellation for any reason.
+            You can cancel your {{data.book}} any time till {{data.wtlist.date | date: newDateFormat}}. You have to contact your provider, {{data.wtlist.providerAccount.businessName}} when system doesn’t permit cancellation for any reason.
         </li>
-        <li>Your provider may cancel your booking for their own reasons any time. Jaldee tries its best to update you about it through timely notifications.
+        <li>Your provider may cancel your {{data.book}} for their own reasons any time. Jaldee tries its best to update you about it through timely notifications.
         </li>
     </ul>
     <ul> <b>Refund Policies</b>
@@ -24,7 +24,7 @@
             When a cancellation is made by you, a 3% service fee will be deducted on the refund of the advance payment made.
         </li>
         <li>
-            For cancellations made on {{data.wtlist.date}} contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
+            For cancellations made on {{data.wtlist.date | date: newDateFormat}} contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
         </li>
     </ul>
     </div>
