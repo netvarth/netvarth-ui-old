@@ -23,7 +23,8 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-appointments',
-  templateUrl: './appointments.component.html'
+  templateUrl: './appointments.component.html',
+  styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   elementType = 'url';
