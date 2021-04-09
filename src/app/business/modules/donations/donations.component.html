@@ -110,7 +110,14 @@
                 <li class="filterli">
                   <!-- (keyup)="focusInput($event,Fmobile)" -->
                   <input type="text" #Ffname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.first_name"
-                    placeholder="Name">
+                    placeholder="First Name">
+                </li>
+              </div>
+              <div class="filterTextinput">
+                <li class="filterli">
+                  <!-- (keyup)="focusInput($event,Fmobile)" -->
+                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
+                    placeholder="Last Name">
                 </li>
               </div>
               <div class="filterTextinput">
