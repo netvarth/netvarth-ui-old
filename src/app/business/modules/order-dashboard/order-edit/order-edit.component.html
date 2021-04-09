@@ -42,7 +42,7 @@
                           <!--begin::Product-->
                           <div class="card-body p-0"  >
                             <ng-container *ngFor="let item of catalogItems">
-                              <div class="col-md-4 col-xxl-4 col-lg-12 orderItems">
+                              <div class="col-md-4 col-xxl-4  orderItems">
                                 <!--begin::Card-->
                                 <div class="card card-custom card-shadowless">
                                   <div class="card-body p-0">
@@ -60,7 +60,7 @@
                                         </td>
                                       </div>
                                       <div class="overlay-wrapper rounded bg-light text-center">
-                                        <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px" />
+                                        <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px maxheight" />
                                       </div>
                                     </div>
                                     <!--end::Image-->

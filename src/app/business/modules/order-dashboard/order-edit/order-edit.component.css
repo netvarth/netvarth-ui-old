@@ -82,9 +82,9 @@ color: #0707eca1 !important;
   font-size: 0.85rem !important;
 }
 .orderItems .card{
-  min-width: 350px !important;
+  /* min-width: 350px !important; */
   min-height: 400px !important;
-  max-width: 350px !important;
+  /* max-width: 350px !important; */
   }
 .mob-prefix-border {
   border-bottom-right-radius: 0px !important;
@@ -97,4 +97,7 @@ color: #0707eca1 !important;
 }
 .address-height {
   height: auto !important;
+}
+.maxheight{
+  max-height: 200px !important;
 }
