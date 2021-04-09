@@ -184,7 +184,7 @@
     <div class="card-item-head">
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
     </div>
-    <div class="card-item-content">
+    <div class="card-item-content" style="display: block !important;">
         <h4 class="user-name card-title font-weight-bold module line-clamp">
             <a *ngIf="user.businessName">{{user.businessName}}</a>
             <!-- <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
@@ -197,7 +197,9 @@
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>
-        <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
+        <div class="specialization-parent" *ngIf="user.businessUserName">
+            <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
+        </div>
         <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
         <p class="availability user-available">
             <ng-container *ngIf="user.apptTime && user.apptTime.caption">
