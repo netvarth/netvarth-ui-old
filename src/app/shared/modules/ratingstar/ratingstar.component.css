@@ -46,3 +46,6 @@ h1 { font-size: 1.5em; margin: 10px; }*/
   width: 15px !important;
   height: auto !important;
 }
+.rating-label {
+  font-weight: 500;
+}
