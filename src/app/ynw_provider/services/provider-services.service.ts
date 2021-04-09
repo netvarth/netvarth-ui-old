@@ -174,6 +174,10 @@ export class ProviderServices {
     const url = 'provider/jaldee/coupons/' + jc_code + '/stats';
     return this.servicemeta.httpGet(url);
   }
+  getProviderCouponStat(jc_code) {
+    const url = 'provider/bill/' + jc_code + '/stats';
+    return this.servicemeta.httpGet(url);
+  }
   getJaldeeCouponReports(filter) {
     const url = 'provider/jaldee/coupons/jcreports/reimburse';
     return this.servicemeta.httpGet(url, null, filter);
