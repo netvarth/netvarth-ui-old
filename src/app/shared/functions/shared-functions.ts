@@ -628,7 +628,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': msg,
-        'heading': 'Public Search'
+        'heading': 'Public Search',
+        'buttons': 'okCancel'
       }
     });
 
