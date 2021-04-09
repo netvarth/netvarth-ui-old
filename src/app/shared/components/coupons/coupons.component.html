@@ -26,6 +26,12 @@
                 <div>{{coupon.endDate | date: 'mediumDate' }}</div>
               </div>
             </div>
+            <div class="coupon-max-discount" *ngIf="coupon.discountType == 'PERCENTAGE'">
+              <div class="coupon-max-discount-title">Max. Discount:&nbsp;</div>
+              <div class="coupon-max-discount-text">
+                <b><i class="fa fa-inr"></i>&nbsp;{{coupon.maxDiscountValue  | currency:'':''}}</b>
+              </div>
+            </div>
             <div class="coupon-main">
               <div>
                 <div *ngIf="coupon.discountType == 'PERCENTAGE'">
