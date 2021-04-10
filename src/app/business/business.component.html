@@ -5,7 +5,8 @@
         <div class="body-section" [ngStyle]="{'height.px': bodyHeight}" [class.loading-style]="apiloading" (click)="showMenu()">
             <router-outlet *ngIf="!apiloading"></router-outlet>
             <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+            <div class="clearfix"></div>
+            <app-footernew></app-footernew>
         </div>
-        <app-footernew></app-footernew>
     </div>
 </div>

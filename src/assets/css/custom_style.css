@@ -4685,7 +4685,8 @@ i.notavail {
 }
 
 .selectedVal {
-  font-weight: bold !important;
+  /* font-weight: bold !important; */
+  font-weight: 700 !important;
 }
 
 .ratingSearch .rating-clear {
@@ -13605,7 +13606,7 @@ color: #fff !important;
     margin-right: 10px;
     background: #f8f8f8;
     margin-top: 10px;
-    width: 30%;
+    width: 100px;
   }
   .shoppinglistbx{
     position: relative;
@@ -14016,6 +14017,11 @@ width: 40px !important;
 }
 .wizardstyle app-footernew .main-footer {
   margin-left: 0px !important;
+}
+.main-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 .cont-outer {
     padding-bottom: 20px;

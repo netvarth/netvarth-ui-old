@@ -26,6 +26,12 @@
                 <div>{{coupon.endDate | date: 'mediumDate' }}</div>
               </div>
             </div>
+            <div class="coupon-max-discount" *ngIf="coupon.discountType == 'PERCENTAGE'">
+              <div class="coupon-max-discount-title">Max. Discount:&nbsp;</div>
+              <div class="coupon-max-discount-text">
+                <b><i class="fa fa-inr"></i>&nbsp;{{coupon.maxDiscountValue  | currency:'':''}}</b>
+              </div>
+            </div>
             <div class="coupon-main">
               <div>
                 <div *ngIf="coupon.discountType == 'PERCENTAGE'">
@@ -37,13 +43,13 @@
                   <div class="coupon-discount-text"><i class="fa fa-inr"></i>&nbsp;{{coupon.discountValue | currency:'':''}}</div>
                 </div>
               </div>
-              <div>
+              <div class="pointer-cursor ttip" (click)="copyText('jaldee-cc-', 'jaldee-cc-tooltip-', coupon.jaldeeCouponCode)"
+                (mouseout)="resetTooltip('jaldee-cc-tooltip-', coupon.jaldeeCouponCode)">
                 <div [id]="'jaldee-cc-'+ coupon.jaldeeCouponCode" class="jaldee-coupon-code">{{coupon.jaldeeCouponCode}}</div>
-                <div (click)="copyText('jaldee-cc-', 'jaldee-cc-tooltip-', coupon.jaldeeCouponCode)"
-                  (mouseout)="resetTooltip('jaldee-cc-tooltip-', coupon.jaldeeCouponCode)" class="ttip">
-                  <span class="tooltiptext" [id]="'jaldee-cc-tooltip-'+ coupon.jaldeeCouponCode">Copy</span>
+                <div>
                   <i class="fa fa-clone" aria-hidden="true"></i>
                 </div>
+                <span class="tooltiptext" [id]="'jaldee-cc-tooltip-'+ coupon.jaldeeCouponCode">Copy</span>
               </div>
             </div>
             <!-- <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}} </span> <span class="help">Apply this
@@ -123,13 +129,13 @@
                   <div class="coupon-discount-text"><i class="fa fa-inr"></i>&nbsp;{{coupon.amount | currency:'':''}}</div>
                 </div>
               </div>
-              <div>
+              <div (click)="copyText('cc-', 'cc-tooltip-', coupon.couponCode)"
+                (mouseout)="resetTooltip('cc-tooltip-', coupon.couponCode)" class="pointer-cursor ttip">
                 <div [id]="'cc-'+ coupon.couponCode" class="jaldee-coupon-code">{{coupon.couponCode}}</div>
-                <div (click)="copyText('cc-', 'cc-tooltip-', coupon.couponCode)"
-                  (mouseout)="resetTooltip('cc-tooltip-', coupon.couponCode)" class="ttip">
-                  <span class="tooltiptext" [id]="'cc-tooltip-'+ coupon.couponCode">Copy</span>
+                <div>
                   <i class="fa fa-clone" aria-hidden="true"></i>
                 </div>
+                <span class="tooltiptext" [id]="'cc-tooltip-'+ coupon.couponCode">Copy</span>
               </div>
             </div>
             <!-- <div> Coupon Code: <span class="code">{{coupon.couponCode}} </span> <span class="help">Apply this

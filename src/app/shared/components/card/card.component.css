@@ -502,6 +502,12 @@ button.fxmenu {
     font-size: 16px !important;
 }
 
+.booking-card-user.user .card-item-content .specialization-parent {
+    max-width: 100% !important;
+    margin: 0 10px !important;
+    height: 26px !important;
+}
+
 .booking-card-user.user .card-item-content .specialization {
     margin: 0 !important;
     border-radius: 5px;
@@ -511,6 +517,10 @@ button.fxmenu {
     font-weight: 600;
     font-size: 15px;
     line-height: 1.5 !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 .booking-card-user.user .card-item-content .availability {

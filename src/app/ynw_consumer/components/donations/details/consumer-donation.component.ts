@@ -217,6 +217,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     dialCode;
     uid;
     private subs = new SubSink();
+    donorFirstName = '';
+    donorLastName = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -258,6 +260,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.customer_data = activeUser;
         }
         this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
+        this.donorFirstName = this.customer_data.firstName;
+        this.donorLastName = this.customer_data.lastName;
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
@@ -361,7 +365,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.donorerror = 'Please enter the donor name';
             return;
         } else {
-            this.donorName = dnr;
+            this.donorFirstName = dnr;
+            this.donorLastName = '';
             this.action = '';
         }
     }
@@ -502,7 +507,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'date': this.todaydate,
             'donationAmount': this.donationAmount,
             'donor': {
-                'firstName': this.donorName
+                'firstName': this.donorFirstName,
+                'lastName': this.donorLastName
             },
             'countryCode': this.dialCode,
             'donorPhoneNumber': this.userPhone,

@@ -262,7 +262,7 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="c-row two section-two"
+                                                                                        <!-- <div class="c-row two section-two"
                                                                                             *ngFor="let coupon of bill_data.providerCoupon">
                                                                                             <div
                                                                                                 class="discount-row two-col">
@@ -276,7 +276,25 @@
                                                                                                     currency:'&#8377;
                                                                                                     '}}</div>
                                                                                             </div>
-                                                                                        </div>
+                                                                                        </div> -->
+
+                                                                                        <div class="c-row two section-two"
+                                                                                        *ngFor="let coupon of bill_data.providerCoupon  | keyvalue">
+                                                                                        <div class="discount-row two-col">
+                                                                                            <div class="name">
+                                                                                                {{coupon.key}} (Coupon)
+                                                                                            </div>
+                                                                                            <div class="price rupee-font">
+                                                                                                    <span>(-)</span>
+                                                                                                    <span
+                                                                                            
+                                                                                                        [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value
+                                                                                                        |
+                                                                                                        currency:'&#8377;
+                                                                                                        '}}</span>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    </div>
                                                                                         <div class="c-row two section-two"
                                                                                             *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
                                                                                             <div
@@ -287,7 +305,6 @@
                                                                                                 <div class="price rupee-font"
                                                                                                     style="flex-basis: 30% !important">
                                                                                                     <span>(-)</span>
-                                                                                                    <!-- (click)="showJCCouponNote(jcoupon)" -->
                                                                                                     <span
                                                                                                         [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value
                                                                                                         |

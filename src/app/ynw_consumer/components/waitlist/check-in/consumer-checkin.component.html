@@ -366,21 +366,21 @@
                                                                     *ngIf="selected_coupons.length === 0"
                                                                     (click)="applyPromocode()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Apply
-                                                                    Promocode</a>
+                                                                    Coupon Code</a>
                                                                 <a class="lnk pointer-cursor action"
                                                                     *ngIf="selected_coupons.length > 0"
                                                                     (click)="applyPromocode()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">
-                                                                    Promocode added</a>
+                                                                    Coupon code added</a>
                                                                 {{selected_coupons.toString()}}
                                                             </div>
                                                             <div  *ngFor="let coupon of paymentDetails.jCouponList | keyvalue" style="text-align: initial;">
-                                                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>
-                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value }} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                                                 </div>
                                                                <div  *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
-                                                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>
-                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value |currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                                                </div>
                                                             <!-- <div class="disp-flex width-100 amount-details" *ngFor="let coupon of paymentDetails.jCouponList | keyvalue">
                                                                 <div class="bill-labels">{{coupon.key}} </div>&nbsp;
@@ -723,7 +723,7 @@
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                                     Apply
-                                                                    promocode
+                                                                    Coupon Code
                                                                 </div>
                                                                 <div
                                                                     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">

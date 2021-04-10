@@ -7,7 +7,7 @@
   <mat-dialog-content>
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Medicine name & size" formControlName="medicine_name">
+        <input matInput type="text" class="form-control" placeholder="Medicine name & size*" formControlName="medicine_name">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
 {
@@ -19,7 +19,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days">
+        <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days*">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'duration')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'duration',
 {
@@ -32,7 +32,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Frequency per day" formControlName="frequency">
+        <input matInput type="text" class="form-control" placeholder="Frequency per day*" formControlName="frequency">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Dosage per consumption" formControlName="dosage">
+        <input matInput type="text" class="form-control" placeholder="Dosage per consumption*" formControlName="dosage">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
 {
@@ -58,7 +58,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <textarea matInput class="form-control" id="instructions" placeholder="Additional instructions " formControlName="instructions" maxlength="500"></textarea>
+        <textarea matInput class="form-control" id="instructions" placeholder="Additional instructions*" formControlName="instructions" maxlength="500"></textarea>
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
 {

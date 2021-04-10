@@ -100,7 +100,7 @@ export class HolidayDetailsComponent implements OnInit {
                   this.getholiday(this.holiday_id).then(
                     (item) => {
                       this.holiday = item;
-                      this.selectedDate = this.holiday.holidaySchedule.startDay;
+                      // this.selectedDate = this.holiday.holidaySchedule.startDay;
                       if (this.action === 'edit') {
                         this.createForm();
                       }
@@ -128,7 +128,7 @@ export class HolidayDetailsComponent implements OnInit {
     });
     if (this.action === 'edit') {
       this.updateForm();
-      this.datepicker_disabled = 'disabled';
+      // this.datepicker_disabled = 'disabled';
     }
     this.api_loading1 = false;
   }
@@ -250,7 +250,7 @@ export class HolidayDetailsComponent implements OnInit {
     this.api_loading = true;
     this.provider_services.addHoliday(post_data)
       .subscribe((data: any) => {
-        this.confirm_data = data
+        this.confirm_data = data;
         if(this.confirm_data.apptCount >0 || this.confirm_data.waitlistCount >0 ){
         const canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
        width: '50%',
@@ -293,8 +293,34 @@ export class HolidayDetailsComponent implements OnInit {
     this.api_loading = true;
     post_data.id = this.holiday.id;
     this.provider_services.editHoliday(post_data)
-      .subscribe(
-        () => {
+      .subscribe((data: any) => {
+        this.confirm_data = data;
+          if(this.confirm_data.apptCount >0 || this.confirm_data.waitlistCount >0 ){
+            const canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': data.msg,
+              'heading': 'Confirm',
+              'type': 'yes/no'
+            }
+          });
+          canceldialogRef.afterClosed().subscribe(result => {
+            let status = 0;
+            status = result;
+            if (status === 1) {
+              this.provider_services.Holidaywaitlist(this.confirm_data.holidayId)
+                .subscribe(
+                  () => {
+                        },
+                  error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  }
+                );
+            }
+          });
+          }
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_UPDATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'general', 'holidays']);

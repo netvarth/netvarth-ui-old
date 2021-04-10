@@ -290,6 +290,11 @@ mat-dialog-content .coupon .coupon-main > div:nth-child(2) > div:nth-child(2) i 
     transition: opacity 0.3s;
 }
   
+.ttip .tooltiptext.copied-text {
+    width: 160px !important;
+    margin-left: -82px !important;
+}
+
 .ttip .tooltiptext::after {
     content: "";
     position: absolute;

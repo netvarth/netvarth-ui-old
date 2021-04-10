@@ -468,6 +468,11 @@ export class ProviderSharedFuctions {
           custids.push(custlst.id);
         }
       }
+      if (customerlist.length === 1) {
+        const fname = (customerlist[0].donor.firstName) ? customerlist[0].donor.firstName : '';
+        const lname = (customerlist[0].donor.lastName) ? customerlist[0].donor.lastName : '';
+        name = fname + ' ' + lname;
+      }
     } else if (customerlist.length === 1 && source !== 'donation-list') {
       type = 'single';
       custid = customerlist[0].id || null;

@@ -366,7 +366,7 @@
                                                             class="link pointer-cursor"
                                                             (click)="providerDetClicked(search_result)">...</span> -->
                                                     </div>
-                                                    <div *ngIf="search_result.fields.userCount" class="user-count">
+                                                    <div *ngIf="search_result.fields.userCount && search_result.fields.sector === 'healthCare'" class="user-count">
                                                         <div>
                                                             {{search_result.fields.userCount}} {{search_result.fields.provider_label}} 
                                                         </div>

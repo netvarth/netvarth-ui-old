@@ -292,12 +292,12 @@
                             </div>
                             <div *ngIf="selected_coupons.length > 0" style="text-align: initial;">
                               <div  *ngFor="let coupon of cartDetails.jCouponList | keyvalue">
-                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>
-                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                 </div>
                                <div  *ngFor="let coupon of cartDetails.proCouponList | keyvalue">
-                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>
-                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
+                                 <a class="black" *ngIf="coupon.value.value > 0"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>
+                                <a class="black" *ngIf="coupon.value.value === '0.0'"> You saved {{coupon.value.value}} <i class="fa fa-inr black"></i> on {{coupon.key}}</a>&nbsp;<i *ngIf="coupon.value.value === '0.0'" (click)="showJCCouponNote(coupon)" class="fa fa-info-circle red" aria-hidden="true"></i>
                                </div>
                             </div>
                             </div>

@@ -42,6 +42,7 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
   weekdays = projectConstantsLocal.myweekdaysSchedule;
   selday_arr: any=[];
   selallweekdays: boolean;
+  bookingMode = projectConstantsLocal.BOOKING_MODE;
   constructor(
     private wordProcessor: WordProcessor,
     private router: Router,
@@ -225,6 +226,10 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
     this.userdialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  getbookingmodes(mes) {
+   const booking_mode = this.bookingMode.filter(bookmode => bookmode.value === mes);
+   return booking_mode[0].displayName;
   }
 
 }

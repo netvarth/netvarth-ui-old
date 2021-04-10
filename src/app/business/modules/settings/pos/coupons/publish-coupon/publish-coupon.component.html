@@ -77,6 +77,12 @@
                                                 </div>
                                                 
                                             </div>
+                                            <div>
+                                                <span class="ttle">Booking Modes</span>
+                                                <ul *ngFor="let msg of this.coupon.bookingChannel">
+                                                    <li>{{ getbookingmodes(msg) }} </li>
+                                                </ul>
+                                            </div>
                                             <div class="c-ot rules-cap">
                                                 <h6>{{rules_cap}}</h6>
                                             </div>
