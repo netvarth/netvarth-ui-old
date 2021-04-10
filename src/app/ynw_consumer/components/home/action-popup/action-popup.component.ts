@@ -5,6 +5,11 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddInboxMessagesComponent } from '../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
+import { SubSink } from 'subsink';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-action-popup',
@@ -26,12 +31,16 @@ export class ActionPopupComponent implements OnInit {
   chekinLvTrackon = false;
   showRescheduleWtlist = false;
   fromOrderDetails = false;
+  galleryDialog: any;
+  private subs=new SubSink();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
+    private galleryService: GalleryService,  
+    private shared_services: SharedServices,
     public dialogRef: MatDialogRef<ActionPopupComponent>) { }
 
   ngOnInit() {
@@ -66,6 +75,42 @@ export class ActionPopupComponent implements OnInit {
       this.showapptCancel = false;
     }
     }
+
+    this.subs.sink = this.galleryService.getMessage().subscribe(input => {
+      console.log(input);
+      if (input && input.accountId && input.uuid && input.type === 'appt') {
+        console.log(input);
+        this.shared_services.addConsumerAppointmentAttachment(input.accountId ,input.uuid ,input.value)
+              .subscribe(
+                  () => {                      
+                      this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                      this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                  },
+                  error => {
+                      this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                      this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                  }
+              );
+       }  else {
+          console.log(input);
+          if (input && input.accountId && input.uuid && input.type === 'checkin') {
+          this.shared_services.addConsumerWaitlistAttachment(input.accountId ,input.uuid ,input.value)
+                .subscribe(
+                    () => {                      
+                        this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                        this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                        this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                    }
+                );
+              }
+        } 
+  });
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
   gotoAptmtReschedule() {
     const navigationExtras: NavigationExtras = {
@@ -211,6 +256,43 @@ export class ActionPopupComponent implements OnInit {
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
     this.dialogRef.close();
+  }
+
+  sendAttachment() {
+    const pass_ob = {};
+    if (this.bookingDetails.appointmentEncId) {
+      this.type = 'appt';
+    } else {
+      this.type = 'checkin';
+    }
+    pass_ob['user_id'] = this.bookingDetails.providerAccount.id;
+    if (this.type === 'appt') {
+      pass_ob['type'] = this.type;
+      pass_ob['uuid'] = this.bookingDetails.uid;
+    } else if (this.type === 'checkin') {
+      pass_ob['type'] = this.type;
+      pass_ob['uuid'] = this.bookingDetails.ynwUuid;
+    } 
+    this.addattachment(pass_ob);
+  }
+  addattachment(pass_ob) {
+    console.log(pass_ob);
+    this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+         source_id: 'consumerimages',
+         accountId:pass_ob.user_id,
+         uid:pass_ob.uuid,
+         type:pass_ob.type
+      }
+    });
+     this.galleryDialog.afterClosed().subscribe(result => {
+       console.log(result);
+       this.dialogRef.close('reload');
+      // this.reloadAPIs();
+    });
   }
 
 }
