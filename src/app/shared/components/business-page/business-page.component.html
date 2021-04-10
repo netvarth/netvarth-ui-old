@@ -149,16 +149,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="question-main-outer" *ngIf="socialMedialist.length>0">
-                                                <div class="question-header">Social Media Links and Listing Sites</div>
-                                                <div class="question-value1">
-                                                    <ul class="details socialmedia m0 no-padding">
-                                                        <li *ngFor="let soc of socialMedialist"><a rel="noopener"
-                                                                [href]="soc.value" target="_blank"><i
-                                                                    [class]="getSocialdet(soc.resource, 'iconClass')"
-                                                                    [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
-                                                        </li>
-                                                    </ul>
+                                            <div class="question-main-outer"
+                                                *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
+                                                <div class="question-header">Languages Known</div>
+                                                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 no-padding mgn-bt-10">
+                                                    <div class="question-value1 pull-left mgn-rt-5"
+                                                        *ngFor="let languages of businessjson.languagesSpoken;let i=index">
+                                                        {{languages}}<ng-container
+                                                            *ngIf="i<(businessjson.languagesSpoken.length-1)">,
+                                                        </ng-container>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
