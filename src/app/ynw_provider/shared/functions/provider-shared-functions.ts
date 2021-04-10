@@ -361,6 +361,7 @@ export class ProviderSharedFuctions {
     let email;
     let phone;
     let phone_history;
+    let jaldeeConsumer = 'false';
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
@@ -387,8 +388,10 @@ export class ProviderSharedFuctions {
         name = fname + ' ' + lname;
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
+        if (waitlist[0].consumer) {
+          jaldeeConsumer = 'true';
+        }
       } else if (appt === 'order-provider') {
-        console.log(waitlist);
         uuid = waitlist[0].uid || null;
         let fname = '';
         let lname = '';
@@ -401,6 +404,9 @@ export class ProviderSharedFuctions {
         name = fname + ' ' + lname;
         email = waitlist[0].email;
         phone = waitlist[0].phoneNumber;
+        if (waitlist[0].jaldeeConsumer) {
+          jaldeeConsumer = 'true';
+        }
       } else {
         uuid = waitlist[0].ynwUuid || null;
         let fname = '';
@@ -415,6 +421,9 @@ export class ProviderSharedFuctions {
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
         phone_history = waitlist[0].waitlistPhoneNumber;
+        if (waitlist[0].jaldeeConsumer) {
+          jaldeeConsumer = 'true';
+        }
       }
     }
     if (type === 'single') {
@@ -438,7 +447,8 @@ export class ProviderSharedFuctions {
           appt: appt,
           email: email,
           phone: phone,
-          phone_history: phone_history
+          phone_history: phone_history,
+          jaldeeConsumer: jaldeeConsumer
         }
       });
 

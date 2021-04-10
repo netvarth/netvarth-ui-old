@@ -506,7 +506,7 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
         if (form_data.customer_id) {
-          post_data['jaldeeId'] = form_data.customer_id;
+          post_data['jaldeeId'] = form_data.customer_id.trim();
         } else {
           post_data['jaldeeId'] = this.jld;
         }

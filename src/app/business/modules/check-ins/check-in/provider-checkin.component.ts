@@ -855,7 +855,7 @@ export class ProviderCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        this.callingModes = this.customer_data.phoneNo;
+                        this.callingModes = this.customer_data.phoneNo.trim();
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
                 }

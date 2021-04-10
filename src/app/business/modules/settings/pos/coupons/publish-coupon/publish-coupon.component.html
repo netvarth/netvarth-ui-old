@@ -205,6 +205,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                                    <div class="cr1" *ngIf="pCouponStat">
+                                      <h5>Coupon Stats</h5>
+                                      <div class="chart">
+                                          <p> #Bookings Applied : {{pCouponStat.providerUsage.usageCount}}</p>
+                                          <p> Total Amount Discounted : {{pCouponStat.providerUsage.usageAmt}}</p>
+                                          <p> Amount Reimbursed by Jaldee.com : {{pCouponStat.providerUsage.reimbursed}}</p>
+                                      </div>
+                                  </div>
+                                  </div>
                             </div>
 
                         </div>

@@ -34,19 +34,15 @@
                                         <div class="pad-10">
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
-                                                {{waitlist.providerAccount.businessName | capitalizeFirst}}
-                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)"
-                                                    class="icon-favourite-filled"
-                                                    (click)="doDeleteFavProvider(waitlist.providerAccount, $event)">
-                                                </div>
-                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)"
-                                                    class="icon-favourite"
-                                                    (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
+                                                {{waitlist.providerAccount.businessName | capitalizeFirst}} 
+                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount, $event)"></div>
+                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
+                                                (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
                                             </h3>
                                             <a class="loc-cls" [href]="waitlist.queue.location.googleMapUrl"
-                                                target="_blank">
+                                            target="_blank">
                                                 <i class="fa fa-map-marker"></i>
-                                                {{waitlist.queue.location.place | capitalizeFirst}}
+                                                {{waitlist.queue.location.place | capitalizeFirst}} 
                                             </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>Provider : </span>
@@ -60,13 +56,11 @@
                                                 <i *ngIf="waitlist.service.serviceType === 'virtualService'"
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
-                                                    {{waitlist.service.name | capitalizeFirst}} <span
+                                                    {{waitlist.service.name | capitalizeFirst}} 
+                                                    <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
-                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
-                                                            class="joinMeeting"
-                                                            href="{{waitlist.service.virtualCallingModes[0].value}}"
-                                                            target="blank">Join Meeting</a>
                                                     </span>
+                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{waitlist.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -77,8 +71,8 @@
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].firstName">
                                                 <span class="item-head">Booking for</span>
-                                                <span class="item-label-val">{{waitlist.waitlistingFor[0].firstName |
-                                                    capitalizeFirst}}
+                                                <span
+                                                    class="item-label-val">{{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
                                             <div class="each-item">
@@ -87,13 +81,12 @@
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
                                                 <span class="item-head">Phone No</span>
-                                                <span class="item-label-val">{{waitlist.countryCode}}
-                                                    {{waitlist.waitlistPhoneNumber}}</span>
+                                                <span class="item-label-val">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
                                                 <span class="item-label-val price rupee-font">
-                                                    {{waitlist.amountPaid | currency:'&#8377;'}}</span>
+                                                    {{waitlist.amountPaid  | currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
@@ -135,36 +128,31 @@
                                         <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
-                                            <!-- virtual time today -->
+                                                <!-- virtual time today -->
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">ESTIMATED
-                                                TIME</span>
-                                            <span class="item-label-val"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
-                                                {{getTimeToDisplay(waitlist.appxWaitingTime)}}
-                                            </span>
-                                            <!-- virtual time future -->
-                                            <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS
-                                                AT</span>
-                                            <span class="item-label-val"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
-                                                {{waitlist.serviceTime}}
-                                            </span>
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">EST WAIT TIME</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
+                                                    {{getTimeToDisplay(waitlist.appxWaitingTime)}}
+                                                </span>
+                                                <!-- virtual time future -->
+                                                <span class="status-label"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS AT</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
+                                                    {{waitlist.serviceTime}}
+                                                </span>
 
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
-                                            <span class="est-tok-time"
-                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
-                                                Est Wait Time:
-                                                {{getTimeToDisplay(waitlist.appxWaitingTime)}}
-                                                <!-- {{waitlist.appxWaitingTime}} min -->
-                                            </span>
+                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
+                                                  Est Wait Time: 
+                                                  {{getTimeToDisplay(waitlist.appxWaitingTime)}}
+                                                  <!-- {{waitlist.appxWaitingTime}} min -->
+                                                </span>
                                             <span class="est-tok-time"
                                                 *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">Starts
-                                                at : {{waitlist.serviceTime}}</span>
+                                                at : {{waitlist.serviceTime}}</span> 
                                         </div>
                                         <div *ngIf="waitlist.batchName"
                                             class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">

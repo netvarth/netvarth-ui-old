@@ -162,7 +162,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this.editlocdialogRef.close();
     }
   }
-  createForm() {
+  createForm(type?) {
     this.amForm = this.fb.group({
       locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_BLANK_FALSE)])],
       locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
@@ -174,7 +174,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       open24hours: [''],
       parkingType: ['none']
     });
-    if (this.action === 'edit') {
+    if (this.action === 'edit' && !type) {
       this.updateForm();
     }
   }
@@ -635,7 +635,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.googleradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }
          });
 
@@ -657,7 +657,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.autolocateradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }         });
     } else if(val === 'manual'){
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -677,7 +677,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.manualradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }
          });
 

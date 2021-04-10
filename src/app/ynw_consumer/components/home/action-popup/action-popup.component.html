@@ -30,6 +30,13 @@
                     class="width-70">
                     <mat-grid-tile-footer><div class="footer-text">Send Message</div></mat-grid-tile-footer>
                 </mat-grid-tile>
+                <mat-grid-tile  (click)="sendAttachment()">
+                    <!-- <img src="assets/images/myjaldee/icon-chat.svg"
+                    class="width-45"> -->
+                    <i class="material-icons">attach_file</i>
+                   <mat-grid-tile-footer><div class="footer-text">Send Attachments</div></mat-grid-tile-footer>
+                 </mat-grid-tile>
+                 
             <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
                 <img src="assets/images/myjaldee/sticky-notes.svg" class="width-45">
                 <mat-grid-tile-footer>
@@ -70,6 +77,13 @@
                     class="width-45">
                     <mat-grid-tile-footer><div class="footer-text">Send Message</div></mat-grid-tile-footer>
                 </mat-grid-tile>
+            
+            <mat-grid-tile  (click)="sendAttachment()">
+                <!-- <img src="assets/images/myjaldee/icon-chat.svg" class="width-45"> -->
+                <i class="material-icons">attach_file</i>
+                 <mat-grid-tile-footer><div class="footer-text">Send Attachments</div></mat-grid-tile-footer>
+               </mat-grid-tile>
+
             <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
                 <img src="assets/images/myjaldee/sticky-notes.svg" class="width-30">
                 <mat-grid-tile-footer><div class="footer-text">Meeting Details</div></mat-grid-tile-footer>

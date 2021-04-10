@@ -931,8 +931,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               _this.views.push(qViewList[i]);
             }
           }
-          for (let i = 0; i < _this.users.length; i++) {
-            _this.views.push(_this.users[i]);
+          if (_this.admin) {
+            for (let i = 0; i < _this.users.length; i++) {
+              _this.views.push(_this.users[i]);
+            }
           }
           _this.views.push(tempView);
           let selected_view;
@@ -955,8 +957,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve(_this.selectedView);
         },
         error => {
-          for (let i = 0; i < _this.users.length; i++) {
-            _this.views.push(_this.users[i]);
+          if (_this.admin) {
+            for (let i = 0; i < _this.users.length; i++) {
+              _this.views.push(_this.users[i]);
+            }
           }
           _this.views.push(tempView);
           _this.groupService.setitemToGroupStorage('selectedView', _this.selectedView);

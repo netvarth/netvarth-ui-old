@@ -89,7 +89,6 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   customer_label = '';
   hidemeItems = true;
   maxdiscountRequired=false;
-  pCouponStat;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -171,7 +170,6 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       this.coupon_title = 'Edit Coupon';
       this.getCouponById(this.couponId).then(
         (couponDetails: any) => {
-          this.getProviderCouponStatistic(couponDetails.couponCode);
           if (couponDetails.couponRules.published) {
             this.coupon_title = 'View Coupon';
             this.dialogMode = 'view';
@@ -266,14 +264,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }
 
   }
-  getProviderCouponStatistic(code) {
-    this.provider_services.getProviderCouponStat(code).subscribe(
-      data => {
-        this.pCouponStat = data;
-        console.log(this.pCouponStat);
-      }
-    );
-  }
+ 
   check_existsinweek_array(arr, val) {
     let ret = -1;
     for (let i = 0; i < arr.length; i++) {
