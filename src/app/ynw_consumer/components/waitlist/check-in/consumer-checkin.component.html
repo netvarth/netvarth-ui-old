@@ -330,7 +330,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div
+                                                        <div *ngIf="!questionnaireList.labels"
                                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
@@ -853,7 +853,7 @@
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="pad-20 quest-head">
-                                            Please provide us with a little more information complete your booking
+                                            Provide us information to complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList"
                                             [questionAnswers]="questionAnswers" [source]="'consCheckin'"
@@ -865,7 +865,7 @@
                                                 <button type="button"
                                                     class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
-                                                    Previous
+                                                    Go Back
                                                 </button>
                                             </div>
                                             <div>
@@ -906,19 +906,6 @@
                                                         </a></td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
-                                                        Token for</td>
-                                                    <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
-                                                        Check-in for</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>
-                                                        <div *ngFor="let customer of waitlist_for">
-                                                            {{customer.firstName}}
-                                                            {{customer.lastName}}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
                                                     <td width="48%" align="right">Service</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>
@@ -936,6 +923,19 @@
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
+                                                        Token for</td>
+                                                    <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
+                                                        Check-in for</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <div *ngFor="let customer of waitlist_for">
+                                                            {{customer.firstName}}
+                                                            {{customer.lastName}}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -1056,9 +1056,9 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-2"
+                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
-                                                    Previous
+                                                    Go Back
                                                 </button>
                                             </div>
                                             <div>
@@ -1066,8 +1066,7 @@
                                                     Cancellation Policy
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')"
-                                                    class="btn btn-success font-weight-bold text-uppercase px-9 py-2">
-
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>

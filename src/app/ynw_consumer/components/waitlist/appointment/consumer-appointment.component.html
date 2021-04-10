@@ -292,7 +292,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div
+                                                        <div *ngIf="!questionnaireList.labels"
                                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
@@ -801,7 +801,7 @@
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="pad-20 quest-head">
-                                            Please provide us with a little more information complete your booking
+                                            Provide us information to complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
                                             [questionAnswers]="questionAnswers" [accountId]="account_id"
@@ -851,13 +851,6 @@
                                                         </a></td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="48%" align="right">
-                                                        Appointment for</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>{{waitlist_for[0].firstName}}
-                                                        {{waitlist_for[0].lastName}}</td>
-                                                </tr>
-                                                <tr>
                                                     <td width="48%" align="right">Service</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>
@@ -876,6 +869,13 @@
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="48%" align="right">
+                                                        Appointment for</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>{{waitlist_for[0].firstName}}
+                                                        {{waitlist_for[0].lastName}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td width="48%" align="right">Contact #</td>
@@ -981,7 +981,7 @@
                                             </div>
                                             <div>
                                                 <button type="button" (click)="saveCheckin('appt')"
-                                                    class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>
