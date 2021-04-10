@@ -796,14 +796,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleOneMemberSelect(id, firstName, lastName) {
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        if (this.userData.userProfile.email) {
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
-        if (this.userData.userProfile.email && this.waitlist_for[0]) {
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
+        if (this.payEmail !== '' && this.waitlist_for[0]) {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         if (this.waitlist_for.length === 0) {
             this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
@@ -1179,6 +1179,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                         if (_this.userData.userProfile.email) {
                             _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                            _this.payEmail = _this.userData.userProfile.email;
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;
@@ -1297,7 +1298,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
-        this.payEmail = this.userData.userProfile.email;
+        // this.payEmail = this.userData.userProfile.email;
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -1621,35 +1622,43 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return false;
             } else {
                 emailId = this.bookingForm.get('newEmail').value;
+                // if (emailId && emailId != "") {
+                //     this.payEmail = emailId;
+                //     const post_data = {
+                //         'id': this.userData.userProfile.id || null,
+                //         'firstName': this.userData.userProfile.firstName || null,
+                //         'lastName': this.userData.userProfile.lastName || null,
+                //         'dob': this.userData.userProfile.dob || null,
+                //         'gender': this.userData.userProfile.gender || null,
+                //         'email': this.payEmail.trim() || ''
+                //     };
+                //     this.updateEmail(post_data).then(
+                //         () => {
+                //             this.closebutton.nativeElement.click();
+                //             setTimeout(() => {
+                //                 this.action = '';
+                //             }, 500);
+                //         },
+                //         error => {
+                //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                //             this.payEmail = this.userData.userProfile.email;
+                //             return false;
+                //         }
+                //     )
+                // } else {
+                //     this.closebutton.nativeElement.click();
+                //     setTimeout(() => {
+                //         this.action = '';
+                //     }, 500);
+                // }
                 if (emailId && emailId != "") {
-                    this.payEmail = emailId;
-                    const post_data = {
-                        'id': this.userData.userProfile.id || null,
-                        'firstName': this.userData.userProfile.firstName || null,
-                        'lastName': this.userData.userProfile.lastName || null,
-                        'dob': this.userData.userProfile.dob || null,
-                        'gender': this.userData.userProfile.gender || null,
-                        'email': this.payEmail.trim() || ''
-                    };
-                    this.updateEmail(post_data).then(
-                        () => {
-                            this.closebutton.nativeElement.click();
-                            setTimeout(() => {
-                                this.action = '';
-                            }, 500);
-                        },
-                        error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            this.payEmail = this.userData.userProfile.email;
-                            return false;
-                        }
-                    )
-                } else {
-                    this.closebutton.nativeElement.click();
-                    setTimeout(() => {
-                        this.action = '';
-                    }, 500);
+                this.payEmail = emailId;
+                this.waitlist_for[0]['email'] = this.payEmail;
                 }
+                this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
             }
         } else {
             this.closebutton.nativeElement.click();

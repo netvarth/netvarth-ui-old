@@ -34,7 +34,7 @@
                 [maxLength]="15" [phoneValidation]="true"
                 [selectedCountryISO] = "selectedCountry"
                 [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                formControlName="phone">
+                formControlName="phone" (keyup)="resetApiErrors()">
             </ngx-intl-tel-input>
             <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
         </div>

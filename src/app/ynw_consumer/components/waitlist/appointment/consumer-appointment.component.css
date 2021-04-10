@@ -1424,6 +1424,7 @@ body.modal-open {
 }
 .modal-body {
   padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 .close-btn button {
   font-size: 2rem !important;
@@ -1494,4 +1495,7 @@ body.modal-open {
 .refundpol .refund_size {
   font-size: 0.9rem !important;
   text-align: left !important;
+}
+.modal-footer {
+  padding-top: 0px !important;
 }

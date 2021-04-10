@@ -130,8 +130,7 @@
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                                 <!-- virtual time today -->
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">ESTIMATED
-                                                TIME</span>
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">EST WAIT TIME</span>
                                                 <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
                                                     {{getTimeToDisplay(waitlist.appxWaitingTime)}}
                                                 </span>
