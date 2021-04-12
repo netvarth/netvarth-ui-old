@@ -34,9 +34,12 @@ export class OrderActionsComponent implements OnInit {
   choose_type: string;
   action = '';
   providerLabels: any = [];
-  labelMap;
+  labelMap = {};
   timeType = '';
+  labelsforRemove: any = [];
+  ordersByLabel: any = [];
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
+  showApply = false;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -170,6 +173,89 @@ goBack() {
   this.action = '';
 }
 
+
+addLabeltoOrder(label, event) {
+  // this.labelMap = new Object();
+  // if (event.checked) {
+  //     this.labelMap[label] = true;
+  //     this.addLabel();
+  // } else {
+  //     this.deleteLabel();
+  // }
+  console.log(event.checked);
+  this.showApply = false;
+  let labelArr = this.providerLabels.filter(lab => lab.label === label);
+  if (this.labelMap[label]) {
+      delete this.labelMap[label];
+  }
+  if (this.labelsforRemove.indexOf(label) !== -1) {
+      this.labelsforRemove.splice(this.labelsforRemove.indexOf(label), 1);
+  }
+  console.log(labelArr);
+  if (event.checked) {
+      if (labelArr[0] && labelArr[0].selected) {
+      } else {
+          this.labelMap[label] = true;
+      }
+  } else {
+      if (labelArr[0] && labelArr[0].selected) {
+          this.labelsforRemove.push(label);
+      }
+  }
+  if (Object.keys(this.labelMap).length > 0 || this.labelsforRemove.length > 0) {
+      this.showApply = true;
+  }
+}
+
+addLabel() {
+  // this.provider_services.addLabeltoCheckin(this.orderDetails.ynwUuid, this.labelMap).subscribe(data => {
+  //     this.dialogRef.close('reload');
+  // },
+  //     error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  const ids = [];
+  if (this.mulipleSelection) {
+      for (const order of this.orderDetails) {
+          ids.push(order.uid);
+      }
+  } else {
+      ids.push(this.orderDetails.uid);
+  }
+  const postData = {
+    'labels':  this.labelMap,
+    'uuid': ids
+};
+  this.provider_services.addLabeltoMultipleOrder(postData).subscribe(data => {
+      this.dialogRef.close('reload');
+  },
+      error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+}
+applyLabel() {
+  if (Object.keys(this.labelMap).length > 0) {
+      this.addLabel();
+  }
+  if (this.labelsforRemove.length > 0) {
+      this.deleteLabel();
+  }
+}
+
+getLabel() {
+  this.loading = true;
+  this.providerLabels = [];
+  this.provider_services.getLabelList().subscribe((data: any) => {
+      this.providerLabels = data.filter(label => label.status === 'ENABLED');
+      console.log(this.providerLabels);
+      if (!this.mulipleSelection) {
+          this.labelselection();
+      }else {
+        this.multipleLabelselection();
+    }
+      this.loading = false;
+  });
+}
 labelselection() {
   const values = [];
   if (this.orderDetails.label && Object.keys(this.orderDetails.label).length > 0) {
@@ -185,62 +271,65 @@ labelselection() {
       }
   }
 }
-addLabeltoOrder(label, event) {
-  this.labelMap = new Object();
-  if (event.checked) {
-      this.labelMap[label] = true;
-      this.addLabel(label);
-  } else {
-      this.deleteLabel(label, this.orderDetails.uid);
+multipleLabelselection() {
+  let values = [];
+  this.ordersByLabel = [];
+  for (let i = 0; i < this.orderDetails.length; i++) {
+      if (this.orderDetails[i].label) {
+          Object.keys(this.orderDetails[i].label).forEach(key => {
+              values.push(key);
+              if (!this.ordersByLabel[key]) {
+                  this.ordersByLabel[key] = [];
+              }
+              this.ordersByLabel[key].push(this.orderDetails[i].uid);
+          });
+      }
+  }
+  for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let k = 0; k < values.length; k++) {
+          const filteredArr = values.filter(value => value === this.providerLabels[i].label);
+          if (filteredArr.length === this.orderDetails.length) {
+              this.providerLabels[i].selected = true;
+          }
+      }
   }
 }
-
-addLabel(label) {
-  // this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+deleteLabel() {
+  // this.provider_services.deleteLabelfromOrder(label).subscribe(data => {
   //     this.dialogRef.close('reload');
   // },
   //     error => {
   //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //     });
-  const ids = [];
-  if (this.mulipleSelection) {
-      for (const order of this.orderDetails) {
-          ids.push(order.uid);
-      }
-  } else {
-      ids.push(this.orderDetails.uid);
-  }
-  const postData = {
-      'labelName': label,
-      'labelValue': 'true',
-      'uuid': ids
-  };
-  this.provider_services.addLabeltoMultipleOrder(postData).subscribe(data => {
-      this.dialogRef.close('reload');
-  },
-      error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-}
-
-getLabel() {
-  this.loading = true;
-  this.providerLabels = [];
-  this.provider_services.getLabelList().subscribe((data: any) => {
-      this.providerLabels = data.filter(label => label.status === 'ENABLED');
-      if (!this.mulipleSelection) {
-          this.labelselection();
-      }
-      this.loading = false;
-  });
-}
-deleteLabel(label, orderId) {
-  this.provider_services.deleteLabelfromOrder(orderId, label).subscribe(data => {
-      this.dialogRef.close('reload');
-  },
-      error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+   // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        let ids = [];
+        // if (this.data.multiSelection) {
+        //     ids = this.ordersByLabel[label];
+        // } else {
+        //     ids.push(this.orderDetails.ynwUuid);
+        // }
+        if (this.data.multiSelection) {
+            for (let label of this.labelsforRemove) {
+                ids = ids.concat(this.ordersByLabel[label]);
+            }
+        } else {
+            ids.push(this.orderDetails.uid);
+        }
+        const postData = {
+            'labelNames': this.labelsforRemove,
+            'uuid': ids
+        };
+        this.provider_services.deleteLabelfromOrder(postData).subscribe(data => {
+            this.dialogRef.close('reload');
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
 }
 gotoLabel() {
   this.router.navigate(['provider', 'settings', 'general', 'labels'], { queryParams: { source: 'order' } });
@@ -264,7 +353,7 @@ addLabelvalue(source, label?) {
           // this.labels();
           this.labelMap = new Object();
           this.labelMap[data.label] = data.value;
-          this.addLabel(data.label);
+          this.addLabel();
           this.getDisplayname(data.label);
           // }, 500);
       }

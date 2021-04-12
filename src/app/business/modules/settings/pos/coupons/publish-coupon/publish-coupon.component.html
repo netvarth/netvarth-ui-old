@@ -77,6 +77,12 @@
                                                 </div>
                                                 
                                             </div>
+                                            <div>
+                                                <span class="ttle">Booking Modes</span>
+                                                <ul *ngFor="let msg of this.coupon.bookingChannel">
+                                                    <li>{{ getbookingmodes(msg) }} </li>
+                                                </ul>
+                                            </div>
                                             <div class="c-ot rules-cap">
                                                 <h6>{{rules_cap}}</h6>
                                             </div>
@@ -190,7 +196,7 @@
                                                 <button class="btn btn-primary" (click)="publish();"> Publish</button>
                                             </div>
                                             <div class="row" *ngIf="coupon.couponRules.published ==true">
-                                                <p><b style="color:green">Coupon published From <span
+                                                <p><b style="color:green">Coupon is published and is valid from<span
                                                             style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span>
                                                         to <span
                                                             style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b>
@@ -199,6 +205,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                                    <div class="cr1" *ngIf="pCouponStat">
+                                      <h5>Coupon Stats</h5>
+                                      <div class="chart">
+                                          <p> #Bookings Applied : {{pCouponStat.providerUsage.usageCount}}</p>
+                                          <p> Total Amount Discounted : {{pCouponStat.providerUsage.usageAmt}}</p>
+                                          <p> Amount Reimbursed by Jaldee.com : {{pCouponStat.providerUsage.reimbursed}}</p>
+                                      </div>
+                                  </div>
+                                  </div>
                             </div>
 
                         </div>

@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+import { SignUpComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-item-details',
@@ -83,6 +85,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   loading = true;
   showitemprice = true;
   logo: any;
+  userType = '';
 
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -115,6 +118,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     return orderCount;
   }
   ngOnInit() {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     const orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (orderList) {
       this.orderList = orderList;
@@ -154,17 +158,83 @@ export class ItemDetailsSharedComponent implements OnInit {
 
 
   checkout() {
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        account_id: this.provider_bussiness_id,
-        'logo': this.logo
+    // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     account_id: this.provider_bussiness_id,
+    //     'logo': this.logo
 
-      }
+    //   }
 
-    };
-    this.router.navigate(['order/shoppingcart'], navigationExtras);
+    // };
+    // this.router.navigate(['order/shoppingcart'], navigationExtras);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account_id: this.provider_bussiness_id,
+          'logo': this.logo
+        }
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
+    }
+    else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
   }
+
+  doLogin(origin?, passParam?) {
+    const is_test_account = true;
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: false,
+        test_account: is_test_account,
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'order') {
+          this.checkout();
+        }
+        else if (result === 'showsignup') {
+          this.doSignup(passParam);
+        }
+      }
+    });
+  }
+   doSignup(passParam?) {
+    const dialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        is_provider: 'false',
+        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'order') {
+          this.checkout();
+        }
+      }
+    });
+  }
+
+
   getItemQty() {
     const orderList = this.orderList;
     let qty = 0;

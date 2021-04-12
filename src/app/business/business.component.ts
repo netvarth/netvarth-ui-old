@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, RouterEvent, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
 import { ProviderServices } from '../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../shared/functions/shared-functions';
@@ -121,7 +121,7 @@ export class BusinessComponent implements OnInit {
   handleScrollhide(ev) {
     this.outerscroller = ev;
   }
-  // @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;

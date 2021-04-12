@@ -7,7 +7,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { ApplyLabelModule } from '../check-ins/apply-label/apply-label.module';
 import { ProviderAppointmentDetailComponent } from './provider-appointment-detail/provider-appointment-detail.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';

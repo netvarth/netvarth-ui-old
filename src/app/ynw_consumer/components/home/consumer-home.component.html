@@ -188,7 +188,7 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div> -->
                                                 <div class="ordr_no font-size-9">Today,
                                                     {{getSingleTime(booking.appmtTime)}}</div>
@@ -202,11 +202,11 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -223,7 +223,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl">Appointment for</div>
                                                         <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
                                                             {{booking.appmtFor[0].lastName}}</div>
@@ -373,33 +373,17 @@
 
                                             <!-- Basic Info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <!-- <span class="ordr_no">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
+                                                <span class="ordr_no" *ngIf="(booking.waitlistStatus == 'arrived' || booking.waitlistStatus == 'checkedIn') && booking.calculationMode !== 'NoCalc'">
                                                     <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        Now
+                                                        *ngIf="!booking.serviceTime">
+                                                        Est wait time: {{getTimeToDisplay(booking.appxWaitingTime)}}
                                                     </span>
                                                     <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        {{booking.serviceTime}}
+                                                        *ngIf="booking.serviceTime">
+                                                        Starts at: {{booking.serviceTime}}
                                                     </span>
-                                                    <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        Est wait time {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        {{booking.serviceTime}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Est Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Starts at : {{booking.serviceTime}}
-                                                    </span>
-                                                </span> -->
+                                                </span>
                                                 <div class="ordr_no font-size-9">Today, {{booking.queue.queueStartTime}}
                                                     -
                                                     {{booking.queue.queueEndTime}}</div>
@@ -413,11 +397,11 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -434,7 +418,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
                                                         <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
                                                         </div>
@@ -606,7 +590,7 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div> -->
                                                 <div class="ordr_no font-size-9">Today,
                                                     {{getSingleTime(booking.appmtTime)}}</div>
@@ -620,12 +604,12 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
 
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -642,7 +626,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl">Appointment for</div>
                                                         <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
                                                             {{booking.appmtFor[0].lastName}}</div>
@@ -789,33 +773,17 @@
 
                                             <!-- Basic Info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <!-- <span class="ordr_no">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
+                                                <span class="ordr_no" *ngIf="(booking.waitlistStatus == 'arrived' || booking.waitlistStatus == 'checkedIn') && booking.calculationMode !== 'NoCalc'">
                                                     <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        Now
+                                                        *ngIf="!booking.serviceTime">
+                                                        Est wait time: {{getTimeToDisplay(booking.appxWaitingTime)}}
                                                     </span>
                                                     <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        {{booking.serviceTime}}
+                                                        *ngIf="booking.serviceTime">
+                                                        Starts at: {{booking.serviceTime}}
                                                     </span>
-                                                    <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        Est wait time {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        {{booking.serviceTime}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Est Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Starts at : {{booking.serviceTime}}
-                                                    </span>
-                                                </span> -->
+                                                </span>
                                                 <div class="ordr_no font-size-9">Today, {{booking.queue.queueStartTime}}
                                                     -
                                                     {{booking.queue.queueEndTime}}</div>
@@ -829,12 +797,12 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
-                                                    <div class="pull-left">
+                                                    <div class="pull-left serv-width ">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
                                                             class="prov_nme disply-flex">
 
-                                                            <span>
+                                                            <span class="serv-name">
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -852,7 +820,7 @@
                                                                 capitalizeFirst}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="pull-right">
+                                                    <div class="pull-right con-width">
                                                         <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
                                                         <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
                                                         </div>
@@ -1016,7 +984,7 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
                                                 </div> -->
                                                 <div class="ordr_no font-size-9">{{booking.appmtDate | date:
@@ -1202,33 +1170,17 @@
 
                                             <!-- Basic Info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <!-- <span class="ordr_no">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
+                                                <span class="ordr_no" *ngIf="(booking.waitlistStatus == 'arrived' || booking.waitlistStatus == 'checkedIn') && booking.calculationMode !== 'NoCalc'">
                                                     <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        Now
+                                                        *ngIf="!booking.serviceTime">
+                                                        Est wait time: {{getTimeToDisplay(booking.appxWaitingTime)}}
                                                     </span>
                                                     <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        {{booking.serviceTime}}
+                                                        *ngIf="booking.serviceTime">
+                                                        Starts at: {{booking.serviceTime}}
                                                     </span>
-                                                    <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        Est wait time {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        {{booking.serviceTime}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Est Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Starts at : {{booking.serviceTime}}
-                                                    </span>
-                                                </span> -->
+                                                </span>
                                                 <div class="ordr_no font-size-9">{{booking.date | date: monthFormat}},
                                                     {{booking.queue.queueStartTime}} - {{booking.queue.queueEndTime}}
                                                 </div>
@@ -1417,7 +1369,7 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
                                                 <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
                                                 </div> -->
                                                 <div class="ordr_no font-size-9">{{booking.appmtDate | date:
@@ -1603,33 +1555,17 @@
 
                                             <!-- Basic Info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <!-- <span class="ordr_no">
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-20 pad-lt-40">
+                                                <span class="ordr_no" *ngIf="(booking.waitlistStatus == 'arrived' || booking.waitlistStatus == 'checkedIn') && booking.calculationMode !== 'NoCalc'">
                                                     <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        Now
+                                                        *ngIf="!booking.serviceTime">
+                                                        Est wait time: {{getTimeToDisplay(booking.appxWaitingTime)}}
                                                     </span>
                                                     <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
-                                                        {{booking.serviceTime}}
+                                                        *ngIf="booking.serviceTime">
+                                                        Starts at: {{booking.serviceTime}}
                                                     </span>
-                                                    <span
-                                                        *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        Est wait time {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                        {{booking.serviceTime}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Est Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
-                                                        Starts at : {{booking.serviceTime}}
-                                                    </span>
-                                                </span> -->
+                                                </span>
                                                 <div class="ordr_no font-size-9">{{booking.date | date: monthFormat}},
                                                     {{booking.queue.queueStartTime}} - {{booking.queue.queueEndTime}}
                                                 </div>

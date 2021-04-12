@@ -267,7 +267,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       this.api_error = 'Last Name is required';
     } else if (firstName && firstName.trim().length < 3) {
       this.api_error = 'First Name is too short';
-    } else {
+    }
+    if (firstName && firstName.trim() !== '' && lastName && lastName.trim() !== '') {
       this.signUpApiConsumer(this.user_details);
     }
   }

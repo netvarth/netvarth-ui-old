@@ -150,7 +150,11 @@
 
                 <!--begin::Action-->
                 <div class="pb-lg-0 pb-5">
-                    <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-lg px-8 py-2 my-3 mr-3">Login</button>
+                    <!-- <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-lg px-8 py-2 my-3 mr-3">Login
+                    </button> -->
+                    <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-lg px-8 py-2 my-3 mr-3" [class.disabled]="api_loading" [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading" [class.spinner-center]="api_loading">
+                      Login
+                  </button>
                     <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button" class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service provider</button>
                 </div>
                 <!--end::Action-->

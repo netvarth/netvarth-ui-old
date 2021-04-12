@@ -179,6 +179,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.resetList();
+      this.getLabel();
       this.doSearch();
     });
   }

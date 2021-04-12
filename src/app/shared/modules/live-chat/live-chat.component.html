@@ -55,8 +55,7 @@
                         <i class="fa fa-close red fa-stack-1x"></i>
                     </i>
                 </i>
-                <!-- *ngIf="twilioService.camDeviceCount > 1" -->
-                <i  title="Switch Camera" class="round novideo"
+                <i *ngIf="twilioService.camDeviceCount > 1" title="Switch Camera" class="round novideo"
                     style="opacity: 1;cursor: pointer;" (click)="switchCamera()">
                     <i class="fa fa-stack"><i class="fa fa-camera fa-stack-1x"></i>
                         <i class="fa fa-refresh fa-stack-1x"></i>

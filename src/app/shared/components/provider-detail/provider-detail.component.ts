@@ -288,6 +288,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkinProviderList: any;
   activeUser: any;
   nonfirstCouponCount=0;
+  wlServices;
+  apptServices;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -554,9 +556,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
-            if (this.account_Type === 'BRANCH') {
-              this.getbusinessprofiledetails_json('departmentProviders', true);
-            }
             this.business_exists = true;
 
             this.provider_bussiness_id = this.businessjson.id;
@@ -712,25 +711,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
-            let apptTimearr = [];
-            let waitTimearr = [];
-            if (this.deptUsers && this.deptUsers.length > 0) {
-              for (let dept of this.deptUsers) {
-                if (!this.showDepartments) {
-                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-                } else {
-                  if (dept.users && dept.users.length > 0) {
-                    for (let user of dept.users) {
-                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-                    }
-                  }
-                }
-              }
+            if (this.account_Type === 'BRANCH') {
+              this.getbusinessprofiledetails_json('departmentProviders', true);
             }
-            this.getUserWaitingTime(waitTimearr);
-            this.getUserApptTime(apptTimearr);
             this.location_exists = true;
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
@@ -807,6 +790,24 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'departmentProviders': {
             this.deptUsers = res;
+            let apptTimearr = [];
+            let waitTimearr = [];
+            if (this.deptUsers && this.deptUsers.length > 0) {
+              for (let dept of this.deptUsers) {
+                if (!this.showDepartments) {
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                } else {
+                  if (dept.users && dept.users.length > 0) {
+                    for (let user of dept.users) {
+                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                    }
+                  }
+                }
+              }
+            }
+            this.getUserApptTime(apptTimearr, waitTimearr);
             break;
           }
           case 'jaldeediscount':
@@ -845,7 +846,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
-  getUserApptTime(provids_locid) {
+  getUserApptTime(provids_locid, waitTimearr) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
@@ -886,6 +887,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               }
             }
           }
+          this.getUserWaitingTime(waitTimearr);
         });
     }
   }
@@ -950,6 +952,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               }
             }
           }
+          this.setServiceUserDetails();
         });
     }
   }
@@ -2075,101 +2078,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
   generateServicesAndDoctorsForLocation(providerId, locationId) {
-    this.servicesAndProviders = [];
-    const servicesAndProviders = [];
-    this.donationServices = [];
-    this.serviceCount = 0;
-    this.userCount = 0;
     this.getWaitlistServices(locationId)
       .then((wlServices: any) => {
+        this.wlServices = wlServices;
         this.getAppointmentServices(locationId)
           .then((apptServices: any) => {
-            if (this.showDepartments) {
-              if (this.userId) {
-                for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
-                    this.serviceCount++;
-                  }
-                }
-                for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
-                    this.serviceCount++;
-                  }
-                }
-              } else {
-                for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-                  const deptItem = {};
-                  deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
-                  deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
-                  deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
-                  deptItem['departmentItems'] = [];
-                  for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                    if (!apptServices[aptIndex]['provider'] && apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === apptServices[aptIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'appt', 'item': apptServices[aptIndex] });
-                      this.serviceCount++;
-                    }
-                  }
-                  for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                    if (!wlServices[wlIndex]['provider'] && wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === wlServices[wlIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
-                      this.serviceCount++;
-                    }
-                  }
-                  if (!this.userId) {
-                    for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-                      const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-                      const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-                      this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
-                      this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
-                      deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
-                      this.userCount++;
-                    }
-                  }
-                  servicesAndProviders.push(deptItem);
-                }
-              }
-              this.servicesAndProviders = servicesAndProviders;
-              // });
-            } else {
-              // tslint:disable-next-line:no-shadowed-variable
-              const servicesAndProviders = [];
-              if (this.userId) {
-                for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
-                    this.serviceCount++;
-                  }
-                }
-                for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
-                    this.serviceCount++;
-                  }
-                }
-              } else {
-                for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (!apptServices[aptIndex]['provider'] && apptServices[aptIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
-                    this.serviceCount++;
-                  }
-                }
-                for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (!wlServices[wlIndex]['provider'] && wlServices[wlIndex].serviceAvailability) {
-                    servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
-                    this.serviceCount++;
-                  }
-                }
-                for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-                  this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-                  this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-                  servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-                  this.userCount++;
-                }
-              }
-              this.servicesAndProviders = servicesAndProviders;
-            }
+            this.apptServices = apptServices;
+            this.setServiceUserDetails();
           },
             error => {
               this.wordProcessor.apiErrorAutoHide(this, error);
@@ -2178,6 +2093,99 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
         });
+  }
+  setServiceUserDetails() {
+    this.servicesAndProviders = [];
+    const servicesAndProviders = [];
+    this.donationServices = [];
+    this.serviceCount = 0;
+    this.userCount = 0;
+    if (this.showDepartments) {
+      if (this.userId) {
+        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+            this.serviceCount++;
+          }
+        }
+        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+            this.serviceCount++;
+          }
+        }
+      } else {
+        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+          const deptItem = {};
+          deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
+          deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
+          deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
+          deptItem['departmentItems'] = [];
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+              deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+              deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
+          if (!this.userId) {
+            for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+              const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+              const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+              this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+              this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
+              deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
+              this.userCount++;
+            }
+          }
+          servicesAndProviders.push(deptItem);
+        }
+      }
+      this.servicesAndProviders = servicesAndProviders;
+      // });
+    } else {
+      // tslint:disable-next-line:no-shadowed-variable
+      const servicesAndProviders = [];
+      if (this.userId) {
+        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+            this.serviceCount++;
+          }
+        }
+        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+            this.serviceCount++;
+          }
+        }
+      } else {
+        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+          if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+            this.serviceCount++;
+          }
+        }
+        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+          if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+            this.serviceCount++;
+          }
+        }
+        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+          this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+          this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+          servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+          this.userCount++;
+        }
+      }
+      this.servicesAndProviders = servicesAndProviders;
+    }
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
         this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });

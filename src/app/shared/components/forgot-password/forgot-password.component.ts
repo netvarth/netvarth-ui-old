@@ -82,7 +82,7 @@ export class ForgotPasswordComponent {
       switch (form_num) {
         case 1: this.fpForm = this.fb.group({
           phone: new FormControl(undefined, [Validators.required]),
-          phonenumber: new FormControl(undefined, [Validators.required])
+          phonenumber: new FormControl(undefined)
         });
           break;
       }
@@ -119,7 +119,9 @@ export class ForgotPasswordComponent {
       }
     } else {
        this.post_data = '+91';
+       if (this.fpForm.get('phonenumber').value) {
       this.sendOtpApi(this.fpForm.get('phonenumber').value, this.post_data);
+       }
     }
   }
 

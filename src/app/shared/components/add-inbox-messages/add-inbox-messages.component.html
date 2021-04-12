@@ -26,7 +26,7 @@
                 <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id" class="mgright50 example-margin" [(ngModel)]="email"
                     [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
-                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null')" class="mgright50 example-margin" [(ngModel)]="pushnotify"
+                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null') || !jaldeeConsumer" class="mgright50 example-margin" [(ngModel)]="pushnotify"
                     [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>

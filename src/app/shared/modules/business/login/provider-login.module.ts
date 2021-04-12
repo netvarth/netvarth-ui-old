@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProviderLoginComponent } from './provider-login.component';
 import { HeaderModule } from '../../header/header.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
-import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { providerLoginRoutingModule } from './provider-login.routing.module';

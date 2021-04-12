@@ -8,7 +8,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentModule } from '../../../../ynw_provider/shared/modules/department/department.module';
 import { GeneralSettingsRoutingModule } from './general-settings.routing.module';
-import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentDetailComponent } from './departments/details/department.details.component';

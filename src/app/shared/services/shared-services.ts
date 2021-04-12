@@ -947,10 +947,10 @@ export class SharedServices {
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
-  getVideoList(countrycode,phonenumber) {
-    const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
-    return this.servicemeta.httpGet(url);
-  }
+  // getVideoList(countrycode,phonenumber) {
+  //   const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
+  //   return this.servicemeta.httpGet(url);
+  // }
   addProviderWaitlistAttachment(uuid, body) {
     const url = 'provider/waitlist/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);

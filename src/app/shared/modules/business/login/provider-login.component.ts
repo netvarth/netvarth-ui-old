@@ -185,6 +185,7 @@ export class ProviderLoginComponent implements OnInit {
   }
 
   onSubmit(data) {
+    this.api_loading = true;
     const pN = data.emailId.trim();
     const pW = data.password;
     if (pN === '') {

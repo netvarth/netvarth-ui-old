@@ -632,7 +632,7 @@ export class CustomersListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Are you sure want to remove?',
+        'message': 'Are you sure you want to remove?',
         'type': 'yes/no'
       }
     });
@@ -725,6 +725,7 @@ export class CustomersListComponent implements OnInit {
     } else {
       this.groupName = this.selectedGroup.groupName;
       this.groupDescription = this.selectedGroup.description;
+      this.groupIdEdit = this.selectedGroup.id;
     }
   }
   customerGroupAction() {

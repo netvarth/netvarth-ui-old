@@ -25,7 +25,7 @@
         <div class="form-group normalpicker">
             <label for="Publish From">Publish From </label>
             <div class="pickerouter">
-                <mat-datepicker-toggle matSuffix [for]="publishedTo"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="publishedFrom"></mat-datepicker-toggle>
                 <mat-datepicker #publishedFrom></mat-datepicker>
                 <input class="form-control dtepicker" type="text" matInput
                     (click)="publishedFrom.open()" [matDatepicker]="publishedFrom" formControlName="publishedFrom"

@@ -13,7 +13,8 @@
             {{customerDetails.lastName}}</span><br>
           <label>{{customer_label | capitalizeFirst}} Id</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
           <label *ngIf="customerDetails.dob">DOB</label><span>
-            {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
+            <!-- {{customerDetails.dob | date:display_dateFormat}} -->
+            {{customerDetails.dob  | date:newDateFormat}}</span><br *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender</label><span>
             {{customerDetails.gender | capitalizeFirst}}</span>
         </div>

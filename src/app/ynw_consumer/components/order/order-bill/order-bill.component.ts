@@ -116,6 +116,7 @@ export class OrderBillComponent implements OnInit,OnDestroy {
   razorpay_payment_id: any;
   razorpayDetails: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   billTitle='Bill';
 private subs=new SubSink();
   constructor(
@@ -192,6 +193,7 @@ private subs=new SubSink();
                   }
                   console.log(this.checkin);
                   this.getCouponList();
+                  this.getproviderCouponList();
                   this.getWaitlistBill();
                   this.getPrePaymentDetails();
                   this.getPaymentModes();
@@ -201,8 +203,9 @@ private subs=new SubSink();
       if (this.bill_data.hasOwnProperty('createdDate')) {
           const datearr = this.bill_data.createdDate.split(' ');
           const billdatearr = datearr[0].split('-');
-          this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+        //   this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
           this.billtime = datearr[1] + ' ' + datearr[2];
+          this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
       }
       if (this.bill_data.hasOwnProperty('gstNumber')) {
           this.gstnumber = this.bill_data.gstNumber;
@@ -679,7 +682,7 @@ private subs=new SubSink();
     this.sharedfunctionObj.getS3Url()
         .then(
             s3Url => {
-               this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+               this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
                     .subscribe(res => {
                         this.couponList.OWN = res;
                     });

@@ -23,6 +23,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 
 
 @Component({
@@ -162,6 +163,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('firstStep',{static: false}) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
+  couponStatuses: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -222,7 +224,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.sel_checkindate = this.chosenDateDetails.order_date;
     this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-    console.log(this.sel_checkindate);
     this.onResize();
   }
   @HostListener('window:resize', ['$event'])
@@ -248,9 +249,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
-      console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      console.log(this.orders);
 
     }
 
@@ -259,6 +258,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       this.loading = false;
+      this.gets3curl();
       if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
       }
@@ -268,7 +268,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           base64: [],
           caption: []
         };
-        this.gets3curl();
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -398,6 +397,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           console.log(data);
           this.cartDetails = data;
+        //   if(this.cartDetails.systemNote){
+        //   this.couponStatuses = JSON.parse(this.cartDetails.systemNote);
+        //   console.log(this.couponStatuses); 
+        // }
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -510,8 +513,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
       if (found) {
         this.couponvalid = true;
-        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+       // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
         this.action = '';
+        if (this.orderType !== 'SHOPPINGLIST') {
+        this.getCartDetails();
+        }
       } else {
         this.api_cp_error = 'Coupon invalid';
       }
@@ -519,9 +525,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.api_cp_error = 'Enter a Coupon';
     }
   }
+  
   removeJCoupon(i) {
     this.selected_coupons.splice(i, 1);
     this.couponsList.splice(i, 1);
+    if (this.orderType !== 'SHOPPINGLIST') {
+      this.getCartDetails();
+      }
   }
   removeCoupons() {
     this.selected_coupons = [];
@@ -546,9 +556,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sharedFunctionobj.getProfile()
       .then(
         (data: any) => {
-          console.log(data);
           this.userEmail = data.userProfile.email;
-          console.log(this.userEmail);
           this.storeContact.get('email').setValue(this.userEmail);
         },
 
@@ -560,7 +568,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.shared_services.getConsumerCatalogs(accountId)
         .subscribe(
           (data: any) => {
-            console.log(JSON.stringify(data[0]));
             resolve(data[0]);
           },
           () => {
@@ -572,17 +579,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  // isLoggedIn() {
-  //   const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-  //   if (activeUser) {
-  //     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-  //     const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
-  //     console.log(customer_phonenumber);
-  //    //  this.loginForm.get('phone').setValue(customer_phonenumber);
-  //     // this.getaddress();
-  //   }
-  //   return true;
-  // }
+  
   getDeliveryCharges() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
@@ -597,13 +594,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
  
   getaddress() {
-    console.log('hi');
     this.shared_services.getConsumeraddress()
       .subscribe(
         data => {
-          console.log(data);
           if (data !== null) {
-            console.log(this.added_address);
             this.added_address = data;
             if (this.added_address.length > 0 && this.added_address !== null) {
               this.highlight(0, this.added_address[0]);
@@ -660,7 +654,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.canceldialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this.added_address.splice(index, 1);
         this.shared_services.updateConsumeraddress(this.added_address)
@@ -679,7 +672,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   goBack() {
-    console.log(this.action);
     if (this.action === 'timeChange' || this.action === 'coupons') {
       this.action = '';
     } else {
@@ -702,7 +694,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   confirm() {
     this.checkoutDisabled = true;
-    console.log(this.nextAvailableTime);
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
@@ -864,13 +855,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   confirmOrder(post_Data) {
-console.log(post_Data.email);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
       let i = 0;
       if (this.selectedImagelist) {
-        console.log(dataToSend);
         for (const pic of this.selectedImagelist.files) {
           dataToSend.append('attachments', pic, pic['name']);
           captions[i] = this.selectedImagelist.caption[i] || '';
@@ -908,7 +897,6 @@ console.log(post_Data.email);
           if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
-                console.log(res);
                 this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
@@ -953,11 +941,9 @@ console.log(post_Data.email);
               uuid: this.trackUuid
             }
           };
-          console.log('prepaymentAmount' + prepayAmount);
           if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
               .subscribe(res => {
-                console.log(res);
                 this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
@@ -981,9 +967,7 @@ console.log(post_Data.email);
 
   goBackToCheckout(selectesTimeslot, queue) {
     this.action = '';
-    console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
-    console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     // this.nextAvailableTime = selectesTimeslot;
     const chosenDateTime = {
@@ -996,10 +980,12 @@ console.log(post_Data.email);
 
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    if(this.couponsList.length > 0 && this.orderType !== 'SHOPPINGLIST'){
+     this.getCartDetails();
+    }
   }
   changeTime() {
     this.action = 'timeChange';
-    console.log(this.choose_type);
     this.getAvailabilityByDate(this.sel_checkindate);
   }
   getOrderItems() {
@@ -1021,7 +1007,6 @@ console.log(post_Data.email);
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
     this.selectedAddress = address;
-    console.log(this.selectedAddress);
   }
   // handleFuturetoggle() {
   //   this.showfuturediv = !this.showfuturediv;
@@ -1055,14 +1040,11 @@ console.log(post_Data.email);
   }
   getOrderAvailableDatesForPickup() {
     const _this = this;
-    console.log(this.catalog_Id);
-    console.log(this.account_id);
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
         this.store_availables = data.filter(obj => obj.isAvailable);
         this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.store_availables.map(function (a) { return a.date; });
-        console.log(availDates);
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -1070,13 +1052,10 @@ console.log(post_Data.email);
   }
   getOrderAvailableDatesForHome() {
     const _this = this;
-    console.log(this.catalog_Id);
-    console.log(this.account_id);
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
          this.home_availables = data.filter(obj => obj.isAvailable);
          this.getAvailabilityByDate(this.sel_checkindate);
-        console.log(this.home_availables);
         const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
@@ -1184,13 +1163,9 @@ console.log(post_Data.email);
     this.showfuturediv = !this.showfuturediv;
   }
   getAvailabilityByDate(date) {
-    console.log(date);
-    console.log(this.storeAvailableDates);
-    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
-    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
@@ -1223,9 +1198,7 @@ console.log(post_Data.email);
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      console.log(homeIntervals);
-      console.log(JSON.stringify(homeIntervals));
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format(); 
       if (homeIntervals.includes(currentday) && (date > thirty_date))  {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
@@ -1253,7 +1226,6 @@ console.log(post_Data.email);
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
       .subscribe((data: any) => {
-        console.log(data);
         this.storeContactNw = data;
       });
   }
@@ -1348,7 +1320,6 @@ console.log(post_Data.email);
     });
     this.shoppinglistdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.selectedImagelist = {
           files: [],
           base64: [],
@@ -1392,9 +1363,7 @@ console.log(post_Data.email);
             base64: [],
             caption: []
           };
-          console.log(result);
           this.selectedImagelist = result;
-          console.log(this.selectedImagelist.files);
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1412,8 +1381,23 @@ console.log(post_Data.email);
       });
     }
   handleQueueSelection(queue, index) {
-    console.log(index);
     this.queue = queue;
+  }
+
+  showJCCouponNote(coupon) {
+    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+    } else {
+      if (coupon.value.value === '0.0') {
+        this.dialog.open(JcCouponNoteComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+          disableClose: true,
+          data: {
+            jCoupon: coupon
+          }
+        });
+      }
+    }
   }
 }
 

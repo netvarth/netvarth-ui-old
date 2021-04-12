@@ -46,7 +46,7 @@ import { RequestForComponent } from './ynw_provider/components/request-for/reque
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
-import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
@@ -74,7 +74,6 @@ import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
-import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
@@ -83,7 +82,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { CookieProcessor } from './shared/services/cookie-processor.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -93,7 +91,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
-import { TwilioService } from './shared/services/twilio-service';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
@@ -104,6 +101,8 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
+import { TeleBookingService } from './shared/services/tele-bookings-service';
+import { BookingService } from './shared/services/booking-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -134,8 +133,6 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    LiveChatComponent,
-    JaldeeVideoComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent,
@@ -218,7 +215,6 @@ export function init_app(globalService: GlobalService) {
     SharedServices,
     GlobalService,
     SharedFunctions,
-    TwilioService,
     FormMessageDisplayService,
     ErrorMessagingService,
     SearchDetailServices,
@@ -238,6 +234,8 @@ export function init_app(globalService: GlobalService) {
     JaldeeTimeService,
     FileService,
     LivetrackService,
+    TeleBookingService,
+    BookingService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

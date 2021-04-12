@@ -27,6 +27,7 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -795,14 +796,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleOneMemberSelect(id, firstName, lastName) {
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        if (this.userData.userProfile.email) {
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
-        if (this.userData.userProfile.email && this.waitlist_for[0]) {
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
+        if (this.payEmail !== '' && this.waitlist_for[0]) {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         if (this.waitlist_for.length === 0) {
             this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
@@ -1178,6 +1179,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                         if (_this.userData.userProfile.email) {
                             _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                            _this.payEmail = _this.userData.userProfile.email;
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;
@@ -1296,7 +1298,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
-        this.payEmail = this.userData.userProfile.email;
+        // this.payEmail = this.userData.userProfile.email;
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -1354,11 +1356,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (found) {
                 this.couponvalid = true;
-                this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+               // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
                 this.closebutton.nativeElement.click();
+                this.checkCouponvalidity();
+
             } else {
                 this.api_cp_error = 'Coupon invalid';
             }
@@ -1366,6 +1370,93 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             // this.api_cp_error = 'Enter a Coupon';
             this.closebutton.nativeElement.click();
         }
+    }
+    checkCouponvalidity() {
+
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                if (list.id === this.customer_data.id) {
+                    list['id'] = 0;
+                }
+            }
+        }
+        this.virtualServiceArray = {};
+        if (this.callingModes !== '') {
+            this.is_wtsap_empty = false;
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                } else {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                }
+            }
+        } else if (this.callingModes === '' || this.callingModes.length < 10) {
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                for (const i in this.sel_ser_det.virtualCallingModes) {
+                    if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        this.is_wtsap_empty = true;
+                        break;
+                    }
+                }
+            }
+        }
+        let phNumber;
+        if (this.currentPhone && this.changePhno) {
+            phNumber = this.currentPhone;
+        } else {
+            phNumber = this.userPhone;
+        }
+        const post_Data = {
+            'queue': {
+                'id': this.queueId
+            },
+            'date': this.selectedDate,
+            'service': {
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
+            },
+            'consumerNote': this.consumerNote,
+            'countryCode': this.countryCode,
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'coupons': this.selected_coupons
+        };
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            for (const i in this.virtualServiceArray) {
+                if (i === 'WhatsApp') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'GoogleMeet') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Zoom') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Phone') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'VideoCall') {
+                    post_Data['virtualService'] = { 'VideoCall': '' };
+                }
+            }
+        }
+        if (this.apptTime) {
+            post_Data['appointmentTime'] = this.apptTime;
+        }
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+            post_Data['provider'] = { 'id': this.selectedUser.id };
+        }
+        if (this.partySizeRequired) {
+            this.holdenterd_partySize = this.enterd_partySize;
+            post_Data['partySize'] = Number(this.holdenterd_partySize);
+        }
+        post_Data['waitlistPhoneNumber'] = phNumber;
+        post_Data['consumer'] = { id: this.customer_data.id };
+        const param = { 'account': this.account_id };
+        this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
+            .subscribe(data => {
+                this.paymentDetails = data;
+                console.log(this.paymentDetails);
+            },
+                error => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
     }
     toggleterms(i) {
         if (this.couponsList[i].showme) {
@@ -1377,6 +1468,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     removeJCoupon(i) {
         this.selected_coupons.splice(i, 1);
         this.couponsList.splice(i, 1);
+        this.checkCouponvalidity()
     }
     getPic(user) {
         if (user.profilePicture) {
@@ -1530,35 +1622,43 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return false;
             } else {
                 emailId = this.bookingForm.get('newEmail').value;
+                // if (emailId && emailId != "") {
+                //     this.payEmail = emailId;
+                //     const post_data = {
+                //         'id': this.userData.userProfile.id || null,
+                //         'firstName': this.userData.userProfile.firstName || null,
+                //         'lastName': this.userData.userProfile.lastName || null,
+                //         'dob': this.userData.userProfile.dob || null,
+                //         'gender': this.userData.userProfile.gender || null,
+                //         'email': this.payEmail.trim() || ''
+                //     };
+                //     this.updateEmail(post_data).then(
+                //         () => {
+                //             this.closebutton.nativeElement.click();
+                //             setTimeout(() => {
+                //                 this.action = '';
+                //             }, 500);
+                //         },
+                //         error => {
+                //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                //             this.payEmail = this.userData.userProfile.email;
+                //             return false;
+                //         }
+                //     )
+                // } else {
+                //     this.closebutton.nativeElement.click();
+                //     setTimeout(() => {
+                //         this.action = '';
+                //     }, 500);
+                // }
                 if (emailId && emailId != "") {
-                    this.payEmail = emailId;
-                    const post_data = {
-                        'id': this.userData.userProfile.id || null,
-                        'firstName': this.userData.userProfile.firstName || null,
-                        'lastName': this.userData.userProfile.lastName || null,
-                        'dob': this.userData.userProfile.dob || null,
-                        'gender': this.userData.userProfile.gender || null,
-                        'email': this.payEmail.trim() || ''
-                    };
-                    this.updateEmail(post_data).then(
-                        () => {
-                            this.closebutton.nativeElement.click();
-                            setTimeout(() => {
-                                this.action = '';
-                            }, 500);
-                        },
-                        error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            this.payEmail = this.userData.userProfile.email;
-                            return false;
-                        }
-                    )
-                } else {
-                    this.closebutton.nativeElement.click();
-                    setTimeout(() => {
-                        this.action = '';
-                    }, 500);
+                this.payEmail = emailId;
+                this.waitlist_for[0]['email'] = this.payEmail;
                 }
+                this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
             }
         } else {
             this.closebutton.nativeElement.click();
@@ -1723,6 +1823,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.waitingTime = this.sel_queue_waitingmins;
             this.serviceTime = this.sel_queue_servicetime;
             this.queueId = this.sel_queue_id;
+            if(this.couponsList.length > 0){
+                this.checkCouponvalidity();
+            }
         }
         if (this.action === 'members') {
             this.saveMemberDetails();
@@ -1753,4 +1856,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.questionnaireList = data;
         });
     }
+    showJCCouponNote(coupon) {
+        if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+        } else {
+            if (coupon.value.value === '0.0') {
+                this.dialog.open(JcCouponNoteComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+                disableClose: true,
+                data: {
+                    jCoupon: coupon
+                }
+                });
+            }
+        }
+      }
 }

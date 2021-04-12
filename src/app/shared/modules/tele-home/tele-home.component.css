@@ -1,0 +1,58 @@
+button.menu-icon {
+    background: none !important;
+    border: none !important;
+    margin: 10px !important;
+    padding-top: 5px;
+}
+
+button.menu-icon:hover {
+    background-color: #ddd !important;
+    border:1px solid #ddd !important;
+    border-radius: 25px !important;
+}
+
+.card.pad-5 {
+    padding:5px !important;
+}
+
+@media (max-width:375px) {
+    .cust-book-details .joinMeeting {
+        margin-left: 0 !important;
+        margin-top: 10px !important;
+    }
+}
+.cust-book-details .joinMeeting {
+    display: inline-block !important;
+}
+.module {
+    margin: 4px 0 0 0;
+    overflow: hidden !important;
+  }
+  
+  .line-clamp-1 {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+  }
+
+  .tele-img {
+      width: 80%;
+  }
+
+  .consumer-dash .fit_in {
+      cursor: default !important;
+  }
+
+  .w-100 {
+      width: 100% !important;
+  }
+  .pad-5 {
+      padding:5px !important;
+  }
+  .no-bookings {
+      padding:25px !important;
+  }
+  .no-bookings h4 {
+    line-height: 1.5;
+    text-align: center;
+  }

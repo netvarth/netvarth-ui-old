@@ -26,6 +26,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -757,8 +758,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     handleOneMemberSelect(id, firstName, lastName) {
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
-        if (this.userData.userProfile.email) {
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         this.getConsumerQuestionnaire();
     }
@@ -1075,6 +1076,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                         if (_this.userData.userProfile.email) {
                             _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                            _this.payEmail = _this.userData.userProfile.email;
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;
@@ -1187,7 +1189,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
-        this.payEmail = this.userData.userProfile.email;
+        // this.payEmail = this.userData.userProfile.email;
     }
     showPhoneInput() {
         this.showInputSection = true;
@@ -1249,11 +1251,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             if (found) {
                 this.couponvalid = true;
-                this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+               // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
                 this.closebutton.nativeElement.click();
+                this.checkCouponvalidity();
             } else {
                 this.api_cp_error = 'Coupon invalid';
             }
@@ -1272,6 +1275,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     removeJCoupon(i) {
         this.selected_coupons.splice(i, 1);
         this.couponsList.splice(i, 1);
+        this.checkCouponvalidity();
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
@@ -1437,35 +1441,43 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 return false;
             } else {
                 emailId = this.bookingForm.get('newEmail').value;
+                // if (emailId && emailId != "") {
+                //     this.payEmail = emailId;
+                //     const post_data = {
+                //         'id': this.userData.userProfile.id || null,
+                //         'firstName': this.userData.userProfile.firstName || null,
+                //         'lastName': this.userData.userProfile.lastName || null,
+                //         'dob': this.userData.userProfile.dob || null,
+                //         'gender': this.userData.userProfile.gender || null,
+                //         'email': this.payEmail.trim() || ''
+                //     };
+                //     this.updateEmail(post_data).then(
+                //         () => {
+                //             setTimeout(() => {
+                //                 this.action = '';
+                //             }, 500);
+                //             this.closebutton.nativeElement.click();
+                //         },
+                //         error => {
+                //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                //             this.payEmail = this.userData.userProfile.email;
+                //             return false;
+                //         }
+                //     )
+                // } else {
+                //     setTimeout(() => {
+                //         this.action = '';
+                //     }, 500);
+                //     this.closebutton.nativeElement.click();
+                // }
                 if (emailId && emailId != "") {
                     this.payEmail = emailId;
-                    const post_data = {
-                        'id': this.userData.userProfile.id || null,
-                        'firstName': this.userData.userProfile.firstName || null,
-                        'lastName': this.userData.userProfile.lastName || null,
-                        'dob': this.userData.userProfile.dob || null,
-                        'gender': this.userData.userProfile.gender || null,
-                        'email': this.payEmail.trim() || ''
-                    };
-                    this.updateEmail(post_data).then(
-                        () => {
-                            setTimeout(() => {
-                                this.action = '';
-                            }, 500);
-                            this.closebutton.nativeElement.click();
-                        },
-                        error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            this.payEmail = this.userData.userProfile.email;
-                            return false;
-                        }
-                    )
-                } else {
+                    this.waitlist_for[0]['email'] = this.payEmail;
+                    }
+                    this.closebutton.nativeElement.click();
                     setTimeout(() => {
                         this.action = '';
                     }, 500);
-                    this.closebutton.nativeElement.click();
-                }
             }
 
         } else {
@@ -1667,4 +1679,96 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.questionnaireList = data;
         });
     }
+    checkCouponvalidity() {
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                if (list.id === this.customer_data.id) {
+                    list['id'] = 0;
+                }
+            }
+        }
+        this.virtualServiceArray = {};
+        if (this.callingModes !== '') {
+            this.is_wtsap_empty = false;
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                } else {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                }
+            }
+        } else if (this.callingModes === '' || this.callingModes.length < 10) {
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                for (const i in this.sel_ser_det.virtualCallingModes) {
+                    if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        this.is_wtsap_empty = true;
+                        break;
+                    }
+                }
+            }
+        }
+        let phNumber;
+        if (this.currentPhone && this.changePhno) {
+            phNumber = this.currentPhone;
+        } else {
+            phNumber = this.userPhone;
+        }
+        const post_Data = {
+            'schedule': {
+                'id': this.selectedApptTime['scheduleId']
+            },
+            'appmtDate': this.selectedDate,
+            'service': {
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
+            },
+            'consumerNote': this.consumerNote,
+            'countryCode': this.countryCode,
+            'phoneNumber': phNumber,
+            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'coupons': this.selected_coupons
+        };
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+            post_Data['provider'] = { 'id': this.selectedUser.id };
+        }
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            for (const i in this.virtualServiceArray) {
+                if (i === 'WhatsApp') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'GoogleMeet') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Zoom') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Phone') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'VideoCall') {
+                    post_Data['virtualService'] = { 'VideoCall': '' };
+                }
+            }
+        }
+    const param = { 'account': this.account_id };
+    this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
+        .subscribe(data => {
+            this.paymentDetails = data;
+        },
+            error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+}
+showJCCouponNote(coupon) {
+    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+    } else {
+        if (coupon.value.value === '0.0') {
+            this.dialog.open(JcCouponNoteComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+            disableClose: true,
+            data: {
+                jCoupon: coupon
+            }
+            });
+        }
+    }
+  }
 }
