@@ -1056,6 +1056,14 @@
 						<div class="col-md-12">
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-1 pb-1 pb-md-2">
+									<div>
+									  <span class="text-right pt-7" style="color: red;font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled'">
+											Cancelled</span>
+									  <span class="text-right pt-7" style="color: red;font-size: smaller;" *ngIf="source === 'appt' && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
+											Cancelled</span>
+									  <span class="text-right pt-7" style="color: red;font-size: smaller;" *ngIf="source === 'order' && bill_data.billStatus === 'Cancel'">
+											Cancelled</span>
+										 </div>
 									<div class="form-group" *ngIf="showPayWorkBench">
 										<!-- <textarea class="form-control form-control-solid" rows="3"></textarea> -->
 										<label style="font-weight: 500;">Leave a Payment Note</label>
