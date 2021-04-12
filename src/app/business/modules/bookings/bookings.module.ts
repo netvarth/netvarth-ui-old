@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BookingsComponent } from './bookings.component';
 import { BookingsRoutingModule } from './bookings.routing.module';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { BookingDetailModule } from './booking-detail/booking-detail.module';
 
 
 
@@ -11,7 +12,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
   imports: [
     CommonModule,
     BookingsRoutingModule,
-    MatGridListModule
+    MatGridListModule,
+    BookingDetailModule
   ]
 })
 export class BookingsModule {
