@@ -1846,6 +1846,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.sel_queue_id = this.queueId;
         const que = this.queuejson.filter(q => q.id === this.queueId);
         this.sel_queue_indx = this.queuejson.indexOf(que[0]);
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
