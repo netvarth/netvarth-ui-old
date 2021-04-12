@@ -978,9 +978,9 @@ export class SharedFunctions {
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
-        msg = 'Token';
+        msg = 'booking';
       } else {
-        msg = 'Check-In';
+        msg = 'booking';
       }
     } else if (type === 'appointment') {
       msg = 'Appointment';
