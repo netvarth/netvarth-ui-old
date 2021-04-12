@@ -987,7 +987,7 @@
 													[(ngModel)]="amounttoRefund">
 											</div>
 											<div class="modal-footer p-1">
-												<a *ngIf="!applydisc && !is_policy" (click)="refundPolicy()">Refund
+												<a *ngIf="!applydisc && !is_policy && btn_hide" (click)="refundPolicy()">Refund
 													Policy</a>
 												<button *ngIf="!applydisc  && !is_policy" type="button"
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
