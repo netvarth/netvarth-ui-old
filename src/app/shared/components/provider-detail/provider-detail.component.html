@@ -141,7 +141,7 @@
                                                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 no-padding mgn-bt-10">
                                                     <div class="question-value1 pull-left mgn-rt-5"
                                                         *ngFor="let languages of businessjson.languagesSpoken;let i=index">
-                                                        {{languages}}<ng-container
+                                                        {{languages | capitalizeFirst}}<ng-container
                                                             *ngIf="i<(businessjson.languagesSpoken.length-1)">,
                                                         </ng-container>
                                                     </div>

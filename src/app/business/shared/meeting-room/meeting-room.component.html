@@ -15,6 +15,12 @@
                 class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
             </div>
             <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
+                <div mat-dialog-content class="pt-0">
+                    <mat-checkbox [(ngModel)]="recordFlag" (change)="settingDeafultValue( $event)">
+                      Record Video</mat-checkbox>
+                     
+                   
+                  </div>
                 <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <h1 *ngIf="!loading">Ready To Start ?</h1>
                     <h1 *ngIf="loading">Getting Ready...</h1>
@@ -27,7 +33,7 @@
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="!loading">
-                    <button [disabled]="!consumerReady" (click)="consumerReady && joinRoom()">Join
+                    <button  (click)="consumerReady && joinRoom()">Join
                         now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                     <br><br>
                 </div>

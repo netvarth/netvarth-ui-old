@@ -78,6 +78,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             }
         };
     }
+    
     /**
      * function which marks the provider readiness and returns a token to connect
      * to the room when the consumer is ready

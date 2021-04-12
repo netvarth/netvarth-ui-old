@@ -494,7 +494,8 @@
                   <div class="order-label" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                     *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                   <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                       Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
+                       Promo code {{selected_coupons.toString()}} added,will be applicable in the final bill. <br>
+                     <u>Add more</u></a>
                     <!-- Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}} -->
                 </div>
                   <span class="form-level-settings" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge"> Delivery charge &#x20B9;{{getDeliveryCharges()}} will added to the bill.</span>
