@@ -1,11 +1,11 @@
 <section class="cons-inbox no-padding-small">
     <div class="container consumer-dashhome no-padding no-padding-small">
-        <div class="panel-heading top-row " *ngIf="params.uuid && (source === 'consCheckin' || source === 'consAppt')">
+        <div class="panel-heading top-row " *ngIf="uuid && (source === 'consCheckin' || source === 'consAppt')">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <app-header></app-header>
             </div>
         </div>
-        <div class="card title-gb rounded-0" *ngIf="params.uuid">
+        <div class="card title-gb rounded-0" *ngIf="uuid">
             <h5 class="mgn-up-10 bold">Questionnaire <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                         class="fa fa-arrow-left"></i></a></h5>
         </div>
@@ -14,7 +14,7 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container"
-            [class.no-padding]="(params.uuid && (source === 'consCheckin' || source === 'consAppt')) || (!params.uuid && (source === 'proCheckin' || source === 'proAppt'))">
+            [class.no-padding]="(uuid && (source === 'consCheckin' || source === 'consAppt')) || (!uuid && (source === 'proCheckin' || source === 'proAppt'))">
             <!--begin::Form-->
             <div class="form">
                 <div class="row">
@@ -148,7 +148,7 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="params.uuid">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="uuid">
                             <button class="normal-btn" mat-flat-button
                                 (click)="!buttonDisable && onSubmit('submit')">Submit</button>
                         </div>

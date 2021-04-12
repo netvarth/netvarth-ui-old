@@ -20,6 +20,7 @@ export class QuestionnaireComponent implements OnInit {
   @Input() accountId;
   @Input() questionAnswers;
   @Input() customerDetails;
+  @Input() uuid;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
   selectedMessage: any = [];
@@ -52,6 +53,9 @@ export class QuestionnaireComponent implements OnInit {
       }
       if (this.params.providerId) {
         this.accountId = this.params.providerId;
+      }
+      if (this.params.uuid) {
+        this.uuid = this.params.uuid;
       }
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
@@ -92,7 +96,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.labels;
       }
     }
-    if (this.params.uuid) {
+    if (this.uuid) {
       this.loading = true;
       if (this.source === 'consCheckin') {
         this.getConsumerCheckinDetails();
@@ -134,6 +138,7 @@ export class QuestionnaireComponent implements OnInit {
           if (answ.question.fieldDataType !== 'FileUpload') {
             this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
+            if (answ.answer.attachment && answ.answer.attachment.length > 0) {
             for (let i = 0; i < answ.answer.attachment.length; i++) {
               if (type === 'get') {
                 this.uploadedImages.push(answ.answer.attachment[i]);
@@ -155,6 +160,7 @@ export class QuestionnaireComponent implements OnInit {
                 this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
               }
             }
+          }
           }
         }
       }
@@ -248,7 +254,8 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
       const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
       if (index !== -1) {
-        delete this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]];
+        // delete this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]];
+        this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]] = 'remove';
         this.filestoUpload[question.labelName] = {};
         this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]] = {};
       }
@@ -263,21 +270,51 @@ export class QuestionnaireComponent implements OnInit {
       console.log(key);
       console.log(Object.keys(this.filestoUpload[key]).length);
       if (Object.keys(this.filestoUpload[key]).length > 0) {
-        this.answers[key] = {};
+        this.answers[key] = [];
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
           if (this.filestoUpload[key][key1]) {
+            console.log(this.filestoUpload[key][key1]);
             const indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
+console.log(indx);
             if (indx !== -1) {
+              if (this.uuid) {
+                let status = 'add';
+                if (this.uploadedFiles[key] && this.uploadedFiles[key][key1]) {
+                  status = 'update';
+                }
+                this.answers[key].push({index: indx, allowedDocument: key1, status: status});
+              } else {
               this.answers[key][indx] = key1;
+              }
+            } else {
+              console.log(this.uploadedFiles[key][key1]);
+              if (this.uuid && this.uploadedFiles[key] && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
+                console.log(this.uploadedFiles[key][key1]);
+                this.answers[key].push({allowedDocument: key1, status: 'remove'});
+              }
+            }
+          } else {
+            console.log(this.uploadedFiles[key][key1]);
+            if (this.uuid && this.uploadedFiles[key] && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
+              console.log(this.uploadedFiles[key][key1]);
+              this.answers[key].push({allowedDocument: key1, status: 'remove'});
             }
           }
         });
       } else {
         // delete this.answers[key];
         console.log(this.uploadedFiles[key]);
-        if (Object.keys(this.uploadedFiles[key]).length === 0) {
-          this.answers[key] = '';
+
+           if (this.uuid && Object.keys(this.uploadedFiles[key]).length > 0) {
+            Object.keys(this.uploadedFiles[key]).forEach(key1 => {
+              if (this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === '') {
+                this.answers[key].push({allowedDocument: key1, status: 'remove'});
+              }
+            });
         }
+        // if (Object.keys(this.uploadedFiles[key]).length === 0) {
+        //   this.answers[key] = '';
+        // }
       }
     });
     let data = [];
@@ -374,7 +411,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
-    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
       this.location.back();
     }, error => {
       this.buttonDisable = false;
@@ -382,7 +419,7 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   resubmitConsumerApptQuestionnaire(body) {
-    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
       this.location.back();
     }, error => {
       this.buttonDisable = false;
@@ -390,7 +427,7 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   resubmitProviderWaitlistQuestionnaire(body) {
-    this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
+    this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
       this.location.back();
     }, error => {
       this.buttonDisable = false;
@@ -398,7 +435,7 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   resubmitProviderApptQuestionnaire(body) {
-    this.providerService.resubmitProviderApptQuestionnaire(body, this.params.uuid).subscribe(data => {
+    this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.location.back();
     }, error => {
       this.buttonDisable = false;
@@ -409,7 +446,7 @@ export class QuestionnaireComponent implements OnInit {
     this.location.back();
   }
   getConsumerCheckinDetails() {
-    this.sharedService.getCheckinByConsumerUUID(this.params.uuid, this.accountId).subscribe(
+    this.sharedService.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
           this.questionnaireList = data.questionnaire;
@@ -422,7 +459,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getConsumerApptDetails() {
-    this.sharedService.getAppointmentByConsumerUUID(this.params.uuid, this.accountId).subscribe(
+    this.sharedService.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
           this.questionnaireList = data.questionnaire;
@@ -435,7 +472,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getCheckinDetailsProvider() {
-    this.providerService.getProviderWaitlistDetailById(this.params.uuid).subscribe(
+    this.providerService.getProviderWaitlistDetailById(this.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
           this.questionnaireList = data.questionnaire;
@@ -448,7 +485,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getApptDetailsProvider() {
-    this.providerService.getAppointmentById(this.params.uuid).subscribe(
+    this.providerService.getAppointmentById(this.uuid).subscribe(
       (data: any) => {
         if (data && data.questionnaire) {
           this.questionnaireList = data.questionnaire;
@@ -509,7 +546,8 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        delete this.uploadedFiles[question.labelName][document];
+        // delete this.uploadedFiles[question.labelName][document];
+        this.uploadedFiles[question.labelName][document] = 'remove';
         this.filestoUpload[question.labelName] = {};
         this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]] = {};
       }
