@@ -258,7 +258,7 @@
                                                             #qrCodeOnlineId>
                                                             <div
                                                                 class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                                                <ngx-qrcode #accQR [elementType]="elementType"
+                                                                <ngx-qrcode id="print-section" [elementType]="elementType"
                                                                     [value]="qr_value"
                                                                     (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
                                                                     class="custId-cursor">
@@ -280,11 +280,9 @@
                                                                             </share-buttons>
                                                                         </div>
                                                                         <div class="dwnld-bdr custId-cursor">
-                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
-                                                                                download>
-                                                                                <i
-                                                                                    class="fa fa-cloud-download dwnld-icon"></i>
-                                                                            </a>
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
+                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
+                                                                              </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -298,7 +296,7 @@
                                                             #qrCodeOnlineId>
                                                             <div
                                                                 class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                                                <ngx-qrcode #custQR [elementType]="elementType"
+                                                                <ngx-qrcode id="print-section" [elementType]="elementType"
                                                                     [value]="qr_value"
                                                                     (click)="qrCodegeneraterOnlineID(bProfile.customId)"
                                                                     class="custId-cursor">
@@ -320,11 +318,9 @@
                                                                             </share-buttons>
                                                                         </div>
                                                                         <div class="dwnld-bdr custId-cursor">
-                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
-                                                                                download>
-                                                                                <i
-                                                                                    class="fa fa-cloud-download dwnld-icon"></i>
-                                                                            </a>
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
+                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
+                                                                              </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
