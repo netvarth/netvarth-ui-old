@@ -34,6 +34,7 @@ export class TeleHomeComponent implements OnInit {
   messageDialog: any;
   isToday = false;
   noBookings = true;
+  loggedUser;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private teleService: TeleBookingService,
@@ -59,6 +60,7 @@ export class TeleHomeComponent implements OnInit {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isLoggedIn = true;
+      this.loggedUser = activeUser;
       this.getVideo();
     }
     else {
@@ -121,7 +123,7 @@ export class TeleHomeComponent implements OnInit {
    * 
    */
   startVideo() {
-    this.router.navigate(['meeting' , this.phoneNumber , this.videoCall.uid ]);
+    this.router.navigate(['meeting' , this.phoneNumber , this.videoCall.uid]);
   }
 
   /**
@@ -148,7 +150,12 @@ export class TeleHomeComponent implements OnInit {
    */
   joinJaldeeVideo(booking) {
     console.log(this.countrycode+""+this.phone);
-    this.router.navigate(['meeting' , this.countrycode+""+this.phone , booking.id]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'room'
+      }
+    };
+    this.router.navigate(['meeting' , this.countrycode+""+this.phone , booking.id], navigationExtras);
   }
 
   // cancelBooking(booking) {

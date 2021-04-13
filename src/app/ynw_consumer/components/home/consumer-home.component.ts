@@ -129,13 +129,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   notificationdialogRef;
   addnotedialogRef;
   checkindialogRef;
-  billdialogRef;
-  paydialogRef;
+  // billdialogRef;
+  // paydialogRef;
   ratedialogRef;
   privacydialogRef;
   canceldialogRef;
   remfavdialogRef;
-  payment_popup = null;
+  // payment_popup = null;
   servicesjson: any = [];
   public time = 300;
   public mode = 'horizontal';
@@ -485,12 +485,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.checkindialogRef) {
       this.checkindialogRef.close();
     }
-    if (this.billdialogRef) {
-      this.billdialogRef.close();
-    }
-    if (this.paydialogRef) {
-      this.paydialogRef.close();
-    }
+    // if (this.billdialogRef) {
+    //   this.billdialogRef.close();
+    // }
+    // if (this.paydialogRef) {
+    //   this.paydialogRef.close();
+    // }
     if (this.ratedialogRef) {
       this.ratedialogRef.close();
     }

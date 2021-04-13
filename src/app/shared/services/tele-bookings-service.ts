@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { TeleBooking } from "../models/booking-model";
+import { TeleBooking } from "../models/tele-booking-model";
 import { DateTimeProcessor } from "./datetime-processor.service";
 import { ServiceMeta } from "./service-meta";
 
@@ -48,18 +48,21 @@ export class TeleBookingService {
                         bookingWindow = appointments[i].schedule.apptSchedule.timeSlots[0].sTime + " - " +
                             appointments[i].schedule.apptSchedule.timeSlots[0].eTime;
                         let bookingTime = this.getSingleTime(appointments[i].appmtTime);
-                        
+
                         let bookingStatus = appointments[i].apptStatus;
 
                         if (appointments[i].apptStatus === 'Started') {
                             bookingStatus = 'is waiting for you';
                         }
-
+                        let btnLabel = 'Join Video Consultation';
+                        if (appointments[i].videoCallMessage === 'Call in progress') {
+                            btnLabel = 'Re-join Video Consultation';
+                        }
                         let booking = new TeleBooking(appointments[i].appmtDate, bookingTime, '',
                             bookingWindow, appointments[i].appointmentEncId, 'appt', appointments[i].service.name,
                             busName, busId, userName, userId, appointments[i].uid, appointments[i].service.virtualCallingModes[0].callingMode,
                             teleMode, teleUrl, bookingStatus, '', consumerName, appointments[i].location.place,
-                            appointments[i].location.googleMapUrl);
+                            appointments[i].location.googleMapUrl, appointments[i].videoCallMessage, appointments[i].videoCallButton, btnLabel);
                         bookings.push(booking);
                     }
                     this.getAvaiableBookingCheckins(countrycode, phonenumber).then(
@@ -69,17 +72,17 @@ export class TeleBookingService {
                                 let token = '';
                                 if (checkins[i].showToken) {
                                     console.log(checkins[i].token);
-                                    if(checkins[i].token) {
+                                    if (checkins[i].token) {
                                         token = checkins[i].token;
                                     } else {
                                         token = '1';
                                     }
-                                    
+
                                 }
                                 let bookingTime = '';
                                 if (checkins[i].serviceTime) {
                                     bookingTime = checkins[i].serviceTime;
-                                } 
+                                }
                                 let busName = "";
                                 let busId = "";
                                 let userId;
@@ -114,12 +117,15 @@ export class TeleBookingService {
                                 if (checkins[i].waitlistStatus === 'started') {
                                     bookingStatus = 'Doctor is waiting for you';
                                 }
-
+                                let btnLabel = 'Join Video Consultation';
+                                if (checkins[i].videoCallMessage === 'Call in progress') {
+                                    btnLabel = 'Re-join Video Consultation';
+                                }
                                 let booking = new TeleBooking(checkins[i].date, bookingTime,
-                                     bookingWindow, token, checkins[i].checkinEncId, 'wl', checkins[i].service.name,
+                                    bookingWindow, token, checkins[i].checkinEncId, 'wl', checkins[i].service.name,
                                     busName, busId, userName, userId, checkins[i].ynwUuid, checkins[i].service.virtualCallingModes[0].callingMode,
                                     teleMode, teleUrl, bookingStatus, '', consumerName, checkins[i].queue.location.place,
-                                    checkins[i].queue.location.googleMapUrl);
+                                    checkins[i].queue.location.googleMapUrl, checkins[i].videoCallMessage, checkins[i].videoCallButton, btnLabel);
                                 bookings.push(booking);
                             }
                             resolve(bookings);
@@ -162,5 +168,139 @@ export class TeleBookingService {
     getAvailableTeleCheckins(countrycode, phonenumber) {
         const url = 'consumer/waitlist/meeting/' + countrycode + '/' + phonenumber;
         return this.servicemeta.httpGet(url);
+    }
+    getTeleCheckinById(uuid) {
+        const url = 'provider/waitlist/' + uuid;
+        return this.servicemeta.httpGet(url);
+    }
+    getTeleApptById(uuid) {
+        const url = 'provider/appointment/' + uuid;
+        return this.servicemeta.httpGet(url);
+    }
+
+    getTeleBookingFromCheckIn(uid) {
+        return new Promise((resolve, reject) => {
+            this.getTeleCheckinById(uid).subscribe(
+                (bookingObj: any) => {
+                    let token = '';
+                    if (bookingObj.showToken) {
+                        console.log(bookingObj.token);
+                        if (bookingObj.token) {
+                            token = bookingObj.token;
+                        } else {
+                            token = '1';
+                        }
+
+                    }
+                    let bookingTime = '';
+                    if (bookingObj.serviceTime) {
+                        bookingTime = bookingObj.serviceTime;
+                    }
+                    let busName = "";
+                    let busId = "";
+                    let userId;
+                    let userName;
+                    if (bookingObj.provider) {
+                        userName = bookingObj.provider.firstName + ' ' + bookingObj.provider.lastName;
+                        userId = bookingObj.provider.id;
+                    } else {
+                        busName = bookingObj.providerAccount.businessName;
+                        busId = bookingObj.providerAccount.id;
+                    }
+                    let consumerName = "";
+                    if (bookingObj.waitlistingFor[0].firstName) {
+                        consumerName = bookingObj.waitlistingFor[0].firstName;
+                    }
+                    if (bookingObj.waitlistingFor[0].lastName) {
+                        consumerName += " " + bookingObj.waitlistingFor[0].lastName;
+                    }
+                    let teleMode = 'video';
+                    if (bookingObj.service.virtualServiceType && bookingObj.service.virtualServiceType === 'audioService') {
+                        teleMode = 'audio';
+                    }
+                    let teleUrl = '';
+                    if (bookingObj.service.virtualCallingModes[0].callingMode !== 'VideoCall' && bookingObj.service.virtualCallingModes[0].callingMode !== 'WhatsApp') {
+                        teleUrl = bookingObj.service.virtualCallingModes[0].value;
+                    }
+                    let bookingWindow = '';
+                    bookingWindow = bookingObj.queue.queueStartTime + " - " +
+                        bookingObj.queue.queueEndTime;
+
+                    let bookingStatus = bookingObj.waitlistStatus;
+                    if (bookingObj.waitlistStatus === 'started') {
+                        bookingStatus = 'Doctor is waiting for you';
+                    }
+                    let btnLabel = 'Join Video Consultation';
+                    if (bookingObj.videoCallMessage === 'Call in progress') {
+                        btnLabel = 'Re-join Video Consultation';
+                    }
+                    let booking = new TeleBooking(bookingObj.date, bookingTime,
+                        bookingWindow, token, bookingObj.checkinEncId, 'wl', bookingObj.service.name,
+                        busName, busId, userName, userId, bookingObj.ynwUuid, bookingObj.service.virtualCallingModes[0].callingMode,
+                        teleMode, teleUrl, bookingStatus, '', consumerName, bookingObj.queue.location.place,
+                        bookingObj.queue.location.googleMapUrl, bookingObj.videoCallMessage, bookingObj.videoCallButton, btnLabel);
+                    resolve(booking);
+                }, (error)=> {
+                    reject(error);
+                }
+            )
+        });
+
+    }
+    getTeleBookingFromAppt(uid) {
+        return new Promise((resolve, reject) => {
+            this.getTeleApptById(uid).subscribe(
+                (bookingObj: any) => {
+                    let busName = "";
+                    let busId = ""
+                    let userName;
+                    let userId;
+                    if (bookingObj.provider) {
+                        userName = bookingObj.provider.firstName + ' ' + bookingObj.provider.lastName;
+                        userId = bookingObj.provider.id;
+                    } else {
+                        busName = bookingObj.providerAccount.businessName;
+                        busId = bookingObj.providerAccount.id;
+                    }
+                    let consumerName = "";
+                    if (bookingObj.appmtFor[0].firstName) {
+                        consumerName = bookingObj.appmtFor[0].firstName;
+                    }
+                    if (bookingObj.appmtFor[0].lastName) {
+                        consumerName += " " + bookingObj.appmtFor[0].lastName;
+                    }
+                    let teleMode = 'video';
+                    if (bookingObj.service.virtualServiceType && bookingObj.service.virtualServiceType === 'audioService') {
+                        teleMode = 'audio';
+                    }
+                    let teleUrl = '';
+                    if (bookingObj.service.virtualCallingModes[0].callingMode !== 'VideoCall' && bookingObj.service.virtualCallingModes[0].callingMode !== 'WhatsApp') {
+                        teleUrl = bookingObj.service.virtualCallingModes[0].value;
+                    }
+                    let bookingWindow = '';
+                    bookingWindow = bookingObj.schedule.apptSchedule.timeSlots[0].sTime + " - " +
+                        bookingObj.schedule.apptSchedule.timeSlots[0].eTime;
+                    let bookingTime = this.getSingleTime(bookingObj.appmtTime);
+
+                    let bookingStatus = bookingObj.apptStatus;
+
+                    if (bookingObj.apptStatus === 'Started') {
+                        bookingStatus = 'is waiting for you';
+                    }
+                    let btnLabel = 'Join Video Consultation';
+                    if (bookingObj.videoCallMessage === 'Call in progress') {
+                        btnLabel = 'Re-join Video Consultation';
+                    }
+                    let booking = new TeleBooking(bookingObj.appmtDate, bookingTime, '',
+                        bookingWindow, bookingObj.appointmentEncId, 'appt', bookingObj.service.name,
+                        busName, busId, userName, userId, bookingObj.uid, bookingObj.service.virtualCallingModes[0].callingMode,
+                        teleMode, teleUrl, bookingStatus, '', consumerName, bookingObj.location.place,
+                        bookingObj.location.googleMapUrl, bookingObj.videoCallMessage, bookingObj.videoCallButton, btnLabel);
+                    resolve(booking);
+                }, (error)=> {
+                    reject(error);
+                }
+            );
+        });
     }
 }
