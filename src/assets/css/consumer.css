@@ -7024,7 +7024,7 @@ margin-top: 7px;
   right: 0;
 }
 .consumer-dash .grid-card .book_stats {
-  font-size: small;
+  /* font-size: small; */
   font-weight: 600;
   color: #673ab7f2;
   margin-top: auto !important;

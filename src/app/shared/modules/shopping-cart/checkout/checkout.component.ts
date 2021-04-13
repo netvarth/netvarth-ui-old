@@ -164,6 +164,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
+  couponlist: any = [];
+  pcouponlist: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -397,10 +399,25 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           console.log(data);
           this.cartDetails = data;
-        //   if(this.cartDetails.systemNote){
-        //   this.couponStatuses = JSON.parse(this.cartDetails.systemNote);
-        //   console.log(this.couponStatuses); 
-        // }
+          this.couponlist = [];
+          this.pcouponlist = [];
+          if(this.cartDetails.jCouponList){
+            for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
+              if(value['value'] !== '0.0'){
+                this.couponlist.push(key);
+                console.log(this.couponlist);
+              }
+            }
+          }
+          if(this.cartDetails.proCouponList){
+            for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
+              if(value['value'] !== '0.0'){
+                this.pcouponlist.push(key);
+                console.log(this.pcouponlist);
+              }
+            }
+          }
+       
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -513,7 +530,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
       if (found) {
         this.couponvalid = true;
-       // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
         this.action = '';
         if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();

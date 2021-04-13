@@ -987,7 +987,7 @@
 													[(ngModel)]="amounttoRefund">
 											</div>
 											<div class="modal-footer p-1">
-												<a *ngIf="!applydisc && !is_policy" (click)="refundPolicy()">Refund
+												<a *ngIf="!applydisc && !is_policy && btn_hide" (click)="refundPolicy()">Refund
 													Policy</a>
 												<button *ngIf="!applydisc  && !is_policy" type="button"
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
@@ -1056,6 +1056,14 @@
 						<div class="col-md-12">
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-1 pb-1 pb-md-2">
+									<div class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
+									  <span class="red" style="font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled'">
+											{{showToken ? 'Token' : 'Check-in'}} Cancelled</span>
+									  <span class="red" style="font-size: smaller;" *ngIf="source === 'appt' && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
+											Appointment Cancelled</span>
+									  <span class="red" style="font-size: smaller;" *ngIf="source === 'order' && bill_data.billStatus === 'Cancel'">
+											Order Cancelled</span>
+										 </div>
 									<div class="form-group" *ngIf="showPayWorkBench">
 										<!-- <textarea class="form-control form-control-solid" rows="3"></textarea> -->
 										<label style="font-weight: 500;">Leave a Payment Note</label>

@@ -16,12 +16,19 @@ export class MeetService {
     // }
     isConsumerReady(post_data) {
         return this.servicemeta.httpPut('provider/appointment/videocall/ready', post_data);
-      }
+    }
     getStatus(uuid) {
         const path = 'provider/appointment/video/status/' + uuid;
         return this.servicemeta.httpGet(path);
     }
-    
+    setJaldeeVideoRecording(status) {
+        const url = 'provider/video/settings/' + status;
+        return this.servicemeta.httpPut(url);
+    }
+    getJaldeeVideoSettings() {
+        const url = 'provider/account/settings';
+        return this.servicemeta.httpGet(url);
+    }
     // getVideoList(countrycode,phonenumber) {
     //     const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
     //     return this.servicemeta.httpGet(url);

@@ -7,6 +7,9 @@ import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
 import { SubSink } from "subsink";
+import { MatDialog } from "@angular/material/dialog";
+import { AddInboxMessagesComponent } from "../../../shared/components/add-inbox-messages/add-inbox-messages.component";
+import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -25,12 +28,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2;
     status = '';
     meetObj;
+    recordingFlag: boolean = true;
     loading = true;
+    booking;
     consumerReady = false;
     subs = new SubSink();
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
     @ViewChild('remoteVideo') remoteVideo: ElementRef;
+    chatDialog: any;
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
@@ -38,7 +44,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private titleService: Title,
         private snackbarService: SnackbarService,
         private router: Router,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private dialog: MatDialog,
+        private teleService: TeleBookingService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
@@ -48,9 +56,52 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             (params) => {
                 this.uuid = params['id'];
                 this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
+                this.getTeleBooking(this.uuid, this.type);
             }
         )
+        this.getRecordingStatus().then(
+            (recordStatus: boolean)=> {         
+                this.recordingFlag = recordStatus;       
+            }
+        );
     }
+    updateRecordingFlag(event) {
+        this.isConsumerReady();
+    }
+
+    getTeleBooking(uuid, type) {
+        const _this=this;
+        // return new Promise(function (resolve, reject) {
+            if (type==='appt') {
+                _this.teleService.getTeleBookingFromAppt(uuid).then(
+                    (booking: any) => {
+                        _this.booking = booking;
+                    }, (error)=> {
+                        console.log(error);
+                    }
+                )
+            } else {
+                _this.teleService.getTeleBookingFromCheckIn(uuid).then(
+                    (booking: any) => {
+                        _this.booking = booking;
+                    }, (error)=> {
+                        console.log(error);
+                    }
+                )
+            }
+        // });
+    }
+    getRecordingStatus() {
+        return new Promise((resolve, reject) => {
+            this.subs.sink = this.meetService.getJaldeeVideoSettings().subscribe(
+            (data: any) => {                
+                resolve(data.videoRecording);                
+            }, (error)=>{
+                reject(error);
+            });
+        });
+    }
+
     /**
      * Init method
      */
@@ -86,7 +137,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         const _this = this;
         const post_data = {
             uuid: _this.uuid,
-            recordingFlag: 'true',
+            recordingFlag: this.recordingFlag,
          
          };
        
@@ -153,6 +204,35 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
           this.router.navigate(['provider', 'telehealth'], navigationExtras);
     }
 
+    /**
+     * 
+     */
+    openChat() {
+        alert('chat');
+        const _this = this;
+        const pass_ob = {};
+        pass_ob['source'] = 'consumer-waitlist';
+        pass_ob['user_id'] = _this.booking.id;
+        pass_ob['name'] = _this.booking.businessName;
+        pass_ob['typeOfMsg'] = 'single';
+        pass_ob['uuid'] = _this.booking.id;
+        if (this.type === 'appt') {
+          pass_ob['appt'] = _this.type;
+        } else if (this.type === 'orders') {
+          pass_ob['orders'] = this.type;
+        }
+        this.chatDialog = this.dialog.open(AddInboxMessagesComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'popup-class'],
+            disableClose: true,
+            autoFocus: true,
+            data: pass_ob
+          });
+          this.chatDialog.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+          });
+    }
     /**
      * Method to connect to a room
      */

@@ -13,14 +13,7 @@
         <div class="card no-padding-small">
             <div class="col-md-12 no-padding">
                 <div class="col-md-12 ">
-                    <!-- graphics -->
-                    <div class="graphics-div">
-                        <span>
-                            <img class="myjaldee-bg" _ngcontent-ywv-c30="" src="assets/images/myjaldee/Group92.png"
-                                style="width: 200px;">
-                        </span>
-                    </div>
-                    <h1 class="tel-serv-a mgn-up-20">Tele Home</h1>
+                    <h1 class="tel-serv-a mgn-up-20">{{loggedUser.userName}}'s Tele Meetings</h1>
                     <p>List all of your virtual scheduled meetings</p>
                 </div>
                 <div class="col-md-12 no-padding">
@@ -29,16 +22,6 @@
                 <div class="col-md-12 no-padding">                   
                     <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small consumer-dash">
                         <div class="grid-card">
-
-                            <!-- <div class="lc4-1 stats-bar">
-                            <div class="lt mgn-bt-10">
-                                <div>
-                                    <span class="amount">
-                                        <strong class="status">Scheduled Meetings</strong>
-                                    </span>
-                                </div>
-                            </div>
-                        </div> -->
                             <div *ngFor="let gBooking of gBookings | keyvalue; let i = index">
                                 <div class="lc4-1 stats-bar card">
                                     <div class="lt mgn-bt-10 mgn-up-10">
@@ -85,27 +68,15 @@
                                                             class="menu-icon">
                                                             <mat-icon>more_horiz</mat-icon>
                                                         </button>
-                                                        <mat-menu #appMenu="matMenu">
-                                                            <!-- (click)="doCancelWaitlist(booking,'appointment')"  -->
-                                                            <!-- <button mat-menu-item
-                                                                *ngIf="booking.bookingStatus == 'Confirmed' || booking.bookingStatus == 'Arrived' || booking.bookingStatus=='prepaymentPending'">
-                                                                <i class="fa cross-icon"></i>
-                                                                Cancel</button> -->
-                                                            <!-- (click)="addWaitlistMessage(booking,'appt')" -->
+                                                        <mat-menu #appMenu="matMenu">                                                           
                                                             <button mat-menu-item (click)="sendMessage(booking)">
                                                                 <i class="fa chat-icon"></i>
-                                                                <!-- {{send_msg_cap}} -->Send Message
+                                                                Send Message
                                                             </button>
                                                             <button mat-menu-item (click)="viewBooking(booking)">
                                                                 <i class="fa eye-icon"></i>
-                                                                <!-- {{send_msg_cap}} -->View Details
-                                                            </button>
-                                                            <!-- (click)="getMeetingDetails(booking,'appt')"                                                                                                                              -->
-                                                            <!-- <button mat-menu-item *ngIf="booking.bookingStatus !== 'Completed'
-                                                && booking.bookingStatus !== 'Cancelled'">
-                                                                <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                                                Meeting details
-                                                            </button> -->
+                                                                View Details
+                                                            </button>                                                          
                                                         </mat-menu>
                                                     </div>
 
@@ -124,8 +95,7 @@
 
                                                     <!-- Extra Info -->
                                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                        <div
-                                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding m-hgt-50">
                                                             <div class="pull-left col-xs-6 no-padding">
                                                                 <div class="prov_lbl">Service</div>
                                                                 <div class="mgn-tp-8 prov_nme disply-flex ">
@@ -146,7 +116,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="pull-right col-xs-6">
-                                                                <div class="prov_lbl">Appointment for</div>
+                                                                <div class="prov_lbl">Booking for</div>
                                                                 <div class="prov_nme"> {{booking.bookingFor}}</div>
                                                             </div>
                                                         </div>
@@ -157,23 +127,23 @@
                                                                 <div class="prov_nme">{{booking.userName}}</div>
                                                             </div>
                                                             <div class="col-xs-6 " [class.no-padding]="!booking.userName">
-                                                                <div class="prov_lbl">Status</div>
-                                                                <div class="prov_nme">{{booking.bookingStatus}}</div>
+                                                                <div class="prov_lbl">Video Status</div>
+                                                                <div class="prov_nme" [class.red]="booking.btnStatus==='DISABLED'" [class.green]="booking.btnStatus==='ENABLED'">{{booking.videoStatus}}</div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <!-- Actions and status -->
-                                                    <mat-grid-tile-footer>
+                                                    <mat-grid-tile-footer >
                                                         <!-- [class]="getBookingStatusClass(booking.bookingStatus)" -->
-                                                        <div class="book_stats mgn-up-20 w-100">
+                                                        <div class="book_stats mgn-up-20 w-100" >
                                                             <!-- <span *ngIf="booking.bookingStatus !== 'Arrived'">{{booking.bookingStatus}}</span> -->
-                                                            <span class="pull-right" *ngIf="booking.teleMedia=== 'VideoCall' || booking.teleMedia=== 'GoogleMeet' || booking.teleMedia=== 'Zoom'">
+                                                            <span  class="pull-right" *ngIf="booking.teleMedia=== 'VideoCall' || booking.teleMedia=== 'GoogleMeet' || booking.teleMedia=== 'Zoom'">
                                                                 <a  *ngIf="booking.teleMedia=== 'VideoCall'">
-                                                                    <button mat-flat-button class="btns pad-5" (click)="joinJaldeeVideo(booking)">Join Video Consultation</button>
+                                                                    <button mat-flat-button class="btns pad-5" [disabled]="booking.btnStatus==='DISABLED'" (click)="booking.btnStatus==='ENABLED' && joinJaldeeVideo(booking)">{{booking.btnLabel}}</button>
                                                                 </a>
-                                                                <a *ngIf="booking.teleMedia=== 'Zoom' || booking.teleMedia=== 'GoogleMeet'" [href]="booking.teleUrl" target="_blank">
-                                                                    <button mat-flat-button class="btns pad-5" >Join Video Consultation</button>
+                                                                <a  *ngIf="booking.teleMedia=== 'Zoom' || booking.teleMedia=== 'GoogleMeet'" [href]="booking.teleUrl" target="_blank">
+                                                                    <button [disabled]="booking.btnStatus==='DISABLED'" mat-flat-button class="btns pad-5">Join Video Consultation</button>
                                                                 </a>
                                                             </span>
                                                         </div>

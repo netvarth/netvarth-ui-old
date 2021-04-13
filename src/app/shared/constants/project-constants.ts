@@ -952,7 +952,8 @@ export const projectConstantsLocal = {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
     GoogleMeet: { displayName: 'Google Meet', placeHolder: 'Update Meet ID', title: 'Configure Google Meet' },
-    Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' }
+    Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' },
+    JaldeeVideo: {displayName: 'Jaldee Video', placeHolder: '', title: 'Configure Jaldee Video'}
   },
   ORDER_STATUS_FILTER: [
     { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true , clas: 'orderreceived'},

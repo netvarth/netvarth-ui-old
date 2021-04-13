@@ -36,6 +36,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     status: string;
     refreshTime = 10;
     subs = new SubSink();
+    source;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -52,10 +53,17 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         // window.addEventListener('unload', () => {
         //     this.disconnect();
         // });
+        this.subs.sink = this.activateroute.queryParams.subscribe(
+            (qParams) => {
+                if (qParams['src']) {
+                    this.source = qParams['src'];
+                }  
+            } 
+        )
         this.subs.sink = this.activateroute.params.subscribe(
             (params) => {
                 this.uuid = params['id'];
-                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
+                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);                             
             }
         );
     }
@@ -138,7 +146,13 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     disconnect() {
         const _this = this;
         _this.twilioService.disconnect();
-        _this.router.navigate(['consumer']);
+        if(_this.source && _this.source=='room') {
+            setTimeout(() => {
+                _this.location.back();
+            }, 3000);
+        } else{
+            _this.router.navigate(['consumer']);
+        }        
     }
     /**
      * Method to start the video

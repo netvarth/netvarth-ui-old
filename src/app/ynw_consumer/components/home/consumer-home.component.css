@@ -13,3 +13,9 @@
 .con-width {
     max-width: 60%;
 }
+.green {
+    color: green !important;
+}
+.m-hgt-50 {
+    min-height: 50px;
+}
