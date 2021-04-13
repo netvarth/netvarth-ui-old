@@ -160,10 +160,12 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     getVirtualCallingModesList() {
         this.provider_services.getVirtualCallingModes().subscribe(
             (data: any) => {
-                this.virtualCallModesList = data.virtualCallingModes;
+                this.virtualCallModesList = data.virtualCallingModes;               
             });
     }
     showPopup(mode) {
+
+        console.log(mode);
         const dialogref = this.dialog.open(UpdateNotificationComponent, {
             width: '40%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'updatenotificationclass'],

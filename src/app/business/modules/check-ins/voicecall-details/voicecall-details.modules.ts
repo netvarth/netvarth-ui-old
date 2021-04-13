@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../../shared/modules/common/shared.module';
-import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { VoicecallDetailsComponent } from './voicecall-details.component';
 @NgModule({
     imports: [

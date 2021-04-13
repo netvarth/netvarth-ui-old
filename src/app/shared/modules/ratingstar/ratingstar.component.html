@@ -44,24 +44,24 @@
             <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" alt="" />
             <img class="ratingstar" src="./assets/images/star-disabled.svg" alt="" />
             <input type="hidden" id="star4" name="rating" [value]="'4'" [(ngModel)]="curratval"><label
-                [class.selectedVal]="curratval==='4'">& Up </label>
+        class="rating-label" [class.selectedVal]="curratval==='4'">& Up </label>
     </div>
     <div (click)="handle_ratingclick('3')">
         <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" alt="" />
         <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" alt="" />
         <input type="hidden" id="star3" name="rating" [value]="'3'" [(ngModel)]="curratval"><label
-            [class.selectedVal]="curratval==='3'">& Up </label>
+        class="rating-label" [class.selectedVal]="curratval==='3'">& Up </label>
     </div>
     <div (click)="handle_ratingclick('2')">
         <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" alt="" />
         <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star-disabled.svg" alt="" />
         <input type="hidden" id="star2" name="rating" [value]="'2'" [(ngModel)]="curratval"><label
-            [class.selectedVal]="curratval==='2'">& Up </label>
+        class="rating-label"  [class.selectedVal]="curratval==='2'">& Up </label>
     </div>
     <div (click)="handle_ratingclick('1')">
         <img class="ratingstar" src="./assets/images/star.svg" alt="" />
         <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star-disabled.svg" alt="" />
         <input type="hidden" id="star1" name="rating" [value]="'1'" [(ngModel)]="curratval"><label
-            [class.selectedVal]="curratval==='1'">& Up </label>
+        class="rating-label" [class.selectedVal]="curratval==='1'">& Up </label>
     </div>
 </div>

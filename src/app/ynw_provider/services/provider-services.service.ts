@@ -174,6 +174,10 @@ export class ProviderServices {
     const url = 'provider/jaldee/coupons/' + jc_code + '/stats';
     return this.servicemeta.httpGet(url);
   }
+  getProviderCouponStat(jc_code) {
+    const url = 'provider/bill/' + jc_code + '/stats';
+    return this.servicemeta.httpGet(url);
+  }
   getJaldeeCouponReports(filter) {
     const url = 'provider/jaldee/coupons/jcreports/reimburse';
     return this.servicemeta.httpGet(url, null, filter);
@@ -190,23 +194,45 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   // Non working days
-  getProviderNonworkingdays(id?) {
-    if (id) {
-      return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
-    } else {
-      return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
-    }
+  // getProviderNonworkingdays(id?) {
+  //   if (id) {
+  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
+  //   } else {
+  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
+  //   }
+  // }
+  // addHoliday(data) {
+  //   return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
+  // }
+  // deleteHoliday(id) {
+  //   const path = 'provider/settings/nonBusinessDays/' + id;
+  //   return this.servicemeta.httpDelete(path);
+  // }
+  // editHoliday(data) {
+  //   return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
+  // }
+
+  // Non working days new Url's
+getProviderNonworkingdays(id?) {
+  if (id) {
+    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday/' + id);
+  } else {
+    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday');
   }
-  addHoliday(data) {
-    return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
-  }
-  deleteHoliday(id) {
-    const path = 'provider/settings/nonBusinessDays/' + id;
-    return this.servicemeta.httpDelete(path);
-  }
-  editHoliday(data) {
-    return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
-  }
+}
+addHoliday(data) {
+  return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
+}
+Holidaywaitlist(id) {
+  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
+}
+deleteHoliday(id) {
+  const path = 'provider/settings/nonBusinessDays/holiday/' + id;
+  return this.servicemeta.httpDelete(path);
+}
+editHoliday(data) {
+  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday', data);
+}
   // business profile Primary fields
   getParkingtypes() {
     return this.servicemeta.httpGet('ynwConf/parkingTypes');
@@ -934,6 +960,10 @@ export class ProviderServices {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }
+  setJaldeeVideoRecording(status) {
+    const url = 'provider/video/settings/' + status;
+    return this.servicemeta.httpPut(url);
+}
   getGlobalSettings() {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
@@ -1870,14 +1900,18 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   addLabeltoMultipleOrder(data) {
-    const url = 'provider/orders/labelBatch';
+    const url = 'provider/orders/labelsBatch';
     return this.servicemeta.httpPost(url, data);
   }
-  deleteLabelfromOrder(uuid, label) {
-    const url = 'provider/orders/label/' + uuid + '/' + label;
-    return this.servicemeta.httpDelete(url);
-  }
-  // Customer Grouping
+  // deleteLabelfromOrder(uuid, label) {
+  //   const url = 'provider/orders/label/' + uuid + '/' + label;
+  //   return this.servicemeta.httpDelete(url);
+  // }
+  // Customer
+  deleteLabelfromOrder(data) {
+    const url = 'provider/orders/masslabel';
+    return this.servicemeta.httpDelete(url,data);
+  } 
   createCustomerGroup(data) {
     const url = 'provider/customers/group';
     return this.servicemeta.httpPost(url, data);

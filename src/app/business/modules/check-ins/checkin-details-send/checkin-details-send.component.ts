@@ -45,14 +45,17 @@ export class CheckinDetailsSendComponent implements OnInit {
     SEND_MESSAGE = '';
     settings: any = [];
     showToken = false;
-  iconClass: string;
-  smsCredits;
-  smsWarnMsg: string;
-  is_smsLow = false;
-  corpSettings: any;
-  addondialogRef: any;
-  is_noSMS = false;
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    iconClass: string;
+    smsCredits;
+    smsWarnMsg: string;
+    is_smsLow = false;
+    corpSettings: any;
+    addondialogRef: any;
+    is_noSMS = false;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    api_error = null;
+    api_success = null;
+  patientid: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -142,6 +145,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         if (this.data.qdata.providerConsumer.email) {
           this.consumer_email = this.data.qdata.providerConsumer.email;
         }
+        if(this.data.qdata.appmtFor[0].memberJaldeeId){
+          this.patientid = this.data.qdata.appmtFor[0].memberJaldeeId;
+        }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
     }
@@ -162,6 +168,10 @@ export class CheckinDetailsSendComponent implements OnInit {
       return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
     sendMessage() {
+      if(this.sms === false && (this.email === true && !this.consumer_email)){
+        this.api_error = 'share message via options are not selected';
+        return;
+      }
       if (this.chekintype === 'Waitlist') {
           if (this.sms === true) {
               this.provider_services.smsCheckin(this.uuid).subscribe(

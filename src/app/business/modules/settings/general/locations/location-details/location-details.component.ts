@@ -100,6 +100,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     latitude: 12.9715987,
     longitude: 77.5945627
   };
+  locationType = 'googleMap';
   mapaddress;
   locationName;
   @ViewChild('googleradio',{static:false}) googleradio:ElementRef;
@@ -161,7 +162,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this.editlocdialogRef.close();
     }
   }
-  createForm() {
+  createForm(type?) {
     this.amForm = this.fb.group({
       locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_BLANK_FALSE)])],
       locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
@@ -173,7 +174,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       open24hours: [''],
       parkingType: ['none']
     });
-    if (this.action === 'edit') {
+    if (this.action === 'edit' && !type) {
       this.updateForm();
     }
   }
@@ -202,6 +203,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
 
     this.checked_sel_badges = true;
     }
+    this.locationType = this.location_data.locationType;
     this.schedule_arr = [];
     // extracting the schedule intervals
     if (this.location_data && this.location_data.bSchedule && this.location_data.bSchedule.timespec) {
@@ -224,6 +226,16 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.location_data = data;
+          this.locationType = this.location_data.locationType;
+          if(this.location_data.locationType === 'googleMap') {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          if(this.location_data.locationType === 'manual') {
+            this.locationFind = 'MANUAL';
+          }
+          if(this.location_data.locationType === 'automatic') {
+            this.locationFind = 'AUTODETECT';
+          }
           this.api_loading = false;
           let schedule_arr = [];
           this.active_Schedules = [];
@@ -500,7 +512,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         'longitude': form_data.loclongitude || '',
         'lattitude': form_data.loclattitude || '',
         'googleMapUrl': form_data.locmapurl || '',
-        'address': form_data.locaddress || ''
+        'address': form_data.locaddress || '',
+        'locationType': this.locationType || ''
       };
       if (this.schedule_json.length > 0) {
         post_itemdata2.bSchedule = {};
@@ -602,8 +615,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     this._location.back();
   }
   handlelocationfind(val) {
+    this.locationType = val;
     this.locationFind = '';
-    if (val === 'googlemap') {
+    if (val === 'googleMap') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -621,11 +635,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.googleradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }
          });
 
-    } else if (val === 'autodetect') {
+    } else if (val === 'automatic') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -643,7 +657,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.autolocateradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }         });
     } else if(val === 'manual'){
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -663,7 +677,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.manualradio.nativeElement.focus();
             }, 100);
-            this.clearFormFields();
+            this.createForm('change');
           }
          });
 

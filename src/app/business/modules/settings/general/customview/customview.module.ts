@@ -3,7 +3,7 @@ import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/bread
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomViewComponent } from './customview-create/custom-view.component';

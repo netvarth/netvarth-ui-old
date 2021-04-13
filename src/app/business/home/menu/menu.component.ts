@@ -251,7 +251,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.shared_functions.sendMessage({ ttype: 'smallMenu', value: this.minimizeMenu });
   }
   gotoActiveHome() {
-    this.router.navigate(['provider', 'check-ins']);
+    this.shared_functions.gotoActiveHome();
   }
   showMenuSection() {
     this.showMenu = false;

@@ -12,7 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { AddDrugComponent } from './prescription/add-drug/add-drug.component';
 import { ShareRxComponent } from './prescription/share-rx/share-rx.component';

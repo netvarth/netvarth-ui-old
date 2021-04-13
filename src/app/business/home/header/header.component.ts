@@ -169,7 +169,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
 
   }
   gotoActiveHome() {
-    this.router.navigate(['provider', 'check-ins']);
+    this.shared_functions.gotoActiveHome();
   }
   gotoProfile() {
     this.router.navigate(['provider', 'settings', 'bprofile']);

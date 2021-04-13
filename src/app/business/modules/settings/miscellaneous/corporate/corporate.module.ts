@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { CommonModule } from '@angular/common';
-import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CorporateSettingsComponent } from './corporate-settings.component';

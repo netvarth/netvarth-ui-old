@@ -5,7 +5,7 @@ import { FormMessageDisplayModule } from '../../../../../../../shared/modules/fo
 import { NonWorkingDaylistComponent } from './nonWorkingDaylist/nonWorkingDaylist.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../../../shared/modules/common/material.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NonWorkingDaydetailsComponent } from './nonWorkingDaydetails/nonWorkingDaydetails.component';

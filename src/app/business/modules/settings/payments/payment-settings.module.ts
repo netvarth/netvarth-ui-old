@@ -5,7 +5,7 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { PaymentSettingsComponent } from './payment-settings.component';
 import { PaymentSettingsRoutingModule } from './payment-settings.routing.module';

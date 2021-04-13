@@ -21,6 +21,7 @@ export class SharedFunctions {
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
+  tdata: any;
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
@@ -355,15 +356,15 @@ export class SharedFunctions {
       // if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
       //   resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
       // } else {
-        this.shared_service.gets3url(src)
-          .subscribe(
-            data => {
-              this.lStorageService.setitemonLocalStorage('s3Url', data);
-              resolve(data);
-            },
-            error => {
-              reject(error);
-            });
+      this.shared_service.gets3url(src)
+        .subscribe(
+          data => {
+            this.lStorageService.setitemonLocalStorage('s3Url', data);
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
       // }
     });
     return promise;
@@ -460,8 +461,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
@@ -477,8 +476,6 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
               if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
-                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
-                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields' });
               } else {
                 searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
@@ -511,12 +508,12 @@ export class SharedFunctions {
     return '₹' + ' ' + price.toFixed(2);;
   }
 
-  imageValidation(file ,source?) {
+  imageValidation(file, source?) {
     let file_types;
-    if(source ==='attachment' || source ==='consumerimages' ){
-        file_types = this.fileService.getSupportedFormats('file');
-    } else{
-        file_types = this.fileService.getSupportedFormats('image');
+    if (source === 'attachment' || source === 'consumerimages') {
+      file_types = this.fileService.getSupportedFormats('file');
+    } else {
+      file_types = this.fileService.getSupportedFormats('image');
     }
     const image_max_size = this.fileService.getMaximumImageSize();
     const error = [];
@@ -537,26 +534,26 @@ export class SharedFunctions {
   }
 
 
-  fileValidation(file ) {
+  fileValidation(file) {
     // let file_types;
     //  if (source === 'attachment' || source === 'consumerimages' ) {
     //      file_types = projectConstants.FILETYPES_UPLOAD;
     //  } else {
     //      file_types = projectConstants.IMAGE_FORMATS;
     //  }
-     const image_max_size = 15000000;
-     const error = [];
-     let is_error = false;
-     if (file.size && file.size > image_max_size) {
-       error['size'] = true;
-       is_error = true;
-     }
-     if (is_error === false) {
-       return true;
-     } else {
-       return error;
-     }
-   }
+    const image_max_size = 15000000;
+    const error = [];
+    let is_error = false;
+    if (file.size && file.size > image_max_size) {
+      error['size'] = true;
+      is_error = true;
+    }
+    if (is_error === false) {
+      return true;
+    } else {
+      return error;
+    }
+  }
 
   getApiError(error) {
     if (error.error && typeof error.error === 'string') {
@@ -633,7 +630,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': msg,
-        'heading': 'Public Search'
+        'heading': 'Public Search',
+        'buttons': 'okCancel'
       }
     });
 
@@ -659,7 +657,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': msg,
-        'heading': 'Business profile'
+        'heading': 'Business profile',
+        'buttons': 'okCancel'
       }
     });
 
@@ -678,7 +677,8 @@ export class SharedFunctions {
       disableClose: true,
       data: {
         'message': 'Do you want to remove your profile picture?',
-        'heading': 'Delete Confirmation'
+        'heading': 'Delete Confirmation',
+        'buttons': 'okCancel'
       }
     });
 
@@ -915,7 +915,7 @@ export class SharedFunctions {
     return pattern.test(str);  // returns a boolean
   }
 
-  
+
 
   redirectto(mod) {
     const usertype = this.isBusinessOwner('returntyp');
@@ -961,28 +961,58 @@ export class SharedFunctions {
     }
   }
   doCancelWaitlist(waitlist, type, cthis?) {
+    console.log(waitlist);
+    let prepay = false;
+    if (type === 'checkin' || type === 'appointment') {
+      if (waitlist.service.minPrePaymentAmount) {
+        if (waitlist.service.minPrePaymentAmount > 0) {
+          prepay = true;
+        }
+      }
+    }
+    if (type === 'order') {
+      if (waitlist.advanceAmountPaid) {
+        if (waitlist.advanceAmountPaid > 0) {
+          prepay = true;
+        }
+      }
+    }
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
-        msg = 'Token';
+        msg = 'booking';
       } else {
-        msg = 'Check-In';
+        msg = 'booking';
       }
     } else if (type === 'appointment') {
       msg = 'Appointment';
     } else if (type === 'order') {
       msg = 'Order';
     }
+
+    if (prepay && type !== 'order') {
+      this.tdata = {
+        'message': 'Refund Policy',
+        'heading': 'Confirm',
+        'type': 'yes/no',
+        'cancelPolicy': 'show',
+        'book': msg,
+        'wtlist': waitlist
+      }
+    } else {
+      this.tdata = {
+        'message': 'Do you want to cancel this ' + msg + '?',
+        'heading': 'Confirm',
+        'type': 'yes/no'
+      }
+    }
+
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
-        data: {
-          'message': 'Do you want to cancel this ' + msg + '?',
-          'heading': 'Confirm',
-          'type': 'yes/no'
-        }
+        data: this.tdata
       });
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
@@ -1065,7 +1095,7 @@ export class SharedFunctions {
     }
     return retval;
   }
-  
+
   roundToTwoDecimel(amt) {
     return Math.round(amt * 100) / 100; // for only two decimal
   }
@@ -1119,14 +1149,14 @@ export class SharedFunctions {
       return false;
     }
   }
-   isNumber(evt) {
+  isNumber(evt) {
     evt = (evt) ? evt : window.event;
     const charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   isNumericforToken(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
@@ -1188,7 +1218,7 @@ export class SharedFunctions {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
   }
-    
+
   setFilter() {
     setTimeout(() => {
       const sidebar = document.getElementById('filterContainer');
@@ -1270,5 +1300,24 @@ export class SharedFunctions {
         resolve(settings);
       }
     });
+  }
+  gotoActiveHome() {
+    this.getGlobalSettings()
+      .then(
+        (settings: any) => {
+          if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+            if (settings.waitlist) {
+              this.router.navigate(['provider', 'check-ins']);
+            } else if (settings.appointment) {
+              this.router.navigate(['provider', 'appointments']);
+            } else if (settings.order) {
+              this.router.navigate(['provider', 'orders']);
+            } else {
+              this.router.navigate(['provider', 'settings']);
+            }
+          } else {
+            this.router.navigate(['provider', 'settings']);
+          }
+        });
   }
 }

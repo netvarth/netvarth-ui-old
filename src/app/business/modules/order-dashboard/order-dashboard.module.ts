@@ -6,7 +6,7 @@ import { OrderDashboardRoutingModule } from './order-dashboard.routing.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatBadgeModule} from '@angular/material/badge';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { CardModule } from '../../../shared/components/card/card.module';

@@ -88,6 +88,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   ]
 };
 private subscriptions = new SubSink();
+    customer_label: any;
   constructor(
     public dialogRef: MatDialogRef<CreateItemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -103,7 +104,7 @@ private subscriptions = new SubSink();
   }
   
   ngOnInit() {
-   
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.api_loading = false;
     this.createForm();
   }

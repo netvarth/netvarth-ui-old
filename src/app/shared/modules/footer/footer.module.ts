@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { FooterComponent } from './footer.component';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [

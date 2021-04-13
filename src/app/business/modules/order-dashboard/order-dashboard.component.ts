@@ -179,6 +179,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.resetList();
+      this.getLabel();
       this.doSearch();
     });
   }
@@ -524,11 +525,12 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getDisplayformatTruncateLabel(labeldetails) {
     let labelString = ' ';
     Object.keys(labeldetails.label).forEach(key => {
-      labelString = labelString + this.getDisplayname(key) + ' ';
+      labelString = labelString + this.getDisplayname(key) + ',';
     });
     if (labelString.length > 40) {
       labelString = labelString.substr(0, 40);
     }
+    labelString = labelString.replace(/\,$/, '');
     return labelString;
   }
   displayLabel(order) {

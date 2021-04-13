@@ -291,6 +291,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   resetApiErrors() {
     this.api_error = null;
+    this.phoneError = null;
   }
   onChangePassword() {
     this.step = 1;

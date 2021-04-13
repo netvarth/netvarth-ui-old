@@ -30,9 +30,6 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
     })],
-    providers: [
-        TwilioService
-    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

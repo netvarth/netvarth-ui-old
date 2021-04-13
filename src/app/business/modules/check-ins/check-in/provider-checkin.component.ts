@@ -678,7 +678,9 @@ export class ProviderCheckinComponent implements OnInit {
                 for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
                     if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
                         if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            _this.departments.push(_this.departmentlist['departments'][i]);
+                            if(_this.departments.indexOf(_this.departmentlist['departments'][i]) == -1) {
+                               _this.departments.push(_this.departmentlist['departments'][i]);
+                            }
                         }
                     }
                 }
@@ -817,7 +819,7 @@ export class ProviderCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        this.callingModes = this.customer_data.phoneNo;
+                        this.callingModes = this.customer_data.phoneNo.trim();
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
                 }

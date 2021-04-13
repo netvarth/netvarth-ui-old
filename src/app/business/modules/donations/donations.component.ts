@@ -24,6 +24,7 @@ export class DonationsComponent implements OnInit {
   check_status;
   filter = {
     first_name: '',
+    last_name: '',
     date: null,
     service: '',
     page_count: projectConstants.PERPAGING_LIMIT,
@@ -57,6 +58,7 @@ export class DonationsComponent implements OnInit {
   apiloading = false;
   filters: any = {
     'first_name': false,
+    'last_name': false,
     'date': false,
     // 'mobile': false,
     // 'email': false
@@ -284,7 +286,7 @@ export class DonationsComponent implements OnInit {
   }
   doSearch() {
     this.getDonationsList();
-    if (this.filter.first_name || this.filter.date || this.filter.service) {
+    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.service) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -293,11 +295,13 @@ export class DonationsComponent implements OnInit {
   resetFilter() {
     this.filters = {
       'first_name': false,
+      'last_name': false,
       'date': false,
       'service': false
     };
     this.filter = {
       first_name: '',
+      last_name: '',
       date: null,
       service: '',
       page_count: projectConstants.PERPAGING_LIMIT,
@@ -316,6 +320,9 @@ export class DonationsComponent implements OnInit {
     const api_filter = {};
     if (this.filter.first_name !== '') {
       api_filter['donor-eq'] = 'firstName::' + this.filter.first_name;
+    }
+    if (this.filter.last_name !== '') {
+      api_filter['donor-eq'] = 'lastName::' + this.filter.last_name;
     }
     if (this.filter.date != null) {
       api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);

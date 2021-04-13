@@ -642,6 +642,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         if (isNaN(instantQ.qcapacity)) {
             const error = 'Please enter a numeric value for capacity';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        } else if(!this.shared_Functionsobj.checkIsInteger(instantQ.qcapacity)){
+            const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        } else if (!this.shared_Functionsobj.checkIsInteger(instantQ.qserveonce)) {
+            const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (isNaN(instantQ.qserveonce)) {
             const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

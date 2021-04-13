@@ -34,7 +34,7 @@ import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angu
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
-import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
@@ -51,6 +51,7 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
+import { TruncateModule } from './shared/pipes/limitTo.module';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
 import { SessionStorageService } from './shared/services/session-storage.service';
@@ -70,6 +71,8 @@ import { DomainConfigGenerator } from './shared/services/domain-config-generator
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
+import { TeleBookingService } from './shared/services/tele-bookings-service';
+import { BookingService } from './shared/services/booking-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -125,6 +128,7 @@ export function init_app(globalService: GlobalService) {
     DisplayboardLayoutContentModule,
     SalesChannelModule,
     JoyrideModule.forRoot(),
+    TruncateModule,
     CardModule
   ],
   providers: [
@@ -163,6 +167,8 @@ export function init_app(globalService: GlobalService) {
     JaldeeTimeService,
     FileService,
     LivetrackService,
+    TeleBookingService,
+    BookingService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },

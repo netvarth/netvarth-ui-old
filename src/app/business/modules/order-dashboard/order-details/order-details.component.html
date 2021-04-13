@@ -61,7 +61,7 @@
         <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
                 <div class="pull-left bold font11">
-                    Order Items
+                    Ordered Items
                 </div>
                 <div class="pull-right viewtypes">
                     View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
@@ -106,11 +106,11 @@
         <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10" >
             <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
         </div>
-        <div  class="col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xs-12 order" *ngIf="orderDetails.shoppingList">
-                <div  class="col-sm-10 col-md-10 col-lg-10 col-xl-8 col-xs-12" >
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
+                <!-- <div  class="col-sm-10 col-md-10 col-lg-10 col-xl-8 col-xs-12" > -->
             <ul class="shoppinglist-gal">
                 <ng-container *ngFor="let file of image_list_popup;let i = index">
-                    <li *ngIf="i<2" class="shoppinglist-li">
+                    <li class="shoppinglist-li">
                         <div class="shoppinglistbx">
                             <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                                 <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
@@ -119,7 +119,7 @@
                         </div>
                     </li>
                 </ng-container>
-                <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <!-- <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
                     <div class="shoppinglistbx">
                         <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
                             *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
@@ -134,16 +134,14 @@
                                 [src]="image_list_popup[2].modal.img" />
                         </div>
                     </div>
-                </li>
+                </li> -->
             </ul>
             <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
             [plainGalleryConfig]="customPlainGalleryRowConfig"
             [buttonsConfig]="customButtonsFontAwesomeConfig"
             (buttonBeforeHook)="onButtonBeforeHook()"
             (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-
-
-        </div>
+        <!-- </div> -->
     </div>
 </div>
     </div>
