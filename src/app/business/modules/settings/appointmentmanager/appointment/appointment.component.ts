@@ -609,7 +609,7 @@ export class AppointmentComponent implements OnInit {
                                 this.note_placeholder = 'Add Note';
                                 this.note_cap = 'Add Note';
                             }
-                            this.shared_services.getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
+                            this.shared_services.getProviderServicesforAppontmntByLocationId(this.sel_loc).subscribe(
                                 (services: any) => {
                                     this.servicesjson = services;
                                     this.serviceslist = services;
@@ -1687,7 +1687,7 @@ export class AppointmentComponent implements OnInit {
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services.getServicesforAppontmntByLocationId(locid)
+        this.shared_services.getProviderServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;

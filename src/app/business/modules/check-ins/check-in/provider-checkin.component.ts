@@ -618,7 +618,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 _this.note_placeholder = 'Add Note';
                                 _this.note_cap = 'Add Note';
                             }
-                            _this.shared_services.getServicesByLocationId(_this.sel_loc).subscribe(
+                            _this.shared_services.getProviderServicesByLocationId(_this.sel_loc).subscribe(
                                 (services: any) => {
                                     // _this.servicesjson = services;
                                     // _this.serviceslist = services;
@@ -1781,7 +1781,7 @@ console.log(Object.keys(this.questionAnswers).length);
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services.getServicesByLocationId(locid)
+        this.shared_services.getProviderServicesByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;
