@@ -20,9 +20,12 @@
         <!--begin::Header-->
         <div class="card-header border-0 py-1 pl-1 pr-1">
           <h3 class="card-title align-items-start flex-column pl-2">
-            <span class="card-label font-weight-bolder text-dark">RCT CONSULTATION
+            <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
+                {{waitlist_data.service.name |
+                capitalizeFirst}}
+            <!-- <span class="card-label font-weight-bolder text-dark">RCT CONSULTATION
               <i class="text-dark-50 flaticon-info"></i>
-            </span>
+            </span> -->
             <span class="text-success mt-3 font-weight-bold font-size-sm">
               <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
               SERVICE HAS BEGUN</span>

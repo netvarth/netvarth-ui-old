@@ -1,0 +1,47 @@
+.fa-dot-circle-o {
+    font-weight: 100;
+    font-size: 0.8rem;
+    color: #11ba11;
+}
+.text-success {
+    color: green !important;
+}
+.lh-1 {
+    line-height: 0.8 !important;
+}
+.disp-grid {
+    display: grid  !important;
+}
+.btn-start {
+    background: green;
+    color: white;
+}
+.font-p8 {
+    font-size: 0.8rem !important;
+}
+.round-10 {
+    border-radius: 10px;
+}
+.fade {
+    opacity: 4 !important;
+}
+.bdr_adjust {
+    min-height: 30px;
+    border-bottom: 1px solid #80808030 !important;
+}
+.bder_grey {
+    border-bottom: 1px solid #80808052 !important;
+}
+.min-ht-60 {
+    min-height: 60px !important;
+}
+.font-1rem {
+    font-size: 1rem !important;
+}
+.stretch_card {
+    height: 100%;
+}
+.start-video-btn {
+    background: green !important;
+    color: white !important;
+}

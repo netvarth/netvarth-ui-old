@@ -3,9 +3,8 @@
     <div class="row">
       <div class="col-lg-8">
         <!--begin::Advance Table Widget 4-->
-        <div class="card rounded-0 card-custom gutter-b wave wave-animate-fast wave-success pl-0 pr-0">
           <!--begin::Header-->
-          <app-service-actions [waitlist_data]="waitlist_data"></app-service-actions>
+          <app-service-actions *ngIf="!api_loading" [waitlist_data]="waitlist_data"></app-service-actions>
           <!-- <div class="card-header border-0 py-1 pl-1 pr-1">
             <h3 class="card-title align-items-start flex-column pl-2">
               <span class="card-label font-weight-bolder text-dark">RCT CONSULTATION
@@ -31,40 +30,10 @@
             </div>
           </div> -->
           <!--end::Header-->
-        </div>
   
         <!-- Patient details -->
         <div class="card rounded-0 card-custom gutter-b wave-success p-0">
-          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
-              <div class="card-body p-0">
-                <!--begin::User-->
-                <div class="d-flex align-items-end">
-                  <div class="d-flex align-items-center">
-                    <div class="d-flex flex-column p-2">
-                      <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-md mb-0">Rahul Menon</a>
-                      <span class="text-muted  font-size-xs font-weight-bold">24 years old</span>
-                      <span class="text-muted  font-size-xs font-weight-bold">luca@festudios.com</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-              <form class="form" style="width: 100%;">
-                <div class="card-body p-3">
-                  <div class="form-group">
-                    <label class="text-muted font-p8">CHIEF COMPLAINT</label>
-                    <input type="email" class="form-control round-10 form-control-lg" placeholder="Large input">
-                  </div>
-                  <div class="form-group mb-0">
-                    <label for="exampleTextarea" class="text-muted font-p8">SUMMARY</label>
-                    <textarea class="form-control round-10" readonly="" rows="3"></textarea>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+          <app-customer-booking-details *ngIf="!api_loading" [waitlist_data]="waitlist_data"></app-customer-booking-details>
         </div>
   
       </div>
@@ -83,120 +52,27 @@
     <!--begin::Second Row-->
     <div class="row">
       <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4  gutter-b col-xs-12">
-        <div class="card card-custom stretch_card  pt-0">
-          <!--begin::Header-->
-          <div class="card-header border-0 p-0 min-ht-60">
-            <h3 class="card-title font-1rem font-weight-bolder text-dark">Case History</h3>
-            <div class="card-toolbar">
-              <!-- space for -->
+        <div class="card card-custom gutter-b">
+          <div class="card-header">
+            <div class="card-title">
+              <h3 class="card-label">
+                Medical Records
+              </h3>
             </div>
           </div>
-          <!--end::Header-->
-  
-          <!--begin::Body-->
-          <div class="card-body pt-2 p-0">
-            <div class="d-flex flex-wrap align-items-center mb-6">
-  
-              <div class="symbol symbol-40 symbol-light-info mr-2">
-                <span class="symbol-label">
-                  <span class="svg-icon svg-icon-lg  svg-icon-info">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg--><svg
-                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                      height="24px" viewBox="0 0 24 24" version="1.1">
-                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <rect x="0" y="0" width="24" height="24"></rect>
-                        <path
-                          d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
-                          fill="#000000" opacity="0.3"></path>
-                        <path
-                          d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
-                          fill="#000000" opacity="0.3"></path>
-                        <path
-                          d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
-                          fill="#000000" opacity="0.3"></path>
-                      </g>
-                    </svg>
-                    <!--end::Svg Icon-->
-                  </span> </span>
-              </div>
-              <!--begin::Title-->
-              <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
-                <a class="text-dark-75 font-weight-bold text-hover-primary font-size-md mb-1">Virtual OP</a>
-                <span class="text-muted font-size-sm font-weight-bold">Appointment</span>
-              </div>
-              <!--end::Title-->
-  
-              <!--begin::Section-->
-              <div class="d-flex align-items-center mt-lg-0 mt-3">
-                <!--begin::Label-->
-                <div class="mr-6">
-                  <span class="text-dark-75 font-weight-bold font-size-xs">20-12-2021</span>
-                </div>
-                <!--end::Label-->
-              </div>
-              <!--end::Section-->
-            </div>
-            <div class="d-flex flex-wrap align-items-center mb-6">
-  
-              <div class="symbol symbol-40 symbol-light-info mr-2">
-                <span class="symbol-label">
-                  <span class="svg-icon svg-icon-lg  svg-icon-info">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg--><svg
-                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                      height="24px" viewBox="0 0 24 24" version="1.1">
-                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <rect x="0" y="0" width="24" height="24"></rect>
-                        <path
-                          d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
-                          fill="#000000" opacity="0.3"></path>
-                        <path
-                          d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
-                          fill="#000000" opacity="0.3"></path>
-                        <path
-                          d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
-                          fill="#000000" opacity="0.3"></path>
-                      </g>
-                    </svg>
-                    <!--end::Svg Icon-->
-                  </span> </span>
-              </div>
-              <!--begin::Title-->
-              <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
-                <a class="text-dark-75 font-weight-bold text-hover-primary font-size-md mb-1">Virtual OP</a>
-                <span class="text-muted font-size-sm font-weight-bold">Appointment</span>
-              </div>
-              <!--end::Title-->
-  
-              <!--begin::Section-->
-              <div class="d-flex align-items-center mt-lg-0 mt-3">
-                <!--begin::Label-->
-                <div class="mr-6">
-                  <span class="text-dark-75 font-weight-bold font-size-xs">20-12-2021</span>
-                </div>
-                <!--end::Label-->
-              </div>
-              <!--end::Section-->
-            </div>
-          </div>
-          <!--end::Body-->
-        </div>
-      </div>
-  
-      <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4  gutter-b col-xs-12">
-        <div class="card card-custom stretch_card pt-0">
-          <div class="card-header border-0 p-0 min-ht-60">
-            <h3 class="card-title font-1rem font-weight-bolder text-dark">Medical Records</h3>
-            <div class="card-toolbar"></div>
-          </div>
-          <div class="card-body p-0 position-relative overflow-hidden">
+          <div class="card-body">
             <div>
               <div class="row m-0">
-                <div class="col bg-light-warning px-5 py-1 rounded-sm mr-2 mb-3">
-  
-                  <a class="text-warning font-weight-bold font-size-xs">
-                    Prescriptions
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
                   </a>
+                  <div class="text-muted font-size-xs">
+                    Symptoms Description
+                  </div>
                 </div>
+              </div>
+              <div class="row m-0">
                 <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
                   <a class="text-primary font-weight-bold font-size-xs mt-2">
                     Symptoms
@@ -204,12 +80,20 @@
                 </div>
               </div>
               <div class="row m-0">
-                <div class="col bg-light-warning px-5 py-1 rounded-sm mr-2 mb-3">
-  
-                  <a class="text-warning font-weight-bold font-size-xs">
-                    Prescriptions
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
                   </a>
                 </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
                 <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
                   <a class="text-primary font-weight-bold font-size-xs mt-2">
                     Symptoms
@@ -218,86 +102,114 @@
               </div>
               <!--end::Row-->
             </div>
-            <!--end::Stats-->
-            <div class="resize-triggers">
-              <div class="expand-trigger">
-                <div style="width: 808px; height: 328px;"></div>
-              </div>
-              <div class="contract-trigger"></div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4  gutter-b col-xs-12">
+        <div class="card card-custom gutter-b">
+          <div class="card-header">
+            <div class="card-title">
+              <h3 class="card-label">
+                Prescriptions
+              </h3>
             </div>
           </div>
-          <!--end::Body-->
+          <div class="card-body">
+            <div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Prescription
+                  </a>
+                  <div class="text-muted font-size-xs">
+                    Prescription Description
+                  </div>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <!--end::Row-->
+            </div>
+          </div>
         </div>
       </div>
   
       <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12  gutter-b">
-        <div class="card card-custom stretch_card pt-0">
-          <div class="card-header border-0 p-0 min-ht-60">
-            <h3 class="card-title font-1rem font-weight-bolder text-dark">Documents</h3>
-            <div class="card-toolbar"></div>
-          </div>
-  
-          <div class="card-body p-0 pt-2">
-            <!--begin::Item-->
-            <div class="d-flex align-items-center mb-5">
-              <!--begin::Symbol-->
-              <div class="symbol symbol-40 symbol-light-success mr-2">
-                <span class="symbol-label">
-                  <img src="assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="">
-                </span>
-              </div>
-              <!--end::Symbol-->
-  
-              <!--begin::Text-->
-              <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                <a href="#" class="text-dark text-hover-primary mb-1 font-size-md">Checkup Results</a>
-  
-              </div>
-              <!--end::Text-->
-  
-              <!--begin::Dropdown-->
-              <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="" data-placement="left"
-                data-original-title="Quick actions">
-                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <i class="ki ki-bold-more-hor"></i>
-                </a>
-              </div>
-              <!--end::Dropdown-->
+        <div class="card card-custom gutter-b">
+          <div class="card-header">
+            <div class="card-title">
+              <h3 class="card-label">
+                Documents
+              </h3>
             </div>
-            <!--end::Item-->
-  
-            <!--begin::Item-->
-            <div class="d-flex align-items-center mb-5">
-              <!--begin::Symbol-->
-              <div class="symbol symbol-40 symbol-light-success mr-2">
-                <span class="symbol-label">
-                  <img src="assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="">
-                </span>
-              </div>
-              <!--end::Symbol-->
-  
-              <!--begin::Text-->
-              <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                <a class="text-dark text-hover-primary mb-1 font-size-md">Clinical Notes </a>
-  
-              </div>
-              <!--end::Text-->
-  
-              <!--begin::Dropdown-->
-              <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="" data-placement="left"
-                data-original-title="Quick actions">
-                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <i class="ki ki-bold-more-hor"></i>
-                </a>
-              </div>
-              <!--end::Dropdown-->
-            </div>
-            <!--end::Item-->
-  
           </div>
-          <!--end::Body-->
+          <div class="card-body">
+            <div>
+              <div class="row m-0">
+                <div class="col bg-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Document 1
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
+                  <a class="text-primary font-weight-bold font-size-xs mt-2">
+                    Symptoms
+                  </a>
+                </div>
+              </div>
+              <!--end::Row-->
+            </div>
+          </div>
         </div>
       </div>
     </div>

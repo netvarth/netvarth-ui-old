@@ -31,6 +31,8 @@ export class BookingDetailComponent implements OnInit {
   pdtype;
   userDet;
   isCheckin
+  api_loading = true;
+
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -46,6 +48,8 @@ export class BookingDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+        this.api_loading = true;
+
     this.getWaitlistDetail()
     // this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
@@ -68,6 +72,8 @@ export class BookingDetailComponent implements OnInit {
         data => {
           this.waitlist_data = data;
           console.log(this.waitlist_data)
+          this.api_loading = false;
+          console.log(this.api_loading)
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
               case 'Zoom': {
@@ -124,6 +130,7 @@ export class BookingDetailComponent implements OnInit {
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
           // this.goBack();
         }
       );

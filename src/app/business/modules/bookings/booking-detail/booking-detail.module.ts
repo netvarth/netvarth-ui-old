@@ -3,20 +3,26 @@ import { CommonModule } from '@angular/common';
 import { BookingsRoutingModule } from '../bookings.routing.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { BookingDetailComponent } from '../booking-detail/booking-detail.component';
-import { ServiceActionsComponent } from './service-actions/service-actions.component';
-import { CustomerBookingDetailsComponent } from './customer-booking-details/customer-booking-details.component';
-import { BookingPrescriptionsComponent } from './booking-prescriptions/booking-prescriptions.component';
-import { BookingMedicalRecordsComponent } from './booking-medical-records/booking-medical-records.component';
+import { ServiceActionModule } from './service-actions/service-actions.module';
+import { CustomerBookingDetailsModule } from './customer-booking-details/customer-booking-details.module';
+import { BookingPrerscriptionModule } from './booking-prescriptions/booking-prescriptions.module';
+import { BookingMedicalRecordsModule } from './booking-medical-records/booking-medical-records.module';
 
 
 
 @NgModule({
-  declarations: [BookingDetailComponent, ServiceActionsComponent, CustomerBookingDetailsComponent, BookingPrescriptionsComponent, BookingMedicalRecordsComponent],
+  declarations: [BookingDetailComponent],
   imports: [
     CommonModule,
     BookingsRoutingModule,
-    MatGridListModule
-  ]
+    MatGridListModule,
+    ServiceActionModule,
+    CustomerBookingDetailsModule,
+    BookingPrerscriptionModule,
+    BookingMedicalRecordsModule
+
+  ],
+  exports:[BookingDetailComponent]
 })
 export class BookingDetailModule {
 }
