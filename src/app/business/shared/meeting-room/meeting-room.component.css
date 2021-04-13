@@ -28,11 +28,6 @@
   border-radius: 10px;
   background: #000;
 } */
-.previewContainer video {
-  /* border: 1px solid #000 !important;
-  border-radius: 10px; */
-  border-radius: 25px !important;
-}
 .local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1);
 }
@@ -119,5 +114,9 @@ header {
 .rem-video {
   width: 100% !important;
   height: 100% !important;
+}
+.record-text {
+  font-size: small;
+  margin: 25px;
 }
 

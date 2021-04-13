@@ -1,12 +1,15 @@
-import { AfterViewInit, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
-import { Location } from '@angular/common';
-import { interval as observableInterval, Subscription } from 'rxjs';
+import { interval as observableInterval } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
+import { SubSink } from "subsink";
+import { MatDialog } from "@angular/material/dialog";
+import { AddInboxMessagesComponent } from "../../../shared/components/add-inbox-messages/add-inbox-messages.component";
+import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -25,31 +28,78 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2;
     status = '';
     meetObj;
+    recordingFlag: boolean = true;
     loading = true;
+    booking;
     consumerReady = false;
-    cronHandle: Subscription;
+    subs = new SubSink();
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
     @ViewChild('remoteVideo') remoteVideo: ElementRef;
+    chatDialog: any;
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
-        private _location: Location,
         private meetService: MeetService,
         private titleService: Title,
         private snackbarService: SnackbarService,
-        private router: Router
+        private router: Router,
+        private cd: ChangeDetectorRef,
+        private dialog: MatDialog,
+        private teleService: TeleBookingService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
         this.renderer = rendererFactory.createRenderer(null, null);
         console.log(this.renderer);
-        this.activateroute.params.subscribe(
+        this.subs.sink = this.activateroute.params.subscribe(
             (params) => {
                 this.uuid = params['id'];
                 this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
+                this.getTeleBooking(this.uuid, this.type);
             }
         )
+        this.getRecordingStatus().then(
+            (recordStatus: boolean)=> {         
+                this.recordingFlag = recordStatus;       
+            }
+        );
+    }
+    updateRecordingFlag(event) {
+        this.isConsumerReady();
+    }
+
+    getTeleBooking(uuid, type) {
+        const _this=this;
+        // return new Promise(function (resolve, reject) {
+            if (type==='appt') {
+                _this.teleService.getTeleBookingFromAppt(uuid).then(
+                    (booking: any) => {
+                        _this.booking = booking;
+                    }, (error)=> {
+                        console.log(error);
+                    }
+                )
+            } else {
+                _this.teleService.getTeleBookingFromCheckIn(uuid).then(
+                    (booking: any) => {
+                        _this.booking = booking;
+                    }, (error)=> {
+                        console.log(error);
+                    }
+                )
+            }
+        // });
+    }
+    getRecordingStatus() {
+        return new Promise((resolve, reject) => {
+            this.subs.sink = this.meetService.getJaldeeVideoSettings().subscribe(
+            (data: any) => {                
+                resolve(data.videoRecording);                
+            }, (error)=>{
+                reject(error);
+            });
+        });
     }
 
     /**
@@ -78,20 +128,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
         };
-
-        this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
-            this.isConsumerReady();
-        });
-
-        // this.sharedServices.getApptMeetingDetailsProvider(this.uuid).subscribe(
-        //     (tokenObj: any) => {
-        //         console.log(tokenObj);
-        //         // this.access_token = tokenObj.token;
-        //         this.twilioService.localVideo = this.localVideo;
-        //         this.twilioService.remoteVideo = this.remoteVideo;
-        //         this.connect(tokenObj);
-        //     }
-        // );
     }
     /**
      * function which marks the provider readiness and returns a token to connect
@@ -99,19 +135,21 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     isConsumerReady() {
         const _this = this;
-        _this.meetService.isConsumerReady(_this.uuid)
-            .subscribe(data => {
-                //    this.result = data;
-                //    console.log(this.result)            
+        const post_data = {
+            uuid: _this.uuid,
+            recordingFlag: this.recordingFlag,
+         
+         };
+       
+        _this.subs.sink = _this.meetService.isConsumerReady(post_data)
+            .subscribe(data => {     
                 if (data) {
                     _this.loading = false;
                     _this.meetObj = data;
                     _this.consumerReady = true;
                     console.log(this.meetObj);
                     _this.status = 'Ready..';
-                    if (_this.cronHandle) {
-                        _this.cronHandle.unsubscribe();
-                    }
+                   _this.subs.unsubscribe();
                 } else {
                     _this.loading = false;
                     _this.consumerReady = false;
@@ -120,11 +158,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 }
             }, error => {
                 _this.loading = false;
-                _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                _this.cronHandle.unsubscribe();
-                setTimeout(() => {
-                    _this._location.back();
-                }, 3000);
+                _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });               
+                _this.subs.unsubscribe();
+                _this.disconnect();
+                
             });
     }
 
@@ -133,6 +170,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     ngAfterViewInit() {
         console.log("ngAfterViewInit");
+        this.cd.detectChanges();
+        this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
+            this.isConsumerReady();
+        });
         this.twilioService.previewContainer = this.previewContainer;
         this.twilioService.previewMedia();
     }
@@ -140,30 +181,58 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * invokes when the page destroys
      */
     ngOnDestroy() {
-        if (this.cronHandle) {
-            this.cronHandle.unsubscribe();
-        }
-        this.disconnect();
+        // if (this.cronHandle) {
+        //     this.cronHandle.unsubscribe();
+        // }
+        this.subs.unsubscribe();
     }
     /**
      * Method to exit from a meeting
      */
     disconnect() {
-        // if (this.twilioService.previewTracks) {
-        //     this.twilioService.previewTracks.forEach(localTrack => {
-        //         localTrack.stop();
-        //     });
-        // }
-        // if (this.twilioService.activeRoom && this.twilioService.activeRoom !== null) {
-        //     this.twilioService.activeRoom.disconnect();
-        //     this.twilioService.activeRoom = null;
-        //     this._location.back();
-        // } else {
         this.twilioService.disconnect();
-        this._location.back();
-        // }
+        let type = this.type;
+        if (this.type==='wl') {
+            type = 'checkin'
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              waiting_id: this.uuid,
+              type: type
+            }
+          };
+          this.router.navigate(['provider', 'telehealth'], navigationExtras);
     }
 
+    /**
+     * 
+     */
+    openChat() {
+        alert('chat');
+        const _this = this;
+        const pass_ob = {};
+        pass_ob['source'] = 'consumer-waitlist';
+        pass_ob['user_id'] = _this.booking.id;
+        pass_ob['name'] = _this.booking.businessName;
+        pass_ob['typeOfMsg'] = 'single';
+        pass_ob['uuid'] = _this.booking.id;
+        if (this.type === 'appt') {
+          pass_ob['appt'] = _this.type;
+        } else if (this.type === 'orders') {
+          pass_ob['orders'] = this.type;
+        }
+        this.chatDialog = this.dialog.open(AddInboxMessagesComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'popup-class'],
+            disableClose: true,
+            autoFocus: true,
+            data: pass_ob
+          });
+          this.chatDialog.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+          });
+    }
     /**
      * Method to connect to a room
      */
@@ -173,20 +242,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             this.twilioService.localVideo = this.localVideo;
             this.twilioService.remoteVideo = this.remoteVideo;
             this.connect(this.meetObj);
-
         }
-        // this.activateroute.params.subscribe(params => {
-        //     const videoId = params.id;
-        // this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
-        //     (tokenObj: any) => {
-        //         console.log(tokenObj);
-        //         // this.access_token = tokenObj.token;
-        //         this.twilioService.localVideo = this.localVideo;
-        //         this.twilioService.remoteVideo = this.remoteVideo;
-        //         this.connect(tokenObj);
-        //     }
-        // );
-        // });
     }
     /**
      * inner method to connect to the room
@@ -246,10 +302,5 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     switchCamera() {
         this.twilioService.switchCamera();
-        // // if (this.twilioService.cameraMode === 'user') {
-        //     this.twilioService.switchCamera('environment');
-        // } else {
-        //     this.twilioService.switchCamera('user');
-        // }
     }
 }

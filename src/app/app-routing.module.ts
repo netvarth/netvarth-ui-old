@@ -6,7 +6,6 @@ import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
-import { TwilioService } from './shared/services/twilio-service';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     {
@@ -30,9 +29,6 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
     })],
-    providers: [
-        TwilioService
-    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

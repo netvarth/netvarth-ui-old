@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
-import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';

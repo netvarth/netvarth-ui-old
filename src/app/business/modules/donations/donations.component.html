@@ -65,7 +65,7 @@
               </a>
             </li>
             <li class="dropdown notifications-menu pull-left">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar"  *ngIf="loadComplete && donations.length !== 0">
                 <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations()"/>
                 &nbsp;&nbsp;Select all
               </a>
@@ -110,7 +110,14 @@
                 <li class="filterli">
                   <!-- (keyup)="focusInput($event,Fmobile)" -->
                   <input type="text" #Ffname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.first_name"
-                    placeholder="Name">
+                    placeholder="First Name">
+                </li>
+              </div>
+              <div class="filterTextinput">
+                <li class="filterli">
+                  <!-- (keyup)="focusInput($event,Fmobile)" -->
+                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
+                    placeholder="Last Name">
                 </li>
               </div>
               <div class="filterTextinput">

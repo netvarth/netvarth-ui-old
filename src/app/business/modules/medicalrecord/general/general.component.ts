@@ -33,6 +33,7 @@ export class GeneralComponent implements OnInit {
   department: any;
   serviceName: any;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   navigationParams: any = {};
   navigationExtras: NavigationExtras;
   customer_label = '';

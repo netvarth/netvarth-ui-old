@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BuserProfileRoutingModule } from './buserprofile.routing.module';
 import { BuserProfileComponent } from './buserprofile.component';
 import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { LoadingSpinnerModule } from '../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';

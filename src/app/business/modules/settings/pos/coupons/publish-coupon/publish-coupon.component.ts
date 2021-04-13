@@ -42,6 +42,8 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
   weekdays = projectConstantsLocal.myweekdaysSchedule;
   selday_arr: any=[];
   selallweekdays: boolean;
+  bookingMode = projectConstantsLocal.BOOKING_MODE;
+  pCouponStat;
   constructor(
     private wordProcessor: WordProcessor,
     private router: Router,
@@ -54,6 +56,7 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
       this.couponId = params.id;
       this.getcouponDetails(this.couponId).then((data) => {
         this.coupon = data;
+        this.getProviderCouponStatistic(this.coupon.couponCode);
         if (this.coupon.couponRules.published) {
           this.title = "Coupon " + this.coupon.couponCode + " Published";
         } else {
@@ -83,6 +86,14 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+  getProviderCouponStatistic(code) {
+    this.provider_services.getProviderCouponStat(code).subscribe(
+      data => {
+        this.pCouponStat = data;
+        console.log(this.pCouponStat);
+      }
+    );
   }
   check_existsinweek_array(arr, val) {
     let ret = -1;
@@ -225,6 +236,10 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
     this.userdialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  getbookingmodes(mes) {
+   const booking_mode = this.bookingMode.filter(bookmode => bookmode.value === mes);
+   return booking_mode[0].displayName;
   }
 
 }

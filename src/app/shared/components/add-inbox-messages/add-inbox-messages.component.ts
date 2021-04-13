@@ -58,6 +58,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   addondialogRef: any;
   is_noSMS = false;
   userId;
+  jaldeeConsumer = true;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -83,6 +84,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
+    if (data.jaldeeConsumer) {
+      this.jaldeeConsumer = (data.jaldeeConsumer === 'true') ? true : false;
+    }
     if (this.source !== 'customer-list') {
       if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
         this.type = 'appt';

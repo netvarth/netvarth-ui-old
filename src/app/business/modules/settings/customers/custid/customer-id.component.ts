@@ -123,7 +123,7 @@ export class CustomerIdSettingsComponent implements OnInit {
         } else {
             this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
                 (data: any) => {
-                    this.snackbarService.openSnackBar('Customer Id Configured Successfully');
+                    this.snackbarService.openSnackBar(this.customer_label  +  'Id Configured Successfully');
                     this.inputChanged = false;
                 },
                 (error) => {

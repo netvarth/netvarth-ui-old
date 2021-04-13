@@ -44,7 +44,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   customerId: any;
   orderCount: number;
   disabledConfirmbtn = false;
-  isfutureAvailableTime: boolean;
+  // isfutureAvailableTime: boolean;
+  isfutureAvailableTime=true ;
   selectedQeTime: any;
   order_date: any;
   selectedQsTime: any;
@@ -125,6 +126,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   image_list_popup: Image[];
   imagelist: any = [];
   orderNumber:any;
+  store_availables: any;
+  home_availables: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -413,7 +416,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
       this.sel_checkindate = this.orderDetails.orderDate;
-      this.getAvailabilityByDate(this.sel_checkindate);
+      // this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
       this.loading = false;
     });
@@ -858,14 +861,42 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.isFuturedate = true;
     }
   }
+  // getOrderAvailableDatesForPickup() {
+  //   const _this = this;
+
+  //   _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+  //   .pipe(takeUntil(this.onDestroy$))
+  //     .subscribe((data: any) => {
+  //       const availables = data.filter(obj => obj.isAvailable);
+  //       const availDates = availables.map(function (a) { return a.date; });
+  //       _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
+  //         return index === self.indexOf(elem);
+  //       });
+  //     });
+  // }
+  // getOrderAvailableDatesForHome() {
+  //   const _this = this;
+
+  //   _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+  //   .pipe(takeUntil(this.onDestroy$))
+  //     .subscribe((data: any) => {
+  //       const availables = data.filter(obj => obj.isAvailable);
+  //       const availDates = availables.map(function (a) { return a.date; });
+  //       _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
+  //         return index === self.indexOf(elem);
+  //       });
+  //     });
+  // }
   getOrderAvailableDatesForPickup() {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
     .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
-        const availables = data.filter(obj => obj.isAvailable);
-        const availDates = availables.map(function (a) { return a.date; });
+        this.store_availables  = data.filter(obj => obj.isAvailable);
+        console.log(this.store_availables);
+        this.getAvailabilityByDate(this.sel_checkindate);
+        const availDates = this.store_availables .map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -875,10 +906,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
-    .pipe(takeUntil(this.onDestroy$))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
-        const availables = data.filter(obj => obj.isAvailable);
-        const availDates = availables.map(function (a) { return a.date; });
+        this.home_availables = data.filter(obj => obj.isAvailable);
+        console.log(this.home_availables);
+        this.getAvailabilityByDate(this.sel_checkindate);
+        const availDates =  this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -892,32 +925,100 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-  getAvailabilityByDate(date) {
+  // getAvailabilityByDate(date) {
+  //   this.sel_checkindate = date;
+  //   const cday = new Date(this.sel_checkindate);
+  //   const currentday = (cday.getDay() + 1);
+  //   if (this.choose_type === 'store') {
+  //     const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
+
+  //     if (storeIntervals.includes(currentday)) {
+  //       this.isfutureAvailableTime = true;
+  //       this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+  //       this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+  //       this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+  //     } else {
+  //       this.isfutureAvailableTime = false;
+  //     }
+
+  //   } else {
+  //     const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
+  //     if (homeIntervals.includes(currentday)) {
+  //       this.isfutureAvailableTime = true;
+  //       this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+  //       this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+  //       this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+  //     } else {
+  //       this.isfutureAvailableTime = false;
+  //     }
+  //   }
+  // }
+  getAvailabilityByDate(date) { 
+    console.log(date);
+    console.log(this.storeAvailableDates);
+    console.log(this.store_availables);
+    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
+    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
-
-      if (storeIntervals.includes(currentday)) {
+      const last_date = moment().add(30, 'days');
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
-      } else {
+        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        console.log('greater than 30');
+      } 
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
+        console.log('less than 30'); 
+        console.log(this.store_availables);
+        const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(availability.length > 0){
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
+          } else{
+            this.isfutureAvailableTime = false;
+          }
+        }     
+      else {
         this.isfutureAvailableTime = false;
       }
-
-    } else {
+    }  
+    else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
-      if (homeIntervals.includes(currentday)) {
+      const last_date = moment().add(30, 'days');
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      console.log(homeIntervals);
+      console.log(JSON.stringify(homeIntervals));
+      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        console.log('greater than 30');
+      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+        console.log(this.home_availables);
+        const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(availability.length > 0){
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
       }
+    }
+    else {        
+       this.isfutureAvailableTime = false;
+     }
     }
   }
 

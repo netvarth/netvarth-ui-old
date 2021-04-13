@@ -41,3 +41,12 @@ h1 { font-size: 1.5em; margin: 10px; }*/
 .ynwstar-rating > input:checked ~ label:hover,
 .ynwstar-rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .ynwstar-rating > input:checked ~ label:hover ~ label { color: #FFED85 ;  } 
+
+.ratingSearch img.ratingstar {
+  width: 15px !important;
+  height: auto !important;
+}
+.rating-label {
+  
+  font-weight: 500;
+}
