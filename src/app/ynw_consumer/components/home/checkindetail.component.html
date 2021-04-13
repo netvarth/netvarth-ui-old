@@ -27,7 +27,7 @@
                                 <div class="card" *ngIf="!api_loading">
                                     <app-common-innerloading-spinner> </app-common-innerloading-spinner>
                                 </div>
-                                <div class="card" *ngIf="api_loading">
+                                <div class="card" *ngIf="api_loading && waitlist">
 
                                     <!-- Header -->
                                     <div class="mgn-bt-20 temp-style index-head">
@@ -220,6 +220,7 @@
                                         </div>
                                     </div>
                                     <div class="c-details pad-10">
+                                        {{waitlist.ynwUuid}}
                                         <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"></app-questionnaire>
                                     </div>
                                     <!-- <div class="c-details pad-10">

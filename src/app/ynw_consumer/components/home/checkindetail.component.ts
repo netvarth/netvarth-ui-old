@@ -255,12 +255,14 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
 
   checkIfFav(id) {
     let fav = false;
+    if (this.fav_providers_id_list) {
     this.fav_providers_id_list.map((e) => {
       if (e === id) {
         fav = true;
       }
     });
     return fav;
+  }
   }
 
   doDeleteFavProvider(fav, event) {

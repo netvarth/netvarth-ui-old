@@ -46,6 +46,8 @@ export class QuestionnaireComponent implements OnInit {
     private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
     private location: Location) {
+      console.log(this.uuid);
+      console.log(this.source);
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
       if (this.params.type) {
@@ -57,6 +59,7 @@ export class QuestionnaireComponent implements OnInit {
       if (this.params.uuid) {
         this.uuid = this.params.uuid;
       }
+      console.log(this.uuid);
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
       switch (message.type) {
@@ -96,6 +99,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.labels;
       }
     }
+    console.log(this.uuid);
     if (this.uuid) {
       this.loading = true;
       if (this.source === 'consCheckin') {
@@ -452,6 +456,7 @@ console.log(indx);
           this.questionnaireList = data.questionnaire;
           this.questions = this.questionnaireList.questionnaire;
           this.loading = false;
+          console.log(this.questions);
           if (this.questions && this.questions.length > 0) {
             this.getAnswers(this.questions, 'get');
           }
