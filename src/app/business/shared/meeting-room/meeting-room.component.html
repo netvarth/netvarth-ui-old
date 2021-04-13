@@ -10,38 +10,37 @@
 
     </header>
     <div class="videocontainer no-padding">
-        <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}" [ngClass]="{'hide': !twilioService.preview}">
+        <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}"
+            [ngClass]="{'hide': !twilioService.preview}">
             <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer"
                 class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
             </div>
             <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
-                <div mat-dialog-content class="pt-0">
-                    <mat-checkbox [(ngModel)]="recordFlag" (change)="settingDeafultValue( $event)">
-                      Record Video</mat-checkbox>
-                     
-                   
-                  </div>
                 <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <h1 *ngIf="!loading">Ready To Start ?</h1>
                     <h1 *ngIf="loading">Getting Ready...</h1>
                 </div>
                 <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading">
-                    {{status}}                  
+                    {{status}}
                 </div>
                 <div class="text-center mgn-bt-20" *ngIf="loading">
                     You will be able to join in just a moment
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="!loading">
-                    <button  (click)="consumerReady && joinRoom()">Join
+                <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding"
+                    *ngIf="!loading">
+                    <button [disabled]="!consumerReady" (click)="consumerReady && joinRoom()">Join
                         now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                     <br><br>
+                    <div class="pt-0">
+                        <mat-checkbox [(ngModel)]="recordingFlag" (change)="updateRecordingFlag( $event)">Record this video consultation</mat-checkbox>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 video-container-org no-padding" [ngStyle]="{'height.px': (screenHeight)}"
-            [ngClass]="{'hide': twilioService.preview}">
-            <div class="remote" id="remote-video" #remoteVideo 
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 video-container-org no-padding"
+            [ngStyle]="{'height.px': (screenHeight)}" [ngClass]="{'hide': twilioService.preview}">
+            <div class="remote" id="remote-video" #remoteVideo
                 [ngClass]="{'remote': twilioService.participantsCount > 0, 'remove-hide': twilioService.participantsCount == 0}">
             </div>
             <div id="local-video" #localVideo
@@ -69,6 +68,9 @@
                 </i>
                 <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
                     (click)="disconnect()"></i>
+                <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
+                    (click)="openChat()"></i> -->
+                <i class="pull-right record-text" *ngIf="recordingFlag">recording...</i>
             </div>
         </div>
         <select id="video-devices" hidden></select>

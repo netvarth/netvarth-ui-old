@@ -53,10 +53,13 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { MatBadgeModule } from '@angular/material/badge';
+
 import { CommunicationComponent } from '../shared/components/communication/communication.component';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { GalleryModule } from '../shared/modules/gallery/gallery.module';
+
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -78,7 +81,6 @@ import { GalleryModule } from '../shared/modules/gallery/gallery.module';
     RatingStarModule,
     Nl2BrPipeModule,
     CheckinAddMemberModule,
-    LoadingSpinnerModule,
     ConsumerAppointmentModule,
     ConsumerDonationModule,
     SearchFormModule,
@@ -88,7 +90,9 @@ import { GalleryModule } from '../shared/modules/gallery/gallery.module';
     ShareIconsModule,
     ModalGalleryModule,
     MatBadgeModule,
-    GalleryModule
+    GalleryModule,
+    MatTooltipModule,
+    CapitalizeFirstPipeModule
   ],
   declarations: [
     ConsumerComponent,

@@ -13,6 +13,12 @@
 .con-width {
     max-width: 60%;
 }
+.green {
+    color: green !important;
+}
+.m-hgt-50 {
+    min-height: 50px;
+}
 .bg-cover {
     height: 200px;
     background-attachment: fixed;

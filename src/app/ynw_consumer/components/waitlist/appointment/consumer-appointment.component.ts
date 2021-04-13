@@ -1353,7 +1353,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             if (found) {
                 this.couponvalid = true;
-                // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                 this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);

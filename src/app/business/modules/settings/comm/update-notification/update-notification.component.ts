@@ -15,6 +15,8 @@ export class UpdateNotificationComponent implements OnInit {
     virtualCallModesList;
     callingMode = '';
     mode;
+    jaldeeVideoRecord_status: any;
+    jaldeeVideoRecord_statusstr: string;
     callingmodes = projectConstantsLocal.videoModes;
     btn_name = 'Add';
     constructor(public dialogRef: MatDialogRef<UpdateNotificationComponent>,
@@ -22,8 +24,16 @@ export class UpdateNotificationComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         public shared_functions: SharedFunctions,
         private snackbarService: SnackbarService) {
-        this.virtualCallModesList = this.data.callingmodeList;
+        this.virtualCallModesList = this.data.callingmodeList;        
         this.mode = this.data.mode;
+        if (this.mode === 'JaldeeVideo') {
+            this.getRecordingStatus().then(
+                (recordStatus)=> {
+                    this.jaldeeVideoRecord_status = recordStatus;
+                    this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+                }
+            );
+        }
         const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === this.mode);
         if (filtererList && filtererList[0]) {
             this.callingMode = filtererList[0].value;
@@ -31,7 +41,7 @@ export class UpdateNotificationComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    ngOnInit() {        
     }
     updateVideoSettings() {
         const virtualCallingModes = [];
@@ -84,6 +94,9 @@ export class UpdateNotificationComponent implements OnInit {
                     } else if (this.mode === 'Phone') {
                         this.snackbarService.openSnackBar('Phone added successfully', { 'panelclass': 'snackbarerror' });
                         this.dialogRef.close();
+                    } else {
+                        this.snackbarService.openSnackBar('Jaldee Video Settings updated successfully', { 'panelclass': 'snackbarerror' });
+                        this.dialogRef.close();
                     }
                 },
                 error => {
@@ -91,6 +104,40 @@ export class UpdateNotificationComponent implements OnInit {
                 }
             );
         }
+    }
+    getRecordingStatus() {
+        return new Promise((resolve, reject) => {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {                
+                resolve(data.videoRecording);                
+            }, (error)=>{
+                reject(error);
+            });
+        });
+    }
+    handle_RecordingStatus(event) {
+        const is_VirtualCallingMode = (event.checked) ? 'ENABLED' : 'DISABLED';
+        this.provider_services.setJaldeeVideoRecording(is_VirtualCallingMode)
+            .subscribe(
+                () => {
+                    this.snackbarService.openSnackBar('Jaldee Video settings' + ' updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.getRecordingStatus().then(
+                        (recordStatus)=> {
+                            this.jaldeeVideoRecord_status = recordStatus;
+                            this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+                        }
+                    );
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getRecordingStatus().then(
+                        (recordStatus)=> {
+                            this.jaldeeVideoRecord_status = recordStatus;
+                            this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+                        }
+                    );
+                }
+            );
     }
     buttonDisable() {
         if (this.callingMode == '' || ((this.mode === 'WhatsApp' || this.mode === 'Phone') && this.callingMode.length !== 10)) {

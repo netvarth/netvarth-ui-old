@@ -453,7 +453,11 @@ export const projectConstantsLocal = {
     PROVIDER_COUPON_NOT_APPLICABLE_NOW : 'Provider coupon not applicable now',
     JC_NOT_APPLICABLE_DAY : 'Jaldee Coupon not applicable on this day',
     ONLY_WHEN_FITST_CHECKIN_ON_PROVIDER : 'Coupon can be applied only for first check in with this provider',
-    MINIMUM_BILL_AMT_REQUIRED : 'A minimum bill amount is required to redeem this coupon'
+    MINIMUM_BILL_AMT_REQUIRED : 'A minimum bill amount is required to redeem this coupon',
+    PROVIDER_COUPON_NOT_APPLICABLE_ORDER:'Provider coupon not applicable for order',
+    PROVIDER_COUPON_NOT_APPLICABLE_WAITLIST:'Provider coupon not applicable for waitlist',
+    PROVIDER_COUPON_NOT_APPLICABLE_APPOINTMENT:'Provider coupon not applicable for appointment',
+    EXCEEDS_PRO_COUP_APPLY_LIMIT: 'Coupon reached limit of usage'
   },
   CHECK_IN_STATUSES: {
     Done: 'Completed',
@@ -969,7 +973,8 @@ export const projectConstantsLocal = {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
     GoogleMeet: { displayName: 'Google Meet', placeHolder: 'Update Meet ID', title: 'Configure Google Meet' },
-    Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' }
+    Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' },
+    JaldeeVideo: {displayName: 'Jaldee Video', placeHolder: '', title: 'Configure Jaldee Video'}
   },
   ORDER_STATUS_FILTER: [
     { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true , clas: 'orderreceived'},

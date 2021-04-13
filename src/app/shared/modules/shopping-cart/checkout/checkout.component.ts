@@ -167,6 +167,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   home_availables: any;
   couponStatuses: any;
   private subs = new SubSink();
+  couponlist: any = [];
+  pcouponlist: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -401,6 +403,25 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           console.log(data);
           this.cartDetails = data;
+          this.couponlist = [];
+          this.pcouponlist = [];
+          if(this.cartDetails.jCouponList){
+            for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
+              if(value['value'] !== '0.0'){
+                this.couponlist.push(key);
+                console.log(this.couponlist);
+              }
+            }
+          }
+          if(this.cartDetails.proCouponList){
+            for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
+              if(value['value'] !== '0.0'){
+                this.pcouponlist.push(key);
+                console.log(this.pcouponlist);
+              }
+            }
+          }
+       
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -551,7 +572,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (found) {
         this.couponvalid = true;
-       // this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
         this.action = '';
         if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
@@ -701,7 +722,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.canceldialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this.added_address.splice(index, 1);
         this.shared_services.updateConsumeraddress(this.added_address)
@@ -901,18 +921,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
       } else if (result === 'showsignup') {
-
+       
       }
     });
   }
   confirmOrder(post_Data) {
-    console.log(post_Data.email);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
       let i = 0;
       if (this.selectedImagelist) {
-        console.log(dataToSend);
         for (const pic of this.selectedImagelist.files) {
           dataToSend.append('attachments', pic, pic['name']);
           captions[i] = this.selectedImagelist.caption[i] || '';
@@ -1251,9 +1269,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
-      console.log(homeIntervals);
-      console.log(JSON.stringify(homeIntervals));
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format(); 
       if (homeIntervals.includes(currentday) && (date > thirty_date))  {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
@@ -1273,8 +1289,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isfutureAvailableTime = false;
       }
     }
+    else {        
+       this.isfutureAvailableTime = false;
+     }
+    }
   }
-}
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
       .subscribe((data: any) => {
