@@ -55,12 +55,12 @@
                                                     <div class="pro-pic-img">
                                                         <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url"
                                                             class="crop-img-fit">
-                                                        <div class="camera-outline custId-cursor" data-toggle="modal"
-                                                            data-target="#exampleModalSizeLg"
-                                                            style="overflow: visible !important;"
-                                                            (click)="clearModalData()">
+                                                            <input #logofile type="file" accept="image/*" style="display:none;"
+                                                            (change)="imageSelect(logofile,'blogo')">
+                                                          <div class="camera-outline custId-cursor" (click)="logofile.click()"
+                                                            style="overflow: visible !important;">
                                                             <i class="fa propic-cam-icon" aria-hidden="true"></i>
-                                                        </div>
+                                                          </div>
                                                     </div>
                                                 </div>
                                             </div>
