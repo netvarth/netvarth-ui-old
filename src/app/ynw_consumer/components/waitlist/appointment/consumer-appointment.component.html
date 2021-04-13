@@ -333,9 +333,11 @@
                                                                 {{selected_coupons.toString()}}
                                                             </div>
                                                             <div  *ngFor="let coupon of paymentDetails.jCouponList | keyvalue" style="text-align: initial;">
+                                                                    <small class="black" *ngIf="coupon.value.value !== '0.0'">You saved {{coupon.value.value}} <i class="fa fa-inr black" ></i> on {{coupon.key}}</small>
                                                                 <small class="black" *ngIf="coupon.value.value === '0.0'">{{coupon.key}} will be honored if all the rules are met &nbsp;<small *ngIf="coupon.value.value === '0.0'" class="blue pointerlist" (click)="showJCCouponNote(coupon)"  aria-hidden="true">Know more</small></small>
                                                                 </div>
                                                                <div  *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                                    <small class="black" *ngIf="coupon.value.value !== '0.0'">You saved {{coupon.value.value}} <i class="fa fa-inr black" ></i> on {{coupon.key}}</small>
                                                                 <small class="black" *ngIf="coupon.value.value === '0.0'">{{coupon.key}} will be honored if all the rules are met &nbsp;<small *ngIf="coupon.value.value === '0.0'" class="blue pointerlist" (click)="showJCCouponNote(coupon)"  aria-hidden="true">Know more</small></small>
                                                                </div>
                                                             <!-- <div class="disp-flex width-100 amount-details" *ngFor="let coupon of paymentDetails.jCouponList | keyvalue">
