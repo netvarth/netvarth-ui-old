@@ -70,6 +70,7 @@
                     (click)="disconnect()"></i>
                 <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
                     (click)="openChat()"></i> -->
+                <i class="pull-right record-text" *ngIf="recordingFlag">recording...</i>
             </div>
         </div>
         <select id="video-devices" hidden></select>

@@ -115,4 +115,8 @@ header {
   width: 100% !important;
   height: 100% !important;
 }
+.record-text {
+  font-size: small;
+  margin: 25px;
+}
 
