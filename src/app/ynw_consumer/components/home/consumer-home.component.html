@@ -232,7 +232,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -242,8 +242,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -281,11 +281,11 @@
                                                     </span>
                                                 </div> -->
                                                 <div class="mgn-lft-10">
-                                                    <span
+                                                    <!-- <span
                                                         *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
-                                                    </span>
+                                                    </span> -->
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
@@ -463,7 +463,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -473,8 +473,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -550,11 +550,11 @@
                                                     </span>
                                                 </div> -->
                                                 <div class="mgn-lft-10">
-                                                    <span
+                                                    <!-- <span
                                                         *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'started' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
-                                                    </span>
+                                                    </span> -->
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
@@ -718,7 +718,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -728,8 +728,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -772,11 +772,11 @@
                                                     </span>
                                                 </div> -->
                                                 <div class="mgn-lft-10">
-                                                    <span
+                                                    <!-- <span
                                                         *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
-                                                    </span>
+                                                    </span> -->
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
@@ -951,7 +951,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -961,9 +961,9 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
+                                                    </div> -->
 
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1043,11 +1043,11 @@
                                                 </div> -->
                                                 <!-- mgn-lft-10 -->
                                                 <div class="">
-                                                    <span
+                                                    <!-- <span
                                                         *ngIf="booking.service.serviceType === 'virtualService' && (booking.waitlistStatus === 'started' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
                                                         <button mat-flat-button class="btns"
                                                             (click)="btnJoinVideoClicked(booking,$event)">Join</button>
-                                                    </span>
+                                                    </span> -->
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
@@ -1214,7 +1214,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1224,8 +1224,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1446,7 +1446,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1456,8 +1456,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1690,7 +1690,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1700,8 +1700,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1922,7 +1922,7 @@
                                                         <div class="prov_lbl">Provider</div>
                                                         <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                     </div>
-                                                    <div *ngIf="booking.service.serviceType === 'virtualService'"
+                                                    <!-- <div *ngIf="booking.service.serviceType === 'virtualService'"
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
@@ -1932,8 +1932,8 @@
                                                             [class.red]="booking.videoCallButton==='DISABLED'"
                                                             [class.green]="booking.videoCallButton==='ENABLED'">
                                                             {{booking.videoCallMessage}}</div>
-                                                    </div>
-                                                    <div *ngIf="booking.service.serviceType !== 'virtualService'"
+                                                    </div> -->
+                                                    <div
                                                         [class.col-xs-6]="booking.provider"
                                                         [class.pull-left]="booking.provider"
                                                         [class.col-xs-12]="!booking.provider"
