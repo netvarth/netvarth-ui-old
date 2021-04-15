@@ -246,6 +246,12 @@ export class SharedServices {
       return this.servicemeta.httpGet(url);
     }
   }
+  getProviderServicesByLocationId(locid) {
+    if (locid) {
+      const url = 'provider/waitlist/services/' + locid;
+      return this.servicemeta.httpGet(url);
+    }
+  }
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
     const url = 'consumer/waitlist/queues/' + locid + '/' + servid + dd;
@@ -771,6 +777,12 @@ export class SharedServices {
   getServicesforAppontmntByLocationId(locid) {
     if (locid) {
       const url = 'consumer/appointment/service/' + locid;
+      return this.servicemeta.httpGet(url);
+    }
+  }
+  getProviderServicesforAppontmntByLocationId(locid) {
+    if (locid) {
+      const url = 'provider/appointment/service/' + locid;
       return this.servicemeta.httpGet(url);
     }
   }
