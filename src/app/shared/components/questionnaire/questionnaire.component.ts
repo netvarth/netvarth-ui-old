@@ -46,8 +46,8 @@ export class QuestionnaireComponent implements OnInit {
     private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
     private location: Location) {
-      console.log(this.uuid);
-      console.log(this.source);
+    console.log(this.uuid);
+    console.log(this.source);
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
       if (this.params.type) {
@@ -143,28 +143,28 @@ export class QuestionnaireComponent implements OnInit {
             this.answers[answ.answer.labelName] = answ.answer.answer;
           } else {
             if (answ.answer.attachment && answ.answer.attachment.length > 0) {
-            for (let i = 0; i < answ.answer.attachment.length; i++) {
-              if (type === 'get') {
-                this.uploadedImages.push(answ.answer.attachment[i]);
-                if (!this.uploadedFiles[answ.answer.labelName]) {
-                  this.uploadedFiles[answ.answer.labelName] = {};
+              for (let i = 0; i < answ.answer.attachment.length; i++) {
+                if (type === 'get') {
+                  this.uploadedImages.push(answ.answer.attachment[i]);
+                  if (!this.uploadedFiles[answ.answer.labelName]) {
+                    this.uploadedFiles[answ.answer.labelName] = {};
+                  }
+                  if (!this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption]) {
+                    this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
+                  }
+                  this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
+                } else {
+                  this.selectedMessage.push(answ.answer.attachment[i]);
+                  if (!this.filestoUpload[answ.answer.labelName]) {
+                    this.filestoUpload[answ.answer.labelName] = {};
+                  }
+                  if (!this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption]) {
+                    this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
+                  }
+                  this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
                 }
-                if (!this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption]) {
-                  this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
-                }
-                this.uploadedFiles[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
-              } else {
-                this.selectedMessage.push(answ.answer.attachment[i]);
-                if (!this.filestoUpload[answ.answer.labelName]) {
-                  this.filestoUpload[answ.answer.labelName] = {};
-                }
-                if (!this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption]) {
-                  this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = {};
-                }
-                this.filestoUpload[answ.answer.labelName][answ.answer.attachment[i].caption] = answ.answer.attachment[i];
               }
             }
-          }
           }
         }
       }
@@ -274,34 +274,38 @@ export class QuestionnaireComponent implements OnInit {
       console.log(key);
       console.log(Object.keys(this.filestoUpload[key]).length);
       if (Object.keys(this.filestoUpload[key]).length > 0) {
-        this.answers[key] = [];
+        if (this.uuid) {
+          this.answers[key] = [];
+        } else {
+          this.answers[key] = {};
+        }
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
           if (this.filestoUpload[key][key1]) {
             console.log(this.filestoUpload[key][key1]);
             const indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
-console.log(indx);
+            console.log(indx);
             if (indx !== -1) {
               if (this.uuid) {
                 let status = 'add';
                 if (this.uploadedFiles[key] && this.uploadedFiles[key][key1]) {
                   status = 'update';
                 }
-                this.answers[key].push({index: indx, allowedDocument: key1, status: status});
+                this.answers[key].push({ index: indx, allowedDocument: key1, status: status });
               } else {
-              this.answers[key][indx] = key1;
+                this.answers[key][indx] = key1;
               }
             } else {
               console.log(this.uploadedFiles[key][key1]);
               if (this.uuid && this.uploadedFiles[key] && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
                 console.log(this.uploadedFiles[key][key1]);
-                this.answers[key].push({allowedDocument: key1, status: 'remove'});
+                this.answers[key].push({ allowedDocument: key1, status: 'remove' });
               }
             }
           } else {
             console.log(this.uploadedFiles[key][key1]);
             if (this.uuid && this.uploadedFiles[key] && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
               console.log(this.uploadedFiles[key][key1]);
-              this.answers[key].push({allowedDocument: key1, status: 'remove'});
+              this.answers[key].push({ allowedDocument: key1, status: 'remove' });
             }
           }
         });
@@ -309,12 +313,12 @@ console.log(indx);
         // delete this.answers[key];
         console.log(this.uploadedFiles[key]);
 
-           if (this.uuid && Object.keys(this.uploadedFiles[key]).length > 0) {
-            Object.keys(this.uploadedFiles[key]).forEach(key1 => {
-              if (this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === '') {
-                this.answers[key].push({allowedDocument: key1, status: 'remove'});
-              }
-            });
+        if (this.uuid && Object.keys(this.uploadedFiles[key]).length > 0) {
+          Object.keys(this.uploadedFiles[key]).forEach(key1 => {
+            if (this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === '') {
+              this.answers[key].push({ allowedDocument: key1, status: 'remove' });
+            }
+          });
         }
         // if (Object.keys(this.uploadedFiles[key]).length === 0) {
         //   this.answers[key] = '';

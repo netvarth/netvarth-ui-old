@@ -167,7 +167,7 @@
           </div>
           <!-- Questionnaire starts-->
           <div class="card"
-            *ngIf="!api_loading && waitlist_data && waitlist_data.questionnaire.questionnaire && waitlist_data.questionnaire.questionnaire.length > 0">
+            *ngIf="!api_loading && waitlist_data && waitlist_data.questionnaire && waitlist_data.questionnaire.questionnaire && waitlist_data.questionnaire.questionnaire.length > 0">
             <div class="bg-cover" style="background-image: url('assets/images/bg-9.jpg')">
               <div class=" container ">
                 <div class="mt-80">
@@ -176,6 +176,9 @@
                   </h3>
                 </div>
               </div>
+            </div>
+            <div class="c-details">
+              <app-questionnaire [source]="'proCheckin'" [uuid]="waitlist_data.ynwUuid"></app-questionnaire>
             </div>
             <!-- <div class="c-details">
               <div class="quest-answ-box col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
