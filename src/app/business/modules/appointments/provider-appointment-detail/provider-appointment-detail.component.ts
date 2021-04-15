@@ -15,9 +15,12 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 @Component({
   selector: 'app-provider-appointment-detail',
-  templateUrl: './provider-appointment-detail.component.html'
+  templateUrl: './provider-appointment-detail.component.html',
+  styleUrls: ['./provider-app.component.css']
+
 })
 
 export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
@@ -99,6 +102,24 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   apptMultiSelection = false;
   timetype;
   showImages: any = [];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  image_list_popup: Image[];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -119,8 +140,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-   // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
-   // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
+    // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
@@ -203,14 +224,14 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
             this.waitlist_data.history = true;
           }
           if (this.waitlist_data.apptStatus !== 'blocked') {
-          this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getWaitlistNotes(this.waitlist_data.uid);
           }
           this.getCheckInHistory(this.waitlist_data.uid);
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
-         }
+          }
 
         },
         error => {
@@ -475,36 +496,69 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
   viewMore() {
     this.view_more = !this.view_more;
-}
+  }
 
-gotoActions(checkin?) {
-  let waitlist = [];
-  if (checkin) {
-    waitlist = checkin;
-  }
-  const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
-      checkinData: waitlist,
-      multiSelection: this.apptMultiSelection,
-      timetype: this.timetype,
-      NoViewDetail: 'true'
+  gotoActions(checkin?) {
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
     }
-  });
-  actiondialogRef.afterClosed().subscribe(data => {
-    this.getProviderSettings();
-  });
-}
-showImagesection(index) {
-  (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
-}
-getThumbUrl(attachment) {
-  if (attachment.s3path.indexOf('.pdf') !== -1) {
-    return attachment.thumbPath;
-  } else {
-    return attachment.s3path;
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        multiSelection: this.apptMultiSelection,
+        timetype: this.timetype,
+        NoViewDetail: 'true'
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      this.getProviderSettings();
+    });
   }
-}
+  showImagesection(index) {
+    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
+  }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  openImage(attachements, index) {
+    this.image_list_popup = [];
+    let count = 0;
+    for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
+      const thumbPath = attachements[comIndex].thumbPath;
+      let imagePath = thumbPath;
+      const description = attachements[comIndex].s3path;
+      imagePath = attachements[comIndex].s3path;
+      const imgobj = new Image(
+        count,
+        { // modal
+          img: imagePath,
+          description: description
+        },
+      );
+      this.image_list_popup.push(imgobj);
+      count++;
+    }
+    if (count > 0) {
+      setTimeout(() => {
+        this.openImageModalRow(this.image_list_popup[index]);
+      }, 200);
+    }
+  }
 }

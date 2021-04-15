@@ -125,6 +125,15 @@ export class CustomerCreateComponent implements OnInit {
   virtualServicemode;
   virtualServicenumber;
   group;
+  questionnaireList: any = [];
+  questionAnswers;
+  qnrLoaded = false;
+  serviceId;
+  bookingMode;
+  showBookingQnr = false;
+  newCustomerId;
+  qnrSource = 'customer-create';
+  loaded = true;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -149,7 +158,6 @@ export class CustomerCreateComponent implements OnInit {
       this.subdomain = user.subSector;
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
-      console.log(JSON.stringify(qparams));
       if (qparams.selectedGroup) {
         this.group = qparams.selectedGroup;
       }
@@ -159,6 +167,12 @@ export class CustomerCreateComponent implements OnInit {
       if (qparams.type) {
         this.type = qparams.type;
       }
+      if (qparams.bookingMode) {
+        this.bookingMode = qparams.bookingMode;
+      }
+      if (qparams.serId) {
+        this.serviceId = qparams.serId;
+      }
       if (qparams.virtualServicemode) {
         this.virtualServicemode = qparams.virtualServicemode;
       }
@@ -167,12 +181,12 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
-        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' ||this.source==='order') {
+        if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' || this.source === 'order') {
           this.getJaldeeIntegrationSettings();
           this.save_btn = 'Proceed';
         }
       } else {
-        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source==='order')) {
+        if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'order')) {
           this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
           if (this.source === 'waitlist-block') {
             if (this.showToken) {
@@ -412,6 +426,7 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
   createForm() {
+    this.getCustomerQnr();
     if (!this.haveMobile) {
       this.amForm = this.fb.group({
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -460,6 +475,14 @@ export class CustomerCreateComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
+    if (this.questionnaireList && this.questionnaireList.labels) {
+      this.validateQnr(form_data);
+    } else {
+      this.customerActions(form_data);
+    }
+
+  }
+  customerActions(form_data) {
     let datebirth;
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
@@ -495,52 +518,15 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
             const qParams = {};
             qParams['pid'] = data;
-            if (this.source === 'checkin' || this.source === 'token') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  thirdParty: this.thirdParty
-                }
-              };
-              this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-            } else if (this.source === 'appointment') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  timeslot: this.timeslot,
-                  scheduleId: this.comingSchduleId,
-                  date: this.date,
-                  thirdParty: this.thirdParty,
-                  serviceId: this.serviceIdParam,
-                  userId: this.userId,
-                  deptId: this.deptId,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-            } else if (this.source === 'appt-block') {
-              this.confirmApptBlock(data);
-            } else if (this.source === 'waitlist-block') {
-              this.confirmWaitlistBlock(data);
-            } else if (this.source === 'order') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+            this.newCustomerId = data;
+            if (this.questionAnswers) {
+              this.submitQnr(form_data, data);
             } else {
-              this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
+              if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+                this.getProviderQuestionnaire(form_data);
+              } else {
+                this.goBackAfterAdd(form_data, data);
+              }
             }
           },
           error => {
@@ -575,41 +561,97 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar('Updated Successfully');
             const qParams = {};
             qParams['pid'] = data;
-            if (this.source === 'checkin' || this.source === 'token') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type
-                }
-              };
-              this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-            } else if (this.source === 'appointment') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkin_type: this.checkin_type
-                }
-              };
-              this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-            }else if (this.source === 'order') {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  ph: form_data.mobile_number,
-                  checkinType: this.checkin_type,
-                  haveMobile: this.haveMobile,
-                  id: data,
-                  type: this.type
-                }
-              };
-              this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+            if (this.questionAnswers) {
+              this.submitQnr(form_data, this.customerId);
             } else {
-              this.router.navigate(['provider', 'customers']);
+              this.goBackAfterEdit(form_data, data);
             }
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           });
+    }
+  }
+  goBackAfterAdd(form_data, data) {
+    if (this.source === 'checkin' || this.source === 'token') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          thirdParty: this.thirdParty
+        }
+      };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    } else if (this.source === 'appointment') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          timeslot: this.timeslot,
+          scheduleId: this.comingSchduleId,
+          date: this.date,
+          thirdParty: this.thirdParty,
+          serviceId: this.serviceIdParam,
+          userId: this.userId,
+          deptId: this.deptId,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+    } else if (this.source === 'appt-block') {
+      this.confirmApptBlock(data);
+    } else if (this.source === 'waitlist-block') {
+      this.confirmWaitlistBlock(data);
+    } else if (this.source === 'order') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+    } else {
+      this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
+    }
+  }
+  goBackAfterEdit(form_data, data) {
+    if (this.source === 'checkin' || this.source === 'token') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type
+        }
+      };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    } else if (this.source === 'appointment') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkin_type: this.checkin_type
+        }
+      };
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+    } else if (this.source === 'order') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          ph: form_data.mobile_number,
+          checkinType: this.checkin_type,
+          haveMobile: this.haveMobile,
+          id: data,
+          type: this.type
+        }
+      };
+      this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+    } else {
+      this.router.navigate(['provider', 'customers']);
     }
   }
   confirmApptBlock(id) {
@@ -689,6 +731,7 @@ export class CustomerCreateComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+    this.disableButton = false;
   }
   onFieldBlur(key) {
     this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
@@ -814,9 +857,7 @@ export class CustomerCreateComponent implements OnInit {
     event.stopPropagation();
   }
   medicalRecord(visitDetails) {
-    console.log(visitDetails);
     if (visitDetails.waitlist) {
-      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -839,9 +880,7 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   prescription(visitDetails) {
-    console.log(visitDetails);
     if (visitDetails.waitlist) {
-      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -989,5 +1028,98 @@ export class CustomerCreateComponent implements OnInit {
   }
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;
+  }
+  getCustomerQnr() {
+    this.questionnaireList = [];
+    this.provider_services.getCustomerQuestionnaire().subscribe(data => {
+      this.questionnaireList = data;
+      this.qnrLoaded = true;
+    });
+  }
+  getProviderQuestionnaire(form_data) {
+    this.loaded = false;
+    this.questionnaireList = [];
+    this.provider_services.getProviderQuestionnaire(this.serviceId, this.newCustomerId, this.bookingMode).subscribe(data => {
+      this.questionnaireList = data;
+      if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        this.showBookingQnr = true;
+        this.loaded = true;
+        if (this.source === 'waitlist-block') {
+          this.qnrSource = 'proCheckin';
+        } else {
+          this.qnrSource = 'proAppt';
+        }
+      } else {
+        this.goBackAfterAdd(form_data, this.newCustomerId);
+      }
+    });
+  }
+  getQuestionAnswers(event) {
+    this.questionAnswers = event;
+    this.disableButton = false;
+  }
+  submitQnr(form_data, id) {
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+      for (const pic of this.questionAnswers.files) {
+        dataToSend.append('files', pic, pic['name']);
+      }
+    }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    if (this.action === 'add') {
+      this.AddQnr(id, dataToSend, form_data);
+    } else {
+      this.updateQnr(id, dataToSend, form_data);
+    }
+  }
+  AddQnr(id, dataToSend, form_data) {
+    this.provider_services.submitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+      if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+        this.questionAnswers = null;
+        this.getProviderQuestionnaire(form_data);
+      } else {
+        this.goBackAfterAdd(form_data, id);
+      }
+    }, error => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
+  updateQnr(id, dataToSend, form_data) {
+    this.provider_services.resubmitProviderCustomerQuestionnaire(id, dataToSend).subscribe(data => {
+      if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+        this.questionAnswers = null;
+        this.getProviderQuestionnaire(form_data);
+      } else {
+        this.goBackAfterEdit(form_data, id);
+      }
+    }, error => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
+  validateQnr(form_data?) {
+    if (this.questionAnswers && this.questionAnswers.answers) {
+      this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+        if (data.length === 0) {
+          if (this.showBookingQnr) {
+            if (this.source === 'appt-block') {
+              this.confirmApptBlock(this.newCustomerId);
+            } else if (this.source === 'waitlist-block') {
+              this.confirmWaitlistBlock(this.newCustomerId);
+            }
+          } else {
+            this.customerActions(form_data);
+          }
+        }
+        this.shared_functions.sendMessage({ type: 'qnrValidateError', value: data });
+      }, error => {
+        this.disableButton = false;
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
+    } else {
+      this.disableButton = false;
+      // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+      this.shared_functions.sendMessage({ type: 'qnrValidateError', value: 'required' });
+    }
   }
 }

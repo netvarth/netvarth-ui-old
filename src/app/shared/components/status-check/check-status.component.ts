@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
@@ -10,12 +9,14 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
   styleUrls: ['./check-status.component.css']
 })
-export class CheckYourStatusComponent implements OnInit {
+export class CheckYourStatusComponent implements OnInit, OnDestroy {
   api_loading: boolean;
   // checkinDetails: any = [];
   type = '';
@@ -48,13 +49,14 @@ export class CheckYourStatusComponent implements OnInit {
   retval;
   provider_id;
   terminologiesjson: ArrayBuffer;
+  private subs = new SubSink();
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
-    private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor) {
     this.activated_route.params.subscribe(
       qparams => {
         // this.type = qparams.type;
@@ -94,6 +96,9 @@ export class CheckYourStatusComponent implements OnInit {
         );
     });
   }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
   ngOnInit() {
     console.log(this.check_in_statuses);
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -113,28 +118,36 @@ export class CheckYourStatusComponent implements OnInit {
     }
   }
   gets3curl() {
-    this.retval = this.shared_functions.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('terminologies', true);
-        });
-  }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'terminologies': {
-            this.terminologiesjson = res;
-            break;
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+      null, 'terminologies').subscribe(
+        (accountS3s) => {
+          if (accountS3s['terminologies']) {
+            this.terminologiesjson = this.s3Processor.getJson(accountS3s['terminologies']);
           }
         }
-      });
+      );
+    // this.retval = this.shared_functions.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+    //       this.getbusinessprofiledetails_json('terminologies', true);
+    //     });
   }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       switch (section) {
+  //         case 'terminologies': {
+  //           this.terminologiesjson = res;
+  //           break;
+  //         }
+  //       }
+  //     });
+  // }
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {
@@ -262,7 +275,6 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
-          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
@@ -336,7 +348,6 @@ export class CheckYourStatusComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.statusInfo = data;
-          console.log(this.statusInfo);
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           this.foundDetails = true;
@@ -442,3 +453,4 @@ export class CheckYourStatusComponent implements OnInit {
    return false
   }
 }
+

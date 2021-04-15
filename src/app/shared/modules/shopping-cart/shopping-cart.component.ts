@@ -14,6 +14,8 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -27,7 +29,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
-  isfutureAvailableTime=true ;
+  isfutureAvailableTime = false;
   selectedQeTime: any;
   order_date: any;
   selectedQsTime: any;
@@ -82,7 +84,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   selected_coupon;
   showCouponWB: boolean;
   provider_id: any;
-  s3url;
+  // s3url;
   api_loading1 = true;
   retval;
   tooltipcls = '';
@@ -94,6 +96,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   queue;
   store_availables: any;
   home_availables: any;
+  private subs = new SubSink();
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -103,7 +106,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     public sharedFunctionobj: SharedFunctions,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor) {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
@@ -125,11 +129,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   }
 
-
-
-
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.subs.unsubscribe();
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
@@ -161,8 +163,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
-     this.getOrderAvailableDatesForPickup();
-     this.getOrderAvailableDatesForHome();
+      this.getOrderAvailableDatesForPickup();
+      this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.getStoreContact();
       this.showfuturediv = false;
@@ -288,19 +290,50 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   gets3curl() {
     this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.getprovidercoupondetails_json('providerCoupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
-          this.api_loading1 = false;
-        }
-      );
+        let accountS3List = 'coupon,providerCoupon';
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+            null, accountS3List).subscribe(
+                (accountS3s) => {
+                    this.processS3s('coupon', accountS3s['coupon']);
+                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                    this.api_loading1 = false;
+                }
+            );
+    // this.api_loading1 = true;
+    // this.retval = this.sharedFunctionobj.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+    //       this.getbusinessprofiledetails_json('coupon', true);
+    //       this.getprovidercoupondetails_json('providerCoupon', true);
+    //       this.api_loading1 = false;
+    //     },
+    //     () => {
+    //       this.api_loading1 = false;
+    //     }
+    //   );
   }
+  processS3s(type, res) {
+    let result = this.s3Processor.getJson(res);
+    switch (type) {
+        case 'coupon': {
+          this.s3CouponsList.JC = result;
+          console.log(this.s3CouponsList.JC);
+          if (this.s3CouponsList.JC.length > 0) {
+            this.showCouponWB = true;
+          }
+            break;
+        }
+        case 'providerCoupon': {
+          this.s3CouponsList.OWN = result;
+          console.log(this.s3CouponsList.OWN);
+          if (this.s3CouponsList.OWN.length > 0) {
+            this.showCouponWB = true;
+          }
+            break;
+        }
+      }
+    }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
       this.couponsList[i].showme = false;
@@ -372,40 +405,40 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   applyPromocode() {
     this.action = 'coupons';
   }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.JC = res;
-        console.log(this.s3CouponsList.JC);
-        if (this.s3CouponsList.JC.length > 0) {
-          this.showCouponWB = true;
-        }
-      },
-        () => {
-        }
-      );
-  }
-  getprovidercoupondetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.OWN = res;
-        console.log(this.s3CouponsList.OWN);
-        if (this.s3CouponsList.OWN.length > 0) {
-          this.showCouponWB = true;
-        }
-      },
-        () => {
-        }
-      );
-  }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.JC = res;
+  //       console.log(this.s3CouponsList.JC);
+  //       if (this.s3CouponsList.JC.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
+  // getprovidercoupondetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.OWN = res;
+  //       console.log(this.s3CouponsList.OWN);
+  //       if (this.s3CouponsList.OWN.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
   removeFromCart(itemObj) {
     const item = itemObj.item;
     for (const i in this.orderList) {

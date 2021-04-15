@@ -15,7 +15,10 @@
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
-                                <div class="col-xl-12">
+                                <div class="loading-hgt" *ngIf="!questionnaireLoaded">
+                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                </div>
+                                <div class="col-xl-12" *ngIf="questionnaireLoaded">
                                     <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding">
                                         <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
@@ -43,8 +46,8 @@
                                                         </svg>
                                                     </span>
                                                 </div>
-                                                <div class="wizard-step" data-wizard-type="step"
-                                                    [class.tab-selected]="bookStep>=2"
+                                                <div class="wizard-step tab-selected wizard-mgn-30"
+                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=2"
                                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">2</div>
@@ -327,7 +330,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div
+                                                        <div *ngIf="!questionnaireList.labels"
                                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
@@ -846,17 +849,34 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
-                                        <div class="mgn-bt-20 quest-head mgn-up-10">
-                                            Please provide us with a little more information complete your booking
+                                        <div class="pad-20 quest-head">
+                                            Provide us information to complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList"
                                             [questionAnswers]="questionAnswers" [source]="'consCheckin'"
-                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
-                                            [serviceId]="sel_ser" [accountId]="account_id"
-                                            (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                                            [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)">
+                                        </app-questionnaire>
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+                                            <div class="mr-2">
+                                                <button type="button"
+                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('prev')">
+                                                    Go Back
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')">
+                                                    Next
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
@@ -886,19 +906,6 @@
                                                         </a></td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
-                                                        Token for</td>
-                                                    <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
-                                                        Check-in for</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>
-                                                        <div *ngFor="let customer of waitlist_for">
-                                                            {{customer.firstName}}
-                                                            {{customer.lastName}}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
                                                     <td width="48%" align="right">Service</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>
@@ -916,6 +923,19 @@
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
+                                                        Token for</td>
+                                                    <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
+                                                        Check-in for</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <div *ngFor="let customer of waitlist_for">
+                                                            {{customer.firstName}}
+                                                            {{customer.lastName}}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -988,13 +1008,16 @@
                                                     <span class="razorpay-icon selected-payment"></span>
                                                     <!-- <span class="paytm-icon"></span> -->
                                                 </div>
-                                                <div *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <a data-toggle="modal" data-target="#exampleModal" class="refund_policy">Cancellation Policy</a>
+                                                <div
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                        class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div>
 
                                             <!-- modalbox -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog refundpol" role="document">
                                                     <div class="modal-content">
                                                         <!-- <div class="modal-header">
@@ -1004,16 +1027,26 @@
                                                             </button>
                                                         </div> -->
                                                         <div class="modal-body pt-8 pb-0 refund_size">
-                                                                <span>Note:</span> Jaldee is not responsible for the transactions between Consumer and Provider.
-                                                                <ul>
-                                                                  <li>Consumers can cancel the booking anytime</li>
-                                                                  <li>If the consumer cancels the appointment, 3% will be deducted from the amount(which includes Jaldee service charges and Online Gateway fees).</li>
-                                                                  <li>Refund will be received directly to the consumer’s bank account after he/she cancels the future bookings.</li>
-                                                                  <li>If the booking is cancelled on the date of booking, refund will not be processed automatically(i.e Consumer must inform the provider to initiate the refund)</li>
-                                                                </ul>
+                                                            <span>Note:</span> Jaldee is not responsible for the
+                                                            transactions between Consumer and Provider.
+                                                            <ul>
+                                                                <li>Consumers can cancel the booking anytime</li>
+                                                                <li>If the consumer cancels the appointment, 3% will be
+                                                                    deducted from the amount(which includes Jaldee
+                                                                    service charges and Online Gateway fees).</li>
+                                                                <li>Refund will be received directly to the consumer’s
+                                                                    bank account after he/she cancels the future
+                                                                    bookings.</li>
+                                                                <li>If the booking is cancelled on the date of booking,
+                                                                    refund will not be processed automatically(i.e
+                                                                    Consumer must inform the provider to initiate the
+                                                                    refund)</li>
+                                                            </ul>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                                            <button type="button"
+                                                                class="btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1023,9 +1056,9 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-2"
+                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
-                                                    Previous
+                                                    Go Back
                                                 </button>
                                             </div>
                                             <div>
@@ -1033,8 +1066,7 @@
                                                     Cancellation Policy
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')"
-                                                    class="btn btn-success font-weight-bold text-uppercase px-9 py-2">
-                                                    
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>

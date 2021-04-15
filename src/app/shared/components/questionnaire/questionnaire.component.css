@@ -1,13 +1,6 @@
 .question-box {
     margin-top: 10px;
 }
-@media (min-width: 768px) {
-    .quest-outer {
-        width: 50%;
-        float: left;
-        height: 120px;
-    }
-}
 .quest-outer {
     padding: 10px;
 }
@@ -21,4 +14,58 @@
 }
 ::ng-deep .mat-checkbox-layout {
     font-weight: normal !important;
+}
+.force_center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.input-group-text {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3F4254;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #F3F6F9 !important;
+    border: 1px solid #E4E6EF !important;
+    border-radius: 0.42rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+}
+.w_100 {
+    width: 100%;
+}
+.img_fit {
+    width: 120px;
+    height: 120px;
+}
+.my-5 .card {
+    /* box-shadow: 0 0 10px rgb(0 0 0 / 22%) !important; */
+}
+.dropzone .dropzone-default {
+    border: 1px dashed #EBEDF3 !important;
+}
+.select-box {
+    padding: 10px !important;
+    border: 1px solid #E4E6EF !important;
+    border-radius: 0.42rem !important;
+}
+.normal-btn {
+    padding: 5px 20px;
+}
+.mgn-0 {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 10px !important;
+}
+.quest {
+    font-size: 1.1rem !important;
 }

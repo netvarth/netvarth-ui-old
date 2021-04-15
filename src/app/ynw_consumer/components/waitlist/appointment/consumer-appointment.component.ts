@@ -21,12 +21,13 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
-import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -217,6 +218,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     googleMapUrl;
     selectedDate;
     private subs = new SubSink();
+    questionnaireLoaded = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -234,6 +236,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         private dateTimeProcessor: DateTimeProcessor,
+        private s3Processor: S3UrlProcessor,
         @Inject(DOCUMENT) public document,
         public dialog: MatDialog) {
         this.subs.sink = this.route.queryParams.subscribe(
@@ -761,7 +764,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.payEmail !== '') {
             this.waitlist_for[0]['email'] = this.payEmail;
         }
-        this.getConsumerQuestionnaire();
+        // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.waitlist_for.length === 0) {
@@ -993,6 +996,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id, 'init');
                     if (this.type != 'reschedule') {
                         this.getConsumerQuestionnaire();
+                    } else {
+                        this.questionnaireLoaded = true;
                     }
                 }
                 this.api_loading1 = false;
@@ -1034,7 +1039,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
-        console.log(this.selectedMessage);
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
@@ -1047,7 +1051,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
-                    console.log(true);
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
@@ -1089,32 +1092,131 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        this.retval = this.sharedFunctionobj.getS3Url()
-            .then(
-                res => {
-                    this.s3url = res;
-                    this.getbusinessprofiledetails_json('businessProfile', true);
-                    this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('departmentProviders', true);
-                    this.getbusinessprofiledetails_json('coupon', true);
-                    this.getbusinessprofiledetails_json('providerCoupon', true);
-                    this.getbusinessprofiledetails_json('appointmentsettings', true);
-                    if (!this.terminologiesjson) {
-                        this.getbusinessprofiledetails_json('terminologies', true);
-                    } else {
-                        if (this.terminologiesjson.length === 0) {
-                            this.getbusinessprofiledetails_json('terminologies', true);
-                        } else {
-                            this.wordProcessor.setTerminologies(this.terminologiesjson);
-                        }
+        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+            null, accountS3List).subscribe(
+                (accountS3s) => {
+                    if (accountS3s['settings']) {
+                        this.processS3s('settings', accountS3s['settings']);
                     }
-                    this.api_loading1 = false;
-                },
-                () => {
+                    if (accountS3s['appointmentsettings']) {
+                        this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+                    }
+                    if (accountS3s['terminologies']) {
+                        this.processS3s('terminologies', accountS3s['terminologies']);
+                    }
+                    if (accountS3s['coupon']) {
+                        this.processS3s('coupon', accountS3s['coupon']);
+                    }
+                    if (accountS3s['providerCoupon']) {
+                        this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                    }
+                    if (accountS3s['departmentProviders']) {
+                        this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+                    }
+                    if (accountS3s['businessProfile']) {
+                        this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    }
                     this.api_loading1 = false;
                 }
             );
     }
+    processS3s(type, res) {
+        let result = this.s3Processor.getJson(res);
+        switch (type) {
+            case 'settings': {
+                this.settingsjson = result;
+                this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+                break;
+            }
+            case 'appointmentsettings': {
+                this.appointmentSettings = result;
+                break;
+            }
+            case 'terminologies': {
+                this.terminologiesjson = result;
+                this.wordProcessor.setTerminologies(this.terminologiesjson);
+                break;
+            }
+            case 'businessProfile': {
+                this.businessjson = result;
+                this.accountType = this.businessjson.accountType;
+                if (this.accountType === 'BRANCH') {
+                    this.getProviderDepart(this.businessjson.id);
+                }
+                this.domain = this.businessjson.serviceSector.domain;
+                if (this.domain === 'foodJoints') {
+                    this.note_placeholder = 'Item No Item Name Item Quantity';
+                    this.note_cap = 'Add Note / Delivery address';
+                } else {
+                    this.note_placeholder = '';
+                    this.note_cap = 'Add Note';
+                }
+                this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+                break;
+            }
+            case 'coupon': {
+                this.s3CouponsList.JC = result;
+                if (this.s3CouponsList.JC.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'providerCoupon': {
+                this.s3CouponsList.OWN = result;
+                if (this.s3CouponsList.OWN.length > 0) {
+                    this.showCouponWB = true;
+                }
+                break;
+            }
+            case 'departmentProviders': {
+                let deptProviders: any = [];
+                deptProviders = result;
+                if (!this.filterDepart) {
+                    this.users = deptProviders;
+                } else {
+                    deptProviders.forEach(depts => {
+                        if (depts.users.length > 0) {
+                            this.users = this.users.concat(depts.users);
+                        }
+                    });
+                }
+                if (this.selectedUserParam) {
+                    this.setUserDetails(this.selectedUserParam);
+                }
+                break;
+            }
+        }
+    }
+
+    // gets3curl() {
+
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('departmentProviders', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 this.getbusinessprofiledetails_json('providerCoupon', true);
+    //                 this.getbusinessprofiledetails_json('appointmentsettings', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
     // gets the various json files based on the value of "section" parameter
     getbusinessprofiledetails_json(section, modDateReq: boolean) {
         let UTCstring = null;
@@ -1251,7 +1353,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             if (found) {
                 this.couponvalid = true;
-                this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
+                 this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
@@ -1520,7 +1622,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.bookStep++;
+                        if (this.bookStep === 2) {
+                            this.validateQuestionnaire();
+                        } else {
+                            this.bookStep++;
+                        }
                     } else {
                         this.bookStep = 3;
                     }
@@ -1656,7 +1762,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files.files) {
+            for (const pic of this.questionAnswers.files) {
                 dataToSend.append('files', pic, pic['name']);
             }
         }
@@ -1677,6 +1783,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
+            this.questionnaireLoaded = true;
         });
     }
     checkCouponvalidity() {
@@ -1747,28 +1854,43 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
         }
-    const param = { 'account': this.account_id };
-    this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
-        .subscribe(data => {
-            this.paymentDetails = data;
-        },
-            error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            });
-}
-showJCCouponNote(coupon) {
-    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
-    } else {
-        if (coupon.value.value === '0.0') {
-            this.dialog.open(JcCouponNoteComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
-            disableClose: true,
-            data: {
-                jCoupon: coupon
+        const param = { 'account': this.account_id };
+        this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
+            .subscribe(data => {
+                this.paymentDetails = data;
+            },
+                error => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+    }
+    showJCCouponNote(coupon) {
+        if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+        } else {
+            if (coupon.value.value === '0.0') {
+                this.dialog.open(JcCouponNoteComponent, {
+                    width: '50%',
+                    panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+                    disableClose: true,
+                    data: {
+                        jCoupon: coupon
+                    }
+                });
             }
-            });
         }
     }
-  }
+    validateQuestionnaire() {
+        if (this.questionAnswers && this.questionAnswers.answers) {
+            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+                if (data.length === 0) {
+                    this.bookStep++;
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        } else {
+            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
+            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
+        }
+    }
 }

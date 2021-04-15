@@ -3183,7 +3183,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
-    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: checkin.service.id, waitlistMode: checkin.waitlistMode } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

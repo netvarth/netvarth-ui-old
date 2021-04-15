@@ -14,9 +14,9 @@ export class SharedServices {
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }
-  getUIConfig(s3Url: any, UTCstring) {
-    const url = s3Url + '/UIConfig/config.json?modifiedDate=' + UTCstring;
-    return this.servicemeta.httpGet(url);
+  getUIConfig(s3Url: any) {
+    // const url = 'https://s3-us-west-1.amazonaws.com/jaldeelocal/UIConfig/config.json?modifiedDate=' + UTCstring;
+    return this.servicemeta.httpGet(s3Url);
   }
   adminLogin(body, type) {
     return this.servicemeta.httpPost(type + '/login', body);
@@ -999,6 +999,7 @@ addApptAdvancePayment(param, body) {
   const url = 'consumer/appointment/advancePayment';
   return this.servicemeta.httpPut(url, body, null, param);
 }
+// Questionnaire Urls
 getConsumerQuestionnaire(serviceId, consumerId, accountId) {
   const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
   return this.servicemeta.httpGet(url);
@@ -1011,24 +1012,20 @@ submitConsumerApptQuestionnaire(body, uuid, accountId) {
   const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
-resubmitConsumerQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
-submitProviderApptQuestionnaire(body, uuid) {
-  const url = 'provider/appointment/questionnaire/' + uuid;
+resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPost(url, body);
 }
-resubmitProviderQuestionnaire(body, uuid) {
-  const url = 'provider/questionnaire/resubmit/' + uuid;
-  return this.servicemeta.httpPost(url, body);
+validateConsumerQuestionnaire(body, accountId) {
+  const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
+  return this.servicemeta.httpPut(url, body);
 }
-submitProviderWaitlistQuestionnaire(body, uuid) {
-  const url = 'provider/waitlist/questionnaire/' + uuid;
-  return this.servicemeta.httpPost(url, body);
-}
-getProviderQuestionnaire(serviceId, consumerId, channel) {
-  const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
-  return this.servicemeta.httpGet(url);
+validateConsumerQuestionnaireResbumit(body, accountId) {
+  const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
+  return this.servicemeta.httpPut(url, body);
 }
 }

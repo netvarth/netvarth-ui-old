@@ -158,41 +158,25 @@ textarea {
     height: 20px !important;
     width: 20px !important;
 }
-.reply-btn {
-    display: none;
-}
 .rounded:hover .reply-btn {
     display: inline-block !important;
 }
 .reply-btn {
-    background: transparent !important;
     border: none !important;
     position: absolute !important;
-    margin-left: -5px !important;
-    margin-top: -15px !important;
+    margin-left: -15px !important;
+    margin-top: -10px !important;
 }
-.view-btn {
-    padding: 5px 20px;
-    border: 2px solid #1e4079;
-    color: #1e4079;
-    font-weight: bold;
+@media(min-width: 600px) {
+    .reply-btn {
+        display: none;
+    }
 }
-.enquiry-section {
-    padding: 20px;
+.bg-light-primary .reply-btn {
+    background: #f9e2a7 !important;
 }
-.enq-box {
-    display: flex;
-    margin-bottom: 10px;
-}
-.enq-box div {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-.cont2, .cont3 {
-    width: 40%;
-}
-.cont4 {
-    width: 15%;
+.bg-light-success .reply-btn {
+    background: #C9F7F5 !important
 }
 .minhgt-60 {
     min-height: 60vh;
@@ -201,3 +185,48 @@ textarea {
     margin: auto;
     text-align: center;
 }
+.fa-times {
+    float: right;
+    color: black !important;
+    margin: auto;
+}
+.reply-section {
+    display: flex;
+    margin-bottom: 10px;
+}
+.reply-msg {
+    font-size: .9rem;
+    white-space: pre-wrap;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+.mt-2 .reply-msg {
+    background: #ccc;
+    padding: 5px 20px 5px 0;
+    cursor: pointer;
+}
+.reply-section .username {
+    color: darkblue;
+}
+.reply-section .close {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+.reply-section .main-sec {
+    width: 100%;
+}
+
+.blinkelem {
+    animation-name: pulse;
+    animation-duration: 3s;
+  }
+  
+  @keyframes pulse {
+    50% {
+        opacity: 0.2;
+    }
+  }

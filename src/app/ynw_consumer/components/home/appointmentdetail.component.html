@@ -36,12 +36,13 @@
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(appt.providerAccount)">
                                                 {{appt.providerAccount.businessName | capitalizeFirst}}
-                                                &nbsp;<div *ngIf="checkIfFav(appt.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(appt.providerAccount, $event)"></div>
+                                                &nbsp;<div *ngIf="checkIfFav(appt.providerAccount.id)"
+                                                    class="icon-favourite-filled"
+                                                    (click)="doDeleteFavProvider(appt.providerAccount, $event)"></div>
                                                 <div *ngIf="!checkIfFav(appt.providerAccount.id)" class="icon-favourite"
-                                                (click)="addFavProvider(appt.providerAccount.id, $event)"></div>
+                                                    (click)="addFavProvider(appt.providerAccount.id, $event)"></div>
                                             </h3>
-                                            <a class="loc-cls" [href]="appt.location.googleMapUrl"
-                                            target="_blank">
+                                            <a class="loc-cls" [href]="appt.location.googleMapUrl" target="_blank">
                                                 <i class="fa fa-map-marker"></i>
                                                 {{appt.location.place | capitalizeFirst}}
                                             </a>
@@ -59,7 +60,10 @@
                                                     {{appt.service.name | capitalizeFirst}} <span
                                                         *ngIf="appt.service.deptName">({{appt.service.deptName}})
                                                     </span>
-                                                    <a *ngIf="appt.apptStatus !== 'Cancelled' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{appt.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
+                                                    <a *ngIf="appt.apptStatus !== 'Cancelled' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                        class="joinMeeting"
+                                                        href="{{appt.service.virtualCallingModes[0].value}}"
+                                                        target="blank">Join Meeting</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -70,8 +74,8 @@
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item" *ngIf="appt.appmtFor[0].firstName">
                                                 <span class="item-head">Booking for</span>
-                                                <span
-                                                    class="item-label-val">{{appt.appmtFor[0].firstName | capitalizeFirst}}
+                                                <span class="item-label-val">{{appt.appmtFor[0].firstName |
+                                                    capitalizeFirst}}
                                                     {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
                                             <div class="each-item">
@@ -80,11 +84,13 @@
                                             </div>
                                             <div class="each-item" *ngIf="appt.phoneNumber">
                                                 <span class="item-head">Phone No</span>
-                                                <span class="item-label-val">{{appt.countryCode}} {{appt.phoneNumber}}</span>
+                                                <span class="item-label-val">{{appt.countryCode}}
+                                                    {{appt.phoneNumber}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
-                                                <span class="item-label-val price rupee-font"> {{appt.amountPaid| currency:'&#8377;'}}</span>
+                                                <span class="item-label-val price rupee-font"> {{appt.amountPaid|
+                                                    currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
@@ -135,7 +141,7 @@
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
                                                 class="fl-left">View less</a></span>
                                         <span class="opt-actions" (click)="gotoActions(appt)"><a>Actions</a></span>
-                                        </div>
+                                    </div>
 
                                     <!-- Instructions,messages,notes -->
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
@@ -143,8 +149,8 @@
                                             <mat-tab label="Instructions">
                                                 <span *ngIf="appt.service && appt.service.postInfoEnabled">
                                                     <h6> {{appt.service.postInfoTitle}} </h6>
-                                                <span [innerHTML]="appt.service.postInfoText">
-                                                </span>
+                                                    <span [innerHTML]="appt.service.postInfoText">
+                                                    </span>
                                                 </span>
                                                 <span *ngIf="appt.service && !appt.service.postInfoEnabled">No
                                                     Instructions</span>
@@ -172,6 +178,75 @@
                                         </mat-tab-group>
                                     </div>
                                 </div>
+
+                                <!-- Questionnaire starts-->
+                                <div class="card"
+                                    *ngIf="appt && appt.questionnaire.questionnaire && appt.questionnaire.questionnaire.length > 0">
+
+                                    <div class="bg-cover" style="background: #ffefc9;">
+                                        <div class="container pad-10">
+                                            <div class="mt-80">
+                                                <h3 class="">
+                                                    Questionnaire
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-details pad-10">
+                                        <app-questionnaire [source]="'consAppt'" [uuid]="appt.uid"></app-questionnaire>
+                                    </div>
+                                    <!-- <div class="c-details pad-10">
+                                        <div class="quest-answ-box col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
+                                            *ngFor="let question of appt.questionnaire.questionnaire">
+                                            <ng-container *ngIf="question.answer">
+                                                <div class="question">
+                                                    <span class="svg-icon svg-icon-success">
+                                                        <svg class="svg-align" xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                                <path
+                                                                    d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                                <path
+                                                                    d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                    fill="#000000" fill-rule="nonzero" opacity="0.3"
+                                                                    transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) ">
+                                                                </path>
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                    <span>{{question.answer.labelName}}</span>
+                                                </div>
+                                                <div class="answer ansr"
+                                                    *ngIf="question.question.fieldDataType !== 'Boolean' && question.question.fieldDataType !== 'Date' && question.question.fieldDataType !== 'FileUpload'">
+                                                    {{question.answer.answer}}</div>
+                                                <div class="answer ansr"
+                                                    *ngIf="question.question.fieldDataType === 'Boolean'">
+                                                    {{(question.answer.answer) ?
+                                                    'Yes' : 'No'}}</div>
+                                                <div class="answer ansr"
+                                                    *ngIf="question.question.fieldDataType === 'Date'">
+                                                    {{question.answer.answer |
+                                                    date:newDateFormat}}</div>
+                                                <div class="answer ansr"
+                                                    *ngIf="question.question.fieldDataType === 'FileUpload'">
+                                                    <div class="qnr-img"
+                                                        *ngFor="let img of question.answer.attachment; let i = index">
+                                                        {{img.caption}}
+                                                        <div class="pointer-cursor"
+                                                            (click)="openImage(question.answer.attachment, i)">
+                                                            <img [src]="img.s3path">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <!-- Questionnaire end-->
                             </div>
                         </div>
                     </div>
@@ -180,3 +255,6 @@
         </div>
     </div>
 </section>
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

@@ -12,28 +12,8 @@
             <div class="card p0">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
-                    <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
-
-                        <!--begin::Enquiry-->
-                        <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="showEnquiry">
-                            <div class="enq-box" *ngFor="let enquiry of enquiries">
-                                <div class="user-name cont1">
-                                    {{getUserShort(enquiry.accountName)}}
-                                </div>
-                                <div class="cont2 mgn-lt-5">
-                                    {{enquiry.accountName}}
-                                </div>
-                                <div class="cont3">
-                                    {{enquiry.providerName}}
-                                </div>
-                                <div class="cont4">
-                                    <span class="view-btn">View</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Enquiry-->
-                        <div class="d-flex flex-row minhgt-60" *ngIf="!showEnquiry && messages.length==0">
+                        <div class="d-flex flex-row minhgt-60" *ngIf="messages.length==0">
                             <div class="no-msg-section">
                                 <div class="nomsg-img mgn-bt-20"></div>
                                 Start messaging to {{customer_label}}s
@@ -41,12 +21,12 @@
                                     (click)="gotoCustomers()"> Go to patients </button>
                             </div>
                         </div>
-                        <!--begin::Chat-->
-                        <div class="d-flex flex-row" *ngIf="!showEnquiry && messages.length>0">
-                            <!--begin::Aside-->
+                        <div class="d-flex flex-row" *ngIf="messages.length>0">
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
-                                <!--begin::Card-->
                                 <div class="card card-custom">
+                                    <div class="pad-10">
+                                        <button mat-flat-button class="mgn-rt-10 normal-btn width-100" (click)="gotoEnquiry()">Enquiry</button>
+                                    </div>
                                     <div class="top-buttons"
                                         *ngIf="userDet && userDet.accountType === 'BRANCH' && users.length > 0 && userWithMsgCount > 1">
                                         <button mat-flat-button class="mgn-rt-10" (click)="changemsgDisplayType('all')"
@@ -62,12 +42,9 @@
                                             selectedUser.firstName + ' ' + selectedUser.lastName}}
                                         </span>
                                     </div>
-                                    <!--begin::Body-->
                                     <div class="card-body">
-                                        <!--begin:Users-->
                                         <div class="scroll scroll-pull over-scroll"
                                             [ngStyle]="{'height.px': userHeight}">
-                                            <!--begin:User-->
                                             <ng-container
                                                 *ngIf="msgDisplay=='all' || selectedUser.userType === 'PROVIDER'">
                                                 <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder"
@@ -125,15 +102,10 @@
                                                     </div>
                                                 </ng-container>
                                             </ng-container>
-                                            <!--end:User-->
                                         </div>
-                                        <!--end:Users-->
                                     </div>
-                                    <!--end::Body-->
                                 </div>
-                                <!--end::Card-->
                             </div>
-                            <!--end::Aside-->
                             <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
                                 *ngIf="selectedCustomer == '' && !small_device_display">
                                 <ng-container
@@ -146,68 +118,56 @@
                                     <div class="null-text">Select a chat to start messaging</div>
                                 </ng-template>
                             </div>
-                            <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                                 *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
-                                <!--begin::Card-->
                                 <div class="card card-custom">
-                                    <!--begin::Header-->
                                     <div class="card-header align-items-center px-4 py-3">
                                         <div class="text-center flex-grow-1">
                                             <div class="text-left flex-grow-1">
-                                                <!--begin::Aside Mobile Toggle-->
                                                 <i (click)="showChatSection()"
                                                     class="fa fa-arrow-left pointer-cursor d-md-none"></i>
-                                                <!--end::Aside Mobile Toggle-->
                                             </div>
                                             <div class="text-dark-75 font-weight-bold font-size-h5">
                                                 {{getUserName(selectedCustomer, 'customer')}}</div>
                                         </div>
                                     </div>
-                                    <!--end::Header-->
-
-
-                                    <!-- <div class="top-buttons" *ngIf="getEnquiry().length > 0">
-                                        <button mat-flat-button class="mgn-rt-10" (click)="changeMsgType('all')"
-                                            [class.selected-btn]="type=='all'">All</button>
-                                        <button mat-flat-button [class.selected-btn]="type=='enquiry'"
-                                            (click)="changeMsgType('enquiry')">Enquiry</button>
-                                    </div> -->
-
-
-                                    <!--begin::Body-->
                                     <div class="card-body no-padding-small">
-                                        <!--begin::Scroll-->
                                         <div class="scroll scroll-pull over-scroll" #scrollMe
                                             [ngStyle]="{'height.px': msgHeight}">
-                                            <!--begin::Messages-->
                                             <div class="messages" *ngFor="let msg of selectedUserMessages">
-                                                <!--begin::Message In-->
                                                 <div *ngIf="msg.messagestatus==='in'"
                                                     class="d-flex flex-column mb-5 align-items-start">
                                                     <div class="d-flex align-items-center">
                                                         <div>
-                                                            <!-- <span class="text-muted font-size-sm">{{getMsgType(msg)}}</span> -->
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+
+                                                                <span
+                                                                    class="greenc font-size-sm">{{getMsgType(msg)}}</span>
+    
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
-                                                        <!-- <button class="reply-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                                    <div (click)="replyForMobile()"
+                                                        class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-right msg-width">
+
+                                                        <button class="reply-btn" mat-icon-button
+                                                            [matMenuTriggerFor]="menu" *ngIf="showReply"
+                                                            aria-label="Example icon-button with a menu">
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                                          </button>
-                                                          <mat-menu #menu="matMenu">
+                                                        </button>
+                                                        <mat-menu #menu="matMenu" (click)="stopprop($event);replytoMsg(msg)">
                                                             <button mat-menu-item>
-                                                              <span>Reply</span>
+                                                                <span>Reply</span>
                                                             </button>
-                                                          </mat-menu> -->
-                                                        <div [innerHTML]="msg.msg | nl2br"></div>
+                                                        </mat-menu>
+                                                        
+                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId" (click)="stopprop($event);gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId).msg}}</div>
+                                                        <div [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
-                                                                <a (click)="openImage(msg.attachements, i)"
+                                                                <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                                                     *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
@@ -217,32 +177,39 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--end::Message In-->
-                                                <!--begin::Message Out-->
                                                 <div *ngIf="msg.messagestatus==='out'"
                                                     class="d-flex flex-column mb-5 align-items-end">
                                                     <div class="d-flex align-items-center">
                                                         <div>
+
+                                                            <span
+                                                                class="greenc font-size-sm">{{getMsgType(msg)}}</span>
+
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                                         </div>
                                                     </div>
-                                                    <div
+                                                    <div (click)="replyForMobile()"
                                                         class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
-                                                        <!-- <button class="reply-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+
+                                                        <button class="reply-btn" mat-icon-button
+                                                            [matMenuTriggerFor]="menu"
+                                                            aria-label="Example icon-button with a menu">
                                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                                          </button>
-                                                          <mat-menu #menu="matMenu">
-                                                            <button mat-menu-item>
-                                                              <span>Reply</span>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item (click)="stopprop($event);replytoMsg(msg)">
+                                                                <span>Reply</span>
                                                             </button>
-                                                          </mat-menu> -->
-                                                        <div [innerHTML]="msg.msg | nl2br"></div>
+                                                        </mat-menu>
+
+                                                        <div class="reply-msg" *ngIf="msg.replyMsgId" (click)="stopprop($event);gotoReplyMsgSection(msg.replyMsgId)">{{getReplyMsgbyId(msg.replyMsgId).msg}}</div>
+                                                        <div [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
-                                                                <a (click)="openImage(msg.attachements, i)"
+                                                                <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                                                     *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
@@ -252,20 +219,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--end::Message Out-->
                                             </div>
-                                            <!--end::Messages-->
                                             <div class="loading" *ngIf="!scrollDone">
                                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                             </div>
                                         </div>
-                                        <!--end::Scroll-->
                                     </div>
-                                    <!--end::Body-->
-                                    <!--begin::Footer-->
                                     <div class="card-footer align-items-center">
-                                        <!--begin::Compose-->
-                                        <div class="d-flex align-items-center justify-content-between mt-5">
+
+<div class="reply-section" *ngIf="replyMsg" #reply>
+    <div class="main-sec">
+    <div class="username">{{(replyMsg.messagestatus === 'out') ? 'You' : replyMsg.accountName}}</div>
+   <div class="reply-msg"> {{replyMsg.msg}}</div>
+</div>
+<div class="close">
+<svg (click)="closeReply()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"></path></svg>
+</div>
+</div>
+
+                                        <div class="d-flex align-items-center justify-content-between">
                                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                                                 class="form-control border-0 p-0" placeholder="Type a message *"
                                                 [(ngModel)]="message"></textarea>
@@ -302,17 +274,11 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <!--begin::Compose-->
                                     </div>
-                                    <!--end::Footer-->
                                 </div>
-                                <!--end::Card-->
                             </div>
-                            <!--end::Content-->
                         </div>
-                        <!--end::Chat-->
                     </div>
-                    <!--end::Entry-->
                 </div>
             </div>
         </div>

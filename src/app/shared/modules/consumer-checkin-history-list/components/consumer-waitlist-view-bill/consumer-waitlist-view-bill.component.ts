@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
@@ -9,11 +9,13 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { S3UrlProcessor } from '../../../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../../../node_modules/subsink';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
 })
-export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
+export class ViewConsumerWaitlistCheckInBillComponent implements OnInit, OnDestroy {
   @ViewChild('itemservicesearch') item_service_search;
   tooltipcls = '';
   new_cap = Messages.NEW_CAP;
@@ -89,6 +91,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   showBillNotes = false;
   paytmEnabled = false;
   type;
+  private subs = new SubSink();
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
@@ -99,6 +102,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer,
+    private s3Processor: S3UrlProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.checkin = this.data.checkin || null;
@@ -122,7 +126,9 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.getPrePaymentDetails();
     this.getPaymentModes();
   }
-
+ngOnDestroy() {
+  this.subs.unsubscribe();
+}
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       const datearr = this.bill_data.createdDate.split(' ');
@@ -343,10 +349,10 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
           this.clearJCoupon();
           resolve();
         },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            reject(error);
-          });
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          reject(error);
+        });
     });
   }
   /**
@@ -584,15 +590,26 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
   getCouponList() {
-    const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    this.sharedfunctionObj.getS3Url()
-      .then(
-        s3Url => {
-          this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-            .subscribe(res => {
-              this.couponList = res;
-            });
-        });
+    // const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+    // this.sharedfunctionObj.getS3Url()
+    //   .then(
+    //     s3Url => {
+
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.checkin.providerAccount.uniqueId,
+      null, 'coupon').subscribe(
+        (accountS3s) => {
+          if (accountS3s['coupon']) {
+            this.couponList = this.s3Processor.getJson(accountS3s['coupon']);
+          }
+        }
+      );
+
+
+    // this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
+    //   .subscribe(res => {
+    //     this.couponList = res;
+    //   });
+    // });
   }
   checkCouponValid(couponCode) {
     let found = false;
@@ -625,3 +642,4 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     }
   }
 }
+

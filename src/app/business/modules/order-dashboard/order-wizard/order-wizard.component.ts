@@ -23,6 +23,8 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
  
 
 
@@ -169,6 +171,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   catalogExpired=false;
   store_availables: any;
   home_availables: any;
+  private subs = new SubSink();
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -183,7 +186,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor) {
 
     this.activated_route.queryParams
     .pipe(takeUntil(this.onDestroy$))
@@ -267,20 +271,34 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   public ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
+    this.subs.unsubscribe();
   }
   gets3curl() {
     this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
-          this.api_loading1 = false;
+    
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.accountId, null, 'coupon').subscribe(
+      (accountS3s) => {
+        if (accountS3s['coupon']) {
+          this.s3CouponsList = this.s3Processor.getJson(accountS3s['coupon']);
+          if (this.s3CouponsList.length > 0) {
+            this.showCouponWB = true;
+          }
         }
-      );
+      }, () => { },
+      () => {
+      });
+
+    // this.retval = this.sharedFunctionobj.getS3Url()
+    //   .then(
+    //     res => {
+    //       this.s3url = res;
+    //       this.getbusinessprofiledetails_json('coupon', true);
+    //       this.api_loading1 = false;
+    //     },
+    //     () => {
+    //       this.api_loading1 = false;
+    //     }
+    //   );
   }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
@@ -301,23 +319,24 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   toggleCoupon() {
     this.showCoupon = !this.showCoupon;
   }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
-    .pipe(takeUntil(this.onDestroy$))
-      .subscribe(res => {
-        this.s3CouponsList = res;
-        if (this.s3CouponsList.length > 0) {
-          this.showCouponWB = true;
-        }
-      },
-        () => {
-        }
-      );
-  }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
+  //   .pipe(takeUntil(this.onDestroy$))
+  //     .subscribe(res => {
+  //       this.s3CouponsList = res;
+  //       console.log(this.s3CouponsList);
+  //       if (this.s3CouponsList.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]
@@ -686,6 +705,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.removeFromCart(item);
   }
   addToCart(Item) {
+    console.log(JSON.stringify(Item));
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
@@ -808,33 +828,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
 
 
   }
-  // getOrderAvailableDatesForPickup() {
-  //   const _this = this;
-
-  //   _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.accountId)
-  //   .pipe(takeUntil(this.onDestroy$))
-  //     .subscribe((data: any) => {
-  //       const availables = data.filter(obj => obj.isAvailable);
-  //       const availDates = availables.map(function (a) { return a.date; });
-  //       _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
-  //         return index === self.indexOf(elem);
-  //       });
-  //     });
-  // }
-  // getOrderAvailableDatesForHome() {
-  //   const _this = this;
-
-  //   _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.accountId)
-  //   .pipe(takeUntil(this.onDestroy$))
-  //     .subscribe((data: any) => {
-  //       const availables = data.filter(obj => obj.isAvailable);
-  //       const availDates = availables.map(function (a) { return a.date; });
-  //       _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
-  //         return index === self.indexOf(elem);
-  //       });
-  //     });
-  // }
-  
   getOrderAvailableDatesForPickup() {
     const _this = this;
 
@@ -874,37 +867,6 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-
-  // getAvailabilityByDate(date) {
-  //   this.sel_checkindate = date;
-  //   const cday = new Date(this.sel_checkindate);
-  //   const currentday = (cday.getDay() + 1);
-  //   if (this.choose_type === 'store') {
-  //     const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
-
-  //     if (storeIntervals.includes(currentday)) {
-  //       this.isfutureAvailableTime = true;
-  //       this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-  //       console.log(this.nextAvailableTimeQueue);
-  //       this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-  //       this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
-  //     } else {
-  //       this.isfutureAvailableTime = false;
-  //     }
-
-  //   } else {
-  //     const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
-  //     if (homeIntervals.includes(currentday)) {
-  //       this.isfutureAvailableTime = true;
-  //       this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-  //       console.log(this.nextAvailableTimeQueue);
-  //       this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-  //       this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
-  //     } else {
-  //       this.isfutureAvailableTime = false;
-  //     }
-  //   }
-  // }
   getAvailabilityByDate(date) {
     console.log(date);
     console.log(this.storeAvailableDates);

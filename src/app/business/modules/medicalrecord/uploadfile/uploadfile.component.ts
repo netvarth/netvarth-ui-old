@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../../app.component';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { MrfileuploadpopupComponent } from './mrfileuploadpopup/mrfileuploadpopup.component';
+import { ShowuploadfileComponent } from './showuploadfile/showuploadfile.component';
 
 
 @Component({
@@ -46,7 +45,7 @@ export class UploadFileComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Upload file';
+  heading = 'Uploaded files';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
@@ -72,6 +71,15 @@ export class UploadFileComponent implements OnInit {
     ]
   };
   customer_label = '';
+  msgDisplay = 'media';
+  loading = false;
+  windowScrolled: boolean;
+  topHeight = 0;
+  typeofFiles: any = [];
+  uploadFiles: any = [];
+  mediafiles: any = [];
+  docfiles: any = [];
+  fileviewdialogRef: any;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
@@ -81,15 +89,40 @@ export class UploadFileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
       this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    // this.activatedRoute.queryParams.subscribe(queryParams => {
-    //   if (queryParams.mode) {
-    //     const type = queryParams.mode;
-    //     if (type === 'view') {
-    //       this.heading = 'Update Prescription';
-    //     }
-    //   }
+    // this.activatedRoute.paramMap.subscribe(params => {
+    //   const medicalrecordId = params.get('mrId');
+    //   this.mrId = parseInt(medicalrecordId, 0);
+    //   console.log(this.mrId)
     // });
 
+    
+
+  }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('qHeader').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('tabHeader').offsetHeight;
+    }
+    this.topHeight = qHeader + tabHeader;
+    if (header) {
+      // if (window.pageYOffset > (this.topHeight + 50)) {
+      //   header.classList.add('sticky');
+      // } else {
+      //   header.classList.remove('sticky');
+      // }
+
+    }
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
   }
 
   ngOnInit() {
@@ -104,9 +137,9 @@ export class UploadFileComponent implements OnInit {
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
     this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
-    // if (this.mrId) {
-    //   this.getMrprescription(this.mrId);
-    // }
+    if (this.mrId !== 0) {
+      this.getMedicalRecordUsingId(this.mrId);
+    }
 
 
   }
@@ -114,76 +147,34 @@ export class UploadFileComponent implements OnInit {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
 
-  getMrprescription(mrId) {
-    this.provider_services.getMRprescription(mrId)
-      .subscribe((data) => {
-        this.uploadImages = data;
-        console.log(data);
-        this.image_list_popup = [];
-        for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true , 'url': pic.url , 'type': pic.type};
-          this.selectedMessage.files.push(imgdet);
-          const imgobj = new Image(0,
-            { // modal
-              img: imgdet.url,
-              description: ''
-            });
-          this.image_list_popup.push(imgobj);
+  getMedicalRecordUsingId(mrId) {
+    this.loading = true;
+    this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
+        if (data) {
+          if (data.mrVideoAudio) {
+            this.uploadFiles = data.mrVideoAudio;
+            console.log(this.uploadFiles);
+            for (let file of this.uploadFiles) {
+              let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'image' || type[0] == 'video' || type[0] =='audio'){
+                this.mediafiles.push(file);
+              } else {
+                this.docfiles.push(file);
+              }
+          }
+          this.loading = false;
+          }
         }
-        console.log(this.selectedMessage.files);
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-
   }
-  openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup[0]);
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
-  onButtonBeforeHook() {
-  }
-  onButtonAfterHook() { }
-
-  filesSelected(event) {
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessage.files.push(file);
-          console.log(this.selectedMessage.files);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-            console.log(this.selectedMessage.base64[0]);
-            this.image_list_popup = [];
-            const imgobj = new Image(0,
-              { // modal
-                img: this.selectedMessage.base64[0],
-                description: ''
-              });
-            this.image_list_popup.push(imgobj);
-          };
-          reader.readAsDataURL(file);
-          this.showSave = true;
-        }
-      }
-    }
-  }
-  imageSize(val) {
-    let imgsize;
-    imgsize = Math.round((val / 1024));
-    return imgsize;
-  }
+ 
+  
 
   uploadpopup() {
     this.uploadfiledialogRef = this.dialog.open(MrfileuploadpopupComponent, {
@@ -205,104 +196,41 @@ export class UploadFileComponent implements OnInit {
   }
 
  
+showFile(file){
+  let type = file.type.split("/");
+  console.log(type[0]);
+  this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: file,
+  });
+  this.fileviewdialogRef.afterClosed().subscribe(result => {
+    if (result) {
 
-  saveImages() {
-    this.disable = true;
-
-    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
-      if (this.selectedMessage.files[ia].view !== true) {
-        this.temarry.files.push(this.selectedMessage.files[ia]);
-
-      }
     }
-    console.log(this.temarry.files);
-    const submit_data: FormData = new FormData();
-    const propertiesDetob = {};
-    let i = 0;
-    for (const pic of this.temarry.files) {
-      console.log(pic);
-      submit_data.append('files', pic, pic['name']);
-      const properties = {
-        'caption': this.temarry.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
-    }
-    const propertiesDet = {
-      'propertiesMap': propertiesDetob
-    };
-    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    submit_data.append('properties', blobPropdata);
-    if (this.mrId) {
-      this.uploadMrPrescription(this.mrId, submit_data);
-    } else {
-      let passingId ;
-      if (this.bookingType === 'FOLLOWUP') {
-        passingId = this.patientId;
-      } else {
-        passingId = this.bookingId;
-      }
-      this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
-        .then((data: number) => {
-          this.mrId = data;
-          console.log(this.mrId);
-          this.uploadMrPrescription(data, submit_data);
-        },
-          error => {
-            this.disable = false;
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-    }
-
-  }
-  uploadMrPrescription(id, submit_data) {
-    this.provider_services.uploadMRprescription(id, submit_data)
-      .subscribe((data) => {
-        this.showSave = false;
-        this.upload_status = 'Uploaded';
-        this.snackbarService.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-      },
-        error => {
-          this.disable = false;
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
-  }
-  deleteTempImage(img, index) {
-    this.showSave = true;
-
-    this.removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'Do you really want to remove the prescription?',
-        'type':'prescription'
-      }
-    });
-    this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (img.view && img.view === true) {
-          this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
-            .subscribe((data) => {
-              this.selectedMessage.files.splice(index, 1);
-            },
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              });
-        } else {
-          this.selectedMessage.files.splice(index, 1);
-          this.selectedMessage.base64.splice(index, 1);
-        }
-      }
-    });
-
-   
-  }
+  });
+}
+  
 
   somethingChanged() {
     this.showSave = true;
   }
-  
+  changemsgDisplayType(type) {
+    this.msgDisplay = type;
+    
+  }
+   scrollToTop() {
+    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  tabChange(event) {
+   
+    //this.loading = true;
+  }
 
 }

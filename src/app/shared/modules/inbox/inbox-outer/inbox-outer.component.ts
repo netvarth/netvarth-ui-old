@@ -58,6 +58,7 @@ export class InboxOuterComponent implements OnInit {
   scrollDone = false;
   cronHandle: Subscription;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  replyMsg;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -155,7 +156,8 @@ export class InboxOuterComponent implements OnInit {
   providerSelection(msgs) {
     this.clearImg();
     this.message = '';
-    this.selectedProvider = msgs.key;
+    this.selectedProvider = msgs.key; 
+    this.replyMsg = null;
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
@@ -187,7 +189,12 @@ export class InboxOuterComponent implements OnInit {
         communicationMessage: this.message
       };
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'CHAT';
+      if (this.replyMsg) {
+        post_data['replyMessageId'] = this.replyMsg.messageId;
+      }
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -199,12 +206,15 @@ export class InboxOuterComponent implements OnInit {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const filter = { 'account': this.selectedUserMessages[0].accountId };
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
             this.message = '';
             this.scrollDone = false;
+            this.replyMsg = null;
             this.getInboxMessages();
             this.clearImg();
             this.sendMessageCompleted = true;
@@ -315,5 +325,12 @@ export class InboxOuterComponent implements OnInit {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
+  }
+  replytoMsg(msg) {
+    this.replyMsg = msg;
+    console.log(this.replyMsg);
+  }
+  closeReply() {
+    this.replyMsg = null;
   }
 }

@@ -297,10 +297,9 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="coupons bus-actions bus-actions-horiz no-padding">
-                                <li
-                                    *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOfferProvider() && frstChckinCupnCunt>0)">
-                                    <i class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
-                                        (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
+                                <li *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOfferProvider() && frstChckinCupnCunt>0) || (s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 )"><i
+                                        class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
+                                        (click)="openCoupons('first')">{{coupon}}</span></li>
                                 <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 "><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{coupon}}</span></li> -->
@@ -336,15 +335,14 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="coup" [matTooltip]="coupon"
-                                    *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
+                                <!-- <li class="coup" [matTooltip]="coupon" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
                                     <a class="like-btn">
                                         <span class="pointer-cursor" (click)="openCoupons()">
                                             <i class="fa fa-tags"></i>
-                                            <!-- {{coupon}} -->
+                                            {{coupon}}
                                         </span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
                                     *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
@@ -385,15 +383,14 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-coup centeralign"
-                                    *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
+                                <!-- <li class="small-devices-coup centeralign" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
                                     <a class="like-btn">
                                         <span class="pointer-cursor" (click)="openCoupons()">
                                             <i class="fa fa-tags"></i>
                                             <span class="display-text">&nbsp;{{coupon}}</span>
                                         </span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a

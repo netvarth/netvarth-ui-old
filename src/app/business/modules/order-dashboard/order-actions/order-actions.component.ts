@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-order-actions',
@@ -40,6 +41,7 @@ export class OrderActionsComponent implements OnInit {
   ordersByLabel: any = [];
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   showApply = false;
+  cancelorderDialog: any;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -115,6 +117,28 @@ export class OrderActionsComponent implements OnInit {
     this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id]);
   }
   changeOrderStatus(status) {
+    console.log(status);
+    if(status === 'Cancelled'){
+      this.cancelorderDialog = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you really want to cancel the order?',
+          'type':'order'
+        }
+      });
+      this.cancelorderDialog.afterClosed().subscribe(result => {
+        if (result) {
+          this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {
+            this.dialogRef.close();
+          },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+        }
+      });
+    } else {
     this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {
       this.dialogRef.close();
     },
@@ -122,6 +146,7 @@ export class OrderActionsComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+}
   getCatalog() {
     this.provider_services.getProviderCatalogs()
       .subscribe(data => {

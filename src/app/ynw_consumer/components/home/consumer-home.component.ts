@@ -28,8 +28,8 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GalleryImportComponent } from '../../../shared/modules/gallery/import/gallery-import.component';
 import { GalleryService } from '../../../shared/modules/gallery/galery-service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image,ButtonType } from '@ks89/angular-modal-gallery';
-import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 
 @Component({
   selector: 'app-consumer-home',
@@ -824,8 +824,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   setWaitlistTimeDetailsProvider(provider, k) {
     if (this.s3url) {
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-      this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
+      // this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
     }
     const locarr = [];
     let i = 0;
@@ -1250,31 +1250,31 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
   // gets the various json files based on the value of "section" parameter
-  getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
-    let UTCstring = null;
-    if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
-      return false;
-    }
-    if (modDateReq) {
-      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    }
-    this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'settings': {
-            this.fav_providers[index]['settings'] = res;
-            break;
-          }
-          case 'terminologies': {
-            this.terminologiesJson = res;
-            break;
-          }
-        }
-      },
-        error => {
-        }
-      );
-  }
+  // getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
+  //   let UTCstring = null;
+  //   if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
+  //     return false;
+  //   }
+  //   if (modDateReq) {
+  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   }
+  //   this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       switch (section) {
+  //         case 'settings': {
+  //           this.fav_providers[index]['settings'] = res;
+  //           break;
+  //         }
+  //         case 'terminologies': {
+  //           this.terminologiesJson = res;
+  //           break;
+  //         }
+  //       }
+  //     },
+  //       error => {
+  //       }
+  //     );
+  // }
   gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
@@ -2158,15 +2158,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   onButtonAfterHook() { }
   gotoQuestionnaire(booking) {
     console.log(booking);
-    let consumerId;
     let uuid;
     let type;
     if (booking.waitlistingFor) {
-      consumerId = (booking.waitlistingFor[0].id === booking.consumer.id) ? 0 : booking.waitlistingFor[0].id;
       uuid = booking.ynwUuid;
       type = 'consCheckin';
     } else {
-      consumerId = (booking.appmtFor[0].id === booking.consumer.id) ? 0 : booking.appmtFor[0].id;
       uuid = booking.uid;
       type = 'consAppt';
     }
@@ -2174,8 +2171,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams: {
         uuid: uuid,
         providerId: booking.providerAccount.id,
-        serviceId: booking.service.id,
-        consumerId: consumerId,
         type: type
       }
     };

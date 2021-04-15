@@ -16,10 +16,11 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html',
-  styleUrls: ['../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css', './checkin-detail.component.css']
+  styleUrls: ['./provider-details.component.css','../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css', './checkin-detail.component.css']
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
@@ -95,6 +96,24 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   timetype;
   spName: any;
   showImages: any = [];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  image_list_popup: Image[];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -593,8 +612,39 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
-    console.log(timeDate);
     return timeDate;
   }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  openImage(attachements, index) {
+    this.image_list_popup = [];
+    let count = 0;
+    for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
+      const thumbPath = attachements[comIndex].thumbPath;
+      let imagePath = thumbPath;
+      const description = attachements[comIndex].s3path;
+      imagePath = attachements[comIndex].s3path;
+      const imgobj = new Image(
+        count,
+        { // modal
+          img: imagePath,
+          description: description
+        },
+      );
+      this.image_list_popup.push(imgobj);
+      count++;
+    }
+    if (count > 0) {
+      setTimeout(() => {
+        this.openImageModalRow(this.image_list_popup[index]);
+      }, 200);
+    }
+  }
 }
-

@@ -5,10 +5,7 @@
             {{heading}}
           </h5>
         </div>
-        <!-- </section>
-              <section> -->
-        <!-- <div class="content loc-list">
-                      <div class="col-md-12 no-padding-small">-->
+        
         <div class="card title-gb">
           <div class="mgn-up-10">
            <label>{{customer_label | capitalizeFirst}} Name</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
@@ -17,7 +14,7 @@
            <label *ngIf="patientDetails.gender">Gender &nbsp;</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
             <hr>
           </div>
-          <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+          <!-- <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
             <h5 class="heading3b ln-hgt-24"> By clicking upload  you will have choice of uploading a file or
               taking picture</h5>
             <div class="mgn-bt-10">
@@ -25,12 +22,71 @@
                 <a class="pointer-cursor" style="color: whitesmoke" (click)="uploadpopup()">Upload Files</a>
               </button>
             </div>
-          </div>
-      <!-- <div>
-          <img  style="width:30%;height: 30%;" [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]">
-      </div> -->
+          </div> -->
          
          
         </div>
       </section>
+     
       
+     
+     
+      <section class="dashboard content pro-dash" >
+        <div class="col-md-12 no-padding-small" >
+          <div class="row">
+            <div class="card p0 w-dta">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> 
+              <div class="head mgn-up-5 mgn-bt-5" 
+                id="qHeader">
+                
+              </div>
+              <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)"  *ngIf="!loading">
+                <mat-tab label="Media">
+                  <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                  <!-- <div class="col-md-2 col-sm-4 col-xs-4 col-lg-1" > -->
+                  <div class="uploaddiv col-md-2 col-sm-3 col-xs-4 " *ngFor="let file of mediafiles;let i = index " >
+                    <div class="uploadcard" >
+                      <img src="assets/images/pdf.png" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <span (click)="showFile(file)">{{file.uid}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div  *ngIf="mediafiles.length == 0" >
+                    Currently no media are available.
+                  </div>
+                  <!-- </div> -->
+                </mat-tab>
+                <mat-tab label="Documents">
+                  <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                  <!-- <div class="col-md-2 col-sm-4 col-xs-4 col-lg-1" > -->
+                  <div class="uploaddiv col-md-2 col-sm-3 col-xs-4 " *ngFor="let file of docfiles;let i = index " >
+                    <div class="uploadcard" >
+                      <img src="assets/images/pdf.png" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <span ><a [href]="file.url" target="_blank" download>{{file.uid}}</a></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div  *ngIf="docfiles.length == 0" >
+                    Currently no documents are available.
+                  </div>
+                  <!-- </div> -->
+                </mat-tab>
+               
+              </mat-tab-group>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div style="margin-top: 100px;">
+            <!-- <app-common-innerloading-spinner></app-common-innerloading-spinner> -->
+          </div>
+        </div>
+       
+        <div class="clearfix"></div>
+        <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
+          <button (click)="scrollToTop()">
+            <i class="fa fa-chevron-up"></i>
+          </button>
+        </div>
+      </section>

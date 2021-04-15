@@ -24,6 +24,8 @@ import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../../node_modules/subsink';
 
 
 @Component({
@@ -34,7 +36,7 @@ import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Co
 export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   totaltax = 0;
   provider_id: any;
-  s3url;
+  // s3url;
   retval: Promise<void>;
   api_loading1: boolean;
   coupon_status = null;
@@ -164,6 +166,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
+  private subs = new SubSink();
   couponlist: any = [];
   pcouponlist: any = [];
   constructor(
@@ -178,7 +181,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     public fed_service: FormMessageDisplayService,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private s3Processor: S3UrlProcessor
   ) {
 
 
@@ -260,7 +264,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       this.loading = false;
-      this.gets3curl();
       if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
       }
@@ -270,6 +273,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           base64: [],
           caption: []
         };
+        this.gets3curl();
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -372,7 +376,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
-    
+      this.nextbtn.nativeElement.click();
     } else {
       this.doLogin('consumer');
     }
@@ -426,55 +430,93 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   gets3curl() {
     this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.getprovidercoupondetails_json('providerCoupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
+    let accountS3List = 'coupon,providerCoupon';
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+      null, accountS3List).subscribe(
+        (accountS3s) => {
+          if (accountS3s['coupon']) {
+          this.processS3s('coupon', accountS3s['coupon']);
+        }
+        if (accountS3s['providerCoupon']) {
+          this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+        }
           this.api_loading1 = false;
         }
       );
   }
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.JC = res;
+  processS3s(type, res) {
+    let result = this.s3Processor.getJson(res);
+    switch (type) {
+      case 'coupon': {
+        this.s3CouponsList.JC = result;
         console.log(this.s3CouponsList.JC);
         if (this.s3CouponsList.JC.length > 0) {
           this.showCouponWB = true;
         }
-      },
-        () => {
-        }
-      );
-  }
-  getprovidercoupondetails_json(section, modDateReq: boolean) {
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        this.s3CouponsList.OWN = res;
+        break;
+      }
+      case 'providerCoupon': {
+        this.s3CouponsList.OWN = result;
         console.log(this.s3CouponsList.OWN);
         if (this.s3CouponsList.OWN.length > 0) {
           this.showCouponWB = true;
         }
-      },
-        () => {
-        }
-      );
+        break;
+      }
+    }
   }
+  // gets3curl() {
+  //   this.api_loading1 = true;
+  //   this.retval = this.sharedFunctionobj.getS3Url()
+  //     .then(
+  //       res => {
+  //         this.s3url = res;
+  //         this.getbusinessprofiledetails_json('coupon', true);
+  //         this.getprovidercoupondetails_json('providerCoupon', true);
+  //         this.api_loading1 = false;
+  //       },
+  //       () => {
+  //         this.api_loading1 = false;
+  //       }
+  //     );
+  // }
+  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.JC = res;
+  //       console.log(this.s3CouponsList.JC);
+  //       if (this.s3CouponsList.JC.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
+  // getprovidercoupondetails_json(section, modDateReq: boolean) {
+  //   let UTCstring = null;
+  //   if (modDateReq) {
+  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  //   }
+  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+  //     .subscribe(res => {
+  //       this.s3CouponsList.OWN = res;
+  //       console.log(this.s3CouponsList.OWN);
+  //       if (this.s3CouponsList.OWN.length > 0) {
+  //         this.showCouponWB = true;
+  //       }
+  //     },
+  //       () => {
+  //       }
+  //     );
+  // }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.subs.unsubscribe();
   }
 
   applyPromocode() {
@@ -506,28 +548,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       let found = false;
       for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
         if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
-            couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
-            couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
-    for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+      }
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
         if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
-            couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
-            if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
-                couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
-            }
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+          couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+          if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+            couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+          }
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
+      }
       if (found) {
         this.couponvalid = true;
         this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
@@ -596,7 +638,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  
+  isLoggedIn() {
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (activeUser) {
+      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
+      this.loginForm.get('phone').setValue(customer_phonenumber);
+      // this.getaddress();
+    }
+    return true;
+  }
   getDeliveryCharges() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
@@ -865,7 +916,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-       
+        if (this.isLoggedIn()) {
+          this.nextbtn.nativeElement.click();
+        }
+
       } else if (result === 'showsignup') {
        
       }
