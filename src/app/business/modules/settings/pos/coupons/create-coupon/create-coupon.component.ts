@@ -171,7 +171,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       this.getCouponById(this.couponId).then(
         (couponDetails: any) => {
           if (couponDetails.couponRules.published) {
-            this.coupon_title = 'View Coupon';
+            this.coupon_title = ' Coupon Details';
             this.dialogMode = 'view';
             this.hideSubmitbtn = true;
           } else {
@@ -264,7 +264,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }
 
   }
- 
+
   check_existsinweek_array(arr, val) {
     let ret = -1;
     for (let i = 0; i < arr.length; i++) {
