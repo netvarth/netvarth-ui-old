@@ -262,27 +262,22 @@
 													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 											</td>
 											<td class="text-right pt-7"
-												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
-													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
+												*ngIf="!source">
 												{{service.quantity}}
-
 											</td>
 											<td class="text-right pt-7"
-												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
-														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
+												*ngIf="source">
 												{{service.quantity}}
-
 											</td>
 
-											<td class="text-right pt-7" style="color: red;font-size: smaller;"
+											<!-- <td class="text-right pt-7" style="color: red;font-size: smaller;"
 												*ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId && service.quantity === 0">
 												Cancelled</td>
 											<td class="text-right pt-7" style="color: red;font-size: smaller;"
 												*ngIf="source && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled') && bill_data.checkinedService === service.serviceId && service.quantity === 0">
-												Cancelled</td>
+												Cancelled</td> -->
 											<td class="text-right pt-7"
-												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
-											                     ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
+												*ngIf="source">
 												<span class="rupee-font">
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="service.GSTpercentage > 0">Tax</sup>
@@ -330,8 +325,7 @@
 
 											</td>
 											<td class="text-right pt-7 pr-0"
-												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
-														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
+												*ngIf="!source">
 												<span class="rupee-font">
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="service.GSTpercentage > 0">Tax</sup>
