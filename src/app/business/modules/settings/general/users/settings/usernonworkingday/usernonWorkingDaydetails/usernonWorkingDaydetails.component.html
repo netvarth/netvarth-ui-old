@@ -27,16 +27,25 @@
                               
                               <div class="form-group no-padding nonworking">   
                                   <mat-form-field class="selctDte">
-                                    <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'add'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date" readonly> 
-                                    <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
-                                    <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle> 
+                                    <input type="text" matInput [matDatepicker]="picker" formControlName="selectdate"
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose start date" readonly
+                                      (keypress)="isNumeric($event)" readonly (click)="picker.open()">
+                                      <!-- <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date"> -->
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> 
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                   </mat-form-field>
-                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')"
+
+                                  <mat-form-field class="selctDte" >
+                                    <input type="text" matInput [matDatepicker]="picker1" formControlName="enddate" [min]="minDate"
+                                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose end date"
+                                      (keypress)="isNumeric($event)" readonly (click)="picker1.open()">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1 [disabled]="false"></mat-datepicker>
+                                  </mat-form-field>
+                                  <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')"
                                     errorMsg="Please enter valid date">
-                                  </app-field-error-display>
+                                  </app-field-error-display> -->
                                 </div>
                                 <div class="form-group">
                                   <mat-form-field>
