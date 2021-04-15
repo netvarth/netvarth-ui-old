@@ -2546,7 +2546,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       queryParams: {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
-        showpric: this.activeCatalog.showPrice
+        showpric: this.activeCatalog.showPrice,
+        unique_id:this.provider_id
       }
 
     };
@@ -2629,6 +2630,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         queryParams: {
 
           providerId: this.provider_bussiness_id,
+          unique_id: this.provider_id,
         }
 
       };
