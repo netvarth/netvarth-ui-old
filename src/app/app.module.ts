@@ -106,6 +106,7 @@ import { DateTimeProcessor } from './shared/services/datetime-processor.service'
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -144,7 +145,8 @@ export function init_app(globalService: GlobalService) {
     AddAddressComponent,
     ItemDetailsSharedComponent,
     MeetingRoomComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    ServicePageHealthcareComponent
   ],
   entryComponents: [
     SignUpComponent,
