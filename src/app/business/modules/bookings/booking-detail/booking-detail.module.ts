@@ -7,6 +7,7 @@ import { ServiceActionModule } from './service-actions/service-actions.module';
 import { CustomerBookingDetailsModule } from './customer-booking-details/customer-booking-details.module';
 import { BookingPrerscriptionModule } from './booking-prescriptions/booking-prescriptions.module';
 import { BookingMedicalRecordsModule } from './booking-medical-records/booking-medical-records.module';
+import { BookingDocumentsModule } from './booking-documents/booking-documents.module';
 
 
 
@@ -19,7 +20,8 @@ import { BookingMedicalRecordsModule } from './booking-medical-records/booking-m
     ServiceActionModule,
     CustomerBookingDetailsModule,
     BookingPrerscriptionModule,
-    BookingMedicalRecordsModule
+    BookingMedicalRecordsModule,
+    BookingDocumentsModule
 
   ],
   exports:[BookingDetailComponent]

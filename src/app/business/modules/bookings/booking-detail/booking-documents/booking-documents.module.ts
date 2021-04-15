@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BookingsRoutingModule } from '../../bookings.routing.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
-import { BookingMedicalRecordsComponent } from './booking-medical-records.component';
+import { BookingDocumentsComponent } from './booking-documents.component';
 
 
 
 @NgModule({
-  declarations: [BookingMedicalRecordsComponent],
+  declarations: [BookingDocumentsComponent],
   imports: [
     CommonModule,
     BookingsRoutingModule,
@@ -16,7 +16,7 @@ import { BookingMedicalRecordsComponent } from './booking-medical-records.compon
     CapitalizeFirstPipeModule,
 
   ],
-  exports:[BookingMedicalRecordsComponent]
+  exports:[BookingDocumentsComponent]
 })
-export class BookingMedicalRecordsModule {
+export class BookingDocumentsModule {
 }

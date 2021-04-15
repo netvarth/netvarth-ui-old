@@ -15,7 +15,9 @@ import { BookingPrescriptionsComponent } from './booking-prescriptions.component
     MatGridListModule,
     CapitalizeFirstPipeModule,
 
-  ]
+  ],
+  exports:[BookingPrescriptionsComponent]
+
 })
 export class BookingPrerscriptionModule {
 }
