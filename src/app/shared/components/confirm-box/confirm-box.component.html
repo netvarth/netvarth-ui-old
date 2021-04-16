@@ -19,13 +19,16 @@
         <li>Your provider may cancel your {{data.book}} for their own reasons any time. Jaldee tries its best to update you about it through timely notifications.
         </li>
     </ul>
-    <ul> <b>Refund Policies</b>
+    <ul> <b>Refund Policies[for advance payments only]</b>
         <li>
             When a cancellation is made by you, a 3% service fee will be deducted on the refund of the advance payment made.
         </li>
         <li>
             For cancellations made on <span *ngIf="data.wtlist.date">{{data.wtlist.date| date: newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date: newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date: newDateFormat}}</span> contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
         </li>
+        <li>
+          Contact {{data.wtlist.providerAccount.businessName}}, for refunds related to any other payments made for this {{data.book}}.
+      </li>
     </ul>
     </div>
     <p> Are you sure you want to cancel {{data.book}}? </p>
