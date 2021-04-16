@@ -1,7 +1,7 @@
 <nav class="navbar navigation-bar">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" routerLink="/business">
+        <a class="navbar-brand" routerLink="/business/healthcare">
             <img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 4rem;">
         </a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarContent" aria-expanded="false">
@@ -14,14 +14,14 @@
   
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="nav navbar-nav navbar-right navigation-bar-border">
-          <li><a class="btn btn-default navigation-bar-btn" routerLink="login">Log in</a></li>
-          <li><a class="btn btn-default navigation-bar-btn" routerLink="signup">Start For Free</a></li>
+          <li><a class="btn btn-default navigation-bar-btn" routerLink="../login">Log in</a></li>
+          <li><a class="btn btn-default navigation-bar-btn" routerLink="../signup">Start For Free</a></li>
         </ul>
           
         <ul class="nav navbar-nav navbar-right">
           <li><a class="btn btn-default navigation-bar-btn navigation-bar-demo" href="https://demo.jaldee.com">REQUEST FOR A FREE DEMO</a></li>
-          <li><a class="navigation-bar-link" href="#">Features</a></li>
-          <li><a class="navigation-bar-link" routerLink="pricing">Pricing</a></li>
+          <li><a class="navigation-bar-link" (click)="triggerScrollTo('features')">Features</a></li>
+          <li><a class="navigation-bar-link" routerLink="../pricing">Pricing</a></li>
           <li><a class="navigation-bar-link" href="https://contact.jaldee.com">Contact Us</a></li>
           <li><a class="navigation-bar-link" href="https://wa.me/917306823011"><i class="fa fa-whatsapp"></i>&nbsp;Whatsapp Us</a></li>
           <li><a class="navigation-bar-link" href="https://t.me/Jaldeekaro"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a></li>
@@ -36,8 +36,8 @@
     <div class="image-text">
       <h1>Consultation Made Easy</h1>
       <h6>Jaldee, is a Comprehensive Practice Management System for every Doctor.</h6>
-      <h6 class="read-more">Read More....</h6>
-      <button>Get Started</button>
+      <!-- <h6 class="read-more">Read More....</h6> --> <!-- Uncomment this line when Read More link available -->
+      <button routerLink="../signup">Get Started</button>
     </div>
   </div>
   <div class="section section2">
@@ -119,7 +119,7 @@
       </div>
     </div>
   </div>
-  <div class="section section3">
+  <div id="features" class="section section3">
     <div class="heading">Benefits for Healthcare Providers</div>
     <div class="section-content">
       <div class="column">
