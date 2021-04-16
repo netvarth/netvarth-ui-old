@@ -689,10 +689,18 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       policiesEntered = false;
     }
     if (isService) {
-      if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0) {
-        this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
-        policiesEntered = false;
+      if(this.active_user.type!=='BRANCH'){
+        if (this.services.length === 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
+          this.snackbarService.openSnackBar('Please choose  either services/ '+this.customer_label+' labels/ '+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          policiesEntered = false;
+        }
+      }else if(this.active_user.type==='BRANCH'){
+        if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
+          this.snackbarService.openSnackBar('Please choose  either services/departments/users/'+this.customer_label+' labels /'+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          policiesEntered = false;
+        }
       }
+      
     }
     if (isCatalog) {
 
