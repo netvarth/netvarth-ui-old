@@ -181,12 +181,12 @@
                                                                     <button type="button" (click)="editCoupons(coupon)"
                                                                         mat-menu-item>
                                                                         <i [ngClass]="coupon.couponRules.published?'icon-info':'icon-edit'"></i>
-                                                                        {{coupon.couponRules.published? 'View':'Edit'}}
+                                                                        {{coupon.couponRules.published? 'Details':'Edit'}}
                                                                     </button>
                                                                     <button type="button" (click)="publish(coupon)"
                                                                     mat-menu-item>
                                                                     <i class="icon-sent"></i>
-                                                                    {{publish_btn}}
+                                                                    {{coupon.couponRules.published? 'View':'Publish'}}
                                                                 </button>
                                                                     <button type="button"
                                                                         (click)="doRemoveCoupons(coupon)" mat-menu-item>
@@ -197,9 +197,9 @@
                                                             </span>
                                                             <span class="mbt-mobile-show">
                                                                 <button [ngClass]="coupon.couponRules.published?'viewcls':'editcls'"  type="button"
-                                                                    (click)="editCoupons(coupon)"> {{coupon.couponRules.published? 'View':'Edit'}}</button>
+                                                                    (click)="editCoupons(coupon)"> {{coupon.couponRules.published? 'Details':'Edit'}}</button>
                                                                     <button class="publishcls" type="button"
-                                                                    (click)="publish(coupon)">{{publish_btn}}</button>
+                                                                    (click)="publish(coupon)"> {{coupon.couponRules.published? 'View':'Publish'}}</button>
                                                                 <button class="deletecls" type="button"
                                                                     (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>
                                                             </span>

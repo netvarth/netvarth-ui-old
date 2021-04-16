@@ -368,6 +368,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.donorFirstName = dnr;
             this.donorLastName = '';
             this.action = '';
+            this.donorName = this.donor.trim();
         }
     }
     addPhone() {

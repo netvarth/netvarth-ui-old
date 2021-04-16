@@ -33,7 +33,8 @@ const routes: Routes = [
       { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },
       { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) },
       { path: 'order', loadChildren: () => import('../ynw_consumer/components/order/order.module').then(m => m.ConsumerOrderModule) },
-      { path: 'questionnaire', loadChildren: () => import('../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) }
+      { path: 'questionnaire', loadChildren: () => import('../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
+      { path: 'mywallet', loadChildren: () =>  import('../ynw_consumer/modules/wallet/wallet.module').then(m => m.WalletModule) },
 
     ]
   }

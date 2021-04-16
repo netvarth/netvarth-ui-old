@@ -350,7 +350,7 @@ export class MedicalrecordComponent implements OnInit {
             this.doctorName = data.provider.businessName;
             this.medicalService.setDoctorId(data.provider.id);
           }
-          if (this.data.consultationMode === 'Out Patient') {
+          if (data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
 
           } else {

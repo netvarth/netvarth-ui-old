@@ -1,5 +1,5 @@
 <section class="cons-inbox no-padding-small">
-    <div class="container consumer-dashhome no-padding no-padding-small">
+    <div class="container consumer-dashhome no-padding no-padding-small" *ngIf="!type">
         <div class="panel-heading top-row " *ngIf="uuid && (source === 'consCheckin' || source === 'consAppt')">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <app-header></app-header>
@@ -33,7 +33,7 @@
                                     <div class="input-group"
                                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile === 1">
                                         <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                                            (change)="filesSelected($event, getQuestion(question))">
+                                            (change)="filesSelected($event, getQuestion(question))" [disabled]="disableInput()">
                                         <a (click)="logofile.click()"
                                             class="btn btn-light btn-text-primary btn-hover-text-primary font-weight-bold mr-2">
                                             <i class="text-dark-50 flaticon-upload"></i>
@@ -44,7 +44,7 @@
                                                 (click)="deleteTempImage(getQuestion(question))"></i>
                                         </div>
                                     </div>
-                                    <mat-select multiple #deptsel
+                                    <mat-select multiple #deptsel [disabled]="disableInput()"
                                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1"
                                         [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]"
                                         class="select-box">
@@ -65,7 +65,7 @@
                                                     <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                                 </div>
                                                 <input #logofile1 type="file" accept="/*;capture=camera"
-                                                    style="display:none;"
+                                                    style="display:none;" [disabled]="disableInput()"
                                                     (change)="filesSelected($event, getQuestion(question), doc)">
                                                 <div class="dz-error-mark pointer-cursor">
                                                     <a class="btn btn-icon btn-light-success btn-circle mr-2"><i
@@ -83,7 +83,7 @@
                                     <div class="checkbox-list">
                                         <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
                                             <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
-                                                (change)="listChange($event, value, getQuestion(question))">
+                                                (change)="listChange($event, value, getQuestion(question))" [disabled]="disableInput()">
                                             <span></span>
                                             {{value}}
                                         </label>
@@ -95,7 +95,7 @@
                                     *ngIf="(getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers === 1) || getQuestion(question).fieldDataType === 'Boolean'">
                                     <div class="radio-list">
                                         <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                            <input type="radio" name="radios2"
+                                            <input type="radio" name="radios2" [disabled]="disableInput()"
                                                 [checked]="isChecked(value, getQuestion(question))"
                                                 (change)="listChange($event, value, getQuestion(question))">
                                             <span></span>
@@ -108,7 +108,7 @@
                                 <!-- for Text -->
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                        (input)="onSubmit();"
+                                        (input)="onSubmit();" [disabled]="disableInput()"
                                         [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                                         [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
                                         class="form-control1 form-control-solid" type="text">
@@ -119,7 +119,7 @@
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Number'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
                                         (input)="onSubmit();" [min]="getQuestion(question).numberPropertie.start"
-                                        [max]="getQuestion(question).numberPropertie.end"
+                                        [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
                                         class="form-control1 form-control-solid" type="number">
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
@@ -128,7 +128,7 @@
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Date'">
                                     <input class="form-control1" type="date"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" id="example-date-input"
-                                        (input)="onSubmit()"
+                                        (input)="onSubmit()" [disabled]="disableInput()"
                                         min="{{getDate(getQuestion(question).dateProperties.startDate) | date:'yyyy-MM-dd'}}"
                                         max="{{getDate(getQuestion(question).dateProperties.endDate) | date:'yyyy-MM-dd'}}">
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
