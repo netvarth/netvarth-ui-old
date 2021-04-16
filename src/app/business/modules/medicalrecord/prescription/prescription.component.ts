@@ -183,7 +183,7 @@ export class PrescriptionComponent implements OnInit {
       .subscribe((data) => {
         if (data === null) {
           this.loading = false;
-        }
+        }else{
         if (data[0].keyName) {
           this.uploadlist = data;
           this.image_list_popup = [];
@@ -199,7 +199,8 @@ export class PrescriptionComponent implements OnInit {
           this.getDigitalSign();
         }
         this.loading = false;
-      },
+      }
+    },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
