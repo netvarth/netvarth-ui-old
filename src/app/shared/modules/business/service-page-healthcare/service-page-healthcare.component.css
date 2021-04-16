@@ -509,6 +509,7 @@
     display: block !important;
     margin: auto !important;
     height: 100px !important;
+    max-width: calc(100% - 10px) !important;
 }
 
 .section.section2 > div:nth-child(2) .column .card .card-text {
