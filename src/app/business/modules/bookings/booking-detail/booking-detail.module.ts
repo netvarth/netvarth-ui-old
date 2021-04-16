@@ -8,6 +8,7 @@ import { CustomerBookingDetailsModule } from './customer-booking-details/custome
 import { BookingPrerscriptionModule } from './booking-prescriptions/booking-prescriptions.module';
 import { BookingMedicalRecordsModule } from './booking-medical-records/booking-medical-records.module';
 import { BookingDocumentsModule } from './booking-documents/booking-documents.module';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 
 
@@ -21,7 +22,8 @@ import { BookingDocumentsModule } from './booking-documents/booking-documents.mo
     CustomerBookingDetailsModule,
     BookingPrerscriptionModule,
     BookingMedicalRecordsModule,
-    BookingDocumentsModule
+    BookingDocumentsModule,
+    LoadingSpinnerModule
 
   ],
   exports:[BookingDetailComponent]
