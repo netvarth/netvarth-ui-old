@@ -2542,6 +2542,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
         showpric: this.activeCatalog.showPrice,
+        unique_id:this.provider_id,
         businessDetails: businessObject
 
       }

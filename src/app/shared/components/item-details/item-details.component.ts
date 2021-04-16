@@ -86,6 +86,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   showitemprice = true;
   logo: any;
   userType = '';
+  provider_id: any;
 
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -110,6 +111,9 @@ export class ItemDetailsSharedComponent implements OnInit {
         if (params.logo) {
           this.logo = params.logo;
           console.log(this.logo);
+        }
+        if(params.unique_id){
+          this.provider_id=params.unique_id;
         }
       });
   }
@@ -174,7 +178,8 @@ export class ItemDetailsSharedComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           account_id: this.provider_bussiness_id,
-          'logo': this.logo
+          'logo': this.logo,
+          unique_id:this.provider_id
         }
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
