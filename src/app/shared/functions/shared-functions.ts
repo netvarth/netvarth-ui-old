@@ -987,7 +987,6 @@ export class SharedFunctions {
     } else if (type === 'order') {
       msg = 'Order';
     }
-
    // if (prepay) {
       this.tdata = {
         'message': 'Cancellation and Refund policy',
