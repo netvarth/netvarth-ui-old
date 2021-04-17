@@ -621,6 +621,7 @@ export const Messages = {
   'HELP_CAP': 'Help',
   'UPGRADE_CAP': 'Upgrade',
   'MEMBERSHIP_CAP': 'License',
+  'WALLET_TITLE':'My Wallet',
   'SWITCH_TO_PROVIDER': 'Switch to Provider',
   'CREATE_PRO_ACCNT': 'Create a Provider Account',
 

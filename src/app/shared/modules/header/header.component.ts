@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   membership_cap = Messages.MEMBERSHIP_CAP;
   close_btn = Messages.CLOSE_BTN;
   dashboard_cap = Messages.DASHBOARD_TITLE;
+  wallet_cap = Messages.WALLET_TITLE;
   create_pro_accnt = Messages.CREATE_PRO_ACCNT;
   family_members = Messages.FAMILY_MEMBERS;
   cronHandle: Subscription;
@@ -371,9 +372,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   redirectto(mod) {
     this.showmobileSubmenu = false;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    console.log(usertype);
     switch (mod) {
       case 'profile':
         this.router.navigate([usertype, 'profile']);
+        break;
+     case 'wallet':
+        this.router.navigate([usertype, 'mywallet']);
         break;
       case 'change-password':
         this.router.navigate([usertype, 'change-password']);
