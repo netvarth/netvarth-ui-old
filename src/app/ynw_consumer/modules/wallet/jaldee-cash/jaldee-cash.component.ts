@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-jaldee-cash',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JaldeeCashComponent implements OnInit {
 
-  constructor() { }
+  constructor(private location: Location,
+    public shared_functions: SharedFunctions) { }
 
   ngOnInit(): void {
+  }
+  goBack () {
+    this.location.back();
   }
 
 }
