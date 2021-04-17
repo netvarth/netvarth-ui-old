@@ -103,6 +103,7 @@ import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
+import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -137,7 +138,8 @@ export function init_app(globalService: GlobalService) {
     AddAddressComponent,
     ItemDetailsSharedComponent,
     MeetingRoomComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    ServicePageHealthcareComponent
   ],
   entryComponents: [
     SignUpComponent,
