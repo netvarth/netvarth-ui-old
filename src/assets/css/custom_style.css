@@ -14028,9 +14028,10 @@ width: 40px !important;
 }
 .booking-img {
     content: url(../images/bookingwindow.png);
-    width: 400px;
+    width: inherit;
     margin: auto;
     margin-top: 50px;
+    padding: 20px;
 }
 .wizard-nav {
   justify-content: center;

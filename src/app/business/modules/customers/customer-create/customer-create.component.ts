@@ -468,7 +468,7 @@ export class CustomerCreateComponent implements OnInit {
       'email_id': this.customer[0].email || null,
       'dob': this.customer[0].dob || null,
       'gender': this.customer[0].gender || null,
-      'mobile_number': this.customer[0].phoneNo || null,
+      'mobile_number': this.customer[0].phoneNo.trim() || null,
       'customer_id': this.customer[0].jaldeeId || null,
       'address': this.customer[0].address || null,
     });

@@ -325,14 +325,17 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         // delete this.answers[key];
         console.log(this.uploadedFiles[key]);
-
-        if (this.uuid && this.uploadedFiles[key] && Object.keys(this.uploadedFiles[key]).length > 0) {
+if (this.uuid) {
+        if (this.uploadedFiles[key] && Object.keys(this.uploadedFiles[key]).length > 0) {
           Object.keys(this.uploadedFiles[key]).forEach(key1 => {
-            if (this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === '') {
+            if (this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
               this.answers[key].push({ allowedDocument: key1, status: 'remove' });
             }
           });
         }
+      } else {
+        delete this.answers[key];
+      }
         // if (Object.keys(this.uploadedFiles[key]).length === 0) {
         //   this.answers[key] = '';
         // }
