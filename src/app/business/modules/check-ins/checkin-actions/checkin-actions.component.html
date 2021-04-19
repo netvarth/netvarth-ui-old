@@ -20,7 +20,7 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
 
-        <div class="action-box pointer-cursor" *ngIf="(checkin.waitlistStatus=='checkedIn' || checkin.waitlistStatus == 'arrived') && checkin.questionnaire && checkin.questionnaire.questionnaire && checkin.questionnaire.questionnaire.length > 0"
+        <div class="action-box pointer-cursor" *ngIf="(checkin.waitlistStatus=='checkedIn' || checkin.waitlistStatus == 'arrived') && checkin.questionnaire && checkin.questionnaire.questionAnswers && checkin.questionnaire.questionAnswers.length > 0"
             (click)="gotoQuestionnaire(checkin)">
             <div class="action-box-sub">
                 <span class="add-appt-icon"></span>

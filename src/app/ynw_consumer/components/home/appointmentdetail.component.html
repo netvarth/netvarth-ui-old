@@ -28,7 +28,7 @@
                                 <div class="card" *ngIf="!api_loading">
                                     <app-common-innerloading-spinner> </app-common-innerloading-spinner>
                                 </div>
-                                <div class="card" *ngIf="api_loading">
+                                <div class="card" *ngIf="appt && api_loading">
 
                                     <!-- Header -->
                                     <div class="mgn-bt-20 temp-style index-head">
@@ -181,7 +181,7 @@
 
                                 <!-- Questionnaire starts-->
                                 <div class="card"
-                                    *ngIf="appt && appt.questionnaire.questionnaire && appt.questionnaire.questionnaire.length > 0">
+                                    *ngIf="api_loading && appt && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0">
 
                                     <div class="bg-cover" style="background: #ffefc9;">
                                         <div class="container pad-10">
@@ -197,7 +197,7 @@
                                     </div>
                                     <!-- <div class="c-details pad-10">
                                         <div class="quest-answ-box col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
-                                            *ngFor="let question of appt.questionnaire.questionnaire">
+                                            *ngFor="let question of appt.questionnaire.questionAnswers">
                                             <ng-container *ngIf="question.answer">
                                                 <div class="question">
                                                     <span class="svg-icon svg-icon-success">
