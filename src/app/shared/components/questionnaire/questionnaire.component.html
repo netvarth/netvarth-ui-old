@@ -12,10 +12,8 @@
     </div>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="d-flex flex-column-fluid">
-        <!--begin::Container-->
         <div class="container"
             [class.no-padding]="(uuid && (source === 'consCheckin' || source === 'consAppt')) || (!uuid && (source === 'proCheckin' || source === 'proAppt'))">
-            <!--begin::Form-->
             <div class="form">
                 <div class="row">
                     <div class="col-xl-12 force_center">
@@ -33,14 +31,15 @@
                                     <div class="input-group"
                                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile === 1">
                                         <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                                            (change)="filesSelected($event, getQuestion(question))" [disabled]="disableInput()">
+                                            (change)="filesSelected($event, getQuestion(question))"
+                                            [disabled]="disableInput()">
                                         <a (click)="logofile.click()"
                                             class="btn btn-light btn-text-primary btn-hover-text-primary font-weight-bold mr-2">
                                             <i class="text-dark-50 flaticon-upload"></i>
                                             Upload File</a>
                                         <div class="mt-3" *ngIf="getImgName(getQuestion(question))">
                                             {{getImgName(getQuestion(question))}}
-                                            <i class="fa fa-times-circle" aria-hidden="true"
+                                            <i class="fa fa-times-circle" aria-hidden="true" *ngIf="!disableInput()"
                                                 (click)="deleteTempImage(getQuestion(question))"></i>
                                         </div>
                                     </div>
@@ -83,7 +82,8 @@
                                     <div class="checkbox-list">
                                         <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
                                             <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
-                                                (change)="listChange($event, value, getQuestion(question))" [disabled]="disableInput()">
+                                                (change)="listChange($event, value, getQuestion(question))"
+                                                [disabled]="disableInput()">
                                             <span></span>
                                             {{value}}
                                         </label>
@@ -95,7 +95,7 @@
                                     *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                                     <div class="radio-list">
                                         <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                            <input type="radio" name="radios2" [disabled]="disableInput()"
+                                            <input type="radio" name="radio1" [disabled]="disableInput()"
                                                 [checked]="isChecked(value, getQuestion(question))"
                                                 (change)="listChange($event, value, getQuestion(question))">
                                             <span></span>
@@ -105,12 +105,11 @@
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
-  <!-- for toggel boolean -->
-                                <div class="col-12"
-                                    *ngIf="getQuestion(question).fieldDataType === 'bool'">
+                                <!-- for toggel boolean -->
+                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
                                     <div class="radio-list">
                                         <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                            <input type="radio" name="radios2" [disabled]="disableInput()"
+                                            <input type="radio" name="radio2" [disabled]="disableInput()"
                                                 [checked]="isBooleanChecked(value, getQuestion(question))"
                                                 (change)="booleanChange($event, value, getQuestion(question))">
                                             <span></span>
@@ -120,7 +119,6 @@
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
-
                                 <!-- for Text -->
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
@@ -150,29 +148,15 @@
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
-                                <!-- for toggel btn(boolean) -->
-                                <!-- <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
-                                    <span class="switch switch-sm switch-icon">
-                                        <label>
-                                            <input type="checkbox" [checked]="isBooleanChecked(getQuestion(question))"
-                                                (change)="booleanChange($event, getQuestion(question))">
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                    <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                        {{apiError[getQuestion(question).labelName]}}</div>
-                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="uuid">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="uuid && !disableInput()">
                             <button class="normal-btn" mat-flat-button
                                 (click)="!buttonDisable && onSubmit('submit')">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--end::Form-->
         </div>
-        <!--end::Container-->
     </div>
 </section>
