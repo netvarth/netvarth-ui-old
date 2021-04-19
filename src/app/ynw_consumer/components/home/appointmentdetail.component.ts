@@ -26,7 +26,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
 
   private subs = new SubSink();
   elementType = 'url';
-  api_loading = true;
+  api_loading = false;
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   bname_cap = 'Service Provider';
   date_cap = Messages.CHECK_DET_DATE_CAP;
@@ -111,6 +111,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
+        this.api_loading = true;
         this.generateQR();
         this.getAppointmentHistory(this.appt.uid, this.appt.providerAccount.id);
         if (this.appt.service.serviceType === 'virtualService') {

@@ -209,7 +209,7 @@
                                 </div>
                                 <!-- Questionnaire starts-->
                                 <div class="card"
-                                    *ngIf="waitlist && waitlist.questionnaire.questionnaire && waitlist.questionnaire.questionnaire.length > 0">
+                                    *ngIf="waitlist && waitlist.questionnaire.questionAnswers && waitlist.questionnaire.questionAnswers.length > 0">
                                     <div class="bg-cover" style="background: #ffefc9;">
                                         <div class="container pad-10">
                                             <div class="mt-80">
@@ -224,7 +224,7 @@
                                     </div>
                                     <!-- <div class="c-details pad-10">
                                         <div class="quest-answ-box col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
-                                            *ngFor="let question of waitlist.questionnaire.questionnaire">
+                                            *ngFor="let question of waitlist.questionnaire.questionAnswers">
                                             <ng-container *ngIf="question.answer">
                                                 <div class="question">
                                                     <span class="svg-icon svg-icon-success">

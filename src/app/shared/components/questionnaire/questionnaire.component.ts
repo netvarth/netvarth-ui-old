@@ -50,8 +50,10 @@ export class QuestionnaireComponent implements OnInit {
     private location: Location) {
     console.log(this.uuid);
     console.log(this.source);
+    console.log(this.accountId);
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
+      console.log(this.params);
       if (this.params.type) {
         this.source = this.params.type;
       }
@@ -92,7 +94,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
         if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
-          this.getAnswers(this.customerDetails[0].questionnaire.questionnaire);
+          this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers);
         }
         this.questions = this.questionnaireList.labels[0].questions;
 
@@ -440,11 +442,9 @@ export class QuestionnaireComponent implements OnInit {
   }
   isBooleanChecked(value, question) {
     value = (value === 'YES') ? true : false;
-    if (this.answers[question.labelName] || this.answers[question.labelName] === false) {
-      console.log(this.answers[question.labelName] + '=' + value)
+    if (this.answers[question.labelName] && this.answers[question.labelName] === value) {
       return true;
     } else {
-      console.log(this.answers[question.labelName] + '=' + value)
       return false;
     }
   }

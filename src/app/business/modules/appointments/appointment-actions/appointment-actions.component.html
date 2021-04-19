@@ -17,7 +17,7 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
 
-        <div class="action-box pointer-cursor" *ngIf="(appt.apptStatus=='Confirmed' || appt.apptStatus == 'Arrived') && appt.questionnaire && appt.questionnaire.questionnaire && appt.questionnaire.questionnaire.length > 0"
+        <div class="action-box pointer-cursor" *ngIf="(appt.apptStatus=='Confirmed' || appt.apptStatus == 'Arrived') && appt.questionnaire && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0"
             (click)="gotoQuestionnaire(appt)">
             <div class="action-box-sub">
                 <span class="add-appt-icon"></span>

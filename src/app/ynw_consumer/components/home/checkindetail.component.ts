@@ -28,7 +28,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   elementType = 'url';
   waitlist: any;
-  api_loading = true;
+  api_loading = false;
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   bname_cap = Messages.CHK_DET_BNAME;
   date_cap = Messages.CHECK_DET_DATE_CAP;
@@ -116,6 +116,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
+        this.api_loading = true;
         this.generateQR();
         this.getWtlistHistory(this.waitlist.ynwUuid, this.waitlist.providerAccount.id);
         if (this.waitlist.service.serviceType === 'virtualService') {
