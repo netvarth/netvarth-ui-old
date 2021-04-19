@@ -87,7 +87,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             if (projectConstantsLocal.MRFILETYPES_UPLOAD.indexOf(file.type) === -1) {
               this.error_msg ='Selected file type not supported';
             } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-              this.error_msg ='Please upload file with size < 10mb';
+              this.error_msg ='Please upload file with size < 100 mb';
             } else {
               this.item_pic.files.push(file);
               console.log(this.item_pic.files);
@@ -156,7 +156,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
       .subscribe((data) => {
         this.dialogRef.close(this.item_pic);
-       console.log(data)
+         this.snackbarService.openSnackBar('File Uploaded Successfully');
        },
        error => {
         this.savedisabled = false;
