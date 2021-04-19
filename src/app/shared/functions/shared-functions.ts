@@ -960,21 +960,21 @@ export class SharedFunctions {
   }
   doCancelWaitlist(waitlist, type, cthis?) {
     console.log(waitlist);
-    let prepay = false;
-    if (type === 'checkin' || type === 'appointment') {
-      if (waitlist.service.minPrePaymentAmount) {
-        if (waitlist.service.minPrePaymentAmount > 0) {
-          prepay = true;
-        }
-      }
-    }
-    if (type === 'order') {
-      if (waitlist.advanceAmountPaid) {
-        if (waitlist.advanceAmountPaid > 0) {
-          prepay = true;
-        }
-      }
-    }
+    // let prepay = false;
+    // if (type === 'checkin' || type === 'appointment') {
+    //   if (waitlist.service.minPrePaymentAmount) {
+    //     if (waitlist.service.minPrePaymentAmount > 0) {
+    //       prepay = true;
+    //     }
+    //   }
+    // }
+    // if (type === 'order') {
+    //   if (waitlist.advanceAmountPaid) {
+    //     if (waitlist.advanceAmountPaid > 0) {
+    //       prepay = true;
+    //     }
+    //   }
+    // }
     let msg;
     if (type === 'checkin') {
       if (waitlist.token) {
@@ -987,23 +987,22 @@ export class SharedFunctions {
     } else if (type === 'order') {
       msg = 'Order';
     }
-
-    if (prepay) {
+   // if (prepay) {
       this.tdata = {
-        'message': 'Refund Policy',
+        'message': 'Cancellation and Refund policy',
         'heading': 'Confirm',
         'type': 'yes/no',
         'cancelPolicy': 'show',
         'book': msg,
         'wtlist': waitlist
       }
-    } else {
-      this.tdata = {
-        'message': 'Do you want to cancel this ' + msg + '?',
-        'heading': 'Confirm',
-        'type': 'yes/no'
-      }
-    }
+    // } else {
+    //   this.tdata = {
+    //     'message': 'Do you want to cancel this ' + msg + '?',
+    //     'heading': 'Confirm',
+    //     'type': 'yes/no'
+    //   }
+    // }
 
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {

@@ -25,6 +25,7 @@ export class InboxOuterComponent implements OnInit {
   loading = false;
   message = '';
   selectedProvider = '';
+  selectedProviderName = '';
   selectedMessage = {
     files: [],
     base64: [],
@@ -95,7 +96,8 @@ export class InboxOuterComponent implements OnInit {
         data => {
           this.messages = data;
           this.scrollDone = true;
-          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
+          this.sortMessages();
+          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
@@ -108,7 +110,6 @@ export class InboxOuterComponent implements OnInit {
               this.scrollToElement();
             }, 100);
           }
-          this.sortMessages();
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
           this.loading = false;
         },
@@ -157,6 +158,7 @@ export class InboxOuterComponent implements OnInit {
     this.clearImg();
     this.message = '';
     this.selectedProvider = msgs.key; 
+    this.selectedProviderName = msgs.value[(msgs.value.length - 1)].accountName;
     this.replyMsg = null;
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
@@ -233,7 +235,9 @@ export class InboxOuterComponent implements OnInit {
       caption: []
     };
   }
-  getUserName(user) {
+  getUserName(messages) {
+    let user = messages[(messages.length-1)].accountName;
+    if (user) {
     const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
     const name = user.split(' ');
     const pattern = userPattern.test(name[0]);
@@ -242,6 +246,7 @@ export class InboxOuterComponent implements OnInit {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
     return nameShort.toUpperCase();
+  }
   }
   filesSelected(event) {
     const input = event.target.files;

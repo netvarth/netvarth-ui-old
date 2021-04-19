@@ -24,12 +24,12 @@
                                 <label class="col-12 quest">{{getQuestion(question).label}}
                                     <span style="color: red;" *ngIf="getQuestion(question).mandatory">*</span>
                                     <!-- <div class="form-level-settings"
-                                                *ngIf="getQuestion(question).fieldDataType != 'Number' && getQuestion(question).fieldDataType != 'PlainText' && getQuestion(question).fieldDataType != 'Date'">
+                                                *ngIf="getQuestion(question).fieldDataType != 'number' && getQuestion(question).fieldDataType != 'plainText' && getQuestion(question).fieldDataType != 'date'">
                                                 {{getQuestion(question).label}}</div> -->
                                 </label>
                                 <!-- for file upload -->
                                 <div class="col-12 ynw-common-form-nm"
-                                    *ngIf="getQuestion(question).fieldDataType === 'FileUpload'">
+                                    *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
                                     <div class="input-group"
                                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile === 1">
                                         <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
@@ -79,7 +79,7 @@
                                 </div>
                                 <!-- for checkbox -->
                                 <div class="col-12"
-                                    *ngIf="getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers > 1">
+                                    *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers > 1">
                                     <div class="checkbox-list">
                                         <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
                                             <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
@@ -92,7 +92,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <div class="col-12"
-                                    *ngIf="(getQuestion(question).fieldDataType === 'List' && getQuestion(question).listPropertie.maxAnswers === 1) || getQuestion(question).fieldDataType === 'Boolean'">
+                                    *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                                     <div class="radio-list">
                                         <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
                                             <input type="radio" name="radios2" [disabled]="disableInput()"
@@ -105,8 +105,24 @@
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
+  <!-- for toggel boolean -->
+                                <div class="col-12"
+                                    *ngIf="getQuestion(question).fieldDataType === 'bool'">
+                                    <div class="radio-list">
+                                        <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
+                                            <input type="radio" name="radios2" [disabled]="disableInput()"
+                                                [checked]="isBooleanChecked(value, getQuestion(question))"
+                                                (change)="booleanChange($event, value, getQuestion(question))">
+                                            <span></span>
+                                            {{value}}
+                                        </label>
+                                    </div>
+                                    <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                                        {{apiError[getQuestion(question).labelName]}}</div>
+                                </div>
+
                                 <!-- for Text -->
-                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'PlainText'">
+                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
                                         (input)="onSubmit();" [disabled]="disableInput()"
                                         [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
@@ -116,7 +132,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <!-- for Number -->
-                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Number'">
+                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
                                         (input)="onSubmit();" [min]="getQuestion(question).numberPropertie.start"
                                         [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
@@ -125,7 +141,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <!-- for Date -->
-                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Date'">
+                                <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'date'">
                                     <input class="form-control1" type="date"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" id="example-date-input"
                                         (input)="onSubmit()" [disabled]="disableInput()"
@@ -135,7 +151,7 @@
                                         {{apiError[getQuestion(question).labelName]}}</div>
                                 </div>
                                 <!-- for toggel btn(boolean) -->
-                                <!-- <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'Boolean'">
+                                <!-- <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
                                     <span class="switch switch-sm switch-icon">
                                         <label>
                                             <input type="checkbox" [checked]="isBooleanChecked(getQuestion(question))"
