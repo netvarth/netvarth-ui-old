@@ -1,0 +1,51 @@
+.walletimg{
+    width: 75px;
+    height: 75px;
+    border: 1px solid darkgrey;
+    margin-top: 5px;
+}
+@media only screen and (max-width: 575px) {
+    .walletimg{
+        width: 50px;
+        height: 50px;
+    }
+  }
+.walletbase{
+    box-shadow: 0 0 10px rgb(0 0 0 / 5%) !important;
+margin-left: 10px;
+border-radius: 10px;
+background-color: aliceblue;
+}
+.walletfont{
+    font-size: smaller;
+    color: darkgrey;
+}
+.walletexpiry{
+    color: darkred;
+    font-size: smaller;
+}
+.walletearn{
+    color: green;
+    font-size: x-large;
+    margin-top: 10px;
+    border-left: 1px solid gainsboro;
+}
+@media only screen and (max-width: 575px) {
+    .walletearn{
+        font-size: medium;
+    }
+  }
+.walletsubfont{
+    font-size: small;
+    color: skyblue;
+}
+@media only screen and (max-width: 575px) {
+    .smalldevicewallet{
+       margin-left: 20px;
+    }
+  }
+  @media only screen and (max-width: 575px) {
+    .walletbase{
+    margin-left: 0px;
+    }
+  }
