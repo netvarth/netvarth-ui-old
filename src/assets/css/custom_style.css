@@ -10600,6 +10600,14 @@ a {
   width: 24px;
 }
 
+.jaldeevideo-icon {
+  content: url(../images/teleservice/jaldeevideo.svg);
+  top: 3px;
+  position: relative;
+  padding-right: 1px;
+  width: 100%;
+}
+
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;
