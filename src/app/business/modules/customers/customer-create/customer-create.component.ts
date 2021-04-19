@@ -426,6 +426,7 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
   createForm() {
+    this.getCustomerQnr();
     if (!this.haveMobile) {
       this.amForm = this.fb.group({
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -459,7 +460,6 @@ export class CustomerCreateComponent implements OnInit {
     if (this.email) {
       this.amForm.get('email_id').setValue(this.email);
     }
-    this.getCustomerQnr();
   }
   updateForm() {
     this.amForm.setValue({

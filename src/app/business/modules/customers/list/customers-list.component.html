@@ -278,7 +278,7 @@
                           <i class="icon-edit"></i>
                           Edit
                         </button>
-                        <button type="button" mat-menu-item (click)="editCustomer(customer)">
+                        <button type="button" mat-menu-item (click)="editCustomer(customer)" *ngIf="questionnaireList && questionnaireList.labels && questionnaireList.labels.length > 0">
                           <i class="icon-edit"></i>
                           Questionnaire
                         </button>

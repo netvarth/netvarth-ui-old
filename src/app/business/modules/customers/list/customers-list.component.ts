@@ -115,6 +115,7 @@ export class CustomersListComponent implements OnInit {
   groupIdEdit = '';
   showAddCustomerHint = false;
   newlyCreatedGroupId;
+  questionnaireList: any = [];
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -165,6 +166,7 @@ export class CustomersListComponent implements OnInit {
     this.getCustomerGroup();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    this.getCustomerQnr();
   }
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
@@ -808,6 +810,12 @@ export class CustomersListComponent implements OnInit {
       if (result) {
         this.addCustomerToGroup(customerId);
       }
+    });
+  }
+  getCustomerQnr() {
+    this.questionnaireList = [];
+    this.provider_services.getCustomerQuestionnaire().subscribe(data => {
+      this.questionnaireList = data;
     });
   }
 }
