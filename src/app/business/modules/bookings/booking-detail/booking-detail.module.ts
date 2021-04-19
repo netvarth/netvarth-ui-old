@@ -9,6 +9,7 @@ import { BookingPrerscriptionModule } from './booking-prescriptions/booking-pres
 import { BookingMedicalRecordsModule } from './booking-medical-records/booking-medical-records.module';
 import { BookingDocumentsModule } from './booking-documents/booking-documents.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { BookingBillModule } from './booking-bill/booking-bill.module';
 
 
 
@@ -23,7 +24,8 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
     BookingPrerscriptionModule,
     BookingMedicalRecordsModule,
     BookingDocumentsModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    BookingBillModule
 
   ],
   exports:[BookingDetailComponent]
