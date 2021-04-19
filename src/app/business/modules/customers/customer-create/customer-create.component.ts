@@ -426,7 +426,6 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
   createForm() {
-    this.getCustomerQnr();
     if (!this.haveMobile) {
       this.amForm = this.fb.group({
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -449,10 +448,10 @@ export class CustomerCreateComponent implements OnInit {
         gender: [''],
         address: ['']
       });
-      if (this.action === 'edit') {
-        this.updateForm();
-      }
       this.loading = false;
+    }
+    if (this.action === 'edit') {
+      this.updateForm();
     }
     if (this.phoneNo) {
       this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -460,6 +459,7 @@ export class CustomerCreateComponent implements OnInit {
     if (this.email) {
       this.amForm.get('email_id').setValue(this.email);
     }
+    this.getCustomerQnr();
   }
   updateForm() {
     this.amForm.setValue({
