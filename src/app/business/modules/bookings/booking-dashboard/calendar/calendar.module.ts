@@ -4,7 +4,8 @@ import { BookingsRoutingModule } from '../../bookings.routing.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { CalendarComponent } from './calendar.component';
-
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 @NgModule({
@@ -14,9 +15,13 @@ import { CalendarComponent } from './calendar.component';
     BookingsRoutingModule,
     MatGridListModule,
     CapitalizeFirstPipeModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
 
   ],
   exports:[CalendarComponent]
 })
-export class CalendarModule {
+export class BookingCalendarModule {
 }

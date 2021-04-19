@@ -3,20 +3,25 @@ import { CommonModule } from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { BookingDashboardComponent } from './booking-dashboard.component';
 import { BookingsDashboardRoutingModule } from './booking-dashboard.routing.module';
-import { CalendarComponent } from './calendar/calendar.component';
-import { UpcomingBookingsComponent } from './upcoming-bookings/upcoming-bookings.component';
-import { BookingQuickActionsComponent } from './booking-quick-actions/booking-quick-actions.component';
-import { BookingFeedsComponent } from './booking-feeds/booking-feeds.component';
-import { TodayBookingStatsComponent } from './today-booking-stats/today-booking-stats.component';
+import { BookingCalendarModule } from './calendar/calendar.module';
+import { UpcomingBookingsModule } from './upcoming-bookings/upcoming-bookings.module';
+import { BooingQuickActionsModule } from './booking-quick-actions/booking-quick-actions.module';
+import { TodayBookingStatsModule } from './today-booking-stats/today-booking-stats.module';
+import { BookingFeedsModule } from './booking-feeds/booking-feeds.module';
 
 
 
 @NgModule({
-  declarations: [BookingDashboardComponent, CalendarComponent, UpcomingBookingsComponent, BookingQuickActionsComponent, BookingFeedsComponent, TodayBookingStatsComponent],
+  declarations: [BookingDashboardComponent],
   imports: [
     CommonModule,
     MatGridListModule,
-    BookingsDashboardRoutingModule
+    BookingsDashboardRoutingModule,
+    BookingCalendarModule,
+    UpcomingBookingsModule,
+    BooingQuickActionsModule,
+    TodayBookingStatsModule,
+    BookingFeedsModule
   ],
   exports:[BookingDashboardComponent]
 
