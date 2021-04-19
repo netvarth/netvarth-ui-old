@@ -50,7 +50,8 @@ export class BookingDetailComponent implements OnInit {
   ngOnInit(): void {
         this.api_loading = true;
 
-    this.getWaitlistDetail()
+    this.getWaitlistDetail();
+    this.getApptDetails();
     // this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -132,6 +133,63 @@ export class BookingDetailComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           // this.goBack();
+        }
+      );
+  }
+
+  getApptDetails() {
+    this.provider_services.getAppointmentById(this.waitlist_id)
+      .subscribe(
+        data => {
+          this.waitlist_data = data;
+          console.log(this.waitlist_data)
+          if (this.waitlist_data.service.serviceType === 'virtualService') {
+            switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
+              case 'Zoom': {
+                this.iconClass = 'fa zoom-icon';
+                break;
+              }
+              case 'GoogleMeet': {
+                this.iconClass = 'fa meet-icon';
+                break;
+              }
+              case 'WhatsApp': {
+                if (this.waitlist_data.service.virtualServiceType === 'audioService') {
+                  this.iconClass = 'fa wtsapaud-icon';
+                } else {
+                  this.iconClass = 'fa wtsapvid-icon';
+                }
+                break;
+              }
+              case 'Phone': {
+                this.iconClass = 'fa phon-icon';
+                break;
+              }
+            }
+          }
+          // this.getTimeSlots();
+          if (this.waitlist_data.appmtTime) {
+            this.apptTime = this.waitlist_data.appmtTime;
+          }
+          const waitlist_date = new Date(this.waitlist_data.date);
+          this.today.setHours(0, 0, 0, 0);
+          waitlist_date.setHours(0, 0, 0, 0);
+          this.waitlist_data.history = false;
+          if (this.today.valueOf() > waitlist_date.valueOf()) {
+            this.waitlist_data.history = true;
+          }
+          if (this.waitlist_data.apptStatus !== 'blocked') {
+            this.getWaitlistNotes(this.waitlist_data.uid);
+          }
+          this.getCheckInHistory(this.waitlist_data.uid);
+          if (this.waitlist_data.provider) {
+            this.spfname = this.waitlist_data.provider.firstName;
+            this.splname = this.waitlist_data.provider.lastName;
+          }
+
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
