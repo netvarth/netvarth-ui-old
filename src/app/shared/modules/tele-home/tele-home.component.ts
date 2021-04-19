@@ -64,6 +64,7 @@ export class TeleHomeComponent implements OnInit {
       this.getVideo();
     }
     else {
+      this.api_loading = false;
       this.doLogin('consumer');
     }
   }
@@ -96,9 +97,11 @@ export class TeleHomeComponent implements OnInit {
    * 
    */
   getVideo() {
+    this.api_loading = false;
     this.countrycode = '91';
     this.teleService.getAvailableBookings(this.countrycode, this.phone)
       .then((bookings: any) => {
+        this.api_loading = false;
         console.log(bookings);
         if (bookings.length > 0) {    
           this.noBookings = false;                
