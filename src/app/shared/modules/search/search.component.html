@@ -159,7 +159,7 @@
     (click)="closeMorepopularoptions()"></div>
   <ng-container>
     <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
-      <div class="location-box">
+      <div class="location-box pull-left">
         <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
           <mat-form-field class="search_location_class">
             <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
@@ -180,7 +180,7 @@
         </div>
       </div>
 
-      <div class="domain-box">
+      <div class="domain-box pull-left">
         <div class="sa-dm">
           <mat-form-field class="search_domain">
             <div>
@@ -195,7 +195,7 @@
         </div>
       </div>
 
-      <div class="search-box">
+      <div class="search-box pull-left">
       <div class="sa-src">
         <mat-form-field floatLabel="never" class="search_keyword_class">
           <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
