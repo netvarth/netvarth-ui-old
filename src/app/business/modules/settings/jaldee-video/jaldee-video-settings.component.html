@@ -1,0 +1,100 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Jaldee TeleHealth
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>        
+    </div>
+</section>
+<section>
+    <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small" #teleservice>
+            <div class="col-md-12">
+                <h5 class="mgn-up-25 mgn-bt-10 pad-lt-10"><i class="fa fa-television" (click)="redirecToHelp()"></i>&nbsp;JALDEE VIDEO</h5>
+                <div class="form-level-settings">Jaldee's own video platform. <a
+                    class="learnmore-pointer" id="customer-help"
+                    (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
+                    More</a></div>
+                <hr/>
+            </div>
+            <div class="col-md-12  no-padding-small">
+                <h5 class="mgn-up-25 mgn-bt-10">Why Jaldee Video?</h5>
+            </div>
+            <div class="col-md-12 justify no-padding-small">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deleniti animi pariatur consectetur in
+                facere fuga.
+                Facere excepturi voluptatem aut repudiandae debitis temporibus modi eum est fugit nisi, maxime ad!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima officiis enim repellat, reprehenderit
+                facilis adipisci illum.
+                Animi sunt quidem tempore saepe incidunt dolor dolores aut iure nam, praesentium, rem nisi?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, optio culpa sequi reiciendis nulla sit
+                ullam dolorum, neque natus in, illum ad laborum fuga.
+                Voluptatibus dignissimos reprehenderit cumque temporibus obcaecati!
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore quas suscipit maxime quos. Quis,
+                expedita quibusdam! Accusamus,
+                mollitia ipsa facere perspiciatis, et reiciendis aut architecto eaque iste, autem natus quisquam!
+            </div>
+            <div class="notification-box col-md-12 col-xs-12 col-sm-12 mgn-up-25 mgn-bt-25  no-padding-small">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
+                    <div class="split-ln-brd col-md-12 pad-15">
+                        <label>Remaining video minutes: <span class="bold">
+                            &nbsp;{{videocredits}}</span> 
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <ul class="info-lst serviceadd-info">
+                        <li>In order to send and receive notifications, purchase atleast one of the <a class="pointlist"
+                                matTooltip="Go to Add-ons" routerLink="/provider/license/addons">Jaldee video calling
+                                ADD-ON.</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-12 mgn-bt-25 no-padding-small">
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-25 mgn-bt-25 bold no-padding">
+                    <i class="fa fa-video-camera dark-blue" aria-hidden="true"></i>
+                    Allow Jaldee to record Video Consultation &nbsp;
+                    <mat-slide-toggle [(ngModel)]="jaldeeVideoRecord_status" (change)="handle_RecordingStatus($event)">
+                    </mat-slide-toggle><span class="row col-sm-12">
+                        <span class='greenc'
+                            *ngIf="jaldeeVideoRecord_status">ON</span>
+                        <span class='disabled'
+                            *ngIf="!jaldeeVideoRecord_status">OFF</span>
+                    </span>
+                </div>
+                <h5 class="mgn-up-25 mgn-bt-10">
+                    What is Jaldee Video Recording?
+                </h5>
+                <div class="col-md-12 justify">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deleniti animi pariatur consectetur
+                    in
+                    facere fuga.
+                    Facere excepturi voluptatem aut repudiandae debitis temporibus modi eum est fugit nisi, maxime ad!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima officiis enim repellat,
+                    reprehenderit
+                    facilis adipisci illum.
+                    Animi sunt quidem tempore saepe incidunt dolor dolores aut iure nam, praesentium, rem nisi?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, optio culpa sequi reiciendis nulla
+                    sit
+                    ullam dolorum, neque natus in, illum ad laborum fuga.
+                    Voluptatibus dignissimos reprehenderit cumque temporibus obcaecati!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore quas suscipit maxime quos. Quis,
+                    expedita quibusdam! Accusamus,
+                    mollitia ipsa facere perspiciatis, et reiciendis aut architecto eaque iste, autem natus quisquam!
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="col-md-12">
+                <h5 class="mgn-up-25 mgn-bt-10 pad-lt-10 blue"><a>Help</a></h5>
+                <hr/>
+            </div>
+            <div class="col-md-12">
+                <a>How to set up Jaldee Video</a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>

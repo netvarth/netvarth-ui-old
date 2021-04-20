@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommSettingsComponent } from './comm-settings.component';
-import { JaldeeVideoSettingsComponent } from './jaldee-video-settings/jaldee-video-settings.component';
+import { JaldeeVideoSettingsComponent } from '../jaldee-video/jaldee-video-settings.component'
 
 const routes: Routes = [
     { path: '', component: CommSettingsComponent },
