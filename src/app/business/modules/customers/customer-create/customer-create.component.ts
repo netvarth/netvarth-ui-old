@@ -1097,16 +1097,17 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
   validateQnr(form_data?) {
+    console.log(this.questionAnswers);
     if (!this.questionAnswers) {
       this.questionAnswers = {
         answers: {
           answerLine: [],
           questionnaireId: this.questionnaireList.id
-        },
-        changed: true
+        }
       }
     }
-    if (this.questionAnswers.answers && this.questionAnswers.changed) {
+    console.log(this.questionAnswers);
+    if (this.questionAnswers.answers) {
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
           if (this.showBookingQnr) {

@@ -374,7 +374,7 @@ export class QuestionnaireComponent implements OnInit {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
       }
-      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload, 'changed': this.changeHappened };
+      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
       console.log(type);
       if (type === 'inputChange') {
         this.changeHappened = true;
