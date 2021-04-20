@@ -122,7 +122,7 @@
                                 <!-- for Text -->
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                        (input)="onSubmit();" [disabled]="disableInput()"
+                                        (input)="onSubmit('inputChange');" [disabled]="disableInput()"
                                         [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                                         [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
                                         class="form-control1 form-control-solid" type="text">
@@ -132,7 +132,8 @@
                                 <!-- for Number -->
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
                                     <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                        (input)="onSubmit();" [min]="getQuestion(question).numberPropertie.start"
+                                        (input)="onSubmit('inputChange');"
+                                        [min]="getQuestion(question).numberPropertie.start"
                                         [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
                                         class="form-control1 form-control-solid" type="number">
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
@@ -142,7 +143,7 @@
                                 <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'date'">
                                     <input class="form-control1" type="date"
                                         [(ngModel)]="answers[getQuestion(question).labelName]" id="example-date-input"
-                                        (input)="onSubmit()" [disabled]="disableInput()"
+                                        (input)="onSubmit('inputChange')" [disabled]="disableInput()"
                                         min="{{getDate(getQuestion(question).dateProperties.startDate) | date:'yyyy-MM-dd'}}"
                                         max="{{getDate(getQuestion(question).dateProperties.endDate) | date:'yyyy-MM-dd'}}">
                                     <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
@@ -152,7 +153,7 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="uuid && !disableInput()">
                             <button class="normal-btn" mat-flat-button
-                                (click)="!buttonDisable && onSubmit('submit')">Submit</button>
+                                (click)="!buttonDisable && onSubmit('submit')">Update</button>
                         </div>
                     </div>
                 </div>

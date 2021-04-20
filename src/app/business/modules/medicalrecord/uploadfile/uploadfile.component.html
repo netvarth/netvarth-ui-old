@@ -5,9 +5,9 @@
             {{heading}}
           </h5>
         </div>
-        
+        <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>  -->
         <div class="card title-gb">
-          <div class="mgn-up-10">
+          <div class="mgn-up-10" *ngIf="!loading">
            <label>{{customer_label | capitalizeFirst}} Name</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
            <label>{{customer_label | capitalizeFirst}} Id</label> &nbsp; <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
            <label  *ngIf="patientDetails.dob">DOB &nbsp;</label>  <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
@@ -45,10 +45,23 @@
                   <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                   <!-- <div class="col-md-2 col-sm-4 col-xs-4 col-lg-1" > -->
                   <div class="uploaddiv col-md-2 col-sm-3 col-xs-4 " *ngFor="let file of mediafiles;let i = index " >
+                  
                     <div class="uploadcard" >
+                        <div >
+                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" class="pull-right">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                            <mat-menu #menu="matMenu">
+                              <button type="button" mat-menu-item  (click)="deleteFile(file)">
+                                <i class="icon-delete"></i>
+                                <span>{{delete_btn}}</span>
+                              </button>
+                            </mat-menu>
+                          </div>
                       <img src="assets/images/pdf.png" class="card-img-top" alt="...">
+                  
                       <div class="card-body">
-                        <span (click)="showFile(file)">{{file.uid}}</span>
+                        <span (click)="showFile(file)"><a href="javascript:;" >{{file.originalName ?file.originalName:file.uid}}</a></span>
                       </div>
                     </div>
                   </div>
@@ -64,7 +77,7 @@
                     <div class="uploadcard" >
                       <img src="assets/images/pdf.png" class="card-img-top" alt="...">
                       <div class="card-body">
-                        <span ><a [href]="file.url" target="_blank" download>{{file.uid}}</a></span>
+                        <span ><a [href]="file.url" target="_blank" download>{{file.originalName ? file.originalName:file.uid}}</a></span>
                       </div>
                     </div>
                   </div>

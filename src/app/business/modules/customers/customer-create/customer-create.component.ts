@@ -426,6 +426,7 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
   createForm() {
+    this.getCustomerQnr();
     if (!this.haveMobile) {
       this.amForm = this.fb.group({
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -459,7 +460,6 @@ export class CustomerCreateComponent implements OnInit {
     if (this.email) {
       this.amForm.get('email_id').setValue(this.email);
     }
-    this.getCustomerQnr();
   }
   updateForm() {
     this.amForm.setValue({
@@ -480,7 +480,6 @@ export class CustomerCreateComponent implements OnInit {
     } else {
       this.customerActions(form_data);
     }
-
   }
   customerActions(form_data) {
     let datebirth;
@@ -1098,7 +1097,16 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
   validateQnr(form_data?) {
-    if (this.questionAnswers && this.questionAnswers.answers) {
+    if (!this.questionAnswers) {
+      this.questionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: this.questionnaireList.id
+        },
+        changed: true
+      }
+    }
+    if (this.questionAnswers.answers && this.questionAnswers.changed) {
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
           if (this.showBookingQnr) {
@@ -1117,9 +1125,15 @@ export class CustomerCreateComponent implements OnInit {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
     } else {
-      this.disableButton = false;
-      // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-      this.shared_functions.sendMessage({ type: 'qnrValidateError', value: 'required' });
+      if (this.showBookingQnr) {
+        if (this.source === 'appt-block') {
+          this.confirmApptBlock(this.newCustomerId);
+        } else if (this.source === 'waitlist-block') {
+          this.confirmWaitlistBlock(this.newCustomerId);
+        }
+      } else {
+        this.customerActions(form_data);
+      }
     }
   }
 }

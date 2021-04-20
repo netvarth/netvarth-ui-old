@@ -15,7 +15,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
+
 @Component({
   selector: 'app-provider-appointment-detail',
   templateUrl: './provider-appointment-detail.component.html',
@@ -102,24 +102,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   apptMultiSelection = false;
   timetype;
   showImages: any = [];
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'inside close-image',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'Close',
-        fontSize: '20px'
-      }
-    ]
-  };
-  image_list_popup: Image[];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -526,39 +508,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       return attachment.thumbPath;
     } else {
       return attachment.s3path;
-    }
-  }
-  onButtonBeforeHook() { }
-  onButtonAfterHook() { }
-  openImageModalRow(image: Image) {
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
-  openImage(attachements, index) {
-    this.image_list_popup = [];
-    let count = 0;
-    for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
-      const thumbPath = attachements[comIndex].thumbPath;
-      let imagePath = thumbPath;
-      const description = attachements[comIndex].s3path;
-      imagePath = attachements[comIndex].s3path;
-      const imgobj = new Image(
-        count,
-        { // modal
-          img: imagePath,
-          description: description
-        },
-      );
-      this.image_list_popup.push(imgobj);
-      count++;
-    }
-    if (count > 0) {
-      setTimeout(() => {
-        this.openImageModalRow(this.image_list_popup[index]);
-      }, 200);
     }
   }
 }
