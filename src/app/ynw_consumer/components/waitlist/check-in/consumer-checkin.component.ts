@@ -1770,8 +1770,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 //     }, 500);
                 // }
                 if (emailId && emailId != "") {
-                this.payEmail = emailId;
-                this.waitlist_for[0]['email'] = this.payEmail;
+                    this.payEmail = emailId;
+                    this.waitlist_for[0]['email'] = this.payEmail;
                 }
                 this.closebutton.nativeElement.click();
                 setTimeout(() => {
@@ -1993,6 +1993,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
+        console.log(this.questionAnswers);
+        if (!this.questionAnswers) {
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        console.log(this.questionAnswers);
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
@@ -2002,9 +2012,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
-        } else {
-            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
     }
 }

@@ -2063,6 +2063,16 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
+        console.log(this.questionAnswers);
+        if (!this.questionAnswers) {
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        console.log(this.questionAnswers);
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 if (data.length === 0) {
@@ -2076,9 +2086,6 @@ export class ProviderCheckinComponent implements OnInit {
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
-        } else {
-            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
     }
 }

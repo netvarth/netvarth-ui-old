@@ -1353,7 +1353,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             if (found) {
                 this.couponvalid = true;
-                 this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
@@ -1575,11 +1575,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (emailId && emailId != "") {
                     this.payEmail = emailId;
                     this.waitlist_for[0]['email'] = this.payEmail;
-                    }
-                    this.closebutton.nativeElement.click();
-                    setTimeout(() => {
-                        this.action = '';
-                    }, 500);
+                }
+                this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
             }
 
         } else {
@@ -1879,6 +1879,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
+        console.log(this.questionAnswers);
+        if (!this.questionAnswers) {
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        console.log(this.questionAnswers);
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
@@ -1888,9 +1898,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
-        } else {
-            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
     }
 }

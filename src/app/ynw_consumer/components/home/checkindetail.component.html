@@ -17,7 +17,7 @@
                                         src="assets/images/myjaldee/Group92.png" style="width: 400px;">
                                 </span>
                             </div> -->
-  
+
                             <!-- Title with back option -->
                             <div class="card title-gb">
                                 <h5 class="mgn-up-10 index-head">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
@@ -34,15 +34,19 @@
                                         <div class="pad-10">
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
-                                                {{waitlist?.providerAccount?.businessName | capitalizeFirst}} 
-                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount, $event)"></div>
-                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
-                                                (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
+                                                {{waitlist?.providerAccount?.businessName | capitalizeFirst}}
+                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)"
+                                                    class="icon-favourite-filled"
+                                                    (click)="doDeleteFavProvider(waitlist.providerAccount, $event)">
+                                                </div>
+                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)"
+                                                    class="icon-favourite"
+                                                    (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
                                             </h3>
                                             <a class="loc-cls" [href]="waitlist.queue.location.googleMapUrl"
-                                            target="_blank">
+                                                target="_blank">
                                                 <i class="fa fa-map-marker"></i>
-                                                {{waitlist.queue.location.place | capitalizeFirst}} 
+                                                {{waitlist.queue.location.place | capitalizeFirst}}
                                             </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>Provider : </span>
@@ -56,11 +60,14 @@
                                                 <i *ngIf="waitlist.service.serviceType === 'virtualService'"
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
-                                                    {{waitlist.service.name | capitalizeFirst}} 
+                                                    {{waitlist.service.name | capitalizeFirst}}
                                                     <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
                                                     </span>
-                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{waitlist.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
+                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                        class="joinMeeting"
+                                                        href="{{waitlist.service.virtualCallingModes[0].value}}"
+                                                        target="blank">Join Meeting</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -71,8 +78,8 @@
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].firstName">
                                                 <span class="item-head">Booking for</span>
-                                                <span
-                                                    class="item-label-val">{{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
+                                                <span class="item-label-val">{{waitlist.waitlistingFor[0].firstName |
+                                                    capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
                                             <div class="each-item">
@@ -81,12 +88,13 @@
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
                                                 <span class="item-head">Phone No</span>
-                                                <span class="item-label-val">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
+                                                <span class="item-label-val">{{waitlist.countryCode}}
+                                                    {{waitlist.waitlistPhoneNumber}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
                                                 <span class="item-label-val price rupee-font">
-                                                    {{waitlist.amountPaid  | currency:'&#8377;'}}</span>
+                                                    {{waitlist.amountPaid | currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
@@ -128,31 +136,36 @@
                                         <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
-                                                <!-- virtual time today -->
+                                            <!-- virtual time today -->
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">EST WAIT TIME</span>
-                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
-                                                    {{getTimeToDisplay(waitlist.appxWaitingTime)}}
-                                                </span>
-                                                <!-- virtual time future -->
-                                                <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS AT</span>
-                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
-                                                    {{waitlist.serviceTime}}
-                                                </span>
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">EST
+                                                WAIT TIME</span>
+                                            <span class="item-label-val"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
+                                                {{getTimeToDisplay(waitlist.appxWaitingTime)}}
+                                            </span>
+                                            <!-- virtual time future -->
+                                            <span class="status-label"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS
+                                                AT</span>
+                                            <span class="item-label-val"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
+                                                {{waitlist.serviceTime}}
+                                            </span>
 
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
-                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
-                                                  Est Wait Time: 
-                                                  {{getTimeToDisplay(waitlist.appxWaitingTime)}}
-                                                  <!-- {{waitlist.appxWaitingTime}} min -->
-                                                </span>
+                                            <span class="est-tok-time"
+                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
+                                                Est Wait Time:
+                                                {{getTimeToDisplay(waitlist.appxWaitingTime)}}
+                                                <!-- {{waitlist.appxWaitingTime}} min -->
+                                            </span>
                                             <span class="est-tok-time"
                                                 *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">Starts
-                                                at : {{waitlist.serviceTime}}</span> 
+                                                at : {{waitlist.serviceTime}}</span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
                                             class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
@@ -220,58 +233,10 @@
                                         </div>
                                     </div>
                                     <div class="c-details pad-10">
-                                        <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid" [accountId]="waitlist.providerAccount.id" [type]="'details'"></app-questionnaire>
+                                        <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"
+                                            [accountId]="waitlist.providerAccount.id" [type]="'details'">
+                                        </app-questionnaire>
                                     </div>
-                                    <!-- <div class="c-details pad-10">
-                                        <div class="quest-answ-box col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
-                                            *ngFor="let question of waitlist.questionnaire.questionAnswers">
-                                            <ng-container *ngIf="question.answer">
-                                                <div class="question">
-                                                    <span class="svg-icon svg-icon-success">
-                                                        <svg class="svg-align" xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                                                <path
-                                                                    d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
-                                                                    fill="#000000" fill-rule="nonzero"></path>
-                                                                <path
-                                                                    d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
-                                                                    fill="#000000" fill-rule="nonzero" opacity="0.3"
-                                                                    transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) ">
-                                                                </path>
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                    <span>{{question.answer.labelName}}</span>
-                                                </div>
-                                                <div class="answer ansr"
-                                                    *ngIf="question.question.fieldDataType !== 'Boolean' && question.question.fieldDataType !== 'Date' && question.question.fieldDataType !== 'FileUpload'">
-                                                    {{question.answer.answer}}</div>
-                                                <div class="answer ansr"
-                                                    *ngIf="question.question.fieldDataType === 'Boolean'">
-                                                    {{(question.answer.answer) ?
-                                                    'Yes' : 'No'}}</div>
-                                                <div class="answer ansr"
-                                                    *ngIf="question.question.fieldDataType === 'Date'">
-                                                    {{question.answer.answer |
-                                                    date:newDateFormat}}</div>
-                                                <div class="answer ansr"
-                                                    *ngIf="question.question.fieldDataType === 'FileUpload'">
-                                                    <div class="qnr-img"
-                                                        *ngFor="let img of question.answer.attachment; let i = index">
-                                                        {{img.caption}}
-                                                        <div class="pointer-cursor"
-                                                            (click)="openImage(question.answer.attachment, i)">
-                                                            <img [src]="img.s3path">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <!-- Questionnaire end-->
                             </div>
@@ -282,6 +247,3 @@
         </div>
     </div>
 </section>
-<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
-    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

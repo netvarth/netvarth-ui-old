@@ -22,7 +22,7 @@
           [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20">
-            <span class="pull-left group-name">{{group.groupName}}</span>   
+            <span class="pull-left group-name">{{group.groupName}}</span>
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
@@ -131,8 +131,8 @@
                 class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="!showCustomers">
-            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name" aria-controls="kt_datatable1"
-              [(ngModel)]="filter.first_name" (keypress)="search($event)">
+            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name"
+              aria-controls="kt_datatable1" [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
             <aside class="filterSidebar" *ngIf="filter_sidebar">
               <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
@@ -278,7 +278,8 @@
                           <i class="icon-edit"></i>
                           Edit
                         </button>
-                        <button type="button" mat-menu-item (click)="editCustomer(customer)" *ngIf="questionnaireList && questionnaireList.labels && questionnaireList.labels.length > 0">
+                        <button type="button" mat-menu-item (click)="editCustomer(customer)"
+                          *ngIf="questionnaireList && questionnaireList.labels && questionnaireList.labels.length > 0">
                           <i class="icon-edit"></i>
                           Questionnaire
                         </button>

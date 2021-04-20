@@ -990,5 +990,11 @@ export const projectConstantsLocal = {
     { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false , clas: 'orderintransit'},
     { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false , clas: 'ordershipped'},
     { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true , clas: 'ordercancelled'}
-  ]
+  ],
+  INBOX_MSG_TYPES: {
+    CHAT: 'Chat',
+    ENQUIRY: 'Enquiry',
+    ALERT: 'Alert',
+    BOOKINGS: 'Bookings'
+  }
 };

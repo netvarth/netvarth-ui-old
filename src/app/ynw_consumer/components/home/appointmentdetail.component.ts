@@ -15,7 +15,6 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
-import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -64,24 +63,6 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   fav_providers;
   fav_providers_id_list: any[];
   apptHistory: ArrayBuffer;
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'inside close-image',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'Close',
-        fontSize: '20px'
-      }
-    ]
-  };
-  image_list_popup: Image[];
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -254,12 +235,12 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   checkIfFav(id) {
     let fav = false;
     if (this.fav_providers_id_list) {
-    this.fav_providers_id_list.map((e) => {
-      if (e === id) {
-        fav = true;
-      }
-    });
-  }
+      this.fav_providers_id_list.map((e) => {
+        if (e === id) {
+          fav = true;
+        }
+      });
+    }
     return fav;
   }
 
@@ -299,45 +280,11 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getApptHistory(u_id, accid)
       .subscribe(
         data => {
-          console.log(data);
           this.apptHistory = data;
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-  }
-  onButtonBeforeHook() { }
-  onButtonAfterHook() { }
-  openImageModalRow(image: Image) {
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
-  openImage(attachements, index) {
-    this.image_list_popup = [];
-    let count = 0;
-    for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
-      const thumbPath = attachements[comIndex].thumbPath;
-      let imagePath = thumbPath;
-      const description = attachements[comIndex].s3path;
-      imagePath = attachements[comIndex].s3path;
-      const imgobj = new Image(
-        count,
-        { // modal
-          img: imagePath,
-          description: description
-        },
-      );
-      this.image_list_popup.push(imgobj);
-      count++;
-    }
-    if (count > 0) {
-      setTimeout(() => {
-        this.openImageModalRow(this.image_list_popup[index]);
-      }, 200);
-    }
   }
 }

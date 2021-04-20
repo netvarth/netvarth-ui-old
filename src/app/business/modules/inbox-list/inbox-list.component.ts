@@ -13,6 +13,7 @@ import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Plai
 import { KeyValue } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -80,7 +81,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
   showReply = false;
-  @ViewChild('reply') replyFrame: ElementRef;
+  msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+  // @ViewChild('reply') replyFrame: ElementRef;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   constructor(
@@ -94,11 +96,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
     this.activateRoute.queryParams.subscribe(params => {
-      console.log(params);
       if (params.customer && params.provider) {
         this.selectedCustomer = params.customer + '=' + params.provider;
       }
-      console.log(this.selectedCustomer);
     });
   }
   ngOnInit() {
@@ -139,7 +139,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.showReply = true;
     }
     const screenHeight = window.innerHeight;
- 	if (this.screenWidth <= 991) {
+    if (this.screenWidth <= 991) {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
         this.userHeight = screenHeight - 303;
       } else {
@@ -476,13 +476,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMessage.caption.splice(i, 1);
   }
   customerSelection(msgs) {
-    console.log(msgs);
     this.type = 'all';
     this.message = '';
     this.replyMsg = null;
     this.clearImg();
     this.selectedCustomer = msgs.key;
-    console.log(this.selectedCustomer);
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
@@ -518,9 +516,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       post_data['msg'] = this.message;
       post_data['messageType'] = 'CHAT';
       if (this.replyMsg) {
-      post_data['replyMessageId'] = this.replyMsg.messageId;
+        post_data['replyMessageId'] = this.replyMsg.messageId;
       }
-      console.log(post_data);
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -543,7 +540,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.scrollDone = false;
-            this.message = ''; 
+            this.message = '';
             this.replyMsg = null;
             this.getInboxMessages();
             this.clearImg();
@@ -588,62 +585,64 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   getMsgType(msg) {
-    return 'chat';
+    if (msg.messageType) {
+      return this.msgTypes[msg.messageType];
+    }
   }
-    gotoCustomers() {
+  gotoCustomers() {
     this.router.navigate(['/provider/customers']);
   }
   replytoMsg(msg) {
-this.replyMsg = msg;
-console.log(this.replyMsg);
-// setTimeout(() => {
-// var height = this.replyFrame.nativeElement.offsetHeight;
-// console.log(height);
-// }, 100);
+    this.replyMsg = msg;
+    console.log(this.replyMsg);
+    // setTimeout(() => {
+    // var height = this.replyFrame.nativeElement.offsetHeight;
+    // console.log(height);
+    // }, 100);
   }
   closeReply() {
     this.replyMsg = null;
   }
   getReplyMsgbyId(msgId) {
-const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
-return replyMsg[0];
+    const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
+    return replyMsg[0];
   }
   gotoReplyMsgSection(msgId) {
-console.log(this.getReplyMsgbyId(msgId));
-let msgs;
-if (this.getReplyMsgbyId(msgId).messagestatus==='out') {
-  msgs = this.outmsgIds;
-} else {
-  msgs = this.inmsgId;
-}
-console.log(msgs);
-msgs.toArray().forEach(element => {
-  if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
-    // element.nativeElement.classList.add(' blinkelem');
-    // console.log(element);
-
-    // const a = document.getElementsByClassName('mt-2');
-    const b = document.getElementsByClassName('selmsg');
-    // console.log(a);
-    console.log(b);
-    for (let i = 0; i < b.length; i++) {
-      console.log(b[i].innerHTML.trim());
-      console.log(this.getReplyMsgbyId(msgId).msg.trim());
-      if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
-        b[i].classList.add('blinkelem');
-      }
+    console.log(this.getReplyMsgbyId(msgId));
+    let msgs;
+    if (this.getReplyMsgbyId(msgId).messagestatus === 'out') {
+      msgs = this.outmsgIds;
+    } else {
+      msgs = this.inmsgId;
     }
-    element.nativeElement.scrollIntoViewIfNeeded();
-    return false;
-  }
-});
-setTimeout(() => {
-  const b = document.getElementsByClassName('selmsg');
-  console.log(b);
-  for (let i = 0; i < b.length; i++) {
-      b[i].classList.remove('blinkelem');
-  }
-}, 2000);
+    console.log(msgs);
+    msgs.toArray().forEach(element => {
+      if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        // element.nativeElement.classList.add(' blinkelem');
+        // console.log(element);
+
+        // const a = document.getElementsByClassName('mt-2');
+        const b = document.getElementsByClassName('selmsg');
+        // console.log(a);
+        console.log(b);
+        for (let i = 0; i < b.length; i++) {
+          console.log(b[i].innerHTML.trim());
+          console.log(this.getReplyMsgbyId(msgId).msg.trim());
+          if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+            b[i].classList.add('blinkelem');
+          }
+        }
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
+    setTimeout(() => {
+      const b = document.getElementsByClassName('selmsg');
+      console.log(b);
+      for (let i = 0; i < b.length; i++) {
+        b[i].classList.remove('blinkelem');
+      }
+    }, 2000);
   }
   gotoEnquiry() {
     this.router.navigate(['provider/enquiry']);
@@ -653,7 +652,7 @@ setTimeout(() => {
   }
   replyForMobile() {
     if (this.small_device_display) {
-    this.showReply = !this.showReply;
+      this.showReply = !this.showReply;
     }
   }
 }
