@@ -1880,15 +1880,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     validateQuestionnaire() {
         console.log(this.questionAnswers);
-        if (!this.questionAnswers) {
-            this.questionAnswers = {
-                answers: {
-                    answerLine: [],
-                    questionnaireId: this.questionnaireList.id
-                }
-            }
-        }
-        console.log(this.questionAnswers);
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {

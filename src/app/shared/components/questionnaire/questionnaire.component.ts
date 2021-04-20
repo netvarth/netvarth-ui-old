@@ -306,8 +306,10 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
         });
+      } else {
+        delete this.answers[key];
       }
-        if (this.answers[key].length === 0) {
+        if (this.answers[key] && this.answers[key].length === 0) {
           delete this.answers[key];
         }
     });
@@ -367,7 +369,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     console.log(data);
-    if (data.length > 0) {
+    // if (data.length > 0) {
       const postData = {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
@@ -388,7 +390,7 @@ export class QuestionnaireComponent implements OnInit {
           console.log(passData);
           this.returnAnswers.emit(passData);
         }
-    }
+    // }
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));
