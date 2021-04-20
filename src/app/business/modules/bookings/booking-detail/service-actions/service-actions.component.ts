@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-service-actions',
@@ -7,9 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ServiceActionsComponent implements OnInit {
   @Input() waitlist_data;
-  @Input() bookingType;
+  bookingType;
+  constructor(
+    private activated_route: ActivatedRoute
 
-  constructor() { }
+  ) {
+    this.activated_route.queryParams.subscribe(params => {
+      this.bookingType = params.type;
+    });
+   }
 
   ngOnInit(): void {
   console.log(this.waitlist_data)

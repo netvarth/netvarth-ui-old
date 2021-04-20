@@ -2035,7 +2035,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.groupService.setitemToGroupStorage('appthP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('appthPFil', this.filter);
     }
-    this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
+    this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type, type: 'appointment' } });
   }
 
   findCurrentActiveQueue(ques) {

@@ -6,9 +6,12 @@
         {{waitlist_data.service.name |
         capitalizeFirst}}
       </span>
-      <span class="text-success mt-3 font-weight-bold font-size-sm">
+      <span *ngIf="bookingType === 'checkin'" class="text-success mt-3 font-weight-bold font-size-sm">
         <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
         {{waitlist_data.waitlistStatus | capitalizeFirst}}</span>
+        <span *ngIf="bookingType === 'appointment'" class="text-success mt-3 font-weight-bold font-size-sm">
+          <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+          {{waitlist_data.apptStatus | capitalizeFirst}}</span>
     </h3>
     <div class="card-toolbar pr-2 disp-grid">
       <div>

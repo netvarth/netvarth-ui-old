@@ -48,6 +48,7 @@ export class BookingDetailComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
+      console.log(this.bookingType)
     });
   }
   
