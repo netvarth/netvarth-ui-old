@@ -95,10 +95,18 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
+      this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activateRoute.queryParams.subscribe(params => {
+      console.log(params);
       if (params.customer && params.provider) {
+        console.log(this.userDet);
+        if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = params.customer + '=' + params.provider;
+        } else {
+          this.selectedCustomer = params.customer;
+        }
       }
+      console.log(this.selectedCustomer);
     });
   }
   ngOnInit() {
@@ -107,7 +115,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
-    this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -256,8 +263,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
     this.onResize();
+    console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
+      console.log(this.groupedMsgs);
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      console.log(this.selectedUserMessages);
       if (this.small_device_display) {
         this.showChat = true;
       }
@@ -481,7 +491,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.replyMsg = null;
     this.clearImg();
     this.selectedCustomer = msgs.key;
+    console.log(this.selectedCustomer);
     this.selectedUserMessages = msgs.value;
+    console.log(this.selectedUserMessages);
     if (this.small_device_display) {
       this.showChat = true;
     }
@@ -585,8 +597,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   getMsgType(msg) {
-    if (msg.messageType) {
-      return this.msgTypes[msg.messageType];
+    if (msg.msgType) {
+      // console.log(msg.messageType);
+      // console.log(this.msgTypes[msg.messageType]);
+      return this.msgTypes[msg.msgType];
     }
   }
   gotoCustomers() {
