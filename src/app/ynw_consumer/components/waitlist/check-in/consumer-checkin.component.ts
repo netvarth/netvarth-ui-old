@@ -193,6 +193,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     selectedQTime;
     questionnaireLoaded = false;
+    jaldeecashcredit = 10;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -742,7 +743,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.submitQuestionnaire(parentUid);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                        this.payuPayment();
+                        if(this.jaldeecashcredit > 0){
+                            this.router.navigate(['consumer', 'jaldeecashcredit']);
+                        } else {
+                            this.payuPayment();
+                        }
                     } else {
                         let multiple;
                         if (this.uuidList.length > 1) {
@@ -2006,5 +2011,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
             this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
+    }
+    jaldeecash(){
+      this.router.navigate(['consumer', 'jaldeecashcredit']);
     }
 }
