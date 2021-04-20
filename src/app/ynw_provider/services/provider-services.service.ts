@@ -966,7 +966,11 @@ editHoliday(data) {
   setJaldeeVideoRecording(status) {
     const url = 'provider/video/settings/' + status;
     return this.servicemeta.httpPut(url);
-}
+  }
+  getJaldeeVideoRecording() {
+    const url = 'provider/account/settings/videoCallMinutes' ;
+    return this.servicemeta.httpGet(url);
+  }
   getGlobalSettings() {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);

@@ -24,6 +24,35 @@
                     More</a></div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-bt-20">
                 <div class="mgn-up-20 bold"> Video Calling Modes</div>
+                    <div class="notification-box col-md-12 col-xs-12 col-sm-12  no-margin-small"  style="margin: 5px !important;">
+                        <div class="col-md-6 col-xs-12 col-sm-7 col-lg-9 no-padding">
+                        Jaldee video   
+                            <div class="form-level-settings"> Jaldee video settings
+                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-5 col-lg-3 no-padding small-device-style">
+                            <div class="send-notify pointer-cursor" (click) = "gotoJaldeeVideoSettings()">
+                                <i class="fa fa-gears mgn-lt-auto"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="padding-bottom: 10px; margin-top: 10px; margin-bottom: 20px;">
+                            <i class="fa fa-video-camera dark-blue" aria-hidden="true"></i>
+                            Allow Jaldee to record Video Consultation &nbsp;
+                            <mat-slide-toggle [(ngModel)]="jaldeeVideoRecord_status"
+                                    (change)="handle_RecordingStatus($event)">
+                            </mat-slide-toggle>        
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="padding-bottom: 10px;">
+                            <label>Remaining video minutes: <span class="bold">
+                                    &nbsp;{{videocredits}}</span> </label>
+                            <ul class="info-lst serviceadd-info">
+                                <li>In order to send and receive notifications, purchase atleast one of the <a class="pointlist" matTooltip="Go to Add-ons"
+                                        routerLink="/provider/license/addons">Jaldee video calling ADD-ON.</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
                         <div class="tele-connect textcenter">WhatsApp</div>
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
