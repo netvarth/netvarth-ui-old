@@ -32,6 +32,7 @@ export class BookingDetailComponent implements OnInit {
   userDet;
   isCheckin
   api_loading = true;
+  bookingType;
 
   constructor(
     private groupService: GroupStorageService,
@@ -45,13 +46,20 @@ export class BookingDetailComponent implements OnInit {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
     });
+    this.activated_route.queryParams.subscribe(params => {
+      this.bookingType = params.type;
+    });
   }
+  
 
   ngOnInit(): void {
         this.api_loading = true;
 
-    this.getWaitlistDetail();
-    this.getApptDetails();
+        if (this.bookingType === 'checkin') {
+          this.getWaitlistDetail();
+        } else{
+          this.getApptDetails();
+        }
     // this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -142,6 +150,7 @@ export class BookingDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.api_loading = false;
           console.log(this.waitlist_data)
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
@@ -190,6 +199,7 @@ export class BookingDetailComponent implements OnInit {
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
         }
       );
   }

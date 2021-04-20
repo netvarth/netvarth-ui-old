@@ -2363,7 +2363,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.groupService.setitemToGroupStorage('hP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type, type: 'checkin' } });
   }
   viewBillPage() {
     const _this = this;

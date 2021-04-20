@@ -7,11 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ServiceActionsComponent implements OnInit {
   @Input() waitlist_data;
+  @Input() bookingType;
 
   constructor() { }
 
   ngOnInit(): void {
   console.log(this.waitlist_data)
+  console.log(this.bookingType)
   }
 
 }
