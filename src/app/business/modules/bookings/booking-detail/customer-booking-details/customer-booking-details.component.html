@@ -10,38 +10,46 @@
               <span class="text-muted  font-size-xs font-weight-bold">luca@festudios.com</span> -->
               <div class="mgn-up-10 stats-item"
                 *ngIf="bookingType === 'checkin' && (waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName)">
-                <span  class="text-dark font-weight-bold text-hover-primary font-size-md mb-0" *ngFor="let user of waitlist_data.waitlistingFor">
+                <h5  class="text-dark font-weight-bold text-hover-primary font-size-md mb-0" *ngFor="let user of waitlist_data.waitlistingFor">
                   {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                </span>
+                </h5>
                 <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].id">
-                    <span class="text-muted">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+                    <span class="text-muted">Jaldee Id: {{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
                   </div>
                 <div class="stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
-                    <span class="text-muted">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
+                  <i class="fas fa-mobile-alt text-success"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
                   </div>
                   <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
-                    <span class="text-muted">{{waitlist_data.waitlistingFor[0].email}}</span>
+                    <i class="text-success far fa-envelope"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.waitlistingFor[0].email}}</span>
                   </div>
                   <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].gender">
-                    <span class="text-muted">{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                    <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fas fa-mars text-success"></i>
+                    <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fas fa-mars-stroke text-success"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
                   </div>
               </div>
               <div class="mgn-up-10 stats-item"
                 *ngIf="bookingType === 'appointment' && (waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName)">
-                <span  class="text-dark font-weight-bold text-hover-primary font-size-md mb-0" *ngFor="let user of waitlist_data.appmtFor">
+                <h5  class="text-dark font-weight-bold text-hover-primary font-size-md mb-0" *ngFor="let user of waitlist_data.appmtFor">
                   {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                </span>
+                </h5>
                 <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].id">
-                    <span class="text-muted">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+                    <span class="text-muted">Jaldee Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
                   </div>
                 <div class="stats-item" *ngIf="waitlist_data.phoneNumber">
-                    <span class="text-muted">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
+                  <i class="fas fa-mobile-alt text-success"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
                   </div>
                   <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].email">
-                    <span class="text-muted">{{waitlist_data.appmtFor[0].email}}</span>
+                    <i class="text-success far fa-envelope"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.appmtFor[0].email}}</span>
                   </div>
-                  <div class="stats-item" *ngIf="customerdetails && customerdetails[0] && customerdetails[0].gender">
-                    <span class="text-muted">{{customerdetails[0].gender | capitalizeFirst}}</span>
+                  <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].gender">
+                    <i *ngIf="waitlist_data.appmtFor[0].gender === 'male'" class="fas fa-mars text-success"></i>
+                    <i *ngIf="waitlist_data.appmtFor[0].gender === 'female'" class="fas fa-mars-stroke text-success"></i>
+                    <span class="mgn-lt-5 text-muted">{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
                   </div>
               </div>
             </div>

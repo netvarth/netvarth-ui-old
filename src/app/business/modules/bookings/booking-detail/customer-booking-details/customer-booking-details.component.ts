@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 @Component({
   selector: 'app-customer-booking-details',
   templateUrl: './customer-booking-details.component.html',
-  styleUrls: ['./customer-booking-details.component.css']
+  styleUrls: ['./customer-booking-details.component.css','../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
 })
 export class CustomerBookingDetailsComponent implements OnInit {
   @Input() waitlist_data;
