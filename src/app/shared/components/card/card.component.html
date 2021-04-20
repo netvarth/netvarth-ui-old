@@ -19,6 +19,8 @@
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                 <i class="fa wtsapvid-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                <i class="fa jaldeevideo-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
             </div>
             <div class="text-center service-image"
                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
