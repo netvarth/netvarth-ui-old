@@ -6,6 +6,7 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+import { projectConstants } from '../../../app.component';
 
 
 
@@ -27,7 +28,9 @@ export class CommunicationComponent implements OnInit {
   uid: any;
   ownerName = 'Provider';
   selectedMsg = -1;
-  newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  display_dateFormat = projectConstants.DATE_FORMAT_WITH_MONTH;
+  //newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  newTimeDateFormat =projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(public dialogRef: MatDialogRef<CommunicationComponent>,
     private shared_functions: SharedFunctions,
