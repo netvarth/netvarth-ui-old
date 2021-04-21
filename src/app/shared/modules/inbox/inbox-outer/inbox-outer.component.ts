@@ -332,7 +332,7 @@ export class InboxOuterComponent implements OnInit {
         count,
         { // modal
           img: imagePath,
-          description: description
+          // description: description
         },
       );
       this.image_list_popup_temp.push(imgobj);
@@ -365,24 +365,18 @@ export class InboxOuterComponent implements OnInit {
     return replyMsg[0];
   }
   gotoReplyMsgSection(msgId) {
-    console.log(this.getReplyMsgbyId(msgId));
     let msgs;
     if (this.getReplyMsgbyId(msgId).owner.id !== this.userDet.id) {
       msgs = this.outmsgIds;
     } else {
       msgs = this.inmsgId;
     }
-    console.log(msgs);
     msgs.toArray().forEach(element => {
-      console.log(element.nativeElement.innerHTML.trim());
-      console.log(this.getReplyMsgbyId(msgId).msg.trim());
       if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
-        const b = document.getElementsByClassName('selmsg');
-        console.log(b);
-        for (let i = 0; i < b.length; i++) {
-          console.log(b[i].innerHTML.trim());
-          console.log(this.getReplyMsgbyId(msgId).msg.trim());
-          if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        const a = document.getElementsByClassName('selmsg');
+        const b = document.getElementsByClassName('messages');
+        for (let i = 0; i < a.length; i++) {
+          if (a[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
             b[i].classList.add('blinkelem');
           }
         }
@@ -391,8 +385,7 @@ export class InboxOuterComponent implements OnInit {
       }
     });
     setTimeout(() => {
-      const b = document.getElementsByClassName('selmsg');
-      console.log(b);
+      const b = document.getElementsByClassName('messages');
       for (let i = 0; i < b.length; i++) {
         b[i].classList.remove('blinkelem');
       }

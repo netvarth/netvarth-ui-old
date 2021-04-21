@@ -481,7 +481,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         count,
         { // modal
           img: imagePath,
-          description: description
+          // description: description
         },
       );
       this.image_list_popup_temp.push(imgobj);
@@ -626,7 +626,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.replyMsg = null;
   }
   getReplyMsgbyId(msgId) {
-    const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
+    const replyMsg = this.inboxList.filter(msg => msg.messageId === msgId);
     return replyMsg[0];
   }
   gotoReplyMsgSection(msgId) {
@@ -639,13 +639,17 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     console.log(msgs);
     msgs.toArray().forEach(element => {
+      console.log(element.nativeElement.innerHTML.trim());
+      console.log(this.getReplyMsgbyId(msgId).msg.trim());
       if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
-        const b = document.getElementsByClassName('selmsg');
+        const a = document.getElementsByClassName('selmsg');
+        console.log(a);
+        const b = document.getElementsByClassName('messages');
         console.log(b);
-        for (let i = 0; i < b.length; i++) {
-          console.log(b[i].innerHTML.trim());
+        for (let i = 0; i < a.length; i++) {
+          console.log(a[i].innerHTML.trim());
           console.log(this.getReplyMsgbyId(msgId).msg.trim());
-          if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+          if (a[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
             b[i].classList.add('blinkelem');
           }
         }
@@ -654,7 +658,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     });
     setTimeout(() => {
-      const b = document.getElementsByClassName('selmsg');
+      const b = document.getElementsByClassName('messages');
       console.log(b);
       for (let i = 0; i < b.length; i++) {
         b[i].classList.remove('blinkelem');

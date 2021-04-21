@@ -38,7 +38,7 @@
                                             <i class="text-dark-50 flaticon-upload"></i>
                                             Upload File</a>
                                         <div class="mt-3" *ngIf="getImgName(getQuestion(question))">
-                                            {{getImgName(getQuestion(question))}}
+                                            <a (click)="openAttachmentGallery(getQuestion(question))">{{getImgName(getQuestion(question))}}</a>
                                             <i class="fa fa-times-circle" aria-hidden="true" *ngIf="!disableInput()"
                                                 (click)="deleteTempImage(getQuestion(question))"></i>
                                         </div>
@@ -161,3 +161,6 @@
         </div>
     </div>
 </section>
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
