@@ -55,17 +55,17 @@
       </div>
       <div>
         <a *ngIf="showCall" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Stop</a>
-        <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
+        <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
         class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
         <a *ngIf="showCancel" class="btn btn-danger btn-square lh-1 font-size-xs">
           Cancel
         </a>
       </div>
       <div class="mt-3">
-        <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Unblock</a>
+        <a *ngIf="waitlist_data.apptStatus==='blocked'" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Unblock</a>
         <a *ngIf="showArrived"
         class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Mark as arrived</a>
-        <a *ngIf="waitlist_data.waitlistStatus == 'started'" class="btn btn-danger btn-square lh-1 font-size-xs">
+        <a *ngIf="waitlist_data.apptStatus == 'Started'" class="btn btn-danger btn-square lh-1 font-size-xs">
           Complete
         </a>
       </div>
