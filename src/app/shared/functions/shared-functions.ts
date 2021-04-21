@@ -983,7 +983,7 @@ export class SharedFunctions {
         msg = 'booking';
       }
     } else if (type === 'appointment') {
-      msg = 'Appointment';
+      msg = 'booking';
     } else if (type === 'order') {
       msg = 'Order';
     }

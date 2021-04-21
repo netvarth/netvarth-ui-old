@@ -10,7 +10,7 @@
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="{{message_label}} * "
-                    formControlName="message" maxlength="1000">
+                    formControlName="message" maxlength="330">
             </textarea>
            </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"

@@ -735,6 +735,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let i = 0; i < this.ratingdisabledCnt; i++) {
         this.ratingdisabledArr.push(i);
       }
+      this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
+        (settings: any) => {
+          this.orderstatus = settings.enableOrder;
+          this.getCatalogs(this.provider_bussiness_id);
+        }
+      );
       // this.getbusinessprofiledetails_json('location', true);
     }
   }
@@ -958,6 +964,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < this.ratingdisabledCnt; i++) {
       this.ratingdisabledArr.push(i);
     }
+   
   }
 
   setUserVirtualFields(res) {
@@ -1506,12 +1513,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
  
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
-      (settings: any) => {
-        this.orderstatus = settings.enableOrder;
-        this.getCatalogs(this.provider_bussiness_id);
-      }
-    );
+    
   }
   // getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
   //   let UTCstring = null;
