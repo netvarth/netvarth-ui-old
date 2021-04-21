@@ -439,7 +439,7 @@ export const projectConstantsLocal = {
     NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
     ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
-    ONLINE_CHECKIN_REQUIRED: 'Online check-in required',
+    ONLINE_CHECKIN_REQUIRED: 'Online booking required',
     CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons',
     CONSUMER_CAN_NOT_APPLY_COUPON:'Coupon cannot be applied.',
     PROVIDER_COUPON_NOT_APPLICABLE_SERVICE:'Provider coupon not applicable for this service',
