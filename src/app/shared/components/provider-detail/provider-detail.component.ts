@@ -410,9 +410,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
             this.domainList = domainConfig;
+            console.log('accountId..'+this.accountEncId);
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: string) => {
                 this.provider_id = id;
+                console.log('providerId first time' + this.provider_id)
                 this.gets3curl();
               }
             )
@@ -493,7 +495,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
 
   gets3curl() {
-
+       console.log(this.provider_id);
     let accountS3List = 'settings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
@@ -692,6 +694,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.business_exists = true;
 
     this.provider_bussiness_id = this.businessjson.id;
+    console.log('businessId'+this.provider_bussiness_id);
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url + '?' + new Date();
@@ -754,6 +757,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.ratingdisabledCnt; i++) {
       this.ratingdisabledArr.push(i);
     }
+    this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
+      (settings: any) => {
+        this.orderstatus = settings.enableOrder;
+        this.getCatalogs(this.provider_bussiness_id);
+      }
+    );
     // this.getbusinessprofiledetails_json('location', true);
   }
 
@@ -861,6 +870,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     }
     console.log(this.locId);
+    console.log(this.provider_bussiness_id);
     if (this.locId) {
       const location1 = this.locationjson.filter(loc => loc.id === this.locId);
       console.log(location1);
@@ -2291,12 +2301,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   changeLocation(loc) {
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
-      (settings: any) => {
-        this.orderstatus = settings.enableOrder;
-        this.getCatalogs(this.provider_bussiness_id);
-      }
-    );
+  
   }
   cardClicked(actionObj) {
     if (actionObj['type'] === 'waitlist') {
