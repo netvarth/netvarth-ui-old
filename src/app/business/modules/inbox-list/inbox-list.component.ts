@@ -95,18 +95,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private router: Router, private activateRoute: ActivatedRoute) {
-      this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activateRoute.queryParams.subscribe(params => {
       console.log(params);
-      if (params.customer && params.provider) {
-        console.log(this.userDet);
-        if (this.userDet.accountType === 'BRANCH') {
-        this.selectedCustomer = params.customer + '=' + params.provider;
-        } else {
-          this.selectedCustomer = params.customer;
-        }
-      }
-      console.log(this.selectedCustomer);
+      this.qParams = params;
     });
   }
   ngOnInit() {
@@ -115,6 +106,16 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
+    this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.qParams.customer && this.qParams.provider) {
+      console.log(this.userDet);
+      if (this.userDet.accountType === 'BRANCH') {
+      this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
+      } else {
+        this.selectedCustomer = this.qParams.customer;
+      }
+    }
+    console.log(this.selectedCustomer);
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -175,6 +176,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
+      this.router.navigate(['provider', 'inbox']);
     });
   }
   getInboxUnreadCnt() {
@@ -264,6 +266,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     this.onResize();
     console.log(this.selectedCustomer);
+    if (this.qParams.customer) {
+      this.readEnquiries();
+    }
+  }
+  readEnquiries() {
     if (this.selectedCustomer !== '') {
       console.log(this.groupedMsgs);
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
