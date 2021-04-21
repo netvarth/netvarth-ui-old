@@ -8,6 +8,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-questionnaire',
@@ -42,6 +43,25 @@ export class QuestionnaireComponent implements OnInit {
   bookingDetails: any = [];
   @ViewChild('logofile') file1: ElementRef;
   @ViewChild('logofile1') file2: ElementRef;
+
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  image_list_popup: Image[];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -118,12 +138,12 @@ export class QuestionnaireComponent implements OnInit {
   setValidateError(errors) {
     console.log(errors);
     this.apiError = [];
-      if (errors.length > 0) {
-        for (let error of errors) {
-          this.apiError[error.questionField] = [];
-          this.apiError[error.questionField].push(error.error);
-        }
+    if (errors.length > 0) {
+      for (let error of errors) {
+        this.apiError[error.questionField] = [];
+        this.apiError[error.questionField].push(error.error);
       }
+    }
   }
   getAnswers(answerData, type?) {
     this.answers = new Object();
@@ -276,11 +296,11 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.selectedMessage);
     console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
-        if (!this.answers[key]) {
-          this.answers[key] = [];
-        }
-        console.log(this.filestoUpload[key]);
-        if (Object.keys(this.filestoUpload[key]).length > 0) {
+      if (!this.answers[key]) {
+        this.answers[key] = [];
+      }
+      console.log(this.filestoUpload[key]);
+      if (Object.keys(this.filestoUpload[key]).length > 0) {
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
           console.log(this.filestoUpload[key][key1]);
           if (this.filestoUpload[key][key1]) {
@@ -309,9 +329,9 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         delete this.answers[key];
       }
-        if (this.answers[key] && this.answers[key].length === 0) {
-          delete this.answers[key];
-        }
+      if (this.answers[key] && this.answers[key].length === 0) {
+        delete this.answers[key];
+      }
     });
     console.log(this.answers);
     Object.keys(this.uploadedFiles).forEach(key => {
@@ -370,26 +390,26 @@ export class QuestionnaireComponent implements OnInit {
     });
     console.log(data);
     // if (data.length > 0) {
-      const postData = {
-        'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
-        'answerLine': data
+    const postData = {
+      'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
+      'answerLine': data
+    }
+    const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
+    console.log(type);
+    if (type === 'inputChange') {
+      this.changeHappened = true;
+    }
+    if (type === 'submit') {
+      console.log(this.changeHappened);
+      if (this.changeHappened) {
+        this.submitQuestionnaire(passData);
+      } else {
+        this.location.back();
       }
-      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
-      console.log(type);
-      if (type === 'inputChange') {
-        this.changeHappened = true;
-      }
-        if (type === 'submit') {
-          console.log(this.changeHappened);
-          if (this.changeHappened) {
-            this.submitQuestionnaire(passData);
-          } else {
-            this.location.back();
-          }
-        } else {
-          console.log(passData);
-          this.returnAnswers.emit(passData);
-        }
+    } else {
+      console.log(passData);
+      this.returnAnswers.emit(passData);
+    }
     // }
   }
   getDate(date) {
@@ -677,5 +697,60 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
+  }
+
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
+  openAttachmentGallery(question, document?) {
+    this.image_list_popup = [];
+    let count = 0;
+    let imagePath;
+console.log(question);
+    console.log(document);
+    if (!document) {
+      document = question.filePropertie.allowedDocuments[0];
+    }
+    console.log(document);
+    console.log(this.filestoUpload);
+    console.log(this.uploadedFiles);
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      console.log(indx);
+      if (indx !== -1) {
+        imagePath = this.selectedMessage[indx].path;
+      }
+      console.log(imagePath);
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
+      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
+      console.log(indx);
+      if (indx !== -1) {
+        imagePath = this.uploadedImages[indx].s3path;
+      }
+      console.log(imagePath);
+    }
+
+    const imgobj = new Image(
+      count,
+      { // modal
+        img: imagePath
+      },
+    );
+    this.image_list_popup.push(imgobj);
+    count++;
+    console.log(count);
+    console.log(this.image_list_popup);
+    if (count > 0) {
+      setTimeout(() => {
+        this.openImageModalRow(this.image_list_popup[0]);
+      }, 200);
+    }
+  }
+
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
   }
 }

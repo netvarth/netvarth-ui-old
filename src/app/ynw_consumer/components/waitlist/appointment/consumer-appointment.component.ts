@@ -1885,6 +1885,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;
+                    this.saveCheckin();
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

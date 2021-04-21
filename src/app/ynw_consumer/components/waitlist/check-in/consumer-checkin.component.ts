@@ -710,6 +710,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
+        console.log(this.sel_ser_det.isPrePayment);
         if (!this.is_wtsap_empty) {
             if (type) {
                 this.addCheckInConsumer(post_Data);
@@ -1844,6 +1845,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.bookStep = type;
         }
+        console.log(this.bookStep);
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
@@ -1998,6 +2000,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;
+                    console.log(this.bookStep);
+                    this.saveCheckin();
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

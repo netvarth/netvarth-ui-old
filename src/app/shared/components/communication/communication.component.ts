@@ -101,7 +101,7 @@ export class CommunicationComponent implements OnInit {
           () => { },
           () => { }
         );
-      this.dialogRef.close();
+      this.dialogRef.close('reloadlist');
     }
   }
   addWaitlistMessage(waitlist, type?) {
@@ -130,9 +130,9 @@ export class CommunicationComponent implements OnInit {
       data: pass_ob
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.dialogRef.close();
-      }
+     // if (result === 'reloadlist') {
+        this.dialogRef.close('reloadlist');
+     // }
     });
   }
 
