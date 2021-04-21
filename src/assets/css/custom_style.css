@@ -10607,7 +10607,11 @@ a {
   padding-right: 1px;
   width: 100%;
 }
-
+.jvideo-icon {
+  content: url(../images/teleservice/video-icon-small.png);
+  position: relative;
+  padding-right: 1px;
+}
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;

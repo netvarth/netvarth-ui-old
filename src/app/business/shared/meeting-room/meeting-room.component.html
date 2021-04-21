@@ -29,11 +29,11 @@
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding"
                     *ngIf="!loading">
-                    <button [disabled]="!consumerReady" (click)="consumerReady && joinRoom()">Join
-                        now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
+                    <button [disabled]="!consumerReady" (click)="consumerReady && joinRoom()">Start Video Sharing
+                        </button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                     <br><br>
                     <div class="pt-0">
-                        <mat-checkbox [(ngModel)]="recordingFlag" (change)="updateRecordingFlag( $event)">Record this video consultation</mat-checkbox>
+                        <mat-checkbox class="rec-check"  [(ngModel)]="recordingFlag" (change)="updateRecordingFlag( $event)">Record this video consultation</mat-checkbox>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                     (click)="disconnect()"></i>
                 <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
                     (click)="openChat()"></i> -->
-                <i class="pull-right record-text record-icon round stop"  *ngIf="recordingFlag"></i>
+                <i class="pull-right record-text record-icon"  *ngIf="recordingFlag"></i>
             </div>
         </div>
         <select id="video-devices" hidden></select>
