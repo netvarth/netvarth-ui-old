@@ -14,6 +14,8 @@ import { KeyValue } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { Item } from 'angular2-multiselect-dropdown';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -85,6 +87,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
   // @ViewChild('reply') replyFrame: ElementRef;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+
+
+
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
+
+  contextMenuPosition = { x: '0px', y: '0px' };
+
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -110,7 +120,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     if (this.qParams.customer && this.qParams.provider) {
       console.log(this.userDet);
       if (this.userDet.accountType === 'BRANCH') {
-      this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
+        this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
       } else {
         this.selectedCustomer = this.qParams.customer;
       }
@@ -153,14 +163,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
       } else {
         this.userHeight = screenHeight - 234;
       }
-      this.msgHeight = screenHeight - 425;
+      this.msgHeight = screenHeight - 385;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
         this.userHeight = screenHeight - 264;
       } else {
         this.userHeight = screenHeight - 208;
       }
-      this.msgHeight = screenHeight - 410;
+      this.msgHeight = screenHeight - 370;
     }
   }
   ngOnDestroy() {
@@ -168,12 +178,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.cronHandle.unsubscribe();
     }
   }
-  readConsumerMessages(consumerId, messageId, providerId, enuiryMsgs?) {
+  readConsumerMessages(consumerId, messageId, providerId) {
+    const enuiryMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
+    console.log(enuiryMsgs);
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
       this.getInboxMessages();
-      console.log(enuiryMsgs);
-      if (enuiryMsgs.length > 0) {
+      if (enuiryMsgs && enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
       this.router.navigate(['provider', 'inbox']);
@@ -266,11 +277,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     this.onResize();
     console.log(this.selectedCustomer);
-    if (this.qParams.customer) {
-      this.readEnquiries();
-    }
-  }
-  readEnquiries() {
     if (this.selectedCustomer !== '') {
       console.log(this.groupedMsgs);
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
@@ -278,15 +284,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (this.small_device_display) {
         this.showChat = true;
       }
+      // if (this.qParams.customer) {
       const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
       console.log(unreadMsgs);
-      const enuiryMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
-      console.log(enuiryMsgs);
       if (unreadMsgs.length > 0) {
         const ids = unreadMsgs.map(msg => msg.messageId);
         const messageids = ids.toString();
-        this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId, enuiryMsgs);
+        this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
       }
+      // }
       setTimeout(() => {
         this.scrollToElement();
       }, 100);
@@ -348,6 +354,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       inboxList.push(inboxData);
     }
+    console.log(inboxList);
     return inboxList;
   }
   searchUserById(id) {
@@ -605,8 +612,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getMsgType(msg) {
     if (msg.msgType) {
-      // console.log(msg.messageType);
-      // console.log(this.msgTypes[msg.messageType]);
       return this.msgTypes[msg.msgType];
     }
   }
@@ -616,10 +621,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   replytoMsg(msg) {
     this.replyMsg = msg;
     console.log(this.replyMsg);
-    // setTimeout(() => {
-    // var height = this.replyFrame.nativeElement.offsetHeight;
-    // console.log(height);
-    // }, 100);
   }
   closeReply() {
     this.replyMsg = null;
@@ -639,12 +640,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(msgs);
     msgs.toArray().forEach(element => {
       if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
-        // element.nativeElement.classList.add(' blinkelem');
-        // console.log(element);
-
-        // const a = document.getElementsByClassName('mt-2');
         const b = document.getElementsByClassName('selmsg');
-        // console.log(a);
         console.log(b);
         for (let i = 0; i < b.length; i++) {
           console.log(b[i].innerHTML.trim());
@@ -671,9 +667,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
   stopprop(event) {
     event.stopPropagation();
   }
-  replyForMobile() {
-    if (this.small_device_display) {
-      this.showReply = !this.showReply;
-    }
+  onContextMenu(event: MouseEvent, item: Item) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
   }
+
 }

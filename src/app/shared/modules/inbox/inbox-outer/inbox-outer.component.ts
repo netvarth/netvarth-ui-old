@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
 import { KeyValue, Location } from '@angular/common';
@@ -10,6 +10,10 @@ import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { Item } from 'angular2-multiselect-dropdown';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+// import { delay, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -60,6 +64,17 @@ export class InboxOuterComponent implements OnInit {
   cronHandle: Subscription;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
+  msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+
+
+  @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
+  @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+  // mouseDown$: Observable<any>;
+  // mouseUp$: Observable<any>;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -98,9 +113,13 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
+          console.log(this.groupedMsgs);
+          console.log(this.selectedProvider);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            console.log(this.selectedUserMessages);
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
+            console.log(unreadMsgs);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
               const messageids = ids.toString();
@@ -337,5 +356,69 @@ export class InboxOuterComponent implements OnInit {
   }
   closeReply() {
     this.replyMsg = null;
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
+  getReplyMsgbyId(msgId) {
+    const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
+    return replyMsg[0];
+  }
+  gotoReplyMsgSection(msgId) {
+    console.log(this.getReplyMsgbyId(msgId));
+    let msgs;
+    if (this.getReplyMsgbyId(msgId).owner.id !== this.userDet.id) {
+      msgs = this.outmsgIds;
+    } else {
+      msgs = this.inmsgId;
+    }
+    console.log(msgs);
+    msgs.toArray().forEach(element => {
+      console.log(element.nativeElement.innerHTML.trim());
+      console.log(this.getReplyMsgbyId(msgId).msg.trim());
+      if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        const b = document.getElementsByClassName('selmsg');
+        console.log(b);
+        for (let i = 0; i < b.length; i++) {
+          console.log(b[i].innerHTML.trim());
+          console.log(this.getReplyMsgbyId(msgId).msg.trim());
+          if (b[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+            b[i].classList.add('blinkelem');
+          }
+        }
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
+    setTimeout(() => {
+      const b = document.getElementsByClassName('selmsg');
+      console.log(b);
+      for (let i = 0; i < b.length; i++) {
+        b[i].classList.remove('blinkelem');
+      }
+    }, 2000);
+  }
+  onContextMenu(event: MouseEvent, item: Item) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  }
+  // replyClickMobile(event: MouseEvent, item: Item) {
+  //   this.mouseDown$.pipe(
+  //     delay(1000),
+  //     takeUntil(this.mouseUp$)
+  //   )
+  //     .subscribe(res => {
+  //       console.log('LONG CLICK')
+  //        this.onContextMenu(event, item);
+  //     });
+  // }
+  getMsgType(msg) {
+    if (msg.messageType) {
+      return this.msgTypes[msg.messageType];
+    }
   }
 }

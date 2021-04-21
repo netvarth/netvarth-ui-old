@@ -18,10 +18,10 @@
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                 <div class="d-flex flex-row minhgt-80" *ngIf="messages.length==0">
                   <div class="no-msg-section">
-                      <div class="nomsg-img mgn-bt-20"></div>
-                      No messages till now
+                    <div class="nomsg-img mgn-bt-20"></div>
+                    No messages till now
                   </div>
-              </div>
+                </div>
                 <div class="d-flex flex-column-fluid">
                   <div class="d-flex flex-row" *ngIf="messages.length>0">
                     <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
@@ -69,20 +69,30 @@
                           </div>
                         </div>
                         <div class="card-body no-padding-small">
-                          <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 50}">
+                          <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 55}">
                             <div class="messages" *ngFor="let msg of selectedUserMessages">
                               <div *ngIf="msg.owner.id!==userDet.id" class="d-flex flex-column mb-5 align-items-start">
                                 <div class="d-flex align-items-center">
                                   <div>
                                     <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+                                    <span class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                   </div>
                                 </div>
-                                <div
-                                  class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
-                                  <div [innerHTML]="msg.msg | nl2br"></div>
+                                <div (contextmenu)="onContextMenu($event, msg)"
+                                  class="rounded pad-10 bg-light-success font-weight-bold font-size-lg text-left msg-width">
+                                  <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
+                                    (click)="stopprop($event);gotoReplyMsgSection(msg.replyMessageId)">
+                                    <div class="username">
+                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
+                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                    <div class="text-dark-50 replymsg"
+                                      [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
+                                  </div>
+                                  <div [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg text-dark-50">
+                                  </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
-                                      <a (click)="openImage(msg.attachements, i)"
+                                      <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                         *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
@@ -95,15 +105,25 @@
                               <div *ngIf="msg.owner.id==userDet.id" class="d-flex flex-column mb-5 align-items-end">
                                 <div class="d-flex align-items-center">
                                   <div>
+                                    <span class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                     <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                   </div>
                                 </div>
-                                <div
-                                  class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
-                                  <div [innerHTML]="msg.msg | nl2br"></div>
+                                <div (contextmenu)="onContextMenu($event, msg)"
+                                  class="rounded pad-10 bg-light-primary font-weight-bold font-size-lg msg-width">
+                                  <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
+                                    (click)="stopprop($event);gotoReplyMsgSection(msg.replyMessageId)">
+                                    <div class="username">
+                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
+                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                    <div class="text-dark-50 replymsg"
+                                      [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
+                                  </div>
+                                  <div [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left text-dark-50">
+                                  </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
-                                      <a (click)="openImage(msg.attachements, i)"
+                                      <a (click)="stopprop($event);openImage(msg.attachements, i)"
                                         *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
@@ -113,14 +133,39 @@
                                   </div>
                                 </div>
                               </div>
+                              <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+                              </div>
+                              <mat-menu #contextMenu="matMenu">
+                                <ng-template matMenuContent let-item="item">
+                                  <button mat-menu-item (click)="replytoMsg(item)">Reply</button>
+                                </ng-template>
+                              </mat-menu>
                             </div>
                             <div class="loading" *ngIf="!scrollDone">
                               <app-common-innerloading-spinner></app-common-innerloading-spinner>
                             </div>
                           </div>
                         </div>
-                        <div class="card-footer align-items-center">
-                          <div class="d-flex align-items-center justify-content-between mt-5">
+                        <div class="card-footer align-items-center no-padding">
+
+                          <div class="reply-section" *ngIf="replyMsg" #reply>
+                            <div class="main-sec">
+                              <div class="username">{{(replyMsg.owner.id===userDet.id) ? 'You' :
+                                selectedProviderName}}</div>
+                              <div class="replymsg">{{replyMsg.msg}}</div>
+                            </div>
+                            <div class="close">
+                              <svg (click)="closeReply()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                width="24" height="24">
+                                <path fill="currentColor"
+                                  d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z">
+                                </path>
+                              </svg>
+                            </div>
+                          </div>
+
+                          <div class="d-flex align-items-center justify-content-between pad-20">
                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                               class="form-control border-0 p-0" placeholder="Type a message *"
                               [(ngModel)]="message"></textarea>

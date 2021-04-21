@@ -81,6 +81,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    padding: 20px;
 }
 .galul li {
     float: left;
@@ -193,8 +194,10 @@ textarea {
 .reply-section {
     display: flex;
     margin-bottom: 10px;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #d5d5d5;
 }
-.reply-msg {
+.replymsg {
     font-size: .9rem;
     white-space: pre-wrap;
     -webkit-line-clamp: 3;
@@ -202,12 +205,13 @@ textarea {
     display: -webkit-box;
     overflow: hidden;
 }
-.mt-2 .reply-msg {
-    background: #ccc;
-    padding: 5px 20px 5px 0;
+.reply-msg {
+    padding: 5px;
     cursor: pointer;
+    border-left: 3px solid darkblue;
+    margin-bottom: 5px;
 }
-.reply-section .username {
+.username {
     color: darkblue;
 }
 .reply-section .close {
@@ -219,14 +223,17 @@ textarea {
 .reply-section .main-sec {
     width: 100%;
 }
-
+.pad-20 {
+padding: 20px;
+}
 .blinkelem {
     animation-name: pulse;
-    animation-duration: 3s;
+    animation-duration: 10s;
   }
   
   @keyframes pulse {
     50% {
         opacity: 0.2;
+        background: darkblue;
     }
   }
