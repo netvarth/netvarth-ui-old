@@ -717,7 +717,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }, 500);
                 },
                 error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                 });
     }
