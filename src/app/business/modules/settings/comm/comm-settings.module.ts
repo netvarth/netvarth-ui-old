@@ -10,7 +10,7 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 import { CommSettingsRoutingModule } from './comm-settings.routing.module';
 import { CommSettingsComponent } from './comm-settings.component';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
-import { JaldeeVideoSettingsComponent } from './jaldee-video-settings/jaldee-video-settings.component';
+import { JaldeeVideoSettingsComponent } from '../jaldee-video/jaldee-video-settings.component';
 
 @NgModule({
     imports: [

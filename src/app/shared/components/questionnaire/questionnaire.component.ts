@@ -258,9 +258,9 @@ export class QuestionnaireComponent implements OnInit {
         delete this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]];
       }
       console.log(Object.keys(this.filestoUpload[question.labelName]).length);
-      if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
-        delete this.filestoUpload[question.labelName];
-      }
+      // if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
+      //   delete this.filestoUpload[question.labelName];
+      // }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
       const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
       if (index !== -1) {
@@ -276,11 +276,13 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.selectedMessage);
     console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
-      if (Object.keys(this.filestoUpload[key]).length > 0) {
         if (!this.answers[key]) {
           this.answers[key] = [];
         }
+        console.log(this.filestoUpload[key]);
+        if (Object.keys(this.filestoUpload[key]).length > 0) {
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
+          console.log(this.filestoUpload[key][key1]);
           if (this.filestoUpload[key][key1]) {
             let indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
             if (indx !== -1) {
@@ -304,10 +306,12 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
         });
-        if (this.answers[key].length === 0) {
+      } else {
+        delete this.answers[key];
+      }
+        if (this.answers[key] && this.answers[key].length === 0) {
           delete this.answers[key];
         }
-      }
     });
     console.log(this.answers);
     Object.keys(this.uploadedFiles).forEach(key => {
@@ -365,12 +369,12 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     console.log(data);
-    if (data.length > 0) {
+    // if (data.length > 0) {
       const postData = {
         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
       }
-      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload, 'changed': this.changeHappened };
+      const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
       console.log(type);
       if (type === 'inputChange') {
         this.changeHappened = true;
@@ -386,7 +390,7 @@ export class QuestionnaireComponent implements OnInit {
           console.log(passData);
           this.returnAnswers.emit(passData);
         }
-    }
+    // }
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));

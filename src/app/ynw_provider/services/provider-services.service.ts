@@ -2062,4 +2062,8 @@ editHoliday(data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
   }
+    deleteMRFile(mrId, fileId) {
+    const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
+    return this.servicemeta.httpDelete(url);
+  }
 }
