@@ -8,7 +8,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -51,14 +51,14 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         private medicalrecord_service: MedicalrecordService,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor
-        // private router: Router,
+        private wordProcessor: WordProcessor,
+        private router: Router
     ) {
 
     }
     ngOnChanges() { }
     ngOnInit() {
-        if (this.data) {
+        if (this.data) { 
             this.mrId = this.data.mrid;
             this.patientId = this.data.patientid;
             this.bookingType = this.data.bookingtype;
@@ -108,11 +108,13 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.item_pic.caption.splice(i, 1);
     }
     saveImages() {
+      console.log(this.mrId);
         this.error_msg = '';
         this.error_list = [];
         this.img_save_caption = 'Uploading .. ';
         this.savedisabled = true;        
         if (this.mrId) {
+          console.log(this.mrId);
             this.uploadMrfiles();
           } else {
             let passingId ;
@@ -155,7 +157,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe(() => {
       this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
       .subscribe((data) => {
-        this.dialogRef.close(this.item_pic);
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
          this.snackbarService.openSnackBar('File Uploaded Successfully');
        },
        error => {

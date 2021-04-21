@@ -473,7 +473,10 @@ export class MedicalrecordComponent implements OnInit {
       }
     });
     this.uploadfiledialogRef.afterClosed().subscribe(result => {
-      this.getMedicalRecordUsingId(this.mrId);
+    //   console.log(result)
+    //   if(result){
+    //   this.getMedicalRecordUsingId(result);
+    // }
     });
   }
 }
