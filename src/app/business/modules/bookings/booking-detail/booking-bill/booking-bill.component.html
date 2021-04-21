@@ -1,8 +1,10 @@
-<div class="booking-bill-component">
+<div class="booking-bill-component" 
+    *ngIf= "(bookingType == 'checkin' && waitlist_data.waitlistStatus != 'cancelled') ||
+            (bookingType == 'appointment' && waitlist_data.apptStatus != 'Cancelled')">
     <div class="card billing-card">
         <div class="card-header bg-transparent">
             <div>Billing</div>
-            <i class="fa fa-external-link" aria-hidden="true"></i>
+            <i (click)="viewBillPage()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
         </div>
         <div class="card-body">
             <div class="outer-table-responsive table-responsive">
@@ -12,24 +14,17 @@
                             <td style="padding: 0 !important;">
                                 <table class="inner-table-one table table-sm table-borderless">
                                     <tbody>
-                                        <tr>
-                                            <td class="item-name">RCT Consultation</td>
-                                            <td class="item-quantity">-</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="item-name">DOLO 650 Mg</td>
-                                            <td class="item-quantity">10 Nos</td>
+                                        <tr *ngFor="let item of bill_data.service">
+                                            <td class="item-name">{{item.serviceName}}</td>
+                                            <td class="item-quantity">{{item.quantity}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </td>
                             <td style="padding: 0 !important;">
                                 <table class="inner-table-two table table-sm table-borderless">
-                                    <tr>
-                                        <td class="item-amount"><i class="fa fa-inr"></i>&nbsp;300</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="item-amount"><i class="fa fa-inr"></i>&nbsp;25</td>
+                                    <tr *ngFor="let item of bill_data.service">
+                                        <td class="item-amount"><i class="fa fa-inr"></i>&nbsp;{{item.price}}</td>
                                     </tr>
                                 </table>
                             </td>
@@ -44,7 +39,7 @@
         </div>
         <div class="card-footer bg-transparent">
             <div class="total-amount">
-                Amount Due&nbsp;:&nbsp;&nbsp;<i class="fa fa-inr"></i>&nbsp;325
+                Amount Due&nbsp;:&nbsp;&nbsp;<i class="fa fa-inr"></i>&nbsp;{{bill_data.amountDue}}
             </div>
             <div class="actions">
                 <!-- <button class="btn next-session-btn">Book the Next Session</button> -->

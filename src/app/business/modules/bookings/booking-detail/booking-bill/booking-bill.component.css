@@ -100,7 +100,7 @@
 }
 
 .card.billing-card .card-body .add-more {
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     padding: 0.6rem 0.3rem 0 !important;
 }
