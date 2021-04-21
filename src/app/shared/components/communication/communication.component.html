@@ -33,7 +33,7 @@
     </div>
 
       <div [ngClass]="(msg.owner.id===0) ?'pull-right time ':'pull-left time'">
-        <small  [ngClass]="(msg.owner.id===0) ?'pull-right text-muted ':'pull-left text-muted'">{{msg.timeStamp |date: display_dateFormat}}</small>
+        <small  [ngClass]="(msg.owner.id===0) ?'pull-right text-muted ':'pull-left text-muted'">{{msg.timeStamp |date: newTimeDateFormat}}</small>
       </div>
       <br>
     </div>
