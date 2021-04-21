@@ -55,6 +55,7 @@ export class OrderActionsComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log(this.customer_label);
     this.orderDetails = this.data.selectedOrder;
     if(this.data.type){
       this.timeType = this.data.type;
