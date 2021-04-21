@@ -13,17 +13,68 @@
           <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
           {{waitlist_data.apptStatus | capitalizeFirst}}</span>
     </h3>
-    <div class="card-toolbar pr-2 disp-grid">
+    <div *ngIf="bookingType === 'checkin'" class="card-toolbar pr-2 disp-grid">
       <div>
         <button type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block">
           Start Video Call
         </button>
       </div>
       <div>
-        <a class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Stop</a>
-        <a class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
-        <a class="btn btn-danger btn-square lh-1 font-size-xs">
+        <a *ngIf="showCall" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Stop</a>
+        <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
+        <a *ngIf="showCancel" class="btn btn-danger btn-square lh-1 font-size-xs">
           Cancel
+        </a>
+      </div>
+      <div class="mt-3">
+        <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Unblock</a>
+        <a *ngIf="showArrived"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Mark as arrived</a>
+        <a *ngIf="waitlist_data.waitlistStatus == 'started'" class="btn btn-danger btn-square lh-1 font-size-xs">
+          Complete
+        </a>
+      </div>
+      <div>
+        <a *ngIf="showUndo" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Status change</a>
+        <a *ngIf="showSendDetails"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Share booking info</a>
+        <a *ngIf="trackStatus" class="btn btn-danger btn-square lh-1 font-size-xs">
+          Where is my customer
+        </a>
+      </div>
+    </div>
+
+
+
+    <div *ngIf="bookingType === 'appointment'" class="card-toolbar pr-2 disp-grid">
+      <div>
+        <button type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block">
+          Start Video Call
+        </button>
+      </div>
+      <div>
+        <a *ngIf="showCall" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Stop</a>
+        <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
+        <a *ngIf="showCancel" class="btn btn-danger btn-square lh-1 font-size-xs">
+          Cancel
+        </a>
+      </div>
+      <div class="mt-3">
+        <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Unblock</a>
+        <a *ngIf="showArrived"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Mark as arrived</a>
+        <a *ngIf="waitlist_data.waitlistStatus == 'started'" class="btn btn-danger btn-square lh-1 font-size-xs">
+          Complete
+        </a>
+      </div>
+      <div>
+        <a *ngIf="showUndo" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Status change</a>
+        <a *ngIf="showSendDetails"
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Share booking info</a>
+        <a *ngIf="trackStatus" class="btn btn-danger btn-square lh-1 font-size-xs">
+          Where is my customer
         </a>
       </div>
     </div>
