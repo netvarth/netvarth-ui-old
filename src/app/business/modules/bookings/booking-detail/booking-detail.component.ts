@@ -33,7 +33,8 @@ export class BookingDetailComponent implements OnInit {
   isCheckin
   api_loading = true;
   bookingType;
-
+source = '';
+uuid;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -57,8 +58,10 @@ export class BookingDetailComponent implements OnInit {
         this.api_loading = true;
 
         if (this.bookingType === 'checkin') {
+          this.source = 'proCheckin';
           this.getWaitlistDetail();
         } else{
+          this.source = 'proAppt';
           this.getApptDetails();
         }
     // this.api_loading = true;
@@ -81,6 +84,7 @@ export class BookingDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.uuid = this.waitlist_data.ynwUuid;
           console.log(this.waitlist_data)
           this.api_loading = false;
           console.log(this.api_loading)
@@ -151,6 +155,7 @@ export class BookingDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.uuid = this.waitlist_data.uid;
           this.api_loading = false;
           console.log(this.waitlist_data)
           if (this.waitlist_data.service.serviceType === 'virtualService') {

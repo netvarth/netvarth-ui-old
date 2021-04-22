@@ -10,6 +10,7 @@ import { BookingMedicalRecordsModule } from './booking-medical-records/booking-m
 import { BookingDocumentsModule } from './booking-documents/booking-documents.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { BookingBillModule } from './booking-bill/booking-bill.module';
+import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 
 
 
@@ -25,8 +26,8 @@ import { BookingBillModule } from './booking-bill/booking-bill.module';
     BookingMedicalRecordsModule,
     BookingDocumentsModule,
     LoadingSpinnerModule,
-    BookingBillModule
-
+    BookingBillModule,
+    QuestionnaireModule
   ],
   exports:[BookingDetailComponent]
 })
