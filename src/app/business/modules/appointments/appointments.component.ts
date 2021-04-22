@@ -481,6 +481,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.refresh();
     });
   }
+  getServiceName(serviceName) {
+    let name='';
+  if(serviceName.length>20){
+   name=serviceName.substring(0,20) +'...';
+  }else{
+    name = serviceName;
+  }
+  return name;
+  }
   showFilterSidebar() {
     this.filter_sidebar = true;
     this.shared_functions.setFilter();

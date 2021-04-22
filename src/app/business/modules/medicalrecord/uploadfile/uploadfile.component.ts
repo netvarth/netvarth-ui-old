@@ -159,7 +159,7 @@ export class UploadFileComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-          'message': 'Do you really want to delete this File?'
+          'message': 'Do you really want to delete this file?'
       }
   });
   this.subscriptions.sink = this.removefiledialogRef.afterClosed().subscribe(result => {

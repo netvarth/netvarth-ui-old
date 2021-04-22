@@ -77,8 +77,8 @@
 }
 .gal_action {
     position: absolute;
-    top: 22px;
-    right: 2px;
+    top: 11px;
+    right: -10px;
     background: rgba(0,0,0,.5);
     width: 20px;
     height: 20px;

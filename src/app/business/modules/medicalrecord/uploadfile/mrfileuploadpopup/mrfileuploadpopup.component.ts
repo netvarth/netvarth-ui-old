@@ -165,7 +165,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         this.dialogRef.close();
         this.snackbarService.openSnackBar('File Uploaded Successfully');
-        this.reloadCurrentRoute();
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
+       // this.reloadCurrentRoute();
       
     
        },

@@ -41,7 +41,7 @@
                                             <a
                                                 (click)="openAttachmentGallery(getQuestion(question))">{{getImgName(getQuestion(question))}}</a>
                                             <i class="fa fa-times-circle" aria-hidden="true" *ngIf="!disableInput()"
-                                                (click)="deleteTempImage(getQuestion(question))"></i>
+                                                (click)="changeImageSelected(getQuestion(question))"></i>
                                         </div>
                                     </div>
                                     <mat-select multiple #deptsel [disabled]="disableInput()"
@@ -50,12 +50,14 @@
                                         class="select-box">
                                         <mat-option
                                             *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
-                                            [value]="document" (click)="takeDoc(getQuestion(question), document)">
+                                            [value]="document"
+                                            (click)="changeImageSelected(getQuestion(question), document)">
                                             {{document}}</mat-option>
                                     </mat-select>
                                     <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
                                         *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && uploadFilesTemp[getQuestion(question).labelName] && uploadFilesTemp[getQuestion(question).labelName].length > 0">
-                                        <div class="dropzone dropzone-default dropzone-primary dz-clickable">
+                                        <div class="dropzone dropzone-default dropzone-primary dz-clickable"
+                                            style="cursor: auto;">
                                             <ng-container
                                                 *ngFor="let doc of uploadFilesTemp[getQuestion(question).labelName]">
                                                 <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
@@ -66,15 +68,15 @@
                                                         <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                                     </div>
                                                     <div class="gal_action"
-                                                        (click)="deleteTempImage(getQuestion(question), doc)">
+                                                        (click)="changeImageSelected(getQuestion(question), doc)">
                                                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                                 <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
-                                                (click)="logofile1.click()"
+                                                    (click)="logofile1.click()"
                                                     *ngIf="!getImg(getQuestion(question), doc)">
                                                     {{doc}}
-                                                    <div class="dz-image">
+                                                    <div class="dz-image pointer-cursor">
                                                     </div>
                                                     <input #logofile1 type="file" accept="/*;capture=camera"
                                                         style="display:none;" [disabled]="disableInput()"

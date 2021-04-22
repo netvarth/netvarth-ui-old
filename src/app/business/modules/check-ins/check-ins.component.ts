@@ -826,6 +826,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.board_count = layout_list.length;
         });
   }
+  getServiceName(serviceName) {
+    let name='';
+  if(serviceName.length>20){
+   name=serviceName.substring(0,20) +'...';
+  }else{
+    name = serviceName;
+  }
+  return name;
+  }
   setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(

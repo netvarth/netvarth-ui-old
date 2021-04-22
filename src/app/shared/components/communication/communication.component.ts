@@ -98,10 +98,13 @@ export class CommunicationComponent implements OnInit {
       console.log(order);
       this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
         .then(
-          () => { },
+          () => { 
+            this.dialogRef.close('reloadlist');
+          },
           () => { }
+          
         );
-      this.dialogRef.close('reloadlist');
+     // this.dialogRef.close('reloadlist');
     }
   }
   addWaitlistMessage(waitlist, type?) {
