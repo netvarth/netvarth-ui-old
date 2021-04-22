@@ -66,6 +66,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   fav_providers: any;
   fav_providers_id_list: any[];
   wthistory;
+  questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
