@@ -1373,8 +1373,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
+        // this.pagination.totalCnt = result;
+        // Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureAppointments(Mfilter)
           .subscribe(
             data => {
