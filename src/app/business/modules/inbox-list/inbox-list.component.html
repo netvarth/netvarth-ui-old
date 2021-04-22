@@ -150,10 +150,12 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId"
+                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
-                                                                {{getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
+                                                                {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
+                                                                'out') ? 'You' :
+                                                                getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
                                                             <div class="text-dark-50 replymsg"
                                                                 [innerHTML]="getReplyMsgbyId(msg.replyMsgId).msg | nl2br">
                                                             </div>
@@ -189,9 +191,12 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId"
+                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
-                                                            <div class="username">You</div>
+                                                            <div class="username">
+                                                                {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
+                                                                'out') ? 'You' :
+                                                                getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
                                                             <div class="text-dark-50 replymsg"
                                                                 [innerHTML]="getReplyMsgbyId(msg.replyMsgId).msg | nl2br">
                                                             </div>
