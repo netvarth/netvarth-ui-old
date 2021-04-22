@@ -135,6 +135,21 @@ export class UploadFileComponent implements OnInit {
     this.getPatientDetails(this.patientId);
 
   }
+  getImageSource(file) {
+    let imgsrc='/assets/images/pdf.png';
+    console.log(file);
+    let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'video'){
+                imgsrc='/assets/images/video.png';
+              } else if( type[0] == 'audio') {
+                imgsrc='/assets/images/audio.png';
+              }
+
+    return imgsrc;
+
+  }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }

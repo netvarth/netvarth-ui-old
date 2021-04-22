@@ -136,7 +136,13 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
           }
         
     }
-
+   reloadCurrentRoute() {
+     console.log('inisde');
+      let currentUrl = 'provider/customers/'+this.patientId+'/' + this.bookingType+'/' + this.bookingId + '/medicalrecord/'+ this.mrId+ '/clinicalnotes';
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([currentUrl]);
+      });
+  }
     uploadMrfiles() {
       let passdata = {};
       let file;
@@ -158,8 +164,10 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
       .subscribe((data) => {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
-         this.snackbarService.openSnackBar('File Uploaded Successfully');
+        this.snackbarService.openSnackBar('File Uploaded Successfully');
+        this.reloadCurrentRoute();
+      
+    
        },
        error => {
         this.savedisabled = false;
