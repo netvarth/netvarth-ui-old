@@ -1,5 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CheckinDetailsSendComponent } from '../../../check-ins/checkin-details-send/checkin-details-send.component';
+import { LocateCustomerComponent } from '../../../check-ins/locate-customer/locate-customer.component';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { projectConstants } from '../../../../../app.component';
 
 @Component({
   selector: 'app-service-actions',
@@ -24,10 +31,17 @@ export class ServiceActionsComponent implements OnInit {
   showAttachment = false;
   showCall;
   showmrrx = false;
+  trackDetail: any = [];
+  customerMsg;
 
   constructor(
-    private activated_route: ActivatedRoute
-
+    private activated_route: ActivatedRoute,
+    private provider_services: ProviderServices,
+    private provider_shared_functions: ProviderSharedFuctions,
+    private dialog: MatDialog,
+    private router: Router,
+    private snackbarService: SnackbarService,
+    public dialogRef: MatDialogRef<ServiceActionsComponent>
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
@@ -124,6 +138,145 @@ export class ServiceActionsComponent implements OnInit {
       }
     
 }
+callingWaitlist() {
+    if(this.bookingType == 'checkin'){
+        const status = (this.waitlist_data.callingStatus) ? 'Disable' : 'Enable';
+    this.provider_services.setCallStatus(this.waitlist_data.ynwUuid, status).subscribe(
+        () => {
+            // this.dialogRef.close('reload');
+        });
+    }else if(this.bookingType == 'appointment'){
 
+    }
+    
+}
+changeWaitlistStatus(action) {
+    if (action !== 'CANCEL') {
+        // this.dialogRef.close();
+        // this.buttonClicked = true;
+    }
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
+}
+smsCheckin() {
+    this.dialogRef.close();
+    const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+            qdata: this.waitlist_data,
+            uuid: this.waitlist_data.ynwUuid,
+            chekintype: 'Waitlist'
+        }
+    });
+    smsdialogRef.afterClosed().subscribe(result => {
+    });
+}
 
+locateCustomer() {
+    this.provider_services.getCustomerTrackStatus(this.waitlist_data.ynwUuid).subscribe(data => {
+        this.trackDetail = data;
+        this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+        this.dialogRef.close();
+        const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                message: this.customerMsg
+            }
+        });
+        locateCustomerdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+        });
+    },
+        error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+}
+locateCustomerMsg(details) {
+    if (details && details.jaldeeDistance) {
+        const distance = details.jaldeeDistance.distance;
+        const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+        const travelTime = details.jaldeelTravelTime.travelTime;
+        const hours = Math.floor(travelTime / 60);
+        const mode = details.jaldeelTravelTime.travelMode;
+        const minutes = travelTime % 60;
+        return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
+    }
+}
+
+unBlockAppt() {
+    this.provider_services.deleteAppointmentBlock(this.waitlist_data.uid)
+        .subscribe(
+            () => {
+                this.dialogRef.close('reload');
+                this.router.navigate(['provider', 'appointments']);
+            },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+}
+callingAppt() {
+    const status = (this.waitlist_data.callingStatus) ? 'Disable' : 'Enable';
+    this.provider_services.setApptCallStatus(this.waitlist_data.uid, status).subscribe(
+        () => {
+            this.dialogRef.close('reload');
+        });
+}
+changeAppnmtStatus(action) {
+    if (action !== 'Rejected') {
+        // this.buttonClicked = true;
+    }
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
+}
+smsApptmnt() {
+    this.dialogRef.close();
+    const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+            qdata: this.waitlist_data,
+            uuid: this.waitlist_data.uid,
+            chekintype: 'appointment'
+        }
+    });
+    smsdialogRef.afterClosed().subscribe(result => {
+    });
+}
+locateApptCustomer() {
+    this.dialogRef.close();
+    this.provider_services.getCustomerTrackStatusforAppointment(this.waitlist_data.uid).subscribe(data => {
+        this.trackDetail = data;
+        this.customerMsg = this.locateApptCustomerMsg(this.trackDetail);
+        const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                message: this.customerMsg
+            }
+        });
+        locateCustomerdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+        });
+    },
+        error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+}
+locateApptCustomerMsg(details) {
+    if (details && details.jaldeeDistance) {
+        const distance = details.jaldeeDistance.distance;
+        const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+        const travelTime = details.jaldeelTravelTime.travelTime;
+        const hours = Math.floor(travelTime / 60);
+        const mode = details.jaldeelTravelTime.travelMode;
+        const minutes = travelTime % 60;
+        return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
+    }
+}
 }
