@@ -62,6 +62,8 @@ export class QuestionnaireComponent implements OnInit {
     ]
   };
   image_list_popup: Image[];
+  questionnaire_heading = '';
+  customer_label = '';
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
@@ -96,6 +98,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     console.log(this.questionnaireList);
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
@@ -515,6 +518,7 @@ export class QuestionnaireComponent implements OnInit {
     this.location.back();
   }
   getConsumerCheckinDetails() {
+    this.questionnaire_heading = 'More info';
     this.sharedService.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         this.bookingDetails = data;
@@ -529,6 +533,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getConsumerApptDetails() {
+    this.questionnaire_heading = 'More info';
     this.sharedService.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         this.bookingDetails = data;
@@ -543,6 +548,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getCheckinDetailsProvider() {
+    this.questionnaire_heading = this.customer_label + ' info';
     this.providerService.getProviderWaitlistDetailById(this.uuid).subscribe(
       (data: any) => {
         this.bookingDetails = data;
@@ -557,6 +563,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getApptDetailsProvider() {
+    this.questionnaire_heading = this.customer_label + ' info';
     this.providerService.getAppointmentById(this.uuid).subscribe(
       (data: any) => {
         this.bookingDetails = data;

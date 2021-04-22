@@ -78,10 +78,13 @@
                                     <span class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                   </div>
                                 </div>
-                                <div (contextmenu)="onContextMenu($event, msg)"
+                                <div
                                   class="rounded pad-10 bg-light-success font-weight-bold font-size-lg text-left msg-width">
+                                  <div class="reply-text">
+                                    <a (click)="replytoMsg(msg)">Reply</a>
+                                  </div>
                                   <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
-                                    (click)="stopprop($event);gotoReplyMsgSection(msg.replyMessageId)">
+                                    (click)="gotoReplyMsgSection(msg.replyMessageId)">
                                     <div class="username">
                                       {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
                                       getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
@@ -92,7 +95,7 @@
                                   </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
-                                      <a (click)="stopprop($event);openImage(msg.attachements, i)"
+                                      <a (click)="openImage(msg.attachements, i)"
                                         *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
@@ -109,10 +112,12 @@
                                     <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                   </div>
                                 </div>
-                                <div (contextmenu)="onContextMenu($event, msg)"
-                                  class="rounded pad-10 bg-light-primary font-weight-bold font-size-lg msg-width">
+                                <div class="rounded pad-10 bg-light-primary font-weight-bold font-size-lg msg-width">
+                                  <div class="reply-text">
+                                    <a (click)="replytoMsg(msg)">Reply</a>
+                                  </div>
                                   <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
-                                    (click)="stopprop($event);gotoReplyMsgSection(msg.replyMessageId)">
+                                    (click)="gotoReplyMsgSection(msg.replyMessageId)">
                                     <div class="username">
                                       {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
                                       getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
@@ -123,7 +128,7 @@
                                   </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
-                                      <a (click)="stopprop($event);openImage(msg.attachements, i)"
+                                      <a (click)="openImage(msg.attachements, i)"
                                         *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
@@ -133,14 +138,6 @@
                                   </div>
                                 </div>
                               </div>
-                              <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-                                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
-                              </div>
-                              <mat-menu #contextMenu="matMenu">
-                                <ng-template matMenuContent let-item="item">
-                                  <button mat-menu-item (click)="replytoMsg(item)">Reply</button>
-                                </ng-template>
-                              </mat-menu>
                             </div>
                             <div class="loading" *ngIf="!scrollDone">
                               <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -148,8 +145,7 @@
                           </div>
                         </div>
                         <div class="card-footer align-items-center no-padding">
-
-                          <div class="reply-section" *ngIf="replyMsg" #reply>
+                          <div class="reply-section" *ngIf="replyMsg">
                             <div class="main-sec">
                               <div class="username">{{(replyMsg.owner.id===userDet.id) ? 'You' :
                                 selectedProviderName}}</div>
@@ -164,7 +160,6 @@
                               </svg>
                             </div>
                           </div>
-
                           <div class="d-flex align-items-center justify-content-between pad-20">
                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                               class="form-control border-0 p-0" placeholder="Type a message *"

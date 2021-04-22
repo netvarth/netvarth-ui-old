@@ -11,6 +11,7 @@ import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spin
 import { QuestionnaireComponent } from './questionnaire.component';
 import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         MatOptionModule,
         MatSelectModule,
         ReactiveFormsModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        CapitalizeFirstPipeModule
     ],
     exports: [QuestionnaireComponent]
 })
