@@ -44,7 +44,6 @@ export class QuestionnaireComponent implements OnInit {
   bookingDetails: any = [];
   @ViewChild('logofile') file1: ElementRef;
   @ViewChild('logofile1') file2: ElementRef;
-
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -100,7 +99,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.questionnaireList);
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
         this.questions = this.questionnaireList.labels[0].questions;
@@ -113,8 +111,6 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.labels;
       }
     }
-    console.log(this.questions);
-    console.log(this.questionAnswers);
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
@@ -140,7 +136,6 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   setValidateError(errors) {
-    console.log(errors);
     this.apiError = [];
     if (errors.length > 0) {
       for (let error of errors) {
@@ -187,13 +182,10 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     } else {
-      console.log(answerData);
       for (let answ of answerData) {
         this.answers[answ.labelName] = answ.answer[Object.keys(answ.answer)[0]];
       }
     }
-    console.log(this.answers);
-    console.log(this.uploadedFiles);
     if (type === 'get') {
       Object.keys(this.uploadedFiles).forEach(key => {
         Object.keys(this.uploadedFiles[key]).forEach(key1 => {
@@ -237,10 +229,8 @@ export class QuestionnaireComponent implements OnInit {
         type = type[1];
         this.apiError[question.labelName] = [];
         if (question.filePropertie.fileTypes.indexOf(type) === -1) {
-          // this.apiError[question.labelName].push('Selected image type not supported');
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (size > question.filePropertie.maxSize) {
-          // this.apiError[question.labelName].push('Please upload images with size < ' + question.filePropertie.maxSize + 'kb');
           this.snackbarService.openSnackBar('Please upload images with size < ' + question.filePropertie.maxSize + 'kb', { 'panelClass': 'snackbarerror' });
         } else {
           if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
@@ -263,8 +253,6 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
       }
-      console.log(this.file1);
-      console.log(this.file2);
       if (this.file1 && this.file1.nativeElement.value) {
         this.file1.nativeElement.value = '';
       }
@@ -274,21 +262,31 @@ export class QuestionnaireComponent implements OnInit {
       this.onSubmit('inputChange');
     }
   }
-  deleteTempImage(question, document?) {
+  changeImageSelected(question, document?) {
     if (!document) {
       document = question.filePropertie.allowedDocuments[0];
     }
-    console.log(document);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (index !== -1) {
         this.selectedMessage.splice(index, 1);
         delete this.filestoUpload[question.labelName][document];
+        if (this.answers[question.labelName] && this.answers[question.labelName].length > 0) {
+          const filteredAnswer = this.answers[question.labelName].filter(answer => answer.caption === document);
+          if (filteredAnswer[0]) {
+            const index = this.answers[question.labelName].indexOf(filteredAnswer[0]);
+            if (index !== -1) {
+              this.answers[question.labelName].splice(index, 1);
+            }
+          }
+        }
       }
-      console.log(Object.keys(this.filestoUpload[question.labelName]).length);
-      // if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
-      //   delete this.filestoUpload[question.labelName];
-      // }
+      if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
+        delete this.filestoUpload[question.labelName];
+      }
+      if (this.answers[question.labelName] && this.answers[question.labelName].length === 0) {
+        delete this.answers[question.labelName];
+      }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (index !== -1) {
@@ -298,19 +296,12 @@ export class QuestionnaireComponent implements OnInit {
     this.onSubmit('inputChange');
   }
   onSubmit(type?) {
-    console.log(this.changeHappened);
-    console.log(this.uploadedFiles);
-    console.log(this.filestoUpload);
-    console.log(this.selectedMessage);
-    console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
       }
-      console.log(this.filestoUpload[key]);
       if (Object.keys(this.filestoUpload[key]).length > 0) {
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
-          console.log(this.filestoUpload[key][key1]);
           if (this.filestoUpload[key][key1]) {
             let indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
             if (indx !== -1) {
@@ -320,17 +311,24 @@ export class QuestionnaireComponent implements OnInit {
               }
               if (this.answers[key] && this.answers[key].length > 0) {
                 const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
-                console.log(filteredAnswer);
                 if (filteredAnswer[0]) {
                   const index = this.answers[key].indexOf(filteredAnswer[0]);
-                  console.log(index);
                   if (index !== -1) {
                     this.answers[key].splice(index, 1);
                   }
                 }
               }
               this.answers[key].push({ index: indx, caption: key1, action: status });
-              console.log(this.answers);
+            }
+          } else {
+            if (this.answers[key] && this.answers[key].length > 0) {
+              const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
+              if (filteredAnswer[0]) {
+                const index = this.answers[key].indexOf(filteredAnswer[0]);
+                if (index !== -1) {
+                  this.answers[key].splice(index, 1);
+                }
+              }
             }
           }
         });
@@ -341,7 +339,6 @@ export class QuestionnaireComponent implements OnInit {
         delete this.answers[key];
       }
     });
-    console.log(this.answers);
     Object.keys(this.uploadedFiles).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -351,17 +348,14 @@ export class QuestionnaireComponent implements OnInit {
           if ((!this.filestoUpload[key] || (this.filestoUpload[key] && !this.filestoUpload[key][key1])) && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
             if (this.answers[key] && this.answers[key].length > 0) {
               const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
-              console.log(filteredAnswer);
               if (filteredAnswer[0]) {
                 const index = this.answers[key].indexOf(filteredAnswer[0]);
-                console.log(index);
                 if (index !== -1) {
                   this.answers[key].splice(index, 1);
                 }
               }
             }
             this.answers[key].push({ caption: key1, action: 'remove' });
-            console.log(this.answers);
           }
         });
         if (this.answers[key].length === 0) {
@@ -370,13 +364,10 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     let data = [];
-    console.log(this.answers);
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
-      console.log(this.questions);
       const question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-      console.log(question);
       let questiontype;
       if (this.source === 'customer-create' || this.source === 'qnrDetails') {
         questiontype = question[0].fieldDataType;
@@ -396,29 +387,23 @@ export class QuestionnaireComponent implements OnInit {
         });
       }
     });
-    console.log(data);
-    // if (data.length > 0) {
     const postData = {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
-    console.log(type);
     if (type === 'inputChange') {
       this.changeHappened = true;
     }
     if (type === 'submit') {
-      console.log(this.changeHappened);
       if (this.changeHappened) {
         this.submitQuestionnaire(passData);
       } else {
         this.location.back();
       }
     } else {
-      console.log(passData);
       this.returnAnswers.emit(passData);
     }
-    // }
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));
@@ -621,66 +606,19 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  takeDoc(question, document) {
-    console.log(question.labelName);
-    console.log(document);
-    console.log(this.filestoUpload);
-    console.log(this.answers);
-    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-      if (indx !== -1) {
-        this.selectedMessage.splice(indx, 1);
-        delete this.filestoUpload[question.labelName][document];
-        if (this.answers[question.labelName] && this.answers[question.labelName].length > 0) {
-          const filteredAnswer = this.answers[question.labelName].filter(answer => answer.caption === document);
-          console.log(filteredAnswer);
-          if (filteredAnswer[0]) {
-            const index = this.answers[question.labelName].indexOf(filteredAnswer[0]);
-            console.log(index);
-            if (index !== -1) {
-              this.answers[question.labelName].splice(index, 1);
-            }
-          }
-        }
-      }
-      console.log(this.filestoUpload);
-      console.log(this.answers[question.labelName].length)
-      if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
-        delete this.filestoUpload[question.labelName];
-      }
-      if (this.answers[question.labelName] && this.answers[question.labelName].length === 0) {
-        delete this.answers[question.labelName];
-      }
-    }
-    if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
-      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
-      if (indx !== -1) {
-        this.uploadedFiles[question.labelName][document] = 'remove';
-      }
-    }
-    console.log(this.answers);
-    console.log(this.filestoUpload);
-    this.onSubmit('inputChange');
-  }
   getImg(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
         const path = this.selectedMessage[indx].path;
         return path;
-      } else {
-        // return '../../assets/images/pdf.png';
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
         const path = this.uploadedImages[indx].s3path;
         return path;
-      } else {
-        // return '../../assets/images/pdf.png';
       }
-    } else {
-      // return '../../assets/images/pdf.png';
     }
   }
   getImgName(question) {
@@ -710,48 +648,36 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
   }
-
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document?) {
-    console.log(question);
-        console.log(document);
-        if (!document) {
-          document = question.filePropertie.allowedDocuments[0];
-        }
-        console.log(document);
+    if (!document) {
+      document = question.filePropertie.allowedDocuments[0];
+    }
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
-    console.log(this.filestoUpload);
-    console.log(this.uploadedFiles);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-      console.log(indx);
       if (indx !== -1) {
         imagePath = this.selectedMessage[indx].path;
       }
-      console.log(imagePath);
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
-      console.log(indx);
       if (indx !== -1) {
         imagePath = this.uploadedImages[indx].s3path;
       }
-      console.log(imagePath);
     }
-if (imagePath) {
-    const imgobj = new Image(
-      count,
-      { // modal
-        img: imagePath
-      },
-    );
-    this.image_list_popup.push(imgobj);
-    count++;
-}
-    console.log(count);
-    console.log(this.image_list_popup);
+    if (imagePath) {
+      const imgobj = new Image(
+        count,
+        {
+          img: imagePath
+        },
+      );
+      this.image_list_popup.push(imgobj);
+      count++;
+    }
     if (count > 0) {
       setTimeout(() => {
         this.openImageModalRow(this.image_list_popup[0]);
@@ -764,8 +690,5 @@ if (imagePath) {
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
-  }
-  stopprop(event) {
-    event.stopPropagation();
   }
 }
