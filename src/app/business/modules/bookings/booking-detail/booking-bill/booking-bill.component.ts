@@ -3,6 +3,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { ConfirmPatmentLinkComponent } from '../../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-booking-bill',
@@ -37,7 +39,8 @@ export class BookingBillComponent implements OnInit {
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
@@ -178,6 +181,32 @@ export class BookingBillComponent implements OnInit {
             }
         );
     }
+  }
+
+  paymentlink() {
+    let uid;
+    let email;
+    let phoneNo;
+    if (this.bookingType == 'appointment') {
+      uid = this.waitlist_data.uid;
+      email = this.waitlist_data.appmtFor[0].email ? this.waitlist_data.appmtFor[0].email : '';
+      phoneNo = this.waitlist_data.phoneNumber ? this.waitlist_data.phoneNumber : '';
+    }
+    else if (this.bookingType == 'checkin') {
+      uid = this.waitlist_data.ynwUuid;
+      email = this.waitlist_data.waitlistingFor[0].email ? this.waitlist_data.waitlistingFor[0].email : '';
+      phoneNo = this.waitlist_data.waitlistPhoneNumber ? this.waitlist_data.waitlistPhoneNumber: '';
+    }
+    this.dialog.open(ConfirmPatmentLinkComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        emailId: email,
+        mobilenumber: phoneNo,
+        uuid: uid
+      }
+    });
   }
 
   ngOnInit(): void {

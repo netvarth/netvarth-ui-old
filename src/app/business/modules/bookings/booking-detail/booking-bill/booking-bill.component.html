@@ -32,18 +32,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="add-more pointer-cursor">
+            <!-- <div class="add-more pointer-cursor">
                 <div class="add-more-icon"><i class="fa fa-plus"></i></div>
                 <div class="add-more-text">Add Item</div>
-            </div>
+            </div> -->
         </div>
         <div class="card-footer bg-transparent">
             <div class="total-amount">
                 Amount Due&nbsp;:&nbsp;&nbsp;<i class="fa fa-inr"></i>&nbsp;{{bill_data.amountDue}}
             </div>
             <div class="actions">
-                <!-- <button class="btn next-session-btn">Book the Next Session</button> -->
-                <button class="btn send-bill-btn">Send Bill</button>
+                <button (click)="viewBillPage()" class="btn view-bill-btn">View Bill</button>
+                <button (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
             </div>
         </div>
     </div>

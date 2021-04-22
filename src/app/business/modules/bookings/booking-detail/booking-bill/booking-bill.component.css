@@ -158,8 +158,7 @@
 .card.billing-card .card-footer .actions {
     display: flex !important;
     align-self: stretch !important;
-    /* justify-content: space-between !important; */ /* Uncomment this line when book next session button added */
-    justify-content: flex-end !important; /* Remove this line when book next session button added */
+    justify-content: flex-end !important;
 }
 
 .card.billing-card .card-footer .actions .send-bill-btn {
@@ -178,7 +177,7 @@
     font-weight: 500 !important;
 }
 
-.card.billing-card .card-footer .actions .next-session-btn {
+.card.billing-card .card-footer .actions .view-bill-btn {
     text-transform: uppercase;
     font-size: 13px;
     color: #395789;
@@ -189,7 +188,7 @@
     background-color: #ffffff;
 }
 
-.card.billing-card .card-footer .actions .next-session-btn:hover {
+.card.billing-card .card-footer .actions .view-bill-btn:hover {
     background-color: #ffffff !important;
     color: #395789 !important;
     text-decoration: underline !important;
