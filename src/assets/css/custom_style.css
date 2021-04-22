@@ -10612,6 +10612,10 @@ a {
   position: relative;
   padding-right: 1px;
 }
+.jvideo-icon-s {
+  width: 20px !important;
+}
+
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;

@@ -86,8 +86,7 @@
                                   <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
                                     (click)="gotoReplyMsgSection(msg.replyMessageId)">
                                     <div class="username">
-                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
-                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                      {{(getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
                                     <div class="text-dark-50 replymsg"
                                       [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
                                   </div>
@@ -118,9 +117,7 @@
                                   </div>
                                   <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
                                     (click)="gotoReplyMsgSection(msg.replyMessageId)">
-                                    <div class="username">
-                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
-                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                    <div class="username">You</div>
                                     <div class="text-dark-50 replymsg"
                                       [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
                                   </div>
