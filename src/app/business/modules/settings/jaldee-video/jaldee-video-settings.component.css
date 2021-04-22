@@ -23,3 +23,8 @@
 .w-60 {
     width: 60px !important;
 }
+.recommend {
+    padding: 5px;
+    color: green;
+    font-size: 1rem;
+  }
