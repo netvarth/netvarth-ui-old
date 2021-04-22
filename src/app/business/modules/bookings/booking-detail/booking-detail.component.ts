@@ -88,9 +88,13 @@ provider;
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.ynwUuid;
           this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
-          if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
-            this.provider = this.waitlist_data.provider.businessName;
+          if (this.userDet.accountType === 'BRANCH') {
+            if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
+              this.provider = this.waitlist_data.provider.businessName;
+            } else {
+            this.provider = this.waitlist_data.providerAccount.businessName;
           }
+        }
           console.log(this.customer);
           console.log(this.provider);
           console.log(this.waitlist_data)
@@ -165,9 +169,13 @@ provider;
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.uid;
           this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
-          if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
-            this.provider = this.waitlist_data.provider.businessName;
+          if (this.userDet.accountType === 'BRANCH') {
+            if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
+              this.provider = this.waitlist_data.provider.businessName;
+            } else {
+            this.provider = this.waitlist_data.providerAccount.businessName;
           }
+        }
           console.log(this.provider);
           this.api_loading = false;
           console.log(this.waitlist_data)

@@ -1,4 +1,4 @@
-<section class="">
+<section class="" *ngIf="!customer">
     <div class="title-gb no-padding">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
             Inbox
@@ -118,7 +118,7 @@
                                     <div class="null-text">Select a chat to start messaging</div>
                                 </ng-template>
                             </div>
-                            <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
+                            <div class="flex-row-fluid" id="kt_chat_content" [class.ml-lg-8]="!customer"
                                 *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
                                 <div class="card card-custom">
                                     <div class="card-header align-items-center px-4 py-3">
@@ -153,9 +153,7 @@
                                                         <div class="reply-msg text-left" *ngIf="msg.replyMsgId"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
-                                                                {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
-                                                                'out') ? 'You' :
-                                                                getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
+                                                                {{getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
                                                             <div class="text-dark-50 replymsg"
                                                                 [innerHTML]="getReplyMsgbyId(msg.replyMsgId).msg | nl2br">
                                                             </div>
@@ -193,10 +191,7 @@
                                                         </div>
                                                         <div class="reply-msg text-left" *ngIf="msg.replyMsgId"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
-                                                            <div class="username">
-                                                                {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
-                                                                'out') ? 'You' :
-                                                                getReplyMsgbyId(msg.replyMsgId).accountName}}</div>
+                                                            <div class="username">You</div>
                                                             <div class="text-dark-50 replymsg"
                                                                 [innerHTML]="getReplyMsgbyId(msg.replyMsgId).msg | nl2br">
                                                             </div>
