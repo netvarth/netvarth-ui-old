@@ -312,7 +312,7 @@
                                                 booking.service.virtualCallingModes.length > 0  && 
                                                 (booking.service.virtualCallingModes[0].callingMode === 'Zoom' || booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
                                                  && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
-                                                    <a [href]="booking.service.virtualCallingModes[0].value"
+                                                    <a  [href]="booking.videoCallButton && booking.videoCallButton==='DISABLED' && booking.service.virtualCallingModes[0].value"
                                                         target="_blank">
                                                         <button
                                                             [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'"
@@ -396,7 +396,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-item
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         (click)="gotoWaitlistReschedule(booking)"><i
                                                             class="consumer-reschedule-icon"></i>
@@ -644,7 +644,7 @@
                                                     booking.service.virtualCallingModes.length > 0  && 
                                                     (booking.service.virtualCallingModes[0].callingMode === 'Zoom' || booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
                                                     && (booking.waitlistStatus === 'started' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
-                                                        <a [href]="booking.service.virtualCallingModes[0].value"
+                                                        <a [href]="booking.videoCallButton && booking.videoCallButton==='DISABLED' && booking.service.virtualCallingModes[0].value"
                                                             target="_blank">
                                                             <button
                                                                 [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'"
@@ -738,8 +738,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ *ngIf="booking.apptStatus=='Confirmed' ||
-                                                        booking.apptStatus=='Arrived'"Â (click)="
+                                                    <button mat-menu-item *ngIf="booking.apptStatus=='Confirmed' ||
+                                                        booking.apptStatus=='Arrived'" (click)="
                                                         gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -913,7 +913,7 @@
                                                     booking.service.virtualCallingModes.length > 0  && 
                                                     (booking.service.virtualCallingModes[0].callingMode === 'Zoom' || booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
                                                      && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')">
-                                                        <a [href]="booking.service.virtualCallingModes[0].value"
+                                                        <a [href]="booking.videoCallButton && booking.videoCallButton==='DISABLED' && booking.service.virtualCallingModes[0].value"
                                                             target="_blank">
                                                             <button
                                                                 [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'"
@@ -1001,7 +1001,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-item
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -1247,7 +1247,7 @@
                                                     booking.service.virtualCallingModes.length > 0  && 
                                                     (booking.service.virtualCallingModes[0].callingMode === 'Zoom' || booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
                                                     && (booking.waitlistStatus === 'started' || booking.waitlistStatus === 'arrived' || booking.waitlistStatus === 'checkedIn')">
-                                                        <a [href]="booking.service.virtualCallingModes[0].value"
+                                                        <a  [href]="booking.videoCallButton && booking.videoCallButton==='DISABLED' && booking.service.virtualCallingModes[0].value"
                                                             target="_blank">
                                                             <button
                                                                 [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'"
@@ -1339,7 +1339,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ *ngIf="booking.apptStatus=='Confirmed' ||
+                                                    <button mat-menu-item *ngIf="booking.apptStatus=='Confirmed' ||
                                                         booking.apptStatus=='Arrived'" (click)="
                                                         gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
@@ -1536,7 +1536,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-item
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -1815,8 +1815,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ *ngIf="booking.apptStatus=='Confirmed' ||
-                                                        booking.apptStatus=='Arrived'"Â (click)="
+                                                    <button mat-menu-item *ngIf="booking.apptStatus=='Confirmed' ||
+                                                        booking.apptStatus=='Arrived'" (click)="
                                                         gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -1831,7 +1831,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Ã¯Â¿Â½
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" 
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -2012,7 +2012,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-item
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
