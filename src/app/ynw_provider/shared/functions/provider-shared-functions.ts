@@ -276,12 +276,12 @@ export class ProviderSharedFuctions {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.cancelReason || result.rejectReason) {
-          ob.changeWaitlistStatusApi(waitlist, action, result);
+          ob.changeAppnmtStatusApi(waitlist, action, result);
         }
       });
 
     } else {
-      ob.changeWaitlistStatusApi(waitlist, action);
+      ob.changeAppnmtStatusApi(waitlist, action);
     }
   }
 

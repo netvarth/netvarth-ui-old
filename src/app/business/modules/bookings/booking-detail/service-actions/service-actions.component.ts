@@ -145,17 +145,26 @@ callingWaitlist() {
         () => {
             // this.dialogRef.close('reload');
         });
-    }else if(this.bookingType == 'appointment'){
-
-    }
-    
+    }    
 }
 changeWaitlistStatus(action) {
+    console.log(action)
     if (action !== 'CANCEL') {
         // this.dialogRef.close();
         // this.buttonClicked = true;
     }
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
+}
+changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+        .then(
+            result => {
+                this.dialogRef.close('reload');
+                // this.buttonClicked = false;
+            },
+            error => {
+                // this.buttonClicked = false;
+            });
 }
 smsCheckin() {
     this.dialogRef.close();
@@ -226,10 +235,22 @@ callingAppt() {
         });
 }
 changeAppnmtStatus(action) {
+    console.log(action)
     if (action !== 'Rejected') {
         // this.buttonClicked = true;
     }
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
+}
+changeAppnmtStatusApi(waitlist, action, post_data = {}) {
+    this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+        .then(
+            result => {
+                this.dialogRef.close('reload');
+                // this.buttonClicked = false;
+            },
+            error => {
+                // this.buttonClicked = false;
+            });
 }
 smsApptmnt() {
     this.dialogRef.close();
