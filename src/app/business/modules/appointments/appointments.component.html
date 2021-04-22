@@ -1142,7 +1142,7 @@
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                 class="fa wtsapaud-icon"></i>
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                class="fa wtsapvid-icon"></i>{{service.name}}
+                                class="fa wtsapvid-icon"></i>{{getServiceName(service.name)}}
                             </mat-checkbox>
                           </li>
                         </div>
