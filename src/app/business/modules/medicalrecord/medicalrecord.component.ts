@@ -472,12 +472,12 @@ export class MedicalrecordComponent implements OnInit {
         bookingtype: this.bookingType
       }
     });
-    this.uploadfiledialogRef.afterClosed().subscribe(result => {
-    //   console.log(result)
-    //   if(result){
-    //   this.getMedicalRecordUsingId(result);
-    // }
-    });
+    // this.uploadfiledialogRef.afterClosed().subscribe(result => {
+    // //   console.log(result)
+    // //   if(result){
+    // //   this.getMedicalRecordUsingId(result);
+    // // }
+    // });
   }
 }
 

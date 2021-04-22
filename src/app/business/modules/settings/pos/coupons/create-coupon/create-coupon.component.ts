@@ -115,6 +115,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.getCatalogs();
     // this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.active_user);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
   }

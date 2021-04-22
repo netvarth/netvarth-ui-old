@@ -9,6 +9,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
+import { Messages } from '../../constants/project-messages';
 
 @Component({
   selector: 'app-questionnaire',
@@ -273,21 +274,25 @@ export class QuestionnaireComponent implements OnInit {
       this.onSubmit('inputChange');
     }
   }
-  deleteTempImage(question) {
-    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
-      const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
+  deleteTempImage(question, document?) {
+    if (!document) {
+      document = question.filePropertie.allowedDocuments[0];
+    }
+    console.log(document);
+    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+      const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (index !== -1) {
         this.selectedMessage.splice(index, 1);
-        delete this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]];
+        delete this.filestoUpload[question.labelName][document];
       }
       console.log(Object.keys(this.filestoUpload[question.labelName]).length);
       // if (Object.keys(this.filestoUpload[question.labelName]).length === 0) {
       //   delete this.filestoUpload[question.labelName];
       // }
-    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
-      const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
+    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
+      const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (index !== -1) {
-        this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]] = 'remove';
+        this.uploadedFiles[question.labelName][document] = 'remove';
       }
     }
     this.onSubmit('inputChange');
@@ -518,7 +523,7 @@ export class QuestionnaireComponent implements OnInit {
     this.location.back();
   }
   getConsumerCheckinDetails() {
-    this.questionnaire_heading = 'More info';
+    this.questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
     this.sharedService.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         this.bookingDetails = data;
@@ -533,7 +538,7 @@ export class QuestionnaireComponent implements OnInit {
       });
   }
   getConsumerApptDetails() {
-    this.questionnaire_heading = 'More info';
+    this.questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
     this.sharedService.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
       (data: any) => {
         this.bookingDetails = data;
@@ -664,7 +669,7 @@ export class QuestionnaireComponent implements OnInit {
         const path = this.selectedMessage[indx].path;
         return path;
       } else {
-        return '../../assets/images/pdf.png';
+        // return '../../assets/images/pdf.png';
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
@@ -672,10 +677,10 @@ export class QuestionnaireComponent implements OnInit {
         const path = this.uploadedImages[indx].s3path;
         return path;
       } else {
-        return '../../assets/images/pdf.png';
+        // return '../../assets/images/pdf.png';
       }
     } else {
-      return '../../assets/images/pdf.png';
+      // return '../../assets/images/pdf.png';
     }
   }
   getImgName(question) {
@@ -709,15 +714,15 @@ export class QuestionnaireComponent implements OnInit {
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document?) {
+    console.log(question);
+        console.log(document);
+        if (!document) {
+          document = question.filePropertie.allowedDocuments[0];
+        }
+        console.log(document);
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
-console.log(question);
-    console.log(document);
-    if (!document) {
-      document = question.filePropertie.allowedDocuments[0];
-    }
-    console.log(document);
     console.log(this.filestoUpload);
     console.log(this.uploadedFiles);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
@@ -735,7 +740,7 @@ console.log(question);
       }
       console.log(imagePath);
     }
-
+if (imagePath) {
     const imgobj = new Image(
       count,
       { // modal
@@ -744,6 +749,7 @@ console.log(question);
     );
     this.image_list_popup.push(imgobj);
     count++;
+}
     console.log(count);
     console.log(this.image_list_popup);
     if (count > 0) {
@@ -752,12 +758,14 @@ console.log(question);
       }, 200);
     }
   }
-
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
+  }
+  stopprop(event) {
+    event.stopPropagation();
   }
 }

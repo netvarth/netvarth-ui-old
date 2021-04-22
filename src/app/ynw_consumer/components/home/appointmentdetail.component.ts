@@ -63,6 +63,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   fav_providers;
   fav_providers_id_list: any[];
   apptHistory: ArrayBuffer;
+  questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,

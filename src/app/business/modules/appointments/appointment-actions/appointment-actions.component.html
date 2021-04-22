@@ -21,7 +21,7 @@
             (click)="gotoQuestionnaire(appt)">
             <div class="action-box-sub">
                 <span class="add-appt-icon"></span>
-                <div class="icon-text">Questionnaire</div>
+                <div class="icon-text">{{customer_label | capitalizeFirst}} info</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="addCustomerDetails()">

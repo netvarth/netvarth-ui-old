@@ -4530,8 +4530,8 @@ Build date: 2019-12-19 16:51:02
 .dropzone.dz-clickable {
   cursor: pointer; }
 
-.dropzone.dz-clickable * {
-  cursor: default; }
+/* .dropzone.dz-clickable * {
+  cursor: default; } */
 
 .dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
   cursor: pointer; }
