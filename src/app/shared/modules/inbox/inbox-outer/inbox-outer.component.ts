@@ -10,10 +10,7 @@ import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { Item } from 'angular2-multiselect-dropdown';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-// import { delay, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -65,16 +62,8 @@ export class InboxOuterComponent implements OnInit {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
-
-
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
-
-  // mouseDown$: Observable<any>;
-  // mouseUp$: Observable<any>;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -113,13 +102,9 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
-          console.log(this.groupedMsgs);
-          console.log(this.selectedProvider);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            console.log(this.selectedUserMessages);
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
-            console.log(unreadMsgs);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
               const messageids = ids.toString();
@@ -176,7 +161,7 @@ export class InboxOuterComponent implements OnInit {
   providerSelection(msgs) {
     this.clearImg();
     this.message = '';
-    this.selectedProvider = msgs.key; 
+    this.selectedProvider = msgs.key;
     this.selectedProviderName = msgs.value[(msgs.value.length - 1)].accountName;
     this.replyMsg = null;
     this.selectedUserMessages = msgs.value;
@@ -200,7 +185,6 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
-
     });
   }
   sendMessage() {
@@ -210,7 +194,6 @@ export class InboxOuterComponent implements OnInit {
         communicationMessage: this.message
       };
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'CHAT';
       if (this.replyMsg) {
@@ -255,17 +238,17 @@ export class InboxOuterComponent implements OnInit {
     };
   }
   getUserName(messages) {
-    let user = messages[(messages.length-1)].accountName;
+    let user = messages[(messages.length - 1)].accountName;
     if (user) {
-    const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
-    const name = user.split(' ');
-    const pattern = userPattern.test(name[0]);
-    let nameShort = name[0].charAt(0);
-    if (name.length > 1 && pattern) {
-      nameShort = nameShort + name[name.length - 1].charAt(0);
+      const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
+      const name = user.split(' ');
+      const pattern = userPattern.test(name[0]);
+      let nameShort = name[0].charAt(0);
+      if (name.length > 1 && pattern) {
+        nameShort = nameShort + name[name.length - 1].charAt(0);
+      }
+      return nameShort.toUpperCase();
     }
-    return nameShort.toUpperCase();
-  }
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -330,9 +313,8 @@ export class InboxOuterComponent implements OnInit {
       }
       const imgobj = new Image(
         count,
-        { // modal
-          img: imagePath,
-          // description: description
+        {
+          img: imagePath
         },
       );
       this.image_list_popup_temp.push(imgobj);
@@ -352,13 +334,9 @@ export class InboxOuterComponent implements OnInit {
   }
   replytoMsg(msg) {
     this.replyMsg = msg;
-    console.log(this.replyMsg);
   }
   closeReply() {
     this.replyMsg = null;
-  }
-  stopprop(event) {
-    event.stopPropagation();
   }
   getReplyMsgbyId(msgId) {
     const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
@@ -391,24 +369,6 @@ export class InboxOuterComponent implements OnInit {
       }
     }, 2000);
   }
-  onContextMenu(event: MouseEvent, item: Item) {
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { 'item': item };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
-  }
-  // replyClickMobile(event: MouseEvent, item: Item) {
-  //   this.mouseDown$.pipe(
-  //     delay(1000),
-  //     takeUntil(this.mouseUp$)
-  //   )
-  //     .subscribe(res => {
-  //       console.log('LONG CLICK')
-  //        this.onContextMenu(event, item);
-  //     });
-  // }
   getMsgType(msg) {
     if (msg.messageType) {
       return this.msgTypes[msg.messageType];
