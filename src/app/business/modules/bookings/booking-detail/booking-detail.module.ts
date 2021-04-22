@@ -11,6 +11,7 @@ import { BookingDocumentsModule } from './booking-documents/booking-documents.mo
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { BookingBillModule } from './booking-bill/booking-bill.module';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { InboxListModule } from '../../inbox-list/inbox-list.module';
 
 
 
@@ -27,7 +28,8 @@ import { QuestionnaireModule } from '../../../../shared/components/questionnaire
     BookingDocumentsModule,
     LoadingSpinnerModule,
     BookingBillModule,
-    QuestionnaireModule
+    QuestionnaireModule,
+    InboxListModule
   ],
   exports:[BookingDetailComponent]
 })

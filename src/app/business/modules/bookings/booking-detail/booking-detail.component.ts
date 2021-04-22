@@ -35,6 +35,8 @@ export class BookingDetailComponent implements OnInit {
   bookingType;
 source = '';
 uuid;
+customer;
+provider;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -85,6 +87,12 @@ uuid;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.ynwUuid;
+          this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
+          if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
+            this.provider = this.waitlist_data.provider.businessName;
+          }
+          console.log(this.customer);
+          console.log(this.provider);
           console.log(this.waitlist_data)
           this.api_loading = false;
           console.log(this.api_loading)
@@ -156,6 +164,11 @@ uuid;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.uid;
+          this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
+          if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
+            this.provider = this.waitlist_data.provider.businessName;
+          }
+          console.log(this.provider);
           this.api_loading = false;
           console.log(this.waitlist_data)
           if (this.waitlist_data.service.serviceType === 'virtualService') {

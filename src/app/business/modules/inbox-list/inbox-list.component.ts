@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ViewChildren, QueryList, Input } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -84,6 +84,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+  @Input() customer;
+  @Input() provider;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -110,6 +112,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
       } else {
         this.selectedCustomer = this.qParams.customer;
+      }
+    }
+    console.log(this.customer);
+    console.log(this.provider);
+    if (this.customer) {
+      if (this.provider) {
+        this.selectedCustomer = this.customer + '=' + this.provider;
+      } else {
+      this.selectedCustomer = this.customer;
       }
     }
     this.domain = this.userDet.sector;
