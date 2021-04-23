@@ -320,10 +320,10 @@
                                     <i class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                         (click)="openCoupons('first')">{{first_time_coupon}}</span>
                                 </li> -->
-                                <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount >0"><i class="fa fa-tags blue"></i><span
+                        <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount >0"><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{coupon}}</span></li> -->
-                            <!-- </ul>
+                        <!-- </ul>
                         </div> -->
                         <div style="position: absolute !important; bottom: 0 !important; right: 0 !important;">
                             <ul class="bus-actions bus-actions-large no-padding mgn-up-10 visible-md visible-lg"
@@ -365,14 +365,12 @@
                                     </a>
                                 </li>
                                 <li class="share" [matTooltip]="'Coupon'">
-                                        <a class="like-btn" (click)="openCoupons()" *ngIf="(
-                                            (s3CouponList.JC.length> 0 && isfirstCheckinOffer && frstChckinCupnCunt>0 || s3CouponList.OWN.length>0 && frstChckinCupnCunt>0 &&isfirstCheckinOfferProvider() ) || 
-                                            (s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount >0))" >
-                                                <span>
-                                                    <i class="fa fa-share-alt"></i>
-                                                    {{coupon}}
-                                                </span>
-                                            </a></li> 
+                                    <a class="like-btn" (click)="openCoupons()" *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
+                                        <span>
+                                            <i class="fa fa-tags" aria-hidden="true"></i>
+                                        
+                                        </span>
+                                    </a></li>
                                 <!-- <li class="coup" [matTooltip]="coupon" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount >0">
                                     <a class="like-btn">
                                         <span class="pointer-cursor" (click)="openCoupons()">
@@ -431,9 +429,11 @@
                                     </a>
                                 </li>
                                 <li class="small-devices-share centeralign">
-                                    <a class="like-btn" *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0&& isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && frstChckinCupnCunt>0 &&isfirstCheckinOfferProvider() ) || s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount >0"  (click)="openCoupons()">
+                                    <a class="like-btn"
+                                        *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0"
+                                        (click)="openCoupons()">
                                         <span>
-                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <i class="fa fa-tags" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;{{coupon}}</span>
                                         </span>
                                     </a>
