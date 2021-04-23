@@ -226,6 +226,9 @@ addHoliday(data) {
 Holidaywaitlist(id) {
   return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
 }
+userHolidaywaitlist(id) {
+  return this.servicemeta.httpPut('provider/vacation/mark/' + id);
+}
 deleteHoliday(id) {
   const path = 'provider/settings/nonBusinessDays/holiday/' + id;
   return this.servicemeta.httpDelete(path);
@@ -963,7 +966,11 @@ editHoliday(data) {
   setJaldeeVideoRecording(status) {
     const url = 'provider/video/settings/' + status;
     return this.servicemeta.httpPut(url);
-}
+  }
+  getJaldeeVideoRecording() {
+    const url = 'provider/account/settings/videoCallMinutes' ;
+    return this.servicemeta.httpGet(url);
+  }
   getGlobalSettings() {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
@@ -1117,28 +1124,41 @@ editHoliday(data) {
     const url = 'provider/services/' + service_id;
     return this.servicemeta.httpGet(url);
   }
+  // **User vacation URL's Old***
+  // getUserProviderNonworkingdays(id?) {
+  //   return this.servicemeta.httpGet('provider/vacation/?provider-eq=' + id);
+  // }
+  // addUserHoliday(data) {
+  // return this.servicemeta.httpPost('provider/vacation', data);
+  // }
+  // deleteUserHoliday(id) {
+  //   const path = 'provider/vacation/' + id;
+  //   return this.servicemeta.httpDelete(path);
+  // }
+  // editUserHoliday(data) {
+  //   return this.servicemeta.httpPut('provider/vacation', data);
+  // }
+  // getUserdetailNonworkingday(id) {
+  //   return this.servicemeta.httpGet('provider/vacation/' + id);
+  // }
 
+   // **User vacation URL's New***
   getUserProviderNonworkingdays(id?) {
-    return this.servicemeta.httpGet('provider/vacation/?provider-eq=' + id);
+    return this.servicemeta.httpGet('provider/vacation/getvacation/' + id);
   }
-
   addUserHoliday(data) {
-    return this.servicemeta.httpPost('provider/vacation', data);
+    return this.servicemeta.httpPost('provider/vacation/vacations', data);
   }
-
   deleteUserHoliday(id) {
-    const path = 'provider/vacation/' + id;
+    const path = 'provider/vacation/vacations/' + id;
     return this.servicemeta.httpDelete(path);
   }
-
-  getUserdetailNonworkingday(id) {
-    return this.servicemeta.httpGet('provider/vacation/' + id);
-  }
-
   editUserHoliday(data) {
-    return this.servicemeta.httpPut('provider/vacation', data);
+    return this.servicemeta.httpPut('provider/vacation/vacations', data);
   }
-
+  getUserdetailNonworkingday(id) {
+    return this.servicemeta.httpGet('provider/vacation/vacations/' + id);
+  }
   uploaduserLogo(passdata, id) {
     return this.servicemeta.httpPost('provider/user/logo/' + id, passdata);
   }
@@ -2041,5 +2061,9 @@ editHoliday(data) {
   videoaudioUploadconfirm(id,data){
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
+  }
+    deleteMRFile(mrId, fileId) {
+    const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
+    return this.servicemeta.httpDelete(url);
   }
 }

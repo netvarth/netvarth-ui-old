@@ -6,12 +6,13 @@
    </h5>
 
         </div>
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
   <!-- </section>
   <section>
       <div class="content loc-list">
           <div class="col-md-12 no-padding-small"> -->
-                  <div class="card title-gb">
-                          <div class="mgn-up-10">
+                  <div class="card title-gb" >
+                          <div class="mgn-up-10" *ngIf="!loading">
 
                               <!-- <p>
                                 <b>Patient:</b>
@@ -27,7 +28,7 @@
                               <hr>
 
                           </div>
-                          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                          
 <ng-container *ngIf="!loading">
   <div class="w-dta" >
     <div class="row">
@@ -146,4 +147,3 @@
 </div> -->
 </div>
 </section>
-

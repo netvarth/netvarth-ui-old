@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
 import { KeyValue, Location } from '@angular/common';
@@ -10,6 +10,7 @@ import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -25,6 +26,7 @@ export class InboxOuterComponent implements OnInit {
   loading = false;
   message = '';
   selectedProvider = '';
+  selectedProviderName = '';
   selectedMessage = {
     files: [],
     base64: [],
@@ -59,6 +61,9 @@ export class InboxOuterComponent implements OnInit {
   cronHandle: Subscription;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   replyMsg;
+  msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+  @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
+  @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -95,7 +100,8 @@ export class InboxOuterComponent implements OnInit {
         data => {
           this.messages = data;
           this.scrollDone = true;
-          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
+          this.sortMessages();
+          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
@@ -108,7 +114,6 @@ export class InboxOuterComponent implements OnInit {
               this.scrollToElement();
             }, 100);
           }
-          this.sortMessages();
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
           this.loading = false;
         },
@@ -156,7 +161,8 @@ export class InboxOuterComponent implements OnInit {
   providerSelection(msgs) {
     this.clearImg();
     this.message = '';
-    this.selectedProvider = msgs.key; 
+    this.selectedProvider = msgs.key;
+    this.selectedProviderName = msgs.value[(msgs.value.length - 1)].accountName;
     this.replyMsg = null;
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
@@ -179,7 +185,6 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
-
     });
   }
   sendMessage() {
@@ -189,7 +194,6 @@ export class InboxOuterComponent implements OnInit {
         communicationMessage: this.message
       };
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'CHAT';
       if (this.replyMsg) {
@@ -233,15 +237,18 @@ export class InboxOuterComponent implements OnInit {
       caption: []
     };
   }
-  getUserName(user) {
-    const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
-    const name = user.split(' ');
-    const pattern = userPattern.test(name[0]);
-    let nameShort = name[0].charAt(0);
-    if (name.length > 1 && pattern) {
-      nameShort = nameShort + name[name.length - 1].charAt(0);
+  getUserName(messages) {
+    let user = messages[(messages.length - 1)].accountName;
+    if (user) {
+      const userPattern = new RegExp(/^[ A-Za-z0-9_.'-]*$/);
+      const name = user.split(' ');
+      const pattern = userPattern.test(name[0]);
+      let nameShort = name[0].charAt(0);
+      if (name.length > 1 && pattern) {
+        nameShort = nameShort + name[name.length - 1].charAt(0);
+      }
+      return nameShort.toUpperCase();
     }
-    return nameShort.toUpperCase();
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -306,9 +313,8 @@ export class InboxOuterComponent implements OnInit {
       }
       const imgobj = new Image(
         count,
-        { // modal
-          img: imagePath,
-          description: description
+        {
+          img: imagePath
         },
       );
       this.image_list_popup_temp.push(imgobj);
@@ -328,9 +334,44 @@ export class InboxOuterComponent implements OnInit {
   }
   replytoMsg(msg) {
     this.replyMsg = msg;
-    console.log(this.replyMsg);
   }
   closeReply() {
     this.replyMsg = null;
+  }
+  getReplyMsgbyId(msgId) {
+    const replyMsg = this.messages.filter(msg => msg.messageId === msgId);
+    return replyMsg[0];
+  }
+  gotoReplyMsgSection(msgId) {
+    let msgs;
+    if (this.getReplyMsgbyId(msgId).owner.id !== this.userDet.id) {
+      msgs = this.outmsgIds;
+    } else {
+      msgs = this.inmsgId;
+    }
+    msgs.toArray().forEach(element => {
+      if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        const a = document.getElementsByClassName('selmsg');
+        const b = document.getElementsByClassName('messages');
+        for (let i = 0; i < a.length; i++) {
+          if (a[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+            b[i].classList.add('blinkelem');
+          }
+        }
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
+    setTimeout(() => {
+      const b = document.getElementsByClassName('messages');
+      for (let i = 0; i < b.length; i++) {
+        b[i].classList.remove('blinkelem');
+      }
+    }, 2000);
+  }
+  getMsgType(msg) {
+    if (msg.messageType) {
+      return this.msgTypes[msg.messageType];
+    }
   }
 }

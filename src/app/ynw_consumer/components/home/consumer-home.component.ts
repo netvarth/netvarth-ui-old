@@ -27,7 +27,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GalleryImportComponent } from '../../../shared/modules/gallery/import/gallery-import.component';
 import { GalleryService } from '../../../shared/modules/gallery/galery-service';
-import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image,ButtonType } from '@ks89/angular-modal-gallery';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 
@@ -231,7 +231,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
-  private subs=new SubSink();
+  private subs = new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -242,11 +242,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private galleryService: GalleryService,  
+    private galleryService: GalleryService,
     private dateTimeProcessor: DateTimeProcessor,
     public _sanitizer: DomSanitizer) {
     this.onResize();
-    this.subs.sink=this.activated_route.queryParams.subscribe(qparams => {
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
         this.api_loading = true;
         setTimeout(() => {
@@ -356,17 +356,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.getAppointmentToday();
     // this.getAppointmentFuture();
     // this.getTdyOrder();
-    this.subs.sink= observableInterval(this.refreshTime * 1000).subscribe(x => {
+    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
 
-    this.subs.sink=  observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
+    this.subs.sink = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
     this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackPolling();
     });
-    this.subs.sink= observableInterval(this.refreshTime * 1000).subscribe(x => {
+    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackApptPolling();
     });
 
@@ -382,34 +382,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       console.log(input);
       if (input && input.accountId && input.uuid && input.type === 'appt') {
         console.log(input);
-        this.shared_services.addConsumerAppointmentAttachment(input.accountId ,input.uuid ,input.value)
-              .subscribe(
-                  () => {                      
-                      this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-                      this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                  },
-                  error => {
-                      this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                      this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                  }
-              );
-       }  else {
-          console.log(input);
-          if (input && input.accountId && input.uuid && input.type === 'checkin') {
-          this.shared_services.addConsumerWaitlistAttachment(input.accountId ,input.uuid ,input.value)
-                .subscribe(
-                    () => {                      
-                        this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-                        this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                    },
-                    error => {
-                        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                        this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                    }
-                );
+        this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
+          .subscribe(
+            () => {
+              this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+            },
+            error => {
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+            }
+          );
+      } else {
+        console.log(input);
+        if (input && input.accountId && input.uuid && input.type === 'checkin') {
+          this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
+            .subscribe(
+              () => {
+                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+              },
+              error => {
+                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
               }
-        } 
-  });
+            );
+        }
+      }
+    });
   }
   paymentsClicked() {
     this.router.navigate(['consumer', 'payments']);
@@ -475,7 +475,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-  
+
     if (this.notificationdialogRef) {
       this.notificationdialogRef.close();
     }
@@ -503,13 +503,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.remfavdialogRef) {
       this.remfavdialogRef.close();
     }
-  
+
     this.subs.unsubscribe();
   }
   setSystemDate() {
     const _this = this;
     return new Promise<void>(function (resolve, reject) {
-     _this.subs.sink= _this.shared_services.getSystemDate()
+      _this.subs.sink = _this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
@@ -529,7 +529,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const params = {
       'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
-    this.subs.sink=this.consumer_services.getWaitlist(params)
+    this.subs.sink = this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
           this.waitlists = data;
@@ -668,7 +668,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.subs.sink=this.consumer_services.getApptlist(params)
+    this.subs.sink = this.consumer_services.getApptlist(params)
       .subscribe(
         data => {
           this.appointments = data;
@@ -799,7 +799,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    this.subs.sink=this.shared_services.getFavProvider()
+    this.subs.sink = this.shared_services.getFavProvider()
       .subscribe(
         data => {
           this.loadcomplete.fav_provider = true;
@@ -846,7 +846,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.subs.sink=this.consumer_services.getApptTime(post_provids_locid)
+      this.subs.sink = this.consumer_services.getApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
@@ -896,7 +896,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.subs.sink=this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+      this.subs.sink = this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
           // const locationjson: any = [];
@@ -1062,7 +1062,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-   this.subs.sink= this.shared_services.addProvidertoFavourite(id)
+    this.subs.sink = this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
@@ -1283,7 +1283,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.server_date) {
       filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
     }
-    this.subs.sink=this.shared_services.getConsumerDonations(filter).subscribe(
+    this.subs.sink = this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
@@ -1307,7 +1307,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let server_time;
     let checkinTime;
     let currentTime;
-    this.subs.sink=this.shared_services.getSystemDate()
+    this.subs.sink = this.shared_services.getSystemDate()
       .subscribe(
         res => {
           server_time = res;
@@ -1324,7 +1324,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let server_time;
     let checkinTime;
     let currentTime;
-    this.subs.sink=this.shared_services.getSystemDate()
+    this.subs.sink = this.shared_services.getSystemDate()
       .subscribe(
         res => {
           server_time = res;
@@ -1352,12 +1352,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
-    if(checkin.uid) {
-      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+    if (checkin.videoCallButton && checkin.videoCallButton !== 'DISABLED') {
+      if (checkin.uid) {
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+      } else {
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
+      } 
     } else {
-      this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
+      return false;
     }
-    
+
   }
   viewBill(checkin, type, event) {
     event.stopPropagation();
@@ -1382,7 +1386,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
     } else {
-     
+
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.uid,
@@ -1495,7 +1499,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passdata = {
       'travelMode': type
     };
-   this.subs.sink= this.shared_services.updateTravelMode(uid, id, passdata)
+    this.subs.sink = this.shared_services.updateTravelMode(uid, id, passdata)
       .subscribe(data => {
         this.changemode[i] = false;
         this.getWaitlist();
@@ -1522,7 +1526,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return this.dateTimeProcessor.providerConvertMinutesToHourMinute(time);
   }
   statusOfLiveTrack(waitlist, i) {
-    this.subs.sink=this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
+    this.subs.sink = this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
       .subscribe(data => {
         this.statusOfTrack[i] = data;
         waitlist.trackStatus = data;
@@ -1533,7 +1537,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   statusOfApptLiveTrack(appointment, i) {
-    this.subs.sink=this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
+    this.subs.sink = this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
       .subscribe(data => {
         this.statusOfApptTrack[i] = data;
         appointment.appttrackStatus = data;
@@ -1590,7 +1594,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return deg * Math.PI / 180;
   }
   updateLatLong(uid, id, passdata) {
-    this.subs.sink=this.shared_services.updateLatLong(uid, id, passdata)
+    this.subs.sink = this.shared_services.updateLatLong(uid, id, passdata)
       .subscribe(data => {
       },
         error => {
@@ -1606,7 +1610,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   startTracking(uid, id, i) {
-    this.subs.sink=this.shared_services.startLiveTrack(uid, id)
+    this.subs.sink = this.shared_services.startLiveTrack(uid, id)
       .subscribe(data => {
         this.getWaitlist();
       },
@@ -1615,7 +1619,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   stopTracking(uid, id, i) {
-   this.subs.sink= this.shared_services.stopLiveTrack(uid, id)
+    this.subs.sink = this.shared_services.stopLiveTrack(uid, id)
       .subscribe(data => {
         this.getWaitlist();
       },
@@ -1631,7 +1635,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   startApptTracking(uid, id, i) {
-    this.subs.sink=this.shared_services.startApptLiveTrack(uid, id)
+    this.subs.sink = this.shared_services.startApptLiveTrack(uid, id)
       .subscribe(data => {
         this.getApptlist();
       },
@@ -1640,7 +1644,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   stopApptTracking(uid, id, i) {
-    this.subs.sink=this.shared_services.stopApptLiveTrack(uid, id)
+    this.subs.sink = this.shared_services.stopApptLiveTrack(uid, id)
       .subscribe(data => {
         this.getApptlist();
       },
@@ -1674,7 +1678,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
-                 _this.subs.sink= _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
+                  _this.subs.sink = _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1682,7 +1686,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 }
               } else {
                 if (waitlist.trackStatus) {
-                _this.subs.sink=  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
+                  _this.subs.sink = _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1713,7 +1717,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
-                 _this.subs.sink= _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
+                  _this.subs.sink = _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1721,7 +1725,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 }
               } else {
                 if (apptlist.appttrackStatus) {
-                _this.subs.sink=  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
+                  _this.subs.sink = _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1787,7 +1791,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getAppointmentToday() {
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.subs.sink=this.consumer_services.getAppointmentToday(params)
+    this.subs.sink = this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
           this.appointmentslist = data;
@@ -1801,7 +1805,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getAppointmentFuture() {
     const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
-    this.subs.sink=this.consumer_services.getAppointmentFuture(params)
+    this.subs.sink = this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
           this.future_appointments = data;
@@ -1825,7 +1829,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getWaitlistFuture() {
     const params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
-    this.subs.sink=this.consumer_services.getWaitlistFuture(params)
+    this.subs.sink = this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
           this.future_waitlists = data;
@@ -1962,7 +1966,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const params = {
       'orderDate-eq': this.tDate
     };
-   this.subs.sink= this.consumer_services.getConsumerOrders(params).subscribe(data => {
+    this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
       if (data) {
@@ -1993,7 +1997,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //   const params = {
     //     'orderDate-gt': this.tDate
     //   };
-    this.subs.sink=this.consumer_services.getConsumerFutOrders().subscribe(data => {
+    this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
@@ -2041,7 +2045,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return '';
     }
   }
-  sendAttachment(booking,type) {
+  sendAttachment(booking, type) {
     console.log(booking);
     console.log(type);
     const pass_ob = {};
@@ -2066,76 +2070,43 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-         source_id: 'consumerimages',
-         accountId:pass_ob.user_id,
-         uid:pass_ob.uuid,
-         type:pass_ob.type
+        source_id: 'consumerimages',
+        accountId: pass_ob.user_id,
+        uid: pass_ob.uuid,
+        type: pass_ob.type
       }
     });
-     this.galleryDialog.afterClosed().subscribe(result => {
+    this.galleryDialog.afterClosed().subscribe(result => {
       this.reloadAPIs();
     });
   }
 
-  viewAttachment(booking,type) {
-   if (type === 'appt') {
-    console.log(type);
-   this.subs.sink= this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid , booking.providerAccount.id).subscribe(
-      (communications: any) => {
-        this.image_list_popup_temp = [];
-        this.image_list_popup = [];
-        let count = 0;
-        for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          const thumbPath = communications[comIndex].thumbPath;
-           let imagePath = thumbPath;
-           const description = communications[comIndex].s3path;
-           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-           if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-             imagePath = communications[comIndex].s3path;
-           }
-           const imgobj = new Image(
-             count,
-             {
-               img: imagePath,
-               description: description
-             },
-           );
-           this.image_list_popup_temp.push(imgobj);
-           count++;
-     }
-        if (count > 0) {
-          this.image_list_popup = this.image_list_popup_temp;
-          setTimeout(() => {
-            this.openImageModalRow(this.image_list_popup[0]);
-          }, 500);
-        }
-      },
-      error => { }
-    );
-    }  else if (type === 'checkin') {
-      this.subs.sink=this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
+  viewAttachment(booking, type) {
+    if (type === 'appt') {
+      console.log(type);
+      this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
         (communications: any) => {
           this.image_list_popup_temp = [];
           this.image_list_popup = [];
           let count = 0;
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
             const thumbPath = communications[comIndex].thumbPath;
-             let imagePath = thumbPath;
-             const description = communications[comIndex].s3path;
-             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-             if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-               imagePath = communications[comIndex].s3path;
-             }
-             const imgobj = new Image(
-               count,
-               {
-                 img: imagePath,
-                 description: description
-               },
-             );
-             this.image_list_popup_temp.push(imgobj);
-             count++;
-       }
+            let imagePath = thumbPath;
+            const description = communications[comIndex].s3path;
+            const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+              imagePath = communications[comIndex].s3path;
+            }
+            const imgobj = new Image(
+              count,
+              {
+                img: imagePath,
+                description: description
+              },
+            );
+            this.image_list_popup_temp.push(imgobj);
+            count++;
+          }
           if (count > 0) {
             this.image_list_popup = this.image_list_popup_temp;
             setTimeout(() => {
@@ -2145,7 +2116,40 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         },
         error => { }
       );
-      }
+    } else if (type === 'checkin') {
+      this.subs.sink = this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
+        (communications: any) => {
+          this.image_list_popup_temp = [];
+          this.image_list_popup = [];
+          let count = 0;
+          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+            const thumbPath = communications[comIndex].thumbPath;
+            let imagePath = thumbPath;
+            const description = communications[comIndex].s3path;
+            const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+              imagePath = communications[comIndex].s3path;
+            }
+            const imgobj = new Image(
+              count,
+              {
+                img: imagePath,
+                description: description
+              },
+            );
+            this.image_list_popup_temp.push(imgobj);
+            count++;
+          }
+          if (count > 0) {
+            this.image_list_popup = this.image_list_popup_temp;
+            setTimeout(() => {
+              this.openImageModalRow(this.image_list_popup[0]);
+            }, 500);
+          }
+        },
+        error => { }
+      );
+    }
   }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);

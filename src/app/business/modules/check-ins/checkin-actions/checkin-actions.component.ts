@@ -519,10 +519,10 @@ export class CheckinActionsComponent implements OnInit {
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showMsg = true;
         }
-        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
+        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService')) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.checkin.service.serviceType === 'virtualService')  && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {

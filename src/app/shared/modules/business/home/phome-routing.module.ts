@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardHome } from '../../../../shared/guard/auth.guard';
 import { PhomeComponent } from './phome.component';
+import { ServicePageHealthcareComponent } from '../service-page-healthcare/service-page-healthcare.component';
 const routes: Routes = [
   { path: '', component: PhomeComponent, canActivate: [AuthGuardHome] },
   {
     path: '',
     children: [
+      { path: 'healthcare', component: ServicePageHealthcareComponent },
       { path: 'pricing', loadChildren: () => import('../pricing/pricing.module').then(m => m.PricingModule) },
       { path: 'signup', loadChildren: () => import('../signup/providersignup.module').then(m => m.ProvidersignupModule) },
       { path: 'login', loadChildren: () => import('../login/provider-login.module').then(m => m.ProviderLoginModule) },

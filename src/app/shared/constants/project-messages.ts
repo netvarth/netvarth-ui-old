@@ -1569,6 +1569,7 @@ export const Messages = {
   'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
   'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the doctor with whom you would like to consult.',
   //attachment send
-  'ATTACHMENT_SEND':'Attachment sent successfully'
+  'ATTACHMENT_SEND':'Attachment sent successfully',
+  'QUESTIONNAIRE_CONSUMER_HEADING': 'More info'
 };
 

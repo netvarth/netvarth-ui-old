@@ -82,12 +82,12 @@ export class DrugListComponent implements OnInit {
 
   ngOnInit() {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.patientDetails = this.medicalrecord_service.getPatientDetails();
-    if (this.patientDetails.memberJaldeeId) {
-      this.display_PatientId = this.patientDetails.memberJaldeeId;
-    } else if (this.patientDetails.jaldeeId) {
-      this.display_PatientId = this.patientDetails.jaldeeId;
-    }
+    // this.patientDetails = this.medicalrecord_service.getPatientDetails();
+    // if (this.patientDetails.memberJaldeeId) {
+    //   this.display_PatientId = this.patientDetails.memberJaldeeId;
+    // } else if (this.patientDetails.jaldeeId) {
+    //   this.display_PatientId = this.patientDetails.jaldeeId;
+    // }
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -97,6 +97,7 @@ export class DrugListComponent implements OnInit {
     this.providerId = user.id;
 
     this.getMrprescription();
+    this.getPatientDetails(this.patientId);
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -112,6 +113,29 @@ export class DrugListComponent implements OnInit {
             // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+  }
+  getPatientDetails(uid) {
+
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading = false;
+          this.patientDetails = response[0];
+          this.patientId = this.patientDetails.id;
+          if (this.patientDetails.memberJaldeeId) {
+            this.display_PatientId = this.patientDetails.memberJaldeeId;
+          } else if (this.patientDetails.jaldeeId) {
+            this.display_PatientId = this.patientDetails.jaldeeId;
+          }
+          this.medicalrecord_service.setPatientDetails(this.patientDetails);
+
+
+        },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
 
   getMrprescription() {

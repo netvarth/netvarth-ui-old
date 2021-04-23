@@ -62,3 +62,13 @@
        float: right;
     }
 }
+.w-60 {
+    width: 60px !important;
+}
+.split-ln-brd {
+    border: 1px;
+    border-style: dotted;
+}
+.pad-15 {
+    padding:15px
+}

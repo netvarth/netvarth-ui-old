@@ -8,7 +8,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -39,10 +39,10 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     savedisabled = false;
     canceldisabled = false;
     source_id;
-    bookingId: any;
+    bookingId: any = 0;
   bookingType: any;
   patientId: any;
-  mrId;
+  mrId = 0;
     subscription: Subscription;
     @ViewChild('imagefile') filed: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,18 +51,23 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         private medicalrecord_service: MedicalrecordService,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor
-        // private router: Router,
+        private wordProcessor: WordProcessor,
+        private router: Router
     ) {
 
     }
     ngOnChanges() { }
     ngOnInit() {
-        if (this.data) {
+        if (this.data) { 
             this.mrId = this.data.mrid;
             this.patientId = this.data.patientid;
             this.bookingType = this.data.bookingtype;
             this.bookingId = this.data.bookingid;
+            console.log(this.mrId);
+            console.log(this.patientId);
+            console.log(this.bookingType);
+            console.log(this.bookingId);
+            
         }
     }
     resetVariables() {
@@ -75,7 +80,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.success_error = null;
     }
     close() {
-        this.dialogRef.close();
+        this.dialogRef.close(this.mrId);
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
     }
     imageSelect(event) {
         this.error_msg = '';
@@ -87,7 +93,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             if (projectConstantsLocal.MRFILETYPES_UPLOAD.indexOf(file.type) === -1) {
               this.error_msg ='Selected file type not supported';
             } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-              this.error_msg ='Please upload file with size < 10mb';
+              this.error_msg ='Please upload file with size < 100 mb';
             } else {
               this.item_pic.files.push(file);
               console.log(this.item_pic.files);
@@ -108,11 +114,13 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.item_pic.caption.splice(i, 1);
     }
     saveImages() {
+      console.log(this.mrId);
         this.error_msg = '';
         this.error_list = [];
         this.img_save_caption = 'Uploading .. ';
         this.savedisabled = true;        
         if (this.mrId) {
+          console.log(this.mrId);
             this.uploadMrfiles();
           } else {
             let passingId ;
@@ -134,7 +142,13 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
           }
         
     }
-
+   reloadCurrentRoute() {
+     console.log('inisde');
+      let currentUrl = 'provider/customers/'+this.patientId+'/' + this.bookingType+'/' + this.bookingId + '/medicalrecord/'+ this.mrId+ '/clinicalnotes';
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([currentUrl]);
+      });
+  }
     uploadMrfiles() {
       let passdata = {};
       let file;
@@ -155,8 +169,15 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe(() => {
       this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
       .subscribe((data) => {
-        this.dialogRef.close(this.item_pic);
-       console.log(data)
+        this.dialogRef.close(this.mrId);
+        this.snackbarService.openSnackBar('File Uploaded Successfully');
+        console.log(this.patientId);
+        console.log(this.bookingType);
+        console.log(this.bookingId);
+        console.log(this.mrId);
+       this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+       // this.reloadCurrentRoute();
+    
        },
        error => {
         this.savedisabled = false;

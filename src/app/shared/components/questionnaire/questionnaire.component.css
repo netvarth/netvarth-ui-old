@@ -69,3 +69,19 @@
 .quest {
     font-size: 1.1rem !important;
 }
+.mt-3 a:hover {
+    text-decoration: underline !important;
+}
+.dzimage, .dz-image {
+    border: 1px dashed #ccc;
+}
+.gal_action {
+    position: absolute;
+    top: 11px;
+    right: -10px;
+    background: rgba(0,0,0,.5);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+}

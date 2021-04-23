@@ -449,10 +449,10 @@ export class CustomerCreateComponent implements OnInit {
         gender: [''],
         address: ['']
       });
-      if (this.action === 'edit') {
-        this.updateForm();
-      }
       this.loading = false;
+    }
+    if (this.action === 'edit') {
+      this.updateForm();
     }
     if (this.phoneNo) {
       this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -468,7 +468,7 @@ export class CustomerCreateComponent implements OnInit {
       'email_id': this.customer[0].email || null,
       'dob': this.customer[0].dob || null,
       'gender': this.customer[0].gender || null,
-      'mobile_number': this.customer[0].phoneNo || null,
+      'mobile_number': this.customer[0].phoneNo.trim() || null,
       'customer_id': this.customer[0].jaldeeId || null,
       'address': this.customer[0].address || null,
     });
@@ -480,7 +480,6 @@ export class CustomerCreateComponent implements OnInit {
     } else {
       this.customerActions(form_data);
     }
-
   }
   customerActions(form_data) {
     let datebirth;
@@ -1098,7 +1097,17 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
   validateQnr(form_data?) {
-    if (this.questionAnswers && this.questionAnswers.answers) {
+    console.log(this.questionAnswers);
+    if (!this.questionAnswers) {
+      this.questionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: this.questionnaireList.id
+        }
+      }
+    }
+    console.log(this.questionAnswers);
+    if (this.questionAnswers.answers) {
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
           if (this.showBookingQnr) {
@@ -1117,9 +1126,15 @@ export class CustomerCreateComponent implements OnInit {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
     } else {
-      this.disableButton = false;
-      // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-      this.shared_functions.sendMessage({ type: 'qnrValidateError', value: 'required' });
+      if (this.showBookingQnr) {
+        if (this.source === 'appt-block') {
+          this.confirmApptBlock(this.newCustomerId);
+        } else if (this.source === 'waitlist-block') {
+          this.confirmWaitlistBlock(this.newCustomerId);
+        }
+      } else {
+        this.customerActions(form_data);
+      }
     }
   }
 }

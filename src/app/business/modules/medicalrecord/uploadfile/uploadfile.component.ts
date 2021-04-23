@@ -10,6 +10,9 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { MrfileuploadpopupComponent } from './mrfileuploadpopup/mrfileuploadpopup.component';
 import { ShowuploadfileComponent } from './showuploadfile/showuploadfile.component';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -20,6 +23,7 @@ export class UploadFileComponent implements OnInit {
 
   bookingId: any;
   bookingType: any;
+  delete_btn = Messages.DELETE_BTN;
   patientId: any;
   display_PatientId: any;
   today = new Date();
@@ -45,7 +49,7 @@ export class UploadFileComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Uploaded files';
+  heading = 'Uploaded Files';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
@@ -80,6 +84,8 @@ export class UploadFileComponent implements OnInit {
   mediafiles: any = [];
   docfiles: any = [];
   fileviewdialogRef: any;
+  removefiledialogRef: any;
+  private subscriptions = new SubSink();
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
@@ -89,11 +95,7 @@ export class UploadFileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
       this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    // this.activatedRoute.paramMap.subscribe(params => {
-    //   const medicalrecordId = params.get('mrId');
-    //   this.mrId = parseInt(medicalrecordId, 0);
-    //   console.log(this.mrId)
-    // });
+
 
     
 
@@ -111,12 +113,7 @@ export class UploadFileComponent implements OnInit {
     }
     this.topHeight = qHeader + tabHeader;
     if (header) {
-      // if (window.pageYOffset > (this.topHeight + 50)) {
-      //   header.classList.add('sticky');
-      // } else {
-      //   header.classList.remove('sticky');
-      // }
-
+ 
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
@@ -126,12 +123,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.patientDetails = this.medicalrecord_service.getPatientDetails();
-    if (this.patientDetails.memberJaldeeId) {
-      this.display_PatientId = this.patientDetails.memberJaldeeId;
-    } else if (this.patientDetails.jaldeeId) {
-      this.display_PatientId = this.patientDetails.jaldeeId;
-    }
+
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -140,16 +132,79 @@ export class UploadFileComponent implements OnInit {
     if (this.mrId !== 0) {
       this.getMedicalRecordUsingId(this.mrId);
     }
+    this.getPatientDetails(this.patientId);
 
+  }
+  getImageSource(file) {
+    let imgsrc='/assets/images/pdf.png';
+    console.log(file);
+    let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'video'){
+                imgsrc='/assets/images/video.png';
+              } else if( type[0] == 'audio') {
+                imgsrc='/assets/images/audio.png';
+              }
+
+    return imgsrc;
 
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
+  deleteFile(file) {
+    this.removefiledialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+          'message': 'Do you really want to delete this file?'
+      }
+  });
+  this.subscriptions.sink = this.removefiledialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      
+              this.subscriptions.sink = this.provider_services.deleteMRFile(this.mrId,file.uid)
+                  .subscribe((data) => {
+                    this.getMedicalRecordUsingId(this.mrId);
+                  },
+                      error => {
+                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      });
+          } 
+      
+  });
+  }
+  getPatientDetails(uid) {
+
+    const filter = { 'id-eq': uid };
+    this.subscriptions.sink=this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading = false;
+          this.patientDetails = response[0];
+          this.patientId = this.patientDetails.id;
+          if (this.patientDetails.memberJaldeeId) {
+            this.display_PatientId = this.patientDetails.memberJaldeeId;
+          } else if (this.patientDetails.jaldeeId) {
+            this.display_PatientId = this.patientDetails.jaldeeId;
+          }
+          this.medicalrecord_service.setPatientDetails(this.patientDetails);
+
+
+        },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
 
   getMedicalRecordUsingId(mrId) {
     this.loading = true;
-    this.provider_services.GetMedicalRecord(mrId)
+    this.mediafiles=[];
+    this.docfiles=[];
+   this.subscriptions.sink= this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
           if (data.mrVideoAudio) {

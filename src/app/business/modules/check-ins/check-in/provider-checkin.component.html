@@ -635,7 +635,7 @@
                 <span> Attach File
                 </span>
               </button> -->
-              <mat-chip-list class="btns" *ngIf="thirdParty === ''">
+              <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
                 <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
                     Change
                     Member </a>
