@@ -39,10 +39,10 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     savedisabled = false;
     canceldisabled = false;
     source_id;
-    bookingId: any;
+    bookingId: any = 0;
   bookingType: any;
   patientId: any;
-  mrId;
+  mrId = 0;
     subscription: Subscription;
     @ViewChild('imagefile') filed: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -63,6 +63,11 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             this.patientId = this.data.patientid;
             this.bookingType = this.data.bookingtype;
             this.bookingId = this.data.bookingid;
+            console.log(this.mrId);
+            console.log(this.patientId);
+            console.log(this.bookingType);
+            console.log(this.bookingId);
+            
         }
     }
     resetVariables() {
@@ -163,11 +168,14 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe(() => {
       this.provider_services.videoaudioUploadconfirm(this.mrId, uid)
       .subscribe((data) => {
-        this.dialogRef.close();
+        this.dialogRef.close(this.mrId);
         this.snackbarService.openSnackBar('File Uploaded Successfully');
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
+        console.log(this.patientId);
+        console.log(this.bookingType);
+        console.log(this.bookingId);
+        console.log(this.mrId);
+       this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
        // this.reloadCurrentRoute();
-      
     
        },
        error => {

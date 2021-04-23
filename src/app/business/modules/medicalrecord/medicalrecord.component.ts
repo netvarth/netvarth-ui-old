@@ -110,6 +110,7 @@ export class MedicalrecordComponent implements OnInit {
         private groupService: GroupStorageService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log("hai..");
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.activated_route.queryParams.subscribe(queryParams => {
       if (queryParams['calledfrom']) {
@@ -125,6 +126,7 @@ export class MedicalrecordComponent implements OnInit {
 
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log("hai..helo");
     this.accountType = user.accountType;
     this.medicalService.setDoctorId(user.id);
     this.activated_route.paramMap.subscribe(params => {
@@ -472,12 +474,12 @@ export class MedicalrecordComponent implements OnInit {
         bookingtype: this.bookingType
       }
     });
-    // this.uploadfiledialogRef.afterClosed().subscribe(result => {
-    // //   console.log(result)
-    // //   if(result){
-    // //   this.getMedicalRecordUsingId(result);
-    // // }
-    // });
+    this.uploadfiledialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result){
+      this.getMedicalRecordUsingId(result);
+    }
+    });
   }
 }
 
