@@ -75,6 +75,17 @@
             <!-- <div class="col-md-2 col-sm-4 col-xs-4 col-lg-1" > -->
             <div class="uploaddiv col-md-2 col-sm-3 col-xs-4 " *ngFor="let file of docfiles;let i = index " >
               <div class="uploadcard" >
+                  <div >
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu" class="pull-right">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                      <mat-menu #menu="matMenu">
+                        <button type="button" mat-menu-item  (click)="deleteFile(file)">
+                          <i class="icon-delete"></i>
+                          <span>{{delete_btn}}</span>
+                        </button>
+                      </mat-menu>
+                    </div>
                 <img src="assets/images/pdf.png" class="card-img-top" alt="...">
                 <div class="card-body">
                   <span ><a [href]="file.url" target="_blank" download>{{file.originalName ? file.originalName:file.uid}}</a></span>
