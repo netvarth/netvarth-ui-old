@@ -1,60 +1,32 @@
 <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0">
-<div class="card card-custom data-card">
+  <div class="card card-custom data-card">
     <div class="card-header bg-transparent">
       <div>Medical Records</div>
       <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
     </div>
-    <div class="card-body padding-tp-10 no-padding">
-      <div>
-          <div class="inner-card add-record rounded-sm">
-            <a class="inner-card-heading">
-              Add Record
-            </a>
-            <div class="inner-card-text">
-              Diagnosis, Allergies, Prescriptions, etc.
-            </div>
-          </div>
-          <div class="inner-card rounded-sm">
-            <a class="inner-card-heading">
-              Symptoms
-            </a>
-            <div class="inner-card-text">
-              Symptoms Description
-            </div>
-          </div>
-          <div class="inner-card rounded-sm">
-            <a class="inner-card-heading">
-              Symptoms
-            </a>
-            <div class="inner-card-text">
-              Symptoms Description
-            </div>
-          </div>
-          <div class="inner-card rounded-sm">
-            <a class="inner-card-heading">
-              Symptoms
-            </a>
-            <div class="inner-card-text">
-              Symptoms Description
-            </div>
-          </div>
-          <div class="inner-card rounded-sm">
-            <a class="inner-card-heading">
-              Symptoms
-            </a>
-            <div class="inner-card-text">
-              Symptoms Description
-            </div>
-          </div>
-          <div class="inner-card rounded-sm">
-            <a class="inner-card-heading">
-              Symptoms
-            </a>
-            <div class="inner-card-text">
-              Symptoms Description
-            </div>
-          </div>
+    <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
+      <div class="inner-card add-record rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)">
+        <a class="inner-card-heading">
+          {{mr.mrNumber}}
+        </a>
+        <div class="inner-card-text">
+          {{mr.mrCreatedDate}}
+        </div>
+        <div class="inner-card-text">
+          {{mr.service.name}}
+        </div>
       </div>
+      <!-- <div class="inner-card rounded-sm">
+        <a class="inner-card-heading">
+          Symptoms
+        </a>
+        <div class="inner-card-text">
+          Symptoms Description
+        </div>
+      </div> -->
+    </div>
+    <div class="card-body padding-tp-10 no-padding" *ngIf="loading">
+      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
     </div>
   </div>
 </div>

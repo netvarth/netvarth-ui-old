@@ -37,6 +37,7 @@ source = '';
 uuid;
 customer;
 provider;
+customerId;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -87,6 +88,7 @@ provider;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.ynwUuid;
+          this.customerId = this.waitlist_data.waitlistingFor[0].id;
           if (this.waitlist_data.consumer) {
           this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
           }
@@ -170,6 +172,7 @@ provider;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.uid;
+          this.customerId = this.waitlist_data.appmtFor[0].id;
           if (this.waitlist_data.consumer) {
           this.customer = this.waitlist_data.consumer.userProfile.firstName + ' ' + this.waitlist_data.consumer.userProfile.lastName;
           }
