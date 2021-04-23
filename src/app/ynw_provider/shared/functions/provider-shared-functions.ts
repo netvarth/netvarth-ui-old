@@ -284,7 +284,6 @@ export class ProviderSharedFuctions {
       ob.changeWaitlistStatusApi(waitlist, action);
     }
   }
-
   changeApptStatusApi(ob, waitlist, action, post_data = {}, showMessage?) {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
