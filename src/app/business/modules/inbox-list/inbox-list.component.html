@@ -7,7 +7,7 @@
     </div>
 </section>
 <section>
-    <div class="content comn-cls">
+    <!-- <div class="content comn-cls"> -->
         <div class="col-md-12 no-padding-small">
             <div class="card p0">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -123,7 +123,7 @@
                                 <div class="card card-custom">
                                     <div class="card-header align-items-center px-4 py-3">
                                         <div class="text-center flex-grow-1">
-                                            <div class="text-left flex-grow-1">
+                                            <div class="text-left flex-grow-1" *ngIf="!customer">
                                                 <i (click)="showChatSection()"
                                                     class="fa fa-arrow-left pointer-cursor d-md-none"></i>
                                             </div>
@@ -257,13 +257,13 @@
                                                 </button>
                                                 <i *ngIf="small_device_display"
                                                     (click)="sendMessageCompleted && sendMessage()"
-                                                    class="fa fa-paper-plane" aria-hidden="true"
+                                                    class="fa fa-paper-plane pointer-cursor" aria-hidden="true"
                                                     [class.grey]="message==''"></i>
                                             </div>
                                         </div>
-                                        <div class="img-section mgn-up-20"
+                                        <div class="img-section"
                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                            <ul class="galul">
+                                            <ul class="galul col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12 no-padding">
                                                 <li *ngFor="let file of selectedMessage.files;let i = index ">
                                                     <div class="galimg_outer">
                                                         <div class="gal_img">
@@ -285,7 +285,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </section>
 <div class="clearfix"></div>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
