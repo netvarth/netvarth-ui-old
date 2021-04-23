@@ -25,14 +25,16 @@
   <!--begin::Second Row-->
   <div class="row" *ngIf="!api_loading">
     <div class="col-lg-9 no-padding" style="padding: 0 12.5px !important;">
-      <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 m-0 border-class">
-        <app-booking-medical-records [customerId]="customerId"></app-booking-medical-records>
-      </div>
-      <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 m-0 border-class">
-        <app-booking-prescriptions></app-booking-prescriptions>
-      </div>
-      <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 m-0 border-class">
-        <app-booking-documents></app-booking-documents>
+      <div class="cards-div">
+        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class">
+          <app-booking-medical-records [customerId]="customerId"></app-booking-medical-records>
+        </div>
+        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class">
+          <app-booking-prescriptions></app-booking-prescriptions>
+        </div>
+        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class">
+          <app-booking-documents></app-booking-documents>
+        </div>
       </div>
       <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5"
         *ngIf="waitlist_data.questionnaire && waitlist_data.questionnaire.questionAnswers && waitlist_data.questionnaire.questionAnswers.length > 0">

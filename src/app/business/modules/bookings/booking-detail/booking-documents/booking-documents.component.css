@@ -24,3 +24,82 @@
     font-size: 13px !important;
     font-weight: 700 !important;
 }
+
+.card-body {
+    padding: 12px 15px !important;
+    height: 250px !important;
+    overflow: auto !important;
+}
+
+.card-body > div {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+
+.card-body > div > .row {
+    width: 100% !important;
+}
+
+.card-body .row-data {
+    width: 100% !important;
+    flex: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-width: auto !important;
+    max-width: none !important;
+    margin-bottom: 6px !important;
+}
+
+.card-body .row-data .doc-name {
+    color: #717171 !important;
+    font-size: 13px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.card-body .row-data .doc-name i {
+    color: rgba(255, 68, 0, 0.603) !important;
+    font-size: 16px !important;
+    margin-right: 5px !important;
+}
+
+.card-body .row-data .doc-menu-icon i {
+    color: #395789 !important;
+    font-size: 13px !important;
+    margin-left: 8px !important;
+}
+
+.card.data-card .card-body .add-more {
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: flex-start !important;
+}
+
+.card.data-card .card-body .add-more .add-more-icon {
+    border: 2px solid #5277c8 !important;
+    border-radius: 50% !important;
+    padding: 2px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 19px !important;
+    margin-right: 5px !important;
+    width: 19px !important;
+    justify-content: center !important;
+}
+
+.card.data-card .card-body .add-more .add-more-icon i {
+    font-size: 11px !important;
+    color: #5277c8 !important;
+}
+
+.card.data-card .card-body .add-more .add-more-text {
+    color: #395789 !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}

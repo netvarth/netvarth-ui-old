@@ -69,8 +69,8 @@
 @media (max-width: 767px) {
     .border-class:nth-child(1),
     .border-class:nth-child(2),
-    .border-class:nth-child(3),
-    .border-class:nth-child(4) {
+    .border-class:nth-child(3)/* ,
+    .border-class:nth-child(4) */ {
         border: 1px solid #d0d0d0 !important;
     }
 }
@@ -95,3 +95,23 @@
     font-size: 13px !important;
     font-weight: 700 !important;
 }
+
+.cards-div > .border-class:nth-child(1) {
+    border-top-left-radius: 0.6rem !important;
+    border-bottom-left-radius: 0.6rem !important;
+    overflow: hidden !important;
+}
+
+.cards-div > .border-class:last-child {
+    border-top-right-radius: 0.6rem !important;
+    border-bottom-right-radius: 0.6rem !important;
+    overflow: hidden !important;
+}
+
+@media (max-width: 767px) {
+    .cards-div > .border-class {
+        border-radius: 0.6rem !important;
+        overflow: hidden !important;
+    }
+}
+

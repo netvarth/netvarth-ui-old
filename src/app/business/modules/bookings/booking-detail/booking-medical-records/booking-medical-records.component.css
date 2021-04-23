@@ -50,6 +50,24 @@
     border-radius: 0.3rem !important;
 }
 
+@media (max-width: 1200px) {
+    .card-body .inner-card {
+        width: 100% !important;
+    }    
+}
+
+@media (max-width: 991px) {
+    .card-body .inner-card {
+        width: 48.5% !important;
+    }    
+}
+
+@media (max-width: 350px) {
+    .card-body .inner-card {
+        width: 100% !important;
+    }    
+}
+
 .card-body .inner-card .inner-card-heading {
     margin-top: 0.1rem !important;
     font-size: 10.5px !important;
