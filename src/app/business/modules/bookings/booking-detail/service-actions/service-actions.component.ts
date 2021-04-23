@@ -189,7 +189,7 @@ changeWaitlistStatusApi(waitlist, action, post_data = {}) {
     
 }
 smsCheckin() {
-    this.dialogRef.close();
+    // this.dialogRef.close();
     const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -257,7 +257,7 @@ callingAppt() {
         });
 }
 smsApptmnt() {
-    this.dialogRef.close();
+    // this.dialogRef.close();
     const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
