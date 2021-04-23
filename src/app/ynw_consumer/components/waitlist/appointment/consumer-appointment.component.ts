@@ -1094,7 +1094,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders,appointmentsettings';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
