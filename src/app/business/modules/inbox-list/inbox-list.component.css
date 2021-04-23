@@ -249,3 +249,22 @@ textarea {
       background-color: rgb(117, 209, 63);
     }
 }
+.bg-transparent {
+    padding: 8px 10px !important;
+    border-radius: 0 !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    color: #395789 !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-height: auto !important;
+}
+.bg-transparent i {
+    color: #395789 !important;
+    font-family: 'FontAwesome' !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}

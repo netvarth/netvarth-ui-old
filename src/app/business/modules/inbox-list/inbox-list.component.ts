@@ -153,9 +153,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.small_device_display = false;
       this.showReply = true;
     }
-    if (this.customer) {
-      this.small_device_display = true;
-    }
     const screenHeight = window.innerHeight;
     if (this.screenWidth <= 991) {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
@@ -171,6 +168,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.userHeight = screenHeight - 208;
       }
       this.msgHeight = screenHeight - 370;
+    }
+    if (this.customer) {
+      this.small_device_display = true;
+      this.msgHeight = 150;
     }
   }
   ngOnDestroy() {
@@ -628,5 +629,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   gotoEnquiry() {
     this.router.navigate(['provider/enquiry']);
+  }
+  viewInbox() {
+    this.router.navigate(['provider/inbox'], { queryParams: { customer: this.customer, provider: this.provider } });
   }
 }
