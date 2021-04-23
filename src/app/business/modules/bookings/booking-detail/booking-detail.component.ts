@@ -87,7 +87,9 @@ provider;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.ynwUuid;
+          if (this.waitlist_data.consumer) {
           this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
+          }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
               this.provider = this.waitlist_data.provider.businessName;
@@ -168,7 +170,9 @@ provider;
         data => {
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.uid;
-          this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
+          if (this.waitlist_data.consumer) {
+          this.customer = this.waitlist_data.consumer.userProfile.firstName + ' ' + this.waitlist_data.consumer.userProfile.lastName;
+          }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
               this.provider = this.waitlist_data.provider.businessName;
