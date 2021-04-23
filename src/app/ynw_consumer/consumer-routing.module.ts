@@ -12,7 +12,6 @@ import { CheckinDetailComponent } from './components/home/checkindetail.componen
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
-import { JaldeeCashClaimComponent } from './components/jaldee-cash-claim/jaldee-cash-claim.component';
 const routes: Routes = [
   {
     path: '', component: ConsumerComponent, children: [
@@ -35,9 +34,7 @@ const routes: Routes = [
       { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) },
       { path: 'order', loadChildren: () => import('../ynw_consumer/components/order/order.module').then(m => m.ConsumerOrderModule) },
       { path: 'questionnaire', loadChildren: () => import('../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
-      { path: 'mywallet', loadChildren: () =>  import('../ynw_consumer/modules/wallet/wallet.module').then(m => m.WalletModule) },
-      { path: 'jaldeecashcredit', component: JaldeeCashClaimComponent, canActivate: [AuthGuardLogin] },
-
+      { path: 'mywallet', loadChildren: () =>  import('../ynw_consumer/modules/wallet/wallet.module').then(m => m.WalletModule) }
     ]
   }
 ];

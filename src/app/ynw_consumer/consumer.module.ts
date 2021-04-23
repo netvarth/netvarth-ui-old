@@ -61,8 +61,6 @@ import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { WalletModule } from './modules/wallet/wallet.module';
-import { JaldeeCashClaimComponent } from './components/jaldee-cash-claim/jaldee-cash-claim.component';
-
 
 @NgModule({
   imports: [
@@ -113,8 +111,7 @@ import { JaldeeCashClaimComponent } from './components/jaldee-cash-claim/jaldee-
     ActionPopupComponent,
     ViewRxComponent,
     OrderComponent,
-    OrderDetailComponent,
-    JaldeeCashClaimComponent,
+    OrderDetailComponent
 
 
   ],
@@ -130,8 +127,7 @@ import { JaldeeCashClaimComponent } from './components/jaldee-cash-claim/jaldee-
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
     ActionPopupComponent,
-    CommunicationComponent,
-    JaldeeCashClaimComponent,
+    CommunicationComponent
   ],
   providers: [
     SharedServices,
