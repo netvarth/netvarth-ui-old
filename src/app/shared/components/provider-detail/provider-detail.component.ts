@@ -884,6 +884,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   setAccountCoupons(res) {
+    console.log('JC'+this.s3CouponList);
     this.s3CouponList.JC = [];
     if (res !== undefined) {
       this.s3CouponList.JC = res;
@@ -892,6 +893,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   SetAccountStoreCoupons(res) {
+    console.log('OWN'+this.s3CouponList);
     if (res !== undefined) {
       this.s3CouponList.OWN = res;
       console.log(this.s3CouponList)
