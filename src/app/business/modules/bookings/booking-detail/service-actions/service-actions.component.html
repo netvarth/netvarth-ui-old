@@ -59,7 +59,7 @@
         <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
         class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
         <a *ngIf="showCancel" class="btn btn-danger btn-square lh-1 font-size-xs"
-        (click)="changeAppnmtStatus('Cancelled')">
+        (click)="changeWaitlistStatus('Cancelled')">
           Cancel
         </a>
       </div>
@@ -68,15 +68,15 @@
         (click)="unBlockAppt()">Unblock</a>
         <a *ngIf="showArrived"
         class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1"
-        (click)="changeAppnmtStatus('Arrived')">Mark as arrived</a>
+        (click)="changeWaitlistStatus('Arrived')">Mark as arrived</a>
         <a *ngIf="waitlist_data.apptStatus == 'Started'" class="btn btn-danger btn-square lh-1 font-size-xs"
-        (click)="changeAppnmtStatus('Completed')">
+        (click)="changeWaitlistStatus('Completed')">
           Complete
         </a>
       </div>
       <div>
         <a *ngIf="showUndo" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1"
-        (click)="changeAppnmtStatus('Confirmed')">Status change</a>
+        (click)="changeWaitlistStatus('Confirmed')">Status change</a>
         <a *ngIf="showSendDetails"
         class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1"
         (click)="smsApptmnt()">Share booking info</a>

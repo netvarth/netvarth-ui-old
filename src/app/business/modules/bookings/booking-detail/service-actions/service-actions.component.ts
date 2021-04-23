@@ -148,15 +148,25 @@ callingWaitlist() {
     }    
 }
 changeWaitlistStatus(action) {
-    console.log(action)
+    if(this.bookingType == 'checkin'){
+        console.log(action)
     if (action !== 'CANCEL') {
         // this.dialogRef.close();
         // this.buttonClicked = true;
     }
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
+    } else if (this.bookingType == 'appointment') {
+        console.log(action)
+        if (action !== 'Rejected') {
+            // this.buttonClicked = true;
+        }
+        this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
+    }
+
 }
 changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+    if(this.bookingType == 'checkin') {
+        this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
         .then(
             result => {
                 this.dialogRef.close('reload');
@@ -165,6 +175,18 @@ changeWaitlistStatusApi(waitlist, action, post_data = {}) {
             error => {
                 // this.buttonClicked = false;
             });
+    }else if(this.bookingType == 'appointment') {
+        this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+        .then(
+            result => {
+                this.dialogRef.close('reload');
+                // this.buttonClicked = false;
+            },
+            error => {
+                // this.buttonClicked = false;
+            });
+    }
+    
 }
 smsCheckin() {
     this.dialogRef.close();
@@ -233,24 +255,6 @@ callingAppt() {
         () => {
             this.dialogRef.close('reload');
         });
-}
-changeAppnmtStatus(action) {
-    console.log(action)
-    if (action !== 'Rejected') {
-        // this.buttonClicked = true;
-    }
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
-}
-changeAppnmtStatusApi(waitlist, action, post_data = {}) {
-    this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
-        .then(
-            result => {
-                this.dialogRef.close('reload');
-                // this.buttonClicked = false;
-            },
-            error => {
-                // this.buttonClicked = false;
-            });
 }
 smsApptmnt() {
     this.dialogRef.close();
