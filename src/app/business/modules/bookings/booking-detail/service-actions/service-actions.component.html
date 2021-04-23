@@ -15,8 +15,29 @@
     </h3>
     <div *ngIf="bookingType === 'checkin'" class="card-toolbar pr-2 disp-grid">
       <div>
-        <button type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block">
-          Start Video Call
+        <button *ngIf="showStart" type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
+            (click)="changeWaitlistStatus('STARTED')">
+          Start
+        </button>
+      </div>
+      <div>
+        <button *ngIf="showTeleserviceStart" type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
+        (click)="showCallingModes(waitlist_data)">
+          <div class="action-box-sub">
+            <span class="meet-icon"
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+            <span class="zoom-icon"
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+            <span class="phon-icon"
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+            <span class="wtsapaud-icon"
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'audioService'"></span>
+            <span class="wtsapvid-icon"
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'videoService'"></span>
+            <div class="icon-text">
+                {{waitlist_data.waitlistStatus == 'Started' ? 'Resume' : 'Start'}} Service
+            </div>
+        </div>
         </button>
       </div>
       <div>
@@ -49,8 +70,29 @@
 
     <div *ngIf="bookingType === 'appointment'" class="card-toolbar pr-2 disp-grid">
       <div>
-        <button type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block">
-          Start Video Call
+        <button *ngIf="showStart" type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
+            (click)="changeWaitlistStatus('Started')">
+          Start
+        </button>
+      </div>
+      <div>
+        <button *ngIf="showTeleserviceStart" type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
+        (click)="showCallingModes(waitlist_data)">
+        <div class="action-box-sub">
+          <span class="meet-icon"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+          <span class="zoom-icon"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+          <span class="phon-icon"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+          <span class="wtsapaud-icon"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'audioService'"></span>
+          <span class="wtsapvid-icon"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'videoService'"></span>
+          <div class="icon-text">
+              {{waitlist_data.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
+          </div>
+      </div>
         </button>
       </div>
       <div>

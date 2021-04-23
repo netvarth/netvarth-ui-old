@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -57,8 +57,7 @@ export class ServiceActionsComponent implements OnInit {
 
   }
   setActions() {
-    if(this.bookingType == 'checkin'){
-
+    if(this.bookingType === 'checkin'){
           // this.apiloading = false;
     if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'done' && this.waitlist_data.waitlistStatus !== 'checkedIn' && this.waitlist_data.waitlistStatus !== 'blocked') {
         this.showUndo = true;
@@ -97,7 +96,7 @@ export class ServiceActionsComponent implements OnInit {
         this.showAttachment = true;
     }
       
-}else if(this.bookingType == 'appointment'){
+}else if(this.bookingType === 'appointment'){
         // this.apiloading = false;
         if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Completed' && this.waitlist_data.apptStatus !== 'Confirmed' && this.waitlist_data.apptStatus !== 'blocked') {
             this.showUndo = true;
@@ -302,6 +301,27 @@ locateApptCustomerMsg(details) {
         const mode = details.jaldeelTravelTime.travelMode;
         const minutes = travelTime % 60;
         return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
+    }
+}
+showCallingModes(modes) {
+    if(this.bookingType == 'checkin') {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                waiting_id: modes.ynwUuid,
+                type: 'checkin'
+            }
+        };
+        this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        this.dialogRef.close();
+    }else if(this.bookingType == 'appointment'){
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                waiting_id: modes.uid,
+                type: 'appt'
+            }
+        };
+        this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        this.dialogRef.close();
     }
 }
 }
