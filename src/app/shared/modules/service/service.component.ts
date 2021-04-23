@@ -708,7 +708,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
                     // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp', 'VideoCall'];
                 }
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {

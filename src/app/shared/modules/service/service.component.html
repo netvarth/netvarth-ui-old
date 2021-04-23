@@ -231,7 +231,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </mat-select>
         </mat-form-field>
         <mat-form-field
-          *ngIf="is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')"
+          *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
           class="example-full-width mat-select-virtualservice">
           <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
             [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
