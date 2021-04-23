@@ -1,0 +1,66 @@
+.data-card {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+.card.data-card .card-header {
+    padding: 8px 15px !important;
+    border-radius: 0 !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    color: #395789 !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-height: auto !important;
+}
+
+.card.data-card .card-header i {
+    color: #395789 !important;
+    font-family: 'FontAwesome' !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+.card-body {
+    padding: 12px 15px !important;
+    height: 250px !important;
+    overflow: auto !important;
+}
+
+.card-body > div {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+}
+
+.card-body .inner-card {
+    width: 48.5% !important;
+    flex: none !important;
+    display: inline-block !important;
+    min-width: auto !important;
+    max-width: none !important;
+    margin-bottom: 6px !important;
+    padding: 5px 8px !important;
+    border: 1px solid #cdd1da !important;
+    border-radius: 0.3rem !important;
+}
+
+.card-body .inner-card .inner-card-heading {
+    margin-top: 0.1rem !important;
+    font-size: 10.5px !important;
+    display: block !important;
+    text-transform: uppercase !important;
+    color: #969090 !important;
+}
+
+.card-body .inner-card .inner-card-text {
+    margin-top: 0.2rem !important;
+    color: #717171 !important;
+    font-size: 12.5px !important;
+    hyphens: auto !important;
+}
