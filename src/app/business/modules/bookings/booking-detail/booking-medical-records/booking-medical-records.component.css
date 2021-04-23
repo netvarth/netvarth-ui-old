@@ -64,3 +64,18 @@
     font-size: 12.5px !important;
     hyphens: auto !important;
 }
+
+.card-body .inner-card.add-record {
+    border-color: #395789 !important;
+}
+
+.card-body .inner-card.add-record .inner-card-heading {
+    color: #395789 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+}
+
+.card-body .inner-card.add-record .inner-card-text {
+    color: #395789 !important;
+    font-size: 10.5px !important;
+}
