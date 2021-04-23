@@ -1981,7 +1981,16 @@ export class AppointmentComponent implements OnInit {
     }
     validateQnr(post_Data?) {
         console.log(this.questionAnswers);
-        if (this.questionAnswers && this.questionAnswers.answers) {
+        if (!this.questionAnswers) {
+          this.questionAnswers = {
+            answers: {
+              answerLine: [],
+              questionnaireId: this.questionnaireList.id
+            }
+          }
+        }
+        console.log(this.questionAnswers);
+        if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
