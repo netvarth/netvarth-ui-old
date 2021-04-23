@@ -1068,11 +1068,8 @@
                                                 <button type="button" (click)="saveCheckin('checkin')"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && jaldeecashcredit == 0">
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>
-                                                    <ng-container
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && jaldeecashcredit > 0">
-                                                        Use Jaldee credit & Pay</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>

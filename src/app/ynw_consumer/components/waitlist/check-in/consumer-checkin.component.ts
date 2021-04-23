@@ -193,7 +193,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     selectedQTime;
     questionnaireLoaded = false;
-    jaldeecashcredit = 10;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -742,13 +741,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(parentUid);
                 } else {
-                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                        if(this.jaldeecashcredit > 0){
-                            this.router.navigate(['consumer', 'jaldeecashcredit']);
-                        } else {
-                            this.payuPayment();
-                        }
-                    } else {
                         let multiple;
                         if (this.uuidList.length > 1) {
                             multiple = true;
@@ -758,7 +750,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
                         }, 500);
-                    }
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -2011,8 +2002,5 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
             this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
-    }
-    jaldeecash(){
-      this.router.navigate(['consumer', 'jaldeecashcredit']);
     }
 }
