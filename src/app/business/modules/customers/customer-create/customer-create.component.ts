@@ -607,7 +607,6 @@ export class CustomerCreateComponent implements OnInit {
     } else if (this.source === 'appt-block') {
       this.confirmApptBlock(data);
     } else if (this.source === 'waitlist-block') {
-      console.log('e');
       this.confirmWaitlistBlock(data);
     } else if (this.source === 'order') {
       const navigationExtras: NavigationExtras = {
@@ -656,7 +655,7 @@ export class CustomerCreateComponent implements OnInit {
       this.router.navigate(['provider', 'customers']);
     }
   }
-  confirmApptBlock(id) {
+  confirmApptBlock(id, type?) {
     const post_data = {
       'uid': this.uid,
       'consumer': {
@@ -674,10 +673,14 @@ export class CustomerCreateComponent implements OnInit {
     this.provider_services.confirmAppointmentBlock(post_data)
       .subscribe(
         data => {
-          this.submitApptQuestionnaire();
+          if (type) {
+            this.submitApptQuestionnaire();
+          } else {
+            this.router.navigate(['provider', 'appointments']);
+          }
         });
   }
-  confirmWaitlistBlock(id) {
+  confirmWaitlistBlock(id, type?) {
     const post_data = {
       'ynwUuid': this.uid,
       'consumer': {
@@ -694,10 +697,12 @@ export class CustomerCreateComponent implements OnInit {
     }
     this.provider_services.confirmWaitlistBlock(post_data)
       .subscribe(
-        data => { 
-          console.log(1);
-          this.router.navigate(['provider', 'check-ins']);
-          // this.submitWaitlistQuestionnaire();
+        data => {
+          if (type) {
+            this.submitWaitlistQuestionnaire();
+          } else {
+            this.router.navigate(['provider', 'check-ins']);
+          }
         });
   }
   onCancel() {
@@ -1116,9 +1121,9 @@ export class CustomerCreateComponent implements OnInit {
         if (data.length === 0) {
           if (this.showBookingQnr) {
             if (this.source === 'appt-block') {
-      this.confirmApptBlock(this.newCustomerId);
+              this.confirmApptBlock(this.newCustomerId, 'qnr');
             } else if (this.source === 'waitlist-block') {
-              this.confirmWaitlistBlock(this.newCustomerId);
+              this.confirmWaitlistBlock(this.newCustomerId, 'qnr');
             }
           } else {
             this.customerActions(form_data);
@@ -1141,11 +1146,8 @@ export class CustomerCreateComponent implements OnInit {
     const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.provider_services.submitProviderWaitlistQuestionnaire(dataToSend, this.uid).subscribe(data => {
-      console.log(2);
-      // this.router.navigate(['provider', 'check-ins']);
-      this.submitWaitlistQuestionnaire();
+      this.router.navigate(['provider', 'check-ins']);
     }, error => {
-      console.log(3);
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
