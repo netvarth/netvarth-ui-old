@@ -64,7 +64,8 @@
             ID</span>
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number
           </span>
-          <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">+91</span>&nbsp;
+          <span
+            *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">+91</span>&nbsp;
           <span>{{service_data.virtualCallingModes[0].value}}</span>
         </div>
 
@@ -113,6 +114,15 @@
         <span class="ttle">Live tracking </span>
         <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
       </div>
+
+      <div class="c-ot" *ngIf="service_data.questionnaireIds && service_data.questionnaireIds.length > 0">
+        <div class="item width-100">
+          <span>{{service_data.questionnaireIds.length}} questionnaire added </span>
+          <a *ngFor="let id of service_data.questionnaireIds;let i=index" (click)="gotoQnr(id)">{{getQnrName(id)}}
+            <ng-container *ngIf="i < (service_data.questionnaireIds.length - 1)">, </ng-container></a>
+        </div>
+      </div>
+
       <!-- </div> -->
       <div class="btm-ctrl">
         <div class="ctrl enable-disable">
@@ -213,9 +223,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <mat-form-field class="mat-select-virtualsrvcategory">
           <mat-label>Select
             <span *ngIf="serv_mode === 'videoService'">Video</span>
-            <span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
-          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname"
-            [ngModelOptions]="{standalone: true}">
+            <span *ngIf="serv_mode === 'audioService'">Audio</span> Call App
+          </mat-label>
+          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
+            name="toolname" [ngModelOptions]="{standalone: true}">
             <mat-option *ngFor="let mode of telemodes" [value]="mode">
               <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
               <i *ngIf="mode === 'WhatsApp'"
@@ -231,9 +242,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </mat-select>
         </mat-form-field>
         <mat-form-field
-          *ngIf="is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')"
+          *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
           class="example-full-width mat-select-virtualservice">
-          <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
+          <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
+            placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
             [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
         </mat-form-field>
       </div>
@@ -363,7 +375,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  <mat-slide-toggle class="example-margin" formControlName="livetrack">
  </mat-slide-toggle>
  </div> -->
-      <div *ngIf = "bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
+      <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
           style="font-size: 1.1rem;">
           Payment Info</a>
@@ -422,8 +434,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 </mat-accordion> -->
       </div>
       <div class="mgn-bt-20">
-        <a class="no-padding underline pointer-cursor" (click)="advancedClick()"
-          style="font-size: 1.1rem;">
+        <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">
           Customization</a>
         <!-- <div class="settings_info" *ngIf="!is_donation">
  Live tracking and more</div> -->
@@ -573,8 +584,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
             [ngModelOptions]="{standalone: true}">
           </ckeditor> -->
-          <textarea [(ngModel)]="preInfoText" rows="10"
-          [ngModelOptions]="{standalone: true}"></textarea>
+          <textarea [(ngModel)]="preInfoText" rows="10" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>
     </div>
@@ -598,8 +608,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
             [ngModelOptions]="{standalone: true}">
           </ckeditor> -->
-          <textarea [(ngModel)]="postInfoText" rows="10"
-          [ngModelOptions]="{standalone: true}"></textarea>
+          <textarea [(ngModel)]="postInfoText" rows="10" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>
     </div>

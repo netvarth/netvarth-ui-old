@@ -1,9 +1,12 @@
 .qnrdetails {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12)!important;
     padding: 10px;
-    line-height: 2;
-    font-weight: bold;
-    color: grey;
+}
+.item {
+    margin-bottom: 10px;
+}
+.grey {
+    color: #999999;
 }
 .question {
     width: 45%;
