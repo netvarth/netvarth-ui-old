@@ -924,7 +924,7 @@
                                                             class="icon-location" matTooltip="Click to navigate">
                                                         </a></td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td width="48%" align="right">Service</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>
@@ -943,7 +943,7 @@
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
                                                         Token for</td>
@@ -976,7 +976,23 @@
                                             </tbody>
                                         </table>
                                         <div class="containerAppt textcenter">
-                                            <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
+                                            <!-- <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div> -->
+                                            <div class="mgn-bt-5">
+                                                <span> {{(settingsjson.showTokenId) ? 'Token for': 'Check-in for' }}  : </span>                                               
+                                                <span *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa meet-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                            <i class="fa zoom-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
+                                                            <i class="fa wtsapvid-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
+                                                        </span>
+                                                        <span>{{sel_ser_det.name}}</span>
+                                            </div>
                                             <div class="mgn-bt-5">
                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
@@ -986,8 +1002,8 @@
                                                     {{selectedQTime}}
                                                 </span>
                                             </div>
-                                            <div class="no-mgn-bt bold"> Waiting in line</div>
-                                            <div class="mgn-bt-10 pad-bt-10">
+                                            <!-- <div class="no-mgn-bt bold"> Waiting in line</div> -->
+                                            <!-- <div class="mgn-bt-10 pad-bt-10">
                                                 <span *ngIf="personsAhead <= 0">0 People</span>
                                                 <span *ngIf="personsAhead == 1">1<span>
                                                         Person</span></span>
@@ -1005,35 +1021,42 @@
                                                             </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         </div>
-                                        <div class="pay-section"
+                                        <!-- <div class="pay-section" -->
+                                        <div class="containerpayment"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
-                                            <div>
-                                                Service Fee <span class="rupee-font">{{serviceCost |
+                                            <!-- <div>
+                                                Consultation Amount <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
                                                 </span>
-                                            </div>
-                                            <div class="bold">
-                                                Payment required now <span
+                                            </div> -->
+                                              <div class="prepayment">
+                                                Payment Required now : &nbsp;<span 
                                                     class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class=""
-                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div class="select-pay"> Payment option</div>
-                                                <div class="">
-                                                    <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="paytm-icon"></span> -->
-                                                </div>
-                                                <div
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <a data-toggle="modal" data-target="#exampleModal"
-                                                        class="refund_policy">Cancellation Policy</a>
-                                                </div>
+                                            <div class="cancelpolicy" 
+                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            <!-- <div class="select-pay"> Payment option</div>
+                                            <div class="">
+                                                <span class="razorpay-icon selected-payment"></span>
+                                                <span class="paytm-icon"></span>
+                                            </div> -->
+                                            <div
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <a data-toggle="modal" data-target="#exampleModal"
+                                                    class="refund_policy">Cancellation Policy</a>
                                             </div>
-
+                                        </div>
+                                            <div class="jaldeecredit">
+                                              <mat-checkbox></mat-checkbox>
+                                                Use Jaldee cash balance : Rs100
+                                            </div>
+                                            <div class="creditleft">
+                                                Balance amount can be paid by other payment methods 
+                                            </div>
                                             <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1088,7 +1111,7 @@
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>
