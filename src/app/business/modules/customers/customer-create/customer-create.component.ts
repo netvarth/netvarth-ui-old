@@ -134,6 +134,7 @@ export class CustomerCreateComponent implements OnInit {
   newCustomerId;
   qnrSource = 'customer-create';
   loaded = true;
+  heading = '';
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -151,6 +152,7 @@ export class CustomerCreateComponent implements OnInit {
     // this.search_data = this.data.search_data;
     const customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
+    this.heading = 'Create ' + this.customer_label;
     this.customernotes = this.customer_label + ' note';
     this.activated_route.queryParams.subscribe(qparams => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -605,6 +607,7 @@ export class CustomerCreateComponent implements OnInit {
     } else if (this.source === 'appt-block') {
       this.confirmApptBlock(data);
     } else if (this.source === 'waitlist-block') {
+      console.log('e');
       this.confirmWaitlistBlock(data);
     } else if (this.source === 'order') {
       const navigationExtras: NavigationExtras = {
@@ -671,7 +674,7 @@ export class CustomerCreateComponent implements OnInit {
     this.provider_services.confirmAppointmentBlock(post_data)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'appointments']);
+          this.submitApptQuestionnaire();
         });
   }
   confirmWaitlistBlock(id) {
@@ -691,8 +694,10 @@ export class CustomerCreateComponent implements OnInit {
     }
     this.provider_services.confirmWaitlistBlock(post_data)
       .subscribe(
-        data => {
+        data => { 
+          console.log(1);
           this.router.navigate(['provider', 'check-ins']);
+          // this.submitWaitlistQuestionnaire();
         });
   }
   onCancel() {
@@ -1048,6 +1053,7 @@ export class CustomerCreateComponent implements OnInit {
         } else {
           this.qnrSource = 'proAppt';
         }
+        this.heading = 'More Info';
       } else {
         this.goBackAfterAdd(form_data, this.newCustomerId);
       }
@@ -1097,7 +1103,6 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
   validateQnr(form_data?) {
-    console.log(this.questionAnswers);
     if (!this.questionAnswers) {
       this.questionAnswers = {
         answers: {
@@ -1106,13 +1111,12 @@ export class CustomerCreateComponent implements OnInit {
         }
       }
     }
-    console.log(this.questionAnswers);
     if (this.questionAnswers.answers) {
       this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
         if (data.length === 0) {
           if (this.showBookingQnr) {
             if (this.source === 'appt-block') {
-              this.confirmApptBlock(this.newCustomerId);
+      this.confirmApptBlock(this.newCustomerId);
             } else if (this.source === 'waitlist-block') {
               this.confirmWaitlistBlock(this.newCustomerId);
             }
@@ -1125,16 +1129,39 @@ export class CustomerCreateComponent implements OnInit {
         this.disableButton = false;
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
-    } else {
-      if (this.showBookingQnr) {
-        if (this.source === 'appt-block') {
-          this.confirmApptBlock(this.newCustomerId);
-        } else if (this.source === 'waitlist-block') {
-          this.confirmWaitlistBlock(this.newCustomerId);
-        }
-      } else {
-        this.customerActions(form_data);
+    }
+  }
+  submitWaitlistQuestionnaire() {
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+      for (const pic of this.questionAnswers.files) {
+        dataToSend.append('files', pic, pic['name']);
       }
     }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    this.provider_services.submitProviderWaitlistQuestionnaire(dataToSend, this.uid).subscribe(data => {
+      console.log(2);
+      // this.router.navigate(['provider', 'check-ins']);
+      this.submitWaitlistQuestionnaire();
+    }, error => {
+      console.log(3);
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitApptQuestionnaire() {
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+      for (const pic of this.questionAnswers.files) {
+        dataToSend.append('files', pic, pic['name']);
+      }
+    }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    this.provider_services.submitProviderApptQuestionnaire(dataToSend, this.uid).subscribe(data => {
+      this.router.navigate(['provider', 'appointments']);
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
   }
 }

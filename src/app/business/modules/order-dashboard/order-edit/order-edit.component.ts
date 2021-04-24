@@ -315,6 +315,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar('Your Order updated successfully');
           this.orderList = [];
           this.router.navigate(['provider', 'orders']);
+        },
+        error => {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
       } else {
           this.placeOrderDisabled = false;
@@ -339,7 +343,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           resolve(data);
         },
           error => {
-            reject();
+            reject(error);
           }
         );
     });

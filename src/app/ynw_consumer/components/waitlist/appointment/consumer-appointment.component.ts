@@ -1094,7 +1094,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders,appointmentsettings';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
@@ -1881,7 +1881,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
-        console.log(this.questionAnswers);
         if (!this.questionAnswers) {
           this.questionAnswers = {
             answers: {
@@ -1890,7 +1889,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
           }
         }
-        console.log(this.questionAnswers);
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {

@@ -1933,10 +1933,10 @@ export class AppointmentComponent implements OnInit {
         } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
-            this.heading = 'Create an Appointment';
         } else {
             this.router.navigate(['provider', 'appointments']);
         }
+        this.heading = 'Create an Appointment';
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
@@ -1959,7 +1959,8 @@ export class AppointmentComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = !this.showQuestionnaire;
+        this.showQuestionnaire = true;
+        this.heading = 'More Info';
     }
     getProviderQuestionnaire() {
         let consumerId;
@@ -1973,6 +1974,7 @@ export class AppointmentComponent implements OnInit {
             if (this.showBlockHint) {
                 if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.showQuestionnaire = true;
+                    this.heading = 'More Info';
                 } else {
                     this.confirmApptBlockPopup();
                 }
@@ -1980,7 +1982,6 @@ export class AppointmentComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
-        console.log(this.questionAnswers);
         if (!this.questionAnswers) {
           this.questionAnswers = {
             answers: {
@@ -1989,7 +1990,6 @@ export class AppointmentComponent implements OnInit {
             }
           }
         }
-        console.log(this.questionAnswers);
         if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 if (data.length === 0) {

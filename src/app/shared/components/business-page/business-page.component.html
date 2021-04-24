@@ -337,14 +337,13 @@
                                         </span>
                                     </a>
                                 </li>
-                                <!-- <li class="coup" [matTooltip]="coupon" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
-                                    <a class="like-btn">
-                                        <span class="pointer-cursor" (click)="openCoupons()">
-                                            <i class="fa fa-tags"></i>
-                                            {{coupon}}
+                                <li class="share" [matTooltip]="'Coupon'">
+                                    <a class="like-btn" (click)="openCoupons()" *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
+                                        <span>
+                                            <i class="fa fa-tags" aria-hidden="true"></i>
+                                        
                                         </span>
-                                    </a>
-                                </li> -->
+                                    </a></li>
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
                                     *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
@@ -385,14 +384,16 @@
                                         </span>
                                     </a>
                                 </li>
-                                <!-- <li class="small-devices-coup centeralign" *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 ">
-                                    <a class="like-btn">
-                                        <span class="pointer-cursor" (click)="openCoupons()">
-                                            <i class="fa fa-tags"></i>
+                                <li class="small-devices-share centeralign">
+                                    <a class="like-btn"
+                                        *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0"
+                                        (click)="openCoupons()">
+                                        <span>
+                                            <i class="fa fa-tags" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;{{coupon}}</span>
                                         </span>
                                     </a>
-                                </li> -->
+                                </li>
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a

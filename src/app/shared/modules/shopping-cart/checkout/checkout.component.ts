@@ -264,6 +264,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       this.loading = false;
+      this.gets3curl();
       if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
       }
@@ -273,7 +274,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           base64: [],
           caption: []
         };
-        this.gets3curl();
+   
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -429,11 +430,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   gets3curl() {
+    console.log('getS3url');
     this.api_loading1 = true;
     let accountS3List = 'coupon,providerCoupon';
     this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
+          console.log(accountS3s);
           if (accountS3s['coupon']) {
           this.processS3s('coupon', accountS3s['coupon']);
         }
@@ -445,7 +448,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   processS3s(type, res) {
+    console.log('inisde');
     let result = this.s3Processor.getJson(res);
+    console.log(JSON.stringify(result));
     switch (type) {
       case 'coupon': {
         this.s3CouponsList.JC = result;
