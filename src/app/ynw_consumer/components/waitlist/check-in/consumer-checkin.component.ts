@@ -710,6 +710,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
+        console.log(this.sel_ser_det.isPrePayment);
         if (!this.is_wtsap_empty) {
             if (type) {
                 this.addCheckInConsumer(post_Data);
@@ -1766,8 +1767,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 //     }, 500);
                 // }
                 if (emailId && emailId != "") {
-                this.payEmail = emailId;
-                this.waitlist_for[0]['email'] = this.payEmail;
+                    this.payEmail = emailId;
+                    this.waitlist_for[0]['email'] = this.payEmail;
                 }
                 this.closebutton.nativeElement.click();
                 setTimeout(() => {
@@ -1840,6 +1841,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.bookStep = type;
         }
+        console.log(this.bookStep);
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
@@ -1989,18 +1991,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
-        if (this.questionAnswers && this.questionAnswers.answers) {
+        console.log(this.questionAnswers);
+        if (!this.questionAnswers) {
+          this.questionAnswers = {
+            answers: {
+              answerLine: [],
+              questionnaireId: this.questionnaireList.id
+            }
+          }
+        }
+        console.log(this.questionAnswers);
+        if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;
+                    console.log(this.bookStep);
+                    this.saveCheckin();
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
-        } else {
-            // this.snackbarService.openSnackBar('Required fields missing', { 'panelClass': 'snackbarerror' });
-            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: 'required' });
         }
     }
 }

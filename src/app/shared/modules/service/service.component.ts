@@ -15,6 +15,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { GroupStorageService } from '../../services/group-storage.service';
+
 
 @Component({
     selector: 'app-jaldee-service',
@@ -143,7 +145,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tempPostInfoTitle = '';
     showEditSection = false;
     savedisabled = false;
-    showNoteError = '';
+    active_user: any;
+    showNoteError='';
+
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -154,9 +158,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
         private dateTimeProcessor: DateTimeProcessor,
+        private groupService: GroupStorageService,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        console.log(this.active_user);
         this.preSubscription = this.sharedFunctons.getMessage().subscribe(
             (message: any) => {
                 switch (message.ttype) {
@@ -176,12 +183,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.subdomainsettings = serviceParams.subdomainsettings;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
+                   
                     if (this.action === 'add') {
                         this.service = null;
                         this.createForm();
                     } else {
                         this.service_data = this.service;
-                        if (this.action === 'show') {
+                        console.log(this.active_user.accountType);
+                        if (this.action === 'show' && this.active_user.accountType==='BRANCH') {
                             this.getDepartments(this.service.department);
                         }
                         if (this.service_data) {
@@ -567,7 +576,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        this.getDepartments();
+       // this.getDepartments();
         if (this.subdomainsettings.serviceBillable) {
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
@@ -696,8 +705,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
+                    // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
                 }

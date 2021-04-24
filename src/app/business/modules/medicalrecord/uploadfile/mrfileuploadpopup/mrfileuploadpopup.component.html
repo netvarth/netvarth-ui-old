@@ -40,7 +40,7 @@
   <div class="upload-doc" (click)="filed.click()"  *ngIf="!canceldisabled && item_pic.files.length === 0">
     <label class="col-form-label">{{select_image_cap}}</label>
     <span class="select-wrapper ">
-         <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">
+         <input type="file"   name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">
     </span>
   </div>
 

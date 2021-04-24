@@ -143,7 +143,7 @@
                                                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 no-padding mgn-bt-10">
                                                     <div class="question-value1 pull-left mgn-rt-5"
                                                         *ngFor="let languages of businessjson.languagesSpoken;let i=index">
-                                                        {{languages}}<ng-container
+                                                        {{languages | capitalizeFirst}}<ng-container
                                                             *ngIf="i<(businessjson.languagesSpoken.length-1)">,
                                                         </ng-container>
                                                     </div>
@@ -297,9 +297,11 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="coupons bus-actions bus-actions-horiz no-padding">
-                                <li *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOfferProvider() && frstChckinCupnCunt>0) || (s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 )"><i
-                                        class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
-                                        (click)="openCoupons('first')">{{coupon}}</span></li>
+                                <li
+                                    *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOfferProvider() && frstChckinCupnCunt>0)">
+                                    <i class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
+                                        (click)="openCoupons('first')">{{first_time_coupon}}</span>
+                                </li>
                                 <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 "><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{coupon}}</span></li> -->
@@ -548,7 +550,8 @@
         </div>
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
-                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
+                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                     *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
@@ -559,18 +562,17 @@
                     <h6 *ngIf="servicesAndProviders.length == 0" class="question-header"> No services or consultations
                         in this location.
                     </h6>
-
-
-                    <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                        *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
-                        [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
-                        </h5>
-                        <h6 class="question-header">{{dotor_specialization_hint}}
-                        </h6>
-                    </div>
-                    <div class="clearfix"></div>
-                    <!-- *ngFor="let loc of locationjson; let i = index">
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
+                    *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
+                    [class.mgn-bt-10]="!showDepartments">
+                    <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
+                    </h5>
+                    <h6 class="question-header">{{dotor_specialization_hint}}
+                    </h6>
+                </div>
+                <div class="clearfix"></div>
+                <!-- *ngFor="let loc of locationjson; let i = index">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding loc-card"
                             *ngIf="locationjson.length > 1">
                             <div class="loc-accor">
@@ -589,38 +591,36 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div> -->
-                    <!-- Departments True-->
-                    <ng-container *ngIf="showDepartments && !this.userId">
-                        <ng-container *ngFor="let sps of servicesAndProviders">
-                            <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
-                                *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
-                                {{sps.departmentName}}
-                            </h4>
-                            <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
-                                    [terminology]='terminologiesjson' [loc]="selectedLocation"
-                                    (actionPerformed)="cardClicked($event)"></app-card>
-                            </div>
-                            <div class="clearfix"></div>
-                            <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
-                        </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                        <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
+                <!-- Departments True-->
+                <ng-container *ngIf="showDepartments && !this.userId">
+                    <ng-container *ngFor="let sps of servicesAndProviders">
+                        <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
+                            *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
+                            {{sps.departmentName}}
+                        </h4>
+                        <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
                             <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
+                        <div class="clearfix"></div>
+                        <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
                     </ng-container>
-                    <ng-container *ngIf="donationServices.length >0">
-                        <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
-                                (actionPerformed)="cardClicked($event)"></app-card>
-                        </div>
-                    </ng-container>
-
-                </div>
-
+                </ng-container>
+                <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
+                    <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
+                        <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            (actionPerformed)="cardClicked($event)"></app-card>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="donationServices.length >0">
+                    <div class="bus-item-N" *ngFor="let sp of donationServices">
+                        <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            (actionPerformed)="cardClicked($event)"></app-card>
+                    </div>
+                </ng-container>
+            </div>
                 <!-- Order Catalog-->
                 <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
                     <div>

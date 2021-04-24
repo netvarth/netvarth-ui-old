@@ -247,8 +247,10 @@ for (const stat of this.orderstatus) {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(result => {
       if (result === 'reloadlist') {
+        this.getOrderCommunications();
       }
     });
+    
   }
   getformatedTime(time) {
     let timeDate;

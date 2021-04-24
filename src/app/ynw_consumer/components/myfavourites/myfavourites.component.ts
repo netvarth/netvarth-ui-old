@@ -41,7 +41,7 @@ export class MyfavouritesComponent implements OnInit,OnDestroy {
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   appttime_arr: any = [];
-  send_msg_cap = Messages.SEND_MSG_CAP;
+  send_msg_cap = Messages.SEND_MSGS_CAP;
   remove_fav_cap = Messages.REMOVE_FAV;
   view_cap = Messages.VIEW_CAP;
   manage_privacy_cap = Messages.MANAGE_PRIVACY;
@@ -384,6 +384,7 @@ private subs=new SubSink();
     pass_ob['source'] = 'consumer-common';
     pass_ob['user_id'] = provider.id;
     pass_ob['name'] = provider.businessName;
+    pass_ob['caption'] = 'Enquiry';
     this.addNote(pass_ob);
   }
 

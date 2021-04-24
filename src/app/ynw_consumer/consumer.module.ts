@@ -60,6 +60,7 @@ import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { WalletModule } from './modules/wallet/wallet.module';
 
 @NgModule({
@@ -93,6 +94,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
     GalleryModule,
     MatTooltipModule,
     CapitalizeFirstPipeModule,
+    QuestionnaireModule,
     WalletModule
   ],
   declarations: [

@@ -14,21 +14,24 @@
       <ul>
         <b>Cancellation Policies</b>
         <li>
-            You can cancel your {{data.book}} any time till {{data.wtlist.date | date: newDateFormat}}. You have to contact your provider, {{data.wtlist.providerAccount.businessName}} when system doesn’t permit cancellation for any reason.
+            You can cancel your {{data.book}} any time till <span *ngIf="data.wtlist.date">{{data.wtlist.date| date: newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date: newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date: newDateFormat}}</span>. You have to contact your provider, {{data.wtlist.providerAccount.businessName}} when system doesn’t permit cancellation for any reason.
         </li>
         <li>Your provider may cancel your {{data.book}} for their own reasons any time. Jaldee tries its best to update you about it through timely notifications.
         </li>
     </ul>
-    <ul> <b>Refund Policies</b>
+    <ul> <b>Refund Policies[for advance payments only]</b>
         <li>
             When a cancellation is made by you, a 3% service fee will be deducted on the refund of the advance payment made.
         </li>
         <li>
-            For cancellations made on {{data.wtlist.date | date: newDateFormat}} contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
+            For cancellations made on <span *ngIf="data.wtlist.date">{{data.wtlist.date| date: newDateFormat}}</span><span *ngIf="data.wtlist.appmtDate">{{data.wtlist.appmtDate| date: newDateFormat}}</span><span *ngIf="data.wtlist.orderDate">{{data.wtlist.orderDate| date: newDateFormat}}</span> contact your provider, {{data.wtlist.providerAccount.businessName}} for refund.
         </li>
+        <li>
+          Contact {{data.wtlist.providerAccount.businessName}}, for refunds related to any other payments made for this {{data.book}}.
+      </li>
     </ul>
     </div>
-    <p> Are you sure you want to cancel {{data.book}}? </p>
+    <p> Are you sure you want to cancel this {{data.book}}? </p>
   </div>
 </div>
 <div *ngIf="data.filterByDept" class="col-md-12 col-sm-12 col-xs-12">
@@ -38,7 +41,7 @@
   </div>
 </div>
 <div mat-dialog-content *ngIf="data.message1">
-  <p> {{data.message1}} </p>
+  <p> {{data.message1}}</p>
 </div>
 <div mat-dialog-actions class="paddingtop">
   <button tabindex="-1" (click)="onClick(0)" class="cs-btn bt2">{{cancel_btn_cap}}</button>

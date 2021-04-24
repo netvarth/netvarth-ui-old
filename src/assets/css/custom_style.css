@@ -10600,6 +10600,22 @@ a {
   width: 24px;
 }
 
+.jaldeevideo-icon {
+  content: url(../images/teleservice/jaldeevideo.svg);
+  top: 3px;
+  position: relative;
+  padding-right: 1px;
+  width: 100%;
+}
+.jvideo-icon {
+  content: url(../images/teleservice/video-icon-small.png);
+  position: relative;
+  padding-right: 1px;
+}
+.jvideo-icon-s {
+  width: 20px !important;
+}
+
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;
@@ -14028,9 +14044,10 @@ width: 40px !important;
 }
 .booking-img {
     content: url(../images/bookingwindow.png);
-    width: 400px;
+    width: inherit;
     margin: auto;
     margin-top: 50px;
+    padding: 20px;
 }
 .wizard-nav {
   justify-content: center;

@@ -1337,7 +1337,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     } else {
       if (this.blogo[0]) {
         this.profimg_exists = true;
-        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
@@ -1454,7 +1454,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.imageToShow = '';
           this.clogo = data;
           // this.cover_url = data[0].url;
-          this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
+          this.cover_url = (data[0].url) ? data[0].url : '';
           //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }

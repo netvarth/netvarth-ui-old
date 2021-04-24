@@ -63,7 +63,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   contact_details_cap = Messages.CONTACT_DETAILS_CAP;
   add_to_fav_cap = Messages.ADD_TO_FAV;
   rem_from_fav_cap = Messages.REM_FROM_FAV_CAP;
-  send_msgs_cap = Messages.SEND_MSG_CAP;
+  send_msgs_cap = Messages.SEND_MSGS_CAP;
   you_have_cap = Messages.YOU_HAVE_CAP;
   at_this_loc_cap = Messages.AT_THIS_LOC_CAP;
   get_directions_cap = Messages.GET_DIRECTIONS_CAP;
@@ -735,6 +735,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let i = 0; i < this.ratingdisabledCnt; i++) {
         this.ratingdisabledArr.push(i);
       }
+      this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
+        (settings: any) => {
+          this.orderstatus = settings.enableOrder;
+          this.getCatalogs(this.provider_bussiness_id);
+        }
+      );
       // this.getbusinessprofiledetails_json('location', true);
     }
   }
@@ -958,6 +964,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < this.ratingdisabledCnt; i++) {
       this.ratingdisabledArr.push(i);
     }
+   
   }
 
   setUserVirtualFields(res) {
@@ -1506,12 +1513,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
  
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
-      (settings: any) => {
-        this.orderstatus = settings.enableOrder;
-        this.getCatalogs(this.provider_bussiness_id);
-      }
-    );
+    
   }
   // getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
   //   let UTCstring = null;
@@ -1987,7 +1989,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        // caption: 'Enquiry',
+        caption: 'Enquiry',
         user_id: provid,
         userId: this.userId,
         source: 'consumer-common',
@@ -3115,7 +3117,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       queryParams: {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
-        showpric: this.activeCatalog.showPrice
+        showpric: this.activeCatalog.showPrice,
+        unique_id:this.provider_id
       }
 
     };
@@ -3198,6 +3201,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         queryParams: {
 
           providerId: this.provider_bussiness_id,
+          unique_id: this.provider_id,
         }
 
       };

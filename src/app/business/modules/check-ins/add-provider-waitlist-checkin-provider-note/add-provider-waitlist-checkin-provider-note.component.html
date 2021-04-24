@@ -11,7 +11,7 @@
         <div class="form-group">
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="{{note_placeholder}} *"
-                    formControlName="message" maxlength="1000">
+                    formControlName="message" maxlength="360">
             </textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a private note.">

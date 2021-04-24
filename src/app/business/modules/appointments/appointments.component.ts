@@ -24,7 +24,8 @@ import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-appointments',
-  templateUrl: './appointments.component.html'
+  templateUrl: './appointments.component.html',
+  styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   elementType = 'url';
@@ -479,6 +480,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+  }
+  getServiceName(serviceName) {
+    let name='';
+  if(serviceName.length>20){
+   name=serviceName.substring(0,20) +'...';
+  }else{
+    name = serviceName;
+  }
+  return name;
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
