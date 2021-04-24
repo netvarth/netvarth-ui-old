@@ -710,7 +710,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
-        console.log(this.sel_ser_det.isPrePayment);
         if (!this.is_wtsap_empty) {
             if (type) {
                 this.addCheckInConsumer(post_Data);
@@ -1571,7 +1570,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-                console.log(this.paymentDetails);
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1845,7 +1843,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.bookStep = type;
         }
-        console.log(this.bookStep);
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
@@ -1995,7 +1992,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
-        console.log(this.questionAnswers);
         if (!this.questionAnswers) {
           this.questionAnswers = {
             answers: {
@@ -2004,12 +2000,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
           }
         }
-        console.log(this.questionAnswers);
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;
-                    console.log(this.bookStep);
                     this.saveCheckin();
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });

@@ -7,3 +7,6 @@
 .createCustomer .form-group {
     margin-bottom: 1rem !important;
 }
+.card-body {
+    padding-bottom: 0px !important;
+}

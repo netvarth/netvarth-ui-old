@@ -461,16 +461,19 @@
                   </span>
                 </div>
               </div>
-
             </ng-container>
             <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
-
             <ng-container *ngIf="checkinLabel && queuejson.length > 0 && servicesjson.length > 0">
               <div class="waitlist-action mgn-bt-20 mgn-up-10">
-                <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="showQnr()"
+                <!-- <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="showQnr()"
                   [disabled]="api_loading"
                   *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                 <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
+                  [disabled]="api_loading" *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button> -->
+                <button type="button" class="btn btn-primary font-weight-bold" (click)="showQnr()"
+                  [disabled]="api_loading"
+                  *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
+                <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
                   [disabled]="api_loading" *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
               </div>
             </ng-container>
@@ -658,16 +661,30 @@
         </div>
       </div>
       <div class="card" *ngIf="showQuestionnaire">
-        <div class="mgn-bt-10 quest-head pad-10">
+        <h6 class="mgn-bt-10 quest-head pad-10">
           Please provide us with a little more information complete your booking
-        </div>
+        </h6>
         <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
           [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-        <div class="waitlist-action mgn-bt-20 mgn-up-10">
+        <!-- <div class="waitlist-action mgn-bt-20 mgn-up-10">
           <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="saveCheckin()"
             [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
           <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="validateQnr()"
             [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+        </div> -->
+        <div
+          class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+          <div class="mr-2" *ngIf="!showBlockHint">
+            <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
+              Previous
+            </button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+              [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+            <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
+              [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+          </div>
         </div>
       </div>
     </div>
