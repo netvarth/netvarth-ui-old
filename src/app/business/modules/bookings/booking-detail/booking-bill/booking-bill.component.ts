@@ -59,6 +59,7 @@ export class BookingBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          console.log(this.bill_data);
           this.deliveryCharge = this.bill_data.deliveryCharges;
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;

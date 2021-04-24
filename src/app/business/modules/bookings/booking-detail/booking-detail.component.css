@@ -114,4 +114,8 @@
         overflow: hidden !important;
     }
 }
-
+.questionnaire-section {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
