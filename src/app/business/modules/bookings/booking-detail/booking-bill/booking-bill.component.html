@@ -1,49 +1,123 @@
-<div class="booking-bill-component" 
-    *ngIf= "(bookingType == 'checkin' && waitlist_data.waitlistStatus != 'cancelled') ||
+<div class="booking-bill-component" *ngIf="(bookingType == 'checkin' && waitlist_data.waitlistStatus != 'cancelled') ||
             (bookingType == 'appointment' && waitlist_data.apptStatus != 'Cancelled')">
     <div class="card billing-card">
         <div class="card-header bg-transparent">
             <div>Billing</div>
             <i (click)="viewBillPage()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
         </div>
-        <div class="card-body">
-            <div class="outer-table-responsive table-responsive">
-                <table class="outer-table table table-sm table-borderless">
-                    <tbody>
-                        <tr>
-                            <td style="padding: 0 !important;">
-                                <table class="inner-table-one table table-sm table-borderless">
-                                    <tbody>
-                                        <tr *ngFor="let item of bill_data.service">
-                                            <td class="item-name">{{item.serviceName}}</td>
-                                            <td class="item-quantity">{{item.quantity}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td style="padding: 0 !important;">
-                                <table class="inner-table-two table table-sm table-borderless">
-                                    <tr *ngFor="let item of bill_data.service">
-                                        <td class="item-amount"><i class="fa fa-inr"></i>&nbsp;{{item.price}}</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div *ngIf="bill_data">
+            <div class="card-body">
+                <div class="outer-table-responsive table-responsive">
+                    <table class="outer-table table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="no-padding">
+                                    <table class="inner-table-one table table-sm table-borderless">
+                                        <tbody>
+                                            <tr *ngFor="let item of bill_data.service">
+                                                <td class="item-name">
+                                                    <div class="bold">{{item.serviceName}}</div>
+                                                    <div *ngFor="let discount of item.discount"
+                                                        class="text-muted-dark font-size-xs ">{{discount.name}}
+                                                    </div>
+                                                    <div *ngIf="item.discount && item.discount.length > 0"
+                                                        class="text-muted-dark">Sub
+                                                        Total</div>
+                                                </td>
+                                                <td class="item-quantity bold">{{item.quantity}}</td>
+                                                <td class="item-amount">
+                                                    <div class="bold"><i class="fa fa-inr"></i>{{item.price}}</div>
+                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">-
+                                                        <i class="fa fa-inr"></i>{{discount.discountValue}}
+                                                    </div>
+                                                    <div *ngIf="item.discount &&item.discount.length > 0"
+                                                        class="clr_ornge"><i class="fa fa-inr"></i>{{item.netRate}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngFor="let item of bill_data.items">
+                                                <td class="item-name">
+                                                    <div class="bold">{{item.itemName}}</div>
+                                                    <div *ngFor="let discount of item.discount"
+                                                        class="text-muted-dark font-size-xs ">{{discount.name}}</div>
+                                                    <div *ngIf="item.discount && item.discount.length > 0"
+                                                        class="text-muted-dark">Sub
+                                                        Total</div>
+                                                </td>
+                                                <td class="item-quantity bold">{{item.quantity}}</td>
+                                                <td class="item-amount">
+                                                    <div class="bold"><i class="fa fa-inr"></i>{{item.price}}</div>
+                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">-
+                                                        <i class="fa fa-inr"></i>{{discount.discountValue}}
+                                                    </div>
+                                                    <div *ngIf="item.discount && item.discount.length > 0"
+                                                        class="clr_ornge"><i class="fa fa-inr"></i>{{item.netRate}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <!-- <div class="add-more pointer-cursor">
-                <div class="add-more-icon"><i class="fa fa-plus"></i></div>
-                <div class="add-more-text">Add Item</div>
-            </div> -->
-        </div>
-        <div class="card-footer bg-transparent">
-            <div class="total-amount">
-                Amount Due&nbsp;:&nbsp;&nbsp;<i class="fa fa-inr"></i>&nbsp;{{bill_data.amountDue}}
-            </div>
-            <div class="actions">
-                <button (click)="viewBillPage()" class="btn view-bill-btn">View Bill</button>
-                <button (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
+            <div class="card-footer bg-transparent">
+                <div class="total-amount">
+                    <div class="flx_1"> Amount</div>
+                    <div><i class="fa fa-inr"></i>{{bill_data.netTotal}}</div>
+                </div>
+                <div class="total-amount" *ngIf="bill_data.jdn && bill_data.jdn.discount">
+                    <div class="flx_1">JDN</div>
+                    <div>(-)<i class="fa fa-inr"></i>{{bill_data.jdn.discount}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngFor="let discount of bill_data.discount">
+                    <div class="flx_1"> {{discount.name}}</div>
+                    <div>(-)<i class="fa fa-inr"></i>{{discount.discValue}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngFor="let coupon of bill_data.providerCoupon | keyvalue">
+                    <div class="flx_1">{{coupon.key}} (Coupon)</div>
+                    <div>(-)<i class="fa fa-inr"></i>{{coupon.value.value}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+                    <div class="flx_1">{{jcoupon.key}} (Jaldee Coupon)</div>
+                    <div>(-)<i class="fa fa-inr"></i>{{jcoupon.value.value}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngIf="bill_data.taxableTotal">
+                    <div class="flx_1">Tax {{bill_data.taxPercentage}}% of <i
+                            class="fa fa-inr"></i>{{bill_data.taxableTotal}}(CGST-{{bill_data.taxPercentage/2}}%,
+                        SGST-{{bill_data.taxPercentage/2}}%)</div>
+                    <div>(+)<i class="fa fa-inr"></i>{{bill_data.totalTaxAmount}}
+                    </div>
+                </div>
+                <div class="total-amount">
+                    <div class="flx_1">Net Total</div>
+                    <div><i class="fa fa-inr"></i>{{bill_data.netRate}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngIf="bill_data.totalAmountPaid > 0">
+                    <div class="flx_1">Amount Paid</div>
+                    <div><i class="fa fa-inr"></i>{{bill_data.totalAmountPaid}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngIf="bill_data.amountDue >= 0">
+                    <div class="flx_1">Amount Due</div>
+                    <div><i class="fa fa-inr"></i>{{bill_data.amountDue}}
+                    </div>
+                </div>
+                <div class="total-amount" *ngIf="bill_data.amountDue < 0">
+                    <div class="flx_1">Refund</div>
+                    <div><i class="fa fa-inr"></i>{{refund_value}}</div>
+                </div>
+                <div class="actions">
+                    <button (click)="viewBillPage()" class="btn view-bill-btn">View Bill</button>
+                    <button (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
+                </div>
             </div>
         </div>
     </div>

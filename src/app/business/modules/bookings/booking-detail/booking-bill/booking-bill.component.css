@@ -1,12 +1,8 @@
-.booking-bill-component {
-    /* margin: 25px 0 0 !important; */
-}
-
 .card.billing-card {
     border-radius: 0.5rem !important;
     border: 1.75px solid #d0d0d0 !important;
     padding: 0 !important;
-    height: 300px !important;
+    /* height: 300px !important; */
 }
 
 .card.billing-card .card-header {
@@ -27,6 +23,7 @@
     font-family: 'FontAwesome' !important;
     font-size: 13px !important;
     font-weight: 700 !important;
+    text-align: right;
 }
 
 .card.billing-card .card-body {
@@ -36,8 +33,7 @@
 
 .card.billing-card .card-body .outer-table-responsive {
     position: relative !important;
-    max-height: 120px !important;
-    /* height: 120px !important;  */ /* Not required as inner-table-one is position: relative; */
+    /* max-height: 120px !important; */
 }
 
 .card.billing-card .card-body .outer-table {
@@ -46,7 +42,7 @@
 
 .card.billing-card .card-body .outer-table .inner-table-one {
     position: relative !important;
-    width: 75% !important;
+    width: 100% !important;
     table-layout: fixed !important;
     margin-bottom: 0 !important;
 }
@@ -136,16 +132,15 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    align-items: center !important;
     flex: 1 !important;
 }
 
 .card.billing-card .card-footer .total-amount {
     padding: 0.3rem !important;
-    align-self: flex-end !important;
     font-size: 14px !important;
     color: #395aa2 !important;
     font-weight: 700 !important;
+    display: flex;
 }
 
 .card.billing-card .card-footer .total-amount i {
@@ -196,4 +191,20 @@
 
 ::-webkit-scrollbar {
     height: 6px !important;
+}
+
+.line-hgt-2 {
+    line-height: 2;
+}
+
+.flx_1 {
+    flex: 1;
+}
+
+.fa-inr {
+    margin-right: 2px;
+}
+
+.font-size-xs {
+    font-size: 0.7rem;
 }
