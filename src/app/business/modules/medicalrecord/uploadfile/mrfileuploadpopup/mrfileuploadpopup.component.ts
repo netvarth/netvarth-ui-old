@@ -154,11 +154,14 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       let file;
       for (const pic of this.item_pic.files) {
            file = pic;
-           console.log(file)
+           console.log(file);
+           const imgsize=pic['size'];
+           const sizeinkb=(imgsize/1024).toFixed(2);
+           console.log(sizeinkb);
            passdata = {
             "url": pic['name'],
             "type": pic['type'],
-          "imageSize": pic['size']
+          "imageSize":sizeinkb
           };
        }
       this.provider_services.videoaudioUploadurl(this.mrId, passdata)
