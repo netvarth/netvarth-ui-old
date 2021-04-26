@@ -2101,7 +2101,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                description: description
+                // description: description
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2134,7 +2134,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                description: description
+                // description: description
               },
             );
             this.image_list_popup_temp.push(imgobj);
