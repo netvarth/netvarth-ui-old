@@ -19,6 +19,7 @@ export class TermsconditionComponent implements OnInit {
     if (this.data.buttons === 'okCancel') {
     }
   }
-
-  
+  close(){
+    this.dialogRef.close();  
+  }
 }
