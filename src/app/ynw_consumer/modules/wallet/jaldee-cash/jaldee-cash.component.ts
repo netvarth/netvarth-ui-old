@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { TermsconditionComponent } from './termscondition/termsconditionpopup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -23,6 +25,7 @@ export class JaldeeCashComponent implements OnInit {
     }
   }
   constructor(private location: Location,
+    private dialog: MatDialog,
     public shared_functions: SharedFunctions) { }
 
   ngOnInit(): void {
@@ -36,5 +39,20 @@ export class JaldeeCashComponent implements OnInit {
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+  termsAndCondition(){
+    const dialogref = this.dialog.open(TermsconditionComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        'messages': 'terms and conditions'
+      }
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+        }
+      });
   }
 }
