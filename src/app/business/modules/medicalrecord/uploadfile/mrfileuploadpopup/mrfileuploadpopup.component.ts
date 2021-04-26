@@ -156,7 +156,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
            file = pic;
            console.log(file);
            const imgsize=pic['size'];
-           const sizeinkb=(imgsize/1024).toFixed(2);
+           const sizeinkb=(imgsize/1024).toFixed(0);
            console.log(sizeinkb);
            passdata = {
             "url": pic['name'],
