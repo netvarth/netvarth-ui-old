@@ -29,6 +29,11 @@
     padding: 12px 15px !important;
     height: 250px !important;
     overflow: auto !important;
+
+    /* display: flex !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important; */
 }
 
 .card-body > div {

@@ -5,25 +5,27 @@
       <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
-      <div class="inner-card add-record rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)">
+      <div>
+      <div class="inner-card add-record rounded-sm pointer-cursor">
         <a class="inner-card-heading">
-          {{mr.mrNumber}}
+          Add Record
         </a>
         <div class="inner-card-text">
-          {{mr.mrCreatedDate}}
-        </div>
-        <div class="inner-card-text">
-          {{mr.service.name}}
+          Diagnosis, Alergies, Prescription, etc.
         </div>
       </div>
-      <!-- <div class="inner-card rounded-sm">
+      <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)">
         <a class="inner-card-heading">
-          Symptoms
+          {{mr.mrNumber ? mr.mrNumber : ''}}
         </a>
         <div class="inner-card-text">
-          Symptoms Description
+          {{mr.mrCreatedDate ? mr.mrCreatedDate : ''}}
         </div>
-      </div> -->
+        <div class="inner-card-text">
+          {{(mr.service && mr.service.name) ? mr.service.name : ''}}
+        </div>
+      </div>
+      </div>
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="loading">
       <app-common-innerloading-spinner> </app-common-innerloading-spinner>
