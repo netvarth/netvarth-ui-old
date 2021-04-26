@@ -29,7 +29,7 @@ export class JaldeeCashComponent implements OnInit {
     public shared_functions: SharedFunctions) { }
 
   ngOnInit(): void {
-  //  this.cashInfo();
+  // this.cashInfo();
   }
   cashInfo() {
     throw new Error("Method not implemented.");

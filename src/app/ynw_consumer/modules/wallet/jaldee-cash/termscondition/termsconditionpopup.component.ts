@@ -9,8 +9,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export class TermsconditionComponent implements OnInit {
 
-  showError = false;
-  okCancelBtn = false;
   constructor(public dialogRef: MatDialogRef<TermsconditionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
