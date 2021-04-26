@@ -575,7 +575,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        // this.getDepartments();
+        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+            this.getDepartments();
+        }
         if (this.subdomainsettings.serviceBillable) {
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
