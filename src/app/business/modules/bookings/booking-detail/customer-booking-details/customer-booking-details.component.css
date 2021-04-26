@@ -1,0 +1,11 @@
+.consumer-note {
+    font-style: italic;
+}
+.add_btn {
+    background: #1e4079;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    float: right;
+    margin-top: 5px;
+}

@@ -128,7 +128,7 @@
 .card.billing-card .card-footer {
     padding: 8px 10px !important;
     border-radius: 0 0 calc(0.5rem - 1px) calc(0.5rem - 1px) !important;
-    border-top: 1.75px solid #d0d0d0 !important;
+    border-top: 1px solid #ddd !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;

@@ -27,7 +27,7 @@
                                                 <td class="item-quantity bold">{{item.quantity}}</td>
                                                 <td class="item-amount">
                                                     <div class="bold"><i class="fa fa-inr"></i>{{item.price}}</div>
-                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">-
+                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">(-)
                                                         <i class="fa fa-inr"></i>{{discount.discountValue}}
                                                     </div>
                                                     <div *ngIf="item.discount &&item.discount.length > 0"
@@ -47,7 +47,7 @@
                                                 <td class="item-quantity bold">{{item.quantity}}</td>
                                                 <td class="item-amount">
                                                     <div class="bold"><i class="fa fa-inr"></i>{{item.price}}</div>
-                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">-
+                                                    <div *ngFor="let discount of item.discount" class="font-size-xs">(-)
                                                         <i class="fa fa-inr"></i>{{discount.discountValue}}
                                                     </div>
                                                     <div *ngIf="item.discount && item.discount.length > 0"

@@ -86,6 +86,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   @Input() customer;
   @Input() provider;
+  @Input() source;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -107,6 +108,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.selectedCustomer);
     if (this.qParams.customer && this.qParams.provider) {
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
@@ -123,6 +125,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.selectedCustomer = this.customer;
       }
     }
+    console.log(this.selectedCustomer);
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -169,9 +172,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       this.msgHeight = screenHeight - 370;
     }
-    if (this.customer) {
+    if (this.source) {
       this.small_device_display = true;
-      this.msgHeight = 250;
+      this.msgHeight = 300;
+      this.showChat = true;
     }
   }
   ngOnDestroy() {
@@ -276,11 +280,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
     this.onResize();
+    console.log(this.groupedMsgs);
+    console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (this.small_device_display) {
         this.showChat = true;
       }
+      console.log(this.selectedUserMessages);
       const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
       if (unreadMsgs.length > 0) {
         const ids = unreadMsgs.map(msg => msg.messageId);

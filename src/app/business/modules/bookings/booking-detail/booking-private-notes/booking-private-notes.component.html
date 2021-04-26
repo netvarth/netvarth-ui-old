@@ -1,0 +1,37 @@
+<div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0">
+  <div class="card card-custom data-card">
+    <div class="card-header bg-transparent">
+      <div>Private Notes</div>
+      <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+    </div>
+    <div class="card-body padding-tp-10 no-padding">
+      <div *ngFor="let note of providerNotes" (click)="selectNote(note)" data-toggle="modal"
+        data-target="#exampleModalCenter">
+        {{note.note}}
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body" *ngIf="selectedNote">
+            <div class="pad-10">
+              {{selectedNote.note}}
+              <div class="disp-flex" *ngIf="selectedNote.attachment && selectedNote.attachment.length > 0">
+                <div class="pad-10" *ngFor="let img of selectedNote.attachment;let i=index">
+                  <img src="assets/images/avatar5.png" (click)="openImage(i)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+  [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+  (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

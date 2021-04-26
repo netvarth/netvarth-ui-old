@@ -90,7 +90,9 @@ customerId;
           this.uuid = this.waitlist_data.ynwUuid;
           this.customerId = this.waitlist_data.waitlistingFor[0].id;
           if (this.waitlist_data.consumer) {
-          this.customer = this.waitlist_data.consumer.firstName + ' ' + this.waitlist_data.consumer.lastName;
+            const fname = (this.waitlist_data.consumer.firstName) ? this.waitlist_data.consumer.firstName : '';
+            const lname = (this.waitlist_data.consumer.lastName) ? this.waitlist_data.consumer.lastName : '';
+          this.customer = fname + ' ' + lname;
           }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
@@ -146,10 +148,9 @@ customerId;
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // this.getWaitlistNotes();
-          if (this.waitlist_data.waitlistStatus !== 'blocked') {
-            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          }
+          // if (this.waitlist_data.waitlistStatus !== 'blocked') {
+          //   this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          // }
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           // this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
@@ -173,8 +174,10 @@ customerId;
           this.waitlist_data = data;
           this.uuid = this.waitlist_data.uid;
           this.customerId = this.waitlist_data.appmtFor[0].id;
-          if (this.waitlist_data.consumer) {
-          this.customer = this.waitlist_data.consumer.userProfile.firstName + ' ' + this.waitlist_data.consumer.userProfile.lastName;
+          if (this.waitlist_data.consumer && this.waitlist_data.consumer.userProfile) {
+            const fname = (this.waitlist_data.consumer.userProfile.firstName) ? this.waitlist_data.consumer.userProfile.firstName : '';
+            const lname = (this.waitlist_data.consumer.userProfile.lastName) ? this.waitlist_data.consumer.userProfile.lastName : '';
+          this.customer = fname + ' ' + lname;
           }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
@@ -221,9 +224,9 @@ customerId;
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          if (this.waitlist_data.apptStatus !== 'blocked') {
-            this.getWaitlistNotes(this.waitlist_data.uid);
-          }
+          // if (this.waitlist_data.apptStatus !== 'blocked') {
+          //   this.getWaitlistNotes(this.waitlist_data.uid);
+          // }
           this.getCheckInHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;

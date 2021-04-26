@@ -1,4 +1,4 @@
-<section class="" *ngIf="!customer">
+<section class="" *ngIf="!source">
     <div class="title-gb no-padding">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
             Inbox
@@ -116,10 +116,10 @@
                                 <div class="null-text">Select a chat to start messaging</div>
                             </ng-template>
                         </div>
-                        <div class="flex-row-fluid" id="kt_chat_content" [class.ml-lg-8]="!customer"
+                        <div class="flex-row-fluid" id="kt_chat_content" [class.ml-lg-8]="!source"
                             *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
                             <div class="card card-custom">
-                                <div class="card-header align-items-center px-4 py-3" *ngIf="!customer">
+                                <div class="card-header align-items-center px-4 py-3" *ngIf="!source">
                                     <div class="text-center flex-grow-1">
                                         <div class="text-left flex-grow-1">
                                             <i (click)="showChatSection()"
@@ -129,14 +129,14 @@
                                             {{getUserName(selectedCustomer, 'customer')}}</div>
                                     </div>
                                 </div>
-                                <div class="bg-transparent" *ngIf="customer">
+                                <div class="bg-transparent" *ngIf="source">
                                     <div>Messages</div>
                                     <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()"
                                         aria-hidden="true"></i>
                                 </div>
                                 <div class="card-body no-padding-small">
                                     <div class="scroll scroll-pull over-scroll" #scrollMe
-                                        [ngStyle]="{'height.px': msgHeight}">
+                                        [ngStyle]="{'height.px': msgHeight}" *ngIf="!source || (source && customer)">
                                         <div class="messages" *ngFor="let msg of selectedUserMessages">
                                             <div *ngIf="msg.messagestatus==='in'"
                                                 class="d-flex flex-column mb-5 align-items-start">
@@ -228,8 +228,11 @@
                                             <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                         </div>
                                     </div>
+                                    <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.px': msgHeight}" *ngIf="source && !customer">
+No messages
+                                    </div>
                                 </div>
-                                <div class="card-footer align-items-center no-padding">
+                                <div class="card-footer align-items-center no-padding" *ngIf="!source || (source && customer)">
                                     <div class="reply-section" *ngIf="replyMsg" #reply>
                                         <div class="main-sec">
                                             <div class="username">{{(replyMsg.messagestatus === 'out') ? 'You' :

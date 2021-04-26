@@ -12,6 +12,7 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { BookingBillModule } from './booking-bill/booking-bill.module';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { InboxListModule } from '../../inbox-list/inbox-list.module';
+import { BookingPrivateNotesModule } from './booking-private-notes/booking-private-notes.module';
 
 
 
@@ -29,7 +30,8 @@ import { InboxListModule } from '../../inbox-list/inbox-list.module';
     LoadingSpinnerModule,
     BookingBillModule,
     QuestionnaireModule,
-    InboxListModule
+    InboxListModule,
+    BookingPrivateNotesModule
   ],
   exports:[BookingDetailComponent]
 })
