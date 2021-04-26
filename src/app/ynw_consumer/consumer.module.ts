@@ -61,6 +61,8 @@ import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
+import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
+import { WlCardComponent } from './components/home/wl-card/wl-card.component';
 
 
 @NgModule({
@@ -113,6 +115,8 @@ import { QuestionnaireModule } from '../shared/components/questionnaire/question
     ViewRxComponent,
     OrderComponent,
     OrderDetailComponent,
+    ApptCardComponent,
+    WlCardComponent,
 
 
   ],

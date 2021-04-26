@@ -318,11 +318,11 @@
                                         <div
                                             class="col-md-9 col-xs-9 col-sm-9 col-lg-10 bus-title-content no-padding-small">
                                             <div class="pt-2 no-padding"
-                                                [ngClass]="{'col-12': (!search_result.fields.logo) ? true : false,
-                                                            'col-md-9 col-sm-8 col-lg-10': (search_result.fields.logo) ? true : false,
-                                                            'col-xs-8': (getClass(search_result) == 3 && search_result.fields.logo) ? true : false,
-                                                            'col-xs-9': (getClass(search_result) == 2 && search_result.fields.logo) ? true : false,
-                                                            'col-xs-10': (getClass(search_result) == 1 && search_result.fields.logo) ? true : false}">
+                                                [ngClass]="{'col-12': (!search_result.fields.bLogo) ? true : false,
+                                                            'col-md-9 col-sm-8 col-lg-10': (search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-8': (getClass(search_result) == 3 && search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-9': (getClass(search_result) == 2 && search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-10': (getClass(search_result) == 1 && search_result.fields.bLogo) ? true : false}">
                                                 <!-- [ngClass]="{'col-xs-10':(search_result.fields.ynw_verified_level > 1)?true:false}"> -->
                                                 <div class="pointer-cursor" (click)="providerDetClicked(search_result)">
                                                     <h3 class="service-provide-name">{{search_result.fields.title | capitalizeFirst}} <!-- <span
@@ -388,11 +388,11 @@
                                             </div>
                                             <!-- <div class="col-md-4 col-xs-2 col-sm-4 col-lg-4 pt-2 no-padding " -->
                                             <div class="pt-2 no-padding"
-                                                [ngClass]="{'no-logo': (!search_result.fields.logo) ? true : false,
-                                                            'col-md-3 col-sm-4 col-lg-2': (search_result.fields.logo) ? true : false,
-                                                            'col-xs-4': (getClass(search_result) == 3 && search_result.fields.logo) ? true : false,
-                                                            'col-xs-3': (getClass(search_result) == 2 && search_result.fields.logo) ? true : false,
-                                                            'col-xs-2': (getClass(search_result) == 1 && search_result.fields.logo) ? true : false}">
+                                                [ngClass]="{'no-logo': (!search_result.fields.bLogo) ? true : false,
+                                                            'col-md-3 col-sm-4 col-lg-2': (search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-4': (getClass(search_result) == 3 && search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-3': (getClass(search_result) == 2 && search_result.fields.bLogo) ? true : false,
+                                                            'col-xs-2': (getClass(search_result) == 1 && search_result.fields.bLogo) ? true : false}">
                                                 <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                     <!-- <span class="rating-star pull-right" *ngIf="search_result.fields.rating>0zz">
                                                       <img src="./assets/images/star.svg" alt="" />
@@ -469,16 +469,16 @@
                                         </div>
                                         <div class="col-md-3 col-xs-3 col-sm-3 col-lg-2 no-padding centeralign ">
                                           <div>
-                                            <div *ngIf="search_result.fields.logo" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 py-2 pro-img1 no-padding">
+                                            <div *ngIf="search_result.fields.bLogo" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 py-2 pro-img1 no-padding">
                                               <!-- (click)="openImageModalRow(image_list_popup[0])" -->
-                                              <img [src]="search_result.fields.logo" id="profile-image1"
-                                                  *ngIf="search_result.fields.logo"
+                                              <img [src]="search_result.fields.bLogo" id="profile-image1"
+                                                  *ngIf="search_result.fields.bLogo"
                                                   class=" img-circle img-responsive pointer-cursor" />
                                               <!-- <img src="assets/images/img-null.svg" id="profile-image1"
                                                   *ngIf="!search_result.fields.logo"
                                                   class=" img-circle img-responsive pointer-cursor"> -->
                                             </div>
-                                            <div class="no-image" *ngIf="!search_result.fields.logo">
+                                            <div class="no-image" *ngIf="!search_result.fields.bLogo">
                                                   <div class="col-sm-12 col-xs-12 col-md-12 pt-2 d-flex justify-content-center no-padding">
                                                       <span class="img pic_align pull-right verification-level"
                                                           *ngIf="search_result.fields.ynw_verified_level==2"

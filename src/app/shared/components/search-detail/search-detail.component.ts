@@ -201,6 +201,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   checkinProviderList: any = [];
+  providerLogos: any = [];
   private subs = new SubSink();
   constructor(private routerobj: Router,
     private location: Location,
@@ -259,15 +260,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let firstCheckin = true;
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-     
-      
+
+
       this.checkinProviderList = activeUser.checkedInProviders;
       const providerInfo = provider.split('-');
       if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         console.log(providerInfo[0]);
         if (this.checkinProviderList.includes(providerInfo[0])) {
           console.log('fiststcheckinover');
-          
+
           firstCheckin = false;
         } else {
           firstCheckin = true;
@@ -1045,6 +1046,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
               }
               this.getWaitingTime(this.result_providdet);
+              this.getProviderLogo(this.result_providdet);
               this.getApptTime(this.result_providdet);
               this.search_result_count = this.search_data.hits.found || 0;
               if (this.search_data.hits.found === 0) {
@@ -1154,6 +1156,28 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+  }
+  getProviderLogo(provids) {
+    if (provids.length > 0) {
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+        post_provids.push(provids[i].provid);
+      }
+      if (post_provids.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getProviderLogo(post_provids)
+        .subscribe(data => {
+          this.providerLogos = data;
+          let index = 0;
+          Object.keys(this.providerLogos).forEach(key => {
+            if (this.providerLogos[key][0]) {
+              this.search_data.hits.hit[index].fields['bLogo'] = this.providerLogos[key][0].url;
+            }
+            index++;
+          });
+        });
+    }
   }
   private getWaitingTime(provids) {
     if (provids.length > 0) {
