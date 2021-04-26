@@ -437,7 +437,7 @@
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
                                 
-                                <input *ngIf="!item.id" class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
+                                <input *ngIf="!item.id" class="form-control" placeholder="Min Qty" (keypress)="isNumber($event); $event.stopPropagation();"
                                   id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}">
                               </div>
                               <!-- Max -->
@@ -446,7 +446,7 @@
                                       Qty</i></span></div>
                                
                                 <input *ngIf="!item.id" class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
-                                  (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}">
+                                  (keypress)="isNumber($event); $event.stopPropagation();" type="number" min="1" value="{{item.maxQuantity}}">
                               </div>
                             </div>
                             <!--end::Details-->
@@ -485,7 +485,7 @@
                               <div  class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
-                                <input  class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
+                                <input  class="form-control" placeholder="Min Qty" (keypress)="isNumber($event); $event.stopPropagation();"
                                   id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}">
                               </div>
                               <!-- Max -->
@@ -493,7 +493,7 @@
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
                                 <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
-                                  (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}">
+                                  (keypress)="isNumber($event); $event.stopPropagation();" type="number" min="1" value="{{item.maxQuantity}}">
                               </div>
                             </div>
                             <!--end::Details-->

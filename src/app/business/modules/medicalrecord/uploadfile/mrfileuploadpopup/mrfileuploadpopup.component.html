@@ -1,7 +1,18 @@
 <span class="mat-dialog-title"> {{header_caption}} <button (click)="close()" class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></span>
-
+<div  class="col-md-12">
+  <ul class="info-lst serviceadd-info">
+          <li> <a class="pointlist"
+                      routerLink="/provider/license/addons">To upload  the file, your license package needs to  be Premium or higher.In order to upload file, you can purchase  'cloud storage'
+                      add-on from the License section.</a>
+          </li>
+          <!-- <li> <a class="pointlist"
+              (click)="enabledepartment()">To
+              complete the process Department feature needs to enabled to add a doctor.</a> 
+          </li> -->
+  </ul>
+</div>
 <mat-dialog-content>
-   
+
    
     <div *ngIf="item_pic.files">
         <ul class="galul">
