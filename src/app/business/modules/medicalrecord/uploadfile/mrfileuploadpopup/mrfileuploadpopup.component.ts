@@ -21,6 +21,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     select_image_cap = 'Click here to select the files';
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;
+    supported_files = 'Upload any files valid extensions jpg,png,jpeg,bmp,gif,webp,doc,docx,pdf,mov,mp4,mp3,mpeg,ogg';
     performUpload = new EventEmitter<any>();
     img_exists = false;
     item_pic = {
