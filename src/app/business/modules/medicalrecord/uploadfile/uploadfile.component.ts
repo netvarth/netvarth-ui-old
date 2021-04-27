@@ -214,7 +214,7 @@ export class UploadFileComponent implements OnInit {
               let type = '';
               type = file.type.split("/");
               console.log(type[0]);
-              if(type[0] == 'image' || type[0] == 'video' || type[0] =='audio'){
+              if(type[0] == 'video' || type[0] =='audio'){
                 this.mediafiles.push(file);
               } else {
                 this.docfiles.push(file);

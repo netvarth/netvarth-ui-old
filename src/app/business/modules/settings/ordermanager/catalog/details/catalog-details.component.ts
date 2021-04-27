@@ -1170,9 +1170,12 @@ console.log('hi submit');
         this.api_success = null;
     }
     isNumeric(evt) {
+       
         return this.sharedfunctionObj.isNumeric(evt);
+       
     }
     isNumber(evt) {
+        evt.stopPropagation();
         return this.sharedfunctionObj.isNumber(evt);
     }
    
