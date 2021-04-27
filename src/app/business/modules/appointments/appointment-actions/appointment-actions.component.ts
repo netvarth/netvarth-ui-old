@@ -106,15 +106,19 @@ export class AppointmentActionsComponent implements OnInit {
     }
     ngOnInit() {
         this.setMinMaxDate();
-        this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
-        if (!this.data.multiSelection) {
-            this.getPos();
-            this.setData();
+        if (this.data.type && this.data.type === 'reschedule') {
+            this.rescheduleActionClicked();
         } else {
-            this.showMsg = true;
-            this.apiloading = false;
+            this.getLabel();
+            if (!this.data.multiSelection) {
+                this.getPos();
+                this.setData();
+            } else {
+                this.showMsg = true;
+                this.apiloading = false;
+            }
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');

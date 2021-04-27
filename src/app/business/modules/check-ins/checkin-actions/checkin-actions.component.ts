@@ -120,8 +120,12 @@ export class CheckinActionsComponent implements OnInit {
     ngOnInit() {
         this.apiloading = true;
         this.setMinMaxDate();
-        this.getLabel();
         this.checkin = this.data.checkinData;
+        if (this.data.type && this.data.type === 'reschedule') {
+            this.rescheduleActionClicked();
+        } else {
+            this.getLabel();
+        }
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
@@ -134,7 +138,9 @@ export class CheckinActionsComponent implements OnInit {
             }
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
+            if (!this.data.type) {
             this.getPos();
+            }
         } else {
             this.showMsg = true;
             this.apiloading = false;

@@ -208,3 +208,8 @@
 .font-size-xs {
     font-size: 0.7rem;
 }
+
+.scroll-sec {
+    height: 200px;
+    overflow-y: auto;
+}

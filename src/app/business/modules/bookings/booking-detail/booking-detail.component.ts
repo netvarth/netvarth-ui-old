@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../app.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -45,7 +46,7 @@ customerId;
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private jaldeeTimeService: JaldeeTimeService,
-
+private sharedFunctions: SharedFunctions
   ) { 
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -53,6 +54,18 @@ customerId;
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
       console.log(this.bookingType)
+    });
+    
+    this.sharedFunctions.getMessage().subscribe((message) => {
+      switch (message.type) {
+        case 'reschedule':
+          if (this.bookingType === 'checkin') {
+            this.getWaitlistDetail();
+          } else{
+            this.getApptDetails();
+          }
+          break;
+      }
     });
   }
   
