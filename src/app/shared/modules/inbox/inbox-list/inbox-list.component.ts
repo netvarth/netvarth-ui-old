@@ -141,6 +141,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMsg = -1;
   }
   formatDateDisplay(dateStr) {
+    dateStr = JSON.parse(dateStr);
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
