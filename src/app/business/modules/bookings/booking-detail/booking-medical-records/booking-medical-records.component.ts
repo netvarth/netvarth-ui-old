@@ -29,4 +29,7 @@ export class BookingMedicalRecordsComponent implements OnInit {
     let bookingId = (mr.uuid) ? mr.uuid : 0;
     this.router.navigate(['provider', 'customers', mr.providerConsumer.id, mr.bookingType, bookingId, 'medicalrecord', mr.id]);
   }
+  gotoMrList() {
+    this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord', 0, 'list'], { queryParams: { 'calledfrom': 'list' } });
+  }
 }
