@@ -703,6 +703,7 @@ export const projectConstantsLocal = {
     'image/bmp',
     'image/gif',
     'image/webp',
+    'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/pdf',
     'video/quicktime',
