@@ -18,7 +18,7 @@
             <div class="pad-10">
               {{selectedNote.note}}
               <div class="disp-flex" *ngIf="selectedNote.attachment && selectedNote.attachment.length > 0">
-                <div class="pad-10" *ngFor="let img of selectedNote.attachment;let i=index">
+                <div class="pad-10 pointer-cursor" *ngFor="let img of selectedNote.attachment;let i=index">
                   <img src="assets/images/avatar5.png" (click)="openImage(i)">
                 </div>
               </div>

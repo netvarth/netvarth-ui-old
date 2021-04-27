@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -21,7 +22,8 @@ export class CustomerBookingDetailsComponent implements OnInit {
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     private wordProcessor: WordProcessor,
-    private sharedFunctions: SharedFunctions
+    private sharedFunctions: SharedFunctions,
+    private snackbarService: SnackbarService
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
@@ -52,8 +54,12 @@ export class CustomerBookingDetailsComponent implements OnInit {
   }
   savePrivateNote() {
     console.log(this.privateNote);
+    if (this.privateNote.trim() === '') {
+      this.snackbarService.openSnackBar('Please enter your note', { 'panelClass': 'snackbarerror' });
+      return;
+    }
     const dataToSend: FormData = new FormData();
-    dataToSend.append('message', this.privateNote.trim() || '');
+    dataToSend.append('message', this.privateNote.trim());
     // let i = 0;
     // if (this.selectedMessage) {
     //   for (const pic of this.selectedMessage.files) {
@@ -67,10 +73,11 @@ export class CustomerBookingDetailsComponent implements OnInit {
         dataToSend)
         .subscribe(
           () => {
+            this.privateNote = '';
             this.sharedFunctions.sendMessage({ type: 'addnote' });
           },
           error => {
-            this.wordProcessor.apiErrorAutoHide(this, error);
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     } else {
@@ -78,10 +85,11 @@ export class CustomerBookingDetailsComponent implements OnInit {
         dataToSend)
         .subscribe(
           () => {
+            this.privateNote = '';
             this.sharedFunctions.sendMessage({ type: 'addnote' });
           },
           error => {
-            this.wordProcessor.apiErrorAutoHide(this, error);
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     }

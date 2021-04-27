@@ -1,13 +1,9 @@
 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
   <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
     <div class="card-body p-0">
-      <!--begin::User-->
       <div class="d-flex align-items-end">
         <div class="d-flex align-items-center">
           <div class="d-flex flex-column p-2">
-            <!-- <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-md mb-0">Rahul Menon</a>
-              <span class="text-muted  font-size-xs font-weight-bold">24 years old</span>
-              <span class="text-muted  font-size-xs font-weight-bold">luca@festudios.com</span> -->
             <div class="mgn-up-10 stats-item"
               *ngIf="bookingType === 'checkin' && (waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName)">
               <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
@@ -62,7 +58,6 @@
     </div>
   </div>
   <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-    <!-- <form class="form" style="width: 100%;"> -->
     <div class="card-body p-3">
       <div class="form-group" *ngIf="waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
         <label class="text-muted font-p8 no-margin">{{waitlist_data.service.consumerNoteTitle}}</label>
@@ -76,6 +71,5 @@
           *ngIf="privateNote != ''">Save</button>
       </div>
     </div>
-    <!-- </form> -->
   </div>
 </div>

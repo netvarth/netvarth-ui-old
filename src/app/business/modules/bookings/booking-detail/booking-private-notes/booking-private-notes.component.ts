@@ -35,12 +35,11 @@ export class BookingPrivateNotesComponent implements OnInit {
     this.sharedFunctions.getMessage().subscribe((message) => {
       switch (message.type) {
         case 'addnote':
-
+          this.getWaitlistNotes();
           break;
       }
     });
   }
-
   ngOnInit(): void {
     this.getWaitlistNotes();
   }
