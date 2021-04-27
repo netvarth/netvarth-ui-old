@@ -75,9 +75,10 @@ export class ConsumerNotificationsComponent implements OnInit {
   orderAddNotificationSettings = { eventType: 'ORDERCONFIRM', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
   orderCancelNotificationSettings = { eventType: 'ORDERCANCEL', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
   orderStatusChangelNotificationSettings = { eventType: 'ORDERSTATUSCHANGE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
+  orderUpdateNotificationSettings={ eventType: 'ORDERUPDATE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false, 'ORDERCONFIRM': false, 'ORDERCANCEL': false, 'ORDERSTATUSCHANGE': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false, 'ORDERCONFIRM': false, 'ORDERCANCEL': false, 'ORDERSTATUSCHANGE': false,'ORDERUPDATE':false };
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
@@ -318,6 +319,9 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'ORDERSTATUSCHANGE' && notificationObj['resourceType'] === 'ORDER') {
         this.cSettings['ORDERSTATUSCHANGE'] = true;
         this.orderStatusChangelNotificationSettings = notificationObj;
+      }else if (notificationObj['eventType'] === 'ORDERUPDATE' && notificationObj['resourceType'] === 'ORDER') {
+        this.cSettings['ORDERUPDATE'] = true;
+        this.orderUpdateNotificationSettings = notificationObj;
       }
     });
   }
@@ -354,6 +358,8 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.orderCancelNotificationSettings[value] = event.checked;
       } else if (type === 'ORDERSTATUSCHANGE') {
         this.orderStatusChangelNotificationSettings[value] = event.checked;
+      }else if (type === 'ORDERUPDATE') {
+        this.orderUpdateNotificationSettings[value] = event.checked;
       } else if (type === 'DONATIONSERVICE') {
         this.donatAddNotificationSettings[value] = event.checked;
       }
@@ -411,6 +417,8 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.orderCancelNotificationSettings;
     } else if (type === 'ORDERSTATUSCHANGE') {
       activeInput = this.orderStatusChangelNotificationSettings;
+    }else if (type === 'ORDERUPDATE') {
+      activeInput = this.orderUpdateNotificationSettings;
     }
 
     if (this.cSettings[type]) {
