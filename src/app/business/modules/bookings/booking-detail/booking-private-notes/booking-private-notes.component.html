@@ -2,14 +2,35 @@
   <div class="card card-custom data-card">
     <div class="card-header bg-transparent">
       <div>Private Notes</div>
-      <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+      <!-- <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i> -->
     </div>
     <div class="card-body padding-tp-10 no-padding">
+    <div>
+      <div *ngFor="let note of providerNotes" (click)="selectNote(note)" data-toggle="modal"
+      data-target="#exampleModalCenter" class="row m-0">
+        <div class="inner-card rounded-sm">
+          <div>
+            <div class="inner-card-date">
+              10 - 12 - 2020
+            </div>
+            <div class="inner-card-text">
+              {{note.note}}
+            </div>
+            <!-- <div class="inner-card-text">
+              Root Canal
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!--end::Row-->
+    </div>
+    </div>
+    <!-- <div class="card-body padding-tp-10 no-padding">
       <div *ngFor="let note of providerNotes" (click)="selectNote(note)" data-toggle="modal"
         data-target="#exampleModalCenter">
         {{note.note}}
       </div>
-    </div>
+    </div> -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">

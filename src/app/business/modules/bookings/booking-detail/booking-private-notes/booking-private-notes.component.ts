@@ -6,7 +6,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 @Component({
   selector: 'app-booking-private-notes',
   templateUrl: './booking-private-notes.component.html',
-  styleUrls: ['./booking-private-notes.component.css']
+  styleUrls: ['./booking-private-notes.component.css','../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
 })
 export class BookingPrivateNotesComponent implements OnInit {
   providerNotes;
@@ -48,6 +48,7 @@ export class BookingPrivateNotesComponent implements OnInit {
       .subscribe(
         data => {
           this.providerNotes = data;
+          console.log(this.providerNotes)
         });
   }
   selectNote(note) {
