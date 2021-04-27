@@ -240,7 +240,7 @@ private sharedFunctions: SharedFunctions
           // if (this.waitlist_data.apptStatus !== 'blocked') {
           //   this.getWaitlistNotes(this.waitlist_data.uid);
           // }
-          this.getCheckInHistory(this.waitlist_data.uid);
+          this.getApptHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
@@ -317,6 +317,17 @@ private sharedFunctions: SharedFunctions
   }
   getCheckInHistory(uuid) {
     this.provider_services.getProviderWaitlistHistroy(uuid)
+      .subscribe(
+        data => {
+          this.waitlist_history = data;
+        },
+        () => {
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        }
+      );
+  }
+  getApptHistory(uuid) {
+    this.provider_services.getProviderAppointmentHistory(uuid)
       .subscribe(
         data => {
           this.waitlist_history = data;

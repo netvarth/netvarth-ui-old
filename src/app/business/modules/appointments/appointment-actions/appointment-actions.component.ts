@@ -109,7 +109,9 @@ export class AppointmentActionsComponent implements OnInit {
         this.apiloading = true;
         this.appt = this.data.checkinData;
         if (this.data.type && this.data.type === 'reschedule') {
+            this.setData();
             this.rescheduleActionClicked();
+            this.apiloading = false;
         } else {
             this.getLabel();
             if (!this.data.multiSelection) {
