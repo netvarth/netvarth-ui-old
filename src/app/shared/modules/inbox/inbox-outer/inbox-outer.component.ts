@@ -144,6 +144,7 @@ export class InboxOuterComponent implements OnInit {
     return a.value[a.value.length - 1]['timeStamp'] > b.value[b.value.length - 1]['timeStamp'] ? -1 : b.value[b.value.length - 1]['timeStamp'] > a.value[a.value.length - 1]['timeStamp'] ? 1 : 0;
   }
   formatDateDisplay(dateStr) {
+    dateStr = JSON.parse(dateStr);
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
