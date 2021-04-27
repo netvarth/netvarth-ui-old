@@ -1169,12 +1169,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.searchdetailserviceobj.getProviderLogo(post_provids)
         .subscribe(data => {
           this.providerLogos = data;
-          let index = 0;
           Object.keys(this.providerLogos).forEach(key => {
             if (this.providerLogos[key][0]) {
-              this.search_data.hits.hit[index].fields['bLogo'] = this.providerLogos[key][0].url;
+              const searchData = this.search_data.hits.hit.filter(data => data.id === key);
+              const indx = this.search_data.hits.hit.indexOf(searchData[0]);
+              this.search_data.hits.hit[indx].fields['bLogo'] = this.providerLogos[key][0].url;
             }
-            index++;
           });
         });
     }
