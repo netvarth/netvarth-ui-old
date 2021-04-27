@@ -20,8 +20,8 @@
           Start
         </button>
       </div>
-      <div>
-        <button *ngIf="showTeleserviceStart" type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
+      <div *ngIf="showTeleserviceStart">
+        <button  type="button" class="start-video-btn btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block"
         (click)="showCallingModes(waitlist_data)">
           <div class="action-box-sub">
             <span class="meet-icon"
@@ -43,7 +43,7 @@
       <div>
         <a *ngIf="showCall" class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1" (click)="callingWaitlist()">Stop</a>
         <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
-        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
+        class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1" (click)="rescheduleActionClicked()">Reschedule</a>
         <a *ngIf="showCancel" class="btn btn-danger btn-square lh-1 font-size-xs" (click)="changeWaitlistStatus('CANCEL')">
           Cancel
         </a>
@@ -128,6 +128,51 @@
         </a>
       </div>
     </div>
+  </div>
+</div>
+
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
+  <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+          aria-hidden="true"></i></button>
+</h1>
+<h4 style="margin-left: 25px;" *ngIf="action === 'reschedule'">Reschedule checkin for
+  {{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}} {{waitlist_data.waitlistingFor[0].lastName | capitalizeFirst}}
+</h4>
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'slotChange'">
+  Choose Date & Time
+  <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+          aria-hidden="true"></i></button>
+</h1>
+<div *ngIf="action === 'reschedule'" class="reschdle">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p>Service Provider : {{waitlist_data.providerAccount.businessName}} </p>
+          <p *ngIf="waitlist_data.service.deptName">Department : {{waitlist_data.service.deptName}} </p>
+          <p *ngIf="waitlist_data.provider">Pprovider : {{waitlist_data.provider.firstName}}
+              {{waitlist_data.provider.lastName}} </p>
+          <p>Location: {{waitlist_data.queue.location.place}}</p>
+          <p>Service :
+              <i *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                  class="fa meet-icon"></i>
+              <i *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                  class="fa zoom-icon"></i>
+              <i *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone'"
+                  class="fa phon-icon"></i>
+              <i *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'audioService'"
+                  class="fa wtsapaud-icon"></i>
+              <i *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'videoService'"
+                  class="fa wtsapvid-icon"></i>
+              {{waitlist_data.service.name}}
+          </p>
+          <p>Checkin Date/Time: {{waitlist_data.date | date: newDateFormat}},
+              [{{waitlist_data.queue.queueStartTime}}-{{waitlist_data.queue.queueEndTime}}]
+          </p>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 changelink"><span class="cs-btn bt3"
+              (click)="changeSlot()">Change Date & Time
+          </span></div>
+
   </div>
 </div>
   <!--end::Header-->

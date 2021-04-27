@@ -7,6 +7,10 @@ import { CheckinDetailsSendComponent } from '../../../check-ins/checkin-details-
 import { LocateCustomerComponent } from '../../../check-ins/locate-customer/locate-customer.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../../app.component';
+import * as moment from 'moment';
+import { SharedServices } from '../../../../../shared/services/shared-services';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-service-actions',
@@ -33,6 +37,27 @@ export class ServiceActionsComponent implements OnInit {
   showmrrx = false;
   trackDetail: any = [];
   customerMsg;
+  action = '';
+  activeDate;
+  checkin_date;
+  pastDate;
+  today;
+  location_id;
+  serv_id;
+  accountid;
+  queuejson: any = [];
+  queueQryExecuted = false;
+  sel_queue_id;
+  sel_queue_waitingmins;
+  sel_queue_servicetime = '';
+  sel_queue_name;
+  sel_queue_timecaption;
+  sel_queue_indx;
+  sel_queue_det;
+  sel_queue_personaahead = 0;
+  calc_mode;
+  availableDates: any = [];
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -41,11 +66,13 @@ export class ServiceActionsComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private snackbarService: SnackbarService,
+    public shared_services: SharedServices,
+    private dateTimeProcessor: DateTimeProcessor,
     public dialogRef: MatDialogRef<ServiceActionsComponent>
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
-      this.timeType = params.timetype;
+      this.timeType = JSON.parse(params.timetype);
     });
    }
 
@@ -54,6 +81,16 @@ export class ServiceActionsComponent implements OnInit {
   console.log(this.waitlist_data)
   console.log(this.bookingType)
   console.log(this.timeType)
+  this.location_id = this.waitlist_data.queue.location.id;
+  this.serv_id = this.waitlist_data.service.id;
+  this.accountid = this.waitlist_data.providerAccount.id;
+
+  if (this.timeType === 3) {
+    this.pastDate = this.waitlist_data.date;
+    this.checkin_date = moment(this.today, 'YYYY-MM-DD HH:mm').format();
+} else {
+    this.checkin_date = this.waitlist_data.date;
+}
 
   }
   setActions() {
@@ -312,7 +349,7 @@ showCallingModes(modes) {
             }
         };
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
-        this.dialogRef.close();
+        // this.dialogRef.close();
     }else if(this.bookingType == 'appointment'){
         const navigationExtras: NavigationExtras = {
             queryParams: {
@@ -321,7 +358,69 @@ showCallingModes(modes) {
             }
         };
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
-        this.dialogRef.close();
+        // this.dialogRef.close();
     }
 }
+ rescheduleActionClicked() {
+        this.action = 'reschedule';
+    }
+
+    changeSlot() {
+        this.action = 'slotChange';
+        // this.selectedTime = '';
+        this.activeDate = this.checkin_date;
+        this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+        this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
+    }
+
+    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+        // this.loading = true;
+        this.queuejson = [];
+        this.queueQryExecuted = false;
+        if (locid && servid) {
+            this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+                .subscribe(data => {
+                    this.queuejson = data;
+                    // this.loading = false;
+                    this.queueQryExecuted = true;
+                    if (this.queuejson.length > 0) {
+                        let selindx = 0;
+                        for (let i = 0; i < this.queuejson.length; i++) {
+                            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
+                                selindx = i;
+                            }
+                        }
+                        this.sel_queue_id = this.queuejson[selindx].id;
+                        this.sel_queue_indx = selindx;
+                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+                        this.sel_queue_name = this.queuejson[selindx].name;
+                        this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+                        this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
+
+                    } else {
+                        this.sel_queue_indx = -1;
+                        this.sel_queue_id = 0;
+                        this.sel_queue_waitingmins = 0;
+                        this.sel_queue_servicetime = '';
+                        this.sel_queue_name = '';
+                        this.sel_queue_timecaption = '';
+                        this.sel_queue_personaahead = 0;
+                    }
+                });
+        }
+    }
+    getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        if (locid && servid && accountid) {
+            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
+                });
+        }
+    }
 }
