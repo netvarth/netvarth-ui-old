@@ -9,13 +9,18 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 })
 export class BookingMedicalRecordsComponent implements OnInit {
   @Input() customerId;
+  @Input() waitlist_data;
   mrList: any = [];
   loading = true;
   constructor(private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
+    if ((this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
     this.getPatientMedicalRecords();
+    } else {
+      this.loading = false;
+    }
   }
   getPatientMedicalRecords() {
     this.provider_services.getPatientMedicalRecords(this.customerId)

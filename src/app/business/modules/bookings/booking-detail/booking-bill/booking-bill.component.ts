@@ -14,9 +14,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class BookingBillComponent implements OnInit {
 
   @Input() waitlist_data;
+  @Input() bookingType;
   bill_data: any = [];
-  bookingType;
   refund_value;
+  pos;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -31,10 +32,22 @@ export class BookingBillComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.bookingType);
     console.log(this.waitlist_data);
-    if ((this.bookingType == 'checkin' && this.waitlist_data.waitlistStatus != 'cancelled') ||
-      (this.bookingType == 'appointment' && this.waitlist_data.apptStatus != 'Cancelled')) {
-      this.getWaitlistBill();
+    if (this.bookingType === 'checkin') {
+      if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
+        this.getWaitlistBill();
+      }
+    } else {
+      if (this.pos && this.waitlist_data.apptStatus !== 'blocked' && ((this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected') || ((this.waitlist_data.apptStatus === 'Cancelled' || this.waitlist_data.apptStatus === 'Rejected') && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
+        this.getWaitlistBill();
+      }
     }
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    },
+      error => {
+      });
   }
   getWaitlistBill() {
     let uid;

@@ -39,6 +39,8 @@ uuid;
 customer;
 provider;
 customerId;
+domain;
+subdomain;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -86,6 +88,8 @@ private sharedFunctions: SharedFunctions
       this.pdtype = 1;
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.domain = this.userDet.sector;
+    this.subdomain = this.userDet.subSector;
     if (this.waitlist_id) {
       // this.getWaitlistDetail();
       // this.getProviderSettings();

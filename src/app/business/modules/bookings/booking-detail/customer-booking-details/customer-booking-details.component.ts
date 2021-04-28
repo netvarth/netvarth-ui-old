@@ -41,6 +41,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   getCustomerdetails(customerId) {
+    if (customerId) {
     const filter = { 'id-eq': customerId };
     this.provider_services.getProviderCustomers(filter)
       .subscribe(
@@ -51,6 +52,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
         () => {
         }
       );
+    }
   }
   savePrivateNote() {
     console.log(this.privateNote);
