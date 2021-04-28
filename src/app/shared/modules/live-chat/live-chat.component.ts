@@ -183,6 +183,21 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             networkQuality: { local: 1, remote: 1 }
         });
     }
+
+    unmuteVideo() {
+        this.twilioService.unmuteVideo();
+    }
+
+    muteVideo() {
+        this.twilioService.muteVideo();
+    }
+    muteAudio() {
+        this.twilioService.muteAudio();
+    }
+    unmuteAudio() {
+        this.twilioService.unmuteAudio();
+    }
+
     /**
      * Mute Local Audio
      */

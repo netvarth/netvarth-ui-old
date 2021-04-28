@@ -14144,3 +14144,9 @@ padding-left: 15px !important;
    display: inline-block;
    padding: 5px;
   }
+  .jvideo-icon-mgm5 {
+    margin-bottom: -5px !important;
+}
+.jvideo-icon-mg5 {
+  margin-bottom: 5px !important;
+}

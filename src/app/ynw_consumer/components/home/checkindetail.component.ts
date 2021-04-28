@@ -122,6 +122,11 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
               this.iconClass = 'fa phon-icon';
               break;
             }
+            // Added by Mani
+            case 'VideoCall': {
+              this.iconClass = 'fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5';
+              break;
+            }
           }
         }
         this.showtoken = this.waitlist.showToken;

@@ -114,6 +114,11 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
               }
               break;
             }
+            // Added by Mani
+            case 'VideoCall': {
+              this.iconClass = 'fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5';
+              break;
+            }
             case 'Phone': {
               this.iconClass = 'fa phon-icon';
               break;

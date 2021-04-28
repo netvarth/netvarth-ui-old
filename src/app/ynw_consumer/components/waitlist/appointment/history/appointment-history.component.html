@@ -40,13 +40,15 @@
                                                 {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
                                             <td data-title="Service" class="td6">
                                                 <span class="service-icon"
-                                                    *ngIf="his_wait.service.serviceType == 'virtualService'">
+                                                    *ngIf="his_wait.service.serviceType === 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
                                                         *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>    
+                                                    <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                                                     <i class="fa wtsapaud-icon"
                                                         *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='audioService'"></i>
                                                     <i class="fa wtsapvid-icon"

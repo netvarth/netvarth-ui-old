@@ -82,7 +82,7 @@ export class WlCardComponent implements OnInit {
     if (this.booking.hasAttachment) {
       this.showViewAttachBtn = true;
     }
-    if (this.type !== 'future' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0
+    if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0
       && this.booking.service.virtualCallingModes[0].callingMode === 'VideoCall'
       && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn')) {
         this.showJoinJaldeeVideoBtn = true;
@@ -92,12 +92,12 @@ export class WlCardComponent implements OnInit {
           this.videoBtnCaption = 'Re-join Video Consultation';
         }
     }
-    if(this.type!=='future' && this.booking.service.serviceType === 'virtualService' &&
+    if(this.type!=='future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' &&
     this.booking.service.virtualCallingModes.length > 0  && 
     (this.booking.service.virtualCallingModes[0].callingMode === 'Zoom' || this.booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
     && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn')) {
       this.showJoinJaldeeVideoBtn = false;
-      this.showJoinJaldeeVideoBtn = true;
+      this.showJoinOtherVideoBtn = true;
       this.videoBtnCaption = 'Join Video Consultation';
       if (this.booking.videoCallMessage && this.booking.videoCallMessage === 'Call in progress') {
         this.videoBtnCaption = 'Re-join Video Consultation';

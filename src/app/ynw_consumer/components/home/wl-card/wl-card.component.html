@@ -85,6 +85,8 @@
                                 *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                             <i class="fa zoom-icon"
                                 *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                             <i class="fa wtsapaud-icon"
                                 *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
                             <i class="fa wtsapvid-icon"
@@ -155,15 +157,13 @@
     <mat-grid-tile-footer>
         <div class="">
             <span *ngIf="showJoinJaldeeVideoBtn" class="mgn-rt-5">
-                <button [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'" mat-flat-button
+                <button  mat-flat-button
                     class="btns" (click)="cardActionPerformed('wl', 'joinVideo', booking, $event)">{{videoBtnCaption}}</button>
             </span>
 
-            <span *ngIf="showJoinOtherVideoBtn" class="mgn-rt-5">
-                <a [href]="booking.videoCallButton && booking.videoCallButton==='DISABLED' && booking.service.virtualCallingModes[0].value"
-                    target="_blank">
-                    <button [disabled]="booking.videoCallButton && booking.videoCallButton==='DISABLED'" mat-flat-button
-                        class="btns">{{videoBtnCaption}}</button>
+            <span *ngIf="showJoinOtherVideoBtn" class="mgn-rt-5" (click)="stopprop($event)">
+                <a [href]="booking.service.virtualCallingModes[0].value" class="pointer-cursor" target="_blank">
+                    <button mat-flat-button class="btns">{{videoBtnCaption}}</button>
                 </a>
             </span>
             <button *ngIf="showPayBtn" mat-flat-button class="btns rupee-font mgn-rt-5" (click)="cardActionPerformed('wl', 'viewBill', booking, $event)">Pay
