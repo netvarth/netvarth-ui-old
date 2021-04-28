@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-booking-private-notes',
@@ -12,6 +13,8 @@ export class BookingPrivateNotesComponent implements OnInit {
   providerNotes;
   @Input() uuid;
   selectedNote;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)

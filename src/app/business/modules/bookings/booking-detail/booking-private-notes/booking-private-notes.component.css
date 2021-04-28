@@ -54,10 +54,10 @@
     border-radius: 0.3rem !important;
 }
 
-.card-body .inner-card > div {
+/* .card-body .inner-card > div {
     border-left: 3px solid #dadada;
     padding-left: 8px !important;
-}
+} */
 
 .card-body .inner-card .inner-card-date {
     margin-top: 0.1rem !important;
