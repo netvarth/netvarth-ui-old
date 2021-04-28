@@ -12,6 +12,7 @@ export class QuestionnaireDetailsComponent implements OnInit {
   questionnaire: any = [];
   loading = true;
   selectedQuestion;
+  service_list: any = [];
   constructor(private providerservices: ProviderServices,
     private activated_route: ActivatedRoute,
     private location: Location) { }
@@ -20,6 +21,7 @@ export class QuestionnaireDetailsComponent implements OnInit {
     this.activated_route.params.subscribe(params => {
       this.getQuestionnaire(params.id);
     });
+    this.getServices();
   }
   getQuestionnaire(id) {
     this.providerservices.getQuestionnairebyId(id).subscribe(data => {
@@ -32,5 +34,16 @@ export class QuestionnaireDetailsComponent implements OnInit {
   }
   selectQuesstion(question) {
     this.selectedQuestion = question;
+  }
+  getServices() {
+    this.providerservices.getProviderServices()
+      .subscribe(
+        data => {
+          this.service_list = data;
+        });
+  }
+  getServiceName(transactionId) {
+    const filteredService = this.service_list.filter(service => service.id === transactionId);
+    return filteredService[0].name;
   }
 }

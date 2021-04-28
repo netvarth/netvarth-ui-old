@@ -1992,9 +1992,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
-        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
-        }
         if (!this.questionAnswers) {
             this.questionAnswers = {
                 answers: {
@@ -2006,8 +2003,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
-                    this.bookStep++;
-                    this.saveCheckin();
+                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                    } else {
+                        this.bookStep++;
+                        this.saveCheckin();
+                    }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
