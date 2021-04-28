@@ -12,6 +12,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 export class BookingPrivateNotesComponent implements OnInit {
   providerNotes;
   @Input() uuid;
+  @Input() waitlist_data;
   selectedNote;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
@@ -44,7 +45,9 @@ export class BookingPrivateNotesComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.getWaitlistNotes();
+    if ((this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
+      this.getWaitlistNotes();
+    }
   }
   getWaitlistNotes() {
     this.provider_services.getProviderWaitlistNotesnew(this.uuid)
