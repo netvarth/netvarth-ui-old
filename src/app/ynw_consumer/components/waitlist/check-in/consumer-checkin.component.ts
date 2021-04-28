@@ -1820,15 +1820,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     goToStep(type) {
         if (type === 'next') {
             if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
-                if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                    this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.bookStep === 2) {
+                        this.validateQuestionnaire();
+                    } else {
+                        this.bookStep++;
+                    }
                 } else {
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        if (this.bookStep === 2) {
-                            this.validateQuestionnaire();
-                        } else {
-                            this.bookStep++;
-                        }
+                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                     } else {
                         this.bookStep = 3;
                     }
@@ -1993,18 +1993,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     validateQuestionnaire() {
         if (!this.questionAnswers) {
-          this.questionAnswers = {
-            answers: {
-              answerLine: [],
-              questionnaireId: this.questionnaireList.id
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
             }
-          }
         }
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
-                    this.bookStep++;
-                    this.saveCheckin();
+                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                    } else {
+                        this.bookStep++;
+                        this.saveCheckin();
+                    }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

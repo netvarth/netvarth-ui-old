@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -572,6 +572,7 @@ export class ProviderCheckinComponent implements OnInit {
             virtualArray[this.virtualServicemode] = this.virtualServicenumber;
             post_data['virtualService'] = virtualArray;
         }
+        console.log(post_data);
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
@@ -856,7 +857,9 @@ export class ProviderCheckinComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
+                    
                         this.wtsapmode = this.customer_data.phoneNo;
+                        console.log('whatsappmoe..'+this.wtsapmode);
                     }
                 }
             }
@@ -1132,8 +1135,11 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                if (this.countryCode) {
-                    const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                if (this.countryCode ) {
+                    let unChangedPhnoCountryCode='91';
+                    if(this.countryCode.split('+')[1]!==undefined){
+                        unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    }
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
                 }
             } else {
@@ -1199,7 +1205,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
-
+ console.log(JSON.stringify(post_Data));
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             post_Data['ignorePrePayment'] = true;
@@ -1221,6 +1227,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     addWaitlistBlock(post_Data) {
+        console.log('data'+post_Data);
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {

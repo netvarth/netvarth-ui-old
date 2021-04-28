@@ -647,6 +647,9 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
+    if (this.source === 'qnrDetails') {
+      return true;
+    }
   }
   onButtonBeforeHook() { }
   onButtonAfterHook() { }

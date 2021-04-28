@@ -20,6 +20,10 @@
                         <div class="grey">Type</div>
                         <div class="bold">{{questionnaire.transactionType}}</div>
                     </div>
+                    <div class="item" *ngIf="questionnaire.transactionType === 'SERVICE' && questionnaire.transactionId">
+                        <div class="grey">Service</div>
+                        <div class="bold">{{getServiceName(questionnaire.transactionId)}}</div>
+                    </div>
                     <div class="item">
                         <div class="grey">Channel</div>
                         <div class="bold">{{questionnaire.channel}}</div>
