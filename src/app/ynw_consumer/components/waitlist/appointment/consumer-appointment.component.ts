@@ -219,6 +219,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selectedDate;
     private subs = new SubSink();
     questionnaireLoaded = false;
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
+    jcreditamount: any;
+    remainingadvanceamount;
+    amounttopay: any;
+    wallet: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -689,8 +697,24 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+        }
         if (!this.is_wtsap_empty) {
             if (type) {
+                console.log('check');
+                console.log(this.jcashamount);
+                console.log(this.checkJcash);
+                console.log(this.paymentDetails.amountRequiredNow);
+                if(this.jcashamount && this.checkJcash){
+                    console.log('avai');
+                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit ,this.paymentDetails.amountRequiredNow )
+                      .subscribe(data => {
+                          this.remainingadvanceamount = data;
+                          console.log(data);
+                    });
+                }
                 this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addApptAdvancePayment(post_Data);
@@ -1651,6 +1675,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
+                this.getJaldeeCashandCredit();
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
             },
@@ -1658,14 +1683,29 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
+    getJaldeeCashandCredit() {
+        this.shared_services.getJaldeeCashandJcredit()
+          .subscribe(data => {
+              this.checkJcash = true
+              this.jaldeecash = data;
+              this.jcashamount = this.jaldeecash.jCashAmt;
+              this.jcreditamount = this.jaldeecash.creditAmt;
+        });
+    }
     payuPayment() {
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
     makeFailedPayment(paymentMode) {
+        console.log(this.remainingadvanceamount);
+        if(this.remainingadvanceamount > 0){
+           this.amounttopay = this.remainingadvanceamount
+        } else {
+           this.amounttopay = this.paymentDetails.amountRequiredNow
+        }
         this.waitlistDetails = {
-            'amount': this.paymentDetails.amountRequiredNow,
+            'amount':  this.amounttopay,
             'paymentMode': null,
             'uuid': this.trackUuid,
             'accountId': this.account_id,
@@ -1675,30 +1715,143 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
-            .subscribe((pData: any) => {
-                this.pGateway = pData.paymentGateway;
-                if (this.pGateway === 'RAZORPAY') {
+        if(this.remainingadvanceamount == 0 && this.checkJcash) {
+            console.log('zero');
+               const postData = {
+                        'amountToPay': this.paymentDetails.amountRequiredNow,
+                        'accountId': this.account_id,
+                        'uuid': this.trackUuid,
+                        'paymentPurpose': 'prePayment',
+                       //  'paymentRefId': pData.orderId,
+                        'isJcashUsed': true,
+                        'isreditUsed': false
+                       };
+                       console.log(postData);
+                       this.shared_services.PayByJaldeewallet(postData)
+                       .subscribe(data => {
+                        this.wallet =data;
+                        if(this.wallet == true){
+                            setTimeout(() => {
+                                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                            }, 500);
+                        //  let multiple;
+                        //  if (this.uuidList.length > 1) {
+                        //      multiple = true;
+                        //  } else {
+                        //      multiple = false;
+                        //  }
+                        //  setTimeout(() => {
+                        //      this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                        //  }, 500);
+                        }
+                        console.log(data);
+   
+                     },
+                     error => {
+                       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                   });              
+   }
+   else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+    console.log('high');
+     this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+       .subscribe((pData: any) => {
+           this.pGateway = pData.paymentGateway;
+           if (this.pGateway === 'RAZORPAY') {
+              console.log(this.remainingadvanceamount);
+              console.log(this.account_id);
+                       console.log('amounttopaygreater');
+                       const postData = {
+                         'amountToPay': this.paymentDetails.amountRequiredNow,
+                         'accountId': this.account_id,
+                         'uuid': this.trackUuid,
+                         'paymentPurpose': 'prePayment',
+                         'paymentRefId': pData.orderId,
+                         'isJcashUsed': true,
+                         'isreditUsed': false
+                        };
+                        console.log(postData);
+                        this.shared_services.PayByJaldeewallet(postData)
+                        .subscribe(data => {
+                            console.log(data);
+                            console.log(this.remainingadvanceamount);
+                             this.paywithRazorpay(pData);
+                      },
+                      error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+           } else {
+               if (pData['response']) {
+                   this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                   setTimeout(() => {
+                       if (paymentMode === 'DC') {
+                           this.document.getElementById('payuform').submit();
+                       } else {
+                           this.document.getElementById('paytmform').submit();
+                       }
+                   }, 2000);
+               } else {
+                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+               }
+           }
+       },
+           error => {
+               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+           });
+   }
+    else {
+        console.log('nothing');
+    this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+        .subscribe((pData: any) => {
+            this.pGateway = pData.paymentGateway;
+            if (this.pGateway === 'RAZORPAY') {
                     this.paywithRazorpay(pData);
+            } else {
+                if (pData['response']) {
+                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                    setTimeout(() => {
+                        if (paymentMode === 'DC') {
+                            this.document.getElementById('payuform').submit();
+                        } else {
+                            this.document.getElementById('paytmform').submit();
+                        }
+                    }, 2000);
                 } else {
-                    if (pData['response']) {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        setTimeout(() => {
-                            if (paymentMode === 'DC') {
-                                this.document.getElementById('payuform').submit();
-                            } else {
-                                this.document.getElementById('paytmform').submit();
-                            }
-                        }, 2000);
-                    } else {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                    }
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                 }
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            }
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+        }
+
+
+        // this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+        //     .subscribe((pData: any) => {
+        //         this.pGateway = pData.paymentGateway;
+        //         if (this.pGateway === 'RAZORPAY') {
+        //             this.paywithRazorpay(pData);
+        //         } else {
+        //             if (pData['response']) {
+        //                 this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+        //                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+        //                 setTimeout(() => {
+        //                     if (paymentMode === 'DC') {
+        //                         this.document.getElementById('payuform').submit();
+        //                     } else {
+        //                         this.document.getElementById('paytmform').submit();
+        //                     }
+        //                 }, 2000);
+        //             } else {
+        //                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+        //             }
+        //         }
+        //     },
+        //         error => {
+        //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //         });
     }
     paywithRazorpay(pData: any) {
         this.prefillmodel.name = pData.consumerName;

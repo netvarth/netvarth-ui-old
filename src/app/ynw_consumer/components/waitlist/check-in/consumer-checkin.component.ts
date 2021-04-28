@@ -200,6 +200,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     jcreditamount: any;
     remainingadvanceamount;
     amounttopay: any;
+    wallet: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1930,6 +1931,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                        console.log(postData);
                        this.shared_services.PayByJaldeewallet(postData)
                        .subscribe(data => {
+                           this.wallet =data;
+                           if(this.wallet == true){
+                            let multiple;
+                            if (this.uuidList.length > 1) {
+                                multiple = true;
+                            } else {
+                                multiple = false;
+                            }
+                            setTimeout(() => {
+                                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                            }, 500);
+                           }
                            console.log(data);
                      },
                      error => {

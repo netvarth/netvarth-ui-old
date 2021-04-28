@@ -870,7 +870,7 @@
                                                             class="icon-location" matTooltip="Click to navigate">
                                                         </a></td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td width="48%" align="right">Service</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>
@@ -889,7 +889,7 @@
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td width="48%" align="right">
                                                         Appointment for</td>
@@ -916,8 +916,25 @@
                                             </tbody>
                                         </table>
                                         <div class="containerAppt textcenter">
-                                            <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div>
-                                            <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
+                                            <!-- <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div> -->
+                                       <div  class="mgn-bt-5">
+                                            <span> Appointment For : </span>                                               
+                                            <span  *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                            <i class="fa phon-icon"
+                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                            <i class="fa meet-icon"
+                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                            <i class="fa zoom-icon"
+                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                            <i class="fa wtsapaud-icon"
+                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
+                                            <i class="fa wtsapvid-icon"
+                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
+                                        </span>
+                                        <span>{{sel_ser_det.name}}</span>
+                                    </div>
+
+                                            <div class="mgn-bt-5" *ngIf="selectedApptTime">
                                                 <span *ngIf="!isFuturedate">Today,
                                                 </span>
                                                 <span *ngIf="isFuturedate">
@@ -926,32 +943,41 @@
                                                 <span>{{getSingleTime(selectedApptTime['time'])}}</span>
                                             </div>
                                         </div>
-                                        <div class="pay-section"
+                                        
+                                        <div class="containerpayment"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
-                                            <div>
+                                            <!-- <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
                                                 </span>
-                                            </div>
-                                            <div class="bold">
-                                                Payment required now <span
+                                            </div> -->
+                                            <div class="prepayment">
+                                                Payment required now : &nbsp; <span
                                                     class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class=""
+                                            <div class="cancelpolicy"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div class="select-pay"> Payment option</div>
+                                                <!-- <div class="select-pay"> Payment option</div>
                                                 <div class="">
                                                     <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="paytm-icon"></span> -->
-                                                </div>
+                                                    <span class="paytm-icon"></span>
+                                                </div> -->
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <a data-toggle="modal" data-target="#exampleModal"
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div>
+
+                                            <div class="jaldeecredit">
+                                                <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                                  Use Jaldee cash balance : Rs{{jcashamount}}
+                                              </div>
+                                              <div class="creditleft">
+                                                  Balance amount can be paid by other payment methods 
+                                              </div>
 
                                             <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -1006,7 +1032,7 @@
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>
