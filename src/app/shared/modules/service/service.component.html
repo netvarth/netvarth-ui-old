@@ -264,8 +264,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           User specific
         </mat-checkbox>
         <mat-form-field class="example-full-width" *ngIf="userspecific && users_list.length >= 1">
-          <mat-select [(value)]="selectedUser" placeholder="Select user" #userlist
-            (selectionChange)="selectUserHandler(userlist.value)">
+          <mat-select [(value)]="selectedUser" placeholder="Select user" #userlist>
             <mat-option *ngFor="let usr of users_list" [value]="usr.id">
               {{usr.firstName}} {{usr.lastName}}
             </mat-option>
