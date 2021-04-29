@@ -414,6 +414,7 @@
 }
 
 .section.section2 > div:nth-child(1) .column {
+    width: 30% !important;
     max-width: 350px !important;
     margin: 0 15px !important;
 }
@@ -511,6 +512,7 @@
     .section.section2 > div:nth-child(1) .column {
         padding-bottom: 30px !important;
         max-width: 300px !important;
+        width: 100% !important;
     }
 
     .section.section2 > div:nth-child(1) .column .card {
