@@ -613,7 +613,4 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }, 2000);
   }
-  gotoEnquiry() {
-    this.router.navigate(['provider/enquiry']);
-  }
 }

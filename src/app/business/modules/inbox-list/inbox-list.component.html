@@ -1,7 +1,7 @@
 <section class="">
     <div class="title-gb no-padding">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            Inbox
+            Messages
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>
@@ -24,10 +24,6 @@
                         <div class="d-flex flex-row" *ngIf="messages.length>0">
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                                 <div class="card card-custom">
-                                    <div class="pad-10">
-                                        <button mat-flat-button class="mgn-rt-10 normal-btn width-100"
-                                            (click)="gotoEnquiry()">Enquiry</button>
-                                    </div>
                                     <div class="top-buttons"
                                         *ngIf="userDet && userDet.accountType === 'BRANCH' && users.length > 0 && userWithMsgCount > 1">
                                         <button mat-flat-button class="mgn-rt-10" (click)="changemsgDisplayType('all')"
@@ -161,7 +157,7 @@
                                                             </div>
                                                         </div>
                                                         <div [innerHTML]="msg.msg | nl2br" #inmsgId
-                                                            class="selmsg text-left text-dark-50"></div>
+                                                            class="selmsg text-left text-dark-75"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
                                                             <ng-container
@@ -202,7 +198,7 @@
                                                             </div>
                                                         </div>
                                                         <div [innerHTML]="msg.msg | nl2br" #outmsgId
-                                                            class="selmsg text-dark-50">
+                                                            class="selmsg text-dark-75">
                                                         </div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
