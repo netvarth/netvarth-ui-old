@@ -25,8 +25,6 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
@@ -283,7 +281,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   accountEncId: string;
   userEncId: string;
   locId;
-  bsModalRef: BsModalRef;
+  // bsModalRef: BsModalRef;
   qrdialogRef: any;
   wndw_path = projectConstants.PATH;
   elementType: 'url' | 'canvas' | 'img' = 'url';
@@ -308,7 +306,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     public wordProcessor: WordProcessor,
     private domainConfigService: DomainConfigGenerator,
-    private modalService: BsModalService,
+    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor
   ) {
@@ -1902,26 +1900,26 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       };
     }
 
-    const initialState = {
-      data: servData
-    };
+    // const initialState = {
+    //   data: servData
+    // };
 
-    this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-      initialState,
-      class: 'commonpopupmainclass popup-class specialclass serv-detail-modal',
-      backdrop: "static"
-    });
+    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
+    //   initialState,
+    //   class: 'commonpopupmainclass popup-class specialclass serv-detail-modal',
+    //   backdrop: "static"
+    // });
 
-    $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
+    // $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
 
-    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
           disableClose: true,
           data: servData
         });
         this.servicedialogRef.afterClosed().subscribe(() => {
-        }); */
+        });
 
   }
   getTerminologyTerm(term) {

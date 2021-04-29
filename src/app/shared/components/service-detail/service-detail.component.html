@@ -29,7 +29,7 @@
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button> -->
         </h1>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -55,9 +55,6 @@
                         </div>
                     </li>
                 </ul>
-                <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-                    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
             </div>
     
             <div class="outer">
@@ -163,3 +160,6 @@
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
     <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
     </app-form-success-display>
+    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

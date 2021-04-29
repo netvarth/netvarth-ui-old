@@ -25,8 +25,6 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
@@ -285,7 +283,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountEncId: string;
   userEncId: string;
 
-  bsModalRef: BsModalRef;
+  // bsModalRef: BsModalRef;
   nonfirstCouponCount=0;
   activeUser: any;
   checkinProviderList: any=[];
@@ -308,7 +306,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
-    private modalService: BsModalService,
+    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor
   ) {
@@ -428,8 +426,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           resolve(id);
         },
         error => {
-
-          resolve(encId);
+          if (error.status === 404) {
+            _this.routerobj.navigate(['/not-found']);
+          }
+          reject();
         }
       );
     });
@@ -2437,26 +2437,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       };
     }
 
-    const initialState = {
-      data: servData
-    };
+    // const initialState = {
+    //   data: servData
+    // };
 
-    this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-      initialState,
-      class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
-      backdrop: "static"
-    });
+    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
+    //   initialState,
+    //   class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
+    //   backdrop: "static"
+    // });
 
-    $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
+    // $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
 
-    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-          width: '40%',
+       this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+          width: '50%',
           panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
           disableClose: true,
           data: servData
         });
         this.servicedialogRef.afterClosed().subscribe(() => {
-        }); */
+        }); 
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
