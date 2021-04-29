@@ -8000,7 +8000,7 @@ hr.wide-separator-line {
   color: inherit;
   background: none;
   border: none;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .pcheckin-owl .owl-item {
