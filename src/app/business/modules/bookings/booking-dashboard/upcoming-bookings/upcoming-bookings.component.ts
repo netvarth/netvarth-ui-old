@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 export class UpcomingBookingsComponent implements OnInit {
   nextWaitlist: any = [];
   nextAppt: any = [];
-  constructor(private provider_services: ProviderServices) { }
+  loading = true;
+  constructor(private provider_services: ProviderServices,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getTodayWatilists();
@@ -26,6 +29,9 @@ export class UpcomingBookingsComponent implements OnInit {
             this.nextWaitlist = data[0];
             console.log(this.nextWaitlist);
           }
+          setTimeout(() => {
+            this.loading = false;
+          }, 100);
         });
   }
   getTodayAppts() {
@@ -39,6 +45,14 @@ export class UpcomingBookingsComponent implements OnInit {
             this.nextAppt = data[0];
             console.log(this.nextAppt);
           }
+          setTimeout(() => {
+            this.loading = false;
+          }, 100);
         });
+  }
+  gotoDetails(type) {
+    const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : this.nextAppt.uid;
+    console.log(uid);
+    // this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
   }
 }
