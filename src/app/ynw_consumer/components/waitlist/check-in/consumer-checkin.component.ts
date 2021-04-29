@@ -734,10 +734,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit ,this.paymentDetails.amountRequiredNow )
                       .subscribe(data => {
                           this.remainingadvanceamount = data;
+                          this.addCheckInConsumer(post_Data);
                           console.log(data);
                     });
                 }
-                this.addCheckInConsumer(post_Data);
+                else {
+                    this.addCheckInConsumer(post_Data);
+                }
+            
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
@@ -1900,7 +1904,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     makeFailedPayment(paymentMode) {
         console.log(this.remainingadvanceamount);
-        if(this.remainingadvanceamount > 0){
+        if(this.remainingadvanceamount > 0 && this.checkJcash){
            this.amounttopay = this.remainingadvanceamount
         } else {
            this.amounttopay = this.paymentDetails.amountRequiredNow

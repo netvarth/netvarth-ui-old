@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 //  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
@@ -26,7 +26,11 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
-
+import { DomSanitizer } from '@angular/platform-browser';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
+import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
+import { RazorpayService } from '../../../../shared/services/razorpay.service';
 
 @Component({
   selector: 'app-checkout',
@@ -169,6 +173,20 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   private subs = new SubSink();
   couponlist: any = [];
   pcouponlist: any = [];
+  checkJcash = false;
+  checkJcredit = false;
+  jaldeecash: any;
+  jcashamount: any;
+  jcreditamount: any;
+  remainingadvanceamount;
+  amounttopay: any;
+  wallet: any;
+  orderDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
+  pGateway: any;
+  payment_popup = null;
+  razorModel: Razorpaymodel;
+  livetrack: any;
+  prepayAmount: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -182,7 +200,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     public fed_service: FormMessageDisplayService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    public _sanitizer: DomSanitizer,
+    private wordProcessor: WordProcessor,
+    @Inject(DOCUMENT) public document,
+    public prefillmodel: RazorpayprefillModel,
+    public razorpayService: RazorpayService,
   ) {
 
 
@@ -265,6 +288,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.orderType = this.catalog_details.orderType;
       this.loading = false;
       this.gets3curl();
+      if(this.catalog_details.advanceAmount >0 && this.orderType === 'SHOPPINGLIST'){
+        this.getJaldeeCashandCredit();
+      }
       if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
       }
@@ -422,12 +448,23 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           }
-       
+          if(this.cartDetails.advanceAmount > 0){
+            this.getJaldeeCashandCredit();
+          }
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  getJaldeeCashandCredit() {
+    this.shared_services.getJaldeeCashandJcredit()
+      .subscribe(data => {
+          this.checkJcash = true
+          this.jaldeecash = data;
+          this.jcashamount = this.jaldeecash.jCashAmt;
+          this.jcreditamount = this.jaldeecash.creditAmt;
+    });
   }
   gets3curl() {
     console.log('getS3url');
@@ -812,6 +849,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderlistNote,
             'coupons': this.selected_coupons
           };
+          if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+          }          
           this.confirmOrder(post_Data);
         } else {
           const post_Data = {
@@ -836,6 +877,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderNote,
             'coupons': this.selected_coupons
           };
+          if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+          }
           this.confirmOrder(post_Data);
         }
       }
@@ -872,6 +917,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderlistNote,
             'coupons': this.selected_coupons
           };
+          if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+          }
           this.confirmOrder(post_Data);
         } else {
           const post_Data = {
@@ -895,6 +944,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderNote,
             'coupons': this.selected_coupons
           };
+          if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+          }
           this.confirmOrder(post_Data);
         }
       }
@@ -931,6 +984,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   confirmOrder(post_Data) {
+    console.log(post_Data);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -950,30 +1004,48 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           const retData = data;
           this.checkoutDisabled = false;
-          let prepayAmount;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
             if (key === '_prepaymentAmount') {
-              prepayAmount = retData['_prepaymentAmount'];
+              this.prepayAmount = retData['_prepaymentAmount'];
             } else {
               this.trackUuid = retData[key];
               uuidList.push(retData[key]);
             }
           });
 
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              account_id: this.account_id,
-              type_check: 'order_prepayment',
-              prepayment: prepayAmount,
-              uuid: this.trackUuid
-            }
-          };
+          // const navigationExtras: NavigationExtras = {
+          //   queryParams: {
+          //     account_id: this.account_id,
+          //     type_check: 'order_prepayment',
+          //     prepayment: prepayAmount,
+          //     uuid: this.trackUuid
+          //   }
+          // };
 
-          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
-                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+                console.log('check');
+                console.log(this.jcashamount);
+                console.log(this.checkJcash);
+                console.log(this.catalog_details.advanceAmount);
+                if(this.jcashamount && this.checkJcash && this.catalog_details.advanceAmount>0){
+                  console.log(this.catalog_details.advanceAmount);
+                
+                    console.log('avai');
+                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit ,this.catalog_details.advanceAmount)
+                      .subscribe(data => {
+                          this.remainingadvanceamount = data;
+                          this.payuPayment();
+                          console.log(data);
+                    });
+                }
+                else{
+                  this.payuPayment();
+                }
+
+                // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
             this.orderList = [];
@@ -998,29 +1070,45 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           const retData = data;
           this.checkoutDisabled = false;
-          let prepayAmount;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
             if (key === '_prepaymentAmount') {
-              prepayAmount = retData['_prepaymentAmount'];
+              this.prepayAmount = retData['_prepaymentAmount'];
             } else {
               this.trackUuid = retData[key];
               uuidList.push(retData[key]);
             }
           });
 
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              account_id: this.account_id,
-              type_check: 'order_prepayment',
-              prepayment: prepayAmount,
-              uuid: this.trackUuid
-            }
-          };
-          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+          // const navigationExtras: NavigationExtras = {
+          //   queryParams: {
+          //     account_id: this.account_id,
+          //     type_check: 'order_prepayment',
+          //     prepayment: prepayAmount,
+          //     uuid: this.trackUuid
+          //   }
+          // };
+          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
               .subscribe(res => {
-                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+              console.log('check');
+              console.log(this.jcashamount);
+              console.log(this.checkJcash);
+              console.log(this.remainingadvanceamount);
+              if(this.jcashamount && this.checkJcash){
+                console.log(this.cartDetails.advanceAmount);
+                  console.log('avai');
+                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit , this.cartDetails.advanceAmount)
+                    .subscribe(data => {
+                        this.remainingadvanceamount = data;
+                        this.payuPayment();
+                        console.log(data);
+                  });
+              }
+              else{
+                this.payuPayment();
+              }
+               // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
             this.orderList = [];
@@ -1475,5 +1563,161 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
+  payuPayment() {
+    let paymentWay;
+    paymentWay = 'DC';
+    this.makeFailedPayment(paymentWay);
+  }
+  makeFailedPayment(paymentMode) {
+    console.log(this.orderType);
+    console.log(this.remainingadvanceamount);
+    if(this.orderType === 'SHOPPINGLIST'){
+      if(this.remainingadvanceamount > 0 && this.checkJcash ){
+        this.amounttopay = this.remainingadvanceamount;
+     } else {
+        this.amounttopay = this.catalog_details.advanceAmount;
+     }
+    }
+    else{
+      if(this.remainingadvanceamount > 0 && this.checkJcash ){
+        this.amounttopay = this.remainingadvanceamount
+     } else {
+        this.amounttopay = this.cartDetails.advanceAmount;
+     }
+    }
+    // this.amounttopay = this.cartDetails.advanceAmount;
+      this.orderDetails = {
+      'amount': this.amounttopay,
+      'paymentMode': null,
+      'uuid':  this.trackUuid,
+      'accountId': this.account_id,
+      'purpose': 'prePayment'
+  };
+  this.orderDetails.paymentMode = paymentMode;
+  this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
+  this.lStorageService.setitemonLocalStorage('acid', this.account_id);
+  this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
+  console.log(this.orderDetails);
+  if(this.remainingadvanceamount == 0 && this.checkJcash) {
+    console.log('zero');
+       const postData = {
+                'amountToPay': this.prepayAmount,
+                'accountId': this.account_id,
+                'uuid': this.trackUuid,
+                'paymentPurpose': 'prePayment',
+               //  'paymentRefId': pData.orderId,
+                'isJcashUsed': true,
+                'isreditUsed': false
+               };
+               console.log(postData);
+               this.shared_services.PayByJaldeewallet(postData)
+               .subscribe(data => {
+                   this.wallet =data;
+                   if(this.wallet == true){
+                    this.orderList = [];
+                    this.lStorageService.removeitemfromLocalStorage('order_sp');
+                    this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+                    this.lStorageService.removeitemfromLocalStorage('order_spId');
+                    this.lStorageService.removeitemfromLocalStorage('order');
+                    this.snackbarService.openSnackBar('Your Order placed successfully');
+                    this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+                   }
+                   console.log(data);
+             },
+             error => {
+               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+           });
+          }
+
+          else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+            console.log('high');
+             this.shared_services.consumerPayment(this.orderDetails)
+               .subscribe((pData: any) => {
+                   this.pGateway = pData.paymentGateway;
+                   if (this.pGateway === 'RAZORPAY') {
+                      console.log(this.remainingadvanceamount);
+                      console.log(this.account_id);
+                               console.log('amounttopaygreater');
+                               const postData = {
+                                 'amountToPay': this.prepayAmount,
+                                 'accountId': this.account_id,
+                                 'uuid': this.trackUuid,
+                                 'paymentPurpose': 'prePayment',
+                                 'paymentRefId': pData.orderId,
+                                 'isJcashUsed': true,
+                                 'isreditUsed': false
+                                };
+                                console.log(postData);
+                                this.shared_services.PayByJaldeewallet(postData)
+                                .subscribe(data => {
+                                    console.log(data);
+                                    console.log(this.remainingadvanceamount);
+                                     this.paywithRazorpay(pData);
+                              },
+                              error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            });
+                   } else {
+                       if (pData['response']) {
+                           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                           setTimeout(() => {
+                               if (paymentMode === 'DC') {
+                                   this.document.getElementById('payuform').submit();
+                               } else {
+                                   this.document.getElementById('paytmform').submit();
+                               }
+                           }, 2000);
+                       } else {
+                           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                       }
+                   }
+               },
+                   error => {
+                       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                   });
+           }
+           else {
+            console.log('nothing');
+            this.shared_services.consumerPayment(this.orderDetails)
+                .subscribe((pData: any) => {
+                    this.pGateway = pData.paymentGateway;
+                    if (this.pGateway === 'RAZORPAY') {
+                        this.paywithRazorpay(pData);
+                    } else {
+                        if (pData['response']) {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                if (paymentMode === 'DC') {
+                                    this.document.getElementById('payuform').submit();
+                                } else {
+                                    this.document.getElementById('paytmform').submit();
+                                }
+                            }, 2000);
+                        } else {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                        }
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        
+                    });
+    
+            }
+  }
+  paywithRazorpay(pData: any) {
+    this.prefillmodel.name = pData.consumerName;
+    this.prefillmodel.email = pData.ConsumerEmail;
+    this.prefillmodel.contact = pData.consumerPhoneumber;
+    this.razorModel = new Razorpaymodel(this.prefillmodel);
+    this.razorModel.key = pData.razorpayId;
+    this.razorModel.amount = pData.amount;
+    this.razorModel.order_id = pData.orderId;
+    this.razorModel.name = pData.providerName;
+    this.razorModel.description = pData.description;
+    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack,this.account_id,  this.cartDetails.advanceAmount);
+}
 }
 
