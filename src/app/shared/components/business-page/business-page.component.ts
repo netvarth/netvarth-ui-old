@@ -675,7 +675,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.provider_bussiness_id = this.businessjson.id;
       if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
         if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-          this.bLogo = this.businessjson.logo.url + '?' + new Date();
+          this.bLogo = this.businessjson.logo.url;
         }
       } else {
         // this.bLogo = '';
@@ -917,7 +917,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.provider_bussiness_id = this.businessjson.id;
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-        this.bLogo = this.businessjson.logo.url + '?' + new Date();
+        this.bLogo = this.businessjson.logo.url;
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {

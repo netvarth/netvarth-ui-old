@@ -6,6 +6,7 @@ import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from '../../services/meet-service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { SubSink } from 'subsink';
+import { TeleBookingService } from '../../services/tele-bookings-service';
 @Component({
     selector: 'app-live-chat',
     templateUrl: './live-chat.component.html',
@@ -35,8 +36,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     type: any;
     status: string;
     refreshTime = 10;
+    booking;
     subs = new SubSink();
     source;
+    account;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -45,7 +48,8 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         public rendererFactory: RendererFactory2,
         private snackbarService: SnackbarService,
         private router: Router,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private teleService: TeleBookingService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.renderer = rendererFactory.createRenderer(null, null);
@@ -57,22 +61,51 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             (qParams) => {
                 if (qParams['src']) {
                     this.source = qParams['src'];
-                }  
+                }
+                if (qParams['account']) {
+                    this.account = qParams['account'];
+                }
             } 
         )
         this.subs.sink = this.activateroute.params.subscribe(
             (params) => {
                 this.uuid = params['id'];
-                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);                             
+                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
+                this.getTeleBooking(this.uuid, this.type, this.account);                       
             }
         );
     }
+    
+    getTeleBooking(uuid, type, account?) {
+        const _this = this;
+        // return new Promise(function (resolve, reject) {
+        if (type === 'appt') {
+            _this.teleService.getTeleBookingFromAppt(uuid, 'consumer', account).then(
+                (booking: any) => {
+                    _this.booking = booking;
+                }, (error) => {
+                    console.log(error);
+                }
+            )
+        } else {
+            _this.teleService.getTeleBookingFromCheckIn(uuid, 'consumer', account).then(
+                (booking: any) => {
+                    _this.booking = booking;
+                }, (error) => {
+                    console.log(error);
+                }
+            )
+        }
+        // });
+    }
+
     /**
      * Calls after the view initialization
      */
     ngAfterViewInit() {
         this.twilioService.previewContainer = this.previewContainer;
         this.twilioService.previewMedia();
+
         this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
             this.isProviderReady();
         });
@@ -90,10 +123,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         _this.subs.sink = _this.meetService.isProviderReady(post_data)
             .subscribe(data => {
                if(data){
-                   console.log(data);
                    _this.meetObj = data;
                    _this.loading = false;
                    _this.providerReady = true;
+                //    'Ready..'
                    _this.status = 'Ready..'
                 if (_this.cronHandle) {
                     _this.cronHandle.unsubscribe();  
@@ -102,7 +135,12 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     _this.loading = false;
                     _this.providerReady = false;
                     _this.meetObj = null;
-                    _this.status = 'Waiting for the provider...'
+                    if (this.booking.userName) {
+                        _this.status = 'Waiting for "' + this.booking.userName + '" to start';
+                    } else {
+                        _this.status = 'Waiting for "' + this.booking.businessName + '" to start'
+                    }
+                    
                }
         }, error => {
             _this.loading = false;
@@ -158,7 +196,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Method to start the video
      */
     connect(tokenObj) {
-        console.log(tokenObj.tokenId);
+        // console.log(tokenObj.tokenId);
         // this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
             
@@ -232,7 +270,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Method to enter to a room. which will invoke the connect method
      */
     joinRoom() {
-        console.log(this.meetObj);
+        // console.log(this.meetObj);
         this.twilioService.localVideo = this.localVideo;
         this.twilioService.remoteVideo = this.remoteVideo;
         this.connect(this.meetObj);

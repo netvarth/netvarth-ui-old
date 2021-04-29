@@ -169,18 +169,30 @@ export class TeleBookingService {
         const url = 'consumer/waitlist/meeting/' + countrycode + '/' + phonenumber;
         return this.servicemeta.httpGet(url);
     }
-    getTeleCheckinById(uuid) {
-        const url = 'provider/waitlist/' + uuid;
+    getTeleCheckinById(uuid, source, accountId?) {
+        let params = '';
+        if (source === 'consumer') {
+            params = '?account=' + accountId;
+        }
+        const url = source + '/waitlist/' + uuid + params;
         return this.servicemeta.httpGet(url);
     }
-    getTeleApptById(uuid) {
-        const url = 'provider/appointment/' + uuid;
+    // getCheckinByConsumerUUID(uuid, accountid) {
+    //     const url = 'consumer/waitlist/' + uuid + '?account=' + accountid;
+    //     return this.servicemeta.httpGet(url);
+    //   }
+    getTeleApptById(uuid, source, accountId?) {
+        let params = '';
+        if (source === 'consumer') {
+            params = '?account=' + accountId ;
+        }
+        const url = source + '/appointment/' + uuid + params;
         return this.servicemeta.httpGet(url);
     }
 
-    getTeleBookingFromCheckIn(uid) {
+    getTeleBookingFromCheckIn(uid, source, accountId?) {
         return new Promise((resolve, reject) => {
-            this.getTeleCheckinById(uid).subscribe(
+            this.getTeleCheckinById(uid, source, accountId).subscribe(
                 (bookingObj: any) => {
                     let token = '';
                     if (bookingObj.showToken) {
@@ -247,9 +259,9 @@ export class TeleBookingService {
         });
 
     }
-    getTeleBookingFromAppt(uid) {
+    getTeleBookingFromAppt(uid, source, accountId?) {
         return new Promise((resolve, reject) => {
-            this.getTeleApptById(uid).subscribe(
+            this.getTeleApptById(uid, source, accountId).subscribe(
                 (bookingObj: any) => {
                     let busName = "";
                     let busId = ""

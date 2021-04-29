@@ -72,8 +72,8 @@ export class TwilioService {
         const _this = this;
         _this.loadDevices().then(
             (videoDevices: any) => {
-                console.log("Video Devices");
-                console.log(videoDevices);
+                // console.log("Video Devices");
+                // console.log(videoDevices);
                 _this.camDeviceCount = videoDevices.length;
                 if (_this.camDeviceCount > 0) {
                     _this.selectedVideoId = _this.cam1Device;
@@ -83,11 +83,11 @@ export class TwilioService {
                     }).then(localTracks => {
                         _this.previewTracks = localTracks;
                         _this.previewTracksClone = localTracks.slice();
-                        console.log("Preview Tracks");
+                        // console.log("Preview Tracks");
                         console.log(_this.previewTracks);
-                        console.log(_this.previewTracksClone);
+                        // console.log(_this.previewTracksClone);
                         localTracks.forEach(localTrack => {
-                            console.log(localTrack);
+                            // console.log(localTrack);
                             _this.addPreviewTrackToDom(localTrack);
                         })
                     });
@@ -101,10 +101,10 @@ export class TwilioService {
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'video') {
                 // localTrack.enable();
-                console.log("Unmute Video");
-                console.log(localTrack);
+                // console.log("Unmute Video");
+                // console.log(localTrack);
                  _this.previewTracksClone.push(localTrack);
-                 console.log(_this.previewTracksClone);
+                //  console.log(_this.previewTracksClone);
                 _this.addPreviewTrackToDom(localTrack);
             }
             
@@ -116,11 +116,11 @@ export class TwilioService {
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'video') {
                 _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
-                console.log("muteVideo Video");
-                console.log(localTrack);
-                console.log(_this.previewTracksClone);
+                // console.log("muteVideo Video");
+                // console.log(localTrack);
+                // console.log(_this.previewTracksClone);
                 _this.removePreviewTrackToDom(localTrack);
-                console.log(_this.previewTracksClone);
+                // console.log(_this.previewTracksClone);
             }
         });
         this.video = false;
@@ -141,9 +141,9 @@ export class TwilioService {
             if(localTrack.kind === 'audio') {
                 // localTrack.disable();
                 _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
-                console.log("unmuteAudio");
-                console.log(localTrack);
-                console.log(_this.previewTracksClone);
+                // console.log("unmuteAudio");
+                // console.log(localTrack);
+                // console.log(_this.previewTracksClone);
             }
         });
         // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
@@ -156,10 +156,10 @@ export class TwilioService {
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'audio') {
                 // localTrack.enable();
-                console.log("unmuteAudio");
-                console.log(localTrack);
+                // console.log("unmuteAudio");
+                // console.log(localTrack);
                  _this.previewTracksClone.push(localTrack);
-                 console.log(_this.previewTracksClone);
+                //  console.log(_this.previewTracksClone);
             }
         });
         // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
@@ -200,7 +200,7 @@ export class TwilioService {
     }
     switchCamera(mode?) {
         const _this = this;
-        console.log(mode);
+        // console.log(mode);
         if (_this.selectedVideoId === _this.cam1Device) {
             _this.selectedVideoId = _this.cam2Device;
         } else {
@@ -230,7 +230,7 @@ export class TwilioService {
         const _this = this;
         console.log("In Connect Room");
         console.log(_this.previewTracks);
-        console.log(_this.previewTracksClone);
+        // console.log(_this.previewTracksClone);
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
         }

@@ -73,7 +73,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         const _this = this;
         // return new Promise(function (resolve, reject) {
         if (type === 'appt') {
-            _this.teleService.getTeleBookingFromAppt(uuid).then(
+            _this.teleService.getTeleBookingFromAppt(uuid, 'provider').then(
                 (booking: any) => {
                     _this.booking = booking;
                 }, (error) => {
@@ -81,7 +81,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 }
             )
         } else {
-            _this.teleService.getTeleBookingFromCheckIn(uuid).then(
+            _this.teleService.getTeleBookingFromCheckIn(uuid, 'provider').then(
                 (booking: any) => {
                     _this.booking = booking;
                 }, (error) => {
@@ -147,14 +147,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                     _this.loading = false;
                     _this.meetObj = data;
                     _this.consumerReady = true;
-                    console.log(this.meetObj);
+                    // console.log(this.meetObj);
                     _this.status = 'Ready..';
                     _this.subs.unsubscribe();
                 } else {
                     _this.loading = false;
                     _this.consumerReady = false;
                     _this.meetObj = null;
-                    _this.status = 'Waiting for the consumer...'
+                    // _this.status = 'Waiting for the consumer...'
+                    _this.status = 'Waiting for "' + this.booking.bookingFor + '" to start';
                 }
             }, error => {
                 _this.loading = false;
@@ -208,7 +209,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * 
      */
     openChat() {
-        alert('chat');
         const _this = this;
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
@@ -238,7 +238,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     joinRoom() {
         if (this.consumerReady) {
-            console.log(this.meetObj);
             this.twilioService.localVideo = this.localVideo;
             this.twilioService.remoteVideo = this.remoteVideo;
             this.connect(this.meetObj);
@@ -249,7 +248,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * @param tokenObj Token object which hold the key and room name
      */
     connect(tokenObj) {
-        console.log(tokenObj.tokenId);
+        console.log("Token Id:" + tokenObj.tokenId);
         // this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
