@@ -439,12 +439,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
-  showBookingDetails(booking) {
+  showBookingDetails(booking, type?) {
     if (booking.apptStatus) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.uid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
@@ -452,7 +453,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);

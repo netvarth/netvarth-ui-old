@@ -67,6 +67,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   fav_providers_id_list: any[];
   wthistory;
   questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
+  type;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -84,6 +85,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       (qParams) => {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
+        this.type = qParams.type;
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
