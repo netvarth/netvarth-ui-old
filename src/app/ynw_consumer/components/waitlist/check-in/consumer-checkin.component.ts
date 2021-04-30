@@ -899,8 +899,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (derror === '') {
             const post_data = {
                 'userProfile': {
-                    'firstName': this.addmemberobj.fname,
-                    'lastName': this.addmemberobj.lname
+                    'firstName': this.addmemberobj.fname.trim(),
+                    'lastName': this.addmemberobj.lname.trim()
                 }
             };
             if (this.addmemberobj.mobile !== '') {
