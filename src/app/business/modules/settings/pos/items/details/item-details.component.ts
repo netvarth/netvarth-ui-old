@@ -46,7 +46,7 @@ export class ItemDetailsComponent implements OnInit {
         files: [],
         base64: null
     };
-    taxpercentage = 0;
+    taxpercentage ;
     price = 0;
     holdtaxable = false;
     file_error_msg = '';
@@ -391,7 +391,7 @@ export class ItemDetailsComponent implements OnInit {
     }
     handleTaxablechange() {
         this.resetApiErrors();
-        if (this.taxpercentage <= 0) {
+        if (!this.taxpercentage) {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
             setTimeout(() => {
                 this.api_error = null;
@@ -603,7 +603,7 @@ export class ItemDetailsComponent implements OnInit {
             .subscribe(data => {
                 if (data) {
                     this.taxDetails = data;
-                    this.taxpercentage = this.taxDetails.taxPercentage;
+                    this.taxpercentage = this.taxDetails.enableTax;
                 }
             });
         this.api_loading = false;

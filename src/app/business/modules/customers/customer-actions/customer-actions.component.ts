@@ -55,7 +55,6 @@ export class CustomerActionsComponent implements OnInit {
     }
     medicalRecord() {
         this.closeDialog();
-        console.log(this.customerDetails);
         const customerDetails = this.customerDetails;
         const customerId = customerDetails[0].id;
         const mrId = 0;
@@ -76,7 +75,6 @@ export class CustomerActionsComponent implements OnInit {
             }
         });
         mrdialogRef.afterClosed().subscribe(result => {
-            console.log(JSON.stringify(result));
             if (result.type === 'prescription') {
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';
@@ -100,10 +98,10 @@ export class CustomerActionsComponent implements OnInit {
     editCustomer() {
         this.closeDialog();
         const navigationExtras: NavigationExtras = {
-          queryParams: { action: 'edit', id: this.customerDetails[0].id }
+            queryParams: { action: 'edit', id: this.customerDetails[0].id }
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
-      }
+    }
     closeDialog() {
         this.dialogRef.close();
     }

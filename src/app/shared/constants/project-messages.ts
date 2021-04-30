@@ -532,6 +532,7 @@ export const Messages = {
   'VERIFIED_CAP': 'Verified',
   // App-shared-modules-change-mobile
   'MOBILE_CAP': 'Mobile #',
+  'CHANGEMOBILE_CAP': 'Change Mobile #',
 
   // App-shared-modules-change-password
   'OLD_PASSWORD_CAP': 'Old Password *',
@@ -1568,6 +1569,7 @@ export const Messages = {
   'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
   'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the doctor with whom you would like to consult.',
   //attachment send
-  'ATTACHMENT_SEND':'Attachment sent successfully'
+  'ATTACHMENT_SEND':'Attachment sent successfully',
+  'QUESTIONNAIRE_CONSUMER_HEADING': 'More info'
 };
 

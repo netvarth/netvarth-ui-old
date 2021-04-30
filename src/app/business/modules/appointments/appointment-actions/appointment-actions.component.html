@@ -16,6 +16,14 @@
         </p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+        <div class="action-box pointer-cursor"
+            *ngIf="(appt.apptStatus=='Confirmed' || appt.apptStatus == 'Arrived') && appt.questionnaire && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0"
+            (click)="gotoQuestionnaire(appt)">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">{{customer_label | capitalizeFirst}} info</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="addCustomerDetails()">
             <div class="action-box-sub">
                 <span class="add-appt-icon"></span>
@@ -39,7 +47,8 @@
                 <div class="icon-text">Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="!buttonClicked && changeWaitlistStatus('Started')">
+        <div class="action-box pointer-cursor" *ngIf="showStart"
+            (click)="!buttonClicked && changeWaitlistStatus('Started')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Start Service</div>
@@ -64,13 +73,15 @@
             </div>
 
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="!buttonClicked && changeWaitlistStatus('Cancelled')">
+        <div class="action-box pointer-cursor" *ngIf="showCancel"
+            (click)="!buttonClicked && changeWaitlistStatus('Cancelled')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel appointment</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="!buttonClicked && changeWaitlistStatus('Arrived')">
+        <div class="action-box pointer-cursor" *ngIf="showArrived"
+            (click)="!buttonClicked && changeWaitlistStatus('Arrived')">
             <div class="action-box-sub">
                 <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
@@ -83,7 +94,8 @@
                 <div class="icon-text">Complete</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="!buttonClicked && changeWaitlistStatus('Confirmed')">
+        <div class="action-box pointer-cursor" *ngIf="showUndo"
+            (click)="!buttonClicked && changeWaitlistStatus('Confirmed')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Status change</div>

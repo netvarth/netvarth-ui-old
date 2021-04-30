@@ -827,6 +827,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.board_count = layout_list.length;
         });
   }
+  getServiceName(serviceName) {
+    let name='';
+  if(serviceName.length>20){
+   name=serviceName.substring(0,20) +'...';
+  }else{
+    name = serviceName;
+  }
+  return name;
+  }
   setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(
@@ -3185,7 +3194,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
-    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: checkin.service.id, waitlistMode: checkin.waitlistMode } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

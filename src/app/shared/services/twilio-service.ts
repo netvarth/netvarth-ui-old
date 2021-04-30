@@ -23,6 +23,7 @@ export class TwilioService {
     selectedVideoId: string;
     cam2Device: string;
     activeRoom;
+    previewTracksClone;
 
     constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
@@ -71,8 +72,8 @@ export class TwilioService {
         const _this = this;
         _this.loadDevices().then(
             (videoDevices: any) => {
-                console.log("Video Devices");
-                console.log(videoDevices);
+                // console.log("Video Devices");
+                // console.log(videoDevices);
                 _this.camDeviceCount = videoDevices.length;
                 if (_this.camDeviceCount > 0) {
                     _this.selectedVideoId = _this.cam1Device;
@@ -81,9 +82,12 @@ export class TwilioService {
                         video: { deviceId: _this.selectedVideoId }
                     }).then(localTracks => {
                         _this.previewTracks = localTracks;
-                        console.log("Preview Tracks");
+                        _this.previewTracksClone = localTracks.slice();
+                        // console.log("Preview Tracks");
                         console.log(_this.previewTracks);
+                        // console.log(_this.previewTracksClone);
                         localTracks.forEach(localTrack => {
+                            // console.log(localTrack);
                             _this.addPreviewTrackToDom(localTrack);
                         })
                     });
@@ -92,6 +96,77 @@ export class TwilioService {
         );
     }
 
+    unmuteVideo() {
+        const _this = this;
+        _this.previewTracks.forEach(localTrack => {
+            if(localTrack.kind === 'video') {
+                // localTrack.enable();
+                // console.log("Unmute Video");
+                // console.log(localTrack);
+                 _this.previewTracksClone.push(localTrack);
+                //  console.log(_this.previewTracksClone);
+                _this.addPreviewTrackToDom(localTrack);
+            }
+            
+        });
+        this.video = true;
+    }
+    muteVideo() {
+        const _this = this;
+        _this.previewTracks.forEach(localTrack => {
+            if(localTrack.kind === 'video') {
+                _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
+                // console.log("muteVideo Video");
+                // console.log(localTrack);
+                // console.log(_this.previewTracksClone);
+                _this.removePreviewTrackToDom(localTrack);
+                // console.log(_this.previewTracksClone);
+            }
+        });
+        this.video = false;
+    }
+    removePreviewTrackToDom(localTrack) {
+        const _this=this;
+        if (_this.previewContainer) {
+            const localElement = _this.previewContainer.nativeElement;
+            while (localElement.firstChild) {
+                localElement.removeChild(localElement.firstChild);
+            }
+        }
+       
+    }
+    muteAudio() {
+        const _this = this;
+        _this.previewTracks.forEach(localTrack => {
+            if(localTrack.kind === 'audio') {
+                // localTrack.disable();
+                _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
+                // console.log("unmuteAudio");
+                // console.log(localTrack);
+                // console.log(_this.previewTracksClone);
+            }
+        });
+        // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
+        //     audioTrack.track.disable();
+        // });
+        this.microphone = false;
+    }
+    unmuteAudio() {
+        const _this = this;
+        _this.previewTracks.forEach(localTrack => {
+            if(localTrack.kind === 'audio') {
+                // localTrack.enable();
+                // console.log("unmuteAudio");
+                // console.log(localTrack);
+                 _this.previewTracksClone.push(localTrack);
+                //  console.log(_this.previewTracksClone);
+            }
+        });
+        // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
+        //     audioTrack.track.enable();
+        // });
+        this.microphone = true;
+    }
     addPreviewTrackToDom(previewTrack) {
         const _this = this;
         const element = previewTrack.attach();
@@ -125,7 +200,7 @@ export class TwilioService {
     }
     switchCamera(mode?) {
         const _this = this;
-        console.log(mode);
+        // console.log(mode);
         if (_this.selectedVideoId === _this.cam1Device) {
             _this.selectedVideoId = _this.cam2Device;
         } else {
@@ -155,9 +230,11 @@ export class TwilioService {
         const _this = this;
         console.log("In Connect Room");
         console.log(_this.previewTracks);
+        // console.log(_this.previewTracksClone);
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
         }
+        // previewTracksClone
         console.log("Options");
         console.log(options);
         
@@ -236,6 +313,12 @@ export class TwilioService {
     roomJoined(room) {
         const _this = this;
         // Attach the Tracks of the Room's Participants.
+        if (!_this.video) {
+            _this.disableVideo();
+        }
+        if (!_this.microphone) {
+            _this.mute();
+        }
         room.participants.forEach((participant) => {
             console.log("Already in Room: '" + participant.identity + "'");
             _this.attachParticipantTracks(participant, _this.remoteVideo.nativeElement, room);

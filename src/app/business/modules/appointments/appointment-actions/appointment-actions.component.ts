@@ -330,7 +330,6 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeWaitlistStatus(action) {
         if (action !== 'Rejected') {
-            // this.dialogRef.close();
             this.buttonClicked = true;
         }
         this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
@@ -414,18 +413,7 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     deleteLabel() {
-        // this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
-        //     this.dialogRef.close('reload');
-        // },
-        //     error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     });
         let ids = [];
-        // if (this.data.multiSelection) {
-        //     ids = this.checkinsByLabel[label];
-        // } else {
-        //     ids.push(this.appt.uid);
-        // }
         if (this.data.multiSelection) {
             for (let label of this.labelsforRemove) {
                 ids = ids.concat(this.checkinsByLabel[label]);
@@ -458,13 +446,10 @@ export class AppointmentActionsComponent implements OnInit {
         });
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
-                // setTimeout(() => {
-                // this.labels();
                 this.labelMap = new Object();
                 this.labelMap[data.label] = data.value;
                 this.addLabel();
                 this.getDisplayname(data.label);
-                // }, 500);
             }
             this.getLabel();
         });
@@ -477,12 +462,6 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     addLabel() {
-        // this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
-        //     this.dialogRef.close('reload');
-        // },
-        //     error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     });
         const ids = [];
         if (this.data.multiSelection) {
             for (const checkin of this.appt) {
@@ -597,7 +576,6 @@ export class AppointmentActionsComponent implements OnInit {
             for (const scheduleSlots of this.schedules) {
                 this.availableSlots = scheduleSlots.availableSlots;
                 for (const freslot of this.availableSlots) {
-                    // if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.selectedTime) {
                     if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                         freslot['scheduleId'] = scheduleSlots['scheduleId'];
                         freslot['displayTime'] = this.getSingleTime(freslot.time);
@@ -606,7 +584,6 @@ export class AppointmentActionsComponent implements OnInit {
                 }
             }
             this.apptTime = this.freeSlots[0];
-            // this.timeSelected(this.freeSlots[0]);
         });
     }
     disableMinus() {
@@ -790,8 +767,7 @@ export class AppointmentActionsComponent implements OnInit {
                 virtualServicenumber = this.appt.virtualService[key];
             });
         }
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
-        // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: this.appt.uid } });
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
     }
     unBlockAppt() {
         this.provider_services.deleteAppointmentBlock(this.appt.uid)
@@ -827,7 +803,6 @@ export class AppointmentActionsComponent implements OnInit {
             disableClose: true,
             data: {
                 source_id: 'attachment',
-                // accountId:this.checkin.providerAccount.id,
                 uid: this.appt.uid
             }
         });
@@ -842,5 +817,15 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.labelsforRemove.length > 0) {
             this.deleteLabel();
         }
+    }
+    gotoQuestionnaire(booking) {
+        this.dialogRef.close();
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                uuid: booking.uid,
+                type: 'proAppt'
+            }
+        };
+        this.router.navigate(['provider', 'appointments', 'questionnaire'], navigationExtras);
     }
 }

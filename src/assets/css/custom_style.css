@@ -8000,7 +8000,7 @@ hr.wide-separator-line {
   color: inherit;
   background: none;
   border: none;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .pcheckin-owl .owl-item {
@@ -10598,6 +10598,22 @@ a {
   position: relative;
   padding-right: 1px;
   width: 24px;
+}
+
+.jaldeevideo-icon {
+  content: url(../images/teleservice/jaldeevideo.svg);
+  top: 3px;
+  position: relative;
+  padding-right: 1px;
+  width: 100%;
+}
+.jvideo-icon {
+  content: url(../images/teleservice/video-icon-small.png);
+  position: relative;
+  padding-right: 1px;
+}
+.jvideo-icon-s {
+  width: 20px !important;
 }
 
 .phon-icon {
@@ -13949,9 +13965,6 @@ width: 40px !important;
   font-size: 1rem;
   margin-bottom: 5px;
 }
-.quest-answ-box {
-  margin-bottom: 20px;
-}
 .header-fixed {
   margin-left: 265px;
   display: block;    
@@ -14031,9 +14044,10 @@ width: 40px !important;
 }
 .booking-img {
     content: url(../images/bookingwindow.png);
-    width: 400px;
+    width: inherit;
     margin: auto;
     margin-top: 50px;
+    padding: 20px;
 }
 .wizard-nav {
   justify-content: center;
@@ -14102,4 +14116,40 @@ padding-left: 15px !important;
     line-height: inherit;
     transition: all .3s;
     border-radius: 3px;
+}
+@media(max-width: 600px) {
+  .hiddencontent {
+    display: none;
+  }
+}
+.uploadcard{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+    padding: 20px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 5%) !important;
+    border-radius: 5px;
+    background: #fff;
+    background-clip: padding-box;
+    border: none !important;
+    width: 100%;
+  }
+  .uploaddiv{
+   display: inline-block;
+   padding: 5px;
+  }
+  .jvideo-icon-mgm5 {
+    margin-bottom: -5px !important;
+}
+.jvideo-icon-mg5 {
+  margin-bottom: 5px !important;
+}
+.pad-bt-0 {
+  padding-bottom: 0px !important;
 }

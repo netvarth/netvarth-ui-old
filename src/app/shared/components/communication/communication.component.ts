@@ -98,10 +98,13 @@ export class CommunicationComponent implements OnInit {
       console.log(order);
       this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
         .then(
-          () => { },
+          () => { 
+            this.dialogRef.close('reloadlist');
+          },
           () => { }
+          
         );
-      this.dialogRef.close();
+     // this.dialogRef.close('reloadlist');
     }
   }
   addWaitlistMessage(waitlist, type?) {
@@ -130,9 +133,9 @@ export class CommunicationComponent implements OnInit {
       data: pass_ob
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.dialogRef.close();
-      }
+     // if (result === 'reloadlist') {
+        this.dialogRef.close('reloadlist');
+     // }
     });
   }
 

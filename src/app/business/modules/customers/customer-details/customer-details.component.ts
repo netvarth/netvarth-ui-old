@@ -96,7 +96,7 @@ export class CustomerDetailComponent implements OnInit {
     todayorderVisitDetailsArray: any = [];
     futureorderVisitDetailsArray: any = [];
     showMoreFuture = false;
-    showMoreToday = false;    
+    showMoreToday = false;
     showMoreHistory = false;
     showMoreorderFuture = false;
     showMoreorderToday = false;
@@ -105,6 +105,8 @@ export class CustomerDetailComponent implements OnInit {
     customernotes = '';
     subdomain;
     showToken;
+    questionnaireList: any = [];
+    showQuestionnaire = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -113,7 +115,7 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router,
         private wordProcessor: WordProcessor,
-        private dateTimeProcessor:DateTimeProcessor,
+        private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService) {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
@@ -183,6 +185,7 @@ export class CustomerDetailComponent implements OnInit {
         });
     }
     ngOnInit() {
+        this.getCustomerQnr();
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
@@ -256,7 +259,6 @@ export class CustomerDetailComponent implements OnInit {
                 this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
                 this.futureorderVisitDetailsArray = data.futureOrders;
                 this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
-                console.log(this.ordervisitDetails);
                 this.loading = false;
             }
         );
@@ -314,7 +316,7 @@ export class CustomerDetailComponent implements OnInit {
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
             this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type } });
-        } else  if (visit.appointmnet) {
+        } else if (visit.appointmnet) {
             this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type } });
         } else {
             this.router.navigate(['provider', 'orders', visit.uid], { queryParams: { timetype: time_type } });
@@ -454,5 +456,14 @@ export class CustomerDetailComponent implements OnInit {
     }
     showHistory() {
         this.showMoreHistory = !this.showMoreHistory;
+    }
+    getCustomerQnr() {
+        this.questionnaireList = [];
+        this.provider_services.getCustomerQuestionnaire().subscribe(data => {
+            this.questionnaireList = data;
+        });
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
     }
 }

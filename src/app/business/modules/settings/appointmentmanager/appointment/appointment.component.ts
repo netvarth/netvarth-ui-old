@@ -16,10 +16,13 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-appointment-checkin',
-    templateUrl: './appointment.component.html'
+    templateUrl: './appointment.component.html',
+    styleUrls: ['../../../../../../assets/css/style.bundle.css']
 })
 export class AppointmentComponent implements OnInit {
     appointmentSubscribtion: Subscription;
@@ -234,17 +237,20 @@ export class AppointmentComponent implements OnInit {
     questionnaireList: any = [];
     channel;
     questionAnswers;
+    bookingMode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
+        private dialog: MatDialog,
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
+        private providerService: ProviderServices,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -261,6 +267,13 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.uid) {
                 this.virtualServicenumber = qparams.virtualServicenumber;
+            }
+            if (qparams.serviceId) {
+                this.sel_ser = qparams.serviceId;
+            }
+            if (qparams.apptMode) {
+                this.bookingMode = qparams.apptMode;
+                this.channel = (this.apptType === 'PHONE_IN_APPOINTMENT') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
@@ -391,6 +404,8 @@ export class AppointmentComponent implements OnInit {
         if (this.source === 'appt-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
+            this.qParams['serId'] = this.sel_ser;
+            this.qParams['bookingMode'] = this.channel;
             if (this.virtualServicemode && this.virtualServicenumber) {
                 this.qParams['virtualServicemode'] = this.virtualServicemode;
                 this.qParams['virtualServicenumber'] = this.virtualServicenumber;
@@ -491,13 +506,11 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
-                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
                             } else {
                                 this.countryCode = '+91';
                             }
-                            // this.countryCode = this.customer_data.countryCode;
-                            console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;
                                 this.heading = 'Confirm your Appointment';
@@ -512,6 +525,22 @@ export class AppointmentComponent implements OnInit {
                     }
                 );
         }
+    }
+    confirmApptBlockPopup() {
+        const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Are you sure want to add',
+                'type': 'yes/no'
+            }
+        });
+        removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.confirmApptBlock();
+            }
+        });
     }
     confirmApptBlock() {
         const post_data = {
@@ -531,7 +560,11 @@ export class AppointmentComponent implements OnInit {
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'appointments']);
+                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.uid);
+                    } else {
+                        this.router.navigate(['provider', 'appointments']);
+                    }
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -556,7 +589,6 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-            console.log(this.waitlist_for)
         }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -723,9 +755,7 @@ export class AppointmentComponent implements OnInit {
             // };
             fn.subscribe(data => {
                 this.familymembers = [];
-                console.log(this.familymembers)
                 this.familymembers.push(this.customer_data);
-                console.log(this.familymembers)
                 for (const mem of data) {
                     if (mem.id !== this.customer_data.id) {
                         this.familymembers.push(mem);
@@ -784,8 +814,9 @@ export class AppointmentComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
-        console.log(this.sel_ser);
-        this.getProviderQuestionnaire();
+        if (this.waitlist_for[0] && this.waitlist_for[0].id) {
+            this.getProviderQuestionnaire();
+        }
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -1036,15 +1067,12 @@ export class AppointmentComponent implements OnInit {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else if(!this.thirdParty) {
+            } else if (!this.thirdParty) {
                 const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode+''+this.callingModes;
-                console.log(this.callingModes)
-                // this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-            }else {
-                console.log("third party")
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+            } else {
                 const thirdparty_countrycode = '91';
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode+''+this.callingModes;
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
             }
         }
         // }
@@ -1115,7 +1143,11 @@ export class AppointmentComponent implements OnInit {
             //   post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
                 if (this.thirdParty === '') {
-                    this.addAppointmentInProvider(post_Data);
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.validateQnr(post_Data);
+                    } else {
+                        this.addAppointmentInProvider(post_Data);
+                    }
                 } else {
                     this.addAppointmentBlock(post_Data);
                 }
@@ -1150,13 +1182,13 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                if (this.questionAnswers) {
                     this.submitQuestionnaire(retUuid);
-                    } else {                
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
 
-                        this.router.navigate(['provider', 'appointments']);
-                    }
+                    this.router.navigate(['provider', 'appointments']);
+                }
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
@@ -1175,24 +1207,21 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-        
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-          for (const pic of this.questionAnswers.files.files) {
-            dataToSend.append('files', pic, pic['name']);
-          }
+            for (const pic of this.questionAnswers.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-        this.router.navigate(['provider', 'appointments']);
-    }, error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-        }
+        this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+            this.router.navigate(['provider', 'appointments']);
+        }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1250,7 +1279,7 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
-        this.getProviderQuestionnaire();
+        // this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1757,7 +1786,7 @@ export class AppointmentComponent implements OnInit {
         // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
         // this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
         //     .subscribe(
-       this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
+        this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1899,41 +1928,81 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     goBack() {
-        if (this.showCheckin) {
+        if (this.showQuestionnaire) {
+            this.showQuestionnaire = false;
+        } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
-            this.heading = 'Create an Appointment';
         } else {
             this.router.navigate(['provider', 'appointments']);
         }
+        this.heading = 'Create an Appointment';
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getProviderAvailableDatessByLocationService(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.availableSlots);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getProviderAvailableDatessByLocationService(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.availableSlots);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getQuestionAnswers(event) {
-console.log(event);
-this.questionAnswers = event;
+        this.questionAnswers = null;
+        this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = !this.showQuestionnaire;
-    }  
-     getProviderQuestionnaire() {
-        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-        //   console.log(data);
-        //   this.questionnaireList = data;
-        // });
-      }
+        this.showQuestionnaire = true;
+        this.heading = 'More Info';
+    }
+    getProviderQuestionnaire() {
+        let consumerId;
+        if (this.showBlockHint) {
+            consumerId = this.customer_data.id;
+        } else {
+            consumerId = this.waitlist_for[0].id;
+        }
+        this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
+            this.questionnaireList = data;
+            if (this.showBlockHint) {
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.showQuestionnaire = true;
+                    this.heading = 'More Info';
+                } else {
+                    this.confirmApptBlockPopup();
+                }
+            }
+        });
+    }
+    validateQnr(post_Data?) {
+        if (!this.questionAnswers) {
+          this.questionAnswers = {
+            answers: {
+              answerLine: [],
+              questionnaireId: this.questionnaireList.id
+            }
+          }
+        }
+        if (this.questionAnswers.answers) {
+            this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                if (data.length === 0) {
+                    if (!this.showBlockHint) {
+                        this.addAppointmentInProvider(post_Data);
+                    } else {
+                        this.confirmApptBlock();
+                    }
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        }
+    }
 }

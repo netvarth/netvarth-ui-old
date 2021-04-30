@@ -11,25 +11,44 @@
     </header>
     <div class="videocontainer no-padding">
         <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}" [ngClass]="{'hide': !twilioService.preview}">
-            <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer"
-                class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
+            <div class="col-md-7 col-lg-7 col-sm-7 col-xs-12 previewSubDiv no-padding" >
+                <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer"
+                class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">       
             </div>
-            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
-                <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <h1 *ngIf="!loading">Ready To Start ?</h1>
-                    <h1 *ngIf="loading">Getting Ready...</h1>
-                </div>
-                <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading">
-                    {{status}}                  
-                </div>
-                <div class="text-center mgn-bt-20" *ngIf="loading">
-                    You will be able to join in just a moment
-                </div>
-                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="!loading">
-                    <button [disabled]="!providerReady" (click)="providerReady && joinRoom()">Join
-                        now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
-                    <br><br>
+            <div class="icons-preview">
+                <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute"
+                    style="opacity: 1;cursor: pointer;" (click)="muteAudio()"></i>
+                <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
+                    style="opacity: 1;cursor: pointer;" (click)="unmuteAudio()"></i>
+                <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
+                    style="opacity: 1;cursor: pointer;" (click)="muteVideo()">
+                </i>
+                <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
+                    style="opacity: 1;cursor: pointer;" (click)="unmuteVideo()">
+                    <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
+                        <i class="fa fa-close red fa-stack-1x"></i>
+                    </i>
+                </i>
+            </div>   
+            </div>
+            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12 no-padding">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                        <!-- <h1 *ngIf="!loading">Ready To Start ?</h1> -->
+                        <h1 *ngIf="loading">Getting Ready...</h1>
+                    </div>
+                    <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading">
+                        {{status}}                  
+                    </div>
+                    <div class="text-center mgn-bt-20" *ngIf="loading">
+                        You will be able to join in just a moment
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="!loading">
+                        <button [disabled]="!providerReady" (click)="providerReady && joinRoom()">Start Sharing Video
+                            </button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
+                        <br><br>
+                    </div>
                 </div>
             </div>
         </div>
