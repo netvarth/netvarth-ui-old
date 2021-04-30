@@ -987,15 +987,15 @@ export class SharedFunctions {
     } else if (type === 'order') {
       msg = 'Order';
     }
-   // if (prepay) {
-      this.tdata = {
-        'message': 'Cancellation and Refund policy',
-        'heading': 'Confirm',
-        'type': 'yes/no',
-        'cancelPolicy': 'show',
-        'book': msg,
-        'wtlist': waitlist
-      }
+    // if (prepay) {
+    this.tdata = {
+      'message': 'Cancellation and Refund policy',
+      'heading': 'Confirm',
+      'type': 'yes/no',
+      'cancelPolicy': 'show',
+      'book': msg,
+      'wtlist': waitlist
+    }
     // } else {
     //   this.tdata = {
     //     'message': 'Do you want to cancel this ' + msg + '?',
@@ -1220,7 +1220,12 @@ export class SharedFunctions {
     setTimeout(() => {
       const sidebar = document.getElementById('filterContainer');
       if (sidebar) {
-        const height = (window.screen.height - 200) + 'px';
+        let height;
+        if (window.screen.width < 991) {
+          height = (window.screen.height - 160) + 'px';
+        } else {
+          height = (window.screen.height - 230) + 'px';
+        }
         sidebar.setAttribute('style', 'overflow:auto;height:' + height);
       }
     }, 500);

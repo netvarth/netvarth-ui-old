@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -65,7 +64,6 @@ export class QuestionnaireComponent implements OnInit {
   customer_label = '';
   editQuestionnaire = false;
   constructor(private sharedService: SharedServices,
-    private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
@@ -406,7 +404,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getDate(date) {
-    return new Date(this.datepipe.transformTofilterDate(date));
+    return new Date(date);
   }
   listChange(ev, value, question) {
     if (ev.target.checked) {
