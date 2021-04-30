@@ -210,6 +210,14 @@
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - 
                   {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
+
+                <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                  class="order-label pointer-cursor" *ngIf="order.label">
+                  <span *ngFor="let label of objectKeys(order.label); let i= index">
+                    {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
+                  </span>
+                </div>
+
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'custom-red':'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
@@ -258,7 +266,7 @@
               </div>
               </div>
               
-              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                 class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
@@ -270,7 +278,7 @@
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
                 </span>
-              </div>
+              </div> -->
             </div>
           </ng-container>
         </div>
@@ -434,6 +442,14 @@
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - 
                   {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
+
+                <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                  class="order-label pointer-cursor" *ngIf="order.label">
+                  <span *ngFor="let label of objectKeys(order.label); let i= index">
+                    {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
+                  </span>
+                </div>
+
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ? 'custom-red':'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending': order.orderStatus | capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
@@ -482,7 +498,7 @@
               </div>
               </div>
 
-              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                 class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
@@ -494,7 +510,7 @@
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
                 </span>
-              </div>
+              </div> -->
             </div>
           </ng-container>
         </div>
@@ -656,6 +672,14 @@
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
+
+                <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                  class="order-label pointer-cursor" *ngIf="order.label">
+                  <span *ngFor="let label of objectKeys(order.label); let i= index">
+                    {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
+                  </span>
+                </div>
+
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ? 'custom-red' : 'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending': order.orderStatus | capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
@@ -703,7 +727,7 @@
               </div>
               </div>
               
-              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                 class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
@@ -715,7 +739,7 @@
                 <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
                   {{getDisplayformatTruncateLabel(order)}}
                 </span>
-              </div>
+              </div> -->
             </div>
           </ng-container>
         </div>

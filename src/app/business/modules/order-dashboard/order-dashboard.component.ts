@@ -31,6 +31,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   loading = false;
   orderSelected: any = [];
   showFilterSection = false;
+  objectKeys=Object.keys;
   filterapplied = false;
   filter = {
     first_name: '',
