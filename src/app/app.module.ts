@@ -104,6 +104,8 @@ import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -195,7 +197,8 @@ export function init_app(globalService: GlobalService) {
     MatStepperModule,
     NgxIntlTelInputModule,
     ModalModule.forRoot(),
-    ShareIconsModule
+    ShareIconsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BsModalService,
