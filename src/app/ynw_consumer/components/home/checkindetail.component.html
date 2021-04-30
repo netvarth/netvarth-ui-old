@@ -223,16 +223,12 @@
                                 <!-- Questionnaire starts-->
                                 <div class="card"
                                     *ngIf="waitlist && waitlist.questionnaire.questionAnswers && waitlist.questionnaire.questionAnswers.length > 0">
-                                    <div class="bg-cover" style="background: #ffefc9;">
-                                        <div class="container pad-10">
-                                            <div class="mt-80">
-                                                <h3 class="">
-                                                    {{questionnaire_heading}}
-                                                </h3>
-                                            </div>
-                                        </div>
+                                    <div class="pad-10 pad-bt-0">
+                                        <h3 class="no-margin">
+                                            {{questionnaire_heading}}
+                                        </h3>
                                     </div>
-                                    <div class="c-details pad-10">
+                                    <div class="c-details">
                                         <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"
                                             [accountId]="waitlist.providerAccount.id" [type]="'details'">
                                         </app-questionnaire>

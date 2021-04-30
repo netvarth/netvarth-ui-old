@@ -715,7 +715,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
         this.profimg_exists = true;
         // const today = new Date();
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
