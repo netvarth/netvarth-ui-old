@@ -115,6 +115,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.getCatalogs();
     // this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.active_user);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
   }
@@ -341,7 +342,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         let calmodeControl = this.couponForm.get('calculationType');
         calmodeControl.markAsTouched();
 
-        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
+        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl.valid) {
           this.step = this.step + 1;
           setTimeout(() => {
             this.startDatePicker.nativeElement.focus();
@@ -354,6 +355,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         const endDateVal = this.couponForm.get('couponRules').get('endDate').value;
         const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
         const calculationType = this.couponForm.get('calculationType').value;
+        console.log(calculationType);
         console.log(startDateVal);
         console.log(endDateVal);
         if (calculationType === 'Percentage') {
@@ -689,10 +691,18 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       policiesEntered = false;
     }
     if (isService) {
-      if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0) {
-        this.snackbarService.openSnackBar('Please add atleast one of either services or depatments or users for which this coupon applied for', { 'panelClass': 'snackbarerror' });
-        policiesEntered = false;
+      if(this.active_user.type!=='BRANCH'){
+        if (this.services.length === 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
+          this.snackbarService.openSnackBar('Please choose  either services/ '+this.customer_label+' labels/ '+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          policiesEntered = false;
+        }
+      }else if(this.active_user.type==='BRANCH'){
+        if (this.services.length === 0 && this.departments.length === 0 && this.users.length == 0 && this.customer_groups.length === 0 && this.customer_labels.length == 0) {
+          this.snackbarService.openSnackBar('Please choose  either services/departments/users/'+this.customer_label+' labels /'+this.customer_label+' groups for which this coupon is applied for', { 'panelClass': 'snackbarerror' });
+          policiesEntered = false;
+        }
       }
+      
     }
     if (isCatalog) {
 

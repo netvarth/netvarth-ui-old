@@ -21,6 +21,7 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { CustomerActionsComponent } from './customer-actions/customer-actions.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CustomerDetailComponent } from './customer-details/customer-details.com
         NgxMatSelectSearchModule,
         NgbModule,
         OwlModule,
-        InboxModule
+        InboxModule,
+        QuestionnaireModule
     ],
     declarations: [
         CustomersListComponent,

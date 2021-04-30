@@ -47,6 +47,7 @@
 }
 .msg-width {
     max-width: 80%;
+    min-width: 70px;
 }
 .thumbnails img {
     width: 100px;
@@ -80,6 +81,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    padding: 20px;
 }
 .galul li {
     float: left;
@@ -130,4 +132,64 @@ textarea {
 .no-msg-section {
     margin: auto;
     text-align: center;
+}
+.reply-section {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 20px 20px 10px;
+    border: 1px solid #d5d5d5;
+    background: #d1d3e05e;
+}
+.replymsg {
+    font-size: .9rem;
+    white-space: pre-wrap;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    color: #7E8299 !important;
+}
+.reply-msg {
+    padding: 5px 0 5px 5px;
+    cursor: pointer;
+    border-left: 3px solid darkblue;
+    margin-bottom: 5px;
+}
+.username {
+    color: darkblue;
+}
+.reply-section .close {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+.reply-section .main-sec {
+    width: 100%;
+}
+.pad-20 {
+    padding: 20px;
+}
+.reply-text {
+    margin-top: -8px;
+    font-size: .7rem;
+    text-align: right;
+    margin-right: -5px;
+    margin-bottom: 2px;
+    color: darkgray;
+    opacity: .6;
+}
+.reply-text a:hover {
+    text-decoration: underline !important;
+}
+.blinkelem {
+    -webkit-animation: NAME-YOUR-ANIMATION 2s infinite;  /* Safari 4+ */
+    -moz-animation: NAME-YOUR-ANIMATION 2s infinite;  /* Fx 5+ */
+    -o-animation: NAME-YOUR-ANIMATION 2s infinite;  /* Opera 12+ */
+    animation: NAME-YOUR-ANIMATION 2s infinite;  /* IE 10+, Fx 29+ */
+}
+@-webkit-keyframes NAME-YOUR-ANIMATION {
+    0%, 49% {
+        background-color: #1e407963;
+    }
 }

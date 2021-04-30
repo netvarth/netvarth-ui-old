@@ -202,7 +202,8 @@
                             capitalizeFirst}} </span>
                         </div>
                         <div class="td one">
-                          <span *ngIf="donation.consumer.userProfile.firstName">{{donation.donor.firstName}}</span>
+                          <span *ngIf="donation.consumer.userProfile.firstName">{{donation.donor.firstName}}</span>&nbsp;
+                          <span *ngIf="donation.consumer.userProfile.lastName">{{donation.donor.lastName}}</span>
                         </div>
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
                           currency:'&#8377;' }}

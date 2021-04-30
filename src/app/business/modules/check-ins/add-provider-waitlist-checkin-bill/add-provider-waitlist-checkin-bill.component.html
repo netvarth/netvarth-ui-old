@@ -84,22 +84,27 @@
 								<div class="d-flex flex-column flex-root">
 									<span class="font-weight-bolder mb-2">BILL TO</span>
 									<span class="opacity-70">
-										<ng-container *ngIf="!source">
+										<!-- <ng-container *ngIf="!source">
 											<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
 												{{user.firstName | capitalizeFirst}}
 												{{user.lastName | capitalizeFirst}}
 											</span>
+										</ng-container> -->
+										<ng-container *ngIf="!source">
+											<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
+												{{getUserName(user)}}
+
+											</span>
 										</ng-container>
 										<ng-container *ngIf="source === 'appt'">
 											<span class="dynamic" *ngFor="let user of checkin.appmtFor">
-												{{user.firstName | capitalizeFirst}}
-												{{user.lastName | capitalizeFirst}}
+												{{getUserName(user)}}
 											</span>
 										</ng-container>
 										<ng-container *ngIf="source === 'order'">
 											<span class="dynamic">
-												{{checkin.orderFor.firstName | capitalizeFirst}}
-												{{checkin.orderFor.lastName | capitalizeFirst}}
+												{{getUserName(checkin.orderFor)}}
+
 											</span>
 										</ng-container>
 									</span>
@@ -130,8 +135,7 @@
 														<mat-option *ngFor="let value of group.values; let i = index"
 															[value]="value"
 															(onSelectionChange)="itemServiceSelected(group.type,value)">
-															{{ value }} <span
-																class="bill_item_service">{{(group.type=='Items')?
+															{{ value }} <span class="bill_item_service">{{(group.type=='Items')?
 																'Item' :
 																'Service'}}</span>
 														</mat-option>
@@ -261,12 +265,10 @@
 												<span *ngIf="service.discount && service.discount.length > 0"
 													class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span>
 											</td>
-											<td class="text-right pt-7"
-												*ngIf="!source">
+											<td class="text-right pt-7" *ngIf="!source">
 												{{service.quantity}}
 											</td>
-											<td class="text-right pt-7"
-												*ngIf="source">
+											<td class="text-right pt-7" *ngIf="source">
 												{{service.quantity}}
 											</td>
 
@@ -276,8 +278,7 @@
 											<td class="text-right pt-7" style="color: red;font-size: smaller;"
 												*ngIf="source && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled') && bill_data.checkinedService === service.serviceId && service.quantity === 0">
 												Cancelled</td> -->
-											<td class="text-right pt-7"
-												*ngIf="source">
+											<td class="text-right pt-7" *ngIf="source">
 												<span class="rupee-font">
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="service.GSTpercentage > 0">Tax</sup>
@@ -324,8 +325,7 @@
 													| currency:'&#8377;'}}</span>
 
 											</td>
-											<td class="text-right pt-7 pr-0"
-												*ngIf="!source">
+											<td class="text-right pt-7 pr-0" *ngIf="!source">
 												<span class="rupee-font">
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="service.GSTpercentage > 0">Tax</sup>
@@ -449,8 +449,7 @@
 													class="text-right font-size-xs font-weight-boldest">
 													<span class="rupee-font text-muted-dark">- {{discount.discountValue
 														|
-														currency:'&#8377;'}}</span> <i
-														(click)="removeItemDiscount(item.itemId, discount.id)"
+														currency:'&#8377;'}}</span> <i (click)="removeItemDiscount(item.itemId, discount.id)"
 														class="fa fa-window-close btn_adjust" aria-hidden="true"></i>
 													<br><br>
 													<span *ngIf="item.discount &&item.discount.length > 0"
@@ -566,7 +565,8 @@
 													[value]="coupon.couponCode">{{coupon.name}}</option>
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
-												class="form-control select-height" [(ngModel)]="selOrderProviderjCoupon">
+												class="form-control select-height"
+												[(ngModel)]="selOrderProviderjCoupon">
 												<option value="" disabled selected hidden>Select Jaldee Coupon</option>
 												<option *ngFor="let jcoupon of jCouponsList; let i = index"
 													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}
@@ -794,8 +794,7 @@
 									<div class="flx_1">{{coupon.key}} (Coupon)</div>
 									<div class="rupee-font">
 										<span (click)="showJCCouponNote(coupon)"
-											[class.couponAmt]="coupon.value.value === '0.0'"
-											style="margin-right: 5px">{{coupon.value.value |
+											[class.couponAmt]="coupon.value.value === '0.0'" style="margin-right: 5px">{{coupon.value.value |
 											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'"
 											(click)="removeProviderCoupon(coupon.key)" class="fa fa-window-close"
@@ -806,8 +805,7 @@
 									<div class="flx_1">{{jcoupon.key}} (Jaldee Coupon)</div>
 									<div class="rupee-font">
 										<span (click)="showJCCouponNote(jcoupon)"
-											[class.couponAmt]="jcoupon.value.value === '0.0'"
-											style="margin-right: 5px">{{jcoupon.value.value |
+											[class.couponAmt]="jcoupon.value.value === '0.0'" style="margin-right: 5px">{{jcoupon.value.value |
 											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
 											class="fa fa-window-close" aria-hidden="true"></i>
@@ -953,14 +951,28 @@
 												<div class="row">
 													<div class="col-md-12 py-md-2 pr-md-2">
 														<ul>
-															<li>If the {{customer_label}} cancels the consultation before the service date, refund will be processed automatically to the {{customer_label}}’s bank.
+															<li>If the {{customer_label}} cancels the consultation
+																before the service date, refund will be processed
+																automatically to the {{customer_label}}’s bank.
 															</li>
-															<li>The refund will not be processed automatically on the day of service, until it is approved by the service provider.</li>
-															<li>If the {{customer_label}} cancels the booking, the amount refunded will be 3% less (3% deduction includes Jaldee service charges and Online Gateway fees).</li>
-															<li>The service provider can cancel the booking and refund any amount less than or equal to the prepayment amount paid by the {{customer_label}}.</li>
-															<li>Service Providers will have to refund the full amount, if the cancellation happens due to the fault of the Service Provider. An amount of 3% of the service fees will be levied from the provider.</li>
-															<li>Only the prepayment amount, and not the total bill amount, will be transferred directly to {{customer_label}} bank account.</li>
-															<li>The refund option will be active for 2 days after the service date for the service provider.</li>
+															<li>The refund will not be processed automatically on the
+																day of service, until it is approved by the service
+																provider.</li>
+															<li>If the {{customer_label}} cancels the booking, the
+																amount refunded will be 3% less (3% deduction includes
+																Jaldee service charges and Online Gateway fees).</li>
+															<li>The service provider can cancel the booking and refund
+																any amount less than or equal to the prepayment amount
+																paid by the {{customer_label}}.</li>
+															<li>Service Providers will have to refund the full amount,
+																if the cancellation happens due to the fault of the
+																Service Provider. An amount of 3% of the service fees
+																will be levied from the provider.</li>
+															<li>Only the prepayment amount, and not the total bill
+																amount, will be transferred directly to
+																{{customer_label}} bank account.</li>
+															<li>The refund option will be active for 2 days after the
+																service date for the service provider.</li>
 														</ul>
 													</div>
 												</div>
@@ -974,14 +986,16 @@
 											<div *ngIf="applydisc" class="disp_flx">
 												<div class="txt_wdth text-primary txt_wdth mt-3 text-center">Enter
 													amount to be refunded</div>
-												<span class="rupee-font" style="font-size: larger; margin-top: 10px;">₹ &nbsp;</span>
+												<span class="rupee-font" style="font-size: larger; margin-top: 10px;">₹
+													&nbsp;</span>
 												<input type="number" class="form-control1 mr-2 mb-2 ip_refund"
 													type="number" aria-label="Number" matInput value="1" size="5"
 													max="{{price_limit}}" min="0" id="example-number-input"
 													[(ngModel)]="amounttoRefund">
 											</div>
 											<div class="modal-footer p-1">
-												<a *ngIf="!applydisc && !is_policy && btn_hide" (click)="refundPolicy()">Refund
+												<a *ngIf="!applydisc && !is_policy && btn_hide"
+													(click)="refundPolicy()">Refund
 													Policy</a>
 												<button *ngIf="!applydisc  && !is_policy" type="button"
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
@@ -1050,14 +1064,18 @@
 						<div class="col-md-12">
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-1 pb-1 pb-md-2">
-									<div class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
-									  <span class="red" style="font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled'">
+									<div
+										class="rounded d-flex align-items-center justify-content-between bg_text_prim max-w-350px position-relative ml-auto p-7">
+										<span class="red" style="font-size: smaller;"
+											*ngIf="!source && bill_data.checkinStatus === 'cancelled'">
 											{{showToken ? 'Token' : 'Check-in'}} Cancelled</span>
-									  <span class="red" style="font-size: smaller;" *ngIf="source === 'appt' && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
+										<span class="red" style="font-size: smaller;"
+											*ngIf="source === 'appt' && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
 											Appointment Cancelled</span>
-									  <span class="red" style="font-size: smaller;" *ngIf="source === 'order' && bill_data.billStatus === 'Cancel'">
+										<span class="red" style="font-size: smaller;"
+											*ngIf="source === 'order' && bill_data.billStatus === 'Cancel'">
 											Order Cancelled</span>
-										 </div>
+									</div>
 									<div class="form-group" *ngIf="showPayWorkBench">
 										<!-- <textarea class="form-control form-control-solid" rows="3"></textarea> -->
 										<label style="font-weight: 500;">Leave a Payment Note</label>

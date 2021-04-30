@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../../app.component';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { MrfileuploadpopupComponent } from './mrfileuploadpopup/mrfileuploadpopup.component';
+import { ShowuploadfileComponent } from './showuploadfile/showuploadfile.component';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class UploadFileComponent implements OnInit {
 
   bookingId: any;
   bookingType: any;
+  delete_btn = Messages.DELETE_BTN;
   patientId: any;
   display_PatientId: any;
   today = new Date();
@@ -46,7 +49,7 @@ export class UploadFileComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Upload file';
+  heading = 'Uploaded Files';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
@@ -72,6 +75,17 @@ export class UploadFileComponent implements OnInit {
     ]
   };
   customer_label = '';
+  msgDisplay = 'media';
+  loading = false;
+  windowScrolled: boolean;
+  topHeight = 0;
+  typeofFiles: any = [];
+  uploadFiles: any = [];
+  mediafiles: any = [];
+  docfiles: any = [];
+  fileviewdialogRef: any;
+  removefiledialogRef: any;
+  private subscriptions = new SubSink();
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
@@ -81,109 +95,143 @@ export class UploadFileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
       this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    // this.activatedRoute.queryParams.subscribe(queryParams => {
-    //   if (queryParams.mode) {
-    //     const type = queryParams.mode;
-    //     if (type === 'view') {
-    //       this.heading = 'Update Prescription';
-    //     }
-    //   }
-    // });
 
+
+    
+
+  }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('qHeader').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('tabHeader').offsetHeight;
+    }
+    this.topHeight = qHeader + tabHeader;
+    if (header) {
+ 
+    }
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
   }
 
   ngOnInit() {
-    this.patientDetails = this.medicalrecord_service.getPatientDetails();
-    if (this.patientDetails.memberJaldeeId) {
-      this.display_PatientId = this.patientDetails.memberJaldeeId;
-    } else if (this.patientDetails.jaldeeId) {
-      this.display_PatientId = this.patientDetails.jaldeeId;
-    }
+
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
     this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
-    // if (this.mrId) {
-    //   this.getMrprescription(this.mrId);
-    // }
+    if (this.mrId !== 0) {
+      this.getMedicalRecordUsingId(this.mrId);
+    }
+    this.getPatientDetails(this.patientId);
 
+  }
+  getImageSource(file) {
+    let imgsrc='/assets/images/pdf.png';
+    console.log(file);
+    let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'video'){
+                imgsrc='/assets/images/video.png';
+              } else if( type[0] == 'audio') {
+                imgsrc='/assets/images/audio.png';
+              }else if( type[0] == 'image') {
+                imgsrc='/assets/images/imageexamle.png';
+              }
+
+    return imgsrc;
 
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
+  deleteFile(file) {
+    this.removefiledialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+          'message': 'Do you really want to delete this file?'
+      }
+  });
+  this.subscriptions.sink = this.removefiledialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      
+              this.subscriptions.sink = this.provider_services.deleteMRFile(this.mrId,file.uid)
+                  .subscribe((data) => {
+                    this.getMedicalRecordUsingId(this.mrId);
+                  },
+                      error => {
+                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      });
+          } 
+      
+  });
+  }
+  getPatientDetails(uid) {
 
-  getMrprescription(mrId) {
-    this.provider_services.getMRprescription(mrId)
-      .subscribe((data) => {
-        this.uploadImages = data;
-        console.log(data);
-        this.image_list_popup = [];
-        for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true , 'url': pic.url , 'type': pic.type};
-          this.selectedMessage.files.push(imgdet);
-          const imgobj = new Image(0,
-            { // modal
-              img: imgdet.url,
-              description: ''
-            });
-          this.image_list_popup.push(imgobj);
+    const filter = { 'id-eq': uid };
+    this.subscriptions.sink=this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading = false;
+          this.patientDetails = response[0];
+          this.patientId = this.patientDetails.id;
+          if (this.patientDetails.memberJaldeeId) {
+            this.display_PatientId = this.patientDetails.memberJaldeeId;
+          } else if (this.patientDetails.jaldeeId) {
+            this.display_PatientId = this.patientDetails.jaldeeId;
+          }
+          this.medicalrecord_service.setPatientDetails(this.patientDetails);
+
+
+        },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+
+  getMedicalRecordUsingId(mrId) {
+    this.loading = true;
+    this.mediafiles=[];
+    this.docfiles=[];
+   this.subscriptions.sink= this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
+        if (data) {
+          if (data.mrVideoAudio) {
+            this.uploadFiles = data.mrVideoAudio;
+            console.log(this.uploadFiles);
+            for (let file of this.uploadFiles) {
+              let type = '';
+              type = file.type.split("/");
+              console.log(type[0]);
+              if(type[0] == 'video' || type[0] =='audio'|| type[0] =='image'){
+                this.mediafiles.push(file);
+              } else {
+                this.docfiles.push(file);
+              }
+          }
+          this.loading = false;
+          }
         }
-        console.log(this.selectedMessage.files);
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-
   }
-  openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup[0]);
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
-  onButtonBeforeHook() {
-  }
-  onButtonAfterHook() { }
-
-  filesSelected(event) {
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessage.files.push(file);
-          console.log(this.selectedMessage.files);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-            console.log(this.selectedMessage.base64[0]);
-            this.image_list_popup = [];
-            const imgobj = new Image(0,
-              { // modal
-                img: this.selectedMessage.base64[0],
-                description: ''
-              });
-            this.image_list_popup.push(imgobj);
-          };
-          reader.readAsDataURL(file);
-          this.showSave = true;
-        }
-      }
-    }
-  }
-  imageSize(val) {
-    let imgsize;
-    imgsize = Math.round((val / 1024));
-    return imgsize;
-  }
+ 
+  
 
   uploadpopup() {
     this.uploadfiledialogRef = this.dialog.open(MrfileuploadpopupComponent, {
@@ -205,104 +253,41 @@ export class UploadFileComponent implements OnInit {
   }
 
  
+showFile(file){
+  let type = file.type.split("/");
+  console.log(type[0]);
+  this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: file,
+  });
+  this.fileviewdialogRef.afterClosed().subscribe(result => {
+    if (result) {
 
-  saveImages() {
-    this.disable = true;
-
-    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
-      if (this.selectedMessage.files[ia].view !== true) {
-        this.temarry.files.push(this.selectedMessage.files[ia]);
-
-      }
     }
-    console.log(this.temarry.files);
-    const submit_data: FormData = new FormData();
-    const propertiesDetob = {};
-    let i = 0;
-    for (const pic of this.temarry.files) {
-      console.log(pic);
-      submit_data.append('files', pic, pic['name']);
-      const properties = {
-        'caption': this.temarry.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
-    }
-    const propertiesDet = {
-      'propertiesMap': propertiesDetob
-    };
-    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    submit_data.append('properties', blobPropdata);
-    if (this.mrId) {
-      this.uploadMrPrescription(this.mrId, submit_data);
-    } else {
-      let passingId ;
-      if (this.bookingType === 'FOLLOWUP') {
-        passingId = this.patientId;
-      } else {
-        passingId = this.bookingId;
-      }
-      this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
-        .then((data: number) => {
-          this.mrId = data;
-          console.log(this.mrId);
-          this.uploadMrPrescription(data, submit_data);
-        },
-          error => {
-            this.disable = false;
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-    }
-
-  }
-  uploadMrPrescription(id, submit_data) {
-    this.provider_services.uploadMRprescription(id, submit_data)
-      .subscribe((data) => {
-        this.showSave = false;
-        this.upload_status = 'Uploaded';
-        this.snackbarService.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-      },
-        error => {
-          this.disable = false;
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
-  }
-  deleteTempImage(img, index) {
-    this.showSave = true;
-
-    this.removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'Do you really want to remove the prescription?',
-        'type':'prescription'
-      }
-    });
-    this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (img.view && img.view === true) {
-          this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
-            .subscribe((data) => {
-              this.selectedMessage.files.splice(index, 1);
-            },
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              });
-        } else {
-          this.selectedMessage.files.splice(index, 1);
-          this.selectedMessage.base64.splice(index, 1);
-        }
-      }
-    });
-
-   
-  }
+  });
+}
+  
 
   somethingChanged() {
     this.showSave = true;
   }
-  
+  changemsgDisplayType(type) {
+    this.msgDisplay = type;
+    
+  }
+   scrollToTop() {
+    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  tabChange(event) {
+   
+    //this.loading = true;
+  }
 
 }

@@ -22,7 +22,7 @@
           [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20">
-            <span class="pull-left group-name">{{group.groupName}}</span>   
+            <span class="pull-left group-name">{{group.groupName}}</span>
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
@@ -54,7 +54,7 @@
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
-              <div class="sel-group-desc">{{selectedGroup.description}}</div>
+            <div class="sel-group-desc">{{selectedGroup.description}}</div>
           </h3>
         </div>
         <div class="p-2 row">
@@ -131,8 +131,8 @@
                 class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="!showCustomers">
-            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name" aria-controls="kt_datatable1"
-              [(ngModel)]="filter.first_name" (keypress)="search($event)">
+            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name"
+              aria-controls="kt_datatable1" [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
             <aside class="filterSidebar" *ngIf="filter_sidebar">
               <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
@@ -202,7 +202,8 @@
           <div class="tab-content">
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center" *ngIf="customers.length > 0">
+              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center"
+                *ngIf="customers.length > 0">
                 <thead>
                   <tr class="text-left text-uppercase">
                     <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
@@ -318,15 +319,16 @@
               <div class="no-customer"
                 *ngIf="!apiloading && customers.length === 0 && !filterapplied && selectedGroup == 'all'">
                 <div>
-                You don't have any {{customer_label}}s
-                <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create {{customer_label
-                  |
-                  capitalizeFirst}}</button>
+                  You don't have any {{customer_label}}s
+                  <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create
+                    {{customer_label
+                    |
+                    capitalizeFirst}}</button>
                 </div>
               </div>
               <div
                 *ngIf="(!apiloading && customers.length === 0 && filterapplied) || (!apiloading && customers.length === 0 && selectedGroup !== 'all')">
-                No {{customer_label}}s found
+                No {{customer_label}}s added to this group.
               </div>
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
                 *ngIf="!apiloading && !showCustomers">

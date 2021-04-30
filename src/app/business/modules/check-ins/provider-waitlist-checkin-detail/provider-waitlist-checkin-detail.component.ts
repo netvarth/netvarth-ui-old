@@ -16,9 +16,11 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
-  templateUrl: './provider-waitlist-checkin-detail.component.html'
+  templateUrl: './provider-waitlist-checkin-detail.component.html',
+  styleUrls: ['./provider-details.component.css']
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
@@ -592,8 +594,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
-    console.log(timeDate);
     return timeDate;
   }
 }
-

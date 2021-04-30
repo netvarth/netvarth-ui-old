@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -17,10 +17,13 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-provider-checkin',
-    templateUrl: './provider-checkin.component.html'
+    templateUrl: './provider-checkin.component.html',
+    styleUrls: ['../../../../../assets/css/style.bundle.css']
 })
 export class ProviderCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;
@@ -232,11 +235,13 @@ export class ProviderCheckinComponent implements OnInit {
     questionnaireList: any = [];
     channel;
     questionAnswers;
+    bookingMode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
+        private dialog: MatDialog,
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices,
         private snackbarService: SnackbarService,
@@ -244,13 +249,21 @@ export class ProviderCheckinComponent implements OnInit {
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private jaldeeTimeService: JaldeeTimeService,
-        private lStorageService: LocalStorageService) {
+        private lStorageService: LocalStorageService,
+        private providerService: ProviderServices) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
+            }
+            if (qparams.serviceId) {
+                this.sel_ser = qparams.serviceId;
+            }
+            if (qparams.waitlistMode) {
+                this.bookingMode = qparams.waitlistMode;
+                this.channel = (this.bookingMode === 'PHONE_CHECKIN') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
@@ -411,6 +424,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.qParams['checkinType'] = this.checkinType;
         if (this.source === 'waitlist-block') {
             this.qParams['source'] = this.source;
+            this.qParams['serId'] = this.sel_ser;
+            this.qParams['bookingMode'] = this.channel;
             this.qParams['uid'] = this.uid;
             this.qParams['showtoken'] = this.showtoken;
             if (this.virtualServicemode && this.virtualServicenumber) {
@@ -526,6 +541,22 @@ export class ProviderCheckinComponent implements OnInit {
                 );
         }
     }
+    confirmWaitlistBlockPopup() {
+        const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Are you sure want to add',
+                'type': 'yes/no'
+            }
+        });
+        removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.confirmWaitlistBlock();
+            }
+        });
+    }
     confirmWaitlistBlock() {
         const post_data = {
             'ynwUuid': this.uid,
@@ -541,10 +572,15 @@ export class ProviderCheckinComponent implements OnInit {
             virtualArray[this.virtualServicemode] = this.virtualServicenumber;
             post_data['virtualService'] = virtualArray;
         }
+        console.log(post_data);
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'check-ins']);
+                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.uid);
+                    } else {
+                        this.router.navigate(['provider', 'check-ins']);
+                    }
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -678,8 +714,8 @@ export class ProviderCheckinComponent implements OnInit {
                 for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
                     if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
                         if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            if(_this.departments.indexOf(_this.departmentlist['departments'][i]) == -1) {
-                               _this.departments.push(_this.departmentlist['departments'][i]);
+                            if (_this.departments.indexOf(_this.departmentlist['departments'][i]) == -1) {
+                                _this.departments.push(_this.departmentlist['departments'][i]);
                             }
                         }
                     }
@@ -811,8 +847,9 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
-        console.log(this.sel_ser);
-        this.getProviderQuestionnaire();
+        if (this.waitlist_for[0] && this.waitlist_for[0].id) {
+            this.getProviderQuestionnaire();
+        }
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -820,7 +857,9 @@ export class ProviderCheckinComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
+                    
                         this.wtsapmode = this.customer_data.phoneNo;
+                        console.log('whatsappmoe..'+this.wtsapmode);
                     }
                 }
             }
@@ -1078,7 +1117,6 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     saveCheckin() {
-        console.log(this.waitlist_for);
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
@@ -1097,14 +1135,14 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                console.log(this.countryCode);
-                if (this.countryCode) {
-                    const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                if (this.countryCode ) {
+                    let unChangedPhnoCountryCode='91';
+                    if(this.countryCode.split('+')[1]!==undefined){
+                        unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    }
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
-                    console.log(this.callingModes)
                 }
             } else {
-                console.log("third party")
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
             }
@@ -1167,7 +1205,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
-
+ console.log(JSON.stringify(post_Data));
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             post_Data['ignorePrePayment'] = true;
@@ -1176,7 +1214,11 @@ export class ProviderCheckinComponent implements OnInit {
                     if (this.waitlist_for.length === 0) {
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
                     } else {
-                    this.addCheckInProvider(post_Data);
+                        if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                            this.validateQnr(post_Data);
+                        } else {
+                            this.addCheckInProvider(post_Data);
+                        }
                     }
                 } else {
                     this.addWaitlistBlock(post_Data);
@@ -1185,6 +1227,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     addWaitlistBlock(post_Data) {
+        console.log('data'+post_Data);
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {
@@ -1204,12 +1247,14 @@ export class ProviderCheckinComponent implements OnInit {
                 this.api_loading = false;
                 const retData = data;
                 let retUuid;
+                let parentUid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
+                    parentUid = retData['parent_uuid'];;
                 });
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
-                this.submitQuestionnaire(retUuid);
+                if (this.questionAnswers) {
+                    this.submitQuestionnaire(parentUid);
                 } else {
                     this.router.navigate(['provider', 'check-ins']);
                     if (this.settingsjson.showTokenId) {
@@ -1233,30 +1278,25 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-        
-console.log(this.questionAnswers);
-console.log(Object.keys(this.questionAnswers).length);
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
-          for (const pic of this.questionAnswers.files.files) {
-            dataToSend.append('files', pic, pic['name']);
-          }
+            for (const pic of this.questionAnswers.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
         }
-        console.log(this.questionAnswers.answers);
-        console.log(JSON.stringify(this.questionAnswers.answers));
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-    this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
-        if (this.settingsjson.showTokenId) {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-        } else {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
-        }
-        this.router.navigate(['provider', 'check-ins']);
-    }, error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-        }
+        this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+            if (this.settingsjson.showTokenId) {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+            } else {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+            }
+            this.router.navigate(['provider', 'check-ins']);
+        }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1315,7 +1355,7 @@ console.log(Object.keys(this.questionAnswers).length);
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        this.getProviderQuestionnaire();
+        // this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1966,16 +2006,18 @@ console.log(Object.keys(this.questionAnswers).length);
                 });
     }
     goBack() {
-        if (this.showCheckin) {
+        if (this.showQuestionnaire) {
+            this.showQuestionnaire = false;
+        } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
-            if (this.showtoken) {
-                this.heading = 'Create a Token';
-            } else {
-                this.heading = 'Create a Check-in';
-            }
         } else {
             this.router.navigate(['provider', 'check-ins']);
+        }
+        if (this.showtoken) {
+            this.heading = 'Create a Token';
+        } else {
+            this.heading = 'Create a Check-in';
         }
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
@@ -2003,17 +2045,54 @@ console.log(Object.keys(this.questionAnswers).length);
         }
     }
     getQuestionAnswers(event) {
-console.log(event);
-this.questionAnswers = event;
-console.log(Object.keys(this.questionAnswers).length);
+        this.questionAnswers = null;
+        this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = !this.showQuestionnaire;
+        this.showQuestionnaire = true;
+        this.heading = 'More Info';
     }
     getProviderQuestionnaire() {
-        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-        //   console.log(data);
-        //   this.questionnaireList = data;
-        // });
-      }
+        let consumerId;
+        if (this.showBlockHint) {
+            consumerId = this.customer_data.id;
+        } else {
+            consumerId = this.waitlist_for[0].id;
+        }
+        this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
+            this.questionnaireList = data;
+            if (this.showBlockHint) {
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.showQuestionnaire = true;
+                    this.heading = 'More Info';
+                } else {
+                    this.confirmWaitlistBlockPopup();
+                }
+            }
+        });
+    }
+    validateQnr(post_Data?) {
+        if (!this.questionAnswers) {
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        if (this.questionAnswers.answers) {
+            this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                if (data.length === 0) {
+                    if (!this.showBlockHint) {
+                        this.addCheckInProvider(post_Data);
+                    } else {
+                        this.confirmWaitlistBlock();
+                    }
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        }
+    }
 }

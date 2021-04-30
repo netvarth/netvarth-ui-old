@@ -126,6 +126,8 @@ export class BranchUserDetailComponent implements OnInit {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
         this.sector = user.sector;
+        console.log(this.sector);
+        console.log(this.subsector);
         if (this.sector === 'healthCare') {
             this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
         }
@@ -191,6 +193,15 @@ export class BranchUserDetailComponent implements OnInit {
                     if (subdomain.subDomain === 'veterinarydoctor') {
                         this.selectedsubDomain.push(subdomain);
                     }
+                }
+            }
+            else if (this.sector === 'retailStores') {
+                if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
                 }
             }
         }

@@ -11,6 +11,7 @@ import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
+import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
+      { path: 'enquiry', component: EnquiryComponent },
     ]
   }
 ];

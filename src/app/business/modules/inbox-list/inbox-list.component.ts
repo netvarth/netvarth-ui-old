@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -13,6 +13,7 @@ import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Plai
 import { KeyValue } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -29,7 +30,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   inboxUnreadCnt;
   groupedMsgs: any = [];
   selectedUserMessages: any = [];
-  tempSelectedUserMessages: any = [];
   message = '';
   selectedCustomer = '';
   selectedMessage = {
@@ -75,13 +75,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
   type = 'all';
   userHeight;
   msgHeight;
-  // @ViewChildren("userMsg") userMsg: QueryList<ElementRef>;
   scrollDone = false;
-  showEnquiry = false;
-  enquiries: any = [];
   qParams;
   customer_label;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  replyMsg;
+  showReply = false;
+  msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+  @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
+  @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -94,12 +96,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private router: Router, private activateRoute: ActivatedRoute) {
     this.activateRoute.queryParams.subscribe(params => {
       this.qParams = params;
-      if (this.qParams.enquiry) {
-        this.showEnquiry = true;
-      }
     });
-  }
-  ngOnChanges() {
   }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -108,6 +105,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.qParams.customer && this.qParams.provider) {
+      if (this.userDet.accountType === 'BRANCH') {
+        this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
+      } else {
+        this.selectedCustomer = this.qParams.customer;
+      }
+    }
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -133,8 +137,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
       this.small_device_display = true;
+      this.showReply = false;
     } else {
       this.small_device_display = false;
+      this.showReply = true;
     }
     const screenHeight = window.innerHeight;
     if (this.screenWidth <= 991) {
@@ -143,14 +149,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
       } else {
         this.userHeight = screenHeight - 234;
       }
-      this.msgHeight = screenHeight - 425;
+      this.msgHeight = screenHeight - 385;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
         this.userHeight = screenHeight - 264;
       } else {
         this.userHeight = screenHeight - 208;
       }
-      this.msgHeight = screenHeight - 410;
+      this.msgHeight = screenHeight - 370;
     }
   }
   ngOnDestroy() {
@@ -159,9 +165,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   readConsumerMessages(consumerId, messageId, providerId) {
+    const enuiryMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
       this.getInboxMessages();
+      if (enuiryMsgs && enuiryMsgs.length > 0) {
+        this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
+      }
+      this.router.navigate(['provider', 'inbox']);
     });
   }
   getInboxUnreadCnt() {
@@ -183,6 +194,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         });
   }
   formatDateDisplay(dateStr) {
+    dateStr = JSON.parse(dateStr);
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
@@ -211,12 +223,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         data => {
           this.messages = data;
           this.scrollDone = true;
-          if (this.showEnquiry) {
-            const inbox = this.generateCustomInbox(this.messages);
-            this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
-          } else {
-            this.setMessages();
-          }
+          this.setMessages();
           this.loading = false;
         },
         () => {
@@ -256,7 +263,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     this.onResize();
     if (this.selectedCustomer !== '') {
-      this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      if (this.small_device_display) {
+        this.showChat = true;
+      }
       const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
       if (unreadMsgs.length > 0) {
         const ids = unreadMsgs.map(msg => msg.messageId);
@@ -316,8 +326,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
         messagestatus: messageStatus,
         attachements: (message.attachements) ? message.attachements : [],
         messageId: message.messageId,
-        read: message.read
+        read: message.read,
+        msgType: message.messageType
       };
+      if (message.replyMessageId) {
+        inboxData['replyMsgId'] = message.replyMessageId;
+      }
       inboxList.push(inboxData);
     }
     return inboxList;
@@ -398,24 +412,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   showChatSection() {
     this.showChat = !this.showChat;
-    // if (!this.showChat) {
-    //   setTimeout(() => {
-    //     this.userMsg.toArray().forEach(element => {
-    //       if (element.nativeElement.innerHTML.trim() === this.selectedCustomer.trim()) {
-
-    // var height = element.nativeElement.offsetHeight;
-    //     window.scroll({
-    //         top: height,
-    //         left: 0,
-    //         behavior: 'smooth'
-    //     });
-
-    // element.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    // return false;
-    //       }
-    //   });
-    //   }, 500);
-    // }
   }
   scrollToElement() {
     try {
@@ -444,9 +440,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       const imgobj = new Image(
         count,
-        { // modal
+        {
           img: imagePath,
-          description: description
         },
       );
       this.image_list_popup_temp.push(imgobj);
@@ -467,9 +462,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
   customerSelection(msgs) {
     this.type = 'all';
     this.message = '';
+    this.replyMsg = null;
     this.clearImg();
     this.selectedCustomer = msgs.key;
-    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
+    this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
@@ -500,7 +496,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
     if (this.message) {
       this.sendMessageCompleted = false;
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', this.message);
+      let post_data = {};
+      post_data['msg'] = this.message;
+      post_data['messageType'] = 'CHAT';
+      if (this.replyMsg) {
+        post_data['replyMessageId'] = this.replyMsg.messageId;
+      }
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -512,6 +513,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const filter = {};
       if (this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
@@ -522,6 +525,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
           () => {
             this.scrollDone = false;
             this.message = '';
+            this.replyMsg = null;
             this.getInboxMessages();
             this.clearImg();
             this.sendMessageCompleted = true;
@@ -539,29 +543,19 @@ export class InboxListComponent implements OnInit, OnDestroy {
   userSelection(user) {
     this.selectedUser = user;
     this.selectedCustomer = '';
-    this.selectedUserMessages = this.tempSelectedUserMessages = [];
+    this.selectedUserMessages = [];
+    this.replyMsg = null;
     this.setMessages();
   }
   changemsgDisplayType(type) {
     this.msgDisplay = type;
     this.selectedUser = this.userDet;
     this.selectedCustomer = '';
-    this.selectedUserMessages = this.tempSelectedUserMessages = [];
+    this.selectedUserMessages = [];
+    this.replyMsg = null;
     if (type === 'all') {
       this.setMessages();
     }
-  }
-  getBusinessProfileLogo(user) {
-    this.provider_services.getUserBussinessProfile(user.id)
-      .subscribe(
-        (logodata: any) => {
-          const blogo = logodata.logo;
-          if (blogo[0]) {
-            return (blogo[0].url) ? blogo[0].url + '?' + this.cacheavoider : '';
-          } else {
-            return false;
-          }
-        });
   }
   goBack() {
     this.selectedUser = this.userDet;
@@ -574,26 +568,49 @@ export class InboxListComponent implements OnInit, OnDestroy {
       return '../../../assets/images/avatar5.png';
     }
   }
-  changeMsgType(type) {
-    this.type = type;
-    this.message = '';
-    if (this.type === 'all') {
-      this.selectedUserMessages = this.tempSelectedUserMessages;
-    } else {
-      this.selectedUserMessages = this.getEnquiry();
-    }
-    setTimeout(() => {
-      this.scrollToElement();
-    }, 100);
-  }
-  getEnquiry() {
-    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
-    return msgs;
-  }
   getMsgType(msg) {
-    return 'chat';
+    if (msg.msgType) {
+      return this.msgTypes[msg.msgType];
+    }
   }
   gotoCustomers() {
     this.router.navigate(['/provider/customers']);
+  }
+  replytoMsg(msg) {
+    this.replyMsg = msg;
+  }
+  closeReply() {
+    this.replyMsg = null;
+  }
+  getReplyMsgbyId(msgId) {
+    const replyMsg = this.inboxList.filter(msg => msg.messageId === msgId);
+    return replyMsg[0];
+  }
+  gotoReplyMsgSection(msgId) {
+    let msgs;
+    if (this.getReplyMsgbyId(msgId).messagestatus === 'out') {
+      msgs = this.outmsgIds;
+    } else {
+      msgs = this.inmsgId;
+    }
+    msgs.toArray().forEach(element => {
+      if (element.nativeElement.innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+        const a = document.getElementsByClassName('selmsg');
+        const b = document.getElementsByClassName('messages');
+        for (let i = 0; i < a.length; i++) {
+          if (a[i].innerHTML.trim() === this.getReplyMsgbyId(msgId).msg.trim()) {
+            b[i].classList.add('blinkelem');
+          }
+        }
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
+    setTimeout(() => {
+      const b = document.getElementsByClassName('messages');
+      for (let i = 0; i < b.length; i++) {
+        b[i].classList.remove('blinkelem');
+      }
+    }, 2000);
   }
 }

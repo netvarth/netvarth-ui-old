@@ -15,6 +15,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { GroupStorageService } from '../../services/group-storage.service';
+
 
 @Component({
     selector: 'app-jaldee-service',
@@ -117,7 +119,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
-    selectedUser = '0';
+    selectedUser ;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -143,7 +145,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tempPostInfoTitle = '';
     showEditSection = false;
     savedisabled = false;
+    active_user: any;
     showNoteError = '';
+    questionnaire: any = [];
+
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -154,9 +159,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
         private dateTimeProcessor: DateTimeProcessor,
+        private groupService: GroupStorageService,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.preSubscription = this.sharedFunctons.getMessage().subscribe(
             (message: any) => {
                 switch (message.ttype) {
@@ -181,7 +188,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.createForm();
                     } else {
                         this.service_data = this.service;
-                        if (this.action === 'show') {
+                        if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
                         }
                         if (this.service_data) {
@@ -391,6 +398,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getGlobalSettings();
         this.getUsers();
+        this.getQuestionnaire();
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -492,9 +500,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            if (this.providerId && this.providerId !== '0' && this.userspecific) {
+            console.log(this.selectedUser);
+            if (this.selectedUser  && this.userspecific) {
                 this.provider = {
-                    'id': this.providerId
+                    'id': this.selectedUser
                 };
                 form_data['provider'] = this.provider;
             } else {
@@ -518,7 +527,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 }
             } else {
-                this.servicesService.actionPerformed(serviceActionModel);
+                //console.log(serviceActionModel);
+               this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
@@ -567,7 +577,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        this.getDepartments();
+        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+            this.getDepartments();
+        }
         if (this.subdomainsettings.serviceBillable) {
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
@@ -696,10 +708,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
+                    // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp', 'VideoCall'];
                 }
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
@@ -730,12 +742,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
-            // this.users_list.push(this.defaultOption);
+            this.selectedUser = this.users_list[0].id;
         });
     }
-    selectUserHandler(value) {
-        this.providerId = value;
-    }
+    // selectUserHandler(value) {
+    //     this.providerId = value;
+    // }
     selectDeptHandler(value) {
         this.departId = value;
         this.getUsers();
@@ -797,11 +809,23 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     checkUrl(urlData) {
         if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
-            const tempvar = urlData.substring( 0 , 4 );
+            const tempvar = urlData.substring(0, 4);
             if (tempvar !== 'http') {
                 this.tool_id = '';
                 this.tool_id = 'https://' + urlData;
             }
         }
+    }
+    getQuestionnaire() {
+        this.provider_services.getAllQuestionnaire().subscribe(data => {
+            this.questionnaire = data;
+        });
+    }
+    getQnrName(id) {
+        const question = this.questionnaire.filter(quest => quest.id === id);
+        return question[0].questionnaireId;
+    }
+    gotoQnr(id) {
+        this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
 }

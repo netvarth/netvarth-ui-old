@@ -12,7 +12,7 @@
 
         <mat-list-option checkboxPosition="before" *ngFor=" let user of user_list" [value] ="user" [selected]="isSelected(user)">
 
-          {{user_list.name}}
+          {{user.firstName}}  {{user.lastName}} 
 
         </mat-list-option>
 

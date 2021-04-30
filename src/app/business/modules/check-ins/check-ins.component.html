@@ -257,7 +257,7 @@
                               class="fa wtsapaud-icon"></i>
                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
                               class="fa wtsapvid-icon"></i>&nbsp;
-                            {{service.name}}
+                            {{getServiceName(service.name)}}
                           </mat-checkbox>
                         </li>
                       </div>
@@ -460,12 +460,12 @@
                       <td class="q-actions td-four">
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (checkin.service.serviceType === 'physicalService')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                          *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                          *ngIf="(time_type==1||time_type==3) && (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                           <span
@@ -694,12 +694,12 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (checkin.service.serviceType === 'physicalService')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                          *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                          *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                           <span
@@ -1025,12 +1025,12 @@
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
-                        *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
+                        *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (checkin.service.serviceType === 'physicalService')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                        *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                        *ngIf="(time_type==1||time_type==3) && (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span
@@ -1440,12 +1440,12 @@
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'STARTED', checkin)"
-                        *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
+                        *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (checkin.service.serviceType === 'physicalService')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                        *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                        *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span

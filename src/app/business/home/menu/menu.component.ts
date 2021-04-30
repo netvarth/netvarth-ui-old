@@ -37,6 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   orderstatus;
   minimizeMenu = false;
   showMenu = false;
+  enquiryCount;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -116,6 +117,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'showmenu':
           this.showMenu = message.value;
           break;
+        case 'enquiryCount':
+          this.getEnquiryCount();
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });
@@ -193,6 +197,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.isAvailableNow();
     this.getProviderSettings();
     this.getOrderStatus();
+    this.getEnquiryCount();
   }
 
   ngOnDestroy() {
@@ -256,5 +261,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   showMenuSection() {
     this.showMenu = false;
     this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenu });
+  }
+  getEnquiryCount() {
+    const providerId = 0;
+    this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {
+      this.enquiryCount = data;
+    });
   }
 }

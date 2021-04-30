@@ -42,6 +42,9 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     type;
     @ViewChild('teleservice') scrollFrame: ElementRef;
     scrollContainer;
+    jaldeeVideoRecord_status: any;
+    jaldeeVideoRecord_statusstr: string;
+    videocredits: ArrayBuffer;
     constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
         private wordProcessor: WordProcessor,
@@ -79,6 +82,9 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         this.getVirtualCallingModesList();
         this.getDomainSubdomainSettings();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        // this.getRecordingStatus();
+        this.getJaldeeVideoCredits();
+        this.getJaldeeRecordingStatus();
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(
@@ -192,6 +198,9 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     gotoCustomerNotification() {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
     }
+    gotoJaldeeVideoSettings() {
+        this.router.navigate(['provider', 'settings', 'comm', 'jaldeevideo']);
+    }
     getName(type) {
         if (this.virtualCallModesList) {
             const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === type);
@@ -216,6 +225,57 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
                         reject(error);
                     }
                 );
+        });
+    }
+    getJaldeeVideoCredits() {
+        this.provider_services.getJaldeeVideoRecording()
+        .subscribe(
+          (data) => {
+            console.log(data)
+           this.videocredits = data;
+          }
+        );
+    }
+    getJaldeeRecordingStatus(){
+        this.getRecordingStatus().then(
+            (recordStatus)=> {
+              this.jaldeeVideoRecord_status = recordStatus;
+              this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+            }
+        );
+    }
+    handle_RecordingStatus(event) {
+        const is_VirtualCallingMode = (event.checked) ? 'ENABLED' : 'DISABLED';
+        this.provider_services.setJaldeeVideoRecording(is_VirtualCallingMode)
+            .subscribe(
+                () => {
+                    this.snackbarService.openSnackBar('Jaldee Video settings' + ' updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.getRecordingStatus().then(
+                        (recordStatus)=> {
+                            this.jaldeeVideoRecord_status = recordStatus;
+                            this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+                        }
+                    );
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getRecordingStatus().then(
+                        (recordStatus)=> {
+                            this.jaldeeVideoRecord_status = recordStatus;
+                            this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+                        }
+                    );
+                }
+            );
+    }
+    getRecordingStatus() {
+        return new Promise((resolve, reject) => {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {                
+                resolve(data.videoRecording);                
+            }, (error)=>{
+                reject(error);
+            });
         });
     }
 }

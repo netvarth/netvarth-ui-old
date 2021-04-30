@@ -15,9 +15,12 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+
 @Component({
   selector: 'app-provider-appointment-detail',
-  templateUrl: './provider-appointment-detail.component.html'
+  templateUrl: './provider-appointment-detail.component.html',
+  styleUrls: ['./provider-app.component.css']
+
 })
 
 export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
@@ -119,8 +122,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-   // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
-   // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
+    // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
@@ -203,14 +206,14 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
             this.waitlist_data.history = true;
           }
           if (this.waitlist_data.apptStatus !== 'blocked') {
-          this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getWaitlistNotes(this.waitlist_data.uid);
           }
           this.getCheckInHistory(this.waitlist_data.uid);
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
-         }
+          }
 
         },
         error => {
@@ -475,36 +478,36 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
   viewMore() {
     this.view_more = !this.view_more;
-}
+  }
 
-gotoActions(checkin?) {
-  let waitlist = [];
-  if (checkin) {
-    waitlist = checkin;
-  }
-  const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
-      checkinData: waitlist,
-      multiSelection: this.apptMultiSelection,
-      timetype: this.timetype,
-      NoViewDetail: 'true'
+  gotoActions(checkin?) {
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
     }
-  });
-  actiondialogRef.afterClosed().subscribe(data => {
-    this.getProviderSettings();
-  });
-}
-showImagesection(index) {
-  (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
-}
-getThumbUrl(attachment) {
-  if (attachment.s3path.indexOf('.pdf') !== -1) {
-    return attachment.thumbPath;
-  } else {
-    return attachment.s3path;
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        multiSelection: this.apptMultiSelection,
+        timetype: this.timetype,
+        NoViewDetail: 'true'
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      this.getProviderSettings();
+    });
   }
-}
+  showImagesection(index) {
+    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
+  }
 }

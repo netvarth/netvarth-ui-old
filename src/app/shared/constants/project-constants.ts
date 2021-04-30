@@ -109,6 +109,7 @@ export const projectConstantsLocal = {
   DATE_MM_DD_YY_FORMAT: 'MMM d, y',
   DATE_EE_MM_DD_YY_FORMAT: 'EEE, MMM dd, y',
   DATE_MM_DD_YY_HH_MM_A_FORMAT: 'medium',
+  DATE_FORMAT_WITH_TIME: 'MMM d, y h:mm a',
   BASE_SCHEDULE: [
     {
       day: 4,
@@ -438,7 +439,7 @@ export const projectConstantsLocal = {
     NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
     ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
-    ONLINE_CHECKIN_REQUIRED: 'Online check-in required',
+    ONLINE_CHECKIN_REQUIRED: 'Online booking required',
     CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons',
     CONSUMER_CAN_NOT_APPLY_COUPON:'Coupon cannot be applied.',
     PROVIDER_COUPON_NOT_APPLICABLE_SERVICE:'Provider coupon not applicable for this service',
@@ -694,6 +695,23 @@ export const projectConstantsLocal = {
     'image/png',
     'image/jpeg',
     'application/pdf'
+  ],
+  MRFILETYPES_UPLOAD: [
+    'image/jpg',
+    'image/png',
+    'image/jpeg',
+    'image/bmp',
+    'image/gif',
+    'image/webp',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/pdf',
+    'video/quicktime',
+    'video/mp4',
+    'video/mpeg',
+    'audio/mpeg',
+    'audio/mp3',
+    'audio/ogg'
   ],
   LIVETRACK_CONST: {
     'KILOMETER': 'km'
@@ -973,5 +991,11 @@ export const projectConstantsLocal = {
     { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false , clas: 'orderintransit'},
     { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false , clas: 'ordershipped'},
     { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true , clas: 'ordercancelled'}
-  ]
+  ],
+  INBOX_MSG_TYPES: {
+    CHAT: 'Chat',
+    ENQUIRY: 'Enquiry',
+    ALERT: 'Alert',
+    BOOKINGS: 'Bookings'
+  }
 };

@@ -19,17 +19,29 @@ export class S3UrlProcessor {
     ) {}
 
     /**
-     * Method which returns the Presigned Urls
+     * Method which returns the Jsons
      * @param accountUniqueId The Unique Id which represents S3 Bucket for a particular Account
      * @param listOfUrlTypes Type of the Url eg. services, businessProfile etc.
-     * @returns { "services": 'https://presigned1/services', "businessProfile": 'https://presigned1/services'}
+     * @returns { "services": 'services.json', "businessProfile": businessprofile.json}
      */ 
-    getPresignedUrls(accountUniqueId, userId, listOfUrlTypes) {
+    getJsonsbyTypes(accountUniqueId, userId, listOfUrlTypes) {
         let path = 'provider/account/settings/config/'+ accountUniqueId;
         if (userId) {
             path = path + '/' + userId;
         }
         path = path + '/' + listOfUrlTypes;
         return this.servicemeta.httpGet(path);
+    }
+
+    /**
+     * 
+     * @param jsonStr_Obj 
+     */
+    getJson(jsonStr_Obj) {
+        if(typeof jsonStr_Obj === 'object') {
+            return jsonStr_Obj;
+        } else {
+            return JSON.parse(jsonStr_Obj);
+        }
     }
 }

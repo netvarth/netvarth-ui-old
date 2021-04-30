@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -59,6 +61,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   is_noSMS = false;
   userId;
   jaldeeConsumer = true;
+  private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -71,7 +74,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private s3Processor: S3UrlProcessor
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
@@ -111,15 +115,25 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.gets3curl()
-        .then(
-          () => {
-            this.setLabel();
-          },
-          () => {
-            this.setLabel();
+      this.subs.sink =  this.s3Processor.getJsonsbyTypes(this.data.user_id, null, 'terminologies').subscribe(
+        (accountS3s) => {
+          if (accountS3s['terminologies']) {
+            this.terminologies = this.s3Processor.getJson(accountS3s['terminologies']);
           }
-        );
+        }, () => { },
+        () => {
+          this.setLabel();
+        });
+
+      // this.gets3curl()
+      //   .then(
+      //     () => {
+      //       this.setLabel();
+      //     },
+      //     () => {
+      //       this.setLabel();
+      //     }
+      //   );
     } else {
       this.setLabel();
     }
@@ -132,29 +146,30 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
+    this.subs.unsubscribe();
   }
-  gets3curl() {
-    return new Promise<void>((resolve, reject) => {
-      this.sharedfunctionObj.getS3Url('provider')
-        .then(
-          res => {
-            let UTCstring = null;
-            UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-            this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
-              .subscribe(termi => {
-                this.terminologies = termi;
-                resolve();
-              },
-                () => {
-                  reject();
-                });
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-  }
+  // gets3curl() {
+  //   return new Promise<void>((resolve, reject) => {
+  //     this.sharedfunctionObj.getS3Url('provider')
+  //       .then(
+  //         res => {
+  //           let UTCstring = null;
+  //           UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+  //           this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
+  //             .subscribe(termi => {
+  //               this.terminologies = termi;
+  //               resolve();
+  //             },
+  //               () => {
+  //                 reject();
+  //               });
+  //         },
+  //         () => {
+  //           reject();
+  //         }
+  //       );
+  //   });
+  // }
   setLabel() {
     this.api_loading = false;
     let provider_label = this.receiver_name;
@@ -339,7 +354,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.disableButton = true;
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'BOOKINGS';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -353,6 +370,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       foruuid.push(this.uuid);
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const postdata = {
         medium: {
           email: this.email,
@@ -484,7 +503,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'BOOKINGS';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -496,6 +517,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       if (this.type === 'appt') {
         this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
           dataToSend)
@@ -572,7 +595,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'CHAT';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -584,6 +609,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+	    dataToSend.append('message', blobpost_Data);
       this.shared_services.addProvidertoConsumerNote(this.user_id,
         dataToSend)
         .subscribe(
@@ -602,7 +629,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      // dataToSend.append('message', post_data.communicationMessage);
+      post_data['msg'] = post_data.communicationMessage;
+      post_data['messageType'] = 'ENQUIRY';
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -614,6 +643,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+      dataToSend.append('message', blobpost_Data);
       const filter = {};
       filter['account'] = this.user_id;
       if (this.userId) {

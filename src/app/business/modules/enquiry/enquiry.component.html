@@ -1,0 +1,38 @@
+<section class="">
+    <div class="title-gb no-padding">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+            Enquiry ({{enquiries.length}})
+        </div>
+    </div>
+</section>
+<section>
+    <div class="content comn-cls">
+        <div class="col-md-12 no-padding">
+            <div class="card p0">
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small"
+                    *ngIf="!loading && enquiries.length > 0">
+                    <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)">
+                        <div class="user-name">
+                            {{getUser(enquiry.accountName)}}
+                        </div>
+                        <div class="cont2 mgn-lt-10">
+                            {{enquiry.accountName}}
+                        </div>
+                        <div class="cont3" *ngIf="userDet.accountType === 'BRANCH'">
+                            {{enquiry.providerName}}
+                        </div>
+                        <div class="cont4">
+                            {{enquiry.timeStamp | date : newTimeDateFormat}}
+                        </div>
+                        <!-- <i class="fa fa-arrow-right" aria-hidden="true"></i> -->
+                    </div>
+                </div>
+                <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small"
+                    *ngIf="!loading && enquiries.length === 0">
+                    No enquiries
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -32,6 +32,7 @@ import { UploadSignatureComponent } from './prescription/upload-digital-signatur
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { UploadFileComponent } from './uploadfile/uploadfile.component';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
+import { ShowuploadfileComponent } from './uploadfile/showuploadfile/showuploadfile.component';
 
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
@@ -54,7 +55,8 @@ import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfil
               ManualSignatureComponent,
               UploadSignatureComponent,
               UploadFileComponent,
-              MrfileuploadpopupComponent
+              MrfileuploadpopupComponent,
+              ShowuploadfileComponent
               // SignaturePadModule
             ],
   imports: [
@@ -78,7 +80,8 @@ import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfil
   ShareRxComponent,
   InstructionsComponent,
   ImagesviewComponent,
-  MrfileuploadpopupComponent
+  MrfileuploadpopupComponent,
+  ShowuploadfileComponent
   ],
   providers: [
     MedicalrecordService

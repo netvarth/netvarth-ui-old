@@ -10,7 +10,7 @@
         <div class="c-outer m0 p0">
           <div class="c-body">
             <div class="card title-gb">
-              <h5 class="mgn-up-10 bold">Inbox <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
+              <h5 class="mgn-up-10 bold">Messages <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                     class="fa fa-arrow-left"></i></a></h5>
             </div>
             <div class="card p0">
@@ -18,10 +18,10 @@
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                 <div class="d-flex flex-row minhgt-80" *ngIf="messages.length==0">
                   <div class="no-msg-section">
-                      <div class="nomsg-img mgn-bt-20"></div>
-                      No messages till now
+                    <div class="nomsg-img mgn-bt-20"></div>
+                    No messages till now
                   </div>
-              </div>
+                </div>
                 <div class="d-flex flex-column-fluid">
                   <div class="d-flex flex-row" *ngIf="messages.length>0">
                     <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
@@ -35,12 +35,12 @@
                               <div class="d-flex align-items-center">
                                 <div class="symbol symbol-circle symbol-50 mr-3">
                                   <div class="user-name">
-                                    {{getUserName(user.key)}}
+                                    {{getUserName(user.value)}}
                                   </div>
                                 </div>
                                 <div class="d-flex flex-column">
                                   <a class="text-dark-75 text-hover-primary font-weight-bold font-size-lg">
-                                    {{user.key}}</a>
+                                    {{user.value[(user.value.length-1)].accountName}}</a>
                                   <span class="text-muted font-weight-bold font-size-sm">
                                     {{formatDateDisplay(user.value[user.value.length-1].timeStamp)}}</span>
                                 </div>
@@ -65,21 +65,34 @@
                         <div class="card-header align-items-center px-4 py-3">
                           <div class="text-center flex-grow-1">
                             <div class="text-dark-75 font-weight-bold font-size-h5">
-                              {{selectedProvider}}</div>
+                              {{selectedProviderName}}</div>
                           </div>
                         </div>
                         <div class="card-body no-padding-small">
-                          <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 50}">
+                          <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 55}">
                             <div class="messages" *ngFor="let msg of selectedUserMessages">
                               <div *ngIf="msg.owner.id!==userDet.id" class="d-flex flex-column mb-5 align-items-start">
                                 <div class="d-flex align-items-center">
                                   <div>
                                     <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+                                    <span class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                   </div>
                                 </div>
                                 <div
-                                  class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
-                                  <div [innerHTML]="msg.msg | nl2br"></div>
+                                  class="rounded pad-10 bg-light-success font-weight-bold font-size-lg text-left msg-width">
+                                  <div class="reply-text">
+                                    <a (click)="replytoMsg(msg)">Reply</a>
+                                  </div>
+                                  <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
+                                    (click)="gotoReplyMsgSection(msg.replyMessageId)">
+                                    <div class="username">
+                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
+                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                    <div class="text-dark-50 replymsg"
+                                      [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
+                                  </div>
+                                  <div [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg text-dark-75">
+                                  </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
                                       <a (click)="openImage(msg.attachements, i)"
@@ -95,12 +108,24 @@
                               <div *ngIf="msg.owner.id==userDet.id" class="d-flex flex-column mb-5 align-items-end">
                                 <div class="d-flex align-items-center">
                                   <div>
+                                    <span class="greenc font-size-sm mgn-rt-5">{{getMsgType(msg)}}</span>
                                     <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                   </div>
                                 </div>
-                                <div
-                                  class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
-                                  <div [innerHTML]="msg.msg | nl2br"></div>
+                                <div class="rounded pad-10 bg-light-primary font-weight-bold font-size-lg msg-width">
+                                  <div class="reply-text">
+                                    <a (click)="replytoMsg(msg)">Reply</a>
+                                  </div>
+                                  <div class="reply-msg text-left" *ngIf="msg.replyMessageId"
+                                    (click)="gotoReplyMsgSection(msg.replyMessageId)">
+                                    <div class="username">
+                                      {{(getReplyMsgbyId(msg.replyMessageId).owner.id===userDet.id) ? 'You' :
+                                      getReplyMsgbyId(msg.replyMessageId).accountName}}</div>
+                                    <div class="text-dark-50 replymsg"
+                                      [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
+                                  </div>
+                                  <div [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left text-dark-75">
+                                  </div>
                                   <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
                                       <a (click)="openImage(msg.attachements, i)"
@@ -119,8 +144,23 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card-footer align-items-center">
-                          <div class="d-flex align-items-center justify-content-between mt-5">
+                        <div class="card-footer align-items-center no-padding">
+                          <div class="reply-section" *ngIf="replyMsg">
+                            <div class="main-sec">
+                              <div class="username">{{(replyMsg.owner.id===userDet.id) ? 'You' :
+                                selectedProviderName}}</div>
+                              <div class="replymsg">{{replyMsg.msg}}</div>
+                            </div>
+                            <div class="close">
+                              <svg (click)="closeReply()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                width="24" height="24">
+                                <path fill="currentColor"
+                                  d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z">
+                                </path>
+                              </svg>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center justify-content-between pad-20">
                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                               class="form-control border-0 p-0" placeholder="Type a message *"
                               [(ngModel)]="message"></textarea>
@@ -132,7 +172,7 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display" [class.disabled]="message==''"
+                                *ngIf="!small_device_display"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"

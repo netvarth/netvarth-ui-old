@@ -25,7 +25,8 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 declare let cordova: any;
 @Component({
   selector: 'app-appointments',
-  templateUrl: './appointments.component.html'
+  templateUrl: './appointments.component.html',
+  styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   elementType = 'url';
@@ -480,6 +481,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+  }
+  getServiceName(serviceName) {
+    let name='';
+  if(serviceName.length>20){
+   name=serviceName.substring(0,20) +'...';
+  }else{
+    name = serviceName;
+  }
+  return name;
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
@@ -1375,8 +1385,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
+        // this.pagination.totalCnt = result;
+        // Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureAppointments(Mfilter)
           .subscribe(
             data => {
@@ -2605,7 +2615,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
+    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
   selectAllStarted() {
     this.startedAppointmentsChecked = {};

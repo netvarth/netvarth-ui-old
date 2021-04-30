@@ -250,14 +250,24 @@ export class TeleServiceComponent implements OnInit {
         if (this.waiting_type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
+                    console.log(meetingdata);
                     this.meetlink_data = meetingdata;
-                    this.starting_url = this.meetlink_data.startingUl;
+                    if(this.callingModes === 'VideoCall') {
+                        this.starting_url = this.meetlink_data.joiningUrl;
+                    } else {
+                        this.starting_url = this.meetlink_data.startingUl;
+                    }
                 });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
-                    this.starting_url = this.meetlink_data.startingUl;
+                    if(this.callingModes === 'VideoCall') {
+                        this.starting_url = this.meetlink_data.joiningUrl;
+                    } else {
+                        this.starting_url = this.meetlink_data.startingUl;
+                    }
+                   
                 });
         }
     }
