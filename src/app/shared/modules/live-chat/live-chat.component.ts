@@ -40,6 +40,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     subs = new SubSink();
     source;
     account;
+    recordingFlag = false;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -126,6 +127,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                    _this.meetObj = data;
                    _this.loading = false;
                    _this.providerReady = true;
+                   _this.recordingFlag = _this.meetObj.recordingFlag;
                 //    'Ready..'
                    _this.status = 'Ready..'
                 if (_this.cronHandle) {
@@ -203,6 +205,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             name: tokenObj.roomName,
             audio: true,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
+
             bandwidthProfile: {
                 video: {
                     mode: 'collaboration',

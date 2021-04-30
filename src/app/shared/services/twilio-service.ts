@@ -175,15 +175,35 @@ export class TwilioService {
     }
 
     enableVideo() {
-        this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
-            videoTrack.track.enable();
+        const _this= this;
+        // this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
+        //     videoTrack.track.enable();
+        // });
+        Video.createLocalVideoTrack({
+            deviceId: { exact: _this.selectedVideoId }
+        }).then(function (localVideoTrack) {
+            _this.activeRoom.localParticipant.publishTrack(localVideoTrack);
+            console.log(_this.activeRoom.localParticipant.identity + ' added track: ' + localVideoTrack.kind);
+            _this.attachTracks([localVideoTrack], _this.localVideo.nativeElement, _this.activeRoom);
         });
         this.video = true;
     }
     disableVideo() {
-        this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
-            videoTrack.track.disable();
+        const _this = this;
+        _this.activeRoom.localParticipant.videoTracks.forEach(publication => {
+            publication.track.stop();
+            publication.unpublish();
+            if (_this.localVideo) {
+                const localElement = _this.localVideo.nativeElement;
+                while (localElement.firstChild) {
+                    localElement.removeChild(localElement.firstChild);
+                }
+            }
         });
+
+        // this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
+        //     videoTrack.track.disable();
+        // });
         this.video = false;
     }
     mute() {
@@ -237,6 +257,7 @@ export class TwilioService {
         // previewTracksClone
         console.log("Options");
         console.log(options);
+        
         
         Video.connect(accessToken, options).then(
             (room: any) => {
@@ -358,7 +379,10 @@ export class TwilioService {
         // of all Participants, including that of the LocalParticipant.
         room.on('disconnected', function () {
             console.log('Left');
+
             room.localParticipant.tracks.forEach(publication => {
+                publication.track.stop();
+                publication.unpublish();
                 const attachedElements = publication.track.detach();
                 attachedElements.forEach(element => element.remove());
             });
@@ -407,5 +431,7 @@ export class TwilioService {
             this.cam2Device = null;
             this.selectedVideoId = null;    
         }
+        this.video = true;
+        this.microphone = true;
     }
 }

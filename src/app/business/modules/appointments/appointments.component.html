@@ -294,6 +294,8 @@
                                     class="fa meet-icon"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
                                     class="fa zoom-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                     class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
                                     class="fa phon-icon"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
@@ -483,6 +485,8 @@
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                             class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -570,6 +574,8 @@
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>  
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -729,6 +735,8 @@
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                             <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                             <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -835,6 +843,8 @@
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                             <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>  
                             <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -931,6 +941,8 @@
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1024,6 +1036,8 @@
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i *ngIf="appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -9,7 +9,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
   templateUrl: './wl-card.component.html',
   styleUrls: ['./wl-card.component.css']
 })
-export class WlCardComponent implements OnInit {
+export class WlCardComponent implements OnInit, OnChanges {
 
   @Input() booking;
   @Input() type;
@@ -38,13 +38,15 @@ export class WlCardComponent implements OnInit {
   showLiveTrackIdBtn = false;
   showLiveTrackBtn = false;
   showPayBtn = false;
-  showReceiptBtn= false;
+  showReceiptBtn = false;
   showPaidInfo = false;
   videoBtnCaption;
 
-  constructor(private wordProcessor: WordProcessor,  private dateTimeProcessor: DateTimeProcessor) { }
+  constructor(private wordProcessor: WordProcessor, private dateTimeProcessor: DateTimeProcessor) { }
 
   ngOnInit(): void {
+  }
+  ngOnChanges() {
     if (this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus === 'arrived') {
       this.showRescheduleBtn = true;
     }
@@ -72,30 +74,37 @@ export class WlCardComponent implements OnInit {
     if (this.booking.waitlistStatus == 'done') {
       this.showRateBtn = true;
     }
-    if (!this.checkIfFav(this.booking.providerAccount.id)) {
-      this.showFavouritesBtn = true;
-      this.showRemFavouritesBtn = false;
-    } else {
-      this.showFavouritesBtn = false;
-      this.showRemFavouritesBtn = true;
+    if (this.extras && this.extras['favourites']) {
+      if (!this.checkIfFav(this.booking.providerAccount.id)) {
+        this.showFavouritesBtn = true;
+        this.showRemFavouritesBtn = false;
+      } else {
+        this.showFavouritesBtn = false;
+        this.showRemFavouritesBtn = true;
+      }
     }
     if (this.booking.hasAttachment) {
       this.showViewAttachBtn = true;
     }
-    if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0
+    console.log(this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton === 'ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0
+      && this.booking.service.virtualCallingModes[0].callingMode === 'VideoCall'
+      && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn'));
+    if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton === 'ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0
       && this.booking.service.virtualCallingModes[0].callingMode === 'VideoCall'
       && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn')) {
-        this.showJoinJaldeeVideoBtn = true;
-        this.showJoinOtherVideoBtn = false;
-        this.videoBtnCaption = 'Join Video Consultation';
-        if (this.booking.videoCallMessage && this.booking.videoCallMessage === 'Call in progress') {
-          this.videoBtnCaption = 'Re-join Video Consultation';
-        }
+
+      console.log("Show ME");
+      this.showJoinJaldeeVideoBtn = true;
+      this.showJoinOtherVideoBtn = false;
+      this.videoBtnCaption = 'Join Video Consultation';
+      if (this.booking.videoCallMessage && this.booking.videoCallMessage === 'Call in progress') {
+        this.videoBtnCaption = 'Re-join Video Consultation';
+      }
     }
-    if(this.type!=='future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' &&
-    this.booking.service.virtualCallingModes.length > 0  && 
-    (this.booking.service.virtualCallingModes[0].callingMode === 'Zoom' || this.booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
-    && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn')) {
+    if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton === 'ENABLED' && this.booking.service.serviceType === 'virtualService' &&
+      this.booking.service.virtualCallingModes.length > 0 &&
+      (this.booking.service.virtualCallingModes[0].callingMode === 'Zoom' || this.booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
+      && (this.booking.waitlistStatus === 'started' || this.booking.waitlistStatus === 'arrived' || this.booking.waitlistStatus === 'checkedIn')) {
       this.showJoinJaldeeVideoBtn = false;
       this.showJoinOtherVideoBtn = true;
       this.videoBtnCaption = 'Join Video Consultation';
@@ -103,13 +112,13 @@ export class WlCardComponent implements OnInit {
         this.videoBtnCaption = 'Re-join Video Consultation';
       }
     }
-    if(this.booking.amountDue>0 && (this.booking.billViewStatus=='Show') && this.booking.waitlistStatus != 'cancelled' && this.booking.billStatus!='Settled') {
+    if (this.booking.amountDue > 0 && (this.booking.billViewStatus == 'Show') && this.booking.waitlistStatus != 'cancelled' && this.booking.billStatus != 'Settled') {
       this.showPayBtn = true;
     }
-    if (this.booking.billViewStatus == 'Show' && ((!(this.booking.amountDue>0) && this.booking.waitlistStatus != 'cancelled') || (this.booking.waitlistStatus === 'cancelled' && this.booking.paymentStatus !== 'NotPaid'))){
+    if (this.booking.billViewStatus == 'Show' && ((!(this.booking.amountDue > 0) && this.booking.waitlistStatus != 'cancelled') || (this.booking.waitlistStatus === 'cancelled' && this.booking.paymentStatus !== 'NotPaid'))) {
       this.showReceiptBtn = true;
     }
-    if(this.booking.amountPaid){
+    if (this.booking.amountPaid) {
       this.showPaidInfo = true;
     }
   }

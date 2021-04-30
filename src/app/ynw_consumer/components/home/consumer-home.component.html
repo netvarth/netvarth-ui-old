@@ -98,11 +98,11 @@
                                     (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -118,11 +118,11 @@
                                     (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>

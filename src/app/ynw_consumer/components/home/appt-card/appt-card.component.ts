@@ -120,13 +120,15 @@ export class ApptCardComponent implements OnInit, OnChanges {
     if(this.booking.amountPaid){
       this.showPaidInfo = true;
     }
-    if (!this.checkIfFav(this.booking.providerAccount.id)) {
-      this.showFavouritesBtn = true;
-      this.showRemFavouritesBtn = false;
-    } else {
-      this.showFavouritesBtn = false;
-      this.showRemFavouritesBtn = true;
-    }
+    if (this.extras && this.extras['favourites']) {
+      if (!this.checkIfFav(this.booking.providerAccount.id)) {
+        this.showFavouritesBtn = true;
+        this.showRemFavouritesBtn = false;
+      } else {
+        this.showFavouritesBtn = false;
+        this.showRemFavouritesBtn = true;
+      }
+    } 
   }
   checkIfFav(id) {
     let fav = false;

@@ -4,6 +4,8 @@
             <span class="name">
                 <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
                     <span>
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'VideoCall' || data.serdet.virtualCallingModes[0].callingMode == 4)"></i>
                         <i class="fa phon-icon"
                             *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Phone' || data.serdet.virtualCallingModes[0].callingMode == 3)"></i>
                         <i class="fa meet-icon"

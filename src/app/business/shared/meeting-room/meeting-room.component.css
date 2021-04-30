@@ -175,6 +175,10 @@ header {
   width: 30px; 
 }
 
+.record {
+  padding:22px 15px 14px 18px;
+}
+
 .rec-check {
   font-weight: normal;
   font-size: small;

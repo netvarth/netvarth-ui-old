@@ -117,7 +117,10 @@
                     (click)="disconnect()"></i>
                 <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
                     (click)="openChat()"></i> -->
-                <i class="pull-right record-text record-icon" *ngIf="recordingFlag"></i>
+                <!-- <span class="pull-right fa-stack" style="vertical-align: top;" *ngIf="recordingFlag"> -->
+                    <!-- <i class="fa fa-square fa-stack-2x"></i> -->
+                    <i class="fa fa-circle record red blink pull-right"></i>
+                <!-- </span> -->
             </div>
         </div>
         <select id="video-devices" hidden></select>

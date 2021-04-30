@@ -139,6 +139,8 @@
                           class="fa meet-icon know-status-i"></i>
                         <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Zoom'"
                           class="fa zoom-icon know-status-i"></i>
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='VideoCall'"
+                          class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5 know-status-i"></i>
                         <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='audioService'"
                           class="fa wtsapaud-icon know-status-i"></i>
                         <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='videoService'"
