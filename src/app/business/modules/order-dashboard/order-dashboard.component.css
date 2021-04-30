@@ -1,8 +1,8 @@
-.order-history-card.card {
+.order-card.card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
-.order-history-card.card > div:nth-child(1) {
+.order-card.card > div:nth-child(1) {
     height: 100% !important;
 }
 
@@ -48,7 +48,7 @@
     right: -15px;
 }
 
-.order-history-card.card .top-sec .order-number-head {
+.order-card.card .top-sec .order-number-head {
     color: #073B4C;
     font-weight: 700;
     font-size: 12.5px;
@@ -58,7 +58,7 @@
     padding-left: 15px !important;
 }
 
-.order-history-card.card .top-sec .order-number {
+.order-card.card .top-sec .order-number {
     color: #073B4C;
     font-weight: 700;
     font-size: 12.5px;
@@ -69,7 +69,7 @@
     padding-right: 10px;
 }
 
-.order-history-card.card .top-sec .order-actions {
+.order-card.card .top-sec .order-actions {
     font-weight: 700;
     font-size: 18px;
     color: #717171;
@@ -77,11 +77,11 @@
     margin-right: 10px;
 }
 
-.order-history-card.card .main-sec {
+.order-card.card .main-sec {
     padding: 8px 15px !important;
 }
 
-.order-history-card.card .main-sec .consumer-name {
+.order-card.card .main-sec .consumer-name {
     color: #395789 !important;
     text-transform: capitalize !important;
     width: calc(300px - 30px) !important;
@@ -93,83 +93,83 @@
 }
 
 @media (max-width:345px) {
-    .order-history-card.card .main-sec .consumer-name {
+    .order-card.card .main-sec .consumer-name {
         width: calc(270px - 30px) !important;
     }
 }
 
-.order-history-card.card .main-sec .date-and-time {
+.order-card.card .main-sec .date-and-time {
     color: #717171;
     font-weight: 700;
     font-size: 14px;
 }
 
-.order-history-card.card .main-sec .order-status {
+.order-card.card .main-sec .order-status {
     font-size: 14px;
     font-weight: 700;
 }
 
-.order-history-card.card .main-sec .order-status.custom-red {
+.order-card.card .main-sec .order-status.custom-red {
     color: #ea3939 !important;
 }
 
-.order-history-card.card .main-sec .order-status.custom-green {
+.order-card.card .main-sec .order-status.custom-green {
     color: #2ca92c !important;
 }
 
-.order-history-card.card .main-sec .order-status .fa.fa-pencil-square-o {
+.order-card.card .main-sec .order-status .fa.fa-pencil-square-o {
     font-size: 14px !important;
     color: #505050 !important;
     font-weight: 700 !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec {
+.order-card.card .main-sec .main-bottom-sec {
     margin-top: 8px !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-end !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec .quantity,
-.order-history-card.card .main-sec .main-bottom-sec .amount {
+.order-card.card .main-sec .main-bottom-sec .quantity,
+.order-card.card .main-sec .main-bottom-sec .amount {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec .quantity {
+.order-card.card .main-sec .main-bottom-sec .quantity {
     margin-bottom: 5px !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec .quantity .head,
-.order-history-card.card .main-sec .main-bottom-sec .amount .head {
+.order-card.card .main-sec .main-bottom-sec .quantity .head,
+.order-card.card .main-sec .main-bottom-sec .amount .head {
     text-transform: uppercase !important;
     font-weight: 700 !important;
     color: #717171 !important;
     font-size: 11px !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec .quantity .value,
-.order-history-card.card .main-sec .main-bottom-sec .amount .value {
+.order-card.card .main-sec .main-bottom-sec .quantity .value,
+.order-card.card .main-sec .main-bottom-sec .amount .value {
     color: #395789 !important;
     font-size: 14px !important;
     font-weight: 700 !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec .amount .value i {
+.order-card.card .main-sec .main-bottom-sec .amount .value i {
     color: #395789 !important;
     font-size: 13px !important;
     font-weight: 700 !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec > div:nth-child(2) {
+.order-card.card .main-sec .main-bottom-sec > div:nth-child(2) {
     display: flex !important;
     flex-direction: row !important;
     justify-content: flex-end !important;
     align-items: flex-end !important;
 }
 
-.order-history-card.card .main-sec .main-bottom-sec > div:nth-child(2) .card-icons {
+.order-card.card .main-sec .main-bottom-sec > div:nth-child(2) .card-icons {
     width: 25px !important;
     margin-left: 5px !important;
 }

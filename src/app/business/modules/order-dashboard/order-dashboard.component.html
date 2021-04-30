@@ -190,60 +190,87 @@
             No orders for today
           </div>
           <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              >
+            <div class="order-card card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index">
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
+                <!-- <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
+                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i> -->
+                <div class="ribbon">
+                  <span class="order-number-head">Order No.:</span>
+                  <span class="order-number">{{order.orderNumber}}</span>
+                </div>
+                <i class="pull-right fa fa-ellipsis-h order-actions" (click)="stopprop($event);showActionPopup(order)"></i>
               </div>
               <div class="main-sec">
-                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
+                <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                  {{order.orderTimeWindow.timeSlots[0].sTime}} - 
+                  {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div  [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
+                <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'custom-red':'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                    *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+
+                <div class="main-bottom-sec">
+                  <div>
+                    <div class="quantity">
+                      <span class="head">Quantity</span>
+                      <span class="value" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}} Nos.</span>
+                      <span class="value" *ngIf="!order.totalItemQuantity">N/A</span>
+                    </div>
+                    <div class="amount">
+                      <span class="head">Amount</span>
+                      <span *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
+                        class="value" [class]="getPayClass(order)"
+                        (click)="stopprop($event);gotoBill(order)"
+                        [matTooltip]="getPaymentTooltip(order)">
+                        <i class="fa fa-inr"></i>
+                        {{order.cartAmount | currency:'':''}}
+                      </span>
+                      <span *ngIf=" !(!order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0)"
+                        class="value" [class]="getPayClass(order)">
+                        N/A
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <i *ngIf="order.homeDelivery" class="delivery-icon card-icons"></i>
+                    <i *ngIf="order.storePickup" class="storepickup-icon card-icons"></i>
+                    <i *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred card-icons"></i> 
+                    <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon card-icons"></i>
+                    <span class="online-icon card-icons" *ngIf="order.orderMode == 'ONLINE_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                    </span>
+                    <span class="phonein-icon card-icons" *ngIf="order.orderMode == 'PHONE_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                    </span>
+                    <span class="walkin-icon card-icons" *ngIf="order.orderMode == 'WALKIN_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
+                    </span>
+                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span> -->
+                  </div>
                 </div>
               </div>
-            </div>
+              </div>
+              
               <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
-
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
+                <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
+                  {{getDisplayformatTruncateLabel(order)}}
+                  <span (click)="displayLabel(order)" style="cursor: pointer;">...</span>
+                </span>
+              </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
+                <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
+                  {{getDisplayformatTruncateLabel(order)}}
+                </span>
+              </div>
             </div>
           </ng-container>
         </div>
@@ -387,61 +414,87 @@
             No future orders
           </div>
           <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              >
+            <div class="order-card card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index">
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
+                <!-- <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
+                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i> -->
+                <div class="ribbon">
+                  <span class="order-number-head">Order No.:</span>
+                  <span class="order-number">{{order.orderNumber}}</span>
+                </div>
+                <i class="pull-right fa fa-ellipsis-h order-actions" (click)="stopprop($event);showActionPopup(order)"></i>
               </div>
               <div class="main-sec">
-                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
+                <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                  {{order.orderTimeWindow.timeSlots[0].sTime}} - 
+                  {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ? 'custom-red':'custom-green'">
+                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending': order.orderStatus | capitalizeFirst}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
 
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                  *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+                <div class="main-bottom-sec">
+                  <div>
+                    <div class="quantity">
+                      <span class="head">Quantity</span>
+                      <span class="value" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}} Nos.</span>
+                      <span class="value" *ngIf="!order.totalItemQuantity">N/A</span>
+                    </div>
+                    <div class="amount">
+                      <span class="head">Amount</span>
+                      <span *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
+                        class="value" [class]="getPayClass(order)"
+                        (click)="stopprop($event);gotoBill(order)"
+                        [matTooltip]="getPaymentTooltip(order)">
+                        <i class="fa fa-inr"></i>
+                        {{order.cartAmount | currency:'':''}}
+                      </span>
+                      <span *ngIf="!(!order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0)"
+                        class="value" [class]="getPayClass(order)">
+                        N/A
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <i *ngIf="order.homeDelivery" class="delivery-icon card-icons"></i>
+                    <i *ngIf="order.storePickup" class="storepickup-icon card-icons"></i>
+                    <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred card-icons"></i> 
+                    <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon card-icons"></i>
+                    <span class="online-icon card-icons" *ngIf="order.orderMode == 'ONLINE_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                    </span>
+                    <span class="phonein-icon card-icons" *ngIf="order.orderMode == 'PHONE_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                    </span>
+                    <span class="walkin-icon card-icons" *ngIf="order.orderMode == 'WALKIN_ORDER'"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
+                    </span>
+                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span> -->
+                  </div>
                 </div>
               </div>
-            </div>
+              </div>
 
               <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
+                <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
+                  {{getDisplayformatTruncateLabel(order)}}
+                  <span (click)="displayLabel(order)" style="cursor: pointer;">...</span>
+                </span>
+              </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
+                <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;">
+                  {{getDisplayformatTruncateLabel(order)}}
+                </span>
+              </div>
             </div>
           </ng-container>
         </div>
@@ -584,7 +637,7 @@
             No history orders
           </div>
           <ng-container *ngIf="historyOrders.length > 0">
-            <div class="order-history-card card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index">
+            <div class="order-card card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index">
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
