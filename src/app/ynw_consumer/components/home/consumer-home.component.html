@@ -17,7 +17,7 @@
                                     Hello {{usr_details.userName}} !
                                 </span> <br>
                                 <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="gotoDetails()">
-                                    Go back &nbsp; <i class="fa fa-search"></i></button>
+                                    <i class="fa fa-home"></i> Home</button>
                             </h1>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right no-padding">
@@ -36,8 +36,8 @@
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9 no-padding-small">
                                 <div class="fl-right disply-flex">
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
-                                        <button *ngIf="!showOrder" class="flat-btn full-wdth" mat-flat-button
-                                            (click)="showOrders()">My Orders</button>
+                                        <!-- <button *ngIf="!showOrder" class="flat-btn full-wdth" mat-flat-button
+                                            (click)="showOrders()">My Orders</button> -->
                                         <button *ngIf="!showOrder" class="flat-icon-btn" mat-flat-button
                                             (click)="showOrders()" [matTooltip]="'Orders'">
                                             <i class="fa ordr_ico"></i>

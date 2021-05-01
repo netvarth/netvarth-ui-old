@@ -223,8 +223,8 @@
                                     <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="inboxiconTooltip">
                                         <div class="ot-bx">
-                                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">
-                                                {{inboxUnreadCnt}}</div>
+                                            <!-- <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">
+                                                {{inboxUnreadCnt}}</div> -->
                                             <i data-icon="H"></i>
                                         </div>
                                     </div>
@@ -237,11 +237,11 @@
                                         <i class="fa fa-user-circle-o"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="redirectto('dashboard')">
+                                       <button mat-menu-item (click)="redirectto('dashboard')">
                                             <i class="icon-dashboard"></i>
-                                            <span>{{dashboard_cap}}</span>
+                                            <span>My Bookings</span>
                                         </button>
-                                        <button mat-menu-item (click)="redirectto('profile')">
+                                       <!--   <button mat-menu-item (click)="redirectto('profile')">
                                             <i class="icon-profile"></i>
                                             <span>{{user_profile}}</span>
                                         </button>
@@ -260,7 +260,7 @@
                                         <button mat-menu-item (click)="help()">
                                             <i data-icon="B"></i>
                                             <span>{{help_cap}}</span>
-                                        </button>
+                                        </button> -->
                                         <button mat-menu-item (click)="doLogout()">
                                             <i class="icon-logout"></i>
                                             <span>{{logout_cap}}</span>

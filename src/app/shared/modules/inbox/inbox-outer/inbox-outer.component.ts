@@ -102,6 +102,7 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
+          this.selectedProvider = projectConstantsLocal.PROVIDER_ACCOUNT_ID.toString();
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
