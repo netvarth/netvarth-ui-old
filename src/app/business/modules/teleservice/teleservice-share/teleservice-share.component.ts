@@ -124,7 +124,11 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+      if(this.data.app === 'VideoCall') {
+        this.videocall_msg = ' , your ' + this.data.app + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+      }else {
+        this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+      }
       this.waitFor = '\n3. Wait for the video call to start';
       this.gooleWaitFor = '\n2. Wait for the video call to start';
       this.zoomWaitFor = '\n2. Wait for the video call to start';
