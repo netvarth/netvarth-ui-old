@@ -2324,5 +2324,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         break;
     }
   }
-
+  gotoDetails() {
+    this.router.navigate(['searchdetail', JSON.parse(projectConstantsLocal.ACCOUNTENC_ID)]);
+  }
 }

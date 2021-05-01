@@ -35,13 +35,14 @@
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
                                                 {{waitlist?.providerAccount?.businessName | capitalizeFirst}}
-                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)"
+                                                &nbsp;
+                                                <!-- <div *ngIf="checkIfFav(waitlist.providerAccount.id)"
                                                     class="icon-favourite-filled"
                                                     (click)="doDeleteFavProvider(waitlist.providerAccount, $event)">
                                                 </div>
                                                 <div *ngIf="!checkIfFav(waitlist.providerAccount.id)"
                                                     class="icon-favourite"
-                                                    (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
+                                                    (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div> -->
                                             </h3>
                                             <a class="loc-cls" [href]="waitlist.queue.location.googleMapUrl"
                                                 target="_blank">

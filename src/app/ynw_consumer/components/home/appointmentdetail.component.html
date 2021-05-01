@@ -35,11 +35,12 @@
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(appt.providerAccount)">
                                                 {{appt.providerAccount.businessName | capitalizeFirst}}
-                                                &nbsp;<div *ngIf="checkIfFav(appt.providerAccount.id)"
+                                                &nbsp;
+                                                <!-- <div *ngIf="checkIfFav(appt.providerAccount.id)"
                                                     class="icon-favourite-filled"
                                                     (click)="doDeleteFavProvider(appt.providerAccount, $event)"></div>
                                                 <div *ngIf="!checkIfFav(appt.providerAccount.id)" class="icon-favourite"
-                                                    (click)="addFavProvider(appt.providerAccount.id, $event)"></div>
+                                                    (click)="addFavProvider(appt.providerAccount.id, $event)"></div> -->
                                             </h3>
                                             <a class="loc-cls" [href]="appt.location.googleMapUrl" target="_blank">
                                                 <i class="fa fa-map-marker"></i>

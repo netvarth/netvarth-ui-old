@@ -54,7 +54,6 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
         if (dt) {
             dtsarr = dt.split(' ');
             const dtarr = dtsarr[0].split('-');
-            console.log(dtarr)
             let retval = '';
             if (mod === 'all') {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
@@ -75,6 +74,9 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
        this.subsription= this.shared_services.getConsumerPayments().subscribe(
             (payments) => {
                 this.payments = payments;
+                console.log(projectConstantsLocal.PROVIDER_ACCOUNT_ID);
+                this.payments = this.payments.filter(payment => payment.accountId === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
+                console.log(this.payments);
             }
         );
     }

@@ -16,9 +16,8 @@
                                 <span class="ng-tns-c16-8 greeting">
                                     Hello {{usr_details.userName}} !
                                 </span> <br>
-                                <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">Find
-                                    Service
-                                    Provider &nbsp; <i class="fa fa-search"></i></button>
+                                <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="gotoDetails()">
+                                    Go back &nbsp; <i class="fa fa-search"></i></button>
                             </h1>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right no-padding">
@@ -60,7 +59,7 @@
                                             <i class="fa myjld-payment"></i>
                                         </button>
                                     </div>
-                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
+                                    <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                         <button class="flat-btn full-wdth" mat-flat-button
                                             (click)="getmyfavourites()">My
                                             Favourites</button>
@@ -68,7 +67,7 @@
                                             [matTooltip]="'My Favourites'">
                                             <i class="fa myjld-fav"></i>
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                         <button class="flat-btn full-wdth" mat-flat-button
                                             (click)="gotoHistory()">History</button>
@@ -235,7 +234,7 @@
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
-                                                <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                <!-- <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
                                                     <span class="icon-favourite-filled"
                                                         (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
                                                 </button>
@@ -243,7 +242,7 @@
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
                                                         to Favourites</span>
-                                                </button>
+                                                </button> -->
                                             </mat-menu>
                                         </div>
                                         <div
@@ -340,7 +339,7 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                    <!-- <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
                                                         <span class="icon-favourite-filled"
                                                             (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
                                                     </button>
@@ -348,7 +347,7 @@
                                                         <span class="icon-favourite"
                                                             (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourites</span>
-                                                    </button>
+                                                    </button> -->
                                                 </mat-menu>
                                             </div>
                                             <div
@@ -443,7 +442,7 @@
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
-                                                <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                <!-- <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
                                                     <span class="icon-favourite-filled"
                                                         (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
                                                 </button>
@@ -451,7 +450,7 @@
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
                                                         to Favourites</span>
-                                                </button>
+                                                </button> -->
                                             </mat-menu>
                                         </div>
                                         <div
@@ -545,7 +544,7 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                    <!-- <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
                                                         <span class="icon-favourite-filled"
                                                             (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
                                                     </button>
@@ -553,7 +552,7 @@
                                                         <span class="icon-favourite"
                                                             (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourites</span>
-                                                    </button>
+                                                    </button> -->
                                                 </mat-menu>
                                             </div>
                                             <div

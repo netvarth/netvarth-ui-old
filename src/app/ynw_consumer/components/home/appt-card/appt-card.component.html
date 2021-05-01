@@ -25,12 +25,12 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</button>
             <button mat-menu-item *ngIf="showMeetingDetailsBtn" (click)="cardActionPerformed('appt', 'meetingDetails', booking, $event)">
                 <i class="fa fa-sticky-note-o" aria-hidden="true"></i>Meeting details</button>
-            <button mat-menu-item *ngIf="showRemFavouritesBtn">
+            <!-- <button mat-menu-item *ngIf="showRemFavouritesBtn">
                 <span class="icon-favourite-filled" (click)="cardActionPerformed('appt', 'removeFavourite', booking, $event)">
                     &nbsp;&nbsp;{{remove_fav_cap}}</span></button>
             <button mat-menu-item *ngIf="showFavouritesBtn">
                 <span class="icon-favourite" (click)="cardActionPerformed('appt', 'addToFavourites', booking, $event)">
-                    &nbsp;&nbsp;Add to Favourites</span></button>
+                    &nbsp;&nbsp;Add to Favourites</span></button> -->
             <button class="custId-cursor" mat-menu-item *ngIf="showLiveTrackBtn" (click)="cardActionPerformed('appt', 'liveTrack', booking, $event)">
                 <i class="fa fa-check fl-right"></i> Sharing location</button>
             <button mat-menu-item *ngIf="showLiveTrackIdBtn" (click)="cardActionPerformed('appt', 'liveTrackId', booking, $event)">
