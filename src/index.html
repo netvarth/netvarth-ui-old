@@ -2,23 +2,21 @@
 <html lang="en" style="height: auto; min-height: 100%;">
 
 <head>
-  <meta name="fragment" content="!">
   <meta charset="utf-8">
-  <title>Jaldee-Avoid Waiting in Queues</title>
-  <base href="/">
+  <title>Jaldee</title>
+  <base href="./">
   <!-- <base href="/jaldee/"> -->
-
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-  <meta name="description" content="Jaldee">
+  <!-- <meta name="description" content="Jaldee"> -->
   <meta name="keywords" content="Jaldee, Avoid waiting">
   <meta name="author" content="Jaldee Soft Private Limited">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script> -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM&amp;libraries=places" type="application/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM&libraries=places"
+    type="application/javascript"></script>
 
   <!-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD887lzwqSirHdEhOWW00xdXNTNztLMVeA"></script> -->
 
@@ -33,59 +31,96 @@
     FontAwesomeConfig = { searchPseudoElements: true };
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
-
-  <!-- Google Tag Manager -->
-  <!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W4KS9C5');</script> -->
-  <!-- End Google Tag Manager -->
-
-  <!-- Start of HubSpot Embed Code -->
-  <!-- <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/9210323.js"></script> -->
-
-  <!-- End of HubSpot Embed Code -->
-  <!-- Messenger Chat Plugin Code -->
-  <div id="fb-root"></div>
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        xfbml: true,
-        version: 'v10.0'
-      });
-    };
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
-  <!-- Your Chat Plugin code -->
-  <div class="fb-customerchat" attribution="setup_tool" page_id="1176319332515659">
-  </div>
 </head>
 
 <body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
-  <!-- Google Tag Manager (noscript) -->
-  <!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4KS9C5"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-  <!-- End Google Tag Manager (noscript) -->
-
-  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+  <link href="./assets/css/style.css" rel="stylesheet">
   <app-root></app-root>
-  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+<!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
 </html>
 <script>
-  var DEBUG_MODE_ON = true; // hide browser console in production
+  var DEBUG_MODE_ON = false; // hide browser console in production
   if (!DEBUG_MODE_ON) {
     console = console || {};
     console.log = function () { };
   }
+  var exitApp = false, intval = setInterval(function () { exitApp = false; }, 1000);
+  function onConfirm(buttonIndex) {
+    if (buttonIndex === 2) {
+      clearInterval(intval);
+      navigator.app.exitApp();
+    }
+  }
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function alertDismissed() {
 
+  }
+  function onDeviceReady() {
+    if (typeof FCMPlugin != 'undefined') {
+      FCMPlugin.getToken(function (token) {
+        console.log(token);
+        localStorage.setItem("mUniqueId", token);
+      }, function (err) {
+        localStorage.setItem("mUniqueId", null);
+      });
+      FCMPlugin.onTokenRefresh(function (token) {
+        console.log("Token Refreshed : " + token);
+        localStorage.setItem("mUniqueId", token);
+        if (localStorage.getItem("ynw-user")) {
+          setPushToken(token);
+        }
+      });
+      FCMPlugin.onNotification(function (data) {
+        if (data.wasTapped) {
+          navigator.notification.alert(
+            data.message,  // message
+            alertDismissed,         // callback
+            data.title,            // title
+            'Ok'                  // buttonName
+          );
+        } else {
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          navigator.notification.alert(
+            data.message,  // message
+            alertDismissed,         // callback
+            data.title,            // title
+            'Ok'                  // buttonName
+          );
+
+        }
+      }, function (msg) {
+        console.log('onNotification callback successfully registered: ' + msg);
+      },
+        function (err) {
+          console.log('Error registering onNotification callback: ' + err);
+        }
+      );
+    };
+    document.addEventListener("backbutton", function (e) {
+      e.preventDefault();
+      if (exitApp) {
+        navigator.notification.confirm('Press Ok to Exit from Jaldee Business App', onConfirm, 'Jaldee for Business', ['Cancel', 'Ok']);
+      }
+      else {
+        exitApp = true
+        history.back(1);
+      }
+    }, false);
+  }
 </script>
+<script>
+  window.addEventListener = function () {
+    (window.EventTarget || Window).prototype.addEventListener.apply(this, arguments);
+  };
+  window.removeEventListener = function () {
+    (window.EventTarget || Window).prototype.removeEventListener.apply(this, arguments);
+  };
+  document.addEventListener = function () {
+    (window.EventTarget || Document).prototype.addEventListener.apply(this, arguments);
+  };
+  document.removeEventListener = function () {
+    (window.EventTarget || Document).prototype.removeEventListener.apply(this, arguments);
+  };
+</script>
+<script src="cordova.js"></script>

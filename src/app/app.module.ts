@@ -53,7 +53,6 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
-import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
@@ -114,7 +113,6 @@ export function init_app(globalService: GlobalService) {
     BusinessPageComponent,
     ForceDialogComponent,
     ConsumerJoinComponent,
-    CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
