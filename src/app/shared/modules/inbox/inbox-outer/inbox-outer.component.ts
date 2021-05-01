@@ -105,6 +105,7 @@ export class InboxOuterComponent implements OnInit {
           this.selectedProvider = projectConstantsLocal.PROVIDER_ACCOUNT_ID.toString();
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            if (this.selectedUserMessages) {
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
@@ -114,6 +115,7 @@ export class InboxOuterComponent implements OnInit {
             setTimeout(() => {
               this.scrollToElement();
             }, 100);
+          }
           }
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
           this.loading = false;
