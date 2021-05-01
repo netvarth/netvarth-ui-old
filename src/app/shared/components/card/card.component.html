@@ -204,11 +204,11 @@
         </div>
         <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
         <p class="availability user-available">
-            <ng-container *ngIf="user.apptTime && user.apptTime.caption">
+            <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
                 {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
             <ng-container
-                *ngIf="(!user.apptTime || (user.apptTime && !user.apptTime.caption)) && user.waitingTime && user.waitingTime.caption">
+                *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
             </ng-container>
         </p>

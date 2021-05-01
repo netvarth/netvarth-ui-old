@@ -287,7 +287,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   elementType: 'url' | 'canvas' | 'img' = 'url';
   checkinProviderList: any;
   activeUser: any;
-  nonfirstCouponCount=0;
+  nonfirstCouponCount = 0;
   wlServices;
   apptServices;
   private subscriptions = new SubSink();
@@ -408,7 +408,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
             this.domainList = domainConfig;
-            console.log('accountId..'+this.accountEncId);
+            console.log('accountId..' + this.accountEncId);
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: string) => {
                 this.provider_id = id;
@@ -434,8 +434,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  isfirstCheckinOfferProvider(){
-  let firstCheckin = true;
+  isfirstCheckinOfferProvider() {
+    let firstCheckin = true;
     if (this.activeUser) {
       this.checkinProviderList = this.activeUser.checkedInProviders;
       if (this.checkinProviderList.length > 0) {
@@ -453,8 +453,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     return firstCheckin;
 
-} 
- ngOnDestroy() {
+  }
+  ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
     }
@@ -493,7 +493,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
 
   gets3curl() {
-       console.log(this.provider_id);
+    console.log(this.provider_id);
     let accountS3List = 'settings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
@@ -521,7 +521,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (accountS3s['providerCoupon']) {
               this.processS3s('providerCoupon', accountS3s['providerCoupon']);
             }
-           
+
             // this.processS3s('settings', accountS3s['settings']);
             // this.processS3s('terminologies', accountS3s['terminologies']);
             // this.processS3s('coupon', accountS3s['coupon']);
@@ -646,6 +646,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       case 'departmentProviders': {
         this.deptUsers = result;
+        this.setUserWaitTime();
         break;
       }
       case 'jaldeediscount': {
@@ -671,7 +672,26 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  setUserWaitTime() {
+    let apptTimearr = [];
+    let waitTimearr = [];
+    if (this.deptUsers && this.deptUsers.length > 0) {
+      for (let dept of this.deptUsers) {
+        if (!this.showDepartments) {
+          apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+          waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+        } else {
+          if (dept.users && dept.users.length > 0) {
+            for (let user of dept.users) {
+              apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+              waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+            }
+          }
+        }
+      }
+    }
+    this.getUserApptTime(apptTimearr, waitTimearr);
+  }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
     this.api_loading = false;
@@ -692,7 +712,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.business_exists = true;
 
     this.provider_bussiness_id = this.businessjson.id;
-    console.log('businessId'+this.provider_bussiness_id);
+    console.log('businessId' + this.provider_bussiness_id);
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url;
@@ -836,24 +856,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   setAccountLocations(res) {
     this.locationjson = res;
-    let apptTimearr = [];
-    let waitTimearr = [];
-    if (this.deptUsers && this.deptUsers.length > 0) {
-      for (let dept of this.deptUsers) {
-        if (!this.showDepartments) {
-          apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-          waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-        } else {
-          if (dept.users && dept.users.length > 0) {
-            for (let user of dept.users) {
-              apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-              waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-            }
-          }
-        }
-      }
-    }
-    this.getUserApptTime(apptTimearr, waitTimearr);
     this.location_exists = true;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
@@ -882,7 +884,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   setAccountCoupons(res) {
-    console.log('JC'+this.s3CouponList);
+    console.log('JC' + this.s3CouponList);
     this.s3CouponList.JC = [];
     if (res !== undefined) {
       this.s3CouponList.JC = res;
@@ -891,7 +893,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   SetAccountStoreCoupons(res) {
-    console.log('OWN'+this.s3CouponList);
+    console.log('OWN' + this.s3CouponList);
     if (res !== undefined) {
       this.s3CouponList.OWN = res;
       console.log(this.s3CouponList)
@@ -1912,14 +1914,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     // $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
 
-      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-          width: '50%',
-          panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-          disableClose: true,
-          data: servData
-        });
-        this.servicedialogRef.afterClosed().subscribe(() => {
-        });
+    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
+      data: servData
+    });
+    this.servicedialogRef.afterClosed().subscribe(() => {
+    });
 
   }
   getTerminologyTerm(term) {
@@ -1985,7 +1987,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
       }
     }
-    
+
   }
 
   claimBusiness() {
@@ -2301,7 +2303,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   changeLocation(loc) {
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-  
+
   }
   cardClicked(actionObj) {
     if (actionObj['type'] === 'waitlist') {
@@ -2547,7 +2549,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
         showpric: this.activeCatalog.showPrice,
-        unique_id:this.provider_id,
+        unique_id: this.provider_id,
         businessDetails: businessObject
 
       }
