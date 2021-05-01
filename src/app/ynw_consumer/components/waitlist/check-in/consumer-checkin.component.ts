@@ -752,7 +752,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                        }, 500);
+                        }, 2000);
                     }
                 }
                 const member = [];

@@ -746,7 +746,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     } else {
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
-                        }, 500);
+                        }, 2000);
                     }
                 }
                 const member = [];
