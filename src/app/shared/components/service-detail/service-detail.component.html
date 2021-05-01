@@ -94,7 +94,7 @@
                     <div class="duration">
                         <span class="data-label"> {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} Fee : </span>
                         <span style="font-weight: bold" class="rupee-font data-value">
-                            <i class='fa fa-inr'></i>{{data.serdet.totalAmount | currency: '':''}}
+                            <i class='fa fa-inr'></i>{{data.serdet.totalAmount}}
                         </span>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     <div class="prepayment">
                         <span class="data-label">Advance Payment : </span>
                         <span style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.minPrePaymentAmount | currency: '':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.minPrePaymentAmount}}
                         </span>
                     </div>
                 </div>
@@ -117,18 +117,18 @@
                     <div class="prepayment">
                         <span class="data-label">{{prepayment_amount}} : </span>
                         <span style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.minAmount | currency: '':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.minAmount}}
                         </span>
                     </div>
                 </div>
                 <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                     <div class="duration">
-                        <span class="data-label">Min amount: </span>
+                        <span class="data-label">Min amount : </span>
                         <span class="data-value" *ngIf="data.serdet.minValue" style="font-weight: bold">
                             {{data.serdet.minValue}}
                         </span>
                         <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.minDonationAmount| currency:'':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.minDonationAmount}}
                         </span>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                             {{data.serdet.maxValue}}
                         </span>
                         <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.maxDonationAmount| currency:'':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.maxDonationAmount}}
                         </span>
                     </div>
                 </div>
