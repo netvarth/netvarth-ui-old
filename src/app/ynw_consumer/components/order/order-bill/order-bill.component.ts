@@ -7,7 +7,7 @@ import { CheckInHistoryServices } from '../../../../shared/modules/consumer-chec
 import { projectConstants } from '../../../../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { JcCouponNoteComponent } from '../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
 // import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';

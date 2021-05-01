@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../shared/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 
 @Injectable()
 export class ProviderSharedFuctions {

@@ -44,7 +44,7 @@ import { ApptDetailComponent } from './components/home/appointmentdetail.compone
 import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
 import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 import { ConsumerFooterModule } from './components/footer/footer.module';
-import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
+// import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ActionPopupComponent } from './components/home/action-popup/action-popup.component';
 import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
@@ -55,7 +55,7 @@ import { OrderDetailComponent } from './components/home/order-detail/order-detai
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 
 import { CommunicationComponent } from '../shared/components/communication/communication.component';
-import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -63,6 +63,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
+import { JcCouponNoteComponent } from '../shared/components/jc-Coupon-note/jc-Coupon-note.component';
+import { ProviderWaitlistCheckInConsumerNoteModule } from '../shared/modules/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../shared/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 
 
 @NgModule({
@@ -96,7 +99,8 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     GalleryModule,
     MatTooltipModule,
     CapitalizeFirstPipeModule,
-    QuestionnaireModule
+    QuestionnaireModule,
+    ProviderWaitlistCheckInConsumerNoteModule
   ],
   declarations: [
     ConsumerComponent,
@@ -110,14 +114,14 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
-    MyfavouritesComponent,
     ActionPopupComponent,
     ViewRxComponent,
     OrderComponent,
     OrderDetailComponent,
     ApptCardComponent,
     WlCardComponent,
-
+    JcCouponNoteComponent,
+    ProviderWaitlistCheckInCancelPopupComponent
 
   ],
   exports: [ConfirmBoxComponent, MatBadgeModule],
@@ -132,13 +136,15 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
     ActionPopupComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    JcCouponNoteComponent,
+    ProviderWaitlistCheckInCancelPopupComponent
   ],
   providers: [
     SharedServices,
     ConsumerServices,
     ConsumerDataStorageService,
-    ProviderSharedFuctions,
+    // ProviderSharedFuctions,
     WaitlistDetailResolver,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

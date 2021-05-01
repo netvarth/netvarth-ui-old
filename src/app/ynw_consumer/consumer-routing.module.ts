@@ -10,7 +10,6 @@ import { ChangePasswordComponent } from '../shared/modules/change-password/chang
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
-import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 const routes: Routes = [
   {
@@ -28,14 +27,11 @@ const routes: Routes = [
       { path: 'checkindetails', component: CheckinDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'apptdetails', component: ApptDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'orderdetails', component: OrderDetailComponent, canActivate: [AuthGuardLogin] },
-      { path: 'myfav', component: MyfavouritesComponent, canActivate: [AuthGuardLogin] },
       { path: 'appointment', loadChildren: () => import('../ynw_consumer/components/waitlist/appointment/consumer-appointment.module').then(m => m.ConsumerAppointmentModule) },
       { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },
       { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) },
       { path: 'order', loadChildren: () => import('../ynw_consumer/components/order/order.module').then(m => m.ConsumerOrderModule) },
       { path: 'questionnaire', loadChildren: () => import('../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
-      { path: 'mywallet', loadChildren: () =>  import('../ynw_consumer/modules/wallet/wallet.module').then(m => m.WalletModule) },
-
     ]
   }
 ];

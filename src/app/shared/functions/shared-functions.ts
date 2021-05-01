@@ -7,7 +7,6 @@ import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.compo
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
-import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -25,7 +24,6 @@ export class SharedFunctions {
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
-    private providerDataStorage: ProviderDataStorageService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,
@@ -62,21 +60,12 @@ export class SharedFunctions {
 
   doLogout() {
     const promise = new Promise<void>((resolve, reject) => {
-      if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
-        this.providerLogout()
-          .then(
-            data => {
-              resolve();
-            }
-          );
-      } else {
         this.consumerLogout()
           .then(
             data => {
               resolve();
             }
           );
-      }
     });
     return promise;
   }
@@ -97,23 +86,7 @@ export class SharedFunctions {
     return promise;
   }
 
-  private providerLogout() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.shared_service.ProviderLogout()
-        .subscribe(data => {
-          this.providerDataStorage.setWeightageArray([]);
-          this.lStorageService.clearLocalstorage();
-          this.sessionStorageService.clearSessionStorage();
-          // this.clearSessionStorage();
-          resolve();
-        },
-          error => {
-            resolve();
-          }
-        );
-    });
-    return promise;
-  }
+
   consumerLogin(post_data, moreParams?) {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.sendMessage({ ttype: 'main_loading', action: true });
@@ -137,86 +110,6 @@ export class SharedFunctions {
             this.sendMessage({ ttype: 'main_loading', action: false });
             if (error.status === 401) {
               // Not registred consumer or session alredy exists
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-
-  businessLogin(post_data) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-          data => {
-            this.providerDataStorage.setWeightageArray([]);
-            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
-            this.setLoginData(data, post_data, 'provider');
-            resolve(data);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-  providerLogin(post_data) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-          data => {
-            this.providerDataStorage.setWeightageArray([]);
-            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
-            this.setLoginData(data, post_data, 'provider');
-            resolve(data);
-            this.router.navigate(['/provider']);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-
-  adminLogin(post_data, type) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.adminLogin(post_data, type)
-        .subscribe(
-          data => {
-            resolve(data);
-            this.setLoginData(data, post_data, 'provider');
-            this.router.navigate(['/provider']);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
               reject(error);
               // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
             } else {

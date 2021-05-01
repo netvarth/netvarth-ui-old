@@ -193,26 +193,26 @@ export class LoginComponent implements OnInit, AfterViewInit {
     };
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
-    if (this.data.type === 'provider') {
-      post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-      // this.shared_functions.clearSessionStorage();
-      this.sessionStorageService.clearSessionStorage();
-      this.shared_functions.providerLogin(post_data)
-        .then(
-          () => {
-            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-            // this.dialogRef.close();
-            setTimeout(() => {
-              this.dialogRef.close();
-            }, projectConstants.TIMEOUT_DELAY_SMALL);
-          },
-          error => {
-            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-            this.api_loading = false;
-          }
-        );
-    } else if (this.data.type === 'consumer') {
+    // if (this.data.type === 'provider') {
+    //   post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+    //   // this.shared_functions.clearSessionStorage();
+    //   this.sessionStorageService.clearSessionStorage();
+    //   this.shared_functions.providerLogin(post_data)
+    //     .then(
+    //       () => {
+    //         const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+    //         this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+    //         // this.dialogRef.close();
+    //         setTimeout(() => {
+    //           this.dialogRef.close();
+    //         }, projectConstants.TIMEOUT_DELAY_SMALL);
+    //       },
+    //       error => {
+    //         ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+    //         this.api_loading = false;
+    //       }
+    //     );
+    // } else if (this.data.type === 'consumer') {
       if (post_data.loginId.startsWith('55') && this.test_provider === false) {
         setTimeout(() => {
           ob.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
@@ -240,7 +240,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }
           );
       }
-    }
+    // }
   }
   doForgotPassword() {
     this.resetApiErrors();

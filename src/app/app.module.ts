@@ -42,20 +42,14 @@ import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
-import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
-import { ProviderAppModule } from './ynw_provider/provider-app.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
-import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
-import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
-import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
@@ -67,19 +61,14 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
-import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
-import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
-import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
-import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SessionStorageService } from './shared/services/session-storage.service';
@@ -91,7 +80,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
-import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
@@ -103,9 +91,7 @@ import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
-import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { ProviderServices } from './ynw_provider/services/provider-services.service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -125,23 +111,15 @@ export function init_app(globalService: GlobalService) {
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
-    RequestForComponent,
     BusinessPageComponent,
     ForceDialogComponent,
-    AdminLoginComponent,
     ConsumerJoinComponent,
-    ManageProviderComponent,
     CheckYourStatusComponent,
     PaymentLinkComponent,
-    VoicecallDetailsSendComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    CheckoutSharedComponent,
-    AddAddressComponent,
     ItemDetailsSharedComponent,
-    MeetingRoomComponent,
-    CommunicationComponent,
-    ServicePageHealthcareComponent
+    CommunicationComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -151,13 +129,10 @@ export function init_app(globalService: GlobalService) {
     ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
-    VoicecallDetailsSendComponent,
     CouponsComponent,
-    RequestForComponent,
     ForceDialogComponent,
     JdnComponent,
-    UpdateProfilePopupComponent,
-    AddAddressComponent
+    UpdateProfilePopupComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -181,24 +156,19 @@ export function init_app(globalService: GlobalService) {
     MaintenanceModule,
     ScrollbarModule,
     OwlModule,
-    ProviderAppModule,
     LoadingSpinnerModule,
     LazyModule,
     ScrollToModule.forRoot(),
     DateFormatPipeModule,
-    DisplayboardLayoutContentModule,
-    SalesChannelModule,
     ForgotPasswordModule,
     SetPasswwordModule,
-    JoyrideModule.forRoot(),
     ConsumerFooterModule,
     TruncateModule,
     CardModule,
     MatStepperModule,
     NgxIntlTelInputModule,
     ModalModule.forRoot(),
-    ShareIconsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ShareIconsModule
   ],
   providers: [
     BsModalService,
@@ -219,12 +189,12 @@ export function init_app(globalService: GlobalService) {
     AuthService,
     SharedServices,
     GlobalService,
+    ProviderServices,
     SharedFunctions,
     FormMessageDisplayService,
     ErrorMessagingService,
     SearchDetailServices,
     ProviderDetailService,
-    ProviderDataStorageService,
     ShareService,
     SessionStorageService,
     LocalStorageService,

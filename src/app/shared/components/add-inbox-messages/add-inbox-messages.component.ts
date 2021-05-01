@@ -9,10 +9,10 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+// import { MatDialog } from '@angular/material/dialog';
+// import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../services/word-processor.service';
-import { SnackbarService } from '../../services/snackbar.service';
+// import { SnackbarService } from '../../services/snackbar.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
@@ -72,9 +72,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public common_datastorage: CommonDataStorageService,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
-    private dialog: MatDialog,
+    // private dialog: MatDialog,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService,
+    // private snackbarService: SnackbarService,
     private s3Processor: S3UrlProcessor
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -736,24 +736,24 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
     );
   }
-  gotoSmsAddon() {
-    this.dialogRef.close();
-    if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-    } else {
-      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-        width: '50%',
-        data: {
-          type: 'addons'
-        },
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true
-      });
-      this.addondialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.getSMSCredits();
-        }
-      });
-    }
-  }
+  // gotoSmsAddon() {
+  //   this.dialogRef.close();
+  //   if (this.corpSettings && this.corpSettings.isCentralised) {
+  //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+  //       width: '50%',
+  //       data: {
+  //         type: 'addons'
+  //       },
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true
+  //     });
+  //     this.addondialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         this.getSMSCredits();
+  //       }
+  //     });
+  //   }
+  // }
 }

@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { JcCouponNoteComponent } from '../../../../components/jc-Coupon-note/jc-Coupon-note.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { S3UrlProcessor } from '../../../../services/s3-url-processor.service';

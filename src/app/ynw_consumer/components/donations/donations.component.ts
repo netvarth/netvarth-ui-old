@@ -6,7 +6,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../../shared/modules/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 
 @Component({
     selector: 'app-consumer-donations',

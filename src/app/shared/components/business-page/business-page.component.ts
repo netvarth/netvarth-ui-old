@@ -17,7 +17,6 @@ import { SearchDetailServices } from '../search-detail/search-detail-services.se
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
-import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -2728,45 +2727,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       message += '\r\n';
     }
     return message;
-  }
-  getContactInfo(phonelist, emaillist) {
-    const contactinfo = [];
-    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
-      if (phonelist.length > 0) {
-        for (let i = 0; i < phonelist.length; i++) {
-          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label);
-        }
-      }
-      if (emaillist && emaillist.length > 0) {
-        for (let i = 0; i < emaillist.length; i++) {
-          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label);
-        }
-      }
-    }
-    return contactinfo;
-  }
-  showContactInfo(phonelist, emaillist) {
-    const contactinfo = [];
-    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
-      if (phonelist.length > 0) {
-        for (let i = 0; i < phonelist.length; i++) {
-          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label + '<br/>');
-        }
-      }
-      if (emaillist && emaillist.length > 0) {
-        for (let i = 0; i < emaillist.length; i++) {
-          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label + '<br/>');
-        }
-      }
-    }
-    this.dialog.open(VisualizeComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'displayContent': contactinfo
-      }
-    });
   }
   showMoreInfo() {
     this.showMore = !this.showMore;
