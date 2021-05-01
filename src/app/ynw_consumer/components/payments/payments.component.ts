@@ -71,7 +71,8 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
         }
     }
     getPayments() {
-       this.subsription= this.shared_services.getConsumerPayments().subscribe(
+        const params = { 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
+        this.subsription= this.shared_services.getConsumerPayments(params).subscribe(
             (payments) => {
                 this.payments = payments;
                 console.log(projectConstantsLocal.PROVIDER_ACCOUNT_ID);

@@ -533,14 +533,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.loadcomplete.waitlist = false;
     this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
     const params = {
-      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
+      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate, 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID
     };
     this.subs.sink = this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
           this.waitlists = data;
           this.today_totalbookings = this.appointments.concat(this.waitlists);
-          this.today_totalbookings = this.today_totalbookings.filter(booking => booking.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.loading = false;
           this.getAppointmentFuture();
           // more case
@@ -1815,7 +1814,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getAppointmentToday() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    const params = { 'apptStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
     this.subs.sink = this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
@@ -1829,7 +1828,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
   getAppointmentFuture() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    const params = { 'apptStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
     this.subs.sink = this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
@@ -1853,13 +1852,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // }
 
   getWaitlistFuture() {
-    const params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
+    const params = { 'waitlistStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
     this.subs.sink = this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
           this.future_waitlists = data;
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
-          this.future_totalbookings = this.future_totalbookings.filter(booking => booking.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.loading = false;
           this.getTdyOrder();
           this.futureBookings = [];
@@ -1995,7 +1993,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
-      this.total_tdy_order = this.total_tdy_order.filter(order => order.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
       if (data) {
         this.getFutureOrder();
       }
@@ -2027,10 +2024,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
-      this.total_future_order = this.total_future_order.filter(order => order.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
-      if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
-        this.showOrder = true;
-      }
+      // if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
+      //   this.showOrder = true;
+      // }
       // show more
       this.futureOrderslst = [];
       this.futureOrderslst_more = [];

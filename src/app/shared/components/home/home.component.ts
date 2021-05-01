@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-home',
@@ -57,15 +58,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private metaService: Meta
   ) {
-    this.evnt = routerobj.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (routerobj.url === '\/') {
-        if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
-          routerobj.navigate(['consumer']);
-        }
-      }
-      }
-    });
+    this.routerobj.navigate([projectConstantsLocal.ACCOUNTENC_ID]);
+    // this.evnt = routerobj.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     if (routerobj.url === '\/') {
+    //     if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
+    //       routerobj.navigate(['consumer']);
+    //     }
+    //   }
+    //   }
+    // });
    }
 ngOnDestroy() {
   const a = document.getElementById("hubspot-messages-iframe-container");
