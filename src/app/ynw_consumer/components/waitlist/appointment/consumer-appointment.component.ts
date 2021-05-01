@@ -807,6 +807,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         let retval = false;
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
+                if(this.waitlist_for[i].id==0){
+                    this.waitlist_for[i].id=this.customer_data.id;
+                }
                 if (this.waitlist_for[i].id === id) {
                     retval = true;
                 }
