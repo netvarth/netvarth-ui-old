@@ -141,6 +141,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
             delete this.apmt_history[i].appmtDate;
           }
           this.entire_history = this.apmt_history.concat(this.history);
+          this.entire_history = this.entire_history.filter(booking => booking.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.sortCheckins(this.entire_history);
           this.loading = false;
         },
@@ -443,6 +444,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
         data => {
           console.log(data);
           this.entire_history = data;
+          this.entire_history = this.entire_history.filter(order => order.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.loadcomplete.history = true;
           this.loading = false;
         },

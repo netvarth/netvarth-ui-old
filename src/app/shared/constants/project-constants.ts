@@ -997,5 +997,6 @@ export const projectConstantsLocal = {
     ENQUIRY: 'Enquiry',
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
-  }
+  },
+  PROVIDER_ACCOUNT_ID: 126501
 };

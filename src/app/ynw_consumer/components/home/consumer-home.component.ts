@@ -540,6 +540,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.waitlists = data;
           this.today_totalbookings = this.appointments.concat(this.waitlists);
+          this.today_totalbookings = this.today_totalbookings.filter(booking => booking.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.loading = false;
           this.getAppointmentFuture();
           // more case
@@ -1858,6 +1859,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.future_waitlists = data;
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
+          this.future_totalbookings = this.future_totalbookings.filter(booking => booking.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
           this.loading = false;
           this.getTdyOrder();
           this.futureBookings = [];
@@ -1993,6 +1995,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
+      this.total_tdy_order = this.total_tdy_order.filter(order => order.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
       if (data) {
         this.getFutureOrder();
       }
@@ -2024,6 +2027,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
+      this.total_future_order = this.total_future_order.filter(order => order.providerAccount.id === projectConstantsLocal.PROVIDER_ACCOUNT_ID);
       if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
         this.showOrder = true;
       }
