@@ -79,13 +79,13 @@ export class JaldeeCashComponent implements OnInit {
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
-  termsAndCondition(){
+  termsAndCondition(displayNote){
     const dialogref = this.dialog.open(TermsconditionComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        'messages': 'terms and conditions'
+        'messages': displayNote
       }
     });
     dialogref.afterClosed().subscribe(
