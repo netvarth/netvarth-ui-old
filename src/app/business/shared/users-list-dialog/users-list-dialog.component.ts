@@ -43,7 +43,7 @@ subscription:Subscription;
       },
 
       (error: any) => {
-       //  this.wordProcessor.apiErrorAutoHide(this, error);
+      this.loading=false;
       });
   }
   close() {
