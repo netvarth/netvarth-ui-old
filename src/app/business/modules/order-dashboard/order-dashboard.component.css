@@ -1,5 +1,5 @@
 .order-card.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.10), 0 0 5px 0 rgba(0, 0, 0, 0.10) !important;
     height: 230px !important;
 }
 
@@ -27,7 +27,7 @@
     max-width: 82.5%;
     display: inline-block;
     height: 30px;
-    background: #f1b51b;
+    background: #1E4079;
     left: -11px;
     margin-top: 6px;
 }
@@ -35,7 +35,7 @@
 .ribbon:before {
     height: 0;
     width: 0;
-    border-bottom: 5.5px solid #c79514;
+    border-bottom: 5.5px solid #214F9C;
     border-left: 5.5px solid transparent;
     top: -6px;
 }
@@ -45,12 +45,12 @@
     width: 0;
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-left: 15px solid #f1b51b;
+    border-left: 15px solid #1E4079;
     right: -15px;
 }
 
 .order-card.card .top-sec .order-number-head {
-    color: #073B4C;
+    color: white;
     font-weight: 700;
     font-size: 12.5px;
     height: 30px;
@@ -60,7 +60,7 @@
 }
 
 .order-card.card .top-sec .order-number {
-    color: #073B4C;
+    color: white;
     font-weight: 700;
     font-size: 12.5px;
     height: 30px;

@@ -205,10 +205,15 @@
               </div>
               <div class="main-sec">
                 <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div style="height: 25px !important;" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">&nbsp;</div>
+                
                 <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - 
                   {{order.orderTimeWindow.timeSlots[0].eTime}}
+                </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderDate && !order.orderTimeWindow.timeSlots[0].sTime && !order.orderTimeWindow.timeSlots[0].eTime">
+                  &nbsp;
                 </div>
 
                 <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -217,12 +222,14 @@
                     {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
                   </span>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.label">&nbsp;</div>
 
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'custom-red':'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderStatus && !order.orderNote">&nbsp;</div>
 
                 <div class="main-bottom-sec">
                   <div>
@@ -437,10 +444,15 @@
               </div>
               <div class="main-sec">
                 <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div style="height: 25px !important;" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">&nbsp;</div>
+                
                 <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - 
                   {{order.orderTimeWindow.timeSlots[0].eTime}}
+                </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderDate && !order.orderTimeWindow.timeSlots[0].sTime && !order.orderTimeWindow.timeSlots[0].eTime">
+                  &nbsp;
                 </div>
 
                 <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -449,12 +461,14 @@
                     {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
                   </span>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.label">&nbsp;</div>
 
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ? 'custom-red':'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending': order.orderStatus | capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderStatus && !order.orderNote">&nbsp;</div>
 
                 <div class="main-bottom-sec">
                   <div>
@@ -668,9 +682,14 @@
               </div>
               <div class="main-sec">
                 <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div style="height: 25px !important;" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">&nbsp;</div>
+
                 <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderDate && !order.orderTimeWindow.timeSlots[0].sTime && !order.orderTimeWindow.timeSlots[0].eTime">
+                  &nbsp;
                 </div>
 
                 <div (click)="stopprop($event);displayLabel(order)" [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
@@ -679,12 +698,14 @@
                     {{label}}{{i < objectKeys(order.label).length - 1 ? ', ' : ''}}
                   </span>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.label">&nbsp;</div>
 
                 <div class="order-status" [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ? 'custom-red' : 'custom-green'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending': order.orderStatus | capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="fa fa-pencil-square-o pointer-cursor"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                <div style="height: 20px !important;" *ngIf="!order.orderStatus && !order.orderNote">&nbsp;</div>
 
                 <div class="main-bottom-sec">
                   <div>
