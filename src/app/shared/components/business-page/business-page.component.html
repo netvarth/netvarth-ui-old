@@ -10,6 +10,12 @@
                         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
                     </div>
                 </div>
+                <div class="text-center covid-coming">
+                    <div class="card">
+                    COVID-19 Screening Tool
+                    <div>COMING SOON</div>
+                </div>
+                </div>
                 <!-- Cover Foto -->
                 <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
                 </div>
@@ -108,12 +114,12 @@
                                 <div class="showmoresec" *ngIf="showMore">
                                     <div class="" *ngIf="showMore">
                                         <div class="">
-                                            <div class="question-main-outer" *ngIf="!userId">
+                                            <!-- <div class="question-main-outer" *ngIf="!userId">
                                                 <div class="question-header">Area of Specialization</div>
                                                 <div class="question-value1">{{businessjson.serviceSubSector.displayName
                                                     |
                                                     capitalizeFirst}}</div>
-                                            </div>
+                                            </div> -->
                                             <div class="question-main-outer"
                                                 *ngFor="let vfield of virtualfieldsCombinedjson">
                                                 <div class="question-outer" *ngIf="vfield.value">

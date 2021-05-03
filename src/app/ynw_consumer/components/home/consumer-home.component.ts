@@ -1197,7 +1197,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log('In ProviderDetail');
     // console.log('order');
     // event.stopPropagation();
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    this.router.navigate([provider.uniqueId]);
   }
 
   goCheckin(data, location, type) {

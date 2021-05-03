@@ -14058,3 +14058,10 @@ padding-left: 15px !important;
 .pad-bt-0 {
   padding-bottom: 0px !important;
 }
+.view-booking {
+  color: rgb(24 62 121) !important;
+  background: white;
+  padding: 5px 10px;
+  font-weight: bold;
+  border: 1px solid rgb(24 62 121);
+}

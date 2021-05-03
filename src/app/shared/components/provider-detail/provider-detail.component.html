@@ -106,12 +106,12 @@
                                 <div class="showmoresec" *ngIf="showMore">
                                     <div class="">
                                         <div class="">
-                                            <div class="question-main-outer">
+                                            <!-- <div class="question-main-outer">
                                                 <div class="question-header">Area of Specialization</div>
                                                 <div class="question-value1">{{businessjson.serviceSubSector.displayName
                                                     |
                                                     capitalizeFirst}}</div>
-                                            </div>
+                                            </div> -->
                                             <div class="question-main-outer"
                                                 *ngFor="let vfield of virtualfieldsCombinedjson">
                                                 <div class="question-outer" *ngIf="vfield.value">
@@ -328,12 +328,11 @@
                         <div style="position: absolute !important; bottom: 0 !important; right: 0 !important;">
                             <ul class="bus-actions bus-actions-large no-padding mgn-up-10 visible-md visible-lg"
                                 *ngIf="settings_exists && business_exists">
-                                <li class="favourite" [matTooltip]="add_to_fav_cap" *ngIf="!isInFav && !userId">
+                                <!-- <li class="favourite" [matTooltip]="add_to_fav_cap" *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                        <!-- <span>&nbsp;{{add_to_fav_cap}}</span> -->
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="favourite remove-favourite" [matTooltip]="rem_from_fav_cap" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
                                         <i class="fa fa-heart" aria-hidden="true"></i>&nbsp;
@@ -392,12 +391,12 @@
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
                             <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
-                                <li class="small-devices-fav centeralign" *ngIf="!isInFav && !userId">
+                                <!-- <li class="small-devices-fav centeralign" *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         <span class="display-text">&nbsp;{{add_to_fav_cap}}</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="small-devices-fav small-devices-remove-fav centeralign" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
                                         <i class="fa fa-heart" aria-hidden="true"></i>

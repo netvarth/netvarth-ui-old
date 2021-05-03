@@ -19,30 +19,28 @@
                                 <div class="book-details"> Booking details </div>
                                 <table class="book-details-sub chkntoknappt-details">
                                     <tbody>
-                                        <tr *ngIf="!appointment.provider">
+                                        <!-- <tr *ngIf="!appointment.provider">
                                             <td width="48%" align="right">
-                                                <!-- Name of the -->
                                                 Provider</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.providerAccount?.businessName}}</td>
-                                        </tr>
-                                        <tr *ngIf="appointment.provider">
+                                        </tr> -->
+                                        <!-- <tr *ngIf="appointment.provider">
                                             <td width="48%" align="right">
-                                                <!-- Name of the -->
                                                 Provider</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.provider.businessName}},
                                                 {{appointment.providerAccount?.businessName}}
                                             </td>
-                                        </tr>
-                                        <tr>
+                                        </tr> -->
+                                        <!-- <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{appointment.location?.place}}<a
                                                     [href]="appointment.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
@@ -106,13 +104,13 @@
                                     </tbody>
                                 </table>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
-                                <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
+                                <!-- <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}
                                 </div>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="_blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a>
-                                </div>
+                                </div> -->
                                 <!-- <div class="txt-align-center mgn-up-10"
                             *ngIf="appointment.consumer && appointment.consumer.userProfile.emailVerified"> A booking
                             confirmation has been sent to your email
@@ -130,11 +128,11 @@
                                 </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
-                                        <strong>OK</strong></span>
+                                        <strong>View Bookings</strong></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="powered-by">
+                        <!-- <div class="powered-by">
                             <div class="poweredby-text">
                                 <div class="one">powered by</div>
                                 <div class="two">
@@ -142,7 +140,7 @@
                                         style="width: 15px;">&nbsp;Jaldee
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
                 </div>

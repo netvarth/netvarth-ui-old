@@ -24,30 +24,27 @@
                                 <div class="book-details"> Booking details </div>
                                 <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>
-                                        <tr *ngIf="!wtlst.provider">
+                                        <!-- <tr *ngIf="!wtlst.provider">
                                             <td width="48%" align="right">
-                                                <!-- Name of the -->
                                                 Provider</td>
-                                                <!-- {{provider_label | capitalizeFirst}}</td> -->
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{wtlst.providerAccount?.businessName}}</td>
-                                        </tr>
-                                        <tr *ngIf="wtlst.provider">
+                                        </tr> -->
+                                        <!-- <tr *ngIf="wtlst.provider">
                                             <td width="48%" align="right">
-                                                <!-- Name of the -->
                                                 Provider</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{wtlst.provider.businessName}},
                                                 {{wtlst.providerAccount?.businessName}}</td>
-                                        </tr>
-                                        <tr>
+                                        </tr> -->
+                                        <!-- <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{wtlst.queue?.location.place}}<a
                                                     [href]="wtlst.queue.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
@@ -118,7 +115,7 @@
                                     </tbody>
                                 </table>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
-                                <table class="status-table mgn-up-10">
+                                <!-- <table class="status-table mgn-up-10">
                                     <tbody>
                                         <tr *ngIf="wtlst.personsAhead>=0">
                                             <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;People waiting
@@ -134,11 +131,11 @@
                                             <td>{{getWaitTime(wtlst)}}</td>
                                         </tr>
                                     </tbody>
-                                </table>
-                                <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                                </table> -->
+                                <!-- <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{wtlst.checkinEncId}}" target="_blank">
                                         {{path}}status/{{wtlst.checkinEncId}}</a>
-                                </div>
+                                </div> -->
                                 <!-- <div class="txt-align-center mgn-up-10" *ngIf="wtlst.consumer.email_verified"> A booking
                             confirmation
                             has been sent to your email
@@ -155,11 +152,11 @@
                                 </div>
                                 <div class="ok-btn" *ngIf="i == (waitlist.length-1)">
                                     <span class="pointer-cursor" (click)="okClick(wtlst)">
-                                        <strong>OK</strong></span>
+                                        <strong>View Bookings</strong></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="powered-by">
+                        <!-- <div class="powered-by">
                             <div class="poweredby-text">
                                 <div class="one">powered by</div>
                                 <div class="two">
@@ -167,7 +164,7 @@
                                         style="width: 15px;">&nbsp;Jaldee
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
                 </div>

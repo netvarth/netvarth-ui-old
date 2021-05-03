@@ -218,6 +218,9 @@
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
                             <button class="join_nw_btn " (click)="doSignup('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
+                                <div class="view-booking" *ngIf="pageSource == 'pdetails'" (click)="redirectto('dashboard')">
+                                   View Bookings
+                                </div>
                             <ng-container *ngIf="ctype=='consumer'">
                                 <div class="bnps">
                                     <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
