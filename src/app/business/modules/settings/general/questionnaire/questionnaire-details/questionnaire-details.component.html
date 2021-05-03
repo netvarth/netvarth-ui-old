@@ -13,13 +13,16 @@
             <div class="copy" *ngIf="!loading">
                 <div class="qnrdetails">
                     <div class="item">
-                        {{questionnaire.questionnaireId}}
+                        <div class="grey">Name</div>
+                        <div class="bold">{{questionnaire.questionnaireId}}</div>
                     </div>
                     <div class="item">
-                        {{questionnaire.transactionType}}
+                        <div class="grey">Type</div>
+                        <div class="bold">{{questionnaire.transactionType}}</div>
                     </div>
                     <div class="item">
-                        {{questionnaire.channel}}
+                        <div class="grey">Channel</div>
+                        <div class="bold">{{questionnaire.channel}}</div>
                     </div>
                 </div>
                 <div class="mgn-up-20 pad-10">

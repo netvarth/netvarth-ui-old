@@ -2004,13 +2004,13 @@ export class ProviderCheckinComponent implements OnInit {
         } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
-            if (this.showtoken) {
-                this.heading = 'Create a Token';
-            } else {
-                this.heading = 'Create a Check-in';
-            }
         } else {
             this.router.navigate(['provider', 'check-ins']);
+        }
+        if (this.showtoken) {
+            this.heading = 'Create a Token';
+        } else {
+            this.heading = 'Create a Check-in';
         }
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
@@ -2042,7 +2042,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = !this.showQuestionnaire;
+        this.showQuestionnaire = true;
+        this.heading = 'More Info';
     }
     getProviderQuestionnaire() {
         let consumerId;
@@ -2056,6 +2057,7 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.showBlockHint) {
                 if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.showQuestionnaire = true;
+                    this.heading = 'More Info';
                 } else {
                     this.confirmWaitlistBlockPopup();
                 }
@@ -2063,16 +2065,14 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
-        console.log(this.questionAnswers);
         if (!this.questionAnswers) {
-          this.questionAnswers = {
-            answers: {
-              answerLine: [],
-              questionnaireId: this.questionnaireList.id
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
             }
-          }
         }
-        console.log(this.questionAnswers);
         if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 if (data.length === 0) {

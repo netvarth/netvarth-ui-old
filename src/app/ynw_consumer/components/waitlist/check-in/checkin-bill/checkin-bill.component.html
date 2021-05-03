@@ -390,6 +390,15 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div>
+                                                                <div *ngIf = "jcashamount>0">
+                                                                    <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                                                      Use Jaldee cash balance : Rs{{jcashamount}}
+                                                                  </div>
+                                                                  <div *ngIf = "jcashamount>0">
+                                                                      Balance amount can be paid by other payment methods 
+                                                                  </div>
+                                                            </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div

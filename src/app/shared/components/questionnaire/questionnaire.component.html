@@ -20,10 +20,9 @@
                         <div class="my-5">
                             <div class="form-group row card mgn-0" *ngFor="let question of questions;let i = index">
                                 <label class="col-12 quest">{{getQuestion(question).label}}
-                                    <span style="color: red;" *ngIf="getQuestion(question).mandatory">*</span>
-                                    <!-- <div class="form-level-settings"
-                                                *ngIf="getQuestion(question).fieldDataType != 'number' && getQuestion(question).fieldDataType != 'plainText' && getQuestion(question).fieldDataType != 'date'">
-                                                {{getQuestion(question).label}}</div> -->
+                                    <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
+                                    <div class="form-level-settings" *ngIf="getQuestion(question).hint">
+                                        {{getQuestion(question).hint}}</div>
                                 </label>
                                 <!-- for file upload -->
                                 <div class="col-12 ynw-common-form-nm"

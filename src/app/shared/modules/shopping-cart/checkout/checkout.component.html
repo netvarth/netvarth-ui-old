@@ -355,6 +355,13 @@
                                 </div>
                                 <div class="hr-line-pitch-blk mgn-up-20"></div>
                                 <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}} </span>required</span>
+                                <div *ngIf = "jcashamount>0">
+                                  <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                    Use Jaldee cash balance : Rs{{jcashamount}}
+                                </div>
+                                <div *ngIf = "jcashamount>0">
+                                    Balance amount can be paid by other payment methods 
+                                </div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
@@ -411,8 +418,13 @@
                                   </div>
                                   <div class="hr-line-pitch-blk mgn-up-20"></div>
                                   <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}} </span>required</span>
-                                  
-                                  
+                                  <div *ngIf = "jcashamount>0">
+                                    <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                      Use Jaldee cash balance : Rs{{jcashamount}}
+                                  </div>
+                                  <div *ngIf = "jcashamount>0">
+                                      Balance amount can be paid by other payment methods 
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -502,6 +514,14 @@
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (buttonBeforeHook)="onButtonBeforeHook($event)"
                     (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                    <span *ngIf="catalog_details.advanceAmount >0" style="font-size: small;color: red;"><i class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span class="rupee-font">{{catalog_details.advanceAmount | currency:'&#8377;'}} </span>required</span>
+                    <div *ngIf = "jcashamount>0">
+                      <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                        Use Jaldee cash balance : Rs{{jcashamount}}
+                    </div>
+                    <div *ngIf = "jcashamount>0">
+                        Balance amount can be paid by other payment methods 
+                    </div>
                    
                     <div *ngIf="selectedImagelist.files.length > 0">
                         <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"class="chekout-btn">CHECKOUT &nbsp; → </button>

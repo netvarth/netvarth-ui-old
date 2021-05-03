@@ -193,6 +193,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     selectedQTime;
     questionnaireLoaded = false;
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
+    jcreditamount: any;
+    remainingadvanceamount;
+    amounttopay: any;
+    wallet: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -321,6 +329,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.getProfile().then(
             () => {
                 this.getFamilyMembers();
+           
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date1 = new Date(dt1);
@@ -710,10 +719,29 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
-        console.log(this.sel_ser_det.isPrePayment);
+        if(this.jcashamount>0 && this.checkJcash){
+            post_Data['useCredit']= this.checkJcredit 
+            post_Data['useJcash']=  this.checkJcash
+        }
         if (!this.is_wtsap_empty) {
             if (type) {
-                this.addCheckInConsumer(post_Data);
+                console.log('check');
+                console.log(this.jcashamount);
+                console.log(this.checkJcash);
+                console.log(this.paymentDetails.amountRequiredNow);
+                if(this.jcashamount && this.checkJcash){
+                    console.log('avai');
+                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit ,this.paymentDetails.amountRequiredNow )
+                      .subscribe(data => {
+                          this.remainingadvanceamount = data;
+                          this.addCheckInConsumer(post_Data);
+                          console.log(data);
+                    });
+                }
+                else {
+                    this.addCheckInConsumer(post_Data);
+                }
+            
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
@@ -742,15 +770,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                     this.submitQuestionnaire(parentUid);
                 } else {
-                        let multiple;
-                        if (this.uuidList.length > 1) {
-                            multiple = true;
+                        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                            this.payuPayment();
                         } else {
-                            multiple = false;
+                            let multiple;
+                            if (this.uuidList.length > 1) {
+                                multiple = true;
+                            } else {
+                                multiple = false;
+                            }
+                            setTimeout(() => {
+                                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                            }, 500);
                         }
-                        setTimeout(() => {
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                        }, 500);
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -1567,7 +1599,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-                console.log(this.paymentDetails);
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1841,7 +1872,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.bookStep = type;
         }
-        console.log(this.bookStep);
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
@@ -1850,6 +1880,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
+                this.getJaldeeCashandCredit();
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
             },
@@ -1857,14 +1888,29 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
+    getJaldeeCashandCredit() {
+        this.shared_services.getJaldeeCashandJcredit()
+          .subscribe(data => {
+              this.checkJcash = true
+              this.jaldeecash = data;
+              this.jcashamount = this.jaldeecash.jCashAmt;
+              this.jcreditamount = this.jaldeecash.creditAmt;
+        });
+    }
     payuPayment() {
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
     makeFailedPayment(paymentMode) {
+        console.log(this.remainingadvanceamount);
+        if(this.remainingadvanceamount > 0 && this.checkJcash){
+           this.amounttopay = this.remainingadvanceamount
+        } else {
+           this.amounttopay = this.paymentDetails.amountRequiredNow
+        }
         this.waitlistDetails = {
-            'amount': this.paymentDetails.amountRequiredNow,
+            'amount': this.amounttopay,
             'paymentMode': null,
             'uuid': this.trackUuid,
             'accountId': this.account_id,
@@ -1874,30 +1920,117 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
-            .subscribe((pData: any) => {
-                this.pGateway = pData.paymentGateway;
-                if (this.pGateway === 'RAZORPAY') {
-                    this.paywithRazorpay(pData);
-                } else {
-                    if (pData['response']) {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        setTimeout(() => {
-                            if (paymentMode === 'DC') {
-                                this.document.getElementById('payuform').submit();
+
+        if(this.remainingadvanceamount == 0 && this.checkJcash) {
+            console.log('zero');
+               const postData = {
+                        'amountToPay': this.paymentDetails.amountRequiredNow,
+                        'accountId': this.account_id,
+                        'uuid': this.trackUuid,
+                        'paymentPurpose': 'prePayment',
+                       //  'paymentRefId': pData.orderId,
+                        'isJcashUsed': true,
+                        'isreditUsed': false
+                       };
+                       console.log(postData);
+                       this.shared_services.PayByJaldeewallet(postData)
+                       .subscribe(data => {
+                           this.wallet =data;
+                           if(this.wallet == true){
+                            let multiple;
+                            if (this.uuidList.length > 1) {
+                                multiple = true;
                             } else {
-                                this.document.getElementById('paytmform').submit();
+                                multiple = false;
                             }
-                        }, 2000);
-                    } else {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                    }
+                            setTimeout(() => {
+                                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                            }, 500);
+                           }
+                           console.log(data);
+                     },
+                     error => {
+                       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                   });
+
+           
+               
+   }
+   else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+    console.log('high');
+     this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+       .subscribe((pData: any) => {
+           this.pGateway = pData.paymentGateway;
+           if (this.pGateway === 'RAZORPAY') {
+              console.log(this.remainingadvanceamount);
+              console.log(this.account_id);
+                       console.log('amounttopaygreater');
+                       const postData = {
+                         'amountToPay': this.paymentDetails.amountRequiredNow,
+                         'accountId': this.account_id,
+                         'uuid': this.trackUuid,
+                         'paymentPurpose': 'prePayment',
+                         'paymentRefId': pData.orderId,
+                         'isJcashUsed': true,
+                         'isreditUsed': false
+                        };
+                        console.log(postData);
+                        this.shared_services.PayByJaldeewallet(postData)
+                        .subscribe(data => {
+                            console.log(data);
+                            console.log(this.remainingadvanceamount);
+                             this.paywithRazorpay(pData);
+                      },
+                      error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+           } else {
+               if (pData['response']) {
+                   this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                   setTimeout(() => {
+                       if (paymentMode === 'DC') {
+                           this.document.getElementById('payuform').submit();
+                       } else {
+                           this.document.getElementById('paytmform').submit();
+                       }
+                   }, 2000);
+               } else {
+                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+               }
+           }
+       },
+           error => {
+               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+           });
+   }
+    else {
+        console.log('nothing');
+    this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+        .subscribe((pData: any) => {
+            this.pGateway = pData.paymentGateway;
+            if (this.pGateway === 'RAZORPAY') {
+                    this.paywithRazorpay(pData);
+            } else {
+                if (pData['response']) {
+                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                    setTimeout(() => {
+                        if (paymentMode === 'DC') {
+                            this.document.getElementById('payuform').submit();
+                        } else {
+                            this.document.getElementById('paytmform').submit();
+                        }
+                    }, 2000);
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                 }
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            }
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+        }
     }
     paywithRazorpay(pData: any) {
         this.prefillmodel.name = pData.consumerName;
@@ -1991,7 +2124,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     validateQuestionnaire() {
-        console.log(this.questionAnswers);
         if (!this.questionAnswers) {
           this.questionAnswers = {
             answers: {
@@ -2000,12 +2132,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
           }
         }
-        console.log(this.questionAnswers);
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep++;
-                    console.log(this.bookStep);
                     this.saveCheckin();
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });

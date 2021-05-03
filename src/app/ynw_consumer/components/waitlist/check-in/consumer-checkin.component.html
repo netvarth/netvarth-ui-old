@@ -1050,11 +1050,11 @@
                                                     class="refund_policy">Cancellation Policy</a>
                                             </div>
                                         </div>
-                                            <div class="jaldeecredit">
-                                              <mat-checkbox></mat-checkbox>
-                                                Use Jaldee cash balance : Rs100
+                                            <div class="jaldeecredit" *ngIf = "jcashamount>0">
+                                              <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                                Use Jaldee cash balance : Rs{{jcashamount}}
                                             </div>
-                                            <div class="creditleft">
+                                            <div class="creditleft" *ngIf = "jcashamount>0">
                                                 Balance amount can be paid by other payment methods 
                                             </div>
                                             <!-- modalbox -->

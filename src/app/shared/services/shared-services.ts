@@ -1028,4 +1028,15 @@ validateConsumerQuestionnaireResbumit(body, accountId) {
   const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
   return this.servicemeta.httpPut(url, body);
 }
+getJaldeeCashandJcredit(){
+  const url = 'consumer/wallet/redeem/eligible/amt';
+  return this.servicemeta.httpGet(url); 
+}
+getRemainingPrepaymentAmount(jcash? , jcredit? , advanceamount?){
+  const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash  + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+  return this.servicemeta.httpGet(url);
+}
+PayByJaldeewallet(postData){
+  return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+}
 }

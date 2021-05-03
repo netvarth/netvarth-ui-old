@@ -884,6 +884,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   setAccountCoupons(res) {
+    console.log('JC'+this.s3CouponList);
     this.s3CouponList.JC = [];
     if (res !== undefined) {
       this.s3CouponList.JC = res;
@@ -892,6 +893,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   SetAccountStoreCoupons(res) {
+    console.log('OWN'+this.s3CouponList);
     if (res !== undefined) {
       this.s3CouponList.OWN = res;
       console.log(this.s3CouponList)
@@ -2604,7 +2606,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       order_date: this.sel_checkindate,
       advance_amount: this.advance_amount,
       account_id: this.provider_bussiness_id
-
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
@@ -2625,7 +2626,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
 
-          providerId: this.provider_bussiness_id,
+          // providerId: this.provider_bussiness_id,
+          providerId: this.provider_id,
         }
 
       };

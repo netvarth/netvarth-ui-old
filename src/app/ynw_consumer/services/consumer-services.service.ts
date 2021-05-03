@@ -209,5 +209,16 @@ export class ConsumerServices {
     const url = 'consumer/orders/future';
     return this.servicemeta.httpGet(url);
   }
+  getConsumerCashbalance() {
+    const url = 'consumer/wallet/cash/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerCashbalanceDetails() {
+    const url = 'consumer/wallet/cash/info';
+     return this.servicemeta.httpGet(url);
+    // const url = 'consumer/wallet/cash/1';
+    // return this.servicemeta.httpGet(url);
+    
+  }
 
 }

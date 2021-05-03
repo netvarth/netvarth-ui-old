@@ -996,5 +996,9 @@ export const projectConstantsLocal = {
     ENQUIRY: 'Enquiry',
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
-  }
+  },
+  WALLET_NOTES: {
+    APP_SIGNUP: 'APP SIGNUP',
+
+  },
 };

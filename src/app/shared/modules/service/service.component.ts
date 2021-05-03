@@ -146,7 +146,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     showEditSection = false;
     savedisabled = false;
     active_user: any;
-    showNoteError='';
+    showNoteError = '';
+    questionnaire: any = [];
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -163,7 +164,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-        console.log(this.active_user);
         this.preSubscription = this.sharedFunctons.getMessage().subscribe(
             (message: any) => {
                 switch (message.ttype) {
@@ -183,14 +183,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.subdomainsettings = serviceParams.subdomainsettings;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
-                   
                     if (this.action === 'add') {
                         this.service = null;
                         this.createForm();
                     } else {
                         this.service_data = this.service;
-                        console.log(this.active_user.accountType);
-                        if (this.action === 'show' && this.active_user.accountType==='BRANCH') {
+                        if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
                         }
                         if (this.service_data) {
@@ -400,6 +398,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getGlobalSettings();
         this.getUsers();
+        this.getQuestionnaire();
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -576,7 +575,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-       // this.getDepartments();
+        // this.getDepartments();
         if (this.subdomainsettings.serviceBillable) {
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
@@ -708,7 +707,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
                     // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp', 'VideoCall'];
                 }
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
@@ -806,11 +805,23 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     checkUrl(urlData) {
         if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
-            const tempvar = urlData.substring( 0 , 4 );
+            const tempvar = urlData.substring(0, 4);
             if (tempvar !== 'http') {
                 this.tool_id = '';
                 this.tool_id = 'https://' + urlData;
             }
         }
+    }
+    getQuestionnaire() {
+        this.provider_services.getAllQuestionnaire().subscribe(data => {
+            this.questionnaire = data;
+        });
+    }
+    getQnrName(id) {
+        const question = this.questionnaire.filter(quest => quest.id === id);
+        return question[0].questionnaireId;
+    }
+    gotoQnr(id) {
+        this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
 }
