@@ -275,21 +275,21 @@ ul.bus-actions li a.lnk {
   font-size: 0.8rem;
 }
 
-.playstore-icon {
+/* .playstore-icon {
   background: url("../../../../../assets/images/home/buy-theme.png") no-repeat !important;
   height: 15px;
   position: absolute;
-}
+} */
 
 .apptext {
   padding-left: 15px !important;
 }
 
-.appstore-icon {
+/* .appstore-icon {
   background: url("../../../../../assets/images/home/quick-question.png") no-repeat !important;
   height: 15px;
   position: absolute;
-}
+} */
 
 .info-bar ul li {
   margin-right: 20px;

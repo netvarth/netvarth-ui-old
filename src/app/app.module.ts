@@ -27,7 +27,6 @@ import { SearchDetailServices } from './shared/components/search-detail/search-d
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ExistingCheckinComponent } from './shared/components/existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
@@ -53,7 +52,6 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
-import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
@@ -106,7 +104,6 @@ export function init_app(globalService: GlobalService) {
     ConfirmBoxComponent,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
-    ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
@@ -124,7 +121,6 @@ export function init_app(globalService: GlobalService) {
     LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
-    ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
@@ -134,7 +130,6 @@ export function init_app(globalService: GlobalService) {
   ],
   imports: [
     CapitalizeFirstPipeModule,
-    BreadCrumbModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

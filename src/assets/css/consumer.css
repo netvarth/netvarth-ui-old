@@ -3815,18 +3815,6 @@
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important;
 }
 
-.content .c-outer .no-search-result {
-  font-size: .875rem;
-  font-weight: 500;
-  flex-grow: 1;
-  background: url(../images/no-search-results.png) no-repeat scroll center top;
-  text-indent: -9999px;
-  max-width: 360px;
-  height: 360px;
-  display: flex;
-  margin: 50px auto;
-}
-
 .more-opt {
   position: absolute;
   width: 100%;
@@ -6877,29 +6865,7 @@ margin-top: 7px;
 .consumer-dash   tbody tr {
  cursor: pointer;
 }
-.store_pick_ico {
-  content: url(../images/order/Storepickup.svg);
-  position: relative;
-  width: 50px;
-  margin-top: 5px;
-  border: 2px solid #f1b616ba;
-  border-radius: 10%;
-  padding: 5px;
-  margin-left: 4px;
-  background: #fcebbea1;
-}
-.hom_deliver_ico {
-  content: url(../images/order/Delivery.svg);
-  position: relative;
-  width: 50px;
-  margin-top: 5px;
-  border: 2px solid #f1b616ba;
-  border-radius: 10%;
-  padding: 5px;
-  margin-left: 4px;
-  background: #fcebbea1;
 
-}
 .consumer-dash .item-btn-div {
   margin-right: 10px;
   width: fit-content;

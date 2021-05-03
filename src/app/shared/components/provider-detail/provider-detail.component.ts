@@ -11,7 +11,6 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 // import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -1863,25 +1862,25 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   onButtonAfterHook() { }
   // Edited//
-  showExistingCheckin(locId, locName, index) {
-    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        locId: locId,
-        locName: locName,
-        terminologies: this.terminologiesjson,
-        settings: this.settingsjson
-      }
-    });
+  // showExistingCheckin(locId, locName, index) {
+  //   this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       locId: locId,
+  //       locName: locName,
+  //       terminologies: this.terminologiesjson,
+  //       settings: this.settingsjson
+  //     }
+  //   });
 
-    this.extChecindialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.getExistingCheckinsByLocation(locId, index);
-      }
-    });
-  }
+  //   this.extChecindialogRef.afterClosed().subscribe(result => {
+  //     if (result === true) {
+  //       this.getExistingCheckinsByLocation(locId, index);
+  //     }
+  //   });
+  // }
 
 
   showServiceDetail(serv, busname) {

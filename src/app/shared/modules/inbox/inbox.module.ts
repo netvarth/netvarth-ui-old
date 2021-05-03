@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
-import { BreadCrumbModule } from '../breadcrumb/breadcrumb.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { InboxListComponent } from './inbox-list/inbox-list.component';
 import { InboxServices } from './inbox.service';
@@ -14,6 +13,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { HeaderModule } from '../header/header.module';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { BreadCrumbModule } from '../breadcrumb/breadcrumb.module';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,

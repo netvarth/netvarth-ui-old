@@ -3406,12 +3406,6 @@ figcaption {
   margin-left: 10px !important;
 }
 
-.copyLink {
-  background: url("../images/home/copy-file.png") no-repeat;
-  padding-left: 20px;
-  margin-left: 10px;
-}
-
 .tablewidth {
   width: 100% !important;
 }
@@ -12058,13 +12052,6 @@ img.busN-logo {
   width: 25px;
 }
 
-.annualpopup .jaldee-icon {
-  content: url(../images/home/logo-icon.png);
-  top: 10px;
-  position: relative;
-  width: 35px;
-}
-
 .comma-list {
   list-style: none;
   padding: 0px;
@@ -13396,18 +13383,6 @@ color: #fff !important;
   border-radius: 20px !important;
   height: 50px !important;
 }
-.delivery-icon {
-  content: url(../images/order/Delivery.svg) !important;
-  width: 20px;
-}
-.storepickup-icon {
-  content: url(../images/order/Storepickup.svg) !important;
-  width: 20px;
-}
-.shoppingcart-icon {
-  content: url(../images/order/shopping-cart.svg) !important;
-  width: 20px;
-}
 .main-img li {
   width: 100%;
 }
@@ -13422,22 +13397,6 @@ color: #fff !important;
 #carousel-container > .current-figure {
   -webkit-animation: none !important;
     animation: none !important;
-}
-.ordermgmt-icon {
-  content: url(../images/order/orderManagement.svg) !important;
-  width: 40px;
-}
-.catalog-icon {
-  content: url(../images/order/catalogueimg.svg) !important;
-  width: 40px;
-}
-.storecontact-icon {
-  content: url(../images/order/StoreContactInfo.svg) !important;
-  width: 40px;
-}
-.items-icon {
-  content: url(../images/order/Items.svg) !important;
-  width: 40px;
 }
 .mgn-up-70 {
   margin-top: 70px
@@ -13485,62 +13444,6 @@ color: #fff !important;
 }
 .shadow-none {
   box-shadow: none !important;
-}
-.order-received-icon {
-  content: url(../images/order/Order-recived.svg);
-  width: 40px;
-}
-.order-ack-icon {
-  content: url(../images/order/order-acknowldged.svg);
-  width: 40px;
-}
-.order-confirmed-icon {
-  content: url(../images/order/Order-confirmation.svg);
-  width: 40px;
-}
-.preparing-icon {
-  content: url(../images/order/Preparing.svg);
-  width: 40px;
-}
-.packing-icon {
-  content: url(../images/order/packing.svg);
-  width: 40px;
-}
-.payment-required-icon {
-  content: url(../images/order/paymentrequired.svg);
-  width: 40px;
-}
-.readyfor-pickup-icon {
-  content: url(../images/order/pickup.svg);
-  width: 40px;
-}
-.readyfor-ship-icon {
-  content: url(../images/order/ready-for-shipment.svg);
-  width: 40px;
-}
-.readyfor-delivery-icon {
-  content: url(../images/order/ready-for-delivery.svg);
-  width: 40px;
-}
-.order-completed-icon {
-  content: url(../images/order/Order-complete.svg);
-  width: 40px;
-}
-.intransit-icon {
-  content: url(../images/order/Intransit.svg);
-  width: 40px;
-}
-.shipped-icon {
-  content: url(../images/order/order-shipped.svg);
-  width: 40px;
-}
-.order-cancelled-icon {
-  content: url(../images/order/Order-cnacelled.svg);
-  width: 40px;
-}
-.socialmedia-icon {
-  content: url(../images/social-media.svg);
-  width: 17px;
 }
 .store-address .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
   margin-top: 20px !important;

@@ -435,15 +435,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-    if (!appPopupDisplayed) {
-      this.popUp.nativeElement.style.display = 'block';
-    }
+    // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
+    // if (!appPopupDisplayed) {
+    //   this.popUp.nativeElement.style.display = 'block';
+    // }
   }
-  closeModal() {
-    this.lStorageService.setitemonLocalStorage('a_dsp', true);
-    this.popUp.nativeElement.style.display = 'none';
-  }
+  // closeModal() {
+  //   this.lStorageService.setitemonLocalStorage('a_dsp', true);
+  //   this.popUp.nativeElement.style.display = 'none';
+  // }
   ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
