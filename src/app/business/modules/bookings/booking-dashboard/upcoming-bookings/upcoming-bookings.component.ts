@@ -25,10 +25,10 @@ export class UpcomingBookingsComponent implements OnInit {
     this.provider_services.getTodayWaitlist(filter)
       .subscribe(
         (data: any) => {
-          if (data.length > 0) {
-            this.nextWaitlist = data[0];
-            console.log(this.nextWaitlist);
-          }
+          // if (data.length > 0) {
+            this.nextWaitlist = data;
+          // }
+          console.log(this.nextWaitlist);
           setTimeout(() => {
             this.loading = false;
           }, 100);
@@ -41,9 +41,9 @@ export class UpcomingBookingsComponent implements OnInit {
     this.provider_services.getTodayAppointments(filter)
       .subscribe(
         (data: any) => {
-          if (data.length > 0) {
-            this.nextAppt = data[0];
-          }
+          // if (data.length > 0) {
+            this.nextAppt = data;
+          // }
           console.log(this.nextAppt);
           setTimeout(() => {
             this.loading = false;
