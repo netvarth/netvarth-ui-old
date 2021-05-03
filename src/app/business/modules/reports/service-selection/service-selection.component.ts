@@ -28,7 +28,6 @@ export class ServiceSelectionComponent implements OnInit {
   queue_list: any = [];
   schedules_list: any = [];
   reportType: any;
-
   serviceList: any;
   selection_type: any;
   services_selected: any = [];
@@ -37,16 +36,11 @@ export class ServiceSelectionComponent implements OnInit {
   select_All = Messages.SELECT_ALL;
   public service_dataSource = new MatTableDataSource<any>();
   selected_data: any = [];
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   service_loading$ = true;
-
   service_displayedColumns = ['select', 'serviceName', 'userName', 'status'];
   selection = new SelectionModel(true, []);
   queueDetail = false;
-
-
 
   constructor(private activated_route: ActivatedRoute,
     private router: Router,
@@ -74,17 +68,10 @@ export class ServiceSelectionComponent implements OnInit {
       if (_this.reportType === 'donation') {
         _this.service_displayedColumns = ['select', 'serviceName', 'status'];
       }
-
-
-
       const serviceData: any[] = qparams.data.split(',');
       for (let i = 0; i < serviceData.length; i++) {
         _this.selected_data.push(serviceData[i]);
       }
-
-
-
-
       _this.loadAllServices().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
           this.masterToggle();
@@ -107,20 +94,14 @@ export class ServiceSelectionComponent implements OnInit {
     });
   }
 
-
   applyFilter(filterValue: string) {
-
     this.selection.clear();
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.service_dataSource.filter = filterValue;
-
   }
 
   ngOnInit() {
-
-
-
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -135,8 +116,6 @@ export class ServiceSelectionComponent implements OnInit {
       this.selection.clear() :
       this.service_dataSource.data.forEach(row => this.selection.select(row));
   }
-
-
 
   // service related method-------------------------------------------------------->
   setServiceDataSource(result) {
@@ -153,7 +132,6 @@ export class ServiceSelectionComponent implements OnInit {
           'user': userName,
           'status': serviceObj.status
         });
-
     });
     return service_list;
 
@@ -167,8 +145,6 @@ export class ServiceSelectionComponent implements OnInit {
     } else {
       filter1 = { 'serviceType-neq': 'donationService' };
     }
-
-
     return new Promise<void>((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
@@ -176,7 +152,6 @@ export class ServiceSelectionComponent implements OnInit {
             this.service_dataSource.data = this.setServiceDataSource(data);
             this.serviceCount = data.length;
             this.service_loading$ = false;
-
             resolve();
           },
           () => { }
@@ -192,38 +167,25 @@ export class ServiceSelectionComponent implements OnInit {
     }
   }
 
-
-
-
-
-
-
   // common method got o previous page------------------------------------->
   passServiceToReports() {
     this.services_selected = this.selection.selected;
-
     if (this.selection.selected.length === 0) {
       this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
-
     } else {
-
-
       if (this.service_dataSource.filteredData.length < this.selection.selected.length) {
         this.services_selected = this.service_dataSource.filteredData;
-
       } else if (this.service_dataSource.filteredData.length > this.selection.selected.length) {
         this.services_selected = this.selection.selected;
       }
       if (this.services_selected.length === this.serviceCount) {
         this.services_selected = 'All';
       }
-
       if (this.services_selected !== 'All') {
         let service_id = '';
         this.services_selected.forEach(function (service) {
           service_id = service_id + service.id + ',';
         });
-
         this.services_selected = service_id;
       }
       if (this.services_selected === '') {
@@ -232,14 +194,9 @@ export class ServiceSelectionComponent implements OnInit {
       this.report_data_service.updatedServiceDataSelection(this.services_selected);
       this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
     }
-
-
-
   }
 
   redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
-
-
 }

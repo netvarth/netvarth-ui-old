@@ -61,6 +61,10 @@
 .normal-btn {
     padding: 5px 20px;
 }
+.edit {
+    padding: 3px 25px;
+    border-radius: 20px !important;
+}
 .mgn-0 {
     margin-left: 0px !important;
     margin-right: 0px !important;
@@ -84,4 +88,16 @@
     height: 20px;
     text-align: center;
     border-radius: 50%;
+    cursor: pointer;
+}
+.single-file {
+    padding: 0px !important;
+    text-align: initial !important;
+    border: none !important;
+}
+.single-file .dz-preview {
+    margin: 0px !important;
+}
+.single-file .gal_action {
+    top: -5px !important;
 }

@@ -439,12 +439,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
-  showBookingDetails(booking) {
+  showBookingDetails(booking, type?) {
     if (booking.apptStatus) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.uid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
@@ -452,7 +453,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
@@ -1370,10 +1372,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
     if (checkin.videoCallButton && checkin.videoCallButton !== 'DISABLED') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account: checkin.providerAccount.id,
+        }
+      };
       if (checkin.uid) {
-        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid], navigationExtras);
       } else {
-        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid], navigationExtras);
       }
     } else {
       return false;

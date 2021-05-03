@@ -25,8 +25,6 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
@@ -285,10 +283,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountEncId: string;
   userEncId: string;
 
-  bsModalRef: BsModalRef;
-  nonfirstCouponCount=0;
+  // bsModalRef: BsModalRef;
+  nonfirstCouponCount = 0;
   activeUser: any;
-  checkinProviderList: any=[];
+  checkinProviderList: any = [];
   wlServices;
   apptServices;
   private subscriptions = new SubSink();
@@ -308,7 +306,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
-    private modalService: BsModalService,
+    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor
   ) {
@@ -428,8 +426,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           resolve(id);
         },
         error => {
-
-          resolve(encId);
+          if (error.status === 404) {
+            _this.routerobj.navigate(['/not-found']);
+          }
+          reject();
         }
       );
     });
@@ -542,8 +542,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             if (accountS3s['providerCoupon']) {
               this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            } 
-                       
+            }
+
             if (accountS3s['businessProfile']) {
               this.processS3s('businessProfile', accountS3s['businessProfile']);
               this.titleService.setTitle(this.businessjson.businessName);
@@ -553,7 +553,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 // {name: 'robots', content: 'index, follow'}
               ]);
             }
-            
+
             if (accountS3s['virtualFields']) {
               this.processS3s('virtualFields', accountS3s['virtualFields']);
             }
@@ -627,6 +627,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case 'departmentProviders': {
         this.deptUsers = result;
+        if (!this.userId) {
+          this.setUserWaitTime();
+        }
         break;
       }
       case 'jaldeediscount': {
@@ -650,6 +653,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
     }
+  }
+  setUserWaitTime() {
+    let apptTimearr = [];
+    let waitTimearr = [];
+    if (this.deptUsers && this.deptUsers.length > 0) {
+      for (let dept of this.deptUsers) {
+        if (!this.showDepartments) {
+          apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+          waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+        } else {
+          if (dept.users && dept.users.length > 0) {
+            for (let user of dept.users) {
+              apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+              waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+            }
+          }
+        }
+      }
+    }
+    this.getUserApptTime(apptTimearr, waitTimearr);
   }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
@@ -675,7 +698,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.provider_bussiness_id = this.businessjson.id;
       if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
         if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-          this.bLogo = this.businessjson.logo.url + '?' + new Date();
+          this.bLogo = this.businessjson.logo.url;
         }
       } else {
         // this.bLogo = '';
@@ -817,26 +840,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setAccountLocations(res) {
     this.locationjson = res;
-    if (!this.userId) {
-      let apptTimearr = [];
-      let waitTimearr = [];
-      if (this.deptUsers && this.deptUsers.length > 0) {
-        for (let dept of this.deptUsers) {
-          if (!this.showDepartments) {
-            apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-            waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-          } else {
-            if (dept.users && dept.users.length > 0) {
-              for (let user of dept.users) {
-                apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-              }
-            }
-          }
-        }
-      }
-      this.getUserApptTime(apptTimearr, waitTimearr);
-    }
     this.location_exists = true;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
@@ -917,7 +920,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.provider_bussiness_id = this.businessjson.id;
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-        this.bLogo = this.businessjson.logo.url + '?' + new Date();
+        this.bLogo = this.businessjson.logo.url;
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {
@@ -964,7 +967,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < this.ratingdisabledCnt; i++) {
       this.ratingdisabledArr.push(i);
     }
-   
+
   }
 
   setUserVirtualFields(res) {
@@ -1379,7 +1382,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
   //   );
   // }
-  
+
   isfirstCheckinOfferProvider() {
     let firstCheckin = true;
     if (this.activeUser) {
@@ -1510,10 +1513,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
- 
+
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    
+
   }
   // getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
   //   let UTCstring = null;
@@ -2437,26 +2440,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       };
     }
 
-    const initialState = {
+    // const initialState = {
+    //   data: servData
+    // };
+
+    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
+    //   initialState,
+    //   class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
+    //   backdrop: "static"
+    // });
+
+    // $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
+
+    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
       data: servData
-    };
-
-    this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-      initialState,
-      class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
-      backdrop: "static"
     });
-
-    $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
-
-    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-          width: '40%',
-          panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-          disableClose: true,
-          data: servData
-        });
-        this.servicedialogRef.afterClosed().subscribe(() => {
-        }); */
+    this.servicedialogRef.afterClosed().subscribe(() => {
+    });
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -2825,7 +2828,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Order Related Code
    */
-   setServiceUserDetails() {
+  setServiceUserDetails() {
     this.servicesAndProviders = [];
     const servicesAndProviders = [];
     this.donationServices = [];
@@ -2923,7 +2926,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.serviceCount++;
       }
     }
-   }
+  }
   getCatalogs(locationId) {
     const account_Id = this.provider_bussiness_id;
     this.shared_services.setaccountId(account_Id);
@@ -2945,7 +2948,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.catalogimage_list_popup.push(imgobj);
           }
           this.catlogArry();
-         
+
 
           this.advance_amount = this.activeCatalog.advanceAmount;
           if (this.activeCatalog.pickUp) {
@@ -2982,7 +2985,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }
           this.orderItems = orderItems;
-         
+
         }
       );
     }
@@ -2991,7 +2994,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OrderItem add to cart
   addToCart(itemObj) {
-   //  const item = itemObj.item;
+    //  const item = itemObj.item;
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
@@ -3096,7 +3099,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           unique_id: this.provider_id,
 
         }
-     
+
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
     }
@@ -3118,7 +3121,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
         showpric: this.activeCatalog.showPrice,
-        unique_id:this.provider_id
+        unique_id: this.provider_id
       }
 
     };
@@ -3186,7 +3189,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       let blogoUrl;
-      if (this.businessjson.logo) { 
+      if (this.businessjson.logo) {
         blogoUrl = this.businessjson.logo.url;
       } else {
         blogoUrl = '';
@@ -3205,7 +3208,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
       };
-      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);

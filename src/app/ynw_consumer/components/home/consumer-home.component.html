@@ -95,14 +95,14 @@
                         <div *ngIf="today_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
                             <mat-grid-list cols="{{no_of_grids}}" rowHeight="240px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of todayBookings;"
-                                    (click)="showBookingDetails(booking)">
+                                    (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -115,14 +115,14 @@
                         <div class="mgn-up-10 mgn-bt-10 grid-card" *ngIf="more_tdybookingsShow">
                             <mat-grid-list cols="{{no_of_grids}}" rowHeight="240px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of todayBookings_more;"
-                                    (click)="showBookingDetails(booking)">
+                                    (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -141,7 +141,7 @@
                         <div *ngIf="future_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
                             <mat-grid-list cols="{{no_of_grids}}" rowHeight="240px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of futureBookings;"
-                                    (click)="showBookingDetails(booking)">
+                                    (click)="showBookingDetails(booking, 'future')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
                                         <app-appt-card [booking]="booking" type="future" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
@@ -161,7 +161,7 @@
                         <div class="mgn-up-10 mgn-bt-10 grid-card" *ngIf="more_futrbookingsShow">
                             <mat-grid-list cols="{{no_of_grids}}" rowHeight="240px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of futureBookings_more;"
-                                    (click)="showBookingDetails(booking)">
+                                    (click)="showBookingDetails(booking, 'future')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
                                       <app-appt-card type="future" [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>                                       

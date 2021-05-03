@@ -4,6 +4,8 @@
             <span class="name">
                 <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
                     <span>
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'VideoCall' || data.serdet.virtualCallingModes[0].callingMode == 4)"></i>
                         <i class="fa phon-icon"
                             *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Phone' || data.serdet.virtualCallingModes[0].callingMode == 3)"></i>
                         <i class="fa meet-icon"
@@ -29,7 +31,7 @@
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button> -->
         </h1>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -55,9 +57,6 @@
                         </div>
                     </li>
                 </ul>
-                <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-                    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
             </div>
     
             <div class="outer">
@@ -124,12 +123,12 @@
                 </div>
                 <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                     <div class="duration">
-                        <span class="data-label">Min amount: </span>
+                        <span class="data-label">Min amount : </span>
                         <span class="data-value" *ngIf="data.serdet.minValue" style="font-weight: bold">
                             {{data.serdet.minValue}}
                         </span>
                         <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.minDonationAmount| currency:'':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.minDonationAmount}}
                         </span>
                     </div>
                 </div>
@@ -140,18 +139,18 @@
                             {{data.serdet.maxValue}}
                         </span>
                         <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font data-value">
-                            <i class="fa fa-inr"></i>{{data.serdet.maxDonationAmount| currency:'':''}}
+                            <i class="fa fa-inr"></i> {{data.serdet.maxDonationAmount}}
                         </span>
                     </div>
                 </div>
-                <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
+                <!-- <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                     <div class="duration">
                         <span class="data-label">Multiples : </span>
                         <span class="data-value" style="font-weight: bold">
                             {{data.serdet.multiples}}
                         </span>
                     </div>
-                </div>
+                </div> -->
                 <div class="mgn-bt-5" *ngIf="data.serdet.minPrePaymentAmount == data.serdet.totalAmount">
                     Note: {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be paid in advance while
                     booking.
@@ -163,3 +162,6 @@
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
     <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
     </app-form-success-display>
+    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

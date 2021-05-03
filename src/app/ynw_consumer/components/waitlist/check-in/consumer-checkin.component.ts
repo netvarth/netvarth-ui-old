@@ -752,7 +752,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                        }, 500);
+                        }, 2000);
                     }
                 }
                 const member = [];
@@ -852,9 +852,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     isChecked(id) {
-        let retval = false;
+        let retval = false; 
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
+             if(this.waitlist_for[i].id==0){
+                 this.waitlist_for[i].id=this.customer_data.id;
+             }
                 if (this.waitlist_for[i].id === id) {
                     retval = true;
                 }
@@ -899,8 +902,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (derror === '') {
             const post_data = {
                 'userProfile': {
-                    'firstName': this.addmemberobj.fname,
-                    'lastName': this.addmemberobj.lname
+                    'firstName': this.addmemberobj.fname.trim(),
+                    'lastName': this.addmemberobj.lname.trim()
                 }
             };
             if (this.addmemberobj.mobile !== '') {

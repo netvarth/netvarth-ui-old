@@ -342,7 +342,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         let calmodeControl = this.couponForm.get('calculationType');
         calmodeControl.markAsTouched();
 
-        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl) {
+        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl.valid) {
           this.step = this.step + 1;
           setTimeout(() => {
             this.startDatePicker.nativeElement.focus();
@@ -355,6 +355,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         const endDateVal = this.couponForm.get('couponRules').get('endDate').value;
         const minbillamountval = this.couponForm.get('couponRules').get('minBillAmount').value;
         const calculationType = this.couponForm.get('calculationType').value;
+        console.log(calculationType);
         console.log(startDateVal);
         console.log(endDateVal);
         if (calculationType === 'Percentage') {

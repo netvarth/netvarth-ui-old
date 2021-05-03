@@ -1500,3 +1500,9 @@ body.modal-open {
 .loading-hgt {
   height: 85vh;
 }
+.jvideo-icon-m {
+  width:25px !important;
+}
+.jvideo-icon-mg5 {
+  margin-bottom: 5px !important;
+}

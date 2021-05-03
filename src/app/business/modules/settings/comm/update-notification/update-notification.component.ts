@@ -47,7 +47,7 @@ export class UpdateNotificationComponent implements OnInit {
         const virtualCallingModes = [];
         let found = false;
         let result = true;
-        if (this.mode !== 'WhatsApp' && this.mode !== 'Phone') {
+        if (this.mode !== 'WhatsApp' && this.mode !== 'Phone' && this.mode !== 'GoogleMeet') {
             const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
             result = pattern.test(this.callingMode);
         }

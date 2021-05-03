@@ -65,6 +65,8 @@
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
                 <span class="zoom-icon"
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+                <span class="fa jvideo-icon jvideo-icon-s"
+                    *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span>
                 <span class="phon-icon"
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
                 <span class="wtsapaud-icon"
@@ -252,7 +254,9 @@
                     class="fa meet-icon"></i>
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"
                     class="fa zoom-icon"></i>
-                <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"
+                <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                    *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
+                    <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"
                     class="fa phon-icon"></i>
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"
                     class="fa wtsapaud-icon"></i>
