@@ -92,3 +92,24 @@
     margin-right: auto !important;
     margin-left: auto !important;
 }
+
+.appt-icon {
+    content: url(../../../../../../assets/images/myjaldee/Appoinment-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 45px;
+  }
+  
+  .chckn-icon {
+    content: url(../../../../../../assets/images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 45px;
+  }
+  
+  .token-icon {
+    content: url(../../../../../../assets/images/myjaldee/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 45px;
+  }

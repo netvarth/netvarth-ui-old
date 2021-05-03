@@ -131,9 +131,9 @@ export class InboxOuterComponent implements OnInit {
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
-      if (message1.timeStamp < message2.timeStamp) {
+      if (message1.timeStamp > message2.timeStamp) {
         return 11;
-      } else if (message1.timeStamp > message2.timeStamp) {
+      } else if (message1.timeStamp < message2.timeStamp) {
         return -1;
       } else {
         return 0;

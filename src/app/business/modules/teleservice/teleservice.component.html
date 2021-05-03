@@ -26,6 +26,7 @@
                                         <h2 class="serv-name-color fnt-lrge">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon "></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon video-wdth"></i>
+                                            <i class="fa jvideo-icon jvideo-icon-sm jvideo-icon-mgm5" *ngIf="callingModes === 'VideoCall'"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'audioService'"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'videoService'"
@@ -142,8 +143,8 @@
                                     <div  *ngIf="callingModes === 'VideoCall'" class="strtvideo">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
-                                            <i *ngIf="callingModes === 'VideoCall'" class="fa meet-icon"></i>
-                                            <b> &nbsp;Start video consultation</b>
+                                            <i *ngIf="callingModes === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                            <b> &nbsp;Start Video Consultation</b>
                                         </button>
                                     </div>
                                 </div>

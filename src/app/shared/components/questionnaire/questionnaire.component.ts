@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -42,7 +41,6 @@ export class QuestionnaireComponent implements OnInit {
   uploadedFiles: any = [];
   uploadedImages: any = [];
   bookingDetails: any = [];
-  @ViewChild('logofile') file1: ElementRef;
   @ViewChild('logofile1') file2: ElementRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -64,8 +62,8 @@ export class QuestionnaireComponent implements OnInit {
   image_list_popup: Image[];
   questionnaire_heading = '';
   customer_label = '';
+  editQuestionnaire = false;
   constructor(private sharedService: SharedServices,
-    private datepipe: DateFormatPipe,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
@@ -110,6 +108,11 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         this.questions = this.questionnaireList.labels;
       }
+    }
+    if (this.source === 'customer-details') {
+      this.questionnaireList = this.customerDetails[0].questionnaire;
+      this.questions = this.customerDetails[0].questionnaire.questionAnswers;
+      this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
     }
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
@@ -211,11 +214,8 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.onSubmit();
   }
-  filesSelected(event, question, document?) {
+  filesSelected(event, question, document) {
     const input = event.target.files;
-    if (!document) {
-      document = question.filePropertie.allowedDocuments[0];
-    }
     if (!this.filestoUpload[question.labelName]) {
       this.filestoUpload[question.labelName] = {};
     }
@@ -253,19 +253,13 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
       }
-      if (this.file1 && this.file1.nativeElement.value) {
-        this.file1.nativeElement.value = '';
-      }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
       }
       this.onSubmit('inputChange');
     }
   }
-  changeImageSelected(question, document?) {
-    if (!document) {
-      document = question.filePropertie.allowedDocuments[0];
-    }
+  changeImageSelected(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (index !== -1) {
@@ -399,14 +393,18 @@ export class QuestionnaireComponent implements OnInit {
       if (this.changeHappened) {
         this.submitQuestionnaire(passData);
       } else {
-        this.location.back();
+        if (!this.type) {
+          this.location.back();
+        } else {
+          this.editQnr();
+        }
       }
     } else {
       this.returnAnswers.emit(passData);
     }
   }
   getDate(date) {
-    return new Date(this.datepipe.transformTofilterDate(date));
+    return new Date(date);
   }
   listChange(ev, value, question) {
     if (ev.target.checked) {
@@ -472,9 +470,20 @@ export class QuestionnaireComponent implements OnInit {
       this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
     }
   }
+  updateConsumerQnr(dataToSend) {
+    this.providerService.resubmitProviderCustomerQuestionnaire(this.customerDetails[0].id, dataToSend).subscribe(data => {
+      this.editQnr();
+    }, error => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitConsumerWaitlistQuestionnaire(body) {
     this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.location.back();
+      if (!this.type) {
+        this.location.back();
+      } else {
+        this.editQnr();
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -482,7 +491,11 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitConsumerApptQuestionnaire(body) {
     this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.location.back();
+      if (!this.type) {
+        this.location.back();
+      } else {
+        this.editQnr();
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -490,7 +503,11 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
-      this.location.back();
+      if (!this.type) {
+        this.location.back();
+      } else {
+        this.editQnr();
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -498,7 +515,11 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
-      this.location.back();
+      if (!this.type) {
+        this.location.back();
+      } else {
+        this.editQnr();
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -579,7 +600,9 @@ export class QuestionnaireComponent implements OnInit {
       this.setValidateError(data);
       this.buttonDisable = false;
       if (data.length === 0) {
-        if (this.source === 'proCheckin') {
+        if (this.source === 'customer-details') {
+          this.updateConsumerQnr(dataToSend);
+        } else if (this.source === 'proCheckin') {
           this.resubmitProviderWaitlistQuestionnaire(dataToSend);
         } else {
           this.resubmitProviderApptQuestionnaire(dataToSend);
@@ -647,16 +670,13 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-    if (this.source === 'qnrDetails') {
+    if (this.source === 'qnrDetails' || (this.type && !this.editQuestionnaire)) {
       return true;
     }
   }
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
-  openAttachmentGallery(question, document?) {
-    if (!document) {
-      document = question.filePropertie.allowedDocuments[0];
-    }
+  openAttachmentGallery(question, document) {
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
@@ -693,5 +713,15 @@ export class QuestionnaireComponent implements OnInit {
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
+  }
+  editQnr() {
+    this.editQuestionnaire = !this.editQuestionnaire;
+  }
+  getDocuments(question) {
+    if (question.filePropertie.maxNoOfFile > 1) {
+      return this.uploadFilesTemp[question.labelName];
+    } else {
+      return question.filePropertie.allowedDocuments;
+    }
   }
 }

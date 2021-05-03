@@ -108,7 +108,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.selectedCustomer);
     if (this.qParams.customer && this.qParams.provider) {
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
@@ -281,14 +280,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
     }
     this.onResize();
-    console.log(this.groupedMsgs);
-    console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (this.small_device_display) {
         this.showChat = true;
       }
-      console.log(this.selectedUserMessages);
       const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.messagestatus === 'in');
       if (unreadMsgs.length > 0) {
         const ids = unreadMsgs.map(msg => msg.messageId);
@@ -634,9 +630,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         b[i].classList.remove('blinkelem');
       }
     }, 2000);
-  }
-  gotoEnquiry() {
-    this.router.navigate(['provider/enquiry']);
   }
   viewInbox() {
     this.router.navigate(['provider/inbox'], { queryParams: { customer: this.customer, provider: this.provider } });

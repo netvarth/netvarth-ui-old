@@ -92,9 +92,7 @@
                                                                     {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
                                                                   </span>
                                                                 </address>
-                                                        <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
-                                                            <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
-                                                        </div>
+                                                   
                                                         <div class="mt-2">
                                                         <mat-icon style="color:blue" (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=false>sms</mat-icon>
                                                       </div>
@@ -259,6 +257,11 @@
                                            ></ks-modal-gallery>
 
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
+                                            <div class="odr_msg_outer"> Order Notes : {{waitlist.orderNote}}</div>
                                         </div>
                                     </div>
 

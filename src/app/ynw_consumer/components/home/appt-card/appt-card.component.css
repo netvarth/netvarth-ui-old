@@ -61,3 +61,6 @@ app-appt-card, app-wl-card {
     height: 100%;
     overflow: auto;
 }
+.jvideo-icon {
+    margin-bottom: -5px !important;
+}

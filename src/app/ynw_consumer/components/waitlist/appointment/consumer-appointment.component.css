@@ -1504,3 +1504,6 @@ body.modal-open {
 .loading-hgt {
   height: 85vh;
 }
+.jvideo-icon-m {
+  width:25px !important;
+}

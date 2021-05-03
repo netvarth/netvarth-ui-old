@@ -24,7 +24,6 @@ export class CustomerActionsComponent implements OnInit {
     showApply = false;
     labelsforRemove: any = [];
     labelMap = {};
-    questionnaireList: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
@@ -40,8 +39,6 @@ export class CustomerActionsComponent implements OnInit {
         }
         if (this.data.type && this.data.type === 'label') {
             this.action = 'label';
-        } else {
-            this.getCustomerQnr();
         }
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -231,11 +228,5 @@ export class CustomerActionsComponent implements OnInit {
                 }
             }
         }
-    }
-    getCustomerQnr() {
-        this.questionnaireList = [];
-        this.provider_services.getCustomerQuestionnaire().subscribe(data => {
-            this.questionnaireList = data;
-        });
     }
 }

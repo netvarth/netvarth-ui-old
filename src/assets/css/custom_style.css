@@ -8000,7 +8000,7 @@ hr.wide-separator-line {
   color: inherit;
   background: none;
   border: none;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .pcheckin-owl .owl-item {
@@ -10615,7 +10615,9 @@ a {
 .jvideo-icon-s {
   width: 20px !important;
 }
-
+.jvideo-icon-sm {
+  width: 28px !important;
+}
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;
@@ -14144,3 +14146,12 @@ padding-left: 15px !important;
    display: inline-block;
    padding: 5px;
   }
+  .jvideo-icon-mgm5 {
+    margin-bottom: -5px !important;
+}
+.jvideo-icon-mg5 {
+  margin-bottom: 5px !important;
+}
+.pad-bt-0 {
+  padding-bottom: 0px !important;
+}

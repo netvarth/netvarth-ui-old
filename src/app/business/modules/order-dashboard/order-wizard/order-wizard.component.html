@@ -150,7 +150,7 @@
 
                                             <ng-container *ngIf="orderType !== 'SHOPPINGLIST'">
                                                 <div class="col-xs-12 col-sm-6  col-md-6 col-xl-4 col-lg-6 mb-3" *ngFor="let item of orderItems;let i=index;">
-                                                    <div class="card card-custom card-shadowless orderItems">
+                                                    <div class="card card-custom card-shadowless orderItems" *ngIf="item.item.isStockAvailable">
                                                         <div class="card-body p-0">
                                                             <!--begin::Image-->
                                                             <div class="overlay">

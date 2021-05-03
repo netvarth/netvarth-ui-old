@@ -28,6 +28,8 @@
                             class="fa meet-icon"></i>
                         <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Zoom'"
                             class="fa zoom-icon"></i>
+                        <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
                         <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Phone'"
                             class="fa phon-icon"></i>
                         <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && chkin.service.virtualServiceType === 'audioService'"

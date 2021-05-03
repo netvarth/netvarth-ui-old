@@ -20,7 +20,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ChangeMobileComponent implements OnInit {
 
-  mobile_cap = Messages.MOBILE_CAP;
+  mobile_cap = Messages.CHANGEMOBILE_CAP;
   your_curmob_msg = Messages.CURRENTMOBMSG;
   verified_cap = Messages.PHONE_VERIFIED;
   save_btn_cap = Messages.SAVE_BTN;

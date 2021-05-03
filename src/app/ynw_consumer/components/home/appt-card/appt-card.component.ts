@@ -57,9 +57,6 @@ export class ApptCardComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     // this.cdref.detectChanges();
-    console.log('Booking');
-    console.log(this.booking);
-    console.log(this.extras);
     if (this.booking.apptStatus == 'Confirmed' || this.booking.apptStatus == 'Arrived') {
       this.showRescheduleBtn = true;
     }
@@ -91,7 +88,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
       && (this.booking.jaldeeApptDistanceTime && this.booking.service.livetrack && this.booking.apptStatus === 'Confirmed')) {
       this.showLiveTrackBtn = true;
     }
-    if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0 &&
+    if (this.type !== 'future' && (this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED') && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0 &&
       this.booking.service.virtualCallingModes[0].callingMode === 'VideoCall' &&
       (this.booking.apptStatus === 'Started' || this.booking.apptStatus === 'Arrived' || this.booking.apptStatus === 'Confirmed')) {
       this.showJoinJaldeeVideoBtn = true;
@@ -104,8 +101,8 @@ export class ApptCardComponent implements OnInit, OnChanges {
     if (this.type !== 'future' && this.booking.videoCallButton && this.booking.videoCallButton==='ENABLED' && this.booking.service.serviceType === 'virtualService' && this.booking.service.virtualCallingModes.length > 0 &&
       (this.booking.service.virtualCallingModes[0].callingMode === 'Zoom' || this.booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet')
       && (this.booking.apptStatus === 'Started' || this.booking.apptStatus === 'Arrived' || this.booking.apptStatus === 'Confirmed')) {
-      this.showJoinJaldeeVideoBtn = false;
-      this.showJoinJaldeeVideoBtn = true;
+        this.showJoinJaldeeVideoBtn = false;
+      this.showJoinOtherVideoBtn = true;
       this.videoBtnCaption = 'Join Video Consultation';
       if (this.booking.videoCallMessage && this.booking.videoCallMessage === 'Call in progress') {
         this.videoBtnCaption = 'Re-join Video Consultation';
@@ -123,13 +120,15 @@ export class ApptCardComponent implements OnInit, OnChanges {
     if(this.booking.amountPaid){
       this.showPaidInfo = true;
     }
-    if (!this.checkIfFav(this.booking.providerAccount.id)) {
-      this.showFavouritesBtn = true;
-      this.showRemFavouritesBtn = false;
-    } else {
-      this.showFavouritesBtn = false;
-      this.showRemFavouritesBtn = true;
-    }
+    if (this.extras && this.extras['favourites']) {
+      if (!this.checkIfFav(this.booking.providerAccount.id)) {
+        this.showFavouritesBtn = true;
+        this.showRemFavouritesBtn = false;
+      } else {
+        this.showFavouritesBtn = false;
+        this.showRemFavouritesBtn = true;
+      }
+    } 
   }
   checkIfFav(id) {
     let fav = false;
@@ -141,8 +140,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
     return fav;
   }
   cardActionPerformed(type, action, booking, event) {
-    console.log(booking);
-    // event.stopPropagation();
+    event.stopPropagation();
     const actionObj = {};
     actionObj['type'] = type;
     actionObj['action'] = action;

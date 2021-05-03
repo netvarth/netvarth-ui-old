@@ -20,8 +20,8 @@
     min-height: 50px;
 }
 .bg-cover {
-    height: 200px;
-    background-attachment: fixed;
+    /* height: 200px;
+    background-attachment: fixed; */
     margin-bottom: 20px;
 }
 .mt-80 {

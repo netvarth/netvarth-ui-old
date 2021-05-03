@@ -31,11 +31,12 @@
     <div class="col-lg-7 no-padding" style="padding: 0 12.5px !important;">
       <div class="cards-div">
         <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class"
-        *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-          <app-booking-medical-records [customerId]="customerId" [waitlist_data]="waitlist_data"></app-booking-medical-records>
+          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+          <app-booking-medical-records [customerId]="customerId" [waitlist_data]="waitlist_data">
+          </app-booking-medical-records>
         </div>
         <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class"
-        *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
           <app-booking-prescriptions></app-booking-prescriptions>
         </div>
         <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5 border-class">
@@ -49,7 +50,8 @@
 
 
     <div class="col-lg-5">
-      <app-booking-bill *ngIf="!api_loading" [waitlist_data]="waitlist_data" [bookingType]="bookingType"></app-booking-bill>
+      <app-booking-bill *ngIf="!api_loading" [waitlist_data]="waitlist_data" [bookingType]="bookingType">
+      </app-booking-bill>
     </div>
 
   </div>
