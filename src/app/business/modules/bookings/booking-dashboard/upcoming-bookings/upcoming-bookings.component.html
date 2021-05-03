@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="spinner spinner-darker-success spinner-center" *ngIf="loading"></div>
-        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading">
+        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading && nextAppt.length > 0">
             <div class="d-flex align-items-center mb-10">
                 <div class="symbol symbol-40 symbol-light-white mr-5">
                     <div class="symbol-label">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="spinner spinner-darker-success spinner-center" *ngIf="loading"></div>
-        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading">
+        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading && nextWaitlist.length > 0">
             <div class="d-flex align-items-center mb-10">
                 <div class="symbol symbol-40 symbol-light-dark mr-5">
                     <div class="symbol-label">

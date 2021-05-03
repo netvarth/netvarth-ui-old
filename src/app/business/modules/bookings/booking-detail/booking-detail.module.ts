@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingsRoutingModule } from '../bookings.routing.module';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { BookingDetailComponent } from '../booking-detail/booking-detail.component';
 import { ServiceActionModule } from './service-actions/service-actions.module';
 import { CustomerBookingDetailsModule } from './customer-booking-details/customer-booking-details.module';
@@ -13,14 +12,12 @@ import { BookingBillModule } from './booking-bill/booking-bill.module';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { InboxListModule } from '../../inbox-list/inbox-list.module';
 import { BookingPrivateNotesModule } from './booking-private-notes/booking-private-notes.module';
-
-
+import { BookingsDetailRoutingModule } from './booking-detail.routing.module';
 
 @NgModule({
   declarations: [BookingDetailComponent],
   imports: [
     CommonModule,
-    BookingsRoutingModule,
     MatGridListModule,
     ServiceActionModule,
     CustomerBookingDetailsModule,
@@ -31,9 +28,10 @@ import { BookingPrivateNotesModule } from './booking-private-notes/booking-priva
     BookingBillModule,
     QuestionnaireModule,
     InboxListModule,
-    BookingPrivateNotesModule
+    BookingPrivateNotesModule,
+    BookingsDetailRoutingModule
   ],
-  exports:[BookingDetailComponent]
+  exports: [BookingDetailComponent]
 })
 export class BookingDetailModule {
 }

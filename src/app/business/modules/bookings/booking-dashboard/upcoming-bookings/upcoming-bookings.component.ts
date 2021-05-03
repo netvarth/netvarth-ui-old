@@ -43,8 +43,8 @@ export class UpcomingBookingsComponent implements OnInit {
         (data: any) => {
           if (data.length > 0) {
             this.nextAppt = data[0];
-            console.log(this.nextAppt);
           }
+          console.log(this.nextAppt);
           setTimeout(() => {
             this.loading = false;
           }, 100);
@@ -53,6 +53,6 @@ export class UpcomingBookingsComponent implements OnInit {
   gotoDetails(type) {
     const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : this.nextAppt.uid;
     console.log(uid);
-    // this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
+    this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
   }
 }
