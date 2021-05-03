@@ -2945,7 +2945,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             count,
             { // modal
               img: imagePath,
-              description: description
+              // description: description
             },
           );
           this.image_list_popup_temp.push(imgobj);
