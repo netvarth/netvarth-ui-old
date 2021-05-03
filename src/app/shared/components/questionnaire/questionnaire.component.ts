@@ -442,12 +442,12 @@ export class QuestionnaireComponent implements OnInit {
       if (!this.answers[question.labelName]) {
         this.answers[question.labelName] = {};
       }
-      this.answers[question.labelName] = (value === 'YES') ? true : false;
+      this.answers[question.labelName] = (value.toLowerCase() === 'yes') ? true : false;
     }
     this.onSubmit('inputChange');
   }
   isBooleanChecked(value, question) {
-    value = (value === 'YES') ? true : false;
+    value = (value.toLowerCase() === 'yes') ? true : false;
     if (this.answers[question.labelName] === value) {
       return true;
     } else {
