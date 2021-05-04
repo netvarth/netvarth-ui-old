@@ -14155,3 +14155,17 @@ padding-left: 15px !important;
 .pad-bt-0 {
   padding-bottom: 0px !important;
 }
+
+.cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
+.cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
+  border-bottom-color: transparent !important; 
+}
+.cal-week-view .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
+  background-color: none !important; 
+}
+.cal-week-view .cal-time {
+  width: 100px !important;
+}
+.cal-day-view .cal-events-container {
+  margin-left: 100px !important;
+}
