@@ -8,8 +8,10 @@ pre {
 }
 .calendar-main-div {
   background: white;
-  /* padding-top: 20px; */
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 5px;
+}
+.cal-week-view .cal-time-events .cal-event-container {
+  min-height: 30px !important;
 }

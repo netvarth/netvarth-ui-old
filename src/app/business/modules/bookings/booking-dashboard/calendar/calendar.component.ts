@@ -1,29 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-
-
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { startOfDay, addHours, isSameMonth, isSameDay, endOfDay, addMinutes } from 'date-fns';
 
 const colors: any = {
   red: {
@@ -47,7 +27,7 @@ const colors: any = {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-    @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
@@ -75,50 +55,14 @@ export class CalendarComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
-  constructor(private modal: NgbModal) { }
-   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  waitlists: any = [];
+  appts: any = [];
+  constructor(
+    private provider_services: ProviderServices) { }
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -151,8 +95,8 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    alert(action);
+    console.log(event);
   }
 
   addEvent(): void {
@@ -185,6 +129,89 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.getTodayWatilists();
+    this.getTodayAppts();
   }
 
+  getTodayWatilists() {
+    const filter = {
+      'waitlistStatus-eq': 'checkedIn,arrived'
+    };
+    this.provider_services.getTodayWaitlist(filter)
+      .subscribe(
+        (data: any) => {
+          this.waitlists = data;
+          console.log(this.waitlists);
+          this.getFutureWatilists();
+        });
+  }
+  getTodayAppts() {
+    const filter = {
+      'apptStatus-eq': 'Confirmed,Arrived'
+    };
+    this.provider_services.getTodayAppointments(filter)
+      .subscribe(
+        (data: any) => {
+          this.appts = data;
+          console.log(this.appts);
+          this.getFutureAppts();
+        });
+  }
+  getFutureWatilists() {
+    const filter = {
+      'waitlistStatus-eq': 'checkedIn,arrived'
+    };
+    this.provider_services.getFutureWaitlist(filter)
+      .subscribe(
+        (data: any) => {
+          this.waitlists = this.waitlists.concat(data);
+          console.log(this.waitlists);
+        });
+  }
+  getFutureAppts() {
+    const filter = {
+      'apptStatus-eq': 'Confirmed,Arrived'
+    };
+    this.provider_services.getFutureAppointments(filter)
+      .subscribe(
+        (data: any) => {
+          this.appts = this.appts.concat(data);
+          console.log(this.appts);
+          for (let appt of this.appts) {
+            this.events.push({
+              start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'start', 'minute')), this.getSingleTime(appt.appmtTime, 'start', 'hour')),
+              end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'end', 'minute')), this.getSingleTime(appt.appmtTime, 'end', 'hour')),
+              title: appt.apptStatus,
+              color: colors.yellow,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              }
+            })
+          }
+          console.log(this.events);
+        });
+  }
+  getSingleTime(slot, type, time) {
+    // console.log(slot);
+    // console.log(type);
+    // console.log(time);
+    const slots = slot.split('-');
+    // console.log(slots);
+    let dTime;
+    if (type === 'start') {
+      dTime = slots[0].split(':');
+    } else {
+      dTime = slots[1].split(':');
+    }
+    // if (time[0].startsWith(0)) {
+    //   console.log(time[0]);
+    // }
+    // console.log(dTime);
+    if (time === 'hour') {
+      return dTime[0];
+    } else {
+      return dTime[1];
+    }
+  }
 }
