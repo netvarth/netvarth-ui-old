@@ -198,20 +198,20 @@
                             TODAY
                         </div>
                         <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
-                                <mat-grid-tile *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="180px" [gutterSize]="'10px'">
+                                <mat-grid-tile style="overflow: visible !important;" *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding" style="overflow: visible !important;">
+                                        <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
                                             <div><i *ngIf="oder.storePickup" class="fa store_pick_ico"
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="more_opt">
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                                 (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
+                                                <mat-icon>more_horiz</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
@@ -246,28 +246,69 @@
                                                 </button>
                                             </mat-menu>
                                         </div>
-                                        <div
-                                            class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10  mgn-up-5 ln-ht-o">
-                                            <span class="ordr_no">{{oder.orderNumber}}</span>
-                                            <div class="tdisplay-block">
-                                                <span class="sp_name"
-                                                    (click)="providerDetail(oder.providerAccount,$event)">
-                                                    {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-5 ln-ht-o">
+                                            <div class="ribbon-new">
+                                                <span class="order-number-head">Order No.:</span>
+                                                <span class="order-number">{{oder.orderNumber}}</span>
+                                            </div>
+                                            <div class="tdisplay-block" style="padding: 5px 0 12px !important;">
+                                                <div class="order-sp-name sp_name" (click)="providerDetail(oder.providerAccount,$event)">
+                                                    {{oder.providerAccount.businessName || '' | capitalizeFirst}}
+                                                </div>
                                                 <!-- <div class="userName">
                                                     <i class="fa fa-user for"></i>
                                                     {{oder.orderFor.firstName}}
                                                     {{oder.orderFor.lastName}}
                                                 </div> -->
-                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                <div class="date-and-time">
+                                                    {{oder.orderDate | date: display_dateFormat}},
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
-                                                <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
-                                                        class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
-                                                    <span>{{oder.totalItemQuantity}}</span>
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                </div>
+                                                <div class="order-status" [ngClass]="oder.orderStatus === 'Cancelled'?'custom-red':'custom-green'">
+                                                    {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}
+                                                </div>
+                                                <div *ngIf="oder.totalItemQuantity > 0" class="quantity">
+                                                    <span class="head">Quantity&nbsp;:&nbsp;&nbsp;</span>
+                                                    <span class="value">{{oder.totalItemQuantity}}&nbsp;Nos.</span>
+                                                </div>
+                                                <div class="bottom-section">
+                                                    <div style="height: 25px !important;">
+                                                        <i *ngIf="oder.storePickup" class="fa store_pick_ico store-pick-up-icon"
+                                                            [matTooltip]="'Store Pickup'"></i>
+                                                        <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico home-delivery-icon"
+                                                            [matTooltip]="'Home Delivery'"></i>
+                                                    </div>
+                                                    <div>
+                                                        <button style="float: right !important;"
+                                                            *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
+                                                            mat-flat-button class="btns rupee-font"
+                                                            (click)="viewBill(oder,'order',$event)">Pay&nbsp;
+                                                            <i class="fa fa-inr"></i>
+                                                            {{oder.amountDue | currency:'':''}}</button>
+                                                        
+                                                        <span *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" 
+                                                            class="amtPaid">Paid&nbsp;
+                                                            <i class="fa fa-inr"></i>
+                                                            {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
+                                                            currency:'':'') : (oder.advanceAmountPaid |
+                                                            currency:'':''))}}</span>
+                                                        
+                                                        <span *ngIf="oder.bill && oder.bill.refundedAmount >0"
+                                                            style="color: #1E4079 !important; font-weight: 700 !important; font-size: 16px !important;">
+                                                            Refunded </span>
+
+                                                        <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                            <button mat-flat-button class="btns"
+                                                                *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
+                                                                (click)="viewBill(oder,'order',$event)">Receipt</button>
+                                                        </span>
+            
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                        <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                 mat-flat-button class="btns rupee-font"
@@ -287,11 +328,11 @@
                                                     (click)="viewBill(oder,'order',$event)">Receipt</button>
                                             </span>
 
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
+                                        </div> -->
+                                        <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                             [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
-                                            confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                            confirmation':oder.orderStatus| capitalizeFirst}}</div> -->
                                     </div>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -303,22 +344,22 @@
                         </div>
                         <ng-container *ngIf="more_tdyOrdersShow">
                             <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
-                                    <mat-grid-tile *ngFor="let oder of todayOrderslst_more;"
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="180px" [gutterSize]="'10px'">
+                                    <mat-grid-tile style="overflow: visible !important;" *ngFor="let oder of todayOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding" style="overflow: visible !important;">
+                                            <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
                                                 <div><i *ngIf="oder.storePickup" class="fa store_pick_ico"
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="more_opt">
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                                     (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
+                                                    <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
@@ -352,23 +393,69 @@
                                                 </mat-menu>
                                             </div>
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10  mgn-up-5 ln-ht-o">
-                                                <span class="ordr_no">{{oder.orderNumber}}</span>
-                                                <div class="tdisplay-block">
-                                                    <span class="sp_name"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12  mgn-up-5 ln-ht-o">
+                                                <div class="ribbon-new">
+                                                    <span class="order-number-head">Order No.:</span>
+                                                    <span class="order-number">{{oder.orderNumber}}</span>
+                                                </div>
+                                                <div class="tdisplay-block" style="padding: 5px 0 12px !important;">
+                                                    <div class="order-sp-name sp_name"
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
-                                                        capitalizeFirst}}</span>
-                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                        capitalizeFirst}}</div>
+                                                    <div class="date-and-time">
+                                                        {{oder.orderDate | date: display_dateFormat}},
                                                         {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
-                                                    <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                    </div>
+                                                    <div class="order-status" [ngClass]="oder.orderStatus === 'Cancelled'?'custom-red':'custom-green'">
+                                                        {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}
+                                                    </div>
+                                                    <div *ngIf="oder.totalItemQuantity > 0" class="quantity">
+                                                        <span class="head">Quantity&nbsp;:&nbsp;&nbsp;</span>
+                                                        <span class="value">{{oder.totalItemQuantity}}&nbsp;Nos.</span>
+                                                    </div>
+                                                    <!-- <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
+                                                    </div> -->
+                                                    <div class="bottom-section">
+                                                        <div style="height: 25px !important;">
+                                                            <i *ngIf="oder.storePickup" class="fa store_pick_ico store-pick-up-icon"
+                                                                [matTooltip]="'Store Pickup'"></i>
+                                                            <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico home-delivery-icon"
+                                                                [matTooltip]="'Home Delivery'"></i>
+                                                        </div>
+                                                        <div>
+                                                            <button style="float: right !important;"
+                                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
+                                                                mat-flat-button class="btns rupee-font"
+                                                                (click)="viewBill(oder,'order',$event)">Pay&nbsp;
+                                                                <i class="fa fa-inr"></i>
+                                                                {{oder.amountDue | currency:'':''}}</button>
+                                                            
+                                                            <span *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" 
+                                                                class="amtPaid">Paid&nbsp;
+                                                                <i class="fa fa-inr"></i>
+                                                                {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
+                                                                currency:'':'') : (oder.advanceAmountPaid |
+                                                                currency:'':''))}}</span>
+                                                            
+                                                            <span *ngIf="oder.bill && oder.bill.refundedAmount >0"
+                                                                style="color: #1E4079 !important; font-weight: 700 !important; font-size: 16px !important;">
+                                                                Refunded </span>
+    
+                                                            <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                                <button mat-flat-button class="btns"
+                                                                    *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
+                                                                    (click)="viewBill(oder,'order',$event)">Receipt</button>
+                                                            </span>
+                
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                            <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
                                                     *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
@@ -392,7 +479,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                                 [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
-                                                confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                                confirmation':oder.orderStatus| capitalizeFirst}}</div> -->
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
@@ -410,20 +497,20 @@
                         </div>
                         <div *ngIf="total_future_order && (total_future_order.length != 0)"
                             class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
-                                <mat-grid-tile *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="180px" [gutterSize]="'10px'">
+                                <mat-grid-tile style="overflow: visible !important;" *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding" style="overflow: visible !important;">
+                                        <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
                                             <div><i *ngIf="oder.storePickup" class="fa store_pick_ico"
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="more_opt">
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                                 (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
+                                                <mat-icon>more_horiz</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
@@ -455,27 +542,69 @@
                                             </mat-menu>
                                         </div>
                                         <div
-                                            class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10  mgn-up-5 ln-ht-o">
-                                            <span class="ordr_no">{{oder.orderNumber}}</span>
-                                            <div class="tdisplay-block">
-                                                <span class="sp_name"
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-5 ln-ht-o">
+                                            <div class="ribbon-new">
+                                                <span class="order-number-head">Order No.:</span>
+                                                <span class="order-number">{{oder.orderNumber}}</span>
+                                            </div>
+                                            <div class="tdisplay-block" style="padding: 5px 0 12px !important;">
+                                                <div class="order-sp-name sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
-                                                    {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    {{oder.providerAccount.businessName || '' | capitalizeFirst}}</div>
+                                                <div class="date-and-time">
+                                                    {{oder.orderDate | date: display_dateFormat}},
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                </div>
+                                                <div class="order-status" [ngClass]="oder.orderStatus === 'Cancelled'?'custom-red':'custom-green'">
+                                                    {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}
+                                                </div>
+                                                <div *ngIf="oder.totalItemQuantity > 0" class="quantity">
+                                                    <span class="head">Quantity&nbsp;:&nbsp;&nbsp;</span>
+                                                    <span class="value">{{oder.totalItemQuantity}}&nbsp;Nos.</span>
+                                                </div>
                                                 <!-- <div class="userName">
                                                     <i class="fa fa-user for"></i>
                                                     {{oder.orderFor.firstName}}
                                                     {{oder.orderFor.lastName}}
                                                 </div> -->
-                                                <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
+                                                <!-- <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
+                                                </div> -->
+                                                <div class="bottom-section">
+                                                    <div style="height: 25px !important;">
+                                                        <i *ngIf="oder.storePickup" class="fa store_pick_ico store-pick-up-icon"
+                                                            [matTooltip]="'Store Pickup'"></i>
+                                                        <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico home-delivery-icon"
+                                                            [matTooltip]="'Home Delivery'"></i>
+                                                    </div>
+                                                    <div>
+                                                        <button style="float: right !important;"
+                                                            *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
+                                                            mat-flat-button class="btns rupee-font"
+                                                            (click)="viewBill(oder,'order',$event)">Pay&nbsp;
+                                                            <i class="fa fa-inr"></i>
+                                                            {{oder.amountDue | currency:'':''}}</button>
+                                                        
+                                                        <span *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" 
+                                                            class="amtPaid">Paid&nbsp;
+                                                            <i class="fa fa-inr"></i>
+                                                            {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
+                                                            currency:'':'') : (oder.advanceAmountPaid |
+                                                            currency:'':''))}}</span>
+
+                                                        <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                            <button mat-flat-button class="btns"
+                                                                *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
+                                                                (click)="viewBill(oder,'order',$event)">Receipt</button>
+                                                        </span>
+            
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                        <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                 mat-flat-button class="btns rupee-font"
@@ -497,7 +626,7 @@
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                             [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
-                                            confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                            confirmation':oder.orderStatus| capitalizeFirst}}</div> -->
                                     </div>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -510,22 +639,22 @@
                         <ng-container *ngIf="more_futrOrdersShow">
                             <div *ngIf="total_future_order && total_future_order.length != 0"
                                 class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
-                                    <mat-grid-tile *ngFor="let oder of futureOrderslst_more;"
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="180px" [gutterSize]="'10px'">
+                                    <mat-grid-tile style="overflow: visible !important;" *ngFor="let oder of futureOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding" style="overflow: visible !important;">
+                                            <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
                                                 <div><i *ngIf="oder.storePickup" class="fa store_pick_ico"
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="more_opt">
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                                     (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
+                                                    <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
@@ -557,23 +686,65 @@
                                                 </mat-menu>
                                             </div>
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10  mgn-up-5 ln-ht-o">
-                                                <span class="ordr_no">{{oder.orderNumber}}</span>
-                                                <div class="tdisplay-block">
-                                                    <span class="sp_name"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-5 ln-ht-o">
+                                                <div class="ribbon-new">
+                                                    <span class="order-number-head">Order No.:</span>
+                                                    <span class="order-number">{{oder.orderNumber}}</span>
+                                                </div>
+                                                <div class="tdisplay-block" style="padding: 5px 0 12px !important;">
+                                                    <div class="order-sp-name sp_name"
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
-                                                        capitalizeFirst}}</span>
-                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                        capitalizeFirst}}</div>
+                                                    <div class="date-and-time">
+                                                        {{oder.orderDate | date: display_dateFormat}},
                                                         {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
-                                                    <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                    </div>
+                                                    <div class="order-status" [ngClass]="oder.orderStatus === 'Cancelled'?'custom-red':'custom-green'">
+                                                        {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':oder.orderStatus| capitalizeFirst}}
+                                                    </div>
+                                                    <div *ngIf="oder.totalItemQuantity > 0" class="quantity">
+                                                        <span class="head">Quantity&nbsp;:&nbsp;&nbsp;</span>
+                                                        <span class="value">{{oder.totalItemQuantity}}&nbsp;Nos.</span>
+                                                    </div>
+                                                    <!-- <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
+                                                    </div> -->
+                                                    <div class="bottom-section">
+                                                        <div style="height: 25px !important;">
+                                                            <i *ngIf="oder.storePickup" class="fa store_pick_ico store-pick-up-icon"
+                                                                [matTooltip]="'Store Pickup'"></i>
+                                                            <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico home-delivery-icon"
+                                                                [matTooltip]="'Home Delivery'"></i>
+                                                        </div>
+                                                        <div>
+                                                            <button style="float: right !important;"
+                                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
+                                                                mat-flat-button class="btns rupee-font"
+                                                                (click)="viewBill(oder,'order',$event)">Pay&nbsp;
+                                                                <i class="fa fa-inr"></i>
+                                                                {{oder.amountDue | currency:'':''}}</button>
+                                                            
+                                                            <span *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" 
+                                                                class="amtPaid">Paid&nbsp;
+                                                                <i class="fa fa-inr"></i>
+                                                                {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
+                                                                currency:'':'') : (oder.advanceAmountPaid |
+                                                                currency:'':''))}}</span>
+    
+                                                            <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                                <button mat-flat-button class="btns"
+                                                                    *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
+                                                                    (click)="viewBill(oder,'order',$event)">Receipt</button>
+                                                            </span>
+                
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                            <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
                                                     *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
@@ -595,7 +766,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "
                                                 [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus==='Order Received' ? 'Order Placed - Waiting for
-                                                confirmation':oder.orderStatus| capitalizeFirst}}</div>
+                                                confirmation':oder.orderStatus| capitalizeFirst}}</div> -->
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
