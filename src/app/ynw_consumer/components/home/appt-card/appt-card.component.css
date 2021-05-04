@@ -64,3 +64,6 @@ app-appt-card, app-wl-card {
 .jvideo-icon {
     margin-bottom: -5px !important;
 }
+mat-grid-tile-footer .mat-flat-button {
+    padding:5px 16px !important;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-department-list-dialog',
@@ -19,7 +20,9 @@ export class DepartmentListDialogComponent implements OnInit ,OnDestroy{
   constructor(
     public dialogRef: MatDialogRef<DepartmentListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private wordProcessor: WordProcessor,
     public dialog: MatDialog,
+ 
     private provider_services: ProviderServices) {
       this.mode=this.data.mode;
   }
@@ -43,7 +46,8 @@ export class DepartmentListDialogComponent implements OnInit ,OnDestroy{
 
         },
         error => {
-          // this.wordProcessor.apiErrorAutoHide(this, error);
+           this.wordProcessor.apiErrorAutoHide(this, error);
+           this.loading = false;
         }
       );
   }
@@ -56,13 +60,13 @@ export class DepartmentListDialogComponent implements OnInit ,OnDestroy{
 
   onConfirm(deptObject) {
     const departments = deptObject.selected.map(dept => dept.value);
-    const result = departments.map(a => a.id);
+    const result = departments.map(a => a.departmentId);
     this.dialogRef.close(result);
 
   }
   isSelected(dept) {
 
-    if (this.former_chosen_departments.some(e => e === dept.id)) {
+    if (this.former_chosen_departments.some(e => e === dept.departmentId)) {
       /* former_chosen_services contains the service we're looking for */
 
       return true;

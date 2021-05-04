@@ -126,12 +126,12 @@ export class BusinessComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     if (this.iswiz) {
-      this.bodyHeight = screenHeight - 50;
+      this.bodyHeight = screenHeight;
     } else {
       if (this.screenWidth <= 991) {
-        this.bodyHeight = screenHeight - 160;
+        this.bodyHeight = screenHeight - 107;
       } else {
-        this.bodyHeight = screenHeight - 120;
+        this.bodyHeight = screenHeight - 67;
       }
     }
   }
@@ -144,9 +144,9 @@ export class BusinessComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     if (this.screenWidth <= 991) {
-      this.bodyHeight = screenHeight - 160;
+      this.bodyHeight = screenHeight - 107;
     } else {
-      this.bodyHeight = screenHeight - 120;
+      this.bodyHeight = screenHeight - 67;
     }
     this.getBusinessProfile();
     this.getLicenseMetaData();

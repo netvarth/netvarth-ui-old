@@ -35,7 +35,10 @@ export class ItemListDialogComponent implements OnInit,OnDestroy {
         this.item_list = data;
         this.loading=false;
 
-      });
+      },
+      error => {
+        this.loading = false;
+     });
   }
   close() {
     this.dialogRef.close();

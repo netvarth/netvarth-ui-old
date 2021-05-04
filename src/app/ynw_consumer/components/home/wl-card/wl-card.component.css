@@ -62,4 +62,7 @@ app-appt-card, app-wl-card {
     height: 100%;
     overflow: auto;
 }
+mat-grid-tile-footer .mat-flat-button {
+    padding:5px 16px !important;
+}
 
