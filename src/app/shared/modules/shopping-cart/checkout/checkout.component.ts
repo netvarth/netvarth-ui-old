@@ -448,8 +448,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           }
-          if (this.cartDetails.advanceAmount > 0) {
-            this.getJaldeeCashandCredit();
+          if (this.cartDetails.eligibleJcashAmt) {
+            this.checkJcash = true
+            this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
+            // this.getJaldeeCashandCredit();
           }
         },
         error => {

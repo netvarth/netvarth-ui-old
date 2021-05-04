@@ -1672,22 +1672,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
-                this.getJaldeeCashandCredit();
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
+                this.checkJcash = true
+                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
-    }
-    getJaldeeCashandCredit() {
-        this.shared_services.getJaldeeCashandJcredit()
-            .subscribe(data => {
-                this.checkJcash = true
-                this.jaldeecash = data;
-                this.jcashamount = this.jaldeecash.jCashAmt;
-                this.jcreditamount = this.jaldeecash.creditAmt;
-            });
     }
     payuPayment() {
         let paymentWay;
