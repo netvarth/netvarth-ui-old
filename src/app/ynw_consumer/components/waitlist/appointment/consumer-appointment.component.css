@@ -217,9 +217,9 @@ ul.bus-actions li a.lnk {
   .panel-body {
     padding: 5px !important;
   }
-  .content .card {
+  /* .content .card {
     padding: 0px !important;
-  }
+  } */
   .img-responsive {
     width: 50% !important;
     margin: auto;
