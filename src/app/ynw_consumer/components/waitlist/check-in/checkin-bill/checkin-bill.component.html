@@ -26,10 +26,12 @@
                                 <div class="c-body">
                                     <div class="card title-gb">
 
-                                        <h5 *ngIf="(bill_data.amountDue != 0)" class="mgn-up-10">Bill<a class="pull-left mgn-rt-20 back-btn"
-                                                (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
-                                        <h5 *ngIf="(bill_data.amountDue == 0)" class="mgn-up-10">Receipt<a class="pull-left mgn-rt-20 back-btn"
-                                                (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
+                                        <h5 *ngIf="(bill_data.amountDue != 0)" class="mgn-up-10">Bill<a
+                                                class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
+                                                    class="fa fa-arrow-left"></i></a></h5>
+                                        <h5 *ngIf="(bill_data.amountDue == 0)" class="mgn-up-10">Receipt<a
+                                                class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
+                                                    class="fa fa-arrow-left"></i></a></h5>
                                     </div>
 
 
@@ -66,21 +68,20 @@
                                                                         </span> <span class="columns rightalign">
                                                                             <span class="dynamic"
                                                                                 *ngIf="gstnumber">{{gstin_cap}} </span>
-                                                                            <span class="dynamic"
-                                                                                *ngIf="gstnumber">{{gstnumber |
+                                                                            <span class="dynamic" *ngIf="gstnumber">{{gstnumber |
                                                                                 capitalizeFirst}}</span>
                                                                         </span>
                                                                         <span class="columns mgn-up-10"
                                                                             *ngIf="checkin.provider">
-                                                                            <span
-                                                                                class="dynamic">{{getTerminologyTerm('provider')
+                                                                            <span class="dynamic">{{getTerminologyTerm('provider')
                                                                                 |
                                                                                 capitalizeFirst}}: </span>
                                                                             <span
                                                                                 class="dynamic">{{checkin.provider.businessName}}</span>
                                                                         </span>
-                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red" *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                        Cancelled</div>
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
+                                                                            *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                            Cancelled</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -94,8 +95,7 @@
                                                                                     <div class="name">
                                                                                         {{service.serviceName |
                                                                                         capitalizeFirst}}
-                                                                                        <span
-                                                                                            class="rupee-font">{{service.price
+                                                                                        <span class="rupee-font">{{service.price
                                                                                             | currency:'&#8377;
                                                                                             '}}</span>
 
@@ -141,8 +141,7 @@
                                                                                     <div class="name">
                                                                                         {{item.itemName |
                                                                                         capitalizeFirst}}
-                                                                                        <span
-                                                                                            class="rupee-font">{{item.price
+                                                                                        <span class="rupee-font">{{item.price
                                                                                             |
                                                                                             currency:'&#8377; '}}
                                                                                         </span>
@@ -219,15 +218,15 @@
                                                                                             {{coupon.key}}
                                                                                         </div>
                                                                                         <div class="price rupee-font">
-                                                                                                <span>(-)</span>
-                                                                                                <span
-                                                                                                    (click)="showJCCouponNote(coupon)"
-                                                                                                    [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value
+                                                                                            <span>(-)</span>
+                                                                                            <span
+                                                                                                (click)="showJCCouponNote(coupon)"
+                                                                                                [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value
                                                                                                     |
                                                                                                     currency:'&#8377;
                                                                                                     '}}</span>
-                                                                                            </div>
-                                                                                </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
                                                                                     *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
@@ -359,7 +358,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="section-three other-section" *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled' && (bill_data.amountDue > 0)">
+                                                        <div class="section-three other-section"
+                                                            *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled' && (bill_data.amountDue > 0)">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
@@ -391,13 +391,14 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <div *ngIf = "jcashamount>0">
-                                                                    <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
-                                                                      Use Jaldee cash balance : Rs{{jcashamount}}
-                                                                  </div>
-                                                                  <div *ngIf = "jcashamount>0">
-                                                                      Balance amount can be paid by other payment methods 
-                                                                  </div>
+                                                                <div *ngIf="jcashamount>0">
+                                                                    <mat-checkbox [(ngModel)]="checkJcash">
+                                                                    </mat-checkbox>
+                                                                    Use Jaldee cash balance : Rs{{jcashamount}}
+                                                                </div>
+                                                                <div *ngIf="jcashamount>0">
+                                                                    Balance amount can be paid by other payment methods
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
