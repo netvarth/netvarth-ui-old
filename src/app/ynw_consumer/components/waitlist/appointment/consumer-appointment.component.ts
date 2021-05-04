@@ -1390,7 +1390,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     getPic(user) {
         if (user.profilePicture) {
-            return JSON.parse(user.profilePicture)['url'];
+            return this.s3Processor.getJson(user.profilePicture)['url'];
         }
         return 'assets/images/img-null.svg';
     }
