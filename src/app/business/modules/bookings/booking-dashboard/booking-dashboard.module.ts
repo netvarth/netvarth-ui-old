@@ -8,6 +8,8 @@ import { UpcomingBookingsModule } from './upcoming-bookings/upcoming-bookings.mo
 import { BooingQuickActionsModule } from './booking-quick-actions/booking-quick-actions.module';
 import { TodayBookingStatsModule } from './today-booking-stats/today-booking-stats.module';
 import { BookingFeedsModule } from './booking-feeds/booking-feeds.module';
+import { BookingAppointmentsModule } from './booking-appointments/booking-appointments.module';
+import { BookingCheckinsModule } from './booking-checkins/booking-checkins.module';
 
 
 
@@ -21,7 +23,9 @@ import { BookingFeedsModule } from './booking-feeds/booking-feeds.module';
     UpcomingBookingsModule,
     BooingQuickActionsModule,
     TodayBookingStatsModule,
-    BookingFeedsModule
+    BookingFeedsModule,
+    BookingAppointmentsModule,
+    BookingCheckinsModule
   ],
   exports:[BookingDashboardComponent]
 
