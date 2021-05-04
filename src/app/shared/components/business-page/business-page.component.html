@@ -338,9 +338,9 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="share" [matTooltip]="'Coupon'">
+                                <li class="share" [matTooltip]="'Coupon'"  *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
                                     <a class="like-btn" (click)="openCoupons()"
-                                        *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
+                                       >
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
 
@@ -387,8 +387,8 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-share centeralign">
-                                    <a class="like-btn" *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0"
+                                <li class="small-devices-share centeralign" *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0">
+                                    <a class="like-btn" 
                                         (click)="openCoupons()">
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
