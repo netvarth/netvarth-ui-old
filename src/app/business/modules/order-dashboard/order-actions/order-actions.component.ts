@@ -408,4 +408,15 @@ addConsumerInboxMessage() {
           () => { }
       );
 }
+  getEditOrderstatus(){
+    let stat = false;
+    if(this.timeType != 'history' && (this.orderDetails.orderStatus === 'Order Received' || this.orderDetails.orderStatus === 'Order Acknowledged' || this.orderDetails.orderStatus === 'Order Confirmed')){
+      stat = true;
+        if(this.orderDetails.bill && this.orderDetails.bill.billStatus === 'Settled'){
+          stat = false;
+        }
+    }
+    return stat;
+    
+  }
 }

@@ -1,0 +1,167 @@
+<!-- <h1 class="mat-dialog-title service-detail-title"> -->
+    <div class="modal-header service-detail-header">
+        <h1 class="modal-title pull-left service-detail-title">
+            <span class="name">
+                <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
+                    <span>
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'VideoCall' || data.serdet.virtualCallingModes[0].callingMode == 4)"></i>
+                        <i class="fa phon-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Phone' || data.serdet.virtualCallingModes[0].callingMode == 3)"></i>
+                        <i class="fa meet-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'GoogleMeet' || data.serdet.virtualCallingModes[0].callingMode == 2)"></i>
+                        <i class="fa zoom-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Zoom' || data.serdet.virtualCallingModes[0].callingMode == 1)"></i>
+                        <i class="fa wtsapaud-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0) && data.serdet.virtualServiceType == 'audioService'"></i>
+                        <i class="fa wtsapvid-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0) && data.serdet.virtualServiceType == 'videoService'"></i>
+                        <img class="card-img img-responsive donation-service" src="assets/images/donation.png" alt=""
+                            *ngIf="data.serdet.serviceType && data.serdet.serviceType == 'donationService'">
+                        <img class="card-img img-responsive physical-service" src="assets/images/meeting_Artboard.png" alt=""
+                            *ngIf="data.serdet.serviceType && data.serdet.serviceType == 'physicalService'">
+                    </span>
+                    {{data.serdet.name | capitalizeFirst}}
+    
+                </span>
+    
+            </span>
+        <!-- <span *ngIf="!is_donation_serv">{{servc_detils}}</span> <span *ngIf="is_donation_serv">{{donation_dtls}}</span> -->
+        <!-- <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button> -->
+        </h1>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    
+    <div class="modal-body service-detail-content service-popup-content"> 
+    <!-- <mat-dialog-content class="service-detail-content service-popup-content"> -->
+        <div class="servicedet_outer" *ngIf="service.name !==''">
+            <!-- <div class="img-outer" *ngIf="!image_list_popup || image_list_popup.length==0">
+                <div class="galbx" *ngIf="!service.servicegallery && !is_donation_serv">
+                    <img src="../../assets/images/img-null.svg" alt=""
+                        style="width:80px;height:80px;background-color: gainsboro">
+                </div>
+            </div> -->
+            <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0 && !is_donation_serv">
+                <ul class="gal" *ngIf="service.servicegallery.length >0">
+                    <li>
+                        <div class="galbx">
+                            <div class="overlay" (click)="openImageModalRow(image_list_popup[0])">
+                                <span *ngIf="service.servicegallery.length > 1">+
+                                    {{service.servicegallery.length - 1 }}</span>
+                            </div>
+                            <img [src]="service.servicegallery[0].thumbUrl" alt="">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+    
+            <div class="outer">
+                <div class="outer1 line" *ngIf="data.serdet && data.serdet.description">
+                    <!-- <span class="name" >  
+                        <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
+                            <span>
+                                <i class="fa phon-icon"
+                                *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Phone' || data.serdet.virtualCallingModes[0].callingMode == 3)"></i>
+                                <i class="fa meet-icon"
+                                *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'GoogleMeet' || data.serdet.virtualCallingModes[0].callingMode == 2)"></i>
+                                <i class="fa zoom-icon"
+                                *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Zoom' || data.serdet.virtualCallingModes[0].callingMode == 1)"></i>
+                                <i class="fa wtsapaud-icon"
+                                *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0)"></i>
+                               </span> 
+                            {{data.serdet.name | capitalizeFirst}}
+                           
+                        </span>
+                        <span *ngIf="this.data.serdet.taxable"><sup>Tax</sup></span>
+                    </span> -->
+                    <div class="description" *ngIf="data.serdet && data.serdet.description"
+                        [innerHTML]="data.serdet.description | nl2br">
+                    </div>
+                </div>
+                <div class="outer5 service-duration" *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
+                    <div class="duration">
+                        <span>{{service_duration}} : </span>
+                        <span style="font-weight: bold">
+                            {{HHMM}}
+                        </span>
+                    </div>
+                </div>
+                <div class="outer3" *ngIf="data.serdet && data.serdet.totalAmount && data.serdet.totalAmount != 0">
+                    <div class="duration">
+                        <span class="data-label"> {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} Fee : </span>
+                        <span style="font-weight: bold" class="rupee-font data-value">
+                            <i class='fa fa-inr'></i>{{data.serdet.totalAmount | currency: '':''}}
+                        </span>
+                    </div>
+                </div>
+                <div class="outer4"
+                    *ngIf="data.serdet && data.serdet.isPrePayment && data.serdet.minPrePaymentAmount != data.serdet.totalAmount">
+                    <div class="prepayment">
+                        <span class="data-label">Advance Payment : </span>
+                        <span style="font-weight: bold" class="rupee-font data-value">
+                            <i class="fa fa-inr"></i>{{data.serdet.minPrePaymentAmount | currency: '':''}}
+                        </span>
+                    </div>
+                </div>
+                <div class="outer4 tax" *ngIf="this.data.serdet.taxable">
+                    <span class="data-label">Tax Applicable : </span>
+                    <span style="font-weight: bold" class="data-value">
+                        Yes
+                    </span>
+                </div>
+                <div class="outer4" *ngIf="data.serdet && data.serdet.prePayment">
+                    <div class="prepayment">
+                        <span class="data-label">{{prepayment_amount}} : </span>
+                        <span style="font-weight: bold" class="rupee-font data-value">
+                            <i class="fa fa-inr"></i>{{data.serdet.minAmount | currency: '':''}}
+                        </span>
+                    </div>
+                </div>
+                <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
+                    <div class="duration">
+                        <span class="data-label">Min amount : </span>
+                        <span class="data-value" *ngIf="data.serdet.minValue" style="font-weight: bold">
+                            {{data.serdet.minValue}}
+                        </span>
+                        <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font data-value">
+                            <i class="fa fa-inr"></i> {{data.serdet.minDonationAmount}}
+                        </span>
+                    </div>
+                </div>
+                <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
+                    <div class="duration">
+                        <span class="data-label">Max amount : </span>
+                        <span class="data-value" *ngIf="data.serdet.maxValue" style="font-weight: bold">
+                            {{data.serdet.maxValue}}
+                        </span>
+                        <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font data-value">
+                            <i class="fa fa-inr"></i> {{data.serdet.maxDonationAmount}}
+                        </span>
+                    </div>
+                </div>
+                <!-- <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
+                    <div class="duration">
+                        <span class="data-label">Multiples : </span>
+                        <span class="data-value" style="font-weight: bold">
+                            {{data.serdet.multiples}}
+                        </span>
+                    </div>
+                </div> -->
+                <div class="mgn-bt-5" *ngIf="data.serdet.minPrePaymentAmount == data.serdet.totalAmount">
+                    Note: {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be paid in advance while
+                    booking.
+                </div>
+            </div>
+        </div>
+    <!-- </mat-dialog-content> -->
+    </div>
+    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display>
+    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

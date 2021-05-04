@@ -1016,7 +1016,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type !== 3) {
       const api_filter = {};
-      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+     // api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
       this.getHistoryAppointmentsCount(api_filter)
         .then(
           (result) => {
@@ -1585,9 +1585,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
-    if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
-      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-    }
+    // if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
+    //   api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -2401,7 +2401,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             count,
             { // modal
               img: imagePath,
-              description: description
+              // description: description
             },
           );
           this.image_list_popup_temp.push(imgobj);
@@ -2735,12 +2735,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
-  setWaitlistStatusFilterForHistory() {
-    for (const apptStatus of this.check_in_statuses_filter) {
-      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
-        this.apptStatuses.push(apptStatus.value);
-      }
-    }
-    return this.apptStatuses.toString();
-  }
+  // setWaitlistStatusFilterForHistory() {
+  //   for (const apptStatus of this.check_in_statuses_filter) {
+  //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+  //       this.apptStatuses.push(apptStatus.value);
+  //     }
+  //   }
+  //   return this.apptStatuses.toString();
+  // }
 }

@@ -247,6 +247,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         } else {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
         }
+        console.log(this.groupedMsgs);
       } else {
         let arr = [];
         Object.keys(group).forEach(key => {
@@ -257,9 +258,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
           });
         });
         this.groupedMsgs = arr;
+        console.log(this.groupedMsgs);
       }
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
+      console.log(this.groupedMsgs);
     }
     this.onResize();
     if (this.selectedCustomer !== '') {
@@ -562,7 +565,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getUserImg(user) {
     if (user.profilePicture) {
-      const proImage = JSON.parse(user.profilePicture);
+      const proImage = user.profilePicture;
       return proImage.url;
     } else {
       return '../../../assets/images/avatar5.png';

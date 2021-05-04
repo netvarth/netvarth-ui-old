@@ -516,7 +516,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.shared_services.getConsumerCatalogs(accountId)
+     // _this.shared_services.getConsumerCatalogs(accountId)
+     _this.providerservice.getProviderCatalogs()
         .subscribe(
           (data: any) => {
             resolve(data[0]);

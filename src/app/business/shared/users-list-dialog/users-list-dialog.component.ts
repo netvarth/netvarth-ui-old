@@ -38,12 +38,12 @@ subscription:Subscription;
   getUsers() {
    this.subscription= this.provider_services.getUsers().subscribe(
       (data: any) => {
-        this.user_list = data;
+        this.user_list = data.filter(obj=>obj.userType!=='ADMIN');
         this.loading=false;
       },
 
       (error: any) => {
-       //  this.wordProcessor.apiErrorAutoHide(this, error);
+      this.loading=false;
       });
   }
   close() {
