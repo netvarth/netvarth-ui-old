@@ -1,17 +1,6 @@
-h3 {
-  margin: 0 0 10px;
-}
-
-pre {
-  background-color: #f5f5f5;
-  padding: 15px;
-}
 .calendar-main-div {
   background: white;
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 5px;
-}
-.cal-week-view .cal-time-events .cal-event-container {
-  min-height: 30px !important;
 }

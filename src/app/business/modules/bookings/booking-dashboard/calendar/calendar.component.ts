@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { CalendarDateFormatter, CalendarEvent, CalendarView } from 'angular-calendar';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { startOfDay, addHours, isSameMonth, isSameDay, endOfDay, addMinutes } from 'date-fns';
+import { startOfDay, addHours, isSameMonth, isSameDay, addMinutes } from 'date-fns';
+import { CustomDateFormatter } from './custom-date-formatter.provider';
 
 const colors: any = {
   red: {
@@ -24,40 +24,21 @@ const colors: any = {
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter
+    }
+  ],
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  refresh: Subject<any> = new Subject();
-
   events: CalendarEvent[] = [];
-
   activeDayIsOpen: boolean = true;
+
   waitlists: any = [];
   appts: any = [];
   constructor(
@@ -76,48 +57,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
   handleEvent(action: string, event: CalendarEvent): void {
     alert(action);
     console.log(event);
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {
@@ -166,6 +108,15 @@ export class CalendarComponent implements OnInit {
         (data: any) => {
           this.waitlists = this.waitlists.concat(data);
           console.log(this.waitlists);
+          // for (let waitlist of this.waitlists) {
+          //   this.events.push({
+          //     start: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getSingleTime(waitlist.appmtTime, 'start', 'minute')), this.getSingleTime(waitlist.appmtTime, 'start', 'hour')),
+          //     end: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getSingleTime(waitlist.appmtTime, 'end', 'minute')), this.getSingleTime(waitlist.appmtTime, 'end', 'hour')),
+          //     title: waitlist.apptStatus,
+          //     color: colors.yellow
+          //   })
+          // }
+          // console.log(this.events);
         });
   }
   getFutureAppts() {
@@ -182,32 +133,20 @@ export class CalendarComponent implements OnInit {
               start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'start', 'minute')), this.getSingleTime(appt.appmtTime, 'start', 'hour')),
               end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'end', 'minute')), this.getSingleTime(appt.appmtTime, 'end', 'hour')),
               title: appt.apptStatus,
-              color: colors.yellow,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true,
-              }
+              color: colors.yellow
             })
           }
           console.log(this.events);
         });
   }
   getSingleTime(slot, type, time) {
-    // console.log(slot);
-    // console.log(type);
-    // console.log(time);
     const slots = slot.split('-');
-    // console.log(slots);
     let dTime;
     if (type === 'start') {
       dTime = slots[0].split(':');
     } else {
       dTime = slots[1].split(':');
     }
-    // if (time[0].startsWith(0)) {
-    //   console.log(time[0]);
-    // }
-    // console.log(dTime);
     if (time === 'hour') {
       return dTime[0];
     } else {
