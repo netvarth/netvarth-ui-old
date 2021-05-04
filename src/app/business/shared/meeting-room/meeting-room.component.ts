@@ -33,6 +33,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     booking;
     consumerReady = false;
     subs = new SubSink();
+    btnClicked = false;
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
     @ViewChild('remoteVideo') remoteVideo: ElementRef;

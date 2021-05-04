@@ -176,6 +176,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
                 this.iconClass = 'fa zoom-icon';
                 break;
               }
+              case 'VideoCall': {
+                this.iconClass = 'fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5';
+                break;
+              }
               case 'GoogleMeet': {
                 this.iconClass = 'fa meet-icon';
                 break;

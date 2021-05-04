@@ -41,7 +41,10 @@ this.subscription.unsubscribe();
       console.log(this.consumer_group.length);
       this.loading =false;
 
-    });
+    },
+    error => {
+      this.loading = false;
+   });
   }
   close() {
     this.dialogRef.close();

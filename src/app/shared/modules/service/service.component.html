@@ -235,7 +235,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
               <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon"></i>
               <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
-              <i *ngIf="mode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s" aria-hidden="true"></i>
+              <i *ngIf="mode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
               <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
               <span class="dash">{{mode}}</span>
             </mat-option>
@@ -374,6 +374,14 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  <mat-slide-toggle class="example-margin" formControlName="livetrack">
  </mat-slide-toggle>
  </div> -->
+ <div  *ngIf="!is_donation" class="mgn-bt-20">
+    <label class="no-padding " 
+      style="font-size: 1.1rem;">
+      {{customer_label | capitalizeFirst}} Info</label>
+    <div class="settings_info" *ngIf="!is_donation">
+        Would you like to collect more information from your customer/patient along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+      </div>
+  </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
           style="font-size: 1.1rem;">
@@ -432,6 +440,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <!-- </mat-expansion-panel>
 </mat-accordion> -->
       </div>
+      
       <div class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">
           Customization</a>
@@ -536,6 +545,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <!-- </mat-expansion-panel>
 </mat-accordion> -->
       </div>
+     
       <div class="actiondiv" style="margin-top: 20px;">
         <div style="margin-bottom:30px;display: inline-flex;">
           <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;

@@ -10615,7 +10615,9 @@ a {
 .jvideo-icon-s {
   width: 20px !important;
 }
-
+.jvideo-icon-sm {
+  width: 28px !important;
+}
 .phon-icon {
   content: url(../images/teleservice/audio.svg);
   top: 3px;
