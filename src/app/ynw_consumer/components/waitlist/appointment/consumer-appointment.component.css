@@ -1452,7 +1452,7 @@ body.modal-open {
   .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
     width: auto !important;
   }
-  .disp-none {
+  .displ-none {
     display: none !important;
   }
 }
