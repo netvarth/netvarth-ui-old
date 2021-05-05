@@ -150,6 +150,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     ) {
         this.subs.sink = this.activated_route.queryParams.subscribe(
             params => {
+                console.log(params);
                 if (params.accountId) {
                     this.accountId = params.accountId;
                 }
@@ -563,7 +564,8 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
         // this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+
     }
 
     resetApiError() {

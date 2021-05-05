@@ -516,7 +516,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
         //    this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+
     }
     paytmPayment() {
         this.pay_data.uuid = this.uuid;
