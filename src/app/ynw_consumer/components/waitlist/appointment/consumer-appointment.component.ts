@@ -219,6 +219,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selectedDate;
     private subs = new SubSink();
     questionnaireLoaded = false;
+    imgCaptions: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -714,7 +715,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }
                     setTimeout(() => {
                         this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
-                    }, 500);
+                    }, 2000);
                 },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -746,7 +747,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     } else {
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
-                        }, 500);
+                        }, 2000);
                     }
                 }
                 const member = [];
@@ -1044,7 +1045,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
                 i++;
             }
         }
