@@ -106,6 +106,7 @@ import { BookingService } from './shared/services/booking-service';
 import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -217,6 +218,7 @@ export function init_app(globalService: GlobalService) {
       multi: true
     },
     AuthService,
+    ConsumerAuthService,
     SharedServices,
     GlobalService,
     SharedFunctions,

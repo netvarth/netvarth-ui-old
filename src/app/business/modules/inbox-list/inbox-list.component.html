@@ -146,7 +146,8 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        <div class="reply-msg text-left"
+                                                            *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
                                                                 {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
@@ -163,10 +164,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                    *ngIf="checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                    *ngIf="checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>
@@ -187,7 +188,8 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        <div class="reply-msg text-left"
+                                                            *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
                                                                 {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
@@ -205,10 +207,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                    *ngIf="checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                    *ngIf="checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>

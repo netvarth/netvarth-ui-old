@@ -437,9 +437,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const thumbPath = attachements[comIndex].thumbPath;
       let imagePath = thumbPath;
       const description = attachements[comIndex].s3path;
-      const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-      if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+      if (this.checkImgType(description) === 'img') {
         imagePath = attachements[comIndex].s3path;
+      } else {
+        imagePath = attachements[comIndex].thumbPath;
       }
       const imgobj = new Image(
         count,
@@ -615,5 +616,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
         b[i].classList.remove('blinkelem');
       }
     }, 2000);
+  }
+  checkImgType(img) {
+    img = img.split('?');
+    if (img[0] && img[0].indexOf('.pdf') === -1) {
+      return 'img';
+    } else {
+      return 'pdf';
+    }
   }
 }
