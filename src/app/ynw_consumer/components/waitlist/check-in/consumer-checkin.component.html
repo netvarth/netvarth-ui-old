@@ -287,7 +287,7 @@
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
+                                                                            <i class="fa wtsapvid-icon mgn-lt-5" style="width: 20px;"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
@@ -310,7 +310,7 @@
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                         <i class="fa wtsapaud-icon wtsap-cal"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                        <i class="fa wtsapvid-icon wtsap-cal"
+                                                                        <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         <span
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
@@ -517,7 +517,7 @@
                                                                     *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                     <i class="fa wtsapaud-icon wtsap-cal"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                    <i class="fa wtsapvid-icon wtsap-cal mgn-rt-5 mgn-lt-10"
+                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10" style="width: 20px;"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                     <span>WhatsApp#:
                                                                         <b>+{{callingModes}}</b></span>

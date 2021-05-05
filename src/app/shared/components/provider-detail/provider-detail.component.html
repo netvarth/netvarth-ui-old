@@ -339,12 +339,11 @@
                                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                                     </a>
                                 </li> -->
-                                <li class="favourite remove-favourite" [matTooltip]="rem_from_fav_cap" *ngIf="isInFav">
+                                <!-- <li class="favourite remove-favourite" [matTooltip]="rem_from_fav_cap" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
                                         <i class="fa fa-heart" aria-hidden="true"></i>&nbsp;
-                                        <!-- <span>{{rem_from_fav_cap}}</span> -->
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="message" [matTooltip]="send_msgs_cap">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
@@ -396,20 +395,20 @@
                         </div>
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
+                            <ul class="bus-actions no-padding mgn-up-10 width-100" *ngIf="settings_exists && business_exists">
                                 <!-- <li class="small-devices-fav centeralign" *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         <span class="display-text">&nbsp;{{add_to_fav_cap}}</span>
                                     </a>
                                 </li> -->
-                                <li class="small-devices-fav small-devices-remove-fav centeralign" *ngIf="isInFav">
+                                <!-- <li class="small-devices-fav small-devices-remove-fav centeralign" *ngIf="isInFav">
                                     <a class='like-btn' (click)="doRemoveFav()">
                                         <i class="fa fa-heart" aria-hidden="true"></i>
                                         <span class="display-text">&nbsp;{{rem_from_fav_cap}}</span>
                                     </a>
-                                </li>
-                                <li class="small-devices-message centeralign">
+                                </li> -->
+                                <li class="small-devices-message centeralign mgn-rt-10">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-comments-o" aria-hidden="true"></i>
@@ -443,11 +442,12 @@
                                         </span>
                                     </a>
                                 </li>
+                            </ul>
+                            <ul class="bus-actions no-padding mgn-up-10 more-info-sec" *ngIf="settings_exists && business_exists">
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
-                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
-                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
-
+                                    class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
+                            <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
+                                    class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">

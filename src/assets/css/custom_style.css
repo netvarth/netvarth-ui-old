@@ -14065,3 +14065,8 @@ padding-left: 15px !important;
   font-weight: bold;
   border: 1px solid rgb(24 62 121);
 }
+@media (max-width: 767px) {
+  .d-small-none {
+    display: none !important;
+  }
+}

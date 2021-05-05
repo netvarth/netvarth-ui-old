@@ -365,13 +365,13 @@
                         </div>
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
+                            <ul class="bus-actions no-padding mgn-up-10 width-100" *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
                                     </a>
                                 </li> -->
-                                <li class="small-devices-message centeralign">
+                                <li class="small-devices-message centeralign mgn-rt-10">
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-commenting-o" aria-hidden="true"></i>
@@ -402,11 +402,12 @@
                                         </span>
                                     </a>
                                 </li>
+                            </ul>
+                            <ul class="bus-actions no-padding mgn-up-10 more-info-sec" *ngIf="settings_exists && business_exists">
                                 <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
-                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
-                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
-
+                                    class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
+                            <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
+                                    class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                     </div>
