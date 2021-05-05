@@ -107,6 +107,7 @@ import { ServicePageHealthcareComponent } from './shared/modules/business/servic
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
+import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -142,7 +143,8 @@ export function init_app(globalService: GlobalService) {
     ItemDetailsSharedComponent,
     MeetingRoomComponent,
     CommunicationComponent,
-    ServicePageHealthcareComponent
+    ServicePageHealthcareComponent,
+    ListRecordingsDialogComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -158,7 +160,8 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    AddAddressComponent
+    AddAddressComponent,
+    ListRecordingsDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
