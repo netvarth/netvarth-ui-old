@@ -19,7 +19,7 @@
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
                                 <div class="col-xl-12" *ngIf="questionnaireLoaded">
-                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding">
+                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding disp-none">
                                         <div class="wizard-nav" *ngIf="type != 'reschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
@@ -197,7 +197,7 @@
                                                             Appointment Time
                                                             <span><a class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
                                                                     (click)="changeSlot()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">Change Slot
+                                                                    data-target="#exampleModalCenter">Change Time
                                                                 </a></span>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
@@ -249,7 +249,7 @@
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
+                                                                            <i class="fa wtsapvid-icon mgn-lt-5" style="width: 20px;"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
@@ -272,7 +272,7 @@
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                         <i class="fa wtsapaud-icon wtsap-cal"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                        <i class="fa wtsapvid-icon wtsap-cal"
+                                                                        <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         <span
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
@@ -447,7 +447,7 @@
                                                         </div>
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 mgn-bt-10">
-                                                            Choose Slot
+                                                            Choose Time
                                                         </div>
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 slotdiv">
@@ -540,6 +540,9 @@
                                                     <div class="modal-body">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{sel_ser_det.consumerNoteTitle}}
+                                                            <div class="form-level-settings">
+                                                                Add any other notes to the provider
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <textarea class="form-control mgn-bt-20 mgn-up-20"
@@ -605,6 +608,9 @@
                                                                             <div class="gal_img">
                                                                                 <img [src]="getImage(selectedMessage.base64[i], file)"
                                                                                     *ngIf="selectedMessage.base64[i]">
+                                                                            </div>
+                                                                            <div class="gal-input">
+                                                                                <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
                                                                             </div>
                                                                             <div class="gal_action"
                                                                                 (click)="deleteTempImage(i)">
@@ -672,7 +678,7 @@
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-rt-5 mgn-lt-10"
+                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-rt-5 mgn-lt-10 mgn-up-10" style="width: 20px;"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                             <span>WhatsApp#:
                                                                                 <b>+{{callingModes}}</b></span>

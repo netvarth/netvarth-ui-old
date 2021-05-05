@@ -193,6 +193,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     selectedQTime;
     questionnaireLoaded = false;
+    imgCaptions: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1106,7 +1107,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
                 i++;
             }
         }
