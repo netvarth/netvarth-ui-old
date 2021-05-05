@@ -1409,7 +1409,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getHistoryAppointments() {
+    console.log("in history");
+    // const filter = this.lStorageService.getitemfromLocalStorage('filter');
+    // if(filter){
+    //   Mfilter = filter;
+    // }
     let Mfilter = this.setFilterForApi();
+    
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
@@ -1430,6 +1436,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               // this.new_checkins_list = [];
+            //  this.lStorageService.removeitemfromLocalStorage('filter');
               this.appt_list = this.check_in_filtered_list = data;
               if (this.filterapplied === true) {
                 this.noFilter = false;
@@ -1503,7 +1510,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return idFilter;
   }
   setFilterForApi() {
-    const api_filter = {};
+    let api_filter = {};
+    const filter = this.lStorageService.getitemfromLocalStorage('filter');
+    console.log(filter);
+    if(filter){
+      api_filter = filter;
+    }
+    console.log(api_filter);
     if (this.time_type === 1) {
       if (this.selQIds) {
         api_filter['schedule-eq'] = this.selQIds.toString();
@@ -1596,6 +1609,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.lStorageService.removeitemfromLocalStorage('filter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
@@ -2043,6 +2057,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goCheckinDetail(checkin) {
+    this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
     if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('appthP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('appthPFil', this.filter);
@@ -2598,6 +2613,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   gotoCustomerDetails(appt) {
+    this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
+    console.log(this.setFilterForApi());
     if (appt.apptStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
     }
@@ -2660,6 +2677,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   tabChange(event) {
+    this.lStorageService.removeitemfromLocalStorage('filter');
     this.resetCheckList();
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;

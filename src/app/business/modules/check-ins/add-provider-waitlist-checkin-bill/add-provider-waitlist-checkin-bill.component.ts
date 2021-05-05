@@ -871,6 +871,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderDiscount='';
   }
   orderPCouponSelected() {
     this.showDiscountSection = false;
@@ -880,6 +881,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderProviderCoupon='';
   }
   jCouponSelected() {
     this.showDiscountSection = false;
@@ -889,6 +891,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderProviderjCoupon='';
   }
 
   disaplynoteSelected() {
