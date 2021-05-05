@@ -11,6 +11,15 @@
     min-width: 210px !important;
 }
 
+.booking-card.card.user {
+    max-width: 300px !important;
+    height: 230px !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: space-between;
+    padding: 35px 10px 45px !important;
+}
+
 /* .booking-card.card.service {
     height: 274px !important;
 } */
@@ -275,6 +284,34 @@ font-weight: 500;
     align-self: center !important;
 }
 
+.booking-card.card.user .card-item-head {
+    width: 30% !important;
+    height: auto !important;
+    align-self: stretch !important;
+}
+
+.booking-card.card.user .card-item-head .img-container {
+    width: 100% !important;
+    padding-top: 100% !important;
+    position: relative !important;
+}
+
+.booking-card.card.user .card-item-head .img-container img {
+    position: absolute !important;
+    height: 100% !important;
+    top: 0 !important;
+    width: 100% !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    border: 2px solid orange !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    margin: 0px !important;
+    padding: 5px !important;
+    box-shadow: none !important;
+}
+
 .booking-card.card.order .card-item-head {
     height: 140px !important;
     width: 100% !important;
@@ -286,6 +323,12 @@ font-weight: 500;
     text-align: center;
     display: table;
     width: 100%;
+}
+
+.booking-card.card.user .card-item-content {
+    width: 70% !important;
+    padding-left: 8px !important;
+    margin-top: 0 !important;
 }
 
 .booking-card.card.order .card-item-content {
@@ -374,10 +417,10 @@ font-weight: 500;
 }
 
 .booking-card-user .card-img {
-    border: none !important;
+    /* border: none !important; */
     margin: 0px !important;
-    padding: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* padding: 5px; */
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 .booking-card h4.card-title a {
@@ -493,7 +536,13 @@ button.fxmenu {
 
 .booking-card-user.user .card-item-content .card-title.user-name {
     height: auto !important;
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 15px !important;
+    text-align: left !important;
+    padding: 0 !important;
+    color: #14637d !important;
+    font-weight: 700 !important;
+    margin-bottom: 5px !important;
 }
 
 .booking-card-user.user .card-item-content .qualification {
@@ -873,4 +922,240 @@ button.fxmenu {
 }
 .service-details .module {
     height: 45px;
+}
+
+.booking-card.card.user p.user-availability {
+    padding: 8px !important;
+    font-size: 10.5px !important;
+    line-height: 1.1 !important;
+    font-weight: 600 !important;
+    color: #073B4C !important;
+    margin: 0 !important;
+    background-color: #b2ccd1 !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    border-radius: 10px !important;
+    text-transform: uppercase !important;
+}
+
+.booking-card.card.user button.user-card-button {
+    width: 100% !important;
+    border: 1px solid #FFC107 !important;
+    background-color: #FFC107 !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    text-transform: uppercase;
+    font-weight: 700 !important;
+}
+
+.booking-card.card.user .user-text {
+    color: #073B4C !important;
+    font-size: 15px !important;
+    margin-top: 8px !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    
+    padding-top: 22px !important;
+    display: flex !important;
+}
+
+.booking-card.card.user .user-text > span {
+    position: relative !important;
+    width: 100% !important;
+}
+
+.booking-card.card.user .user-text > span > span:nth-child(1) {
+    position: absolute !important;
+    right: 20% !important;
+    border: 1px solid orange !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    bottom: 0 !important;
+}
+
+.booking-card.card.user .user-text > span > span:nth-child(1) > span {
+    background-color: orange !important;
+    border-radius: 50% !important;
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+}
+
+.booking-card.card.user .user-text > span > span:nth-child(2) {
+    z-index: 500 !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 25% !important;
+}
+
+.booking-card.card.user .modes {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
+    align-items: flex-start !important;
+}
+
+.booking-card.card.user .modes .online, 
+.booking-card.card.user .modes .in-person {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.booking-card.card.user .modes {
+    margin-top: 8px !important;
+}
+
+.booking-card.card.user .modes .icon {
+    color: #404040 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.booking-card.card.user .modes .icon-text {
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    color: #717171 !important;
+}
+
+.booking-card.card.user .role-and-experience {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(1) {
+    width: 75% !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(1) .role {
+    color: #098686 !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    text-align: left !important;
+    text-transform: uppercase !important;
+    padding-right: 2px !important;
+    margin-bottom: 15px !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(2) {
+    width: 25% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    margin-bottom: 15px !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(2) .experience {
+    color: #098686 !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    text-align: left !important;
+    text-transform: uppercase !important;
+    border-left: 2px solid transparent !important;
+    padding-left: 2px !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(2) > div.experience:nth-child(1) {
+    border-left: 2px solid #098686 !important;
+}
+
+.booking-card.card.user .pay-section {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+}
+
+.booking-card.card.user .pay-section > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    margin-bottom: 10px !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(1){
+    width: 30%;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(2) {
+    width: 70% !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(1) .head {
+    color: #098686 !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    text-align: left !important;
+    padding-right: 4px !important;
+    border-right: 1px solid transparent !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(1) .value {
+    color: #098686 !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    text-align: left !important;
+    padding-right: 4px !important;
+    border-right: 1px solid #c0c0c0 !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(2) .head {
+    color: orange !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    text-align: left !important;
+    padding-left: 4px !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(2) .value {
+    color: orange !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    text-align: left !important;
+    padding-left: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.booking-card.card.user .pay-section > div:nth-child(2) .value i.fa.fa-info {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid orange !important;
+    border-radius: 50% !important;
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 9px !important;
+    padding: 0 !important;
+    margin-left: 4px !important;
+}
+
+.booking-card.card.user .degrees {
+    text-transform: uppercase !important;
+    color: #717171 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+}
+
+.booking-card.card.user .doctor-address {
+    color: #717171 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    hyphens: auto !important;
 }

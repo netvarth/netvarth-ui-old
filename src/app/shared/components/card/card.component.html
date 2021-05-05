@@ -181,8 +181,37 @@
 </div>
 <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
     (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
+    
+    <p class="user-availability">
+        <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
+            Available {{user.apptTime.date}}
+        </ng-container>
+        <ng-container
+            *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
+            {{user.waitingTime.caption}}&nbsp;{{user.waitingTime.date}}
+        </ng-container>
+    </p>
+    
     <div class="card-item-head">
-        <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
+        <div class="img-container">
+            <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
+        </div>
+        <div class="user-text">
+            <span>
+                <span><span>&nbsp;</span></span>
+                <span>Circle</span>
+            </span>
+        </div>
+        <div class="modes">
+            <div class="online">
+                <div class="icon"><i class="fa fa-video-camera"></i></div>
+                <div class="icon-text">Online</div>
+            </div>
+            <div class="in-person">
+                <div class="icon"><i class="fa fa-hospital-o"></i></div>
+                <div class="icon-text">In-Person</div>
+            </div>
+        </div>
     </div>
     <div class="card-item-content" style="display: block !important;">
         <h4 class="user-name card-title font-weight-bold module line-clamp">
@@ -192,16 +221,42 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst | limitTo: [14, '...']}}</a> -->
         </h4>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
+        <div class="role-and-experience">
+            <div>
+                <label class="role">Allergy and Clinical Immunologist</label>
+            </div>
+            <div>
+                <div class="experience">9 YRS</div>
+                <div class="experience">EXP.</div>
+            </div>
+        </div>
+        <div class="pay-section">
+            <div>
+                <div class="head">You Pay</div>
+                <div class="value">
+                    <i class="fa fa-inr"></i>&nbsp;1100
+                </div>
+            </div>
+            <div>
+                <div class="head">Circle Member Pays</div>
+                <div class="value">
+                    <i class="fa fa-inr"></i>&nbsp;950
+                    <i class="fa fa-info"></i>
+                </div>
+            </div>
+        </div>
+        <div class="degrees">MD., DCH., DAA., FACI, EAACI </div>
+        <div class="doctor-address">Appolo Children Hospital Chennai, Greams Road, Chennai</div>
+        <!-- <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
             {{user.qualifications[0] | limitTo: [20, '...']}}
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
-            style="height:17px;"></h6>
-        <div class="specialization-parent" *ngIf="user.businessUserName">
+            style="height:17px;"></h6> -->
+        <!-- <div class="specialization-parent" *ngIf="user.businessUserName">
             <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
         </div>
-        <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
-        <p class="availability user-available">
+        <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label> -->
+        <!-- <p class="availability user-available">
             <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
                 {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
@@ -209,9 +264,10 @@
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
             </ng-container>
-        </p>
-        <button type="button" class="btn btn-outline-warning">Book Now</button>
+        </p> -->
+        <!-- <button type="button" class="btn btn-outline-warning">Book Now</button> -->
     </div>
+    <button type="button" class="btn btn-outline-warning user-card-button">Book Now</button>
 </div>
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
     (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
