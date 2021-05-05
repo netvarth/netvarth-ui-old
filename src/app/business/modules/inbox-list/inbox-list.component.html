@@ -164,10 +164,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="checkImgType(attachment.s3path) === 'img'"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="checkImgType(attachment.s3path) === 'pdf'"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>
@@ -207,10 +207,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="checkImgType(attachment.s3path) === 'img'"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="checkImgType(attachment.s3path) === 'pdf'"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>
