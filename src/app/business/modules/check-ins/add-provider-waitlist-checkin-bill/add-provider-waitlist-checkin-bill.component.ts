@@ -227,6 +227,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountId_servie: any;
   discountid;
   applydisc = false;
+  jcashRefund = false;
   walkinConsumer_status = false;
   @ViewChild('closebutton') closebutton;
   @ViewChild('itemdiscountapply') itemdiscountapply;
@@ -1824,6 +1825,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyRefund(payment) {
     this.applydisc = true;
+    this.jcashRefund = false
+    if(payment.paymentMode == 'JCASH'){
+      this.jcashRefund = true
+    }  
     if (payment) {
       this.selectedPayment = payment;
       this.amounttoRefund = payment.refundableAmount.toFixed(2);

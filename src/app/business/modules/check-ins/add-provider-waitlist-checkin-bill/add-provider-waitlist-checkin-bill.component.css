@@ -272,6 +272,10 @@ border-color: #3699FF; */
 .margin-top-10 {
     margin-top: 10px;
   }
-  .select-height {
-      height: 38px !important;
-  }
+.select-height {
+   height: 38px !important;
+}
+.scrool-refund {
+  max-height: 500px;
+  overflow: auto;
+}
