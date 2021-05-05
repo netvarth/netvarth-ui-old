@@ -847,7 +847,7 @@ ul.bus-actions li a.lnk {
   padding: 15px !important;
 }
 .c-checkin-new .slotdiv {
-  max-height: 175px !important;
+  max-height: 50vh !important;
   overflow: auto;
   margin-top: 0px !important;
 
@@ -1445,6 +1445,9 @@ body.modal-open {
   .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
     width: auto !important;
   }
+  .disp-none {
+    display: none !important;
+  }
 }
 @media (min-width: 768px) {
   .wizard.wizard-1 .wizard-nav .wizard-steps {
@@ -1505,4 +1508,8 @@ body.modal-open {
 }
 .jvideo-icon-mg5 {
   margin-bottom: 5px !important;
+}
+.gal-input input {
+  width: 80px;    
+  font-size: .7rem;
 }

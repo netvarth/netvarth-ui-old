@@ -19,7 +19,7 @@
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
                                 <div class="col-xl-12" *ngIf="questionnaireLoaded">
-                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding">
+                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding disp-none">
                                         <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
@@ -662,6 +662,9 @@
                                                                             <div class="gal_img">
                                                                                 <img [src]="getImage(selectedMessage.base64[i], file)"
                                                                                     *ngIf="selectedMessage.base64[i]">
+                                                                            </div>
+                                                                            <div class="gal-input">
+                                                                                <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
                                                                             </div>
                                                                             <div class="gal_action"
                                                                                 (click)="deleteTempImage(i)">

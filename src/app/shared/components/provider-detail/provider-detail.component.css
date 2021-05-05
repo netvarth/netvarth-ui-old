@@ -1985,3 +1985,12 @@ img.ordericon.home {
     font-size: 15px !important;
   }
 }
+
+.covid-coming {
+  background: #f8f8f8 !important;
+  padding: 10px 0;    
+  font-weight: bold;
+}
+.covid-coming .card {
+  background: lightgrey;
+}
