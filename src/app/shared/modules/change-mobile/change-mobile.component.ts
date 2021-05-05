@@ -165,7 +165,7 @@ export class ChangeMobileComponent implements OnInit {
           console.log(this.submit_data.phonenumber);
           this.api_success = null;
           this.snackbarService.openSnackBar(Messages.PHONE_VERIFIED);
-          const ynw = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); // get the credentials from local storage variable
+          const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
           ynw['loginId'] = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
           console.log(ynw);
           this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable

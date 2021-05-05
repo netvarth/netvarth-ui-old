@@ -59,11 +59,11 @@
                                 </div>
                                 <div *ngIf="customer[0].address">Address: <span
                                         class="cust-detail">{{customer[0].address}}</span></div>
-                                <div class="moreinfo">
+                                <div class="mgn-up-15 mgn-bt-10" *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
                                     <a (click)="showQnr()">More {{customer_label}} info</a>
                                 </div>
                                 <div class="mgn-bt-20"
-                                    *ngIf="showQuestionnaire && customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+                                    *ngIf="showQuestionnaire">
                                     <app-questionnaire [questionnaireList]="questionnaireList"
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>

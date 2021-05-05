@@ -1922,7 +1922,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
-    const api_filter = {};
+    let api_filter = {};
+    const filter = this.lStorageService.getitemfromLocalStorage('wlfilter');
+    console.log(filter);
+    if(filter){
+      api_filter = filter;
+    }
     // if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
     //   api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     // }
@@ -2032,6 +2037,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
@@ -2369,6 +2375,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   goCheckinDetail(checkin) {
+    this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
     if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('hP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('hPFil', this.filter);
@@ -3124,6 +3131,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   tabChange(event) {
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.resetCheckList();
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
@@ -3152,6 +3160,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   gotoCustomerDetails(waitlist) {
+    this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
+    console.log(this.setFilterForApi());
     if (waitlist.waitlistStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
     }
