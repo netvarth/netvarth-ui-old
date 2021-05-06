@@ -101,3 +101,62 @@
 .single-file .gal_action {
     top: -5px !important;
 }
+
+.form-group {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    padding-bottom: 20px !important;
+}
+
+.form-group label.quest {
+    color: #312f2f !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+}
+
+.form-group label.quest .form-level-settings {
+    font-size: 1rem !important;
+    color: #aaaaaa !important;
+    margin-top: 10px !important;
+}
+
+.form-group .text-field {
+    border: 1px solid #8a368a !important;
+    background: #fafafa !important;
+    border-radius: 0.3rem !important;
+}
+
+.form-group .text-field:focus {
+    background-color: white !important;
+}
+
+.radio-list .radio {
+    margin-bottom: 0.7rem !important;
+    color: #6a6a6a !important;
+}
+
+.radio > span {
+    border-color: #8a368a !important;
+    background-color: #fafafa !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.radio > input:checked ~ span {
+    background-color: #8a368a !important;
+}
+
+.form-group mat-select {
+    border-color: #8a368a !important;
+}
+
+.force_center {
+    padding: 20px !important;
+}
+
+@media (max-width: 550px) {
+    .force_center {
+        padding: 20px 0 !important;
+    }
+}

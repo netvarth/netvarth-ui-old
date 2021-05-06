@@ -18,13 +18,13 @@
         <div class="col-xl-12 force_center">
             <div class="my-5">
                 <div class="form-group card mgn-0" *ngFor="let question of questions;let i = index">
-                    <label class="col-12 quest">{{getQuestion(question).label}}
+                    <label class="col-12 quest" style="padding-left: 0 !important;">{{getQuestion(question).label}}
                         <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
                         <div class="form-level-settings" *ngIf="getQuestion(question).hint">
                             {{getQuestion(question).hint}}</div>
                     </label>
                     <!-- for file upload -->
-                    <div class="col-12 ynw-common-form-nm" *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
+                    <div class="col-12 ynw-common-form-nm" style="padding-left: 0 !important;" *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
                         <mat-select multiple #deptsel [disabled]="disableInput()"
                             *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
                             [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box">
@@ -36,7 +36,7 @@
                             *ngIf="getDocuments(getQuestion(question)) && getDocuments(getQuestion(question)).length > 0">
                             <div class="dropzone dropzone-default dropzone-primary dz-clickable"
                                 [class.single-file]="getQuestion(question).filePropertie.maxNoOfFile == 1"
-                                style="cursor: auto;">
+                                style="cursor: auto; background-color: #f6f6f6 !important;">
                                 <ng-container *ngFor="let doc of getDocuments(getQuestion(question))">
                                     <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
                                         *ngIf="getImg(getQuestion(question), doc)">
@@ -115,21 +115,21 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Text -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
-                        <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                    <div class="col-12" style="padding-left: 0 !important;" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
+                        <input placeholder="Enter your answer here" [(ngModel)]="answers[getQuestion(question).labelName]"
                             (input)="onSubmit('inputChange');" [disabled]="disableInput()"
                             [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                             [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
-                            class="form-control1 form-control-solid" type="text">
+                            class="form-control1 text-field form-control-solid" type="text">
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Number -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
-                        <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                    <div class="col-12" style="padding-left: 0 !important;" *ngIf="getQuestion(question).fieldDataType === 'number'">
+                        <input placeholder="Enter your answer here" [(ngModel)]="answers[getQuestion(question).labelName]"
                             (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
                             [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
-                            class="form-control1 form-control-solid" type="number">
+                            class="form-control1 text-field form-control-solid" type="number">
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>

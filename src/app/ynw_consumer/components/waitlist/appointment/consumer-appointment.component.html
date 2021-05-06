@@ -9,7 +9,7 @@
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'appt'"></app-header>
                 </div>
             </div>
-            <div class="pad-10 d-flex flex-column-fluid">
+            <div class="card-container-custom d-flex flex-column-fluid">
                 <div class="card card-custom">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
@@ -100,14 +100,14 @@
                                         </div>
                                         <div class="booking-img"></div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
-                                        *ngIf="bookStep === 1">
+                                        *ngIf="bookStep === 1">  <!-- right-part -->
                                         <div class="panel-body no-padding">
                                             <div
                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group custom-border-bottom border-tp "> <!-- border-rt -->
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
                                                         *ngIf="this.selectedUserParam && selectedUser">
                                                         <div class="col-sm-3 col-xs-4 col-md-4 ">
@@ -127,13 +127,13 @@
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                                         <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+                                                            class="appointment-custom-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
                                                             Appointment For
                                                         </div>
                                                         <div class="col-sm-12 col-xs-12 col-md-12">
                                                             <div class="card-body no-padding"
                                                                 *ngIf="sel_ser || type == 'reschedule'">
-                                                                <div class="service-icon pull-left"
+                                                                <!-- <div class="service-icon pull-left"
                                                                     *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -147,7 +147,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                </div>
+                                                                </div> -->
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
@@ -187,15 +187,43 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div *ngIf="!questionnaireList.labels"
+                                                            class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding" style="padding: 0 12.5px !important">
+                                                            <a #modal data-toggle="modal"
+                                                                data-target="#exampleModalCenter">
+                                                            </a>
+                                                            <mat-chip-list class="btns">
+                                                                <mat-chip class="notes-and-file-chip"
+                                                                    [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'reschedule'"
+                                                                    (click)="handleSideScreen('note');modal.click();">
+                                                                    <a class="lnk action pointer-cursor"><i
+                                                                            class="fa fa-file-text-o mgn-rt-5"
+                                                                            aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
+                                                                        <span
+                                                                            *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
+                                                                </mat-chip>
+                                                                <mat-chip class="notes-and-file-chip"><a class="lnk action pointer-cursor"
+                                                                        (click)="imagefile1.click();modal.click();"><input
+                                                                            #imagefile1 type="file"
+                                                                            accept="/*;capture=camera"
+                                                                            style="display:none;" multiple
+                                                                            (change)="filesSelected($event, 'close')"><i
+                                                                            class="fa fa-paperclip mgn-rt-5"
+                                                                            aria-hidden="true"></i>Upload
+                                                                        File<span
+                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
+                                                                    </a></mat-chip>
+                                                            </mat-chip-list>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp custom-border-bottom check-new-group pad-rt-0"> <!-- border-rt -->
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                                            Appointment Time
-                                                            <span><a class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
+                                                            class="appointment-custom-heading col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                                            Date/Time
+                                                            <span><a class="change-button pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
                                                                     (click)="changeSlot()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Change Time
                                                                 </a></span>
@@ -225,10 +253,10 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                                             <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
+                                                                class="appointment-custom-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
                                                                 Booking
                                                                 For <a *ngIf="type !== 'reschedule'"
-                                                                    class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
+                                                                    class="change-button pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
                                                                     (click)="handleSideScreen('members')"
                                                                     data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Change
@@ -236,15 +264,15 @@
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                                <div class="card-body no-padding">
-                                                                    <h6 class="card-title service mgn-bt-10">
+                                                                <div class="user-data-card card-body no-padding">
+                                                                    <h6 class="card-title service mgn-bt-10" style="font-size: 1.1rem !important; color: #383535 !important;">
                                                                         {{waitlist_for[0].firstName |
                                                                         capitalizeFirst}}
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
                                                                     </h6>
-                                                                    <div class="contact-section">
-                                                                        <i class="fa fa-mobile "></i>
+                                                                    <div class="contact-section" style="color: #8c8989 !important; font-weight: 600 !important">
+                                                                        <!-- <i class="fa fa-mobile "></i>
                                                                         <ng-container
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
@@ -253,20 +281,20 @@
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
-                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                        <span class="mgn-lt-10 phonevallabel"
+                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i> -->
+                                                                        <span class="phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
-                                                                        <span class="mgn-lt-10 phonevallabel"
+                                                                        <span class="phonevallabel"
                                                                             *ngIf="currentPhone && changePhno">{{countryCode}}
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="mode-hint mgn-bt-5"
+                                                                        <!-- <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact
                                                                             you in this number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -283,18 +311,18 @@
                                                                             you in this number
                                                                         </div>
                                                                     </div>
-                                                                    <div class=""
+                                                                    <div class=""  style="color: #8c8989 !important; font-weight: 600 !important"
                                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
-                                                                        <i class="fa fa-envelope-o "></i>
+                                                                        <!-- <i class="fa fa-envelope-o "></i> -->
                                                                         <span
-                                                                            class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
+                                                                            class="emailvallabel">{{userData.userProfile.email}}</span>
                                                                         <a class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div *ngIf="!questionnaireList.labels"
+                                                        <!-- <div *ngIf="!questionnaireList.labels"
                                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
@@ -321,7 +349,7 @@
                                                                             *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
                                                                     </a></mat-chip>
                                                             </mat-chip-list>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
                                                                 *ngIf="(s3CouponsList.JC.length > 0) && type != 'reschedule'||(s3CouponsList.OWN.length > 0) && type != 'reschedule'">
@@ -392,12 +420,13 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="type != 'reschedule'"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-4 mgn-lt-10">
                                                 <button type="button"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"
                                                     [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
                                                     Next
+                                                    <i class="fa fa-long-arrow-right"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -802,11 +831,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="pad-20 quest-head">
-                                            Provide us information to complete your booking
+                                            Please provide us with a little more information to complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
                                             [questionAnswers]="questionAnswers" [accountId]="account_id"
@@ -820,7 +849,7 @@
                                                         <a #modal data-toggle="modal" data-target="#exampleModalCenter">
                                                         </a>
                                                         <mat-chip-list class="btns">
-                                                            <mat-chip
+                                                            <mat-chip class="notes-and-file-chip"
                                                                 [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'reschedule'"
                                                                 (click)="handleSideScreen('note');modal.click();">
                                                                 <a class="lnk action pointer-cursor"><i
@@ -829,7 +858,7 @@
                                                                     <span
                                                                         *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                             </mat-chip>
-                                                            <mat-chip><a class="lnk action pointer-cursor"
+                                                            <mat-chip class="notes-and-file-chip"><a class="lnk action pointer-cursor"
                                                                     (click)="imagefile1.click();modal.click();"><input
                                                                         #imagefile1 type="file"
                                                                         accept="/*;capture=camera" style="display:none;"
@@ -849,51 +878,54 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    style="color: white !important;"
                                                     (click)="goToStep('prev')">
+                                                    <i style="color: white !important;" class="fa fa-long-arrow-left"></i>
                                                     Previous
                                                 </button>
                                             </div>
                                             <div>
                                                 <button type="button"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')">
                                                     Next
+                                                    <i class="fa fa-long-arrow-right"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your appointment details</div>
-                                        <table class="bookdetails">
-                                            <tbody>
-                                                <tr *ngIf="!sel_ser_det.provider">
-                                                    <td width="48%" align="right">
-                                                        Provider</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td class="name-line-ht">{{businessjson.businessName}}</td>
-                                                </tr>
-                                                <tr *ngIf="sel_ser_det.provider">
-                                                    <td width="48%" align="right">
-                                                        Provider</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td class="name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
-                                                        {{businessjson.businessName}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="48%" align="right">Location </td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td> {{locationName}}<a [href]="googleMapUrl" target="_blank"
+                                        <div class="bookdetails">
+                                            
+                                                <div *ngIf="!sel_ser_det.provider">
+                                                    <span class="billing-head">
+                                                        Provider</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value name-line-ht">{{businessjson.businessName}}</span>
+                                                </div>
+                                                <div *ngIf="sel_ser_det.provider">
+                                                    <span class="billing-head">
+                                                        Provider</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
+                                                        {{businessjson.businessName}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="billing-head">Location </span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value"> {{locationName}}<a [href]="googleMapUrl" target="_blank"
                                                             class="icon-location" matTooltip="Click to navigate">
-                                                        </a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="48%" align="right">Service</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>
-                                                        <span class="service-icon pull-left"
+                                                        </a></span>
+                                                </div>
+                                                <div>
+                                                    <span class="billing-head">Service</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span>
+                                                        <!-- <span class="service-icon pull-left"
                                                             *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -907,37 +939,37 @@
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
-                                                        </span>
-                                                        <span>{{sel_ser_det.name}}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="48%" align="right">
-                                                        Appointment for</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>{{waitlist_for[0].firstName}}
-                                                        {{waitlist_for[0].lastName}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="48%" align="right">Contact #</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>{{countryCode}} {{userPhone}}</td>
-                                                </tr>
-                                                <tr
+                                                        </span> -->
+                                                        <span class="billing-value">{{sel_ser_det.name}}</span>
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span class="billing-head">
+                                                        Appointment for</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value">{{waitlist_for[0].firstName}}
+                                                        {{waitlist_for[0].lastName}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="billing-head">Contact #</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value">{{countryCode}} {{userPhone}}</span>
+                                                </div>
+                                                <div
                                                     *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                    <td width="48%" align="right">WhatsApp #</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td> +{{callingModes}}</td>
-                                                </tr>
-                                                <tr *ngIf="payEmail">
-                                                    <td width="48%" align="right">Email</td>
-                                                    <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td style="word-break: break-all;">{{payEmail}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                    <span class="billing-head">WhatsApp #</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value"> +{{callingModes}}</span>
+                                                </div>
+                                                <div *ngIf="payEmail">
+                                                    <span class="billing-head">Email</span>
+                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value" style="word-break: break-all;">{{payEmail}}</span>
+                                                </div>
+                                            
+                                        </div>
                                         <div class="containerAppt textcenter">
-                                            <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div>
+                                            <div class="mgn-up-10 no-mgn-bt bold">Appointment for: {{sel_ser_det.name}}</div>
                                             <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
                                                 <span *ngIf="!isFuturedate">Today,
                                                 </span>
@@ -1016,21 +1048,26 @@
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
                                             <div class="mr-2">
-                                                <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                <button type="button" style="color: white !important;"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
+                                                    <i style="color: white !important;" class="fa fa-long-arrow-left"></i>
                                                     Previous
                                                 </button>
                                             </div>
                                             <div>
                                                 <button type="button" (click)="saveCheckin('appt')"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI 
+                                                        <i class="fa fa-long-arrow-right"></i>
+                                                    </ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                        Confirm</ng-container>
+                                                        Confirm
+                                                        <i class="fa fa-long-arrow-right"></i>
+                                                    </ng-container>
                                                 </button>
                                             </div>
                                         </div>
