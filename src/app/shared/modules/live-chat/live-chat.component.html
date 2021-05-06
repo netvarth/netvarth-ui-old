@@ -7,7 +7,6 @@
                 </a>
             </div>
         </div>
-
     </header>
     <div class="videocontainer no-padding">
         <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}" [ngClass]="{'hide': !twilioService.preview}">
@@ -82,7 +81,7 @@
                 </i>
                 <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
                     (click)="disconnect()"></i>
-                <i class="fa fa-circle record red blink pull-right"></i>
+                <i class="fa fa-circle record red blink pull-right" *ngIf="recordingFlag"></i>
             </div>
         </div>
         <select id="video-devices" hidden></select>

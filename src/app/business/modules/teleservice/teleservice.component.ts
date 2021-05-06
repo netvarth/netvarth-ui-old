@@ -181,7 +181,17 @@ export class TeleServiceComponent implements OnInit {
     // Back btn navigation
     redirecToPreviousPage() {
         // if (this.step === 1) {
-        this._location.back();
+            if (this.callingModes === 'VideoCall') {
+                if (this.waiting_type === 'appt') {
+                    this.router.navigate(['provider', 'appointments']);
+                } else {
+                    this.router.navigate(['provider', 'check-ins']);
+                }
+                
+            } else {
+                this._location.back();
+            }
+        
         // }
         // const navigationExtras: NavigationExtras = {
         //     queryParams: {
