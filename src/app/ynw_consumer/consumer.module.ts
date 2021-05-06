@@ -63,7 +63,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
-
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @NgModule({
   imports: [
@@ -96,7 +96,8 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     GalleryModule,
     MatTooltipModule,
     CapitalizeFirstPipeModule,
-    QuestionnaireModule
+    QuestionnaireModule,
+    WalletModule
   ],
   declarations: [
     ConsumerComponent,
@@ -114,7 +115,7 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     ActionPopupComponent,
     ViewRxComponent,
     OrderComponent,
-    OrderDetailComponent,
+    OrderDetailComponent
     ApptCardComponent,
     WlCardComponent,
 
