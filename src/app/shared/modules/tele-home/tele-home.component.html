@@ -8,8 +8,12 @@
     </div>
 
 </header>
-<section *ngIf="isLoggedIn">
-    <div class="content settings container checkin-details">
+
+<section>
+    <div class="" *ngIf="api_loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="content settings container checkin-details" *ngIf="isLoggedIn && !api_loading">
         <div class="card no-padding-small">
             <div class="col-md-12 no-padding">
                 <div class="col-md-12 ">

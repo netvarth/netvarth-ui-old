@@ -280,8 +280,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (this.payAdvance === 'FIXED' && this.step === 3) {
-            if (this.amForm.get('advancePayment').value === '') {
-                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+            if (this.amForm.get('advancePayment').value === '' || this.amForm.get('advancePayment').value <= 0) {
+                this.snackbarService.openSnackBar('Please enter valid advance amount', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }

@@ -51,10 +51,8 @@ export class EnquiryComponent implements OnInit {
         data => {
           this.messages = data;
           this.sortMessages();
-          console.log(this.messages);
           const inbox = this.generateCustomInbox(this.messages);
           this.enquiries = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
-          console.log(this.enquiries);
           this.loading = false;
         });
   }
@@ -137,8 +135,7 @@ export class EnquiryComponent implements OnInit {
     return retdate;
   }
   gotoInbox(msg) {
-    console.log(msg);
-    this.router.navigate(['provider/inbox'], { queryParams: { customer: msg.accountName, provider: msg.providerName } });
+    this.router.navigate(['provider/inbox'], { queryParams: { customer: msg.accountId, provider: msg.providerId } });
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

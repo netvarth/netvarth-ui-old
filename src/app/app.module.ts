@@ -74,6 +74,8 @@ import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
+import { ConsumerAuthService } from './shared/services/consumer-auth-service';
+import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -93,7 +95,8 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent,
-    ServicePageHealthcareComponent
+    ServicePageHealthcareComponent,
+    ListRecordingsDialogComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -102,7 +105,8 @@ export function init_app(globalService: GlobalService) {
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,
     RequestForComponent,
-    ForceDialogComponent
+    ForceDialogComponent,
+    ListRecordingsDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -149,6 +153,7 @@ export function init_app(globalService: GlobalService) {
       multi: true
     },
     AuthService,
+    ConsumerAuthService,
     SharedServices,
     GlobalService,
     SharedFunctions,

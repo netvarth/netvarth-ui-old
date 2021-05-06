@@ -24,7 +24,7 @@ export class TwilioService {
     cam2Device: string;
     activeRoom;
     previewTracksClone;
-
+    btnClicked = false;
     constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
@@ -70,6 +70,8 @@ export class TwilioService {
     previewMedia() {
         this.preview = true;
         const _this = this;
+        _this.video = false;
+        _this.microphone =false;
         _this.loadDevices().then(
             (videoDevices: any) => {
                 // console.log("Video Devices");
@@ -77,6 +79,7 @@ export class TwilioService {
                 _this.camDeviceCount = videoDevices.length;
                 if (_this.camDeviceCount > 0) {
                     _this.selectedVideoId = _this.cam1Device;
+                    _this.video= true;                    
                     Video.createLocalTracks({
                         audio: true,
                         video: { deviceId: _this.selectedVideoId }
@@ -88,8 +91,13 @@ export class TwilioService {
                         // console.log(_this.previewTracksClone);
                         localTracks.forEach(localTrack => {
                             // console.log(localTrack);
+                            if (localTrack.kind === 'audio'){
+                                this.microphone= true;
+                            }
                             _this.addPreviewTrackToDom(localTrack);
                         })
+                    }, (error)=> {
+                        console.log(error);
                     });
                 }
             }
@@ -253,24 +261,19 @@ export class TwilioService {
         // console.log(_this.previewTracksClone);
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
-        }
-        // previewTracksClone
-        console.log("Options");
-        console.log(options);
-        
+        }      
         
         Video.connect(accessToken, options).then(
             (room: any) => {
                 _this.preview = false;
                 _this.activeRoom = room;
-                // !_this.previewing && 
                 if (options['video']) {
                     if (!_this.localVideo.nativeElement.querySelector('video')) {
                         console.log("in connect method");
                         _this.attachParticipantTracks(room.localParticipant, _this.localVideo.nativeElement, room);
                     }
-                    // _this.previewing = true;
                 }
+                this.btnClicked = false;
                 _this.roomJoined(room);
             }
         );

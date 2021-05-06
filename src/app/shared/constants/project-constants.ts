@@ -273,7 +273,7 @@ export const projectConstantsLocal = {
     { key: 'instagram', iconClass: 'instagram insta', iconImg: 'instagram.png', displayName: 'Instagram' },
     { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' },
-    { key: 'googleplus', iconClass: 'socicon-googleplus', displayName: 'Google+' }
+    { key: 'googleplus', iconClass: 'fa fa-google-plus-square red', displayName: 'Google+' }
   ],
   PRIVACY_PERMISSIONS: {
     'all': 'Public (All can see)',

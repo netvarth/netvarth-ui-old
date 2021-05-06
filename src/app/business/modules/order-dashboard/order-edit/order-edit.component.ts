@@ -167,7 +167,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       params => {
         this.account_id = this.groupService.getitemFromGroupStorage('accountId');
         this.uid = params.id;
-        // this.getOrderDetails(this.uid);
+         this.getOrderDetails(this.uid);
       });
 
   }
@@ -422,6 +422,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.sel_checkindate = this.orderDetails.orderDate;
       // this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      console.log(this.nextAvailableTime);
       this.loading = false;
     });
   }

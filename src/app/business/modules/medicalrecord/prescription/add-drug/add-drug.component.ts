@@ -25,7 +25,7 @@ export class AddDrugComponent implements OnInit {
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
   amForm: FormGroup;
-  api_error = null;
+  api_error = '';
   api_success = null;
   parent_id;
   selitem_pic = '';
@@ -83,11 +83,11 @@ export class AddDrugComponent implements OnInit {
   createForm() {
 
       this.amForm = this.fb.group({
-        medicine_name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        frequency: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        instructions: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
-        duration: ['', Validators.compose([Validators.required])],
-        dosage: ['', Validators.compose([Validators.required])]
+        medicine_name: ['', Validators.compose([ Validators.maxLength(this.maxChars)])],
+        frequency: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        instructions: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+        duration: [''],
+        dosage: ['']
       });
 
     if (this.formMode === 'edit') {
@@ -106,9 +106,14 @@ export class AddDrugComponent implements OnInit {
   }
 
   onSubmit(form_data) {
+    console.log(form_data);
+    this.api_error = '';
+    if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
+      this.api_error = 'Atleast one field required';
+    } else {
     this.drugDetail.push(form_data);
     this.dialogRef.close(this.drugDetail);
-
+    }
   }
   close() {
     if (this.addAnother === true) {
@@ -119,11 +124,15 @@ export class AddDrugComponent implements OnInit {
     
   }
   saveAndAddOther(form_data) {
+    this.api_error = '';
+    if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
+      this.api_error = 'Atleast one field required';
+    } else {
     this.drugDetail.push(form_data);
     this.addAnother = true;
     this.amForm.reset();
   }
-
+  }
 
 
 
