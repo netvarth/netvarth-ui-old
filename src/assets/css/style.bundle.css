@@ -47149,8 +47149,8 @@ a, button {
 
 .btn.btn-primary {
   color: #FFFFFF;
-  background-color: #1e4079;
-  border-color: #1e4079;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  border-color: unset !important;
 }
 
 .btn.btn-primary i {

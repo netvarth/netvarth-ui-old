@@ -32,7 +32,7 @@ export class InboxOuterComponent implements OnInit {
     base64: [],
     caption: []
   };
-  showChat = false;
+  showChat = true;
   screenWidth;
   small_device_display = false;
   sendMessageCompleted = true;

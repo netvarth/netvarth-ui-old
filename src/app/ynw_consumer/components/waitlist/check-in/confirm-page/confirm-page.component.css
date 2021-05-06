@@ -51,7 +51,7 @@
   border: 1px solid;
   padding: 10px 50px;
   border-radius: 20px;
-  background: #334b99!important;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   color: #fff!important;
   font-weight: bold;
 }

@@ -5505,7 +5505,7 @@ i.notavail {
 }
 
 .mat-button {
-  background-color: #3c8dbc !important;
+  background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
 }
 
 .mailbox .title-color {
@@ -11714,7 +11714,7 @@ header.consumer img, header .tp-l.lgo img {
 /* fonts */
 
 body, .mat-expansion-panel-header, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, header.consumer .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, header.consumer .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content, .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-infix .mat-input-element, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, .signupmainclass div, .signupmainclass label, .signupmainclass input, .loginmainclass div, .loginmainclass label, .loginmainclass input, .moreoptionsmainclass div, .moreoptionsmainclass label, .moreoptionsmainclass input, .forgotpasswordmainclass div, .forgotpasswordmainclass label, .forgotpasswordmainclass input, .commonpopupmainclass div, .commonpopupmainclass label, .commonpopupmainclass input, .googlemainmappopup div, .googlemainmappopup label, .googlemainmappopup input, .outer-card div, .outer-card label, .outer-card input, .consumerpopupmainclass div, .consumerpopupmainclass label, .consumerpopupmainclass input, .specialclass div, .specialclass label, .specialclass input, .mat-menu-item, .info-lst li, .about_us_text, .mat-form-field, .cal-mod-instrct, .bt1, .bt2, .bt3, .bt4, .bt5, .bt6, .bt7, .bt8 {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: Roboto !important;
 }
 
 header.consumer .tp-1 .tp-l {
@@ -11989,7 +11989,7 @@ img.busN-logo {
 }
 
 .panel-heading.top-row {
-  background: #f8f8f8 !important;
+  background: #59345D 0% 0% no-repeat padding-box !important;
   height: 50px !important;
 }
 
@@ -12633,7 +12633,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-bottom: 1px solid #183e7a;
 }
 .checkin-details .stats-bar {
-  background: #ffecbe;
+  background: #b67ab670 !important;
   padding: 10px;
 }
 .checkin-details .status-label {
@@ -12670,10 +12670,10 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 0.88rem;
 }
 .checkin-details .qrcode img {
-  border: 1.5px solid #ecaf08;
+  border: 1.5px solid #b67ab670;
   width: 130px;
   /* box-shadow: 5px 5px 5px 5px lightgrey !important; */
-  box-shadow: 5px 5px 5px 5px  #ecaf0842 !important
+  box-shadow: 5px 5px 5px 5px #b67ab652 !important;
 }
 .checkin-details .graphics-div {
   position: absolute;
@@ -14072,20 +14072,27 @@ padding-left: 15px !important;
     display: none !important;
   }
 }
-.content {
+.content, .panel {
     background: #F6F6F6 0% 0% no-repeat padding-box !important;
-}
-.panel-heading {
-  background: #59345D 0% 0% no-repeat padding-box !important;
-  opacity: 1;
-  height: 50px !important;
 }
 .lgin.cust button, .ot-bx {
   height: 30px !important;
   background: white !important;
   width: 30px !important;
-  margin-top: 10px;
 }
 .lgin.cust button .fa-user-circle-o {
   margin-top: -10px;
+}
+app-consumer-appointment .ot-bx,
+app-consumer-appointment .lgin.cust button,
+app-business-page .lgin.cust button,
+app-consumer-checkin .ot-bx,
+app-consumer-checkin .lgin.cust button,
+app-business-page .ot-bx,
+app-confirm-page .lgin.cust button, 
+app-confirm-page .ot-bx {
+  margin-top: 10px;
+}
+.mat-button {
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
 }

@@ -535,10 +535,15 @@ button.fxmenu {
 
 .booking-card-user.user .card-item-content .btn { 
     width: 90%;
-    border: 1px solid #FFC107;
-    background-color: #FFC107;
-    color: #073B4C;
     font-weight: 600;
+    color: white;
+    font-weight: 600;
+    border-radius: 15px;
+    background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+    box-shadow: 15px 15px 40px #dba8c4;
+    opacity: 1;
+    margin-bottom: 20px;
+    padding: 8px;
 }
 
 .booking-card-user.user .card-item-content .btn:hover {
@@ -621,7 +626,7 @@ button.fxmenu {
     color: white;
     font-weight: 600;
     border-radius: 15px;
-    background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+    background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     box-shadow: 15px 15px 40px #DBA8C4;
     opacity: 1;
     margin-bottom: 20px;
@@ -629,8 +634,8 @@ button.fxmenu {
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton:hover {
     color: #073B4C !important;
-    background-color: #E0A800 !important;
-    border-color: #D39E00;
+    background-color: #b67ab670 !important;
+    border-color: #b67ab670;
 }
 .booking-card.card.service .card-body .service-details .service-buttons .moreDetails {
     position: absolute;

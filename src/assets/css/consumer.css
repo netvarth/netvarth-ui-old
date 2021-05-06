@@ -133,16 +133,16 @@
   /* padding: 20px; */
   border-bottom: 2px solid #f2f2f2;
   margin-bottom: 0px;
-  color: rgb(24 62 121);
+  color: #B67AB6 !important;
   padding-top: 20px;
   padding-bottom: 20px;
 }
 .consumer-dash .card.c-checkins h1 {
   font-size: 2rem;
   padding: 40px;
-  border-bottom: 2px solid #f2f2f2;
+  /* border-bottom: 2px solid #f2f2f2; */
   margin-bottom: 0px;
-  color: rgb(24 62 121);
+  color: #59345D !important;
 }
 
 .consumer-dash .card.c-checkins .outer {
@@ -6473,7 +6473,7 @@
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
   border-radius: 20px;
-  background: rgb(24 62 121);
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   color: rgb(255 255 255);
   padding-left: 30px;
   padding-right: 30px;
@@ -6541,7 +6541,7 @@
   color: rgb(255 255 255) !important;
 }
 .consumer-dash .card.c-checkins .bg-yelow {
-  background: rgb(242 183 22 / 76%);
+  /* background: rgb(242 183 22 / 76%); */
 }
 /* .consumer-dash .card.c-checkins table h4:hover {
   color: rgb(187 144 30);
@@ -6559,7 +6559,7 @@
   /* border: 1px solid rgb(4 62 121); */
   border-radius: 50px;
   /* color: rgb(255 255 255); */
-  background: rgb(24 62 121);
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   /* min-width: 0px !important; */
   display: none;
 }
@@ -6623,10 +6623,10 @@ margin-top: 7px;
   width: 45px;
   margin-top: 7px;
   margin-left: 10px;
-  border: 2px solid #f5c84d;
+  border: 2px solid #b67ab670 !important;
   padding: 4px;
   border-radius: 20%;
-  background: #fcebbe54;
+  background: #b67ab61c !important;
 }
 .consumer-dash .grid-card .consumer-reschedule-icon {
   content: url(../images/Reschedule-01-01.svg);
@@ -6639,10 +6639,10 @@ margin-top: 7px;
   padding-right: 1px;
   margin-top: 7px;
   margin-left: 10px;
-  border: 2px solid #f5c84d;
+  border: 2px solid #b67ab670 !important;
   padding: 4px;
   border-radius: 20%;
-  background: #fcebbe54;
+  background: #b67ab61c !important;
 }
 .consumer-dash .grid-card .resche_ico_wtlist {
   content: url(../images/Reschedule-01-01.svg);
@@ -6690,10 +6690,10 @@ margin-top: 7px;
   width: 45px;
   margin-top: 7px;
   margin-left: 10px;
-  border: 2px solid #f5c84d;
+  border: 2px solid #b67ab670 !important;
   padding: 4px;
   border-radius: 20%;
-  background: #fcebbe54;
+  background: #b67ab61c !important;
 }
 .consumer-dash .circle-tokens {
   /* background: rgb(252 235 190); */
@@ -6795,7 +6795,7 @@ margin-top: 7px;
   color: blue;
 }
 .cust-book-details .mat-tab-labels {
-  background: #ffecbe;
+  background: #b67ab63d !important;
 }
 .checkin-details .histry-font {
   font-size: 0.9rem;
@@ -6827,10 +6827,10 @@ margin-top: 7px;
 .cust-book-details .joinMeeting {
   padding: 6px;
   font-size: 0.8rem;
-  background: #f1b51cd6;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   border-radius: 50px;
   margin-left: 10px;
-  color: #3c5c8d;
+  color: white;
 }
 .delivery-amenity {
   content: url(../images/myjaldee/amenities/delivery-man.svg);
@@ -6874,7 +6874,8 @@ margin-top: 7px;
   display: flex;
 }
 .consumer-dash .mgn-lft-2{
-  margin-left: 2px;
+  margin-left: 15px;
+  color: white;
 }
 .consumer-dash .mgn-lft-10{
   margin-left: 10px !important;
@@ -6942,7 +6943,7 @@ margin-top: 7px;
   /* margin-top: 10px;
   margin-left: 20px; */
   color: rgb(24 62 121);
-  background: #ffefc9;
+  background: #b67ab670 !important;
   padding: 15px;
 }
 .consumer-dash .card_ico {
@@ -6977,7 +6978,7 @@ margin-top: 7px;
   font-weight: 600;
 }
 .consumer-dash .grid-card .btns {
-  background: #183e79d6;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   color: white;
 }
 .consumer-dash .grid-card .mat-flat-button {
@@ -7070,10 +7071,10 @@ margin-top: 7px;
     line-height: 2em;
     min-width: 25%;
     max-width: fit-content;
-    color: #183e79;
+    color: white;
     font-weight: 600;
     border-radius: 0 0.156em 0.156em 0;
-    background: rgb(245 200 77);
+    background: #b67ab6;
     box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
 }
 
@@ -7096,7 +7097,7 @@ margin-top: 7px;
 .consumer-dash .grid-card .ribbon:after{
   right: -1em;
   border-width: 0.99em 1em 1em 3em;
-  border-color: #f5c84d transparent #f5c84d #f5c84d;
+  border-color: #b67ab6 transparent #b67ab6 #b67ab6;
   z-index: -1;
   box-shadow: 0 8px 6px -6px #00000085;
 }

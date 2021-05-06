@@ -2220,7 +2220,7 @@ img.ordericon.home {
   }
 }
 .action-btns {
-  background: transparent radial-gradient(closest-side at 0% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   opacity: 1;
 }
 .question-value1, .question-valuearr {
