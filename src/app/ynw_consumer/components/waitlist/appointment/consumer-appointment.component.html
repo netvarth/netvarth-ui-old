@@ -231,7 +231,7 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                                             <h6 class="card-title serv-time" *ngIf="selectedApptTime">
-                                                                <span *ngIf="!isFuturedate">Today,
+                                                                <span *ngIf="!isFuturedate">Today,<br/>
                                                                 </span><span
                                                                     *ngIf="!isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                                 <span *ngIf="isFuturedate" style="display: block;">
@@ -265,13 +265,13 @@
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding">
-                                                                    <h6 class="card-title service mgn-bt-10" style="font-size: 1.1rem !important; color: #383535 !important;">
+                                                                    <h6 class="card-title service mgn-bt-10" style="font-size: 14px !important; color: #363636 !important;">
                                                                         {{waitlist_for[0].firstName |
                                                                         capitalizeFirst}}
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
                                                                     </h6>
-                                                                    <div class="contact-section" style="color: #8c8989 !important; font-weight: 600 !important">
+                                                                    <div class="contact-section contact">
                                                                         <!-- <i class="fa fa-mobile "></i>
                                                                         <ng-container
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
@@ -311,7 +311,7 @@
                                                                             you in this number
                                                                         </div>
                                                                     </div>
-                                                                    <div class=""  style="color: #8c8989 !important; font-weight: 600 !important"
+                                                                    <div class="email-section"
                                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
                                                                         <!-- <i class="fa fa-envelope-o "></i> -->
                                                                         <span
