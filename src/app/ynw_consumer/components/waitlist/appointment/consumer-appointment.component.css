@@ -1690,17 +1690,20 @@ button.next-button {
   border-radius: 21px !important;
   opacity: 1 !important;
   border: 0 !important;
+  padding-top: 10px !important;
 }
 
-.containerAppt > div:nth-child(1) {
+.containerAppt > div:nth-child(1),
+.containerAppt > div:nth-child(2) {
   text-align: center !important;
   font: normal normal medium 18px/22px Roboto !important;
   letter-spacing: 0px !important;
   color: #59345D !important;
   opacity: 1 !important;
+  margin-top: 0 !important;
 }
 
-.containerAppt > div:nth-child(2) {
+.containerAppt > div:nth-child(3) {
   text-align: center !important;
   font: normal normal normal 15px/18px Roboto !important;
   letter-spacing: 0px !important;
