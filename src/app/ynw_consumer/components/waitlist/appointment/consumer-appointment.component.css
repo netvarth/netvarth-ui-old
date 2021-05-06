@@ -867,8 +867,8 @@ ul.bus-actions li a.lnk {
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
-  border-color: #334b99 !important;
-  color:#334b99 !important;
+  border-color: #bf6bce !important;
+  color:#bf6bce !important;
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
@@ -1273,7 +1273,8 @@ ngx-intl-tel-input input {
   font: normal normal normal 14px/1 FontAwesome !important;
 }
 .fa-arrow-left {
-  color: black;
+  color: white !important;
+  margin-top: 10px;
 }
 .pay-section {
   text-align: center;

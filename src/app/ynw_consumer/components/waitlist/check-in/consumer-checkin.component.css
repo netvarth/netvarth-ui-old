@@ -1263,6 +1263,7 @@ ngx-intl-tel-input input {
 }
 .fa-arrow-left {
   color: white !important;
+  margin-top: 10px;
 }
 .pay-section {
   text-align: center;
