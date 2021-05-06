@@ -50,14 +50,16 @@ export class ChangePasswordComponent implements OnInit {
     private location: Location,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {
+    this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
+   }
   goBack() {
     this.location.back();
   }
   ngOnInit() {
-    this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
-    if (this.isBusinessowner) {
+
+    if (this.curtype!=='consumer') {
       this.spForm = this.fb.group({
         old_password: ['', Validators.compose(
           [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
@@ -65,7 +67,7 @@ export class ChangePasswordComponent implements OnInit {
           [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
         confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
       });
-    } else {
+    } else if(this.curtype==='consumer') {
       this.spForm = this.fb.group({
         old_password: ['', Validators.compose(
           [Validators.required])],
