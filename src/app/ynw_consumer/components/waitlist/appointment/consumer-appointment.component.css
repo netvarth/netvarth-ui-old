@@ -705,19 +705,20 @@ ul.bus-actions li a.lnk {
 
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
+  margin-top: 5px !important;
 }
 .service-icon .phon-icon {
   margin-bottom: 5px;
 }
 .service-icon .zoom-icon {
   width: 30px !important; 
+  margin-top: 5px !important;
 }
 .service-icon .wtsapaud-icon {
   width: 40px !important;
 }
 .service-icon .wtsapvid-icon {
   width: 20px !important;
-  margin-bottom: 10px;
 }
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
   margin-bottom: -5px !important;
@@ -775,7 +776,7 @@ ul.bus-actions li a.lnk {
   /* margin-bottom: 0 !important; */
 
   text-align: left !important;
-  font: normal normal medium 25px/30px Roboto !important;
+  /* font: normal normal medium 25px/30px Roboto !important; */
   letter-spacing: 0px !important;
   color: #59345D !important;
 }
@@ -793,7 +794,7 @@ ul.bus-actions li a.lnk {
   color: #334b99 !important; */
 
   text-align: left !important;
-  font: normal normal bold 25px/30px Roboto !important;
+  /* font: normal normal bold 25px/30px Roboto !important; */
   letter-spacing: 0px !important;
   color: #59345D !important;
 }
@@ -925,11 +926,13 @@ ul.bus-actions li a.lnk {
   margin-right: 5px !important;
 } */
 .meet-icon,.zoom-icon,.service-icon{
-  top: 0 !important;
+  /* top: 0 !important;
   padding-right: 0 !important;
   margin-top: 3px !important;
-  margin-right: 5px !important;
-  height: 35px;
+  margin-right: 5px !important;*/
+  height: 35px; 
+  margin-top: -10px !important;
+  margin-right: 2px;
 }
 .service-icon .fa-phone{
   color: #7a7a7a !important
@@ -1204,6 +1207,10 @@ height: 150px !important;
     width: 25px !important;
     top: 4px !important;
    }
+   .contact-section .meet-icon {
+    width: 15px !important;
+    margin-top: 5px !important;
+   }
    .changephemail {
      /* width: 65px !important; */
    }
@@ -1296,7 +1303,7 @@ ngx-intl-tel-input input {
   margin-bottom: 20px;
   color: #59345d;
   text-align: left;
-  font: normal normal bold 18px/22px Roboto;
+  /* font: normal normal bold 18px/22px Roboto; */
   letter-spacing: 0px;
   color: #59345D;
   opacity: 1;
@@ -1549,7 +1556,7 @@ body.modal-open {
 .card-container-custom .appointment-custom-heading {
   text-transform: uppercase !important;
   text-align: left !important;
-  font: normal normal bold 12px/14px Roboto !important;
+  /* font: normal normal bold 12px/14px Roboto !important; */
   letter-spacing: 0px !important;
   color: #9B9B9B !important;
   opacity: 1 !important;
@@ -1558,7 +1565,7 @@ body.modal-open {
 .c-checkin-new .card-container-custom .lnk a.change-button.changeitem {
   text-transform: capitalize !important;
   text-align: left !important;
-  font: normal normal medium 15px/18px Roboto !important;
+  /* font: normal normal medium 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
   color: #8D42A2 !important;
   opacity: 1 !important;
@@ -1597,7 +1604,7 @@ body.modal-open {
   margin-bottom: 0 !important;
 
   text-align: left !important;
-  font: normal normal bold 17px/27px Roboto !important;
+  /* font: normal normal bold 17px/27px Roboto !important; */
   letter-spacing: 0.26px !important;
   color: #363636 !important;
   opacity: 1 !important;
@@ -1638,7 +1645,7 @@ button.next-button {
 
 .quest-head {
   text-align: left !important;
-  font: normal normal bold 18px/25px Roboto !important;
+  /* font: normal normal bold 18px/25px Roboto !important; */
   letter-spacing: 0px !important;
   color: #59345D !important;
   opacity: 1 !important;
@@ -1673,14 +1680,14 @@ button.next-button {
 
 .billing-head {
   text-align: left !important;
-  font: normal normal bold 15px/18px Roboto !important;
+  /* font: normal normal bold 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
   color: #A986AC !important;
 }
 
 .billing-value {
   text-align: left;
-  font: normal normal normal 15px/18px Roboto;
+  /* font: normal normal normal 15px/18px Roboto; */
   letter-spacing: 0px;
   color: #363636;
 }
@@ -1697,7 +1704,7 @@ button.next-button {
 .containerAppt > div:nth-child(1),
 .containerAppt > div:nth-child(2) {
   text-align: center !important;
-  font: normal normal medium 18px/22px Roboto !important;
+  /* font: normal normal medium 18px/22px Roboto !important; */
   letter-spacing: 0px !important;
   color: #59345D !important;
   opacity: 1 !important;
@@ -1706,7 +1713,7 @@ button.next-button {
 
 .containerAppt > div:nth-child(3) {
   text-align: center !important;
-  font: normal normal normal 15px/18px Roboto !important;
+  /* font: normal normal normal 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
   color: #A986AC !important;
   opacity: 1 !important;
@@ -1721,7 +1728,7 @@ button.next-button {
 
 .pay-section > div {  
   text-align: left;
-  font: normal normal medium 18px/22px Roboto;
+  /* font: normal normal medium 18px/22px Roboto; */
   letter-spacing: 0px;
   color: #59345D;
   opacity: 1;
@@ -1729,7 +1736,7 @@ button.next-button {
 
 .contact-section.contact {
   text-align: left !important;
-  font: normal normal normal 14px/27px Roboto !important;
+  /* font: normal normal normal 14px/27px Roboto !important; */
   letter-spacing: 0.21px !important;
   color: #747474 !important;
   opacity: 1 !important;
@@ -1737,7 +1744,7 @@ button.next-button {
 
 .email-section {
   text-align: left !important;
-  font: normal normal normal 14px/27px Roboto !important;
+  /* font: normal normal normal 14px/27px Roboto !important; */
   letter-spacing: 0.21px !important;
   color: #747474 !important;
   opacity: 1 !important;

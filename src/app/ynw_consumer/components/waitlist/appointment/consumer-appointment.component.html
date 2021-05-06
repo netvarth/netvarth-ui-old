@@ -133,7 +133,7 @@
                                                         <div class="col-sm-12 col-xs-12 col-md-12">
                                                             <div class="card-body no-padding"
                                                                 *ngIf="sel_ser || type == 'reschedule'">
-                                                                <!-- <div class="service-icon pull-left"
+                                                                <div class="service-icon pull-left"
                                                                     *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -147,7 +147,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                </div> -->
+                                                                </div>
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
@@ -272,7 +272,7 @@
                                                                         capitalizeFirst}}
                                                                     </h6>
                                                                     <div class="contact-section contact">
-                                                                        <!-- <i class="fa fa-mobile "></i>
+                                                                        <i class="fa fa-mobile "></i>
                                                                         <ng-container
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
@@ -281,7 +281,7 @@
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
-                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i> -->
+                                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                         <span class="phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
@@ -290,11 +290,11 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <!-- <div class="mode-hint mgn-bt-5"
+                                                                        <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact
                                                                             you in this number
-                                                                        </div> -->
+                                                                        </div>
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -921,11 +921,11 @@
                                                             class="icon-location" matTooltip="Click to navigate">
                                                         </a></span>
                                                 </div>
-                                                <div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head">Service</span>
                                                     <span>&nbsp;:&nbsp;</span>
-                                                    <span>
-                                                        <!-- <span class="service-icon pull-left"
+                                                    <div>
+                                                        <span class="service-icon pull-left contact-section"
                                                             *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -939,9 +939,9 @@
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
-                                                        </span> -->
+                                                        </span>
                                                         <span class="billing-value">{{sel_ser_det.name}}</span>
-                                                    </span>
+                                                    </div>
                                                 </div>
                                                 <div>
                                                     <span class="billing-head">

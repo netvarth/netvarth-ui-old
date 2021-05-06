@@ -856,8 +856,8 @@ ul.bus-actions li a.lnk {
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
-  border-color: #bf6bce !important;
-  color:#bf6bce !important;
+  border-color: #334b99 !important;
+  color:#334b99 !important;
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
@@ -902,7 +902,7 @@ ul.bus-actions li a.lnk {
   transition: all .3s ease;
   cursor: pointer;
   padding: 7px !important;
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: #334b99 !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
   font-weight: 500;
@@ -1262,8 +1262,7 @@ ngx-intl-tel-input input {
   font: normal normal normal 14px/1 FontAwesome !important;
 }
 .fa-arrow-left {
-  color: white !important;
-  margin-top: 10px;
+  color: black;
 }
 .pay-section {
   text-align: center;
