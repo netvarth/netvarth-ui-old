@@ -77,19 +77,31 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private s3Processor: S3UrlProcessor
   ) {
+    console.log(this.data);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.userId = this.data.userId || null;
     this.uuid = this.data.uuid || null;
     this.email_id = this.data.email;
-    this.phone = this.data.phone;
+    this.phone = (this.data.phone) ? this.data.phone.trim() : '';
     this.phone_history = this.data.phone_history;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
     if (data.jaldeeConsumer) {
       this.jaldeeConsumer = (data.jaldeeConsumer === 'true') ? true : false;
+    }
+    if (this.typeOfMsg === 'single') {
+      if (!this.email_id) {
+        this.email = false;
+      }
+      if ((!this.phone && !this.phone_history) || this.phone === '') {
+        this.sms = false;
+      }
+      if (!this.email_id && (!this.phone || (this.phone === '')) || !this.jaldeeConsumer) {
+        this.pushnotify = false;
+      }
     }
     if (this.source !== 'customer-list') {
       if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
@@ -115,7 +127,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.subs.sink =  this.s3Processor.getJsonsbyTypes(this.data.user_id, null, 'terminologies').subscribe(
+      this.subs.sink = this.s3Processor.getJsonsbyTypes(this.data.user_id, null, 'terminologies').subscribe(
         (accountS3s) => {
           if (accountS3s['terminologies']) {
             this.terminologies = this.s3Processor.getJson(accountS3s['terminologies']);
@@ -610,7 +622,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
-	    dataToSend.append('message', blobpost_Data);
+      dataToSend.append('message', blobpost_Data);
       this.shared_services.addProvidertoConsumerNote(this.user_id,
         dataToSend)
         .subscribe(

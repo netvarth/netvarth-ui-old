@@ -450,17 +450,23 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings">
         <div class="form-group box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="disp-flex">
-            <label class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
+            <label *ngIf="!is_donation" class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
               while booking online &nbsp;&nbsp;
+            </label>
+            <label *ngIf="is_donation" class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
+              while donation &nbsp;&nbsp;
             </label>
             <mat-slide-toggle class="example-margin" formControlName="consumerNoteMandatory"
               (change)="changeConsumerNoteStatus($event)">
             </mat-slide-toggle>
           </div>
-          <div class="settings_info">
+          <div class="settings_info" *ngIf="!is_donation">
             If enabled, {{customer_label}}s will have to click this button and add certain information before confirming
             their service
             booking</div>
+            <div class="settings_info" *ngIf="is_donation">
+              If enabled, {{customer_label}}s will have to click this button and add certain information before confirming
+              their donation</div>
           <div class="mgn-up-15" *ngIf="showConsumerNote">
             Button Name:
             <span *ngIf="!showEditSection">{{consumerNote}}&nbsp;
@@ -484,8 +490,17 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </app-field-error-display>
           </div>
         </div>
-        <div class="mgn-up-10 mgn-bt-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="mgn-up-10 mgn-bt-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!is_donation">
           Show personalized information about this service
+          <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+            Click here</span>
+          <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+            <i class="fa fa-check"></i>
+            <a (click)="showInfoSection()"> Instructions Added</a>
+          </div>
+        </div>
+        <div class="mgn-up-10 mgn-bt-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="is_donation">
+          Show personalized information about this cause
           <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
             Click here</span>
           <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
@@ -576,13 +591,15 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">
     <div class="mgn-bt-20 mgn-up-20">
       <div class="form-group preinfo">
-        <label class="col-form-label">Show personalized information about this service in the booking
+        <label class="col-form-label" *ngIf="!is_donation">Show personalized information about this service in the booking
           window&nbsp;&nbsp;</label>
+          <label class="col-form-label" *ngIf="is_donation">Show personalized information about this donation cause.&nbsp;&nbsp;</label>
         <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
         </mat-slide-toggle>
       </div>
-      <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s while choosing the
+      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s while choosing the
         service.</div>
+        <div class="form-level-settings" *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s while making a donation.</div>
       <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
         <mat-form-field>
           <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="preInfoTitle"
@@ -600,13 +617,15 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     <div class="clearfix"></div>
     <div class="mgn-bt-20 mgn-up-20">
       <div class="form-group postinfo">
-        <label class="col-form-label">Show personalized messages to your {{customer_label}}s upon successful booking
-          confirmation&nbsp;&nbsp;</label>
+        <label class="col-form-label" *ngIf="!is_donation">Show personalized messages to your {{customer_label}}s upon successful booking
+          confirmation.&nbsp;&nbsp;</label>
+          <label class="col-form-label" *ngIf="is_donation">Show personalized message to your {{customer_label}}s after the donation.&nbsp;&nbsp;</label>
         <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
         </mat-slide-toggle>
       </div>
-      <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s after confirmation of
+      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s after confirmation of
         the service.</div>
+        <div class="form-level-settings"  *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s after the donation is successfully made.</div>
       <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
         <mat-form-field>
           <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="postInfoTitle"

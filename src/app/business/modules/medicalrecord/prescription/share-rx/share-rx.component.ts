@@ -81,6 +81,7 @@ export class ShareRxComponent implements OnInit {
   accountType: any;
   userbname: any;
   loading = true;
+  signature_loading=true;
   showthirdparty = false;
   thirdpartyphone = '';
   thirdpartyemail = '';
@@ -343,8 +344,10 @@ export class ShareRxComponent implements OnInit {
 
           if (data[0].keyName) {
             console.log(data);
+            this.signature_loading=false;
           } else {
             this.drugList = data;
+            this.signature_loading=false;
             this.getDigitalSign();
           }
           this.getProviderLogo();
@@ -366,11 +369,12 @@ export class ShareRxComponent implements OnInit {
       );
   }
   getDigitalSign() {
+    console.log('getDigitalsignature');
     if (this.provider_user_Id) {
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data: any) => {
           console.log(data);
-          this.imagedetails = JSON.parse(data);
+          this.imagedetails = data;
           console.log(this.imagedetails);
           this.signurl = this.imagedetails.url;
           console.log(this.signurl);
@@ -382,9 +386,12 @@ export class ShareRxComponent implements OnInit {
   }
   showdigitalsign() {
     let logourl = '';
+    console.log(this.signurl);
     if (this.signurl) {
-      logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
+      // logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
+      logourl=(this.signurl) ? this.signurl  : '';
     }
+    console.log(this.shared_functions.showlogoicon(logourl));
     return this.shared_functions.showlogoicon(logourl);
 
   }
@@ -393,7 +400,8 @@ export class ShareRxComponent implements OnInit {
     this.profimg_exists = false;
     if (this.blogo[0]) {
       this.profimg_exists = true;
-      logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+      //logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+      logourl = (this.blogo[0].url) ? this.blogo[0].url  : '';
     }
     return this.shared_functions.showlogoicon(logourl);
   }

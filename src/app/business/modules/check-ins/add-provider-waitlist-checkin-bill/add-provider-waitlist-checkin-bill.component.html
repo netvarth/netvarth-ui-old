@@ -563,14 +563,14 @@
 												[(ngModel)]="selOrderProviderCoupon">
 												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
-													[value]="coupon.couponCode">{{coupon.name}}</option>
+													[value]="coupon.couponCode"> {{coupon.couponCode}} ({{coupon.name}} )</option>
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
 												class="form-control select-height"
 												[(ngModel)]="selOrderProviderjCoupon">
 												<option value="" disabled selected hidden>Select Jaldee Coupon</option>
 												<option *ngFor="let jcoupon of jCouponsList; let i = index"
-													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}
+													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }} ({{jcoupon.couponName}} )
 												</option>
 											</select>
 											<br>
