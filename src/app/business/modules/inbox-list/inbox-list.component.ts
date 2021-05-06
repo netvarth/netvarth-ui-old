@@ -234,20 +234,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
   setMessages() {
     this.inboxList = this.generateCustomInbox(this.messages);
     if (this.userDet.accountType === 'BRANCH') {
-      const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
+      const group = this.shared_functions.groupBy(this.inboxList, 'providerId');
       Object.keys(group).forEach(key => {
-        const group2 = this.shared_functions.groupBy(group[key], 'accountName');
+        const group2 = this.shared_functions.groupBy(group[key], 'accountId');
         group[key] = group2;
       });
       this.userWithMsgCount = Object.keys(group).length;
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
-        if (this.selectedUser.businessName) {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
-        } else {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
-        }
-        console.log(this.groupedMsgs);
+        this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.id];
       } else {
         let arr = [];
         Object.keys(group).forEach(key => {
@@ -258,11 +253,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
           });
         });
         this.groupedMsgs = arr;
-        console.log(this.groupedMsgs);
       }
     } else {
-      this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
-      console.log(this.groupedMsgs);
+      this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountId');
     }
     this.onResize();
     if (this.selectedCustomer !== '') {
@@ -376,9 +369,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       caption: []
     };
   }
-  getUserShort(user) {
-    user = user.split('=');
-    user = user[0];
+  getUserShort(messages) {
+    let user = messages[(messages.length - 1)].accountName;
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
@@ -386,12 +378,17 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     return nameShort.toUpperCase();
   }
-  getUserName(user, type) {
-    const name = user.split('=');
-    if (type === 'customer') {
-      return name[0];
-    } else {
-      return name[1];
+  getUserName(type?, messages?) {
+    if (!messages) {
+      messages = this.selectedUserMessages;
+    }
+    let user = messages[(messages.length - 1)];
+    if (user) {
+      if (type === 'customer') {
+        return user.accountName;
+      } else {
+        return user.providerName;
+      }
     }
   }
   filesSelected(event) {
@@ -488,7 +485,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     return unreadMsgs.length;
   }
   getUserUnreadCount(user) {
-    const userMsgs = this.groupedMsgsbyUser[(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName];
+    const userMsgs = this.groupedMsgsbyUser[user.id];
     let count = 0;
     Object.keys(userMsgs).forEach(key => {
       const unreadMsgs = userMsgs[key].filter(msg => !msg.read && msg.messagestatus === 'in');

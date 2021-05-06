@@ -75,10 +75,11 @@
                                             <th style="min-width: 100px;">Phone</th>
                                             <th style="min-width: 100px;" class="hiddencontent">Email</th>
                                             <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="row_data border-bottom pointer-cursor"
+                                        <tr class="row_data border-bottom pointer-cursor tbl-hover"
                                             (click)="getProviderQuestionnaire()">
                                             <td>
                                                 <span class="text-dark-75 d-block">{{customer_data.firstName}}
@@ -103,6 +104,9 @@
                                                 <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
                                                     {{customer_data.dob | date:dateFormat}}
                                                 </span>
+                                            </td>
+                                            <td class="">
+                                              <i class="fa fa-arrow-right black" aria-hidden="true"></i> 
                                             </td>
                                         </tr>
                                     </tbody>
