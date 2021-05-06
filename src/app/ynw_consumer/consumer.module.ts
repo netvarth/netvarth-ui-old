@@ -115,7 +115,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
     ActionPopupComponent,
     ViewRxComponent,
     OrderComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
     ApptCardComponent,
     WlCardComponent,
 

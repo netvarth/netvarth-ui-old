@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { WindowRefService } from './windowRef.service';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from './shared-services';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Razorpaymodel } from '../components/razorpay/razorpay.model';
@@ -27,8 +27,8 @@ export class RazorpayService {
     public razorpayModel: Razorpaymodel,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private ngZone: NgZone,
-    private activatedRoute:ActivatedRoute,
+    private ngZone: NgZone
+  
   ) { }
 
   changePaidStatus(value: string) {
