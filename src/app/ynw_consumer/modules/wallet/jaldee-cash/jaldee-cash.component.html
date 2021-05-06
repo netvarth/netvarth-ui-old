@@ -29,7 +29,7 @@
                           
                           <div class="wallet-balance" *ngIf="cashbalanceInfodetail && cashbalanceInfodetail.totCashAvailable">
                               <p>Wallet Balance</p>
-                              <h5 class=""><span class="w-currency"><i class="fa fa-inr" aria-hidden="true"></i></span>{{cashbalanceInfodetail.totCashAvailable}}</h5>
+                              <h5 class=""><span class="w-currency"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;</span>{{cashbalanceInfodetail.totCashAvailable}}</h5>
                           </div>
                       </div>
 
@@ -75,7 +75,7 @@
                           </div>
                       </div>
                       <span >
-                        <span class="walletexpiry">Expires on {{details.jCashSpendRulesInfo.expiryDt  | date: newDateFormat}}</span><span class="pull-right walletfont" (click)="termsAndCondition()">T&C</span>
+                        <span class="walletexpiry">Expires on {{details.jCashSpendRulesInfo.expiryDt  | date: newDateFormat}}</span><span class="pull-right walletfont" (click)="termsAndCondition(details.displayNote)">T&C</span>
                     </span>
                   </div>
                   
@@ -126,7 +126,7 @@
                       <td data-title="Expiry date" class="red" >
                         {{details.jCashSpendRulesInfo.expiryDt | date: newDateFormat}}
                       </td>
-                      <td data-title="" class="walletfont" (click)="termsAndCondition()" >
+                      <td data-title="" class="walletfont" (click)="termsAndCondition(details.displayNote)" >
                         T&C
                       </td>
                     </tr>

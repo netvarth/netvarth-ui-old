@@ -5,7 +5,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../app.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,157 +21,165 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 
 @Component({
-  selector: 'app-order-bill',
-  templateUrl: './order-bill.component.html',
-  styleUrls: ['./order-bill.component.css']
+    selector: 'app-order-bill',
+    templateUrl: './order-bill.component.html',
+    styleUrls: ['./order-bill.component.css']
 })
-export class OrderBillComponent implements OnInit,OnDestroy {
-   
+export class OrderBillComponent implements OnInit, OnDestroy {
 
-  @ViewChild('itemservicesearch') item_service_search;
-  tooltipcls = '';
-  new_cap = Messages.NEW_CAP;
-  bill_cap = Messages.BILL_CAPTION;
-  date_cap = Messages.DATE_CAP;
-  time_cap = Messages.TIME_CAP;
-  bill_no_cap = Messages.BILL_NO_CAP;
-  gstin_cap = Messages.GSTIN_CAP;
-  ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
-  no_cap = Messages.NO_CAP;
-  available_cap = Messages.AVAILABLE_CAP;
-  qty_cap = Messages.QTY_CAPITAL_CAP;
-  add_btn_cap = Messages.ADD_BTN;
-  cancel_btn_cap = Messages.CANCEL_BTN;
-  qnty_cap = Messages.QTY_CAP;
-  select_discount_cap = Messages.SEL_DISC_CAP;
-  select_coupon_cap = Messages.SEL_COUPON_CAP;
-  done_btn_cap = Messages.DONE_BTN;
-  discount_cap = Messages.DISCOUNT_CAP;
-  coupon_cap = Messages.COUPON_CAP;
-  sub_tot_cap = Messages.SUB_TOT_CAP;
-  dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
-  delete_btn_cap = Messages.DELETE_BTN;
-  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
-  bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
-  tax_cap = Messages.TAX_CAP;
-  amount_paid_cap = Messages.AMNT_PAID_CAP;
-  amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
-  back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
-  payment_logs_cap = Messages.PAY_LOGS_CAP;
-  amount_cap = Messages.AMOUNT_CAP;
-  refundable_cap = Messages.REFUNDABLE_CAP;
-  status_cap = Messages.PAY_STATUS;
-  mode_cap = Messages.MODE_CAP;
-  refunds_cap = Messages.REFUNDS_CAP;
-  coupon_notes = projectConstants.COUPON_NOTES;
-  api_error = null;
-  api_success = null;
-  checkin = null;
-  bill_data = null;
-  message = '';
-  items: any = [];
-  pre_payment_log: any = [];
-  payment_options: any = [];
-  close_msg = 'close';
-  bname = '';
-  billdate = '';
-  billtime = '';
-  gstnumber = '';
-  billnumber = '';
-  bill_load_complete = 0;
-  item_service_tax: any = 0;
-  uuid;
-  gateway_redirection = false;
-  payModesExists = false;
-  payModesQueried = false;
-  pay_data = {
-      'uuid': null,
-      'paymentMode': null,
-      'amount': 0,
-      'accountId': null,
-      'purpose': null
-  };
-  payment_popup = null;
-  showPaidlist = false;
-  showJCouponSection = false;
-  jCoupon = '';
-  couponList : any={
-    JC:[],OWN:[]
-  };
-  refund_value;
-  discountDisplayNotes = false;
-  billNoteExists = false;
-  showBillNotes = false;
-  paytmEnabled = false;
-  type;
-  accountId;
-  pid;
-  breadcrumbs;
-  source;
-  pGateway: any;
-  razorModel: any;
-  origin: string;
-  paidStatus = 'false';
-  checkIn_type: any;
-  razorpay_order_id: any;
-  razorpay_payment_id: any;
-  razorpayDetails: any = [];
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  billTitle='Bill';
-  provider_id: any;
-  terminologiesjson: any;
-private subs=new SubSink();
-  constructor(
-    //   private consumer_services: ConsumerServices,
-      public consumer_checkin_history_service: CheckInHistoryServices,
-      public sharedfunctionObj: SharedFunctions,
-      public sharedServices: SharedServices,
-      public _sanitizer: DomSanitizer,
-      private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService,
-      private activated_route: ActivatedRoute,
-      private dialog: MatDialog,
-      private locationobj: Location,
-      @Inject(DOCUMENT) public document,
-      public razorpayService: RazorpayService,
-      public prefillmodel: RazorpayprefillModel,
-      public winRef: WindowRefService,
-      private cdRef: ChangeDetectorRef,
-      private location: Location,
-      private s3Processor: S3UrlProcessor
-  ) {
-     this.subs.sink= this.activated_route.queryParams.subscribe(
-          params => {
-              console.log(params);
-              if (params.accountId) {
-                  this.accountId = params.accountId;
-                  console.log(this.accountId);
-              }
-              if (params.paidStatus) {
-                  this.paidStatus = params.paidStatus;
-              }
-              if (params.uuid) {
-                  this.uuid = params.uuid;
-                  console.log(this.uuid);
 
-              }
-              if (params.source) {
-                  this.source = params.source;
-              }
-              this.getWaitlist();
-              if (this.source === 'history') {
-                  this.checkIn_type = 'checkin_historybill';
-              }
-              if (params.type) {
-                  this.checkIn_type = params.type;
-              }
-              if (params.details) {
-                  this.razorpayDetails = JSON.parse(params.details);
-                  this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
-                  this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
-                  this.cdRef.detectChanges();
-              }
+    @ViewChild('itemservicesearch') item_service_search;
+    tooltipcls = '';
+    new_cap = Messages.NEW_CAP;
+    bill_cap = Messages.BILL_CAPTION;
+    date_cap = Messages.DATE_CAP;
+    time_cap = Messages.TIME_CAP;
+    bill_no_cap = Messages.BILL_NO_CAP;
+    gstin_cap = Messages.GSTIN_CAP;
+    ad_ser_item_cap = Messages.ADD_SER_ITEM_CAP;
+    no_cap = Messages.NO_CAP;
+    available_cap = Messages.AVAILABLE_CAP;
+    qty_cap = Messages.QTY_CAPITAL_CAP;
+    add_btn_cap = Messages.ADD_BTN;
+    cancel_btn_cap = Messages.CANCEL_BTN;
+    qnty_cap = Messages.QTY_CAP;
+    select_discount_cap = Messages.SEL_DISC_CAP;
+    select_coupon_cap = Messages.SEL_COUPON_CAP;
+    done_btn_cap = Messages.DONE_BTN;
+    discount_cap = Messages.DISCOUNT_CAP;
+    coupon_cap = Messages.COUPON_CAP;
+    sub_tot_cap = Messages.SUB_TOT_CAP;
+    dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
+    delete_btn_cap = Messages.DELETE_BTN;
+    gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+    bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
+    tax_cap = Messages.TAX_CAP;
+    amount_paid_cap = Messages.AMNT_PAID_CAP;
+    amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
+    back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
+    payment_logs_cap = Messages.PAY_LOGS_CAP;
+    amount_cap = Messages.AMOUNT_CAP;
+    refundable_cap = Messages.REFUNDABLE_CAP;
+    status_cap = Messages.PAY_STATUS;
+    mode_cap = Messages.MODE_CAP;
+    refunds_cap = Messages.REFUNDS_CAP;
+    coupon_notes = projectConstants.COUPON_NOTES;
+    api_error = null;
+    api_success = null;
+    checkin = null;
+    bill_data = null;
+    message = '';
+    items: any = [];
+    pre_payment_log: any = [];
+    payment_options: any = [];
+    close_msg = 'close';
+    bname = '';
+    billdate = '';
+    billtime = '';
+    gstnumber = '';
+    billnumber = '';
+    bill_load_complete = 0;
+    item_service_tax: any = 0;
+    uuid;
+    gateway_redirection = false;
+    payModesExists = false;
+    payModesQueried = false;
+    pay_data = {
+        'uuid': null,
+        'paymentMode': null,
+        'amount': 0,
+        'accountId': null,
+        'purpose': null
+    };
+    payment_popup = null;
+    showPaidlist = false;
+    showJCouponSection = false;
+    jCoupon = '';
+    couponList: any = {
+        JC: [], OWN: []
+    };
+    refund_value;
+    discountDisplayNotes = false;
+    billNoteExists = false;
+    showBillNotes = false;
+    paytmEnabled = false;
+    type;
+    accountId;
+    pid;
+    breadcrumbs;
+    source;
+    pGateway: any;
+    razorModel: any;
+    origin: string;
+    paidStatus = 'false';
+    checkIn_type: any;
+    razorpay_order_id: any;
+    razorpay_payment_id: any;
+    razorpayDetails: any = [];
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    billTitle = 'Bill';
+    provider_id: any;
+    terminologiesjson: any;
+    private subs = new SubSink();
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
+    jcreditamount: any;
+    remainingadvanceamount;
+    wallet: any;
+    constructor(
+        //   private consumer_services: ConsumerServices,
+        public consumer_checkin_history_service: CheckInHistoryServices,
+        public sharedfunctionObj: SharedFunctions,
+        public sharedServices: SharedServices,
+        public _sanitizer: DomSanitizer,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private activated_route: ActivatedRoute,
+        private dialog: MatDialog,
+        private locationobj: Location,
+        @Inject(DOCUMENT) public document,
+        public razorpayService: RazorpayService,
+        public prefillmodel: RazorpayprefillModel,
+        public winRef: WindowRefService,
+        private cdRef: ChangeDetectorRef,
+        private location: Location,
+        private s3Processor: S3UrlProcessor,
+        public router: Router,
+    ) {
+        this.subs.sink = this.activated_route.queryParams.subscribe(
+            params => {
+                console.log(params);
+                if (params.accountId) {
+                    this.accountId = params.accountId;
+                    console.log(this.accountId);
+                }
+                if (params.paidStatus) {
+                    this.paidStatus = params.paidStatus;
+                }
+                if (params.uuid) {
+                    this.uuid = params.uuid;
+                    console.log(this.uuid);
+
+                }
+                if (params.source) {
+                    this.source = params.source;
+                }
+                this.getWaitlist();
+                if (this.source === 'history') {
+                    this.checkIn_type = 'checkin_historybill';
+                }
+                if (params.type) {
+                    this.checkIn_type = params.type;
+                }
+                if (params.details) {
+                    this.razorpayDetails = JSON.parse(params.details);
+                    this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
+                    this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
+                    this.cdRef.detectChanges();
+                }
 
             });
     }
@@ -226,13 +234,13 @@ private subs=new SubSink();
     gets3curl() {
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id, null, 'terminologies,coupon,providerCoupon').subscribe(
             (accountS3s) => {
-                if(accountS3s['terminologies']) {
+                if (accountS3s['terminologies']) {
                     this.processS3s('terminologies', accountS3s['terminologies']);
                 }
-                if(accountS3s['coupon']) {
+                if (accountS3s['coupon']) {
                     this.processS3s('coupon', accountS3s['coupon']);
                 }
-                if(accountS3s['providerCoupon']) {
+                if (accountS3s['providerCoupon']) {
                     this.processS3s('providerCoupon', accountS3s['providerCoupon']);
                 }
             });
@@ -302,6 +310,10 @@ private subs=new SubSink();
                     if (this.bill_data.amountDue < 0) {
                         this.refund_value = Math.abs(this.bill_data.amountDue);
                     }
+                    if (this.bill_data.amountDue > 0) {
+                        this.getJaldeeCashandCredit();
+                    }
+
                     this.getBillDateandTime();
                 },
                 error => {
@@ -309,6 +321,15 @@ private subs=new SubSink();
                 () => {
                 }
             );
+    }
+    getJaldeeCashandCredit() {
+        this.sharedServices.getJaldeeCashandJcredit()
+            .subscribe(data => {
+                this.checkJcash = true
+                this.jaldeecash = data;
+                this.jcashamount = this.jaldeecash.jCashAmt;
+                this.jcreditamount = this.jaldeecash.creditAmt;
+            });
     }
     billNotesClicked() {
         if (!this.showBillNotes) {
@@ -365,37 +386,123 @@ private subs=new SubSink();
      * Perform PayU Payment
      */
     payuPayment() {
-        this.pay_data.uuid = this.uuid;
-        this.pay_data.amount = this.bill_data.amountDue;
-        this.pay_data.paymentMode = 'DC';
-        this.pay_data.accountId = this.accountId;
-        this.pay_data.purpose = 'billPayment';
-        this.resetApiError();
-        if (this.pay_data.uuid != null &&
-            this.pay_data.paymentMode != null &&
-            this.pay_data.amount !== 0) {
-            this.api_success = Messages.PAYMENT_REDIRECT;
-            this.gateway_redirection = true;
-            this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
-                .subscribe(
-                    (data: any) => {
-                        this.origin = 'consumer';
-                        this.pGateway = data.paymentGateway;
-                        if (this.pGateway === 'RAZORPAY') {
-                            this.paywithRazorpay(data);
-                        } else {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            setTimeout(() => {
-                                this.document.getElementById('payuform').submit();
-                            }, 2000);
-                        }
-                    },
-                    error => {
-                        this.resetApiError();
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        if (this.jcashamount > 0 && this.checkJcash) {
+            this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
+                .subscribe(data => {
+                    this.remainingadvanceamount = data;
+                    if (this.remainingadvanceamount == 0 && this.checkJcash) {
+                        const postData = {
+                            'amountToPay': this.bill_data.amountDue,
+                            'accountId': this.accountId,
+                            'uuid': this.uuid,
+                            'paymentPurpose': 'billPayment',
+                            'isJcashUsed': true,
+                            'isreditUsed': false,
+                            'isRazorPayPayment': false,
+                            'isPayTmPayment': false,
+                            'paymentMode': 'JCASH'
+                        };
+                        this.sharedServices.PayByJaldeewallet(postData)
+                            .subscribe(data => {
+                                this.wallet = data;
+                                if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
+                                    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                                    this.router.navigate(['consumer']);
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                });
+                    } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                        const postData = {
+                            'amountToPay': this.bill_data.amountDue,
+                            'accountId': this.accountId,
+                            'uuid': this.uuid,
+                            'paymentPurpose': 'billPayment',
+                            'isJcashUsed': true,
+                            'isreditUsed': false,
+                            'isRazorPayPayment': true,
+                            'isPayTmPayment': false,
+                            'paymentMode': 'DC'
+                        };
+                        this.sharedServices.PayByJaldeewallet(postData)
+                            .subscribe((pData: any) => {
+                                if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
+                                    this.pay_data.uuid = this.uuid;
+                                    this.pay_data.amount = this.remainingadvanceamount;
+                                    this.pay_data.paymentMode = 'DC';
+                                    this.pay_data.accountId = this.accountId;
+                                    this.pay_data.purpose = 'billPayment';
+                                    this.resetApiError();
+                                    if (this.pay_data.uuid != null &&
+                                        this.pay_data.paymentMode != null &&
+                                        this.pay_data.amount !== 0) {
+                                        this.api_success = Messages.PAYMENT_REDIRECT;
+                                        this.gateway_redirection = true;
+                                        this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+                                            .subscribe(
+                                                (data: any) => {
+                                                    this.origin = 'consumer';
+                                                    this.pGateway = data.paymentGateway;
+                                                    if (this.pGateway === 'RAZORPAY') {
+                                                        this.paywithRazorpay(data);
+                                                    } else {
+                                                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                                        setTimeout(() => {
+                                                            this.document.getElementById('payuform').submit();
+                                                        }, 2000);
+                                                    }
+                                                },
+                                                error => {
+                                                    this.resetApiError();
+                                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                                }
+                                            );
+                                    }
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                });
                     }
-                );
+                });
+        }
+        else {
+            this.pay_data.uuid = this.uuid;
+            this.pay_data.amount = this.bill_data.amountDue;
+            this.pay_data.paymentMode = 'DC';
+            this.pay_data.accountId = this.accountId;
+            this.pay_data.purpose = 'billPayment';
+            this.resetApiError();
+            if (this.pay_data.uuid != null &&
+                this.pay_data.paymentMode != null &&
+                this.pay_data.amount !== 0) {
+                this.api_success = Messages.PAYMENT_REDIRECT;
+                this.gateway_redirection = true;
+
+
+                this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+                    .subscribe(
+                        (data: any) => {
+                            this.origin = 'consumer';
+                            this.pGateway = data.paymentGateway;
+                            if (this.pGateway === 'RAZORPAY') {
+                                this.paywithRazorpay(data);
+                            } else {
+                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                setTimeout(() => {
+                                    this.document.getElementById('payuform').submit();
+                                }, 2000);
+                            }
+                        },
+                        error => {
+                            this.resetApiError();
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        }
+                    );
+            }
         }
     }
     paywithRazorpay(data: any) {
@@ -409,7 +516,9 @@ private subs=new SubSink();
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
         //    this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+
     }
     paytmPayment() {
         this.pay_data.uuid = this.uuid;
@@ -470,10 +579,10 @@ private subs=new SubSink();
                     this.clearJCoupon();
                     resolve();
                 },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    reject(error);
-                });
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        reject(error);
+                    });
         });
     }
     /**

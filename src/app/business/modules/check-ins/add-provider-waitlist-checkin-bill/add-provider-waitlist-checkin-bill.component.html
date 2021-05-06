@@ -844,7 +844,7 @@
 									aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-											<div class="modal-body pb-3" *ngIf="!is_policy">
+											<div class="modal-body pb-3 scrool-refund" *ngIf="!is_policy">
 												<div class="row">
 													<div class="col-md-12 py-md-10 pr-md-5">
 														<div class="table-responsive">
@@ -868,7 +868,7 @@
 																</thead>
 																<tbody
 																	*ngFor="let payment of pre_payment_log; let i = index">
-																	<tr class="font-weight-bolder font-size-sm">
+																	<tr class="font-weight-bolder font-size-sm" *ngIf = "payment.status == 'SUCCESS'">
 																		<td class="fnt-p7 text-center pt-4">
 																			{{payment.status | capitalizeFirst}}</td>
 																		<td class=" fnt-p7 text-center pt-4">
@@ -912,7 +912,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="row" *ngFor="let payment of pre_payment_log; let i = index">
+												<div class="row " *ngFor="let payment of pre_payment_log; let i = index">
 													<div *ngIf="payment.refundDetails.length" class="table-responsive"
 														style="width: 100%">
 														<table class="table mb-0">
@@ -990,21 +990,25 @@
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
 													(click)="refundBack()">Back</button>
 
-												<button *ngIf="applydisc" type="button"
+												<button *ngIf="applydisc && !jcashRefund " type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
 													(click)="refundPayment('cash')" data-dismiss="modal">Pay by
 													Cash</button>
 
-												<button *ngIf="applydisc" type="button"
+												<button *ngIf="applydisc && !jcashRefund " type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
 													(click)="refundPayment('other')" data-dismiss="modal">Pay by
 													Others</button>
 												<button type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
-													*ngIf="applydisc && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
+													*ngIf="applydisc && !jcashRefund && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
 													(click)="refundPayment('online')" data-dismiss="modal">Pay
-													Online</button>
-
+													Online</button>												
+												<button type="button"
+													class="btn btn-success btn-square lh-p6 font-weight-bold"
+													*ngIf="applydisc && jcashRefund"
+													(click)="refundPayment('jcash')" data-dismiss="modal">Confirm
+													</button>
 												<button *ngIf="applydisc" type="button"
 													class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
 													(click)="revokeRefund()">Cancel</button>

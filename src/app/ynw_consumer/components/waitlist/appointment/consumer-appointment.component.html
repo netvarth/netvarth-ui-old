@@ -917,22 +917,22 @@
                                         </table>
                                         <div class="containerAppt textcenter">
                                             <!-- <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div> -->
-                                       <div  class="mgn-bt-5">
-                                            <span> Appointment For : </span>                                               
-                                            <span  *ngIf="sel_ser_det.serviceType == 'virtualService'">
-                                            <i class="fa phon-icon"
-                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                            <i class="fa meet-icon"
-                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                            <i class="fa zoom-icon"
-                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                            <i class="fa wtsapaud-icon"
-                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
-                                            <i class="fa wtsapvid-icon"
-                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
-                                        </span>
-                                        <span>{{sel_ser_det.name}}</span>
-                                    </div>
+                                            <div class="mgn-bt-5">
+                                                <span> Appointment For : </span>
+                                                <span *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa meet-icon"
+                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                    <i class="fa zoom-icon"
+                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
+                                                    <i class="fa wtsapvid-icon"
+                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
+                                                </span>
+                                                <span>{{sel_ser_det.name}}</span>
+                                            </div>
 
                                             <div class="mgn-bt-5" *ngIf="selectedApptTime">
                                                 <span *ngIf="!isFuturedate">Today,
@@ -943,7 +943,7 @@
                                                 <span>{{getSingleTime(selectedApptTime['time'])}}</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="containerpayment"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <!-- <div>
@@ -952,8 +952,7 @@
                                                 </span>
                                             </div> -->
                                             <div class="prepayment">
-                                                Payment required now : &nbsp; <span
-                                                    class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                Payment required now : &nbsp; <span class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
@@ -973,11 +972,11 @@
 
                                             <div class="jaldeecredit">
                                                 <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
-                                                  Use Jaldee cash balance : Rs{{jcashamount}}
-                                              </div>
-                                              <div class="creditleft">
-                                                  Balance amount can be paid by other payment methods 
-                                              </div>
+                                                Use Jaldee cash balance : Rs{{jcashamount}}
+                                            </div>
+                                            <div class="creditleft">
+                                                Balance amount can be paid by other payment methods
+                                            </div>
 
                                             <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

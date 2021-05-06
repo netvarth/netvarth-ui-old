@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, Afte
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Location, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 //  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
@@ -108,7 +108,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   hold_sel_checkindate;
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
   ddate;
-  isfutureAvailableTime=true;
+  isfutureAvailableTime = true;
   storeContactNw: any;
   showSide = false;
   orderType = '';
@@ -158,7 +158,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   couponvalid = true;
   api_cp_error = null;
   s3CouponsList: any = {
-    JC:[],OWN:[]
+    JC: [], OWN: []
   };
   selected_coupons: any = [];
   couponsList: any = [];
@@ -166,7 +166,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   showCouponWB: boolean;
   cartDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-  @ViewChild('firstStep',{static: false}) public nextbtn: ElementRef;
+  @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -288,7 +288,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.orderType = this.catalog_details.orderType;
       this.loading = false;
       this.gets3curl();
-      if(this.catalog_details.advanceAmount >0 && this.orderType === 'SHOPPINGLIST'){
+      if (this.catalog_details.advanceAmount > 0 && this.orderType === 'SHOPPINGLIST') {
         this.getJaldeeCashandCredit();
       }
       if (this.orderType !== 'SHOPPINGLIST') {
@@ -300,7 +300,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           base64: [],
           caption: []
         };
-   
+
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -350,10 +350,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.home_delivery = true;
           this.storeChecked = false;
           this.getOrderAvailableDatesForHome();
-          
+
         }
       }
-     
+
     });
     this.getStoreContact();
 
@@ -432,24 +432,27 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.cartDetails = data;
           this.couponlist = [];
           this.pcouponlist = [];
-          if(this.cartDetails.jCouponList){
+          if (this.cartDetails.jCouponList) {
             for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
-              if(value['value'] !== '0.0'){
+              if (value['value'] !== '0.0') {
                 this.couponlist.push(key);
                 console.log(this.couponlist);
               }
             }
           }
-          if(this.cartDetails.proCouponList){
+          if (this.cartDetails.proCouponList) {
             for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
-              if(value['value'] !== '0.0'){
+              if (value['value'] !== '0.0') {
                 this.pcouponlist.push(key);
                 console.log(this.pcouponlist);
               }
             }
           }
-          if(this.cartDetails.advanceAmount > 0){
-            this.getJaldeeCashandCredit();
+          if (this.cartDetails.eligibleJcashAmt) {
+            this.checkJcash = true
+            this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
+            // this.getJaldeeCashandCredit();
           }
         },
         error => {
@@ -460,11 +463,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getJaldeeCashandCredit() {
     this.shared_services.getJaldeeCashandJcredit()
       .subscribe(data => {
-          this.checkJcash = true
-          this.jaldeecash = data;
-          this.jcashamount = this.jaldeecash.jCashAmt;
-          this.jcreditamount = this.jaldeecash.creditAmt;
-    });
+        this.checkJcash = true
+        this.jaldeecash = data;
+        this.jcashamount = this.jaldeecash.jCashAmt;
+        this.jcreditamount = this.jaldeecash.creditAmt;
+      });
   }
   gets3curl() {
     console.log('getS3url');
@@ -475,11 +478,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         (accountS3s) => {
           console.log(accountS3s);
           if (accountS3s['coupon']) {
-          this.processS3s('coupon', accountS3s['coupon']);
-        }
-        if (accountS3s['providerCoupon']) {
-          this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-        }
+            this.processS3s('coupon', accountS3s['coupon']);
+          }
+          if (accountS3s['providerCoupon']) {
+            this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+          }
           this.api_loading1 = false;
         }
       );
@@ -617,7 +620,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.snackbarService.openSnackBar('Promocode accepted', { 'panelclass': 'snackbarerror' });
         this.action = '';
         if (this.orderType !== 'SHOPPINGLIST') {
-        this.getCartDetails();
+          this.getCartDetails();
         }
       } else {
         this.api_cp_error = 'Coupon invalid';
@@ -626,13 +629,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.api_cp_error = 'Enter a Coupon';
     }
   }
-  
+
   removeJCoupon(i) {
     this.selected_coupons.splice(i, 1);
     this.couponsList.splice(i, 1);
     if (this.orderType !== 'SHOPPINGLIST') {
       this.getCartDetails();
-      }
+    }
   }
   removeCoupons() {
     this.selected_coupons = [];
@@ -661,7 +664,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.storeContact.get('email').setValue(this.userEmail);
         },
 
-    );
+      );
   }
   getCatalogDetails(accountId) {
     const _this = this;
@@ -702,7 +705,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     return qty;
   }
- 
+
   getaddress() {
     this.shared_services.getConsumeraddress()
       .subscribe(
@@ -849,10 +852,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderlistNote,
             'coupons': this.selected_coupons
           };
-          if(this.jcashamount>0 && this.checkJcash){
-            post_Data['useCredit']= this.checkJcredit 
-            post_Data['useJcash']=  this.checkJcash
-          }          
+          if (this.jcashamount > 0 && this.checkJcash) {
+            post_Data['useCredit'] = this.checkJcredit
+            post_Data['useJcash'] = this.checkJcash
+          }
           this.confirmOrder(post_Data);
         } else {
           const post_Data = {
@@ -867,7 +870,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-     
+
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
@@ -877,9 +880,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderNote,
             'coupons': this.selected_coupons
           };
-          if(this.jcashamount>0 && this.checkJcash){
-            post_Data['useCredit']= this.checkJcredit 
-            post_Data['useJcash']=  this.checkJcash
+          if (this.jcashamount > 0 && this.checkJcash) {
+            post_Data['useCredit'] = this.checkJcredit
+            post_Data['useJcash'] = this.checkJcash
           }
           this.confirmOrder(post_Data);
         }
@@ -908,7 +911,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-      
+
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -917,9 +920,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderlistNote,
             'coupons': this.selected_coupons
           };
-          if(this.jcashamount>0 && this.checkJcash){
-            post_Data['useCredit']= this.checkJcredit 
-            post_Data['useJcash']=  this.checkJcash
+          if (this.jcashamount > 0 && this.checkJcash) {
+            post_Data['useCredit'] = this.checkJcredit
+            post_Data['useJcash'] = this.checkJcash
           }
           this.confirmOrder(post_Data);
         } else {
@@ -944,9 +947,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'orderNote': this.orderNote,
             'coupons': this.selected_coupons
           };
-          if(this.jcashamount>0 && this.checkJcash){
-            post_Data['useCredit']= this.checkJcredit 
-            post_Data['useJcash']=  this.checkJcash
+          if (this.jcashamount > 0 && this.checkJcash) {
+            post_Data['useCredit'] = this.checkJcredit
+            post_Data['useJcash'] = this.checkJcash
           }
           this.confirmOrder(post_Data);
         }
@@ -955,9 +958,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   doLogin(origin?, passParam?) {
- 
+
     const is_test_account = true;
-  
+
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
@@ -979,12 +982,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
       } else if (result === 'showsignup') {
-       
+
       }
     });
   }
   confirmOrder(post_Data) {
-    console.log(post_Data);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1026,22 +1028,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
-                console.log('check');
-                console.log(this.jcashamount);
-                console.log(this.checkJcash);
-                console.log(this.catalog_details.advanceAmount);
-                if(this.jcashamount && this.checkJcash && this.catalog_details.advanceAmount>0){
-                  console.log(this.catalog_details.advanceAmount);
-                
-                    console.log('avai');
-                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit ,this.catalog_details.advanceAmount)
-                      .subscribe(data => {
-                          this.remainingadvanceamount = data;
-                          this.payuPayment();
-                          console.log(data);
+                if (this.jcashamount > 0 && this.checkJcash) {
+                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
+                    .subscribe(data => {
+                      this.remainingadvanceamount = data;
+                      this.payuPayment();
                     });
                 }
-                else{
+                else {
                   this.payuPayment();
                 }
 
@@ -1089,26 +1083,19 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //   }
           // };
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
-              console.log('check');
-              console.log(this.jcashamount);
-              console.log(this.checkJcash);
-              console.log(this.remainingadvanceamount);
-              if(this.jcashamount && this.checkJcash){
-                console.log(this.cartDetails.advanceAmount);
-                  console.log('avai');
-                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash ,this.checkJcredit , this.cartDetails.advanceAmount)
+                if (this.jcashamount > 0 && this.checkJcash) {
+                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
                     .subscribe(data => {
-                        this.remainingadvanceamount = data;
-                        this.payuPayment();
-                        console.log(data);
-                  });
-              }
-              else{
-                this.payuPayment();
-              }
-               // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+                      this.remainingadvanceamount = data;
+                      this.payuPayment();
+                    });
+                }
+                else {
+                  this.payuPayment();
+                }
+                // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
             this.orderList = [];
@@ -1144,8 +1131,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-    if(this.couponsList.length > 0 && this.orderType !== 'SHOPPINGLIST'){
-     this.getCartDetails();
+    if (this.couponsList.length > 0 && this.orderType !== 'SHOPPINGLIST') {
+      this.getCartDetails();
     }
   }
   changeTime() {
@@ -1218,8 +1205,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-         this.home_availables = data.filter(obj => obj.isAvailable);
-         this.getAvailabilityByDate(this.sel_checkindate);
+        this.home_availables = data.filter(obj => obj.isAvailable);
+        this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
@@ -1333,58 +1320,58 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } 
-      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
-        console.log('less than 30'); 
+      }
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
+        console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-          } else{
-            this.isfutureAvailableTime = false;
-          }
-        }     
+        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
       else {
         this.isfutureAvailableTime = false;
       }
-    }  
+    }
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format(); 
-      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+      if (homeIntervals.includes(currentday) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+      } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
         console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-      } else {
+        const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
+      else {
         this.isfutureAvailableTime = false;
       }
-    }
-    else {        
-       this.isfutureAvailableTime = false;
-     }
     }
   }
   getStoreContact() {
@@ -1478,7 +1465,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         file: this.imagelist.files.slice(),
         base: this.imagelist.base64.slice(),
-        caption:this.imagelist.caption.slice(),
+        caption: this.imagelist.caption.slice(),
         type: 'edit'
       }
     });
@@ -1489,7 +1476,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           base64: [],
           caption: []
         };
-       this.selectedImagelist = result;
+        this.selectedImagelist = result;
         this.image_list_popup = [];
         if (this.selectedImagelist.files.length > 0) {
           for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1505,45 +1492,45 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  uploadShoppingList(){
+  uploadShoppingList() {
     this.imagelist = {
-        files: [],
-        base64: [],
-        caption: []
-      };
-      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          source: this.imagelist,
-          type: 'add'
-        }
-      });
-      this.shoppinglistdialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.selectedImagelist = {
-            files: [],
-            base64: [],
-            caption: []
-          };
-          this.selectedImagelist = result;
-          this.image_list_popup = [];
-          if (this.selectedImagelist.files.length > 0) {
-            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-              const imgobj = new Image(i,
-                {
-                  img: this.selectedImagelist.base64[i],
-                  description: this.selectedImagelist.caption[i] || ''
-                }, this.selectedImagelist.files[i].name);
-              this.image_list_popup.push(imgobj);
-            }
-            console.log(this.image_list_popup);
-
+      files: [],
+      base64: [],
+      caption: []
+    };
+    this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        source: this.imagelist,
+        type: 'add'
+      }
+    });
+    this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedImagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
+        this.selectedImagelist = result;
+        this.image_list_popup = [];
+        if (this.selectedImagelist.files.length > 0) {
+          for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+            const imgobj = new Image(i,
+              {
+                img: this.selectedImagelist.base64[i],
+                description: this.selectedImagelist.caption[i] || ''
+              }, this.selectedImagelist.files[i].name);
+            this.image_list_popup.push(imgobj);
           }
+          console.log(this.image_list_popup);
+
         }
-      });
-    }
+      }
+    });
+  }
   handleQueueSelection(queue, index) {
     this.queue = queue;
   }
@@ -1569,143 +1556,120 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.makeFailedPayment(paymentWay);
   }
   makeFailedPayment(paymentMode) {
-    console.log(this.orderType);
-    console.log(this.remainingadvanceamount);
-    if(this.orderType === 'SHOPPINGLIST'){
-      if(this.remainingadvanceamount > 0 && this.checkJcash ){
-        this.amounttopay = this.remainingadvanceamount;
-     } else {
-        this.amounttopay = this.catalog_details.advanceAmount;
-     }
-    }
-    else{
-      if(this.remainingadvanceamount > 0 && this.checkJcash ){
-        this.amounttopay = this.remainingadvanceamount
-     } else {
-        this.amounttopay = this.cartDetails.advanceAmount;
-     }
-    }
-    // this.amounttopay = this.cartDetails.advanceAmount;
-      this.orderDetails = {
-      'amount': this.amounttopay,
+    // console.log(this.orderType);
+    // console.log(this.remainingadvanceamount);
+    // if(this.orderType === 'SHOPPINGLIST'){
+    //   if(this.remainingadvanceamount > 0 && this.checkJcash ){
+    //     this.amounttopay = this.remainingadvanceamount;
+    //  } else {
+    //     this.amounttopay = this.catalog_details.advanceAmount;
+    //  }
+    // }
+    // else{
+    //   if(this.remainingadvanceamount > 0 && this.checkJcash ){
+    //     this.amounttopay = this.remainingadvanceamount
+    //  } else {
+    //     this.amounttopay = this.cartDetails.advanceAmount;
+    //  }
+    // }
+    this.orderDetails = {
+      // 'amount': this.amounttopay,
+      'amount': this.prepayAmount,
       'paymentMode': null,
-      'uuid':  this.trackUuid,
+      'uuid': this.trackUuid,
       'accountId': this.account_id,
       'purpose': 'prePayment'
-  };
-  this.orderDetails.paymentMode = paymentMode;
-  this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
-  this.lStorageService.setitemonLocalStorage('acid', this.account_id);
-  this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-  console.log(this.orderDetails);
-  if(this.remainingadvanceamount == 0 && this.checkJcash) {
-    console.log('zero');
-       const postData = {
-                'amountToPay': this.prepayAmount,
-                'accountId': this.account_id,
-                'uuid': this.trackUuid,
-                'paymentPurpose': 'prePayment',
-               //  'paymentRefId': pData.orderId,
-                'isJcashUsed': true,
-                'isreditUsed': false
-               };
-               console.log(postData);
-               this.shared_services.PayByJaldeewallet(postData)
-               .subscribe(data => {
-                   this.wallet =data;
-                   if(this.wallet == true){
-                    this.orderList = [];
-                    this.lStorageService.removeitemfromLocalStorage('order_sp');
-                    this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-                    this.lStorageService.removeitemfromLocalStorage('order_spId');
-                    this.lStorageService.removeitemfromLocalStorage('order');
-                    this.snackbarService.openSnackBar('Your Order placed successfully');
-                    this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-                   }
-                   console.log(data);
-             },
-             error => {
-               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-           });
-          }
+    };
+    this.orderDetails.paymentMode = paymentMode;
+    this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
+    this.lStorageService.setitemonLocalStorage('acid', this.account_id);
+    this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
+    console.log(this.orderDetails);
+    if (this.remainingadvanceamount == 0 && this.checkJcash) {
+      const postData = {
+        'amountToPay': this.prepayAmount,
+        'accountId': this.account_id,
+        'uuid': this.trackUuid,
+        'paymentPurpose': 'prePayment',
+        'isJcashUsed': true,
+        'isreditUsed': false,
+        'isRazorPayPayment': false,
+        'isPayTmPayment': false,
+        'paymentMode': 'JCASH'
+      };
+      this.shared_services.PayByJaldeewallet(postData)
+        .subscribe(data => {
+          this.wallet = data;
+          if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
 
-          else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            console.log('high');
-             this.shared_services.consumerPayment(this.orderDetails)
-               .subscribe((pData: any) => {
-                   this.pGateway = pData.paymentGateway;
-                   if (this.pGateway === 'RAZORPAY') {
-                      console.log(this.remainingadvanceamount);
-                      console.log(this.account_id);
-                               console.log('amounttopaygreater');
-                               const postData = {
-                                 'amountToPay': this.prepayAmount,
-                                 'accountId': this.account_id,
-                                 'uuid': this.trackUuid,
-                                 'paymentPurpose': 'prePayment',
-                                 'paymentRefId': pData.orderId,
-                                 'isJcashUsed': true,
-                                 'isreditUsed': false
-                                };
-                                console.log(postData);
-                                this.shared_services.PayByJaldeewallet(postData)
-                                .subscribe(data => {
-                                    console.log(data);
-                                    console.log(this.remainingadvanceamount);
-                                     this.paywithRazorpay(pData);
-                              },
-                              error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            });
-                   } else {
-                       if (pData['response']) {
-                           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                           setTimeout(() => {
-                               if (paymentMode === 'DC') {
-                                   this.document.getElementById('payuform').submit();
-                               } else {
-                                   this.document.getElementById('paytmform').submit();
-                               }
-                           }, 2000);
-                       } else {
-                           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                       }
-                   }
-               },
-                   error => {
-                       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                   });
-           }
-           else {
-            console.log('nothing');
-            this.shared_services.consumerPayment(this.orderDetails)
-                .subscribe((pData: any) => {
-                    this.pGateway = pData.paymentGateway;
-                    if (this.pGateway === 'RAZORPAY') {
-                        this.paywithRazorpay(pData);
-                    } else {
-                        if (pData['response']) {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            setTimeout(() => {
-                                if (paymentMode === 'DC') {
-                                    this.document.getElementById('payuform').submit();
-                                } else {
-                                    this.document.getElementById('paytmform').submit();
-                                }
-                            }, 2000);
-                        } else {
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                        }
-                    }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        
-                    });
-    
+            this.orderList = [];
+            this.lStorageService.removeitemfromLocalStorage('order_sp');
+            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+            this.lStorageService.removeitemfromLocalStorage('order_spId');
+            this.lStorageService.removeitemfromLocalStorage('order');
+            this.snackbarService.openSnackBar('Your Order placed successfully');
+            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+          }
+        },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+    }
+
+    else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+      const postData = {
+        'amountToPay': this.prepayAmount,
+        'accountId': this.account_id,
+        'uuid': this.trackUuid,
+        'paymentPurpose': 'prePayment',
+        'isJcashUsed': true,
+        'isreditUsed': false,
+        'isRazorPayPayment': true,
+        'isPayTmPayment': false,
+        'paymentMode': 'DC'
+      };
+
+      this.shared_services.PayByJaldeewallet(postData)
+        .subscribe((pData: any) => {
+
+          if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
+            this.paywithRazorpay(pData.response);
+          }
+        },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+
+    }
+    else {
+
+      this.shared_services.consumerPayment(this.orderDetails)
+        .subscribe((pData: any) => {
+          this.pGateway = pData.paymentGateway;
+          if (this.pGateway === 'RAZORPAY') {
+            this.paywithRazorpay(pData);
+          } else {
+            if (pData['response']) {
+              this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+              setTimeout(() => {
+                if (paymentMode === 'DC') {
+                  this.document.getElementById('payuform').submit();
+                } else {
+                  this.document.getElementById('paytmform').submit();
+                }
+              }, 2000);
+            } else {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
             }
+          }
+        },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+
+          });
+
+    }
   }
   paywithRazorpay(pData: any) {
     this.prefillmodel.name = pData.consumerName;
@@ -1717,7 +1681,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
     this.razorModel.description = pData.description;
-    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack,this.account_id,  this.cartDetails.advanceAmount);
+    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount);
+  }
 }
-}
-

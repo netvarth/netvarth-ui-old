@@ -192,8 +192,8 @@ background-color: #f8f8f8 !important;
   margin-bottom: 24px;
 }
 .widget-account-invoice-three .widget-heading .wallet-balance {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
   margin-top: 37px;
 }
 .widget-account-invoice-three .widget-heading .wallet-balance p {
