@@ -82,6 +82,7 @@ export class BookingAppointmentsComponent implements OnInit {
   filterLocation: any = [];
   genderList: any = [];
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
+  Mfilter: any = [];
 
   constructor(
     private groupService: GroupStorageService,
@@ -100,35 +101,21 @@ export class BookingAppointmentsComponent implements OnInit {
   }
 
   getTodayAppointments() {
-    const Mfilter = this.setFilterForApi();
-    if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
-      this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
-    } else {
-
-    }
-    if (this.selQIds) {
-      Mfilter['schedule-eq'] = this.selQIds.toString();
-      const qs = [];
-      qs.push(this.selQIds);
-      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
-      this.groupService.setitemToGroupStorage('appt_history_selQ', qs);
-      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
-    }
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+      this.Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0;
     // if (this.activeSchedules.length > 0) {
-      const promise = this.getTodayAppointmentsCount(Mfilter);
+      console.log(this.Mfilter)
+      const promise = this.getTodayAppointmentsCount(this.Mfilter);
       promise.then(
         result => {
           this.chkSelectAppointments = false;
-          this.provider_services.getTodayAppointments(Mfilter)
+          this.provider_services.getTodayAppointments(this.Mfilter)
             .subscribe(
               (data: any) => {
                 this.appt_list = data;
+                console.log(this.appt_list)
                 this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'apptStatus');
                 if (this.filterapplied === true) {
                   this.noFilter = false;
@@ -140,7 +127,6 @@ export class BookingAppointmentsComponent implements OnInit {
                 this.apptByTimeSlot = this.shared_functions.groupBy(this.check_in_filtered_list, 'appmtTime');
                 this.handleApptSelectionType();
                 this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
-                console.log(this.startedAppts);
               },
               () => {
                 // this.load_waitlist = 1;
@@ -274,90 +260,94 @@ export class BookingAppointmentsComponent implements OnInit {
   }
   setFilterForApi() {
     const api_filter = {};
-    if (this.time_type === 1) {
-      if (this.selQIds) {
-        api_filter['schedule-eq'] = this.selQIds.toString();
-      }
-      if (this.token && this.time_type === 1) {
-        api_filter['token-eq'] = this.token;
-      }
-    }
-    if (this.filter.first_name !== '') {
-      api_filter['firstName-eq'] = this.filter.first_name;
-    }
-    if (this.filter.last_name !== '') {
-      api_filter['lastName-eq'] = this.filter.last_name;
-    }
-    if (this.filter.phone_number !== '') {
-      api_filter['phoneNo-eq'] = this.filter.phone_number;
-    }
-    if (this.filter.appointmentEncId !== '') {
-      api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
-    }
-    if (this.filter.patientId !== '') {
-      api_filter['appmtFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
-    }
-    if (this.services.length > 0 && this.filter.service !== 'all') {
-      api_filter['service-eq'] = this.services.toString();
-    }
-    if (this.apptStatuses.length > 0 && this.filter.apptStatus !== 'all') {
-      api_filter['apptStatus-eq'] = this.apptStatuses.toString();
-    }
-    if (this.apptModes.length > 0 && this.filter.appointmentMode !== 'all') {
-      api_filter['appointmentMode-eq'] = this.apptModes.toString();
-    }
-    if (this.time_type !== 1) {
-      if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
-      }
-      if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
-      }
-    }
-    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-      api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
-    }
-    if (this.time_type === 3) {
-      if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-        api_filter['schedule-eq'] = this.filteredSchedule.toString();
-      }
-      if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
-        api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
-        const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
-        const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
-        if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') === -1) {
-          api_filter['dob-ge'] = kids;
-        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
-          api_filter['dob-le'] = kids;
-          api_filter['dob-ge'] = adults;
-        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
-          api_filter['dob-le'] = adults;
-        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
-          api_filter['dob-ge'] = adults;
-        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
-          api_filter['dob-le'] = adults;
-          api_filter['dob-ge'] = kids;
-        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') !== -1) {
-          api_filter['dob-le'] = kids;
-        }
-      }
-      if (this.genderList.length > 0 && this.filter.gender !== 'all') {
-        api_filter['gender-eq'] = this.genderList.toString();
-      }
-    }
-    if (this.time_type !== 3) {
-      if (this.selected_location && this.selected_location.id) {
-        api_filter['location-eq'] = this.selected_location.id;
-      }
-    }
-    if (this.labelFilterData !== '') {
-      api_filter['label-eq'] = this.labelFilterData;
-    }
-    // if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
-    //   api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    api_filter['apptStatus-eq'] = this.apptStatuses.toString();
+
+    // if (this.time_type === 1) {
+    //   if (this.selQIds) {
+    //     console.log("schedule-eq")
+    //     api_filter['schedule-eq'] = this.selQIds.toString();
+    //   }
+    //   if (this.token && this.time_type === 1) {
+    //     api_filter['token-eq'] = this.token;
+    //   }
     // }
+    // if (this.filter.first_name !== '') {
+    //   api_filter['firstName-eq'] = this.filter.first_name;
+    // }
+    // if (this.filter.last_name !== '') {
+    //   api_filter['lastName-eq'] = this.filter.last_name;
+    // }
+    // if (this.filter.phone_number !== '') {
+    //   api_filter['phoneNo-eq'] = this.filter.phone_number;
+    // }
+    // if (this.filter.appointmentEncId !== '') {
+    //   api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
+    // }
+    // if (this.filter.patientId !== '') {
+    //   api_filter['appmtFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
+    // }
+    // if (this.services.length > 0 && this.filter.service !== 'all') {
+    //   api_filter['service-eq'] = this.services.toString();
+    // }
+    // if (this.apptStatuses.length > 0 && this.filter.apptStatus !== 'all') {
+    //   console.log("apptstatus")
+    //   api_filter['apptStatus-eq'] = this.apptStatuses.toString();
+    // }
+    // if (this.apptModes.length > 0 && this.filter.appointmentMode !== 'all') {
+    //   api_filter['appointmentMode-eq'] = this.apptModes.toString();
+    // }
+    // if (this.time_type !== 1) {
+    //   if (this.filter.check_in_start_date != null) {
+    //     api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
+    //   }
+    //   if (this.filter.check_in_end_date != null) {
+    //     api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
+    //   }
+    // }
+    // if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+    //   api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
+    // }
+    // if (this.time_type === 3) {
+    //   if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+    //     api_filter['schedule-eq'] = this.filteredSchedule.toString();
+    //   }
+    //   if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
+    //     api_filter['location-eq'] = this.filterLocation.toString();
+    //   }
+    //   if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
+    //     const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
+    //     const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
+    //     if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') === -1) {
+    //       api_filter['dob-ge'] = kids;
+    //     } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
+    //       api_filter['dob-le'] = kids;
+    //       api_filter['dob-ge'] = adults;
+    //     } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
+    //       api_filter['dob-le'] = adults;
+    //     } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
+    //       api_filter['dob-ge'] = adults;
+    //     } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
+    //       api_filter['dob-le'] = adults;
+    //       api_filter['dob-ge'] = kids;
+    //     } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') !== -1) {
+    //       api_filter['dob-le'] = kids;
+    //     }
+    //   }
+    //   if (this.genderList.length > 0 && this.filter.gender !== 'all') {
+    //     api_filter['gender-eq'] = this.genderList.toString();
+    //   }
+    // }
+    // if (this.time_type !== 3) {
+    //   if (this.selected_location && this.selected_location.id) {
+    //     api_filter['location-eq'] = this.selected_location.id;
+    //   }
+    // }
+    // if (this.labelFilterData !== '') {
+    //   api_filter['label-eq'] = this.labelFilterData;
+    // }
+    // // if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
+    // //   api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    // // }
     return api_filter;
   }
   getActiveTimeSlot(slots) {

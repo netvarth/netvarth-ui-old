@@ -3,7 +3,7 @@
     <table class="table table-report table-report--bordered display datatable w-full">
         
         <tbody>
-            <tr *ngFor="let appt of startedAppts, let i=index">
+            <tr *ngFor="let appt of appt_list, let i=index">
                 <td class="border-b">
                     <div *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName" class="font-medium whitespace-no-wrap">
                         {{appt.appmtFor[0].firstName}}
@@ -14,7 +14,8 @@
                         </div>
                 </td>
                 
-                <td class="text-center border-b">id:&nbsp; {{appt.providerConsumer.jaldeeId}}</td>
+                <td class="text-center border-b">
+                    <div *ngIf="appt.providerConsumer && appt.providerConsumer.jaldeeId !== '' ">id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div></td>
                 <td class="text-center border-b">
                     <div class="flex items-center sm:justify-center text-theme-9">{{appt.service.name}}</div>
                 </td>
