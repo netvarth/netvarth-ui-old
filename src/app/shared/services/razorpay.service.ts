@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { WindowRefService } from './windowRef.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from './shared-services';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Razorpaymodel } from '../components/razorpay/razorpay.model';
@@ -27,7 +27,8 @@ export class RazorpayService {
     public razorpayModel: Razorpaymodel,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private activatedRoute:ActivatedRoute,
   ) { }
 
   changePaidStatus(value: string) {
@@ -121,6 +122,7 @@ export class RazorpayService {
     });
 
     options.modal.ondismiss = (() => {
+      console.log('inisde');
       console.log(checkin_type);
       if (usertype === 'consumer') {
         if (checkin_type === 'checkin_prepayment') {
@@ -147,7 +149,8 @@ export class RazorpayService {
           }
         };
         console.log(navigationExtras)
-        this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
       }
       if (checkin_type === 'waitlist') {
         const navigationExtras: NavigationExtras = {
@@ -185,4 +188,14 @@ export class RazorpayService {
       location.reload();
     }, 540000);
   }
+  onReloadPage() {
+   // window.location.reload();
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // this.router.onSameUrlNavigation = 'reload';
+    // this.router.navigate(['./'], { relativeTo: this.activatedRoute, queryParamsHandling: 'preserve' });
+    let currentUrl = this.router.url;
+   this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+   this.router.navigate([currentUrl]);
+   });
+}
 }
