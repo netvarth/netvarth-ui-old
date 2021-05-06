@@ -1735,9 +1735,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.waitlist_status === 'all') {
     //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     // }
-    if (this.filter.waitlist_status === 'all' && this.firstTime) {
-      Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-    }
+    // if (this.filter.waitlist_status === 'all' && this.firstTime) {
+    //   Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
       const qids = this.activeQs.map(q => q.id);
       Mfilter['queue-eq'] = qids.toString();
@@ -1921,10 +1921,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
-    const api_filter = {};
-    if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
-      api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    let api_filter = {};
+    const filter = this.lStorageService.getitemfromLocalStorage('wlfilter');
+    console.log(filter);
+    if(filter){
+      api_filter = filter;
     }
+    // if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
+    //   api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    // }
     if (this.time_type === 1) {
       // api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
@@ -2031,6 +2036,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
@@ -2368,6 +2374,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   goCheckinDetail(checkin) {
+    this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
     if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('hP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('hPFil', this.filter);
@@ -2945,7 +2952,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             count,
             { // modal
               img: imagePath,
-              description: description
+              // description: description
             },
           );
           this.image_list_popup_temp.push(imgobj);
@@ -3122,6 +3129,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   tabChange(event) {
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.resetCheckList();
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
@@ -3150,6 +3158,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   gotoCustomerDetails(waitlist) {
+    this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
+    console.log(this.setFilterForApi());
     if (waitlist.waitlistStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
     }
@@ -3206,12 +3216,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
-  setWaitlistStatusFilterForHistory() {
-    for (const apptStatus of this.check_in_statuses_filter) {
-      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
-        this.apptStatuses.push(apptStatus.value);
-      }
-    }
-    return this.apptStatuses.toString();
-  }
+  // setWaitlistStatusFilterForHistory() {
+  //   for (const apptStatus of this.check_in_statuses_filter) {
+  //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+  //       this.apptStatuses.push(apptStatus.value);
+  //     }
+  //   }
+  //   return this.apptStatuses.toString();
+  // }
 }

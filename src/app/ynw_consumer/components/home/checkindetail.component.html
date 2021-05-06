@@ -64,7 +64,7 @@
                                                     <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
                                                     </span>
-                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
@@ -223,16 +223,12 @@
                                 <!-- Questionnaire starts-->
                                 <div class="card"
                                     *ngIf="waitlist && waitlist.questionnaire.questionAnswers && waitlist.questionnaire.questionAnswers.length > 0">
-                                    <div class="bg-cover" style="background: #ffefc9;">
-                                        <div class="container pad-10">
-                                            <div class="mt-80">
-                                                <h3 class="">
-                                                    {{questionnaire_heading}}
-                                                </h3>
-                                            </div>
-                                        </div>
+                                    <div class="pad-10 pad-bt-0">
+                                        <h3 class="no-margin">
+                                            {{questionnaire_heading}}
+                                        </h3>
                                     </div>
-                                    <div class="c-details pad-10">
+                                    <div class="c-details">
                                         <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"
                                             [accountId]="waitlist.providerAccount.id" [type]="'details'">
                                         </app-questionnaire>

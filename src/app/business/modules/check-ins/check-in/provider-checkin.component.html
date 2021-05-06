@@ -53,10 +53,11 @@
                       <th style="min-width: 100px;">Phone</th>
                       <th style="min-width: 100px;" class="hiddencontent">Email</th>
                       <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="row_data border-bottom pointer-cursor" (click)="getProviderQuestionnaire()">
+                    <tr class="row_data border-bottom pointer-cursor tbl-hover" (click)="getProviderQuestionnaire()">
                       <td>
                         <span class="text-dark-75 d-block">{{customer_data.firstName}}
                           {{customer_data.lastName}}</span>
@@ -80,6 +81,9 @@
                         <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
                           {{customer_data.dob | date:newDateFormat}}
                         </span>
+                      </td>
+                      <td class="">
+                        <i class="fa fa-arrow-right black" aria-hidden="true"></i> 
                       </td>
                     </tr>
                   </tbody>
@@ -236,9 +240,13 @@
                           class="fa wtsapaud-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType==='videoService'"
                           class="fa wtsapvid-icon"></i>
-                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
+                       
+                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                           class="fa zoom-icon"></i>
-                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
+                          class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                        
+                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                           class="fa meet-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
                           class="fa phon-icon" aria-hidden="true"></i>
@@ -257,6 +265,8 @@
                             class="fa wtsapvid-icon"></i>
                           <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                             class="fa zoom-icon"></i>
+                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
                           <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                             class="fa meet-icon"></i>
                           <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"

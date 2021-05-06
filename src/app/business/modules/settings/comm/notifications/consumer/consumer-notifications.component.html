@@ -487,6 +487,31 @@
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                Orders Update Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when order is
+                  updated.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div>
+                  <mat-checkbox [checked]="orderUpdateNotificationSettings.sms"
+                    (change)="showSubmit('ORDERUPDATE', 'sms', $event)" class="mgn-rt-20">
+                    Via SMS</mat-checkbox>
+                  <mat-checkbox [checked]="orderUpdateNotificationSettings.email"
+                    (change)="showSubmit('ORDERUPDATE', 'email', $event)" class="mgn-rt-20">
+                    Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="orderUpdateNotificationSettings.pushNotification"
+                    (change)="showSubmit('ORDERUPDATE', 'pushNotification', $event)" class="mgn-rt-20">
+                    Via App</mat-checkbox>
+                  <span *ngIf="showButton['ORDERUPDATE'] && !small_device_display"
+                    (click)="changeNotificationSettings('ORDERUPDATE')" class="notify-ok-btn">OK</span>
+                  <div class="mgn-up-10" *ngIf="showButton['ORDERUPDATE'] && small_device_display">
+                    <span (click)="changeNotificationSettings('ORDERUPDATE')" class="notify-ok-btn">OK</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Orders Status Change Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when order is
                   Status Change.</div>

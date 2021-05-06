@@ -61,6 +61,8 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
                 <span class="zoom-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+                <span class="fa jvideo-icon jvideo-icon-sm" 
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span> 
                 <span class="phon-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
                 <span class="wtsapaud-icon"
@@ -192,6 +194,16 @@
                 <!-- <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
+        <!--Added By Mani for Video Play-->
+        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
+        class="action-box pointer-cursor" (click)="viewRecordings()">
+        <div class="action-box-sub">
+            <!-- <span class="mr-rx-icon"></span> -->
+            <i class="fa fa-circle record red fa-2x pad-9"></i>
+            <div class="icon-text">View Recordings</div>
+            <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
+        </div>
+    </div>
     </div>
 </div>
 <div class="dashqr" *ngIf="showQR">
@@ -250,6 +262,8 @@
                     class="fa meet-icon"></i>
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"
                     class="fa zoom-icon"></i>
+                <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" 
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"
                     class="fa phon-icon"></i>
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"

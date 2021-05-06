@@ -386,6 +386,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          console.log(JSON.stringify(this.checkin));
           this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.emailId = this.checkin.email;
           this.mobilenumber = this.checkin.phoneNumber;
@@ -456,6 +457,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  getUserName(user) {
+    let userDetails = '';
+    if (user.firstName && user.firstName !== null && user.firstName !== undefined && user.firstName !== '') {
+      userDetails = user.firstName +' '+ user.lastName;
+    } else {
+      if (user.memberJaldeeId) {
+        userDetails = 'Patient id : ' + user.memberJaldeeId;
+      }
+      if (user.jaldeeId) {
+        userDetails = 'Patient id : ' + user.jaldeeId;
+      }
+    }
+    return userDetails;
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
@@ -610,7 +625,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.coupons = data;
-            this.coupons=this.coupons.filter(obj=> obj.status==='ACTIVE');
+            this.coupons = this.coupons.filter(obj => obj.status === 'ACTIVE');
             resolve();
           },
           error => {
@@ -666,7 +681,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.pre_payment_log = data;
-             this.refund_show = this.pre_payment_log.filter(obj => (obj.refundableAmount > 0) && (obj.status === 'SUCCESS') && (!obj.fullyRefunded) && (obj.paymentPurpose == 'prePayment'));
+            this.refund_show = this.pre_payment_log.filter(obj => (obj.refundableAmount > 0) && (obj.status === 'SUCCESS') && (!obj.fullyRefunded) && (obj.paymentPurpose == 'prePayment'));
             resolve();
           },
           error => {
@@ -797,7 +812,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Item Discount/Coupon Section
    * @param indx Index
    */
-  itemDiscCoupSec(indx ,item?) {
+  itemDiscCoupSec(indx, item?) {
     this.selectedItem = item
     this.bill_data.items[indx].itemDiscount = '';
     if (this.bill_data.items[indx]) {
@@ -813,7 +828,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Toggle Service Discount/Coupon section
    * @param indx Index
    */
-  serviceDiscCoupSec(indx , service?) {
+  serviceDiscCoupSec(indx, service?) {
     this.selectedservice = service;
     this.bill_data.service[indx].serviceDiscount = '';
     if (this.bill_data.service[indx]) {
@@ -857,6 +872,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderDiscount='';
   }
   orderPCouponSelected() {
     this.showDiscountSection = false;
@@ -866,6 +882,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderProviderCoupon='';
   }
   jCouponSelected() {
     this.showDiscountSection = false;
@@ -875,6 +892,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
+    this.selOrderProviderjCoupon='';
   }
 
   disaplynoteSelected() {
@@ -1010,13 +1028,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         action = 'removeService';
       }
       // if (this.actiontype !== 'adjustService') {
-        data['price'] = this.curSelItm.price;
+      data['price'] = this.curSelItm.price;
       // }
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
       // if (this.actiontype !== 'adjustItem') {
-        data['price'] = this.curSelItm.price;
+      data['price'] = this.curSelItm.price;
       // }
       if (this.curSelItm.qty === 0) {
         action = 'removeItem';
@@ -1160,7 +1178,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // discountIds.push(item.itemDiscount.id);
     const data = {};
     // data['itemId'] = item.itemId;
-      data['itemId'] = this.selectedItem.itemId;
+    data['itemId'] = this.selectedItem.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
     this.applyAction(action, this.bill_data.uuid, data, 'applyitemDisc');
@@ -1198,7 +1216,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
- 
+
   /**
    * Remove Jaldee Coupon
    * @param jCouponCode Coupon Code
@@ -1304,15 +1322,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyOrderCoupon() {
     const action = 'addProviderCoupons';
-   let couponCode:string;
-   couponCode = '"' + this.selOrderProviderCoupon + '"';
+    let couponCode: string;
+    couponCode = '"' + this.selOrderProviderCoupon + '"';
     this.disableCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, couponCode, 'closeJcDiscPc');
   }
-   /**
-   * Apply Jaldee Coupon
-   * @param jCoupon Coupon Code
-   */
+  /**
+  * Apply Jaldee Coupon
+  * @param jCoupon Coupon Code
+  */
   applyJCoupon() {
     const action = 'addJaldeeCoupons';
     let jaldeeCoupon: string;
@@ -1847,11 +1865,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
-        (data: any) => {
-            this.walkinConsumer_status = data.walkinConsumerBecomesJdCons;
-        }
+      (data: any) => {
+        this.walkinConsumer_status = data.walkinConsumerBecomesJdCons;
+      }
     );
-}
+  }
   refundBtnShow(value) {
     if (value === 'refund') {
       this.btn_hide = true;

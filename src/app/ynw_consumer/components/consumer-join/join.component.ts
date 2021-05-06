@@ -209,8 +209,24 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             },
             error => {
               if (error.status === 401 && error.error === 'Session already exists.') {
-                this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                this.dialogRef.close('success');
+
+                const activeUser = this.lStorageService.getitemfromLocalStorage('ynw-user');
+                if (!activeUser) {
+                  this.shared_services.ConsumerLogout().subscribe(
+                    ()=> {
+                      this.shared_functions.consumerLogin(post_data, this.moreParams).then(
+                        () => {
+                          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+                          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                          this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                          this.dialogRef.close('success');
+                        });
+                    }
+                  )              
+                } else {
+                  this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                  this.dialogRef.close('success');
+                }
               } else {
                 ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                 this.api_loading = false;

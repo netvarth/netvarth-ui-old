@@ -52,11 +52,9 @@
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
             <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>  -->
             <p class="card-text donationAmount" *ngIf="item.type=='donation'">
-                <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount|
-                    currency:'':''}}</span>
+                <span class="rupee-font bold"><i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                 To
-                <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.maxDonationAmount|
-                    currency:'':''}}</span>
+                <span class="rupee-font bold"><i class="fa fa-inr"></i> {{service.maxDonationAmount}}</span>
             </p>
             <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
             <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
@@ -101,7 +99,7 @@
             Out of stock
         </div> -->
         <div class="card-item-content">
-            <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu"
+            <button class="fxmenu1" mat-icon-button [matMenuTriggerFor]="appMenu"
                 *ngIf="!service.itemImages && item.actions" (click)="stopProp($event)">
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -204,11 +202,11 @@
         </div>
         <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
         <p class="availability user-available">
-            <ng-container *ngIf="user.apptTime && user.apptTime.caption">
+            <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
                 {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
             <ng-container
-                *ngIf="(!user.apptTime || (user.apptTime && !user.apptTime.caption)) && user.waitingTime && user.waitingTime.caption">
+                *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
             </ng-container>
         </p>

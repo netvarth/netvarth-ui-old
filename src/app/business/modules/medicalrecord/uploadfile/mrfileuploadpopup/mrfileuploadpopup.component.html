@@ -1,7 +1,18 @@
 <span class="mat-dialog-title"> {{header_caption}} <button (click)="close()" class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></span>
-
+<div  class="col-md-12">
+  <ul class="info-lst serviceadd-info">
+          <li> <a class="pointlist"
+                      routerLink="/provider/license/addons">To upload  the file, your subscription plan needs to  be Premium or higher.In order to upload file, you can purchase  'cloud storage'
+                      add-on from the Subscription plan section.</a>
+          </li>
+          <!-- <li> <a class="pointlist"
+              (click)="enabledepartment()">To
+              complete the process Department feature needs to enabled to add a doctor.</a> 
+          </li> -->
+  </ul>
+</div>
 <mat-dialog-content>
-   
+
    
     <div *ngIf="item_pic.files">
         <ul class="galul">
@@ -9,16 +20,16 @@
           <div class="galimg_outer">
           <div class="gal_img" *ngIf="file.type == 'image/bmp'|| file.type =='image/png'|| file.type == 'image/gif' || file.type == 'image/jpg' ||file.type =='image/jpeg'||file.type == 'image/webp'" >
             <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
-            <img src="assets/images/imageexamle.png" *ngIf="!item_pic.base64[i]">
+            <img src="assets/images/document.png" *ngIf="!item_pic.base64[i]" height="110px;">
           </div>
-          <div class="gal_img"  *ngIf="file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'|| file.type == 'application/pdf'">
-            <img src="assets/images/pdf.png">
+          <div class="gal_img"  *ngIf="file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'|| file.type == 'application/pdf'|| file.type == 'application/msword'">
+            <img src="assets/images/document.png" height="110px;">
           </div>
           <div class="gal_img"  *ngIf=" file.type == 'video/mp4' || file.type == 'video/mpeg'||file.type == 'video/quicktime'">
-            <img src="assets/images/videoimages.jpeg">
+            <img src="assets/images/video.png" height="110px;">
           </div>
           <div class="gal_img"  *ngIf="file.type == 'audio/ogg'|| file.type == 'audio/mpeg'|| file.type == 'audio/mp3'">
-            <img src="assets/images/videoimages.jpeg">
+            <img src="assets/images/audio.png" height="110px;">
           </div>
           <!-- <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div> -->
           <div class="gal_action"  *ngIf="!canceldisabled">
@@ -42,6 +53,7 @@
     <span class="select-wrapper ">
          <input type="file"   name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">
     </span>
+    <label class="form-level-settings">{{supported_files}}</label>
   </div>
 
 </mat-dialog-content>

@@ -47,6 +47,7 @@
 }
 .msg-width {
     max-width: 80%;
+    min-width: 70px;
 }
 .thumbnails img {
     width: 100px;
@@ -119,8 +120,8 @@ textarea {
     color: #1e4079;
 }
 .label.label-sm {
-    height: 20px !important;
-    width: 20px !important;
+    height: 25px !important;
+    width: 25px !important;
 }
 .minhgt-80 {
     min-height: 80vh;
@@ -136,7 +137,8 @@ textarea {
     display: flex;
     margin-bottom: 10px;
     padding: 20px 20px 10px;
-    border-bottom: 1px solid #d5d5d5;
+    border: 1px solid #d5d5d5;
+    background: #d1d3e05e;
 }
 .replymsg {
     font-size: .9rem;
@@ -145,6 +147,7 @@ textarea {
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden;
+    color: #7E8299 !important;
 }
 .reply-msg {
     padding: 5px 0 5px 5px;
@@ -187,6 +190,6 @@ textarea {
 }
 @-webkit-keyframes NAME-YOUR-ANIMATION {
     0%, 49% {
-        background-color: rgb(117, 209, 63);
+        background-color: #1e407963;
     }
 }

@@ -21,6 +21,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     select_image_cap = 'Click here to select the files';
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;
+    supported_files = 'Upload any files valid extensions jpg,png,jpeg,bmp,gif,webp,doc,docx,pdf,mov,mp4,mp3,mpeg,ogg';
     performUpload = new EventEmitter<any>();
     img_exists = false;
     item_pic = {
@@ -154,11 +155,14 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       let file;
       for (const pic of this.item_pic.files) {
            file = pic;
-           console.log(file)
+           console.log(file);
+           const imgsize=pic['size'];
+           const sizeinkb=(imgsize/1024).toFixed(0);
+           console.log(sizeinkb);
            passdata = {
             "url": pic['name'],
             "type": pic['type'],
-          "imageSize": pic['size']
+          "imageSize":sizeinkb
           };
        }
       this.provider_services.videoaudioUploadurl(this.mrId, passdata)

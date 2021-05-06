@@ -14,11 +14,20 @@
           <h5 class="mgn-up-10">{{mobile_cap}} <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
         </div>
         <div class="related-links">
+            
           <div class="outer-card">
+         
             <div class="card">
               <div *ngIf="step==1" class="change-phone-div">
                 <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
                   (keyup)="resetApiErrors()" class="form">
+                  <div  class="col-md-12 mr-2">
+                      <ul class="info-lst serviceadd-info">
+                              <li> <a >The new mobile number will be updated as the login mobile number too.</a>
+                              </li>
+                             
+                      </ul>
+                    </div>
                   <div class="form-group phonenumber">
                     <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
                   </div>
@@ -96,6 +105,13 @@
           <div *ngIf="step==1" class="change-phone-div">
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
               (keyup)="resetApiErrors()" class="ynw-common-form-nm change-mob-style">
+              <div  class="col-md-12 mr-2">
+                <ul class="info-lst serviceadd-info">
+                        <li> <a >The new mobile number will be updated as the login mobile number too.</a>
+                        </li>
+                       
+                </ul>
+              </div>
               <div class="form-group phonenumber">
                 <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
               </div>

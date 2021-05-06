@@ -167,7 +167,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   callingModesDisplayName = projectConstants.CALLING_MODES;
   breadcrumbs;
   donations: any = [];
-  rupee_symbol = '₹';
+  rupee_symbol = 'â‚¹';
   appttime_arr: any = [];
   api_error: any;
   api_loading = false;
@@ -231,6 +231,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+
+  extras: any;
+
   private subs = new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
@@ -269,13 +272,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     let divider;
     const divident = this.screenWidth / 37.8;
+    // else if (this.screenWidth > 700 && this.screenWidth < 900) {
+    //   divider = divident / 2;
+    // } 
     if (this.screenWidth > 1000) {
       divider = divident / 3;
-    } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
-      divider = divident / 3;
-    } else if (this.screenWidth > 500 && this.screenWidth < 700) {
+    } else if (this.screenWidth > 600 && this.screenWidth < 1000) {
       divider = divident / 2;
-    } else if (this.screenWidth < 500) {
+    } else if (this.screenWidth < 600) {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
@@ -435,12 +439,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
-  showBookingDetails(booking) {
+  showBookingDetails(booking, type?) {
     if (booking.apptStatus) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.uid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
@@ -448,7 +453,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id
+          providerId: booking.providerAccount.id,
+          type: type
         }
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
@@ -798,19 +804,31 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
   getFavouriteProvider() {
-    this.loadcomplete.fav_provider = false;
-    this.subs.sink = this.shared_services.getFavProvider()
-      .subscribe(
-        data => {
-          this.loadcomplete.fav_provider = true;
-          this.fav_providers = data;
-          this.fav_providers_id_list = [];
-          this.setWaitlistTimeDetails();
-        },
-        error => {
-          this.loadcomplete.fav_provider = true;
-        }
-      );
+    // console.log('In Get Favourites');
+    const _this = this;
+    // return new Promise(function (resolve, reject) {
+      _this.loadcomplete.fav_provider = false;
+      _this.subs.sink = _this.shared_services.getFavProvider()
+        .subscribe(
+          data => {
+            _this.loadcomplete.fav_provider = true;
+            _this.fav_providers = data;
+            _this.fav_providers_id_list = [];
+            _this.setWaitlistTimeDetails();
+            this.extras = {
+              'favourites': _this.fav_providers_id_list
+            }
+            // resolve(_this.fav_providers_id_list);
+          },
+          error => {
+            _this.loadcomplete.fav_provider = true;
+            this.extras = {
+              'favourites': []
+            }
+            // resolve([]);
+          }
+        );
+    // });
   }
 
   setWaitlistTimeDetails() {
@@ -1176,8 +1194,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   providerDetail(provider, event) {
-    console.log('order');
-    event.stopPropagation();
+    console.log('In ProviderDetail');
+    // console.log('order');
+    // event.stopPropagation();
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
@@ -1353,11 +1372,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
     if (checkin.videoCallButton && checkin.videoCallButton !== 'DISABLED') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account: checkin.providerAccount.id,
+        }
+      };
       if (checkin.uid) {
-        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid], navigationExtras);
       } else {
-        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid]);
-      } 
+        this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.ynwUuid], navigationExtras);
+      }
     } else {
       return false;
     }
@@ -2101,7 +2125,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                description: description
+                // description: description
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2134,7 +2158,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                description: description
+                // description: description
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2180,4 +2204,121 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'questionnaire'], navigationExtras);
   }
+
+  cardClicked(actionObj) {
+    console.log(actionObj);
+    switch (actionObj['type']) {
+      case 'appt':
+        this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        break;
+      case 'wl':
+        this.performWLActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        break;
+    }
+  }
+  performWLActions(actionString, booking, event) {
+    switch (actionString) {
+      case 'reschedule':
+        this.gotoWaitlistReschedule(booking);
+        break;
+      case 'rating':
+        this.rateService(booking, 'checkin');
+        break;
+      case 'cancel':
+        this.doCancelWaitlist(booking, 'checkin');
+        break;
+      case 'sendMessage':
+        this.addWaitlistMessage(booking);
+        break;
+      case 'sendAttachment':
+        this.sendAttachment(booking, 'checkin');
+        break;
+      case 'viewAttachment':
+        this.viewAttachment(booking, 'checkin');
+        break;
+      case 'meetingDetails':
+        this.getMeetingDetails(booking, 'waitlist');
+        break;
+      case 'removeFavourite':
+        this.doDeleteFavProvider(booking.providerAccount);
+        break;
+      case 'addToFavourites':
+        this.addFavProvider(booking.providerAccount.id);
+        break;
+      case 'moreInfo':
+        this.gotoQuestionnaire(booking);
+        break;
+      case 'viewPrescription':
+        this.viewprescription(booking);
+        break;
+      case 'liveTrack':
+        this.gotoLivetrackPage('true', booking);
+        break;
+      case 'liveTrackId':
+        this.gotoLivetrackchekin(booking.ynwUuid, booking.providerAccount.id, 'false');
+        break;
+      case 'viewBill':
+        this.viewBill(booking, 'checkin', event);
+        break;
+      case 'joinVideo':
+        this.btnJoinVideoClicked(booking, event);
+        break;
+      case 'providerDetails':
+        this.providerDetail(booking.providerAccount, event);
+        break;
+    }
+  }
+  performApptActions(actionString, booking, event) {
+    switch (actionString) {
+      case 'reschedule':
+        this.gotoAptmtReschedule(booking);
+        break;
+      case 'rating':
+        this.rateService(booking, 'appointment');
+        break;
+      case 'cancel':
+        this.doCancelWaitlist(booking, 'appointment');
+        break;
+      case 'sendMessage':
+        this.addWaitlistMessage(booking, 'appt');
+        break;
+      case 'sendAttachment':
+        this.sendAttachment(booking, 'appt');
+        break;
+      case 'viewAttachment':
+        this.viewAttachment(booking, 'appt');
+        break;
+      case 'meetingDetails':
+        this.getMeetingDetails(booking, 'appt');
+        break;
+      case 'removeFavourite':
+        this.doDeleteFavProvider(booking.providerAccount);
+        break;
+      case 'addToFavourites':
+        this.addFavProvider(booking.providerAccount.id);
+        break;
+      case 'moreInfo':
+        this.gotoQuestionnaire(booking);
+        break;
+      case 'viewPrescription':
+        this.viewprescription(booking);
+        break;
+      case 'liveTrack':
+        this.gotoLivetrackPage('true', booking);
+        break;
+      case 'liveTrackId':
+        this.gotoLivetrack(booking.uid, booking.providerAccount.id, 'false');
+        break;
+      case 'viewBill':
+        this.viewBill(booking, 'appointment', event);
+        break;
+      case 'joinVideo':
+        this.btnJoinVideoClicked(booking, event);
+        break;
+      case 'providerDetails':
+        this.providerDetail(booking.providerAccount, event);
+        break;
+    }
+  }
+
 }

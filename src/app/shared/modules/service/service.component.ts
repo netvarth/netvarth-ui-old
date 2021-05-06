@@ -119,7 +119,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
-    selectedUser = '0';
+    selectedUser ;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -500,9 +500,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            if (this.providerId && this.providerId !== '0' && this.userspecific) {
+            console.log(this.selectedUser);
+            if (this.selectedUser  && this.userspecific) {
                 this.provider = {
-                    'id': this.providerId
+                    'id': this.selectedUser
                 };
                 form_data['provider'] = this.provider;
             } else {
@@ -526,7 +527,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 }
             } else {
-                this.servicesService.actionPerformed(serviceActionModel);
+                //console.log(serviceActionModel);
+               this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
@@ -575,7 +577,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        // this.getDepartments();
+        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+            this.getDepartments();
+        }
         if (this.subdomainsettings.serviceBillable) {
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
@@ -738,12 +742,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
-            // this.users_list.push(this.defaultOption);
+            this.selectedUser = this.users_list[0].id;
         });
     }
-    selectUserHandler(value) {
-        this.providerId = value;
-    }
+    // selectUserHandler(value) {
+    //     this.providerId = value;
+    // }
     selectDeptHandler(value) {
         this.departId = value;
         this.getUsers();

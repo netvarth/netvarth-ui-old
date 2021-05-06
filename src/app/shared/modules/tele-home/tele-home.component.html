@@ -8,8 +8,12 @@
     </div>
 
 </header>
-<section *ngIf="isLoggedIn">
-    <div class="content settings container checkin-details">
+
+<section>
+    <div class="" *ngIf="api_loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="content settings container checkin-details" *ngIf="isLoggedIn && !api_loading">
         <div class="card no-padding-small">
             <div class="col-md-12 no-padding">
                 <div class="col-md-12 ">
@@ -107,6 +111,8 @@
                                                                                 *ngIf="booking.teleMedia === 'GoogleMeet'"></i>
                                                                             <i class="fa zoom-icon"
                                                                                 *ngIf="booking.teleMedia === 'Zoom'"></i>
+                                                                            <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                                                                *ngIf="booking.teleMedia === 'VideoCall'"></i>
                                                                             <i class="fa wtsapaud-icon"
                                                                                 *ngIf="booking.teleMedia === 'WhatsApp' && booking.teleMode ==='audio'"></i>
                                                                             <i class="fa wtsapvid-icon"

@@ -145,6 +145,8 @@ export class UploadFileComponent implements OnInit {
                 imgsrc='/assets/images/video.png';
               } else if( type[0] == 'audio') {
                 imgsrc='/assets/images/audio.png';
+              }else if( type[0] == 'image') {
+                imgsrc='/assets/images/imageexamle.png';
               }
 
     return imgsrc;
@@ -214,7 +216,7 @@ export class UploadFileComponent implements OnInit {
               let type = '';
               type = file.type.split("/");
               console.log(type[0]);
-              if(type[0] == 'image' || type[0] == 'video' || type[0] =='audio'){
+              if(type[0] == 'video' || type[0] =='audio'|| type[0] =='image'){
                 this.mediafiles.push(file);
               } else {
                 this.docfiles.push(file);

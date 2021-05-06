@@ -67,6 +67,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   fav_providers_id_list: any[];
   wthistory;
   questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
+  type;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -84,6 +85,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       (qParams) => {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
+        this.type = qParams.type;
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -120,6 +122,11 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
             }
             case 'Phone': {
               this.iconClass = 'fa phon-icon';
+              break;
+            }
+            // Added by Mani
+            case 'VideoCall': {
+              this.iconClass = 'fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5';
               break;
             }
           }
@@ -290,6 +297,10 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       );
   }
   getTimeToDisplay(min) {
-    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    if (this.dateTimeProcessor.convertMinutesToHourMinute(min) === '0 minutes') {
+      return 'Now';
+    } else {
+      return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    }
   }
 }

@@ -167,7 +167,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       params => {
         this.account_id = this.groupService.getitemFromGroupStorage('accountId');
         this.uid = params.id;
-        // this.getOrderDetails(this.uid);
+         this.getOrderDetails(this.uid);
       });
 
   }
@@ -422,6 +422,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.sel_checkindate = this.orderDetails.orderDate;
       // this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      console.log(this.nextAvailableTime);
       this.loading = false;
     });
   }
@@ -516,7 +517,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.shared_services.getConsumerCatalogs(accountId)
+     // _this.shared_services.getConsumerCatalogs(accountId)
+     _this.providerservice.getProviderCatalogs()
         .subscribe(
           (data: any) => {
             resolve(data[0]);
@@ -661,7 +663,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
   getDeliveryCharge() {
     let deliveryCharge = 0;
-    if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+    if(this.orderDetails.bill && this.orderDetails.bill.deliveryCharges) {
+      deliveryCharge=this.orderDetails.bill.deliveryCharges;
+    }
+    else if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
     return deliveryCharge.toFixed(2);
@@ -670,7 +675,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     let subtotal = 0;
     let deliveryCharge = 0;
     if (this.orders.length !== 0) {
-      if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+      if(this.orderDetails.bill && this.orderDetails.bill.deliveryCharges) {
+        deliveryCharge=this.orderDetails.bill.deliveryCharges;
+      }
+      else if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
         deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
       }
     }

@@ -20,7 +20,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ChangeMobileComponent implements OnInit {
 
-  mobile_cap = Messages.MOBILE_CAP;
+  mobile_cap = Messages.CHANGEMOBILE_CAP;
   your_curmob_msg = Messages.CURRENTMOBMSG;
   verified_cap = Messages.PHONE_VERIFIED;
   save_btn_cap = Messages.SAVE_BTN;
@@ -162,14 +162,18 @@ export class ChangeMobileComponent implements OnInit {
       .subscribe(
         () => {
           // this.api_success = Messages.PHONE_VERIFIED;
+          console.log(this.submit_data.phonenumber);
           this.api_success = null;
           this.snackbarService.openSnackBar(Messages.PHONE_VERIFIED);
           const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
-          ynw.loginId = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
+          ynw['loginId'] = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
+          console.log(ynw);
           this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
+          // console.log('going back');
+          // this.location.back();
           setTimeout(() => {
             this.location.back();
-            this.getProfile();
+            // this.getProfile();
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {

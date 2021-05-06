@@ -194,6 +194,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         });
   }
   formatDateDisplay(dateStr) {
+    dateStr = JSON.parse(dateStr);
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
@@ -233,19 +234,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
   setMessages() {
     this.inboxList = this.generateCustomInbox(this.messages);
     if (this.userDet.accountType === 'BRANCH') {
-      const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
+      const group = this.shared_functions.groupBy(this.inboxList, 'providerId');
       Object.keys(group).forEach(key => {
-        const group2 = this.shared_functions.groupBy(group[key], 'accountName');
+        const group2 = this.shared_functions.groupBy(group[key], 'accountId');
         group[key] = group2;
       });
       this.userWithMsgCount = Object.keys(group).length;
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
-        if (this.selectedUser.businessName) {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
-        } else {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
-        }
+        this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.id];
       } else {
         let arr = [];
         Object.keys(group).forEach(key => {
@@ -258,7 +255,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.groupedMsgs = arr;
       }
     } else {
-      this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
+      this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountId');
     }
     this.onResize();
     if (this.selectedCustomer !== '') {
@@ -372,9 +369,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       caption: []
     };
   }
-  getUserShort(user) {
-    user = user.split('=');
-    user = user[0];
+  getUserShort(messages) {
+    let user = messages[(messages.length - 1)].accountName;
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
@@ -382,12 +378,17 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     return nameShort.toUpperCase();
   }
-  getUserName(user, type) {
-    const name = user.split('=');
-    if (type === 'customer') {
-      return name[0];
-    } else {
-      return name[1];
+  getUserName(type?, messages?) {
+    if (!messages) {
+      messages = this.selectedUserMessages;
+    }
+    let user = messages[(messages.length - 1)];
+    if (user) {
+      if (type === 'customer') {
+        return user.accountName;
+      } else {
+        return user.providerName;
+      }
     }
   }
   filesSelected(event) {
@@ -433,9 +434,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const thumbPath = attachements[comIndex].thumbPath;
       let imagePath = thumbPath;
       const description = attachements[comIndex].s3path;
-      const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-      if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+      if (this.checkImgType(description) === 'img') {
         imagePath = attachements[comIndex].s3path;
+      } else {
+        imagePath = attachements[comIndex].thumbPath;
       }
       const imgobj = new Image(
         count,
@@ -483,7 +485,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     return unreadMsgs.length;
   }
   getUserUnreadCount(user) {
-    const userMsgs = this.groupedMsgsbyUser[(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName];
+    const userMsgs = this.groupedMsgsbyUser[user.id];
     let count = 0;
     Object.keys(userMsgs).forEach(key => {
       const unreadMsgs = userMsgs[key].filter(msg => !msg.read && msg.messagestatus === 'in');
@@ -561,7 +563,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getUserImg(user) {
     if (user.profilePicture) {
-      const proImage = JSON.parse(user.profilePicture);
+      const proImage = user.profilePicture;
       return proImage.url;
     } else {
       return '../../../assets/images/avatar5.png';
@@ -612,7 +614,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }, 2000);
   }
-  gotoEnquiry() {
-    this.router.navigate(['provider/enquiry']);
+  checkImgType(img) {
+    img = img.split('?');
+    if (img[0] && img[0].indexOf('.pdf') === -1) {
+      return 'img';
+    } else {
+      return 'pdf';
+    }
   }
 }

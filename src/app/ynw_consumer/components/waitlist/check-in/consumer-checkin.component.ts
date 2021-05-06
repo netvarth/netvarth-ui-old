@@ -193,14 +193,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     selectedQTime;
     questionnaireLoaded = false;
-    checkJcash = false;
-    checkJcredit = false;
-    jaldeecash: any;
-    jcashamount: any;
-    jcreditamount: any;
-    remainingadvanceamount;
-    amounttopay: any;
-    wallet: any;
+    imgCaptions: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -329,7 +322,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.getProfile().then(
             () => {
                 this.getFamilyMembers();
-
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date1 = new Date(dt1);
@@ -719,23 +711,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
-        if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-        }
         if (!this.is_wtsap_empty) {
             if (type) {
-                if (this.jcashamount > 0 && this.checkJcash) {
-                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
-                        .subscribe(data => {
-                            this.remainingadvanceamount = data;
-                            this.addCheckInConsumer(post_Data);
-                        });
-                }
-                else {
-                    this.addCheckInConsumer(post_Data);
-                }
-
+                this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
@@ -775,7 +753,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                         setTimeout(() => {
                             this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                        }, 500);
+                        }, 2000);
                     }
                 }
                 const member = [];
@@ -875,9 +853,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     isChecked(id) {
-        let retval = false;
+        let retval = false; 
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
+             if(this.waitlist_for[i].id==0){
+                 this.waitlist_for[i].id=this.customer_data.id;
+             }
                 if (this.waitlist_for[i].id === id) {
                     retval = true;
                 }
@@ -922,8 +903,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (derror === '') {
             const post_data = {
                 'userProfile': {
-                    'firstName': this.addmemberobj.fname,
-                    'lastName': this.addmemberobj.lname
+                    'firstName': this.addmemberobj.fname.trim(),
+                    'lastName': this.addmemberobj.lname.trim()
                 }
             };
             if (this.addmemberobj.mobile !== '') {
@@ -1126,7 +1107,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
                 i++;
             }
         }
@@ -1612,7 +1593,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getPic(user) {
         if (user.profilePicture) {
-            return JSON.parse(user.profilePicture)['url'];
+            return this.s3Processor.getJson(user.profilePicture)['url'];
         }
         return 'assets/images/img-null.svg';
     }
@@ -1843,15 +1824,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     goToStep(type) {
         if (type === 'next') {
             if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
-                if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                    this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.bookStep === 2) {
+                        this.validateQuestionnaire();
+                    } else {
+                        this.bookStep++;
+                    }
                 } else {
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        if (this.bookStep === 2) {
-                            this.validateQuestionnaire();
-                        } else {
-                            this.bookStep++;
-                        }
+                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                     } else {
                         this.bookStep = 3;
                     }
@@ -1876,10 +1857,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
-                this.checkJcash = true
-                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
-                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
-
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1902,86 +1879,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-
-        if (this.remainingadvanceamount == 0 && this.checkJcash) {
-            const postData = {
-                'amountToPay': this.paymentDetails.amountRequiredNow,
-                'accountId': this.account_id,
-                'uuid': this.trackUuid,
-                'paymentPurpose': 'prePayment',
-                'isJcashUsed': true,
-                'isreditUsed': false,
-                'isRazorPayPayment': false,
-                'isPayTmPayment': false,
-                'paymentMode': "JCASH"
-            };
-            this.shared_services.PayByJaldeewallet(postData)
-                .subscribe(data => {
-                    this.wallet = data;
-                    if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
-                        let multiple;
-                        if (this.uuidList.length > 1) {
-                            multiple = true;
-                        } else {
-                            multiple = false;
-                        }
+        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+            .subscribe((pData: any) => {
+                this.pGateway = pData.paymentGateway;
+                if (this.pGateway === 'RAZORPAY') {
+                    this.paywithRazorpay(pData);
+                } else {
+                    if (pData['response']) {
+                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                         setTimeout(() => {
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
-                        }, 500);
-                    }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-        }
-        else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            const postData = {
-                'amountToPay': this.paymentDetails.amountRequiredNow,
-                'accountId': this.account_id,
-                'uuid': this.trackUuid,
-                'paymentPurpose': 'prePayment',
-                'isJcashUsed': true,
-                'isreditUsed': false,
-                'isRazorPayPayment': true,
-                'isPayTmPayment': false,
-                'paymentMode': "DC"
-            };
-            this.shared_services.PayByJaldeewallet(postData)
-                .subscribe((pData: any) => {
-                    if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                        this.paywithRazorpay(pData.response);
-                    }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-        }
-        else {
-            this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
-                .subscribe((pData: any) => {
-                    this.pGateway = pData.paymentGateway;
-                    if (this.pGateway === 'RAZORPAY') {
-                        this.paywithRazorpay(pData);
+                            if (paymentMode === 'DC') {
+                                this.document.getElementById('payuform').submit();
+                            } else {
+                                this.document.getElementById('paytmform').submit();
+                            }
+                        }, 2000);
                     } else {
-                        if (pData['response']) {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            setTimeout(() => {
-                                if (paymentMode === 'DC') {
-                                    this.document.getElementById('payuform').submit();
-                                } else {
-                                    this.document.getElementById('paytmform').submit();
-                                }
-                            }, 2000);
-                        } else {
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                        }
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                     }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-        }
+                }
+            },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
     }
     paywithRazorpay(pData: any) {
         this.prefillmodel.name = pData.consumerName;
@@ -2086,8 +2007,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
-                    this.bookStep++;
-                    this.saveCheckin();
+                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                    } else {
+                        this.bookStep++;
+                        this.saveCheckin();
+                    }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {

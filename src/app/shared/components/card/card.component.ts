@@ -4,6 +4,7 @@ import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -27,17 +28,19 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     personsAheadText = '';
     itemQty = 0;
     actions: string;
+    todayDate;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
+        private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
-      console.log(this.item.type);
-console.log(this.domain)
+        this.todayDate = this.datePipe.transformTofilterDate(new Date());
+        console.log(this.todayDate);
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
@@ -61,26 +64,20 @@ console.log(this.domain)
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 this.buttonCaption = 'Get Appointment';
-                console.log(this.service);
                 break;
             case 'donation':
                 this.service = this.item.item;
-                console.log(this.service);
                 this.buttonCaption = 'Donate';
                 break;
             case 'catalog':
                 this.service = this.item.item;
-                console.log(this.service);
                 break;
             case 'item':
-            console.log('item');
                 this.service = this.item.item;
                 break;
             case 'pitem':
                 this.service = this.item.item;
                 this.actions = this.extras;
-                console.log(this.service);
-                console.log(this.actions);
                 break;
             case 'order-details-item':
                 this.service = this.item.item;
@@ -89,6 +86,7 @@ console.log(this.domain)
                 break;
             default:
                 this.user = this.item.item;
+                console.log(this.user);
                 break;
         }
     }
@@ -211,7 +209,7 @@ console.log(this.domain)
     getPic(user) {
         if (user.profilePicture) {
             // alert(JSON.parse(user.profilePicture)['url']);
-            return JSON.parse(user.profilePicture)['url'];
+            return user.profilePicture['url'];
         }
         return 'assets/images/img-null.svg';
     }

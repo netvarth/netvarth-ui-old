@@ -14,7 +14,7 @@
 </h1>
 <mat-dialog-content style="padding-top: 0px;display: grid;">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'checkin'">
-    <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
+    <p *ngIf="checkin.token">Token # : {{checkin.token}}</p>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'appt'">
     <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}

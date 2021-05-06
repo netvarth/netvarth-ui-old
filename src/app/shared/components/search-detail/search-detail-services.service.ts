@@ -76,4 +76,18 @@ export class SearchDetailServices {
     const path = 'provider/waitlist/queues/providerWaitingTime/' + str;
     return this.servicemetaobj.httpGet(path);
   }
+  getProviderLogo(prov_arr) {
+    let str = '';
+    for (let i = 0; i < prov_arr.length; i++) {
+      if (str !== '') {
+        str += '%2C'; // comma
+      }
+      str += prov_arr[i];
+    }
+    if (str === '') {
+      return null;
+    }
+    const path = 'provider/imagePropries/logo/' + str;
+    return this.servicemetaobj.httpGet(path);
+  }
 }

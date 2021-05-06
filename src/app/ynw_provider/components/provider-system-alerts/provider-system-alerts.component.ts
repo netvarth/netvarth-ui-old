@@ -63,8 +63,8 @@ export class ProviderSystemAlertComponent implements OnInit {
   filters: any = {
     'date': false
   };
-  ackStatus;
-  notAckStatus = true;;
+  ackStatus=false;
+  notAckStatus = false;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
