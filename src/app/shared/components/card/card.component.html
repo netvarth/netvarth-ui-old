@@ -65,7 +65,7 @@
             <!-- </div>
         <div class="card-footer"> -->
             <div class="service-buttons">
-                <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
+                <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption | uppercase}}</button>
                 <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
                     class="btn pointer-cursor btn-warning moreDetails">. . .</button>
             </div>

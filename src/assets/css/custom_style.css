@@ -14070,3 +14070,6 @@ padding-left: 15px !important;
     display: none !important;
   }
 }
+.content {
+    background: #F6F6F6 0% 0% no-repeat padding-box !important;
+}

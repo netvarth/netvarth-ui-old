@@ -204,7 +204,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     });
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    this.router.navigate([provider.uniqueId]);
   }
   viewMore() {
     this.view_more = !this.view_more;

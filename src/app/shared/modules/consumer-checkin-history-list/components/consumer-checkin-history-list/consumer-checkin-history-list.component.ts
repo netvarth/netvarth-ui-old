@@ -253,7 +253,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
     }
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    this.router.navigate([provider.uniqueId]);
   }
 
 }

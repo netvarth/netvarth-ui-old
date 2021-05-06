@@ -343,7 +343,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     }
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    this.router.navigate([provider.uniqueId]);
   }
   addApptMessage(waitlist) {
     const pass_ob = {};

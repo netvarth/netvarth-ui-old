@@ -202,7 +202,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     });
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    this.router.navigate([provider.uniqueId]);
   }
 
   viewMore() {

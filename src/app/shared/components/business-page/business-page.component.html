@@ -17,8 +17,8 @@
                 </div>
                 </div>
                 <!-- Cover Foto -->
-                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
-                </div>
+                <!-- <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
+                </div> -->
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="badge-smalldv  visible-xs visible-sm">
@@ -372,7 +372,7 @@
                                     </a>
                                 </li> -->
                                 <li class="small-devices-message centeralign mgn-rt-10">
-                                    <a class="like-btn" (click)="communicateHandler()">
+                                    <a class="like-btn action-btns" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-commenting-o" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;{{send_msgs_cap}}</span>
@@ -380,13 +380,13 @@
                                     </a>
                                 </li>
                                 <li class="small-devices-share centeralign">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!customId" class="like-btn action-btns" (click)="qrCodegeneraterOnlineID(accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
                                         </span>
                                     </a>
-                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                    <a *ngIf="customId" class="like-btn action-btns" (click)="qrCodegeneraterOnlineID(customId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
@@ -564,7 +564,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                         [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
+                        <h5 class="mgn-bt-5 primary-color"> {{service_cap | uppercase}}
                         </h5>
                         <!-- <h6 *ngIf="servicesAndProviders.length !== 0" class="question-header">Book online now and save
                             your

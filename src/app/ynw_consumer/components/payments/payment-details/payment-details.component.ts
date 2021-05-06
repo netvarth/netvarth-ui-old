@@ -83,7 +83,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     }
     providerDetail(id, event) {
         event.stopPropagation();
-        this.router.navigate(['searchdetail', id]);
+        this.router.navigate([id]);
       }
 }
 

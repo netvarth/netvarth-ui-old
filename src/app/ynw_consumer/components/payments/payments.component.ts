@@ -86,6 +86,6 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
     }
     providerDetail(id, event) {
         event.stopPropagation();
-        this.router.navigate(['searchdetail', id]);
+        this.router.navigate([id]);
       }
 }
