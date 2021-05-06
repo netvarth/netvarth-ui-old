@@ -312,7 +312,7 @@
 
                             </div>
                             <a href="javascript:void(0);" *ngIf="services.length>0" (click)="openServiceDialog()">
-                              {{ services.length }} Services Selected
+                              {{ services.length }} Service(s) Selected
                             </a>
                           </div>
                         </div>
@@ -338,7 +338,7 @@
 
                               </div>
                               <a href="javascript:void(0);" *ngIf="departments.length>0" (click)="openDepartmentDialog()">
-                                {{ departments.length }} Departments Selected
+                                {{ departments.length }} Department(s) Selected
                               </a>
                             </div>
                           </div>
@@ -364,7 +364,7 @@
 
                                 </div>
                                 <a href="javascript:void(0);" *ngIf="users.length>0"   (click)="openUserDialog()">
-                                  {{ users.length }} Users Selected
+                                  {{ users.length }} User(s) Selected
                                 </a>
                               </div>
                             </div>
@@ -392,7 +392,7 @@
 
                                 </div>
                                 <a href="javascript:void(0);" *ngIf="customer_labels.length>0" (click)="openCustomerLabelDialog()">
-                                  {{ customer_labels.length }} Labels Selected
+                                  {{ customer_labels.length }} Label(s) Selected
                                 </a>
                               </div>
                             </div>
@@ -449,7 +449,7 @@
                             <div class="form-group">
                               <mat-form-field appearance="fill">
                                 <label>Catalog</label>
-                                <mat-select placeholder="Catalogue" formControlName="catalogues" [multiple]="true">
+                                <mat-select placeholder="Catalog" formControlName="catalogues" [multiple]="true">
                                   <mat-option *ngFor=" let catalog of catalog_list" [value]="catalog.id">
                                     {{catalog.catalogName}}
                                   </mat-option>
@@ -483,7 +483,7 @@
 
                             </div>
                             <a href="javascript:void(0);" *ngIf="items.length>0"  (click)="openItemDialog()">
-                              {{ items.length }} Items Selected
+                              {{ items.length }} Item(s) Selected
                             </a>
                           </div>
                         </div>
@@ -498,7 +498,7 @@
                         <div class="form-group">
                           <mat-form-field appearance="fill">
                             <label>Booking Channel</label>
-                            <mat-select placeholder="Booking channels" formControlName="bookingChannel" [multiple]="true">
+                            <mat-select placeholder="Booking channel" formControlName="bookingChannel" [multiple]="true">
                               <mat-option *ngFor=" let mode of bookingMode" [value]="mode.value">
                                 {{mode.displayName}}
                               </mat-option>
