@@ -14059,11 +14059,13 @@ padding-left: 15px !important;
   padding-bottom: 0px !important;
 }
 .view-booking {
-  color: rgb(24 62 121) !important;
-  background: white;
-  padding: 5px 10px;
+  color: #59345D !important;
   font-weight: bold;
-  border: 1px solid rgb(24 62 121);
+  margin-top: 10px;
+  padding: .45rem .75rem;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #A986AC !important;
+  border-radius: 21px !important;
 }
 @media (max-width: 767px) {
   .d-small-none {
@@ -14072,4 +14074,18 @@ padding-left: 15px !important;
 }
 .content {
     background: #F6F6F6 0% 0% no-repeat padding-box !important;
+}
+.panel-heading {
+  background: #59345D 0% 0% no-repeat padding-box !important;
+  opacity: 1;
+  height: 50px !important;
+}
+.lgin.cust button, .ot-bx {
+  height: 30px !important;
+  background: white !important;
+  width: 30px !important;
+  margin-top: 10px;
+}
+.lgin.cust button .fa-user-circle-o {
+  margin-top: -10px;
 }

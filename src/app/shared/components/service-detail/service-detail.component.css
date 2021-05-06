@@ -174,9 +174,13 @@
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration .duration{
     display: inline-block;
-    border-radius: 40px;
-    background-color: #F1B51C;
-    padding: 10px 15px;
+    border-radius: 15px;
+    background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 15px 15px 40px #dba8c4;
+    opacity: 1;
+    padding: 8px;    
+    width: 80%;
+    text-align: center;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration .duration span{

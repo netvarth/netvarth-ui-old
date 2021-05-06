@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <div class="panel-heading top-row ">
+                <div class="panel-heading">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <!-- <a class="pull-left back-btn mgn-up-5" (click)="goB/ack()"><i class="fa fa-arrow-left"></i></a> -->
                     </div>
@@ -10,6 +10,10 @@
                         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
                     </div>
                 </div>
+
+
+                <div>
+
                 <div class="text-center covid-coming">
                     <div class="card">
                     COVID-19 Screening Tool
@@ -74,8 +78,8 @@
                                     *ngIf="bNameStart!='' || bNameEnd!=''">
                                     <div class="question-outer">
                                         <ng-container>
-                                            <div class="question-header">About Us
-                                            </div>
+                                            <!-- <div class="question-header">About Us
+                                            </div> -->
                                             <div class="question-value1 ">
                                                 <span *ngIf="bNameStart!=''"
                                                     [innerHTML]="bNameStart | nl2br"></span><span
@@ -527,6 +531,9 @@
                         </div>
                     </div> -->
                 </div>
+
+            </div>
+
             </div>
         </div>
         <!-- Locations -->

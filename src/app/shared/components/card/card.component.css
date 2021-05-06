@@ -621,7 +621,6 @@ button.fxmenu {
     color: white;
     font-weight: 600;
     border-radius: 15px;
-    box-shadow: 15px 15px 40px var(--unnamed-color-dba8c4);
     background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
     box-shadow: 15px 15px 40px #DBA8C4;
     opacity: 1;
