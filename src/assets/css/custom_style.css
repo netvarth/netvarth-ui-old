@@ -14096,3 +14096,8 @@ app-confirm-page .ot-bx {
 .mat-button {
   background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
 }
+.msg-icon {
+  content: url(../images/Asset.png);    
+  width: 15px;
+  margin-top: 5px;
+}
