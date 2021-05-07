@@ -62,22 +62,22 @@
     <tbody>
       <tr *ngFor="let drug of drugList; let i = index;" >
         <td data-title="Medicine">
-          {{drug.medicine_name}}
+          {{drug.medicine_name? drug.medicine_name : ''}} 
         </td>
         <td data-title="Duration(days)">
-          {{drug.duration}}
+          {{drug.duration? drug.duration : ''}}
         </td>
         <td data-title="Dosage">
-              {{drug.dosage}}
+          {{drug.dosage? drug.dosage : ''}}
            </td>
         <td data-title="Frequency">
-               {{drug.frequency}}
+          {{drug.frequency? drug.frequency : ''}}
             </td>
             <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 0">
               <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
              </td>
              <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 1">
-               {{drug.instructions}}
+              {{drug.instructions? drug.instructions : ''}}
            </td>
          <!-- <td>
           <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
