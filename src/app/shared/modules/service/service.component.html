@@ -15,6 +15,8 @@
           class="fa wtsapaud-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'"
           class="fa wtsapvid-icon"></i>
+        <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'VideoCall'"
+          class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
         {{service_data.name | capitalizeFirst}}
         <span *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
       </h4>
