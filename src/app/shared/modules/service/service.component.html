@@ -381,7 +381,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       style="font-size: 1.1rem;">
       {{customer_label | capitalizeFirst}} Info</label>
     <div class="settings_info" *ngIf="!is_donation">
-        Would you like to collect more information from your customer/patient along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+        Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
       </div>
   </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
