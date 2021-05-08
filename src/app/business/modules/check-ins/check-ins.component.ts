@@ -337,6 +337,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   qloading: boolean;
   firstTime = true;
   statusChangeClicked = false;
+  activeUser: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1250,6 +1251,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.activeUser=null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
     tempUser['id'] = 'all';
@@ -1393,7 +1395,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
     if (this.selQIds && this.selQIds.length > 0) {
-      Mfilter['queue-eq'] = this.selQIds;
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['queue-eq'] = this.selQIds;
+      }
       this.groupService.setitemToGroupStorage('selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
@@ -1454,7 +1460,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     if (this.selQIds && this.selQIds.length > 0) {
-      Mfilter['queue-eq'] = this.selQIds;
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['queue-eq'] = this.selQIds;
+      }
       // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
@@ -1503,7 +1513,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
       const qids = this.activeQs.map(q => q.id);
-      Mfilter['queue-eq'] = qids.toString();
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['queue-eq'] = qids.toString();
+      }
     }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
@@ -1602,9 +1616,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (time_type !== 3) {
       this.resetPaginationData();
     } else {
-      const selectedView = this.groupService.getitemFromGroupStorage('selectedView');
-      this.selQIds = this.getActiveQIdsFromView(selectedView);
-      this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+      if (this.activeUser) {
+
+      } else {
+        const selectedView = this.groupService.getitemFromGroupStorage('selectedView');
+        this.selQIds = this.getActiveQIdsFromView(selectedView);
+        this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+      }
+      
     }
     const stype = this.groupService.getitemFromGroupStorage('pdStyp');
     if (stype) {
@@ -1670,7 +1689,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid && queueid !== '') {
-        Mfilter['queue-eq'] = queueid;
+        if(this.activeUser) {
+          Mfilter['provider-eq'] = this.activeUser;
+        } else {
+          Mfilter['queue-eq'] = queueid;
+        }
       }
       no_filter = true;
     }
@@ -1697,9 +1720,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid) {
-        Mfilter['queue-eq'] = queueid;
+        if(this.activeUser) {
+          Mfilter['provider-eq'] = this.activeUser;
+        } else {
+          Mfilter['queue-eq'] = queueid;
+        }
       } else {
-        Mfilter['queue-eq'] = this.selQIds;
+        if(this.activeUser) {
+          Mfilter['provider-eq'] = this.activeUser;
+        } else {
+          Mfilter['queue-eq'] = this.selQIds;
+        }
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       }
       // no_filter = true;
@@ -1740,7 +1771,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
       const qids = this.activeQs.map(q => q.id);
-      Mfilter['queue-eq'] = qids.toString();
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['queue-eq'] = qids.toString();
+      }
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
@@ -1984,7 +2019,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
-        api_filter['queue-eq'] = this.filterQ.toString();
+        
+        if(this.activeUser) {
+          api_filter['provider-eq'] = this.activeUser;
+        } else {
+          api_filter['queue-eq'] = this.filterQ.toString();
+        }
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
@@ -2880,6 +2920,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleUserSelection(user) {
+    this.activeUser = null;
     this.qloading = true;
     this.resetFields();
     this.groupService.setitemToGroupStorage('selectedUser', user);
@@ -2891,6 +2932,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!user || (user && user === 'all')) {
       this.activeQs = this.tempActiveQs;
     } else {
+      this.activeUser = user.id;
       for (let i = 0; i < this.tempActiveQs.length; i++) {
         if (this.tempActiveQs[i].provider && this.tempActiveQs[i].provider.id === this.selectedUser.id) {
           qs.push(this.tempActiveQs[i]);
