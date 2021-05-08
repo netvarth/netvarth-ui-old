@@ -97,11 +97,11 @@ export class AddDrugComponent implements OnInit {
 
   updateForm() {
     this.amForm.setValue({
-      'medicine_name': this.drugData.medicine_name || null,
-      'frequency': this.drugData.frequency || null,
-      'instructions': this.drugData.instructions || null,
-      'duration': this.drugData.duration || null,
-      'dosage': this.drugData.dosage || null
+      'medicine_name': this.drugData.medicine_name || '',
+      'frequency': this.drugData.frequency || '',
+      'instructions': this.drugData.instructions || '',
+      'duration': this.drugData.duration || '',
+      'dosage': this.drugData.dosage || ''
     });
   }
 
@@ -124,14 +124,23 @@ export class AddDrugComponent implements OnInit {
     
   }
   saveAndAddOther(form_data) {
+    console.log(form_data);
     this.api_error = '';
     if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
       this.api_error = 'Atleast one field required';
     } else {
     this.drugDetail.push(form_data);
     this.addAnother = true;
-    this.amForm.reset();
+    this.clearAll();
+    //this.amForm.reset();
   }
+  }
+  clearAll() {
+    this.amForm.get('medicine_name').setValue('');
+    this.amForm.get('frequency').setValue('');
+    this.amForm.get('instructions').setValue('');
+    this.amForm.get('duration').setValue('');
+    this.amForm.get('dosage').setValue('');
   }
 
 

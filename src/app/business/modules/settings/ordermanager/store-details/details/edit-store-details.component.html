@@ -21,25 +21,47 @@
                                     <form novalidate class="ynw-common-form-nm wiz-service labelForm serviceform">
                                         <ng-container>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>FirstName*</label>
+                                                    <input type="text" class="form-control form-control-solid form-control-lg" id="firstName"
+                                                    placeholder="FirstName*" [(ngModel)]="firstName"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                  </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="firstName"
                                                             placeholder="FirstName*" [(ngModel)]="firstName"
                                                             [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>LastName</label>
+                                                    <input type="text" class="form-control form-control-solid form-control-lg" id="lastName"
+                                                    placeholder="LastName" [(ngModel)]="lastName"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                  </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="lastName"
                                                             placeholder="LastName" [(ngModel)]="lastName"
                                                             [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>Mobile</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span class="input-group-text1"><i
+                                                                    style="font-style: normal;font-size: small;">+91</i></span></div>
+                                                        <input type="text" class="form-control" id="phone"
+                                                        placeholder="Phone*" [(ngModel)]="phone"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend mob-prefix">
@@ -50,19 +72,35 @@
                                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                         </div>
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control form-control-solid form-control-lg" id="email"
+                                                    placeholder="Email" [(ngModel)]="email"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                  </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="email"
                                                             placeholder="Email" [(ngModel)]="email"
                                                             [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>Alternate Phone</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span class="input-group-text1"><i
+                                                                    style="font-style: normal;font-size: small;">+91</i></span></div>
+                                                        <input type="text" class="form-control" id="alternatePhone" placeholder="Alternate Phone"
+                                                        [(ngModel)]="alternatePhone"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend mob-prefix">
@@ -74,19 +112,35 @@
                                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                         </div>
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>Alternate Email</label>
+                                                    <input type="text" class="form-control form-control-solid form-control-lg" id="alternateEmail"
+                                                    placeholder="Alternate Email" [(ngModel)]="alternateEmail"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                  </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="alternateEmail"
                                                             placeholder="Alternate Email" [(ngModel)]="alternateEmail"
                                                             [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="c-ot m0 no-padding">
-                                                <div class="form-group col-md-7 no-padding">
+                                                <div class="form-group mgn-up-10 col-md-7 no-padding">
+                                                    <label>Whatsapp number</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span class="input-group-text1"><i
+                                                                    style="font-style: normal;font-size: small;">+91</i></span></div>
+                                                        <input type="text" class="form-control" id="whatsappNo"
+                                                        placeholder="whatsapp number" [(ngModel)]="whatsappNo"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group col-md-7 no-padding">
                                                     <mat-form-field>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend mob-prefix">
@@ -97,14 +151,21 @@
                                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                         </div>
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                             </div>
-                                            <div class="form-group store-address">
-                                                <mat-form-field>
+                                            <div class="form-group mgn-up-10 store-address">
+                                                <label>Address</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"></div>
+                                                    <textarea type="text" class="form-control" id="address"
+                                                    placeholder="Address" [(ngModel)]="address"
+                                                    [ngModelOptions]="{standalone: true}" maxlength="255"></textarea>
+                                                </div>
+                                                <!-- <mat-form-field>
                                                     <textarea matInput class="form-control" id="address"
                                                         placeholder="Address" [(ngModel)]="address"
                                                         [ngModelOptions]="{standalone: true}" maxlength="255"> </textarea>
-                                                </mat-form-field>
+                                                </mat-form-field> -->
                                             </div>
                                             <div class="actiondiv labelsave glbl-seting-heder">
                                                 <button (click)="onCancel()" type="button"

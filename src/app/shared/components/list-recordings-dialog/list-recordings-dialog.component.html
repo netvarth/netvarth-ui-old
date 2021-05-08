@@ -5,7 +5,8 @@
         <div class="col-xs-12">
             <ul>
                 <li *ngFor="let recordingUrl of recordingUrls, let i= index" class="pad-10">
-                   <a [href]="recordingUrl" target="_blank">Recording {{i+1}}</a> 
+                   <a [href]="recordingUrl.s3url" target="_blank">Recording {{i+1}}
+                   </a> 
                 </li>
             </ul>
         </div>

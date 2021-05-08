@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+// import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -44,7 +44,7 @@ export class ViewReportComponent implements OnInit {
   invoice_id;
   isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
-    private sharedfunctionObj: SharedFunctions,
+   // private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute,
     private shared_services: SharedServices,
     private wordProcessor: WordProcessor,
@@ -66,27 +66,28 @@ export class ViewReportComponent implements OnInit {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
       data => {
         this.viewreport = data;
-        this.sharedfunctionObj.getS3Url('provider')
-          .then(
-            res => {
-              this.s3url = res;
-              const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-              const section = 'invoice/' + this.invoice_id + '/jaldeeinvoice';
-              this.shared_services.getbusinessprofiledetails_json(this.viewreport.uId, this.s3url, section, UTCstring)
+       
+        // this.sharedfunctionObj.getS3Url('provider')
+        //   .then(
+        //     res => {
+        //       this.s3url = res;
+             // const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+            // const UTCstring='';
+             // const section = 'invoice/' + this.invoice_id + '/jaldeeinvoice';
+              this.shared_services.getReimburseReport(this.viewreport.s3UrlPath)
                 .subscribe(s3Result => {
                   this.invoiceFromS3 = s3Result;
                 },
                   error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
                   });
-            },
+             },
             error => {
               this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       }
-    );
-  }
+  
 
   formatDateDisplay(dateStr) {
     return this.dateTimeProcessor.formatDateDisplay(dateStr);
