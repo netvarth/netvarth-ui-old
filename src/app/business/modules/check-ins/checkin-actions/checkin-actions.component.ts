@@ -489,6 +489,14 @@ export class CheckinActionsComponent implements OnInit {
         }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
+    changeWaitlistservice() {
+        this.dialogRef.close();
+        console.log("hi");
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid , 'user']);
+
+    }
+
+    
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
             .then(

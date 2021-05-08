@@ -32,6 +32,7 @@ import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.mo
 import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { UserServiceChnageComponent } from '../../../shared/components/user-service-change/user-service-change.component';
 
 
 @NgModule({
@@ -69,13 +70,15 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
         ProviderWaitlistCheckInDetailComponent,
-        CheckinActionsComponent
+        CheckinActionsComponent,
+        UserServiceChnageComponent
         // DateRangePickerJComponent
 
     ],
     entryComponents: [
         AdjustQueueDelayComponent,
-        CheckinActionsComponent
+        CheckinActionsComponent,
+        UserServiceChnageComponent
     ],
     exports: [CheckInsComponent]
 })

@@ -216,6 +216,10 @@ export class BranchUserDetailComponent implements OnInit {
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
+            // location : ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+            postalCode: ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+
+
             selectedDepartment: [],
             privileges: [''],
             selectedUserType: [],
@@ -329,7 +333,8 @@ export class BranchUserDetailComponent implements OnInit {
             // 'state': input.state,
             // 'deptId': input.selectedDepartment,
             // 'isAdmin' :
-            'userType': input.selectedUserType
+            'userType': input.selectedUserType,
+            'postalCode': input.postalCode
         };
         if(input.phonenumber !==''){
             post_data1['countryCode'] = '+91',
@@ -352,13 +357,14 @@ export class BranchUserDetailComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else {
-            this.provider_services.createUser(post_data1).subscribe(() => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'general', 'users']);
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            console.log(post_data1);
+            // this.provider_services.createUser(post_data1).subscribe(() => {
+            //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
+            //     this.router.navigate(['provider', 'settings', 'general', 'users']);
+            // },
+            //     error => {
+            //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            //     });
         }
     }
     onCancel() {
