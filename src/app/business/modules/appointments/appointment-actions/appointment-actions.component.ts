@@ -91,6 +91,7 @@ export class AppointmentActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     buttonClicked = false;
+    accountType: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -104,6 +105,8 @@ export class AppointmentActionsComponent implements OnInit {
         public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
     }
     ngOnInit() {
         this.setMinMaxDate();
@@ -332,6 +335,10 @@ export class AppointmentActionsComponent implements OnInit {
             this.buttonClicked = true;
         }
         this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
+    }
+    changeWaitlistservice() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid , 'user'] ,{ queryParams: { source: 'appt' } });
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)

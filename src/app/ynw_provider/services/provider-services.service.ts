@@ -1065,6 +1065,10 @@ editHoliday(data) {
     const url = 'provider/waitlist/update';
     return this.servicemeta.httpPut(url, post_data);
   }
+  updateUserAppointment(post_data) {
+    const url = 'provider/appointment/update';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   getUsersCount(filter = {}) {
     const url = 'provider/user/count';
     return this.servicemeta.httpGet(url, null, filter);

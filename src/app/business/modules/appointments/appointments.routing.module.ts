@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppointmentsComponent } from './appointments.component';
 import { ProviderAppointmentDetailComponent } from './provider-appointment-detail/provider-appointment-detail.component';
 import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
+import { UserServiceChnageComponent } from '../../../shared/components/user-service-change/user-service-change.component';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -10,7 +11,8 @@ const routes: Routes = [
         children: [
             { path: 'adjustdelay', component: AdjustscheduleDelayComponent },
             { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
-            { path: ':id', component: ProviderAppointmentDetailComponent }
+            { path: ':id', component: ProviderAppointmentDetailComponent },
+            { path: ':id/user', component: UserServiceChnageComponent }
         ]
     }
 ];

@@ -86,10 +86,10 @@
             </div>
         </div>
 
-        <div class="action-box pointer-cursor"  (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="accountType=='BRANCH'" (click)="changeWaitlistservice()">
         <div class="action-box-sub">
             <span class="cancel-icon"></span>
-            <div class="icon-text">Change</div>
+            <div class="icon-text">Change Doctor</div>
         </div>
     </div>
         <div class="action-box pointer-cursor" *ngIf="showArrived"

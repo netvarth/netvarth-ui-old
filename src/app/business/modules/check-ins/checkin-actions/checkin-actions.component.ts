@@ -103,6 +103,7 @@ export class CheckinActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     buttonClicked = false;
+    accountType: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -117,6 +118,8 @@ export class CheckinActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;        
     }
     ngOnInit() {
         this.apiloading = true;
@@ -491,12 +494,8 @@ export class CheckinActionsComponent implements OnInit {
     }
     changeWaitlistservice() {
         this.dialogRef.close();
-        console.log("hi");
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid , 'user']);
-
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
     }
-
-    
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
             .then(
@@ -544,7 +543,7 @@ export class CheckinActionsComponent implements OnInit {
         if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService')) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.checkin.service.serviceType === 'virtualService')  && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
