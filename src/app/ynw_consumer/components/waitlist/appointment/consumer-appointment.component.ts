@@ -1983,4 +1983,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             });
         }
     }
+    changeJcashUse(event) {
+        if(event.checked){
+            this.checkJcash = true;
+        } else {
+            this.checkJcash = false;
+        }
+    }
 }

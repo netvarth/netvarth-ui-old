@@ -1051,7 +1051,7 @@
                                         </div>
                                         <!-- <div class="pay-section" -->
                                         <div class="containerpayment mgn-lt-5"
-                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
                                             <!-- <div>
                                                 Consultation Amount <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
@@ -1076,7 +1076,7 @@
                                                 </div>
                                             </div>
                                             <div class="jaldeecredit" *ngIf="jcashamount>0">
-                                                <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : Rs{{jcashamount}}
                                             </div>
                                             <div class="creditleft" *ngIf="jcashamount>0">
@@ -1134,9 +1134,16 @@
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-                                                    <ng-container
+                                                    <!-- <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay by CC/DC/UPI</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container> -->
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                         ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || ( checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                         Confirm</ng-container>
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                         Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>

@@ -389,13 +389,15 @@
                                     class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                                     class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}}
                                   </span>required</span>
-                                <div *ngIf="jcashamount>0">
-                                  <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
-                                  Use Jaldee cash balance : Rs{{jcashamount}}
-                                </div>
-                                <div *ngIf="jcashamount>0">
-                                  Balance amount can be paid by other payment methods
-                                </div>
+                                  <div *ngIf="cartDetails.advanceAmount">
+                                    <div *ngIf="jcashamount>0">
+                                      <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                      Use Jaldee cash balance : Rs{{jcashamount}}
+                                    </div>
+                                    <div *ngIf="jcashamount>0">
+                                      Balance amount can be paid by other payment methods
+                                    </div>
+                                  </div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
@@ -462,13 +464,15 @@
                                     class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                                     class="rupee-font">{{cartDetails.advanceAmount | currency:'&#8377;'}}
                                   </span>required</span>
-                                <div *ngIf="jcashamount>0">
-                                  <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
-                                  Use Jaldee cash balance : Rs{{jcashamount}}
-                                </div>
-                                <div *ngIf="jcashamount>0">
-                                  Balance amount can be paid by other payment methods
-                                </div>
+                                  <div *ngIf="cartDetails.advanceAmount">
+                                    <div *ngIf="jcashamount>0">
+                                      <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
+                                      Use Jaldee cash balance : Rs{{jcashamount}}
+                                    </div>
+                                    <div *ngIf="jcashamount>0">
+                                      Balance amount can be paid by other payment methods
+                                    </div>
+                                  </div>
                               </div>
                             </div>
                           </div>
