@@ -1002,7 +1002,7 @@
                                         </table>
                                         <div class="containerAppt textcenter">
                                             <!-- <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div> -->
-                                            <div class="mgn-bt-5">
+                                            <div >
                                                 <span> {{(settingsjson.showTokenId) ? 'Token for': 'Check-in for' }} :
                                                 </span>
                                                 <span *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -1019,7 +1019,7 @@
                                                 </span>
                                                 <span>{{sel_ser_det.name}}</span>
                                             </div>
-                                            <div class="mgn-bt-5">
+                                            <div  class="mgn-up-10">
                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
                                                     newDateFormat}},
@@ -1050,7 +1050,7 @@
                                             </div> -->
                                         </div>
                                         <!-- <div class="pay-section" -->
-                                        <div class="containerpayment"
+                                        <div class="containerpayment mgn-lt-5"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <!-- <div>
                                                 Consultation Amount <span class="rupee-font">{{serviceCost |

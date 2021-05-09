@@ -938,7 +938,7 @@
                                         </table>
                                         <div class="containerAppt textcenter">
                                             <!-- <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div> -->
-                                            <div class="mgn-bt-5">
+                                            <div >
                                                 <span> Appointment For : </span>
                                                 <span *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -952,10 +952,10 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span>{{sel_ser_det.name}}</span>
+                                                <span>{{sel_ser_det.name}}</span><br>
                                             </div>
 
-                                            <div class="mgn-bt-5" *ngIf="selectedApptTime">
+                                            <div  class="mgn-up-10" *ngIf="selectedApptTime">
                                                 <span *ngIf="!isFuturedate">Today,
                                                 </span>
                                                 <span *ngIf="isFuturedate">
@@ -965,7 +965,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="containerpayment"
+                                        <div class="containerpayment mgn-lt-5"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <!-- <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
