@@ -331,7 +331,7 @@
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
-                <button class="cs-btn bt1" (click)="rescheduleWaitlist()">Reschedule</button>
+                <button class="cs-btn bt1" (click)="rescheduleWaitlist()" [disabled]="queuejson.length === 0">Reschedule</button>
             </div>
         </div>
     </div>
