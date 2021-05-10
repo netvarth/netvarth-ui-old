@@ -94,7 +94,7 @@
                   <!--begin::Cart Header-->
                   <thead>
                     <tr>
-                      <th>Booking/Order ID</th>
+                      <!-- <th>Booking/Order ID</th> -->
                       <th>Cash reward</th>
                       <th>Amount earned</th>
                       <th>Amount spent</th>
@@ -108,9 +108,9 @@
                   <tbody>
                     <!--begin::Cart Content-->
                     <tr *ngFor="let details of cashbalanceInfo; let i = index;">
-                        <td data-title="Booking/Order ID" >
+                        <!-- <td data-title="Booking/Order ID" >
                           {{details.id}}
-                           </td>
+                           </td> -->
                       <td data-title="Cash reward" >
                       {{wallet_notes[details.triggerWhen]}}
                       </td>
