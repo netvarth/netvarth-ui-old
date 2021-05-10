@@ -351,6 +351,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   maxday = new Date();
   endmaxday = new Date();
   statusChangeClicked = false;
+  activeUser: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1202,7 +1203,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid) {
-        Mfilter['schedule-eq'] = queueid;
+        
+        if(this.activeUser) {
+          Mfilter['provider-eq'] = this.activeUser;
+        } else {
+          Mfilter['schedule-eq'] = queueid;
+        }
       }
       no_filter = true;
     }
@@ -1228,7 +1234,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid) {
-        Mfilter['schedule-eq'] = queueid;
+        if(this.activeUser) {
+          Mfilter['provider-eq'] = this.activeUser;
+        } else {
+          Mfilter['schedule-eq'] = queueid;
+        }
+        
       }
     }
     if (this.filter.apptStatus === 'all') {
@@ -1254,7 +1265,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
       const qids = this.activeSchedules.map(q => q.id);
-      Mfilter['schedule-eq'] = qids.toString();
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['schedule-eq'] = qids.toString();
+      }
+      
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1294,7 +1310,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
     if (this.selQIds) {
-      Mfilter['schedule-eq'] = this.selQIds.toString();
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['schedule-eq'] = this.selQIds.toString();
+      }
+      
       const qs = [];
       qs.push(this.selQIds);
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
@@ -1369,7 +1390,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     let Mfilter = this.setFilterForApi();
     if (this.selQIds) {
-      Mfilter['schedule-eq'] = this.selQIds;
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['schedule-eq'] = this.selQIds;
+      }
+      
       const qs = [];
       qs.push(this.selQIds);
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
@@ -1418,7 +1444,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
       const qids = this.activeSchedules.map(q => q.id);
-      Mfilter['schedule-eq'] = qids.toString();
+      if(this.activeUser) {
+        Mfilter['provider-eq'] = this.activeUser;
+      } else {
+        Mfilter['schedule-eq'] = qids.toString();
+      }
+      
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
@@ -1516,7 +1547,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(api_filter);
     if (this.time_type === 1) {
       if (this.selQIds) {
-        api_filter['schedule-eq'] = this.selQIds.toString();
+        if(this.activeUser) {
+          api_filter['provider-eq'] = this.activeUser;
+        } else {
+          api_filter['schedule-eq'] = this.selQIds.toString();
+        }
+        
       }
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
@@ -1559,7 +1595,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-        api_filter['schedule-eq'] = this.filteredSchedule.toString();
+        if(this.activeUser) {
+          api_filter['provider-eq'] = this.activeUser;
+        } else {
+          a api_filter['schedule-eq'] = this.filteredSchedule.toString();
+        }
+       
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
@@ -2206,6 +2247,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.activeUser=null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
     tempUser['id'] = 'all';
@@ -2299,6 +2341,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleUserSelection(user) {
+    this.activeUser = null;
     this.qloading = true;
     this.resetFields();
     this.groupService.setitemToGroupStorage('appt-selectedUser', user);
@@ -2313,6 +2356,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!user || (user && user === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
+      this.activeUser = user.id;
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
         if (this.tempActiveSchedules[i].provider && this.tempActiveSchedules[i].provider.id === this.selectedUser.id) {
           qs.push(this.tempActiveSchedules[i]);
