@@ -22,6 +22,8 @@ export class JaldeeCashComponent implements OnInit {
   cashbalanceInfodetail: any;
   wallet_notes = projectConstantsLocal.WALLET_NOTES;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  cashbalanceInfoExpireddetail:any = [];
+  expiredcash = false;
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -40,6 +42,7 @@ export class JaldeeCashComponent implements OnInit {
   ngOnInit(): void {
    this.cashInfo();
    this.jaldeecashbalance();
+   this.jaldeecashExpired();
   }
   cashInfo() {
     this.subs.sink=this.consumer_services.getConsumerCashbalance()
@@ -73,6 +76,19 @@ export class JaldeeCashComponent implements OnInit {
         }
       );
   }
+
+  jaldeecashExpired(){
+    this.subs.sink=this.consumer_services.getConsumerCashbalanceExpiredDetails()
+    .subscribe(
+      data => {
+       console.log(data);
+       this.cashbalanceInfoExpireddetail = data;
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
   goBack () {
     this.location.back();
   }
@@ -94,4 +110,11 @@ export class JaldeeCashComponent implements OnInit {
         }
       });
   }
+  expiredCash(){
+    if(this.expiredcash){
+      this.expiredcash = false;
+      } else {
+        this.expiredcash = true;
+      }
+    }
 }

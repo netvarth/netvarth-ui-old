@@ -220,5 +220,9 @@ export class ConsumerServices {
     // return this.servicemeta.httpGet(url);
     
   }
+  getConsumerCashbalanceExpiredDetails(){
+    const url = 'consumer/wallet/cash/expired';
+     return this.servicemeta.httpGet(url);
+  }
 
 }

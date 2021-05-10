@@ -54,7 +54,7 @@
 
                 <div class="widget-content">
 
-                  <div class="inv-action" *ngIf="cashbalanceInfo.totCashAwarded !== 0">
+                  <div class="inv-action" *ngIf="cashbalanceInfo && cashbalanceInfo.totCashAwarded !== 0">
                     <a (click)="gotoJaldeeCashdetails()" class="btn btn-outline-primary view-details">View Details</a>
                   </div>
 

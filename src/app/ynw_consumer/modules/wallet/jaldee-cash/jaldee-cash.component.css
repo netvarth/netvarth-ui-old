@@ -147,7 +147,7 @@ background-color: #f8f8f8 !important;
   display: inline-block;
   padding: 12px 23px;
   background: #fff;
-  text-align: left;
+  /* text-align: left; */
   border-radius: 6px;
   width: 40%;
   -webkit-box-shadow: 0px 8px 20px rgb(0 0 0 / 6%);
@@ -344,3 +344,15 @@ background-color: #f8f8f8 !important;
   letter-spacing: 1px;
   font-weight: 500;
 }
+.w-a-info span {
+  margin-left: 15px;
+}
+.expirecash{
+  margin-left: 15px;
+  text-decoration: underline;
+}
+@media (max-width: 350px){
+  .w-a-info span {
+    margin: 0px;
+  }
+  }
