@@ -1050,19 +1050,21 @@
                                             </div> -->
                                         </div>
                                         <!-- <div class="pay-section" -->
-                                        <div class="containerpayment mgn-lt-5"
+                                        <div class="containerpayment "
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                            <!-- <div>
-                                                Consultation Amount <span class="rupee-font">{{serviceCost |
-                                                    currency:'&#8377;'}}
-                                                </span>
-                                            </div> -->
+                                            <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
+                                                Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
+                                            </div>
+                                            <div class="creditleft" *ngIf="jcashamount>0">
+                                                Balance amount can be paid by other payment methods
+                                            </div>
                                             <div class="prepayment">
                                                 Payment Required now : &nbsp;<span class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class="cancelpolicy"
+                                            <div class="cancelpolicy pull-right mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <!-- <div class="select-pay"> Payment option</div>
                                             <div class="">
@@ -1075,13 +1077,7 @@
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div>
-                                            <div class="jaldeecredit" *ngIf="jcashamount>0">
-                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
-                                                Use Jaldee cash balance : Rs{{jcashamount}}
-                                            </div>
-                                            <div class="creditleft" *ngIf="jcashamount>0">
-                                                Balance amount can be paid by other payment methods
-                                            </div>
+                                            
                                             <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">

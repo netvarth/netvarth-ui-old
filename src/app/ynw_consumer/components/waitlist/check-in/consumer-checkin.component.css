@@ -1307,7 +1307,6 @@ ngx-intl-tel-input input {
   /* box-shadow: 4px 4px 1px 1px #d9d9d9; */
   box-shadow:rgb(0 0 0 / 10%) 0px 20px 30px, rgb(0 0 0 / 10%) 0px 12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px;
   border-radius: 10px;
-  height: 70px;
 }
 .containerpayment {
   font-size: 1.3rem;
@@ -1319,6 +1318,7 @@ ngx-intl-tel-input input {
   box-shadow:rgb(0 0 0 / 10%) 0px 30px 30px, rgb(0 0 0 / 10%) 0px -12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px;
   border-radius: 10px;
   padding-left: 10px;
+  height: 110px;
 }
 .selected-payment {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
@@ -1540,13 +1540,20 @@ body.modal-open {
   color: darkgrey;
 }
 .jaldeecredit{
-  color: darkgrey;
+  /* color: darkgrey; */
   font-size: medium;
+  padding-top: 5px;
 }
 .cancelpolicy{
   text-align: center;
   padding-bottom: 10px;
-}.prepayment{
+}
+.prepayment{
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+}
+@media (max-width: 400px) {
+.containerpayment{
+  height: 140px;
+}
 }
