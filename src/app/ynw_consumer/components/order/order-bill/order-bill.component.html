@@ -356,12 +356,11 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <div *ngIf="jcashamount>0">
-                                                                    <mat-checkbox [(ngModel)]="checkJcash">
-                                                                    </mat-checkbox>
+                                                                <div *ngIf="jcashamount>0"  style="font-size: medium;">
+                                                                    <mat-checkbox [(ngModel)]="checkJcash"  (change)="changeJcashUse($event)"></mat-checkbox>
                                                                     Use Jaldee cash balance : Rs{{jcashamount}}
                                                                 </div>
-                                                                <div *ngIf="jcashamount>0">
+                                                                <div *ngIf="jcashamount>0 && (checkJcash && jcashamount < bill_data.amountDue)" style="font-size: small;">
                                                                     Balance amount can be paid by other payment methods
                                                                 </div>
                                                             </div>
@@ -369,11 +368,14 @@
                                                                 *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
-                                                                    <span class="">Payment Options</span>
+                                                                    <!-- <span class="">Payment Options</span> -->
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding"
                                                                     style="display: flex">
-                                                                    <button class="cs-btn bt1"
+                                                                    <button class="cs-btn bt1"   (click)="payuPayment()"
+                                                                    *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
+                                                                     Confirm</button>
+                                                                    <button class="cs-btn bt1"  *ngIf="((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
                                                                         (click)="payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
                                                                     <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled"

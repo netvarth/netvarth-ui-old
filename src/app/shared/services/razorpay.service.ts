@@ -122,8 +122,6 @@ export class RazorpayService {
     });
 
     options.modal.ondismiss = (() => {
-      console.log('inisde');
-      console.log(checkin_type);
       if (usertype === 'consumer') {
         if (checkin_type === 'checkin_prepayment') {
           this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
@@ -139,7 +137,6 @@ export class RazorpayService {
         this.ngZone.run(() => this.router.navigate(['consumer']));
       }
       if (checkin_type === 'appointment') {
-        console.log(checkin_type);
         const navigationExtras: NavigationExtras = {
           queryParams: {
             uuid: uuid,
@@ -162,9 +159,8 @@ export class RazorpayService {
           }
         };
         console.log(navigationExtras)
-        this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
-        console.log(navigationExtras)
-
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
       }
       if (checkin_type === 'order') {
         const navigationExtras: NavigationExtras = {
@@ -175,10 +171,9 @@ export class RazorpayService {
             'paidStatus': false
           }
         };
-        console.log(navigationExtras)
-        this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
-        console.log(navigationExtras)
-
+        console.log(navigationExtras);
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
       }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
@@ -189,13 +184,13 @@ export class RazorpayService {
     }, 540000);
   }
   onReloadPage() {
-   // window.location.reload();
+   window.location.reload();
     // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     // this.router.onSameUrlNavigation = 'reload';
     // this.router.navigate(['./'], { relativeTo: this.activatedRoute, queryParamsHandling: 'preserve' });
-    let currentUrl = this.router.url;
-   this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-   this.router.navigate([currentUrl]);
-   });
+  //   let currentUrl = this.router.url;
+  //  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+  //  this.router.navigate([currentUrl]);
+  //  });
 }
 }

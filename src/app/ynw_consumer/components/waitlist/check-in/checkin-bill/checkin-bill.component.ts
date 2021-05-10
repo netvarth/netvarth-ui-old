@@ -932,4 +932,11 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     backtoProviderDetails() {
         this.locationobj.back();
     }
+    changeJcashUse(event) {
+        if(event.checked){
+            this.checkJcash = true;
+        } else {
+            this.checkJcash = false;
+        }
+    }
 }
