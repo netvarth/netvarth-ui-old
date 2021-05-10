@@ -379,7 +379,7 @@ export class CustomerDetailComponent implements OnInit {
         let uuid;
         if (this.selectedDetailsforMsg.waitlist) {
             uuid = this.selectedDetailsforMsg.waitlist.ynwUuid;
-        } else if(this.selectedDetailsforMsg.appointment) {
+        } else if(this.selectedDetailsforMsg.appointmnet) {
             uuid = this.selectedDetailsforMsg.appointmnet.uid;
         }else {
             uuid=this.selectedDetailsforMsg.uid;
