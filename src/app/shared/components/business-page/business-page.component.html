@@ -345,39 +345,46 @@
                     <div class="text-center mgn-bt-20" *ngIf="!userId">
                         <img src="assets/images/heartfulness/heartfulness-doctor.png">
                     </div>
-                    <div *ngIf="!userId"
-                        class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                        <ul class="bus-actions no-padding mgn-up-10 width-100"
-                            *ngIf="settings_exists && business_exists">
-                            <li class="small-devices-message centeralign mgn-rt-10">
-                                <a class="like-btn action-btns" (click)="communicateHandler()">
-                                    <span *ngIf="provider_bussiness_id">
-                                        <i class="msg-icon" aria-hidden="true"></i>
-                                        <span class="display-text">&nbsp;{{send_msgs_cap}}</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="small-devices-share centeralign">
-                                <a *ngIf="!customId" class="like-btn action-btns"
-                                    (click)="qrCodegeneraterOnlineID(accEncUid)">
-                                    <span *ngIf="provider_bussiness_id">
-                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
-                                        <span class="display-text">&nbsp;Share</span>
-                                    </span>
-                                </a>
-                                <a *ngIf="customId" class="like-btn action-btns"
-                                    (click)="qrCodegeneraterOnlineID(customId)">
-                                    <span *ngIf="provider_bussiness_id">
-                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
-                                        <span class="display-text">&nbsp;Share</span>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
+                        *ngIf="!userId">
+                        <div
+                            class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
+                            <ul class="bus-actions no-padding mgn-up-10 width-100"
+                                *ngIf="settings_exists && business_exists">
+                                <li class="small-devices-message centeralign mgn-rt-10">
+                                    <a class="like-btn action-btns" (click)="communicateHandler()">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="msg-icon" aria-hidden="true"></i>
+                                            <span class="display-text">&nbsp;{{send_msgs_cap}}</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="small-devices-share centeralign">
+                                    <a *ngIf="!customId" class="like-btn action-btns"
+                                        (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <span class="display-text">&nbsp;Share</span>
+                                        </span>
+                                    </a>
+                                    <a *ngIf="customId" class="like-btn action-btns"
+                                        (click)="qrCodegeneraterOnlineID(customId)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <span class="display-text">&nbsp;Share</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="bSection">
+                    <div class="bSection" *ngIf="userId">
                         <img alt="Profile Image" src="{{bLogo}}">
+                        <div class="name-dept">
                         <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
+                        <div class="bname dept" *ngIf="apptServices[0]"> {{apptServices[0].deptName}}</div>
+                        <div class="bname dept" *ngIf="!apptServices[0] && wlServices[0]">  {{wlServices[0].deptName}}</div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -432,14 +439,6 @@
                     </ng-container>
 
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                        <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
-                            *ngIf="apptServices[0]">
-                            {{apptServices[0].deptName}}
-                        </h4>
-                        <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
-                            *ngIf="!apptServices[0] && wlServices[0]">
-                            {{wlServices[0].deptName}}
-                        </h4>
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                             <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"

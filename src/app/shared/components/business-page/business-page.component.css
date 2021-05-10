@@ -2185,11 +2185,10 @@ img.ordericon.home {
   /* font-weight: 500 !important; */
   text-transform: capitalize !important;
   font-size: 19px !important;
-  color: black !important;
+  color: white !important;
   font-weight: 700 !important;
   text-align: left !important;
   font-style: italic !important;
-  background-color: mintcream !important;
 }
 
 @media (max-width: 650px) {
@@ -2287,6 +2286,12 @@ img.ordericon.home {
   color: white;
   font-size: 1.5rem;
   margin-left: 10px;
+  font-weight: bold;
+}
+.bSection .name-dept {
   margin-top: auto;
   margin-bottom: auto;
+}
+.bSection .dept {
+  font-size: 1.25rem !important;
 }
