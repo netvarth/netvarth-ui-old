@@ -3,21 +3,20 @@
     <table class="table table-report table-report--bordered display datatable w-full no-margin">
         
         <tbody>
-            <tr *ngFor="let appt of appt_list, let i=index">
+            <tr *ngFor="let checkin of appt_list, let i=index">
                 <td class="border-b">
-                    <div *ngIf="appt.waitlistingFor[0].firstName || appt.waitlistingFor[0].lastName" class="font-medium whitespace-no-wrap">
-                        {{appt.waitlistingFor[0].firstName}}
-                          {{appt.waitlistingFor[0].lastName}}</div>
+                    <div *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName" class="font-medium whitespace-no-wrap">
+                        {{checkin.waitlistingFor[0].firstName}}
+                          {{checkin.waitlistingFor[0].lastName}}</div>
                     <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        <!-- <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span> -->
-                        <!-- S{{getScheduleIndex(appt.schedule.id) + 1}} -->
+                        <span class="greenc bold font11">{{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}</span>
                         </div>
                 </td>
                 
                 <td class="text-center border-b">
-                    <div *ngIf="appt.providerConsumer && appt.providerConsumer.jaldeeId !== '' ">id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div></td>
+                    <div *ngIf="checkin.token">Token:&nbsp; {{checkin.token}}</div></td>
                 <td class="text-center border-b">
-                    <div class="flex items-center sm:justify-center text-theme-9">{{appt.service.name}}</div>
+                    <div class="flex items-center sm:justify-center text-theme-9">{{checkin.service.name}}</div>
                 </td>
                 <td class="border-b w-5 actions">
                     <div class="flex sm:justify-center items-center">
