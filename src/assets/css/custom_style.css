@@ -14158,3 +14158,24 @@ padding-left: 15px !important;
 .tbl-hover:hover {
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
 }
+
+
+.videoIframe {
+  height: 270px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 468px) {
+  
+.videoIframe {
+  height: 300px !important;
+  width: 100% !important;
+}
+}
+@media (min-width: 1200px) {
+  
+  .videoIframe {
+    height: 350px !important;
+    width: 100% !important;
+  }
+  }

@@ -354,7 +354,7 @@ ngAfterViewInit() {
     this.routerobj.navigate(['status/new']);
   }
   providerLinkClicked() {
-    this.routerobj.navigate(['/business']);
+    this.routerobj.navigate(['/business/healthcare']);
   }
   // knowApptStatus () {
   //   this.routerobj.navigate(['appt/status/new']);

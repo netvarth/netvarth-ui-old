@@ -65,7 +65,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   placeOrderDisabled: boolean;
   today: any;
   maxDate: Date;
-  storeChecked: boolean;
+  storeChecked = true;
   showfuturediv: boolean;
   ddate;
   isFuturedate: boolean;

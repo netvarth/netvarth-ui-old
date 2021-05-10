@@ -39,7 +39,7 @@ export class TeleServiceComponent implements OnInit {
     emailPresent: boolean;
     consumer_fname: any;
     phNo: any;
-    api_loading = false;
+    api_loading = true;
     step = 1;
     startTeledialogRef: any;
     consumer_lname: any;
@@ -68,6 +68,7 @@ export class TeleServiceComponent implements OnInit {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
     ngOnInit() {
+        this.api_loading = true;
         this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
@@ -143,6 +144,7 @@ export class TeleServiceComponent implements OnInit {
                             this.phNo = this.data.waitlistingFor[0].phoneNo;
                         }
                     }
+                    this.api_loading = false;
                 });
     }
     getProviderApptById() {
@@ -175,13 +177,24 @@ export class TeleServiceComponent implements OnInit {
                     }
                     // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
+                    this.api_loading = false;
                 });
     }
 
     // Back btn navigation
     redirecToPreviousPage() {
         // if (this.step === 1) {
-        this._location.back();
+            if (this.callingModes === 'VideoCall') {
+                if (this.waiting_type === 'appt') {
+                    this.router.navigate(['provider', 'appointments']);
+                } else {
+                    this.router.navigate(['provider', 'check-ins']);
+                }
+                
+            } else {
+                this._location.back();
+            }
+        
         // }
         // const navigationExtras: NavigationExtras = {
         //     queryParams: {
@@ -282,6 +295,7 @@ export class TeleServiceComponent implements OnInit {
         }
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+        this.api_loading = true;
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {

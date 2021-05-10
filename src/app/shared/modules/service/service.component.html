@@ -15,6 +15,8 @@
           class="fa wtsapaud-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'"
           class="fa wtsapvid-icon"></i>
+        <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'VideoCall'"
+          class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
         {{service_data.name | capitalizeFirst}}
         <span *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
       </h4>
@@ -379,7 +381,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       style="font-size: 1.1rem;">
       {{customer_label | capitalizeFirst}} Info</label>
     <div class="settings_info" *ngIf="!is_donation">
-        Would you like to collect more information from your customer/patient along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+        Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
       </div>
   </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">

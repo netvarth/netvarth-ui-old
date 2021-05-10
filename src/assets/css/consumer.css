@@ -6957,9 +6957,9 @@ margin-top: 7px;
   background: white;
 }
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-footer {
-  border-top: 3px solid #80808052;
+  /* border-top: 3px solid #80808052; */
   background: none !important;
-  height: 20%;
+  height: 17%;
 }
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-header {
   background: #183e79 !important;
