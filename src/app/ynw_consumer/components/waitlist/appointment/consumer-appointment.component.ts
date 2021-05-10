@@ -227,7 +227,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     remainingadvanceamount;
     amounttopay: any;
     wallet: any;
-   imgCaptions: any = [];
+    imgCaptions: any = [];
+    payAmount: number;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1681,6 +1682,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
+                console.log(this.jcashamount);
+                if( this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount){
+                    this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
+                    console.log(this.payAmount);
+                } else if( this.checkJcash && this.paymentDetails.amountRequiredNow < this.jcashamount){
+                    this.payAmount = 0;
+                    console.log(this.payAmount)
+                }
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

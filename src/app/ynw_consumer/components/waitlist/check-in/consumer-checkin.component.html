@@ -1056,11 +1056,15 @@
                                                 <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
                                             </div>
-                                            <div class="creditleft" *ngIf="jcashamount>0">
+                                            <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
                                                 Balance amount can be paid by other payment methods
                                             </div>
                                             <div class="prepayment">
-                                                Payment Required now : &nbsp;<span class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                Payment Required now : &nbsp;
+                                                <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                    currency:'&#8377;'}}
+                                                </span>
+                                                <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>

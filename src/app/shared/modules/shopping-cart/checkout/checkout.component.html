@@ -394,7 +394,7 @@
                                       <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
                                       Use Jaldee cash balance : Rs{{jcashamount}}
                                     </div>
-                                    <div *ngIf="jcashamount>0">
+                                    <div *ngIf="jcashamount>0  && (checkJcash && jcashamount < cartDetails.advanceAmount)">
                                       Balance amount can be paid by other payment methods
                                     </div>
                                   </div>
@@ -469,7 +469,7 @@
                                       <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
                                       Use Jaldee cash balance : Rs{{jcashamount}}
                                     </div>
-                                    <div *ngIf="jcashamount>0">
+                                    <div *ngIf="jcashamount>0  && (checkJcash && jcashamount < cartDetails.advanceAmount)">
                                       Balance amount can be paid by other payment methods
                                     </div>
                                   </div>
@@ -572,7 +572,7 @@
                     <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
                     Use Jaldee cash balance : Rs{{jcashamount}}
                   </div>
-                  <div *ngIf="jcashamount>0">
+                  <div *ngIf="jcashamount>0  && (checkJcash && jcashamount < catalog_details.advanceAmount)">
                     Balance amount can be paid by other payment methods
                   </div>
 
