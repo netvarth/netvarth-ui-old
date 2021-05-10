@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+// import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -45,7 +45,7 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
   bookingMode = projectConstantsLocal.BOOKING_MODE;
   pCouponStat;
   constructor(
-    private wordProcessor: WordProcessor,
+    // private wordProcessor: WordProcessor,
     private router: Router,
     private dialog: MatDialog,
     private provider_services: ProviderServices,
@@ -77,7 +77,8 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
         this.api_loading = false;
       });
     });
-    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+   // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+   this.checkin_label='Booking';
 
 
   }

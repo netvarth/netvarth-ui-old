@@ -16,6 +16,7 @@
                 <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
                     {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
+                <span *ngIf="orderDetails.orderFor.jaldeeId">{{customerLabel | capitalizeFirst}} id : {{orderDetails.orderFor.jaldeeId}}</span>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
                         <div *ngIf="orderDetails.email"> <i class="fa fa-envelope"

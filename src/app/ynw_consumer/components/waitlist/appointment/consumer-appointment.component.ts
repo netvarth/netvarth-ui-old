@@ -219,6 +219,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selectedDate;
     private subs = new SubSink();
     questionnaireLoaded = false;
+    imgCaptions: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1047,7 +1048,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
                 i++;
             }
         }

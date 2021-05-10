@@ -143,11 +143,12 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         };
 
         _this.subs.sink = _this.meetService.isConsumerReady(post_data)
-            .subscribe(data => {
+            .subscribe((data: any) => {
                 if (data) {
                     _this.loading = false;
                     _this.meetObj = data;
                     _this.consumerReady = true;
+                    _this.recordingFlag = data.recordingFlag;
                     // console.log(this.meetObj);
                     _this.status = 'Ready..';
                     _this.subs.unsubscribe();
@@ -238,6 +239,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Method to connect to a room
      */
     joinRoom() {
+        this.btnClicked = true;
         if (this.consumerReady) {
             this.twilioService.localVideo = this.localVideo;
             this.twilioService.remoteVideo = this.remoteVideo;

@@ -100,9 +100,12 @@
                                                     </ul>
                                                 </td> -->
                                                 <td data-title="" class="td5">
-                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                    <button class="d-small-none" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
+                                                    <!-- <button class="cs-btn bt3 d-md-none" [matMenuTriggerFor]="appMenu">
+                                                       Actions
+                                                    </button> -->
                                                     <mat-menu #appMenu="matMenu">
                                                         <button mat-menu-item   (click)="addWaitlistMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
@@ -174,9 +177,12 @@
                                                         class="{{his_wait.apptStatus}}">{{getStatusLabel(his_wait.apptStatus)}}</span>
                                                 </td>
                                                 <td data-title="" class="td5">
-                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                    <button class="d-small-none" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
+                                                    <!-- <button class="cs-btn bt3 d-md-none" [matMenuTriggerFor]="appMenu">
+                                                       Actions
+                                                    </button> -->
                                                     <mat-menu #appMenu="matMenu">
                                                         <button mat-menu-item   (click)="addApptMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
@@ -243,10 +249,10 @@
                                                 </td>
                                                 <!-- <td data-title="Location" class="td2">
                                                     {{his_wait.location.place || '' | capitalizeFirst}}</td> -->
-                                                <td data-title="Service for">
+                                                <td data-title="Order for">
                                                     {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
                                                     {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>
-                                                <td data-title="Service" class="td6">
+                                                <td data-title="No of items" class="td6">
                                                     <span *ngIf="his_wait.orderItem">{{his_wait.orderItem.length}}</span>
                                                 </td>
                                                 <td data-title="Status" class="td4">

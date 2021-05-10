@@ -23,6 +23,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 
 
 @Component({
@@ -399,6 +400,19 @@ export class CheckinActionsComponent implements OnInit {
                 qdata: this.checkin,
                 uuid: this.checkin.ynwUuid,
                 chekintype: 'Waitlist'
+            }
+        });
+        smsdialogRef.afterClosed().subscribe(result => {
+        });
+    }
+    viewRecordings() {
+        this.dialogRef.close();
+        const smsdialogRef = this.dialog.open(ListRecordingsDialogComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                recordingUrls: this.checkin.s3VideoUrls
             }
         });
         smsdialogRef.afterClosed().subscribe(result => {

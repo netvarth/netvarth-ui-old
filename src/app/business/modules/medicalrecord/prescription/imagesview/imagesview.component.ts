@@ -28,7 +28,7 @@ export class ImagesviewComponent implements OnInit {
   showimg(imgurl) {
     let logourl = '';
       if (imgurl) {
-        logourl = (imgurl) ? imgurl + '?' + this.cacheavoider : '';
+        logourl = (imgurl) ? imgurl  : '';
       }
       return this.sharedfunctionObj.showlogoicon(logourl);
   }

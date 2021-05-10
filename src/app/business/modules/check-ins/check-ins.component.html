@@ -198,7 +198,7 @@
               <div>
                 <aside class="filterSidebar" *ngIf="filter_sidebar">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                    <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
+                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Close filter window'"></i>
@@ -780,7 +780,7 @@
                 <div>
                   <aside class="filterSidebar" *ngIf="filter_sidebar">
                     <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                      <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
+                      <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Close filter window'"></i>
@@ -1119,7 +1119,7 @@
                 <div>
                   <aside class="filterSidebar" *ngIf="filter_sidebar">
                     <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                      <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
+                      <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Close filter window'"></i>

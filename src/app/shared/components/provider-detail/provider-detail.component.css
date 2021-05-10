@@ -1623,14 +1623,14 @@ img.ordericon.home {
   background-color: #eee !important;
   padding: 10px 20px !important;
   display: flex !important;
-  justify-content: space-between !important;
+  /* justify-content: space-between !important; */
 }
 
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-share,
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-coup,
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-fav,
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-message {
-  margin: 0 !important;
+  margin: 0 5px !important;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-share a,
@@ -1983,5 +1983,28 @@ img.ordericon.home {
 @media (max-width: 650px) {
   .bus-page .dept-title-h4.department-title {
     font-size: 15px !important;
+  }
+}
+
+.covid-coming {
+  background: #f8f8f8 !important;
+  padding: 10px 0;    
+  font-weight: bold;
+}
+.covid-coming .card {
+  padding: 20px 10px !important;
+  margin: 10px;
+  width: 95%;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #00cc96;
+  box-shadow: 0 0 10px 5px rgb(0 0 0 / 5%) !important;
+}
+.more-info-sec {
+  width: 160px !important;
+}
+@media(max-width: 991px) {
+  .bus-actions-small-devices {
+    display: flex !important;
   }
 }

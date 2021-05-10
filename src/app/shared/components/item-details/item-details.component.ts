@@ -292,7 +292,7 @@ export class ItemDetailsSharedComponent implements OnInit {
       this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
       this.orderList.push(this.currentItemObject);
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      this.lStorageService.setitemonLocalStorage('order_sp', this.businessDetails);
+      //this.lStorageService.setitemonLocalStorage('order_sp', this.businessDetails);
       this.getItemQty();
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {

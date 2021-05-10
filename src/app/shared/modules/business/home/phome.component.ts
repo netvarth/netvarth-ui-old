@@ -408,5 +408,8 @@ export class PhomeComponent implements OnInit {
     };
     this.router.navigate(['business'], navigationExtras);
   }
+  playvideoClicked() {
+    document.getElementById('video-box').innerHTML = '<iframe class="videoIframe" src="https://drive.google.com/file/d/1IMvXtqleSXRkQ9dhK8HNdg_IqxyHr2jH/preview" ></iframe>';
+  }
 }
 

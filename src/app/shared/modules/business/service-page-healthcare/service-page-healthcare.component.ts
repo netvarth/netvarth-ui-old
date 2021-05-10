@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
@@ -9,7 +10,9 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 export class ServicePageHealthcareComponent implements OnInit {
 
   constructor(
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    private routerobj: Router
+
   ) { }
 
   ngOnInit(): void {
@@ -23,5 +26,8 @@ export class ServicePageHealthcareComponent implements OnInit {
       offset: 0
     };
     this._scrollToService.scrollTo(config);
+  }
+  providerLinkClicked() {
+    this.routerobj.navigate(['/business']);
   }
 }

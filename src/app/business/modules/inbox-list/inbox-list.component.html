@@ -51,21 +51,21 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50 mr-3">
                                                             <div class="user-name">
-                                                                {{getUserShort(user.key)}}
+                                                                {{getUserShort(user.value)}}
                                                             </div>
                                                         </div>
                                                         <div class="d-flex flex-column">
                                                             <a
                                                                 class="text-dark-75 text-hover-primary font-weight-bold font-size-lg">
-                                                                {{getUserName(user.key, 'customer')}}</a>
+                                                                {{getUserName('customer', user.value)}}</a>
                                                             <span class="text-muted font-weight-bold font-size-sm">
                                                                 {{formatDateDisplay(user.value[user.value.length-1].timeStamp)}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-column align-items-end">
-                                                        <span *ngIf="userWithMsgCount > 1"
-                                                            class="text-muted font-weight-bold font-size-sm">{{getUserName(user.key,
-                                                            'provider')}}</span>
+                                                        <span *ngIf="userWithMsgCount > 1 && selectedUser.userType !== 'PROVIDER'"
+                                                            class="text-muted font-weight-bold font-size-sm">{{getUserName('provider',
+                                                            user.value)}}</span>
                                                         <span class="label label-sm label-success"
                                                             *ngIf="getUnreadCount(user.value) > 0">{{getUnreadCount(user.value)}}</span>
                                                     </div>
@@ -74,7 +74,7 @@
                                             <ng-container
                                                 *ngIf="msgDisplay=='user' && selectedUser.userType !== 'PROVIDER'">
                                                 <ng-container *ngFor="let user of users">
-                                                    <div *ngIf="groupedMsgsbyUser[(user.businessName) ? user.businessName : user.firstName+' '+user.lastName]"
+                                                    <div *ngIf="groupedMsgsbyUser[user.id]"
                                                         (click)="userSelection(user)"
                                                         class="d-flex align-items-center justify-content-between pointer-cursor pad-5"
                                                         [class.selected-user]="selectedUser==user">
@@ -124,7 +124,7 @@
                                                     class="fa fa-arrow-left pointer-cursor d-md-none"></i>
                                             </div>
                                             <div class="text-dark-75 font-weight-bold font-size-h5">
-                                                {{getUserName(selectedCustomer, 'customer')}}</div>
+                                                {{getUserName('customer')}}</div>
                                         </div>
                                     </div>
                                     <div class="bg-transparent" *ngIf="source">
@@ -151,7 +151,8 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        <div class="reply-msg text-left"
+                                                            *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
                                                                 {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
@@ -168,10 +169,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>
@@ -192,7 +193,8 @@
                                                         <div class="reply-text">
                                                             <a (click)="replytoMsg(msg)">Reply</a>
                                                         </div>
-                                                        <div class="reply-msg text-left" *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        <div class="reply-msg text-left"
+                                                            *ngIf="msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                             (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                             <div class="username">
                                                                 {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
@@ -210,10 +212,10 @@
                                                             <ng-container
                                                                 *ngFor="let attachment of msg.attachements;let i=index">
                                                                 <a (click)="openImage(msg.attachements, i)"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                                 <a [href]="attachment.s3path"
-                                                                    *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                    *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                         [src]="getThumbUrl(attachment)" /></a>
                                                             </ng-container>
                                                         </div>

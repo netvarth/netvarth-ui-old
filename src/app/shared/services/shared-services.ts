@@ -236,6 +236,9 @@ export class SharedServices {
     }
     return this.servicemeta.httpGet(gurl);
   }
+  getReimburseReport(gurl) {
+    return this.servicemeta.httpGet(gurl);
+  }
   getAllSearchlabels() {
     const path = 'ynwConf/searchLabels';
     return this.servicemeta.httpGet(path);

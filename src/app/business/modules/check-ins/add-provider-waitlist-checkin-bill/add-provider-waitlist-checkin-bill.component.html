@@ -555,6 +555,7 @@
 											<select *ngIf="discounts.length >0 && showDiscountSection"
 												class="form-control" [(ngModel)]="selOrderDiscount"
 												(click)="onChange()">
+												<option value="" disabled selected hidden>Select Discount</option>
 												<option *ngFor="let discount of discounts; let i = index"
 													[value]="discount.id">{{discount.name}}</option>
 											</select>
@@ -562,14 +563,14 @@
 												[(ngModel)]="selOrderProviderCoupon">
 												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
-													[value]="coupon.couponCode">{{coupon.name}}</option>
+													[value]="coupon.couponCode"> {{coupon.couponCode}} ({{coupon.name}} )</option>
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
 												class="form-control select-height"
 												[(ngModel)]="selOrderProviderjCoupon">
 												<option value="" disabled selected hidden>Select Jaldee Coupon</option>
 												<option *ngFor="let jcoupon of jCouponsList; let i = index"
-													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}
+													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }} ({{jcoupon.couponName}} )
 												</option>
 											</select>
 											<br>
@@ -674,8 +675,13 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-												<span *ngIf="showDisplaynoteSection">Add Display Note</span>
-												<span *ngIf="showPrivatenoteSection">Add Private Note</span>
+											
+													<!-- <span *ngIf="!displayNoteedit">{{add_display_note}}</span>
+													<span *ngIf="displayNoteedit">{{update_display_note}}</span>
+													<span *ngIf="!privateNoteedit">{{add_private_note}}</span>
+										<span *ngIf="privateNoteedit">{{update_private_note}}</span> -->
+												<span *ngIf="showDisplaynoteSection">{{displayNoteedit==false?'Add':'Update'}} Display Note</span>
+												<span *ngIf="showPrivatenoteSection">{{privateNoteedit==false?'Add':'Update'}} Private Note</span>
 											</h5>
 
 										</div>

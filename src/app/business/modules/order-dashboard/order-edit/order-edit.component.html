@@ -289,7 +289,8 @@
                         <!-- begin: Invoice footer-->
                         <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
                           <div class="col-md-10 ln-ht-2" >
-                            <div class="text-muted">DELIVERY TYPE</div>
+                            <div class="text-muted">DELIVERY TYPE&nbsp;&nbsp; <img src="assets/images/Store-pick-up.png" alt="..." *ngIf="store_pickup && !home_delivery" style="width: 60px;height:50px">
+                              <img src="assets/images/Homedelivery.png" alt="..." *ngIf="home_delivery && !store_pickup" style="width: 60px;height:50px"></div>
                             <ng-container *ngIf="home_delivery && store_pickup">
                               <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
                                 <mat-radio-button [value]="'store'" [checked]="storeChecked">
@@ -564,7 +565,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button #closeDatepickerModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                    <button type="button" [disabled]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
+                                    <button type="button" [hidden]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
                                   </div>
                                 </div>
 
@@ -698,7 +699,7 @@
                   </div> -->
                   <div>
 
-                    <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]="placeOrderDisabled" [hidden]="!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
                       Update Order
                     </button>
