@@ -380,9 +380,11 @@ private subs=new SubSink();
   }
 
   addCommonMessage(provider) {
+    console.log(provider);
     const pass_ob = {};
     pass_ob['source'] = 'consumer-common';
-    pass_ob['user_id'] = provider.id;
+    pass_ob['user_id'] = provider.uniqueId;
+  //  pass_ob['id'] = provider.id;
     pass_ob['name'] = provider.businessName;
     pass_ob['caption'] = 'Enquiry';
     this.addNote(pass_ob);
