@@ -984,7 +984,7 @@
                                                     <span class="billing-head">Service</span>
                                                     <span>&nbsp;:&nbsp;</span>
                                                     <span class="billing-value">
-                                                        <span class="service-icon pull-left"
+                                                        <span class="service-icon" style="display: inline-block !important;"
                                                             *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1009,10 +1009,10 @@
                                                         Check-in for</span>
                                                     <span>&nbsp;:&nbsp;</span>
                                                     <span class="billing-value">
-                                                        <div *ngFor="let customer of waitlist_for">
+                                                        <span *ngFor="let customer of waitlist_for; let i = index;">
                                                             {{customer.firstName}}
-                                                            {{customer.lastName}}
-                                                        </div>
+                                                            {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : ""}}
+                                                        </span>
                                                     </span>
                                                 </div>
                                                 <div>
@@ -1045,8 +1045,8 @@
                                                     {{selectedQTime}}
                                                 </span>
                                             </div>
-                                            <div class="no-mgn-bt bold"> Waiting in line</div>
-                                            <div class="mgn-bt-10 pad-bt-10">
+                                            <div class="no-mgn-bt bold" style="color: #59345D;"> Waiting in line</div>
+                                            <div class="mgn-bt-10 pad-bt-10" style="color: #59345D;">
                                                 <span *ngIf="personsAhead <= 0">0 People</span>
                                                 <span *ngIf="personsAhead == 1">1<span>
                                                         Person</span></span>

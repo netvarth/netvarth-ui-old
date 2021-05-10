@@ -706,9 +706,9 @@ ul.bus-actions li a.lnk {
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
-.service-icon .phon-icon {
+/* .service-icon .phon-icon {
   margin-bottom: 5px;
-}
+} */
 .service-icon .zoom-icon {
   width: 30px !important; 
 }
@@ -717,7 +717,7 @@ ul.bus-actions li a.lnk {
 }
 .service-icon .wtsapvid-icon {
   width: 20px !important;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
   margin-bottom: -5px !important;

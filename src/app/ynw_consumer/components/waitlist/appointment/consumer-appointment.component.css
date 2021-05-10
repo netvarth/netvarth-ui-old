@@ -707,9 +707,9 @@ ul.bus-actions li a.lnk {
   width: 25px !important;
   margin-top: 5px !important;
 }
-.service-icon .phon-icon {
+/* .service-icon .phon-icon {
   margin-bottom: 5px;
-}
+} */
 .service-icon .zoom-icon {
   width: 30px !important; 
   margin-top: 5px !important;
