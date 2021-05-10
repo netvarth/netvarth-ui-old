@@ -165,6 +165,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_coupon;
   showCouponWB: boolean;
   cartDetails: any = [];
+  listDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
@@ -289,7 +290,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loading = false;
       this.gets3curl();
       if (this.catalog_details.advanceAmount > 0 && this.orderType === 'SHOPPINGLIST') {
-        this.getJaldeeCashandCredit();
+        // this.getJaldeeCashandCredit();
+        this.getlisttDetails();
       }
       if (this.orderType !== 'SHOPPINGLIST') {
         this.getCartDetails();
@@ -408,6 +410,37 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.doLogin('consumer');
     }
   }
+  getlisttDetails() {
+    let delivery = false;
+    if (this.delivery_type === 'home') {
+      delivery = true;
+    } else {
+      delivery = false;
+    }
+    const passdata = {
+      'catalog': {
+        'id': this.catalog_Id
+      },
+      'homeDelivery': delivery,
+      'coupons': this.selected_coupons,
+      'orderDate': this.sel_checkindate
+    };
+    this.shared_services.getCartdetails(this.account_id, passdata)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.listDetails = data;      
+          if (this.listDetails.eligibleJcashAmt) {
+            this.checkJcash = true
+            this.jcashamount = this.listDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.listDetails.eligibleJcashAmt.creditAmt;
+          }
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
   getCartDetails() {
     console.log('details');
     let delivery = false;
@@ -452,7 +485,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.checkJcash = true
             this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
             this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
-            // this.getJaldeeCashandCredit();
           }
         },
         error => {
@@ -460,15 +492,15 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
   }
-  getJaldeeCashandCredit() {
-    this.shared_services.getJaldeeCashandJcredit()
-      .subscribe(data => {
-        this.checkJcash = true
-        this.jaldeecash = data;
-        this.jcashamount = this.jaldeecash.jCashAmt;
-        this.jcreditamount = this.jaldeecash.creditAmt;
-      });
-  }
+  // getJaldeeCashandCredit() {
+  //   this.shared_services.getJaldeeCashandJcredit()
+  //     .subscribe(data => {
+  //       this.checkJcash = true
+  //       this.jaldeecash = data;
+  //       this.jcashamount = this.jaldeecash.jCashAmt;
+  //       this.jcreditamount = this.jaldeecash.creditAmt;
+  //     });
+  // }
   gets3curl() {
     console.log('getS3url');
     this.api_loading1 = true;
