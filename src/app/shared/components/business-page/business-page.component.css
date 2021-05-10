@@ -2188,14 +2188,13 @@ img.ordericon.home {
   color: white !important;
   font-weight: 700 !important;
   text-align: left !important;
-  font-style: italic !important;
 }
 
-@media (max-width: 650px) {
+/* @media (max-width: 650px) {
   .bus-page .dept-title-h4.department-title {
     font-size: 15px !important;
   }
-}
+} */
 .covid-coming {
   /* background: #f8f8f8 !important; */
   padding: 10px 0;    
