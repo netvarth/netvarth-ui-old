@@ -16,6 +16,7 @@ import { ServicesService } from '../../../../../shared/modules/service/services.
 import { ServiceModule } from '../../../../../shared/modules/service/service.module';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
 import { OrderModule } from 'ngx-order-pipe';
+import { TableModule } from 'primeng/table'
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import { OrderModule } from 'ngx-order-pipe';
         GalleryModule,
         ServiceModule,
         PagerModule,
-        OrderModule
+        OrderModule,
+        TableModule
     ],
     declarations: [
         WaitlistServicesComponent,

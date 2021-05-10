@@ -11,7 +11,6 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
-
 @Component({
     selector: 'app-waitlist-services',
     templateUrl: './waitlist-services.component.html'
@@ -31,7 +30,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     breadcrumbs;
     domain: any;
     trackStatus: string;
-    serv_list;
     liveTrackStatus: any;
     is_virtual_enbl = true;
     page_count = projectConstants.PERPAGING_LIMIT;
@@ -59,6 +57,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+
+    selectedServices: any = [];
+
+    activityValues: number[] = [0, 100];
+
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -71,6 +74,18 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService) { }
 
     ngOnInit() {
+        // this.columnDefs = [{ field: "make" }, { field: "model" }, { field: "price" }];
+
+        // this.rowData = [
+        //   { make: "Toyota", model: "Celica", price: 35000 },
+        //   { make: "Ford", model: "Mondeo", price: 32000 },
+        //   { make: "Porsche", model: "Boxter", price: 72000 }
+        // ];
+        /* Custom code that can be used to either retrieve user's column preference from local storage
+      or from the original configuration based on availability.
+      This can also be done by calling an API endpoint in production application's so that the user
+      preferences will not be lost between sessions. */
+        //   this.customers.forEach(customer => customer.date = new Date(customer.date));
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.liveTrackStatus = data.livetrack;
@@ -270,7 +285,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
 
             });
         } else {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
+            this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
         }
     }
 
