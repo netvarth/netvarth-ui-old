@@ -10,6 +10,7 @@ import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.c
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
+import { DepartmentServicePageComponent } from './shared/components/department-service-page/department-service-page.component';
 const routes: Routes = [
     {
         path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
@@ -28,6 +29,7 @@ const routes: Routes = [
     { path: 'pay/:id', component: PaymentLinkComponent },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: ':id', component: BusinessPageComponent },
+    { path: ':id/department/:deptId', component: DepartmentServicePageComponent },
     { path: ':id/:userEncId', component: BusinessPageComponent }
 ];
 

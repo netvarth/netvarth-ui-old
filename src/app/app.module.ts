@@ -89,6 +89,7 @@ import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ProviderServices } from './ynw_provider/services/provider-services.service';
+import { DepartmentServicePageComponent } from './shared/components/department-service-page/department-service-page.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -114,7 +115,8 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     ItemDetailsSharedComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    DepartmentServicePageComponent
   ],
   entryComponents: [
     SignUpComponent,

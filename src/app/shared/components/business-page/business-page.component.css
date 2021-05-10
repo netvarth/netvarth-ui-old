@@ -46,9 +46,9 @@ ul.details.contact {
   font-size: 1.1rem !important;
 }
 
-.info-bar {
+/* .info-bar {
   background-color: #f5f5f5 !important;
-}
+} */
 
 .bus-page .gal .galbx .overlay {
   position: absolute;
@@ -2147,7 +2147,7 @@ img.ordericon.home {
   padding: 12px 15px !important;
   /* box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); */
   border-radius: 5px;
-  background: #F6F6F6 0% 0% no-repeat padding-box !important;
+  background: none !important;
   margin-bottom: 8px !important;
 }
 
@@ -2198,7 +2198,7 @@ img.ordericon.home {
   }
 }
 .covid-coming {
-  background: #f8f8f8 !important;
+  /* background: #f8f8f8 !important; */
   padding: 10px 0;    
   font-weight: bold;
 }
@@ -2228,4 +2228,65 @@ img.ordericon.home {
 }
 .question-header {
   color: #59345D !important;
+}
+
+
+.dept-card {
+  width: 100% !important;
+  font-weight: 400 !important;
+  border: 0 !important;
+  box-shadow: 0px 34px 55px #28282814 !important;
+  margin: auto !important;
+  overflow: hidden !important;
+  max-width: 50vh !important;
+  min-width: 210px !important;
+  border-radius: 10px !important;
+  background: white;
+  padding: 10px;
+  display: flex;
+}
+.dept-card .book-btn {
+  width: 100%;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  opacity: 1;
+  padding: 8px;
+  border: none;
+}
+.dept-card .dept-name {
+  color: #946394 !important;
+  font-weight: bold;    
+  width: 45%;
+  margin-left: 5px;
+  font-size: 1.2rem;    
+  margin-right: 5px;
+}
+.dept-card .dept-img {
+  width: 20%;
+}
+.dept-card .dept-img img {
+  width: 100%;
+}
+.dept-card .service-buttons{
+  width: 35%;
+  margin: auto;
+}
+.panel-body .text-center img {
+  width: 60%;
+}
+.bSection {
+  display: flex;
+  margin-left: 20px;
+}
+.bSection img {
+  width: 80px;
+}
+.bSection .bname {
+  color: white;
+  font-size: 1.5rem;
+  margin-left: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
 }

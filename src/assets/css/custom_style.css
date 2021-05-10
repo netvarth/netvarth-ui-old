@@ -11989,7 +11989,7 @@ img.busN-logo {
 }
 
 .panel-heading.top-row {
-  background: #59345D 0% 0% no-repeat padding-box !important;
+  background: #522e5a 0% 0% no-repeat padding-box !important;
   height: 50px !important;
 }
 
@@ -12508,9 +12508,9 @@ img.busN-logo {
   font-weight: 700 !important;
 }
 
-.back-btn i {
+/* .back-btn i {
   color: black !important;
-}
+} */
 
 .email-txt-pad {
   padding: 10px 30px 10px;
@@ -14073,7 +14073,7 @@ padding-left: 15px !important;
   }
 }
 .content, .panel {
-    background: #F6F6F6 0% 0% no-repeat padding-box !important;
+    background: none !important;
 }
 .lgin.cust button, .ot-bx {
   height: 30px !important;
@@ -14083,7 +14083,7 @@ padding-left: 15px !important;
 .lgin.cust button .fa-user-circle-o {
   margin-top: -10px;
 }
-app-consumer-appointment .ot-bx,
+/* app-consumer-appointment .ot-bx,
 app-consumer-appointment .lgin.cust button,
 app-business-page .lgin.cust button,
 app-consumer-checkin .ot-bx,
@@ -14091,6 +14091,10 @@ app-consumer-checkin .lgin.cust button,
 app-business-page .ot-bx,
 app-confirm-page .lgin.cust button, 
 app-confirm-page .ot-bx {
+  margin-top: 10px;
+} */
+
+.lgin.cust button, .ot-bx {
   margin-top: 10px;
 }
 .mat-button {
@@ -14100,4 +14104,15 @@ app-confirm-page .ot-bx {
   content: url(../images/Asset.png);    
   width: 15px;
   margin-top: 5px;
+}
+.fa-arrow-left {
+  color: white !important;
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
+.background-img {
+  background-image: url(../images/heartfulness/BG.jpg);    
+}
+.panel-default .panel-heading {
+  border: none !important;
 }

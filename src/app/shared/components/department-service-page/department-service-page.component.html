@@ -1,0 +1,42 @@
+<section class="content bus-page">
+    <div class="container background-img">
+        <div class="row pad-bt-10 bus-page-header">
+            <div class="panel panel-default">
+                <div class="panel-heading top-row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a class="pull-left mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-center mgn-bt-40 mgn-up-30">
+                        <img src="assets/images/heartfulness/heartfulness-logo.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
+                    <ng-container *ngFor="let sps of servicesAndProviders">
+                        <ng-container *ngIf="sps.departmentId == deptId">
+                            <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
+                                *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
+                                {{sps.departmentName}}
+                            </h4>
+                            <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
+                                <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                    [terminology]='terminologiesjson' [loc]="selectedLocation"
+                                    (actionPerformed)="cardClicked($event)"></app-card>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
