@@ -7,12 +7,13 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 @Component({
   selector: 'app-booking-private-notes',
   templateUrl: './booking-private-notes.component.html',
-  styleUrls: ['./booking-private-notes.component.css','../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
+  styleUrls: ['./booking-private-notes.component.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
 })
 export class BookingPrivateNotesComponent implements OnInit {
   providerNotes;
   @Input() uuid;
   @Input() waitlist_data;
+  @Input() bookingType;
   selectedNote;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
@@ -50,12 +51,20 @@ export class BookingPrivateNotesComponent implements OnInit {
     }
   }
   getWaitlistNotes() {
-    this.provider_services.getProviderWaitlistNotesnew(this.uuid)
-      .subscribe(
-        data => {
-          this.providerNotes = data;
-          console.log(this.providerNotes)
-        });
+    if (this.bookingType === 'checkin') {
+      this.provider_services.getProviderWaitlistNotesnew(this.uuid)
+        .subscribe(
+          data => {
+            this.providerNotes = data;
+            console.log(this.providerNotes)
+          });
+    } else {
+      this.provider_services.getProviderAppointmentNotes(this.uuid)
+        .subscribe(
+          data => {
+            this.providerNotes = data;
+          });
+    }
   }
   selectNote(note) {
     this.selectedNote = note;
