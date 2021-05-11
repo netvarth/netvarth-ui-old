@@ -1632,6 +1632,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
   checkinClicked(location, service) {
+    console.log('checkin clcikef');
     const current_provider = {
       'id': location.id,
       'place': location.place,
@@ -1663,8 +1664,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.changedate_req = true;
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
     if (this.userType === 'consumer') {
-      this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+      console.log(service.serviceType);
+      if (service.serviceType === 'virtualService') {
+        console.log('checkin');
+        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
+        });
+
+      }else{
+        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service,null, 'consumer');
+      }
+      
     } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);
