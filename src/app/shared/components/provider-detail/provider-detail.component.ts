@@ -1802,7 +1802,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: JSON.stringify(consumerdata)
+      data: consumerdata
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -1823,7 +1823,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
         .subscribe(
           data => {
-            console
+            console.log(data);
             resolve(data);
           },
           () => {

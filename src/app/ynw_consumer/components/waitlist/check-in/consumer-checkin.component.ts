@@ -726,7 +726,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
-            data: JSON.stringify(memberObject[0])
+            data: memberObject[0]
             
           });
           virtualdialogRef.afterClosed().subscribe(result => {

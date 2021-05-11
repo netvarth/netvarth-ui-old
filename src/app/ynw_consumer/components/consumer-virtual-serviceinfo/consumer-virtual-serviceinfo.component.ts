@@ -17,7 +17,7 @@ virtualForm:FormGroup;
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ConsumerVirtualServiceinfoComponent>,
     public fed_service: FormMessageDisplayService,) { 
-      this.data=JSON.parse(data);
+      this.data=data;
     }
 
   ngOnInit(): void {
