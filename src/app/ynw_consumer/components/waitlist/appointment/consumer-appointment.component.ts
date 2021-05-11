@@ -624,7 +624,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 error = this.validatorPartysize(this.enterd_partySize);
             }
             if (error === '') {
-                this.saveCheckin();
+                this.saveCheckin('next');
             } else {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.apptdisable = false;
@@ -636,7 +636,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
-            data: JSON.stringify(memberObject[0])
+            data: memberObject[0]
             
           });
           virtualdialogRef.afterClosed().subscribe(result => {
@@ -1713,7 +1713,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.bookStep = type;
         }
         if (this.bookStep === 3) {
-            this.saveCheckin('next');
+            this.saveCheckin();
         }
     }
     addApptAdvancePayment(post_Data) {
