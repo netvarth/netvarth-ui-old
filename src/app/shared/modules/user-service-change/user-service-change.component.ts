@@ -179,6 +179,7 @@ export class UserServiceChnageComponent implements OnInit {
   selection = new SelectionModel(true, []);
   uuid: any;
   source;
+  selected = false;
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -212,6 +213,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.service_dataSource.data = this.setServiceDataSource(data);
     });
+    console.log(this.service_dataSource.data);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -305,7 +307,11 @@ export class UserServiceChnageComponent implements OnInit {
   redirecToReports() {
     this.router.navigate(['provider', 'check-ins']);
   }
-
+  selectedRow(index){
+    if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
+      this.service_dataSource.data[index].selected = true;
+  }
+  }
 
 }
 

@@ -10,13 +10,47 @@
     </h5>
   </div>
 </section>
-<section class="report">
-  <div class="content w-manager settings comn-cls lic-page">
-    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+<section >
+  <div >
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
 
+      <div class="w-dta" >
+        <div class="row">
+            <div class="copy">
+                <div class="table-outer q-itm">
+      <div class="pad-10 drugdetailslist">
+      <table class="table ">
+        <thead>
+          <tr>
+            <th>Service ID</th>
+            <th>Username</th>
+            <th>User Type</th>
+            <th>Online status</th>
+            <th>Phone number</th>
+            <th>Specialization</th>
+            <th>Languages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr [class.green]="service.selected" *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i)">
+            <td data-title="Service ID">{{service.id? service.id : ''}}</td>
+            <td data-title="Username">{{service.Username?service.Username : ''}}</td>
+            <td data-title="User Type">{{service.userType? service.userType : ''}}</td>
+            <td data-title="Online status"><span ><i class="fa fa-user-circle-o green"  *ngIf="service.isAvailable" aria-hidden="true"></i><i class="fa fa-user-circle-o gray"  *ngIf="!service.isAvailable" aria-hidden="true"></i></span></td>
+            <td data-title="Phone number" > {{service.mobileNo}}</td>
+            <td data-title="Specialization" >{{service.specialization}} </td>
+            <td data-title="Languages">{{service.languages}} </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+   
+   
+    
+</div></div></div></div>
 
-
-      <div class="box">
+      <!-- <div class="box">
         <div *ngIf="service_dataSource.data.length!=0">
           <div class="box-body table-container table-responsive mat-elevation-z8'">
             Choose services from this grid
@@ -28,8 +62,6 @@
             </div>
 
             <table mat-table [dataSource]="service_dataSource">
-              <!-- Checkbox Column -->
-              <!-- Checkbox Column -->
               <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef >
                   <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -52,22 +84,14 @@
               <ng-container matColumnDef="username">
                 <th mat-header-cell *matHeaderCellDef>Username</th>
                 <td mat-cell *matCellDef="let service">
-                  <!-- <span class="mobile-label">Service Name:</span> -->
                   {{service.Username}}</td>
               </ng-container>
 
               <ng-container matColumnDef="userType">
                 <th mat-header-cell *matHeaderCellDef>User type</th>
                 <td mat-cell *matCellDef="let service">
-                  <!-- <span class="mobile-label">User Name</span> -->
                   {{service.userType}}</td>
               </ng-container>
-              <!-- <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status</th>
-                <td mat-cell *matCellDef="let service">
-                 
-                  {{service.status}}</td>
-              </ng-container> -->
               <ng-container matColumnDef="availability">
                 <th mat-header-cell *matHeaderCellDef>Online status</th>
                 <td mat-cell *matCellDef="let service">
@@ -92,18 +116,10 @@
                   {{service.languages}}
                   </td>
               </ng-container>
-              <!-- <ng-container matColumnDef="department">
-              <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
-              <mat-cell *matCellDef="let service">
-                  <span class="mobile-label">Department</span>
-                {{service.department}}</mat-cell>
-            </ng-container> -->
-
               <tr mat-header-row *matHeaderRowDef="service_displayedColumns"></tr>
               <tr mat-row *matRowDef="let row;columns:service_displayedColumns"></tr>
 
             </table>
-            <!-- <mat-paginator #paginator [pageSize]="100" [length]="serviceCount"></mat-paginator> -->
             <div class="text-center mt-5">
               <button type="button" class="btn btn-lg default profile-back"
                 (click)="updateUser();">Select</button>
@@ -117,14 +133,13 @@
             No users Found
           </div>
         </div>
-      </div>
+      </div> -->
 
 
 
 
     </div>
   </div>
-  <div class="clearfix"></div>
 </section>
 
 
