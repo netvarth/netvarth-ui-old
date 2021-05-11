@@ -53,7 +53,7 @@
         <header class="main-header dash chkin" id="apptsHeader" [class.index-zero]="filter_sidebar">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation" style="background: transparent !important;">
             <div class="navbar-custom-menu width100pc">
-              <ul class="nav navbar-nav width100pc" style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important;">
+              <ul class="nav navbar-nav width100pc" style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important; flex-wrap: wrap !important;">
                 <li class="dropdown notifications-menu">
                   <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
@@ -77,22 +77,25 @@
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
                 </li>
-                <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3" style="margin-left: auto !important; margin-bottom: 12px !important;">
-                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    *ngIf="selectedView" style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display && selectedView.name">
-                      {{selectedView.name}}</span>
-                    <span *ngIf="!small_device_display && !selectedView.name">
-                      <ng-container *ngIf="selectedView.businessName">
-                        {{selectedView.businessName}}</ng-container>
-                      <ng-container *ngIf="!selectedView.businessName">
-                        {{selectedView.firstName}}</ng-container>
+                <li class="dropdown customized-dd" *ngIf="time_type !==3" style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    *ngIf="selectedView">
+                    <span style="margin-right: 10px !important;">
+                      <i class="fa fa-eye"></i>
+                      <span *ngIf="!small_device_display && selectedView.name">
+                        {{selectedView.name}}</span>
+                      <span *ngIf="!small_device_display && !selectedView.name">
+                        <ng-container *ngIf="selectedView.businessName">
+                          {{selectedView.businessName}}</ng-container>
+                        <ng-container *ngIf="!selectedView.businessName">
+                          {{selectedView.firstName}}</ng-container>
+                      </span>
                     </span>
-                  </a>
-                  <ul class="dropdown-menu">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" style="padding-bottom: 0 !important;">
                     <li>
-                      <ul class="menu">
+                      <ul class="menu dd-menu">
                         <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
                           <a class="pointer-cursor" (click)="handleViewSel(view)">
                             <ng-container *ngIf="view.name">
@@ -122,7 +125,7 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
+                    <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
               </ul>

@@ -37,3 +37,40 @@
     margin: 20px 0px;
     box-shadow: 0px 34px 55px #00008b1c !important;
 }
+
+.dropdown.customized-dd button {
+    background-color: white !important;
+}
+
+.dropdown.customized-dd:hover button{
+    background-color: #f4f4f4 !important;
+    color: #444 !important;
+}
+
+.dropdown.customized-dd .dd-menu {
+    list-style-type: none !important;
+    padding: 5px !important;
+    width: max-content !important;
+}
+
+.dropdown.customized-dd .dd-menu h4 {
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+    color: #777 !important;
+    font-weight: 500 !important;
+}
+
+.dropdown.customized-dd .manage-views {
+    background: #f0f0f0 !important;
+    height: 30px !important;
+}
+
+.dropdown.customized-dd .manage-views a {
+    text-align: center !important;
+    color: #1E4079 !important;
+    height: 100% !important;
+    font-weight: 600 !important;
+    line-height: 30px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
