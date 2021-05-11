@@ -117,15 +117,14 @@ export class CheckinActionsComponent implements OnInit {
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
-        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.accountType = user.accountType;        
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');    
     }
     ngOnInit() {
         this.apiloading = true;
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
+        console.log(this.checkin);
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
@@ -144,7 +143,9 @@ export class CheckinActionsComponent implements OnInit {
             this.apiloading = false;
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        console.log(this.provider_label);
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;   
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');

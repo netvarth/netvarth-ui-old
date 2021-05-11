@@ -105,8 +105,6 @@ export class AppointmentActionsComponent implements OnInit {
         public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.accountType = user.accountType;
     }
     ngOnInit() {
         this.setMinMaxDate();
@@ -122,6 +120,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');

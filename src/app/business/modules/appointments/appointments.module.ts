@@ -24,6 +24,9 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { CardModule } from '../../../shared/components/card/card.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { CardModule } from '../../../shared/components/card/card.module';
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         QuestionnaireModule,
-        CardModule
+        CardModule,
+        MatTableModule,
+        MatCheckboxModule,
+        UserServiceChangeModule
     ],
     declarations: [
         AppointmentsComponent,

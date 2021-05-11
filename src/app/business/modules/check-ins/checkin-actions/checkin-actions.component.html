@@ -89,7 +89,8 @@
         <div class="action-box pointer-cursor" *ngIf="accountType=='BRANCH'" (click)="changeWaitlistservice()">
         <div class="action-box-sub">
             <span class="cancel-icon"></span>
-            <div class="icon-text">Change Doctor</div>
+            <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
+            <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
         </div>
     </div>
         <div class="action-box pointer-cursor" *ngIf="showArrived"
