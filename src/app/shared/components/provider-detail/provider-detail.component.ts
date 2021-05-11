@@ -1792,11 +1792,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
+    data:''
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
