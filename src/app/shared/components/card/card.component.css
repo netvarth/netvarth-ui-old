@@ -883,46 +883,66 @@ button.fxmenu1{
     height: 45px;
 }
 .action-btn {
-    padding: 5px 10px;
+    padding: 5px 20px;
     border: 1px solid #ccc;
     color: black;
-    border-radius: 20px;
+    border-radius: 5px;
+    border-color: #1e4079 !important;
 }
-.token {
-    border-radius: 50%;
-    color: black;
-    border: 1px solid #00008b1c;
-    max-width: 100px;
-    padding: 20px 10px;
-    text-align: center;
-    max-height: 55px;
-    width: 55px;
+.action-btn:hover {
+    background: #1e4079 !important;
+    color: white;
+    box-shadow: 0 4px 4px 0 #1e4079;
 }
-.box1, .box3 {
-    width: 25%;
-    display: inline-block;
-}
-.box4 {
-    width: 25%;
-    display: inline-block;
-}
-.box2 {
-    width: 18%;
-    display: inline-block;
-}
-.box5 {
-    width: 35%;
-    display: inline-block;
+.wtsapvid-icon {
+    width: 14px !important;
 }
 .walkin-icon, .online-icon {
     width: 15px !important;
+}
+.view-more {
+    padding: 0px 10px;
+    border: 1px solid #eee;
+    text-align: center;
+    font-size: .7rem;
+    border-radius: 20px;
+}
+.token {
+    border: 1px solid #eee;
+    padding: 20px 0px;
+    width: 70px;
+    text-align: center;    
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+}
+.box1 {
+    width: 45%;
+    display: inline-block;
+}
+.box4 {
+    width: 30%;
+    display: inline-block;
+    margin-right: 5px;
+}
+.history .box1 {
+    width: 67%;
+}
+.consumer-name {
+    font-weight: bold;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .dash-item {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 20px;
 }
-.wtsapvid-icon {
-    width: 14px !important;
+.mgn-bt-minus {
+    margin-bottom: -20px
 }
+.history .main-sec {
+    height: 70px !important;
+} 
