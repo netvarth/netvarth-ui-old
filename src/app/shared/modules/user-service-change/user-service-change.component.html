@@ -80,6 +80,18 @@
                   {{service.mobileNo}}
                   </td>
               </ng-container>
+              <ng-container matColumnDef="specialization">
+                <th mat-header-cell *matHeaderCellDef>Specialization</th>
+                <td mat-cell *matCellDef="let service">
+                  {{service.specialization}}
+                  </td>
+              </ng-container>
+              <ng-container matColumnDef="languages">
+                <th mat-header-cell *matHeaderCellDef>Languages</th>
+                <td mat-cell *matCellDef="let service">
+                  {{service.languages}}
+                  </td>
+              </ng-container>
               <!-- <ng-container matColumnDef="department">
               <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
               <mat-cell *matCellDef="let service">

@@ -175,7 +175,7 @@ export class UserServiceChnageComponent implements OnInit {
   select_All = Messages.SELECT_ALL;
   public service_dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  service_displayedColumns = ['select', 'username', 'userType', 'availability','phonenumber'];
+  service_displayedColumns = ['select', 'username', 'userType', 'availability','phonenumber','specialization','languages'];
   selection = new SelectionModel(true, []);
   uuid: any;
   source;
@@ -228,13 +228,23 @@ export class UserServiceChnageComponent implements OnInit {
     const service_list: any = [];
     result.forEach(serviceObj => {
       let userName = '';
+      let languages = '';
       userName = serviceObj.firstName + ' ' + serviceObj.lastName;
+      if(serviceObj.preferredLanguages){
+        console.log(JSON.parse(serviceObj.preferredLanguages));
+        languages = JSON.parse(serviceObj.preferredLanguages);
+      }
+      
       service_list.push(
         {
           'id': serviceObj.id,
           'Username': userName,
           'userType': serviceObj.userType,
-          'status': serviceObj.status
+          'status': serviceObj.status,
+          'mobileNo':serviceObj.mobileNo,
+          'isAvailable':serviceObj.isAvailable,
+          'specialization':serviceObj.specialization,
+          'languages':languages
         });
     });
     return service_list;
@@ -242,7 +252,7 @@ export class UserServiceChnageComponent implements OnInit {
   updateUser() {
     this.services_selected = this.selection.selected;
     let msg = '';
-    msg = 'DO you want change the provider?';
+    msg = 'Do you want change the provider?';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
