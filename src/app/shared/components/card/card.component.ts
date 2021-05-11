@@ -5,6 +5,9 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
+import { projectConstantsLocal } from '../../constants/project-constants';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { Router } from '@angular/router';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -18,6 +21,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() domain;
     @Output() actionPerformed = new EventEmitter<any>();
     @Output() noteClicked = new EventEmitter<any>();
+    @Input() type;
+    @Input() time_type;
+    @Input() allLabels;
+    @Input() pos;
     service: any;
     user: any;
     timingCaption: string;
@@ -29,16 +36,50 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     itemQty = 0;
     actions: string;
     todayDate;
+    waitlists;
+    newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+    customer_label = '';
+    selectedUser;
+    selQIds: any = [];
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
+        private groupService: GroupStorageService,
+        private router: Router,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
+        if (this.type) {
+            this.item.type = this.type;
+        }
+        if (this.item.type == 'checkin') {
+            if (this.groupService.getitemFromGroupStorage('selectedUser')) {
+                this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
+            }
+            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
+            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('history_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('history_selQ');
+            }
+        } else {
+            if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
+                this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
+            }
+            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
+            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
+            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('appt_history_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
+            }
+        }
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         console.log(this.todayDate);
         switch (this.item.type) {
@@ -83,6 +124,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.service = this.item.item;
                 break;
             case 'item-head':
+                break;
+            case 'checkin-dashboard':
+                this.waitlists = this.item;
+                break;
+            case 'appt-dashboard':
+                this.waitlists = this.item;
                 break;
             default:
                 this.user = this.item.item;
@@ -253,4 +300,21 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return;
     } */
+    getDisplayname(label) {
+        for (let i = 0; i < this.allLabels.length; i++) {
+            if (this.allLabels[i].label === label) {
+                return this.allLabels[i].displayName;
+            }
+        }
+    }
+    checkinActions(waitlist, type) {
+        this.actionPerformed.emit({ waitlist: waitlist, type: type });
+    }
+    gotoDetails(checkin) {
+        if (this.item.type == 'checkin-dashboard') {
+            this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
+        } else {
+            this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
+        }
+    }
 }

@@ -2801,4 +2801,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   //   return this.apptStatuses.toString();
   // }
+  cardClicked(event) {
+    console.log(event);
+    if (event.type === 'note') {
+      this.showConsumerNote(event.waitlist);
+    } else if (event.type === 'note') {
+      this.openAttachmentGallery(event.waitlist);
+    } else if (event.type === 'actions') {
+      this.showCheckinActions(event.waitlist);
+    }
+  }
 }

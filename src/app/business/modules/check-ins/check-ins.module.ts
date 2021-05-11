@@ -32,7 +32,7 @@ import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.mo
 import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
-import { UserServiceChnageComponent } from '../../../shared/components/user-service-change/user-service-change.component';
+import { CardModule } from '../../../shared/components/card/card.module';
 
 
 @NgModule({
@@ -62,7 +62,8 @@ import { UserServiceChnageComponent } from '../../../shared/components/user-serv
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        QuestionnaireModule
+        QuestionnaireModule,
+        CardModule
     ],
     declarations: [
         CheckInsComponent,
@@ -70,15 +71,13 @@ import { UserServiceChnageComponent } from '../../../shared/components/user-serv
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
         ProviderWaitlistCheckInDetailComponent,
-        CheckinActionsComponent,
-        UserServiceChnageComponent
+        CheckinActionsComponent
         // DateRangePickerJComponent
 
     ],
     entryComponents: [
         AdjustQueueDelayComponent,
-        CheckinActionsComponent,
-        UserServiceChnageComponent
+        CheckinActionsComponent
     ],
     exports: [CheckInsComponent]
 })

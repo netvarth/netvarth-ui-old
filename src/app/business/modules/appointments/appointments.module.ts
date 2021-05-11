@@ -23,6 +23,7 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { CardModule } from '../../../shared/components/card/card.module';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        QuestionnaireModule
+        QuestionnaireModule,
+        CardModule
     ],
     declarations: [
         AppointmentsComponent,

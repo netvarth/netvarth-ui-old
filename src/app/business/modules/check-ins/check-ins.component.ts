@@ -338,6 +338,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   firstTime = true;
   statusChangeClicked = false;
   activeUser: any;
+  statusLoaded = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -3162,6 +3163,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   statusClick(status) {
+    this.statusLoaded = true;
     this.allSelection = false;
     this.statusAction = status;
     this.groupService.setitemToGroupStorage('action', this.statusAction);
@@ -3173,6 +3175,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, status);
     }
+    setTimeout(() => {
+      this.statusLoaded = false;
+    }, 500);
   }
   tabChange(event) {
     this.lStorageService.removeitemfromLocalStorage('wlfilter');
@@ -3270,4 +3275,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   //   return this.apptStatuses.toString();
   // }
+  cardClicked(event) {
+    console.log(event);
+    if (event.type === 'note') {
+      this.showConsumerNote(event.waitlist);
+    } else if (event.type === 'note') {
+      this.openAttachmentGallery(event.waitlist);
+    } else if (event.type === 'actions') {
+      this.showCheckinActions(event.waitlist);
+    }
+  }
 }
