@@ -24,7 +24,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() type;
     @Input() time_type;
     @Input() allLabels;
-    @Input() pos;
+    // @Input() pos;
+    @Input() statusAction;
     service: any;
     user: any;
     timingCaption: string;
@@ -36,7 +37,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     itemQty = 0;
     actions: string;
     todayDate;
-    waitlists;
+    waitlist;
     newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     customer_label = '';
     selectedUser;
@@ -56,7 +57,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (this.type) {
             this.item.type = this.type;
         }
-        if (this.item.type == 'checkin') {
+        if (this.item.type == 'checkin-dashboard') {
             if (this.groupService.getitemFromGroupStorage('selectedUser')) {
                 this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
             }
@@ -79,6 +80,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
             }
         }
+        console.log(this.selQIds);
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         console.log(this.todayDate);
@@ -126,10 +128,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             case 'item-head':
                 break;
             case 'checkin-dashboard':
-                this.waitlists = this.item;
+                this.waitlist = this.item;
                 break;
             case 'appt-dashboard':
-                this.waitlists = this.item;
+                this.waitlist = this.item;
                 break;
             default:
                 this.user = this.item.item;
@@ -307,14 +309,27 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
         }
     }
-    checkinActions(waitlist, type) {
-        this.actionPerformed.emit({ waitlist: waitlist, type: type });
+    getLabels(checkin) {
+        let label = [];
+        Object.keys(checkin.label).forEach(key => {
+            for (let i = 0; i < this.allLabels.length; i++) {
+                if (this.allLabels[i].label === key) {
+                    label.push(this.allLabels[i].displayName);
+                }
+            }
+        });
+        const lbl = label.toString();
+        return lbl.replace(/,/g, ", ");
     }
-    gotoDetails(checkin) {
+    checkinActions(waitlist, type) {
+        this.actionPerformed.emit({ waitlist: waitlist, type: type, statusAction: this.statusAction });
+    }
+    gotoDetails() {
         if (this.item.type == 'checkin-dashboard') {
-            this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
+            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
         } else {
-            this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
+            this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type } });
         }
     }
 }
+

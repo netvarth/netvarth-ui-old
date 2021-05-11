@@ -32,3 +32,10 @@
         margin-bottom: 0px !important;
     }    
 }
+.waitlist-box {
+    /* box-shadow: 0px 34px 55px #28282814 !important; */
+    padding: 10px;
+    margin: 10px 5px;
+    display: flex;
+    background: #00008b1c;
+}

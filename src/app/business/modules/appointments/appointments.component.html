@@ -465,7 +465,7 @@
                   </a>
 
                 </div>
-                <table class="table tbl-qboard childDetails singleDash">
+                <table class="table tbl-qboard childDetails singleDash" *ngIf="!small_device_display">
                   <thead id="childActionBar" *ngIf="startedAppts.length > 1 || apptStartedMultiSelection">
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="startedAppts.length > 1" colspan="3">
@@ -662,6 +662,12 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="small_device_display && !statusLoaded">
+                  <app-card [item]="startedAppts" [type]="'appt-dashboard'" [time_type]="time_type"
+                  (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'"></app-card>
+                </div>
+
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
@@ -698,7 +704,7 @@
                     </i>
                   </a>
                 </div>
-                <table class="table tbl-qboard childDetails singleDash">
+                <table class="table tbl-qboard childDetails singleDash" *ngIf="!small_device_display">
                   <thead id="childActionBar"
                     *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
                     <tr>
@@ -1125,6 +1131,13 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="small_device_display && !statusLoaded">
+                  <app-card [item]="check_in_filtered_list" [type]="'appt-dashboard'" [time_type]="time_type"
+                  (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
+                </div>
+
+
               </div>
             </div>
           </mat-tab>
@@ -1263,7 +1276,7 @@
                   </aside>
                 </div>
               </div>
-              <table class="table tbl-qboard childDetails singleDash">
+              <table class="table tbl-qboard childDetails singleDash" *ngIf="!small_device_display">
                 <thead id="childActionBar" *ngIf="showSelectAll()">
                   <tr>
                     <th class="chkWth check-table-head" colspan="3">
@@ -1468,6 +1481,13 @@
                   </tr>
                 </tbody>
               </table>
+
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="small_device_display && !statusLoaded">
+                <app-card [item]="check_in_filtered_list" [type]="'appt-dashboard'" [time_type]="time_type"
+                (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
+              </div>
+
+
             </div>
           </mat-tab>
           <mat-tab label="History ({{history_waitlist_count}})">
@@ -1646,7 +1666,7 @@
                   </aside>
                 </div>
               </div>
-              <table class="table tbl-qboard childDetails singleDash">
+              <table class="table tbl-qboard childDetails singleDash" *ngIf="!small_device_display">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
@@ -1850,6 +1870,13 @@
                   </tr>
                 </tfoot>
               </table>
+
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="small_device_display">
+                <app-card [item]="check_in_filtered_list" [type]="'appt-dashboard'" [time_type]="time_type"
+                (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
+              </div>
+
+
             </div>
           </mat-tab>
         </mat-tab-group>

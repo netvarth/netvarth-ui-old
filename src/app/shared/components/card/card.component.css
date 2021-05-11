@@ -882,3 +882,38 @@ button.fxmenu1{
 .service-details .module {
     height: 45px;
 }
+.waitlist-box {
+    /* box-shadow: 0px 34px 55px #28282814 !important; */
+    padding: 10px;
+    margin: 10px 5px;
+    display: flex;
+    background: #00008b1c;
+}
+.action-btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: black;
+    border-radius: 20px;
+}
+.token {
+    border-radius: 50%;
+    color: black;
+    background-color: white;
+    max-width: 100px;
+    padding: 13px 10px;
+    text-align: center;
+    max-height: 50px;
+    width: 45px;
+}
+.box1, .box3 {
+    width: 30%;
+}
+.box4 {
+    width: 100px;
+}
+.walkin-icon {
+    width: 15px !important;
+}
+.box2 {
+    width: 60px;
+}

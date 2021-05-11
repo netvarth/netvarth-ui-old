@@ -3283,7 +3283,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (event.type === 'note') {
       this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
-      this.showCheckinActions(event.waitlist);
+      this.showCheckinActions(event.statusAction, event.waitlist);
     }
   }
 }
