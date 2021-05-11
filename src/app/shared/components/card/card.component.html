@@ -250,11 +250,11 @@
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
 
-        <div class="main-sec" [class.mgn-bt-minus]="waitlist.provider">
+        <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && waitlist.token">
                 {{waitlist.token}}
             </div>
-            <div class="box1 mgn-lt-5">
+            <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider && time_type!==3">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
