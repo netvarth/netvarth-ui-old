@@ -717,7 +717,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if(this.virtualInfo){
                 console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             console.log(formattedDate);
             this.waitlist_for[0]['dob']=formattedDate;
             if(this.virtualInfo.islanguage==='yes'){
@@ -743,7 +743,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     
     saveCheckin(type?) {
-        console.log('insaide');
+      
         if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {

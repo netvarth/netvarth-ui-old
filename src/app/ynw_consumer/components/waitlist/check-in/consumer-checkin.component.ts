@@ -708,7 +708,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if(this.virtualInfo){
                 console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             console.log(formattedDate);
             this.waitlist_for[0]['dob']=formattedDate;
             if(this.virtualInfo.islanguage==='yes'){

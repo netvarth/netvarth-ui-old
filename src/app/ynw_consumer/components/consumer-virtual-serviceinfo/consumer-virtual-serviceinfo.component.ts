@@ -41,7 +41,7 @@ virtualForm:FormGroup;
     this.details=this.data;
     this.virtualForm.patchValue({
       dob: this.details.userProfile.dob,
-      pincode: (this.details.bookingLocation &&this.details.bookingLocation.pincode)?this.details.bookingLocation.pincode:'',
+      pincode: (this.details.bookingLocation &&this.details.bookingLocation.pincode)?this.details.bookingLocation.pincode:'' || this.details.userProfile.pinCode,
       preferredLanguage: (this.details.preferredLanguage&&this.details.preferredLanguage[0])?this.details.preferredLanguage[0]:'',
       isLanguage:(this.details.preferredLanguage&& this.details.preferredLanguage[0]==='English')?'yes':'no'
     });
