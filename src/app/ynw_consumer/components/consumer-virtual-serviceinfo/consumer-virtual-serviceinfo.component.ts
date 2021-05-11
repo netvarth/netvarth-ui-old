@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-consumer-virtual-serviceinfo',
@@ -12,9 +12,13 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ConsumerVirtualServiceinfoComponent implements OnInit {
   lngknown='yes';
 virtualForm:FormGroup;
+  details: any;
   constructor( private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ConsumerVirtualServiceinfoComponent>,
-    public fed_service: FormMessageDisplayService,) { }
+    public fed_service: FormMessageDisplayService,) { 
+      this.data=JSON.parse(data);
+    }
 
   ngOnInit(): void {
     this.createForm();
@@ -27,10 +31,23 @@ virtualForm:FormGroup;
       islanguage: ['', Validators.compose([Validators.required])],
      
     });
+    console.log(this.data);
+    if(this.data!==null|| this.data!==undefined ||this.data!==''){
+      this.updateForm();
+
+    }
+  }
+  updateForm(){
+    this.details=this.data;
+    this.virtualForm.patchValue({
+      dob: this.details.userProfile.dob,
+      pincode: this.details.bookingLocation.pincode,
+      preferredLanguage: this.details.preferredLanguage[0],
+      isLanguage:(this.details.preferredLanguage&& this.details.preferredLanguage[0]==='English')?'yes':'no'
+    });
   }
   onSubmit(formdata){
 
-console.log(formdata);
  this.dialogRef.close(formdata)
 
   }

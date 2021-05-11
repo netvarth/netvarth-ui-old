@@ -28,6 +28,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
+import { ConsumerVirtualServiceinfoComponent } from '../../consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 
 @Component({
     selector: 'app-consumer-appointment',
@@ -630,7 +631,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
     }
-    saveCheckin(type?) {
+    confirmVirtualServiceinfo(memberObject,type?){
+        const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+            disableClose: true,
+            data: JSON.stringify(memberObject[0])
+            
+          });
+          virtualdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+             this.virtualInfo=result;
+             // this.confirmcheckin(type);
+            
+            }
+          });
+    }
+    confirmcheckin(type?){
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -722,6 +739,28 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.addApptAdvancePayment(post_Data);
             }
         }
+    }
+    
+    saveCheckin(type?) {
+        console.log('insaide');
+        if(this.sel_ser_det.serviceType === 'virtualService'){
+            if (this.waitlist_for.length !== 0) {
+                for (const list of this.waitlist_for) {
+                   console.log(list['id']);
+                   console.log(this.familymembers);
+                  const memberObject= this.familymembers.filter(member=>member.userProfile.id===list['id']);
+                  console.log(memberObject);
+                  if(list['id']!==this.customer_data.id){
+                   this.confirmVirtualServiceinfo(memberObject,type);
+                  }else{
+                      this.confirmcheckin(type);
+                  }
+                }
+            }
+        }else{
+            this.confirmcheckin(type);
+        }
+
     }
     rescheduleAppointment() {
         this.apptdisable = true;
@@ -1765,6 +1804,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
+        console.log(this.action);
         if (this.action === 'slotChange') {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
@@ -1773,6 +1813,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         if (this.action === 'members') {
             this.saveMemberDetails();
+            this.checkVirtualService();
         } else if (this.action === 'addmember') {
             this.handleSaveMember();
         } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
@@ -1780,6 +1821,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else if (this.action === 'coupons') {
             this.applyCoupons();
         }
+    }
+    checkVirtualService() {
+       console.log(this.waitlist_for[0]) ;
     }
     popupClosed() {
         this.sel_checkindate = this.selectedDate;

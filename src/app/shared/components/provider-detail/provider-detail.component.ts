@@ -1787,16 +1787,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
   collectRequiredinfo(id,place,location,date,service?) {
-    console.log('inside');
+    const dataObj={};
     const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
+    data:JSON.stringify(dataObj)
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
