@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {  MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { SearchModule } from './shared/modules/search/search.module';
@@ -108,6 +108,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { ConsumerVirtualServiceinfoComponent } from './ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -144,7 +145,8 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ServicePageHealthcareComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    ConsumerVirtualServiceinfoComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -161,7 +163,8 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     AddAddressComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    ConsumerVirtualServiceinfoComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -202,7 +205,7 @@ export function init_app(globalService: GlobalService) {
     NgxIntlTelInputModule,
     ModalModule.forRoot(),
     ShareIconsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BsModalService,

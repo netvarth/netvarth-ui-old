@@ -1712,7 +1712,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], current_provider['service'], consumerdata);
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
         });
 
       }
@@ -1765,7 +1765,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           if (passParam['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
 
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
             });
 
           }
@@ -1783,7 +1783,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getFavProviders();
           if (passParam['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
             });
 
           }else{
@@ -1806,6 +1806,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log("Result:");
+        console.log(result);
         this.consumerVirtualinfo = result;
         if(type==='appt'){
           this.showAppointment(id, place, location, date, service, 'consumer', result);

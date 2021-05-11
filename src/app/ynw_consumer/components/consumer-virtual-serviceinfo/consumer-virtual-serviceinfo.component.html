@@ -5,7 +5,7 @@
 onSubmit(virtualForm.value)">
     <div class="mat-dialog-title">
        
-        <div class="title">TeleService Form</div>
+        <div class="title"></div>
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -16,13 +16,14 @@ onSubmit(virtualForm.value)">
 
             <div class="form-group dob">
                 <mat-label for="dob">Enter your Date of Birth</mat-label>
-                <mat-form-field color="accent" appearance="fill">
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="dob" formControlName="dob">
-                    <mat-datepicker-toggle matSuffix [for]="dob">
+                <br/>
+                <!-- <mat-form-field color="accent" appearance="fill" class="mgn-up-10 vt_dt no-padding"> -->
+                    <!-- <mat-label>Choose a date</mat-label> -->
+                    <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob" class="vt_dt no-padding mgn-up-5">
+                    <!-- <mat-datepicker-toggle matSuffix [for]="dob">
                     </mat-datepicker-toggle>
-                    <mat-datepicker #dob></mat-datepicker>
-                </mat-form-field>
+                    <mat-datepicker #dob></mat-datepicker> -->
+                <!-- </mat-form-field> -->
                 <br>
             </div>
 
@@ -85,10 +86,10 @@ onSubmit(virtualForm.value)">
                 <span >Submit</span>
                
             </button>
-            <button class="cust-logpg-submt login-button"  type="button" mat-button>
+            <!-- <button class="cust-logpg-submt login-button"  type="button" mat-button>
                 <span >Cancel</span>
                
-            </button>
+            </button> -->
         </div>
         <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
         </app-field-error-display> -->

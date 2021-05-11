@@ -63,7 +63,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
-import { ConsumerVirtualServiceinfoComponent } from './components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 
 
 @NgModule({
@@ -117,10 +116,7 @@ import { ConsumerVirtualServiceinfoComponent } from './components/consumer-virtu
     OrderComponent,
     OrderDetailComponent,
     ApptCardComponent,
-    WlCardComponent,
-    ConsumerVirtualServiceinfoComponent,
-
-
+    WlCardComponent
   ],
   exports: [ConfirmBoxComponent, MatBadgeModule],
   schemas: [
