@@ -248,55 +248,56 @@
 
 <div *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'" (click)="gotoDetails()">
 
-    <div class="box1 mgn-lt-5" [class.box5]="time_type==3">
+    <div class="box1 mgn-lt-5" [class.box5]="time_type==3 || !waitlist.token">
         <div class="dash-item"
             *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
             {{waitlist.waitlistingFor[0].firstName}}
             {{waitlist.waitlistingFor[0].lastName}}
         </div>
-        <div class="dash-item"
+        <!-- <div class="dash-item"
             *ngIf="item.type=='appt-dashboard' && (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName)">
             {{waitlist.appmtFor[0].firstName}}
             {{waitlist.appmtFor[0].lastName}}
-        </div>
+        </div> -->
         <div class="dash-item"
             *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
             {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
-        <div class="dash-item"
+        <!-- <div class="dash-item"
             *ngIf="item.type=='appt-dashboard' && !waitlist.appmtFor[0].firstName && !waitlist.appmtFor[0].lastName">
-            {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.providerConsumer.jaldeeId}}</div>
+            {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.providerConsumer.jaldeeId}}</div> -->
         <div class="dash-item">
             <ng-container *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
                 {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}
             </ng-container>
         </div>
-        <div class="dash-item">
+        <!-- <div class="dash-item">
             <ng-container *ngIf="item.type=='appt-dashboard' && selQIds.length > 1">
                 {{waitlist.schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' +
                 waitlist.schedule.apptSchedule.timeSlots[0]['eTime']}}
             </ng-container>
-        </div>
+        </div> -->
         <div class="dash-item">
             <ng-container *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
                 {{waitlist.date | date: newTimeDateFormat}}
             </ng-container>
         </div>
-        <div class="dash-item">
+        <!-- <div class="dash-item">
             <ng-container *ngIf="time_type!=1 && item.type=='appt-dashboard'">
                 {{waitlist.appmtDate | date: newTimeDateFormat}}
             </ng-container>
-        </div>
+        </div> -->
+        <div class="dash-item"></div>
     </div>
 
     <div class="box2" *ngIf="time_type!==3 && waitlist.token">
         <div class="token">
             {{waitlist.token}}</div>
-        <div class="dash-item"></div>
+            <div class="dash-item"></div>
     </div>
 
 
-    <div class="box3" [class.box5]="time_type==3">
-        <div class="bold greenc dash-item" *ngIf="selectedUser && selectedUser.id == 'all' && waitlist.provider">
+    <div class="box3" [class.box5]="time_type==3 || !waitlist.token">
+        <div class="bold greenc dash-item" *ngIf="waitlist.provider">
             {{waitlist.provider.businessName}}
         </div>
         <div class="dash-item">
@@ -315,7 +316,8 @@
             {{waitlist.service.name}}
         </div>
         <div class="dash-item">Location</div>
-        <div class="dash-item">Languages</div>
+        <div class="dash-item">Languages</div> 
+        <div class="dash-item" *ngIf="!waitlist.provider"> </div>
     </div>
 
 

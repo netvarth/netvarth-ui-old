@@ -891,37 +891,38 @@ button.fxmenu1{
 .token {
     border-radius: 50%;
     color: black;
-    background-color: white;
+    border: 1px solid #00008b1c;
     max-width: 100px;
-    padding: 13px 10px;
+    padding: 20px 10px;
     text-align: center;
-    max-height: 50px;
-    width: 45px;
+    max-height: 55px;
+    width: 55px;
 }
 .box1, .box3 {
-    width: 27%;
+    width: 25%;
     display: inline-block;
 }
 .box4 {
     width: 25%;
     display: inline-block;
 }
-.walkin-icon, .online-icon {
-    width: 15px !important;
-}
 .box2 {
-    width: 15%;
+    width: 18%;
     display: inline-block;
 }
 .box5 {
     width: 35%;
     display: inline-block;
 }
-/* .dashboard-card {
-    display: flex;
-} */
+.walkin-icon, .online-icon {
+    width: 15px !important;
+}
 .dash-item {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 20px;
+}
+.wtsapvid-icon {
+    width: 14px !important;
 }

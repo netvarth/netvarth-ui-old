@@ -138,6 +138,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.user);
                 break;
         }
+        console.log(this.waitlist);
     }
     ngOnChanges() {
         // this.itemQty = this.quantity;
