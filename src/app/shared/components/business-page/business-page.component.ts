@@ -2113,7 +2113,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           if (_this.userType === 'consumer') {
             if (service.serviceType === 'virtualService') {
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate,'checkin', service, consumerdata);
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate,'checkin', service, consumerdata);
               });
             }
             else {

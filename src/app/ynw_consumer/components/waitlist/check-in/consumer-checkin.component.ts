@@ -248,6 +248,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleWaitlistDet();
                 }
+                if(params.virtual_info){
+                    this.virtualInfo=JSON.parse(params.virtual_info);
+                    console.log(this.virtualInfo);
+                }
             });
     }
     ngOnInit() {
@@ -672,7 +676,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             phNumber = this.userPhone;
         }
-        const post_Data = {
+        let post_Data = {
             'queue': {
                 'id': this.queueId
             },
@@ -683,7 +687,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
             'consumerNote': this.consumerNote,
             'countryCode': this.countryCode,
-            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
         if (this.sel_ser_det.serviceType === 'virtualService') {
@@ -701,6 +704,26 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        if(this.virtualInfo){
+            console.log(this.virtualInfo);
+            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            console.log(formattedDate);
+            this.waitlist_for[0]['dob']=formattedDate;
+            if(this.virtualInfo.islanguage==='yes'){
+                let langs = [];
+                langs.push('English');
+                this.waitlist_for[0]['preferredLanguage']=langs;
+            }else{
+                let langs = [];
+                langs.push(this.virtualInfo.preferredLanguage);
+                this.waitlist_for[0]['preferredLanguage']=langs;
+            }
+            const bookingLocation={};
+            bookingLocation['pincode']=this.virtualInfo.pincode;
+            this.waitlist_for[0]['bookingLocation']=bookingLocation;
+        }
+        post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
