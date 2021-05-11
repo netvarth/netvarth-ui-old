@@ -624,7 +624,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 error = this.validatorPartysize(this.enterd_partySize);
             }
             if (error === '') {
-                this.saveCheckin();
+                this.saveCheckin('next');
             } else {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.apptdisable = false;
@@ -1713,7 +1713,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.bookStep = type;
         }
         if (this.bookStep === 3) {
-            this.saveCheckin('next');
+            this.saveCheckin();
         }
     }
     addApptAdvancePayment(post_Data) {

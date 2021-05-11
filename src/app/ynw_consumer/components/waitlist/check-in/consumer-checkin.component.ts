@@ -29,6 +29,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { ConsumerVirtualServiceinfoComponent } from '../../consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -194,6 +195,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     selectedQTime;
     questionnaireLoaded = false;
     imgCaptions: any = [];
+    virtualInfo: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -635,7 +637,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    saveCheckin(type?) {
+    confirmcheckin(type){
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -712,12 +714,49 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
         if (!this.is_wtsap_empty) {
-            if (type) {
+            if (type==='checkin') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment) {
+            } else if (this.sel_ser_det.isPrePayment && type==='checkin') {
                 this.addWaitlistAdvancePayment(post_Data);
             }
         }
+    }
+    confirmVirtualServiceinfo(memberObject,type?){
+        const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+            disableClose: true,
+            data: JSON.stringify(memberObject[0])
+            
+          });
+          virtualdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+             this.virtualInfo=result;
+             this.confirmcheckin(type);
+            
+            }
+          });
+    }
+    saveCheckin(type?) {
+        console.log('insaide');
+        if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
+            if (this.waitlist_for.length !== 0) {
+                for (const list of this.waitlist_for) {
+                   console.log(list['id']);
+                   console.log(this.familymembers);
+                  const memberObject= this.familymembers.filter(member=>member.userProfile.id===list['id']);
+                  console.log(memberObject);
+                  if(list['id']!==this.customer_data.id){
+                   this.confirmVirtualServiceinfo(memberObject,type);
+                  }else{
+                      this.confirmcheckin(type);
+                  }
+                }
+            }
+        }else{
+            this.confirmcheckin(type);
+        }
+        
     }
     addCheckInConsumer(postData) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)

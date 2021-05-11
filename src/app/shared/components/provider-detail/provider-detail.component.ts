@@ -1781,14 +1781,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
+          if (passParam['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
+            });
+
+          }else{
+            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],'waitlist',current_provider['service'] );
+          }
+          
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
       }
     });
   }
-  collectRequiredinfo(id, place, location, date, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date,type, service?, consumerdata?) {
     console.log('inisdee');
     const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
       width: '40%',
@@ -1799,8 +1807,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.consumerVirtualinfo = result;
-        console.log(result);
-        this.showAppointment(id, place, location, date, service, 'consumer', result);
+        if(type==='appt'){
+          this.showAppointment(id, place, location, date, service, 'consumer', result);
+        }else{
+          this.showCheckin(id,place,location, date,service,'consumer',result );
+        }
+        
       }
     });
   }
@@ -1861,7 +1873,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?,virtualinfo?) {
 
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -1876,7 +1888,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       account_id: this.provider_bussiness_id,
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
-      service_id: service.id
+      service_id: service.id,
+      virtual_info: JSON.stringify(virtualinfo)
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
