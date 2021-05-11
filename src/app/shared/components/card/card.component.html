@@ -87,7 +87,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #appMenu="matMenu">
-                <button mat-menu-item *ngFor="let action of item.actions"
+                <buttonÂ mat-menu-item *ngFor="let action of item.actions"
                     (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
@@ -104,7 +104,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #appMenu="matMenu">
-                <button mat-menu-item *ngFor="let action of item.actions"
+                <buttonÂ mat-menu-item *ngFor="let action of item.actions"
                     (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
@@ -247,113 +247,99 @@
 </div>
 
 
-<div *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'" (click)="gotoDetails()">
+<ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
+    <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
 
-    <div class="box1 mgn-lt-5" [class.box5]="time_type==3 || !waitlist.token">
-        <div class="dash-item"
-            *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
-            {{waitlist.waitlistingFor[0].firstName}}
-            {{waitlist.waitlistingFor[0].lastName}}
+        <div class="main-sec" [class.mgn-bt-minus]="waitlist.provider">
+            <div class="token" *ngIf="time_type!==3 && waitlist.token">
+                {{waitlist.token}}
+            </div>
+            <div class="box1 mgn-lt-5">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
+                    {{waitlist.waitlistingFor[0].firstName}}
+                    {{waitlist.waitlistingFor[0].lastName}}
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="waitlist.provider">
+                    {{waitlist.provider.businessName}}
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item">
+                    <i class="fa meet-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                    <i class="fa zoom-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                    <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                    <i class="fa phon-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                    <i class="fa wtsapaud-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'audioService'"></i>
+                    <i class="fa wtsapvid-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'videoService'"></i>
+                    {{waitlist.service.name}}
+                </div>
+            </div>
+            <div class="box4">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
+                    <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
+                    </span>
+                    <span class="online-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'ONLINE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'ONLINE_APPOINTMENT')">
+                    </span>
+                    <span class="phonein-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'PHONE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'PHONE_IN_APPOINTMENT')">
+                    </span>
+                    <span class="walkin-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'WALK_IN_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'WALK_IN_APPOINTMENT')">
+                    </span>
+                    <span class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span>
+                    <span class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
+                        (click)="stopProp($event);checkinActions(waitlist, 'note')">
+                        <i class="icon-note"></i>
+                    </span>
+                    <span (click)="stopProp($event);checkinActions(waitlist, 'attachment')"
+                        class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.hasAttachment"><i
+                            style="font-size: 20px;" class="material-icons">attach_file</i></span>
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
+                    <a class="action-btn" (click)="stopProp($event);checkinActions(waitlist, 'actions')">
+                        Actions
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- <div class="dash-item"
-            *ngIf="item.type=='appt-dashboard' && (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName)">
-            {{waitlist.appmtFor[0].firstName}}
-            {{waitlist.appmtFor[0].lastName}}
-        </div> -->
-        <div class="dash-item"
-            *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
-            {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
-        <!-- <div class="dash-item"
-            *ngIf="item.type=='appt-dashboard' && !waitlist.appmtFor[0].firstName && !waitlist.appmtFor[0].lastName">
-            {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.providerConsumer.jaldeeId}}</div> -->
-        <div class="dash-item">
-            <ng-container *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
-                {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}
-            </ng-container>
+
+        <div class="mgn-up-5 mgn-lt-5 mgn-bt-5 mgn-rt-5" *ngIf="showDetails.indexOf(waitlist) != -1">
+
+            <div class="dash-item" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
+                <span> Time Window </span>
+                <span class="pull-right"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
+            </div>
+            <div class="dash-item" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
+                <span>Date </span> <span class="pull-right">{{waitlist.date | date: newTimeDateFormat}}</span>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="getLabels(waitlist)">
+                <span>Label </span> <span class="pull-right"> {{getLabels(waitlist)}}</span>
+            </div>
+            <div class="dash-item">
+                <span>Location </span>
+                <span class="pull-right">Location </span>
+            </div>
+            <div class="dash-item">
+                <span>Languages </span>
+                <span class="pull-right">Languages </span>
+            </div>
         </div>
-        <!-- <div class="dash-item">
-            <ng-container *ngIf="item.type=='appt-dashboard' && selQIds.length > 1">
-                {{waitlist.schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' +
-                waitlist.schedule.apptSchedule.timeSlots[0]['eTime']}}
-            </ng-container>
-        </div> -->
-        <div class="dash-item">
-            <ng-container *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
-                {{waitlist.date | date: newTimeDateFormat}}
-            </ng-container>
-        </div>
-        <!-- <div class="dash-item">
-            <ng-container *ngIf="time_type!=1 && item.type=='appt-dashboard'">
-                {{waitlist.appmtDate | date: newTimeDateFormat}}
-            </ng-container>
-        </div> -->
-        <div class="dash-item"></div>
+
     </div>
 
-    <div class="box2" *ngIf="time_type!==3 && waitlist.token">
-        <div class="token">
-            {{waitlist.token}}</div>
-            <div class="dash-item"></div>
+    <div class="col-sm-12 col-xs-12 view-more" (click)="showMore(waitlist)">
+        View More <i class="fa fa-caret-down"></i>
     </div>
-
-
-    <div class="box3" [class.box5]="time_type==3 || !waitlist.token">
-        <div class="bold greenc dash-item" *ngIf="waitlist.provider">
-            {{waitlist.provider.businessName}}
-        </div>
-        <div class="dash-item">
-            <i class="fa meet-icon"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-            <i class="fa zoom-icon"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-            <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-            <i class="fa phon-icon"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-            <i class="fa wtsapaud-icon"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'audioService'"></i>
-            <i class="fa wtsapvid-icon"
-                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'videoService'"></i>
-            {{waitlist.service.name}}
-        </div>
-        <div class="dash-item">Location</div>
-        <div class="dash-item">Languages</div> 
-        <div class="dash-item" *ngIf="!waitlist.provider"> </div>
-    </div>
-
-
-    <div class="box4">
-        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
-            <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
-            </span>
-            <span class="online-icon mgn-rt-10"
-                *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'ONLINE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'ONLINE_APPOINTMENT')">
-            </span>
-            <span class="phonein-icon mgn-rt-10"
-                *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'PHONE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'PHONE_IN_APPOINTMENT')">
-            </span>
-            <span class="walkin-icon mgn-rt-10"
-                *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'WALK_IN_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'WALK_IN_APPOINTMENT')">
-            </span>
-            <span class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span>
-            <span class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
-                (click)="stopProp($event);checkinActions(waitlist, 'note')">
-                <i class="icon-note"></i>
-            </span>
-            <span (click)="stopProp($event);checkinActions(waitlist, 'attachment')"
-                class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.hasAttachment"><i
-                    style="font-size: 20px;" class="material-icons">attach_file</i></span>
-        </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-5 dash-item">{{getLabels(waitlist)}}</div>
-        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-5">
-            <a class="action-btn" (click)="stopProp($event);checkinActions(waitlist, 'actions')">
-                Actions
-            </a>
-        </div>
-    </div>
-
-
-</div>
+</ng-container>
 
 <!-- Card -->

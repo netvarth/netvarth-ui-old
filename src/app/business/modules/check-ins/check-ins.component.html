@@ -569,8 +569,8 @@
                   </tbody>
 
                   <tbody *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                    <div class="waitlist-box" *ngFor="let checkin of startedCheckins, let i=index">
-                      <div class="chkWth" *ngIf="startedCheckins.length > 1">
+                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of startedCheckins, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
@@ -819,8 +819,8 @@
                   </tbody>
 
                   <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                  <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
-                    <div class="chkWth" *ngIf="showSelectAll()">
+                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         *ngIf="checkin.consumer" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
@@ -1176,8 +1176,8 @@
                 </tbody>
 
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                  <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
-                    <div class="chkWth" *ngIf="showSelectAll()">
+                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         *ngIf="checkin.consumer" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
@@ -1604,9 +1604,9 @@
                 </tbody>
 
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display">
-                  <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
+                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
            
-                    <div class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
