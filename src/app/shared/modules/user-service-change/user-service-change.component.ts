@@ -313,7 +313,6 @@ export class UserServiceChnageComponent implements OnInit {
       this.service_dataSource.data[index].selected = true;
     }
   }
-
    removeSelection() {
     this.service_dataSource.data.map((question) => {
       return question.selected = false;
