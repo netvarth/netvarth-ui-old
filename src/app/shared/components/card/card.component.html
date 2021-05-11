@@ -282,7 +282,7 @@
                     {{waitlist.service.name}}
                 </div>
             </div>
-            <div class="box4">
+            <div class="box4" [class.mgn-bt-minus]="waitlist.provider && time_type!==3">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
                     <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
                     </span>
