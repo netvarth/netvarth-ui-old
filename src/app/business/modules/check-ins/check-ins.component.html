@@ -212,7 +212,7 @@
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0 && time_type !==3 && !qloading"
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="(activeQs && activeQs.length > 0 && !activeUser) && time_type !==3 && !qloading"
           id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
@@ -394,16 +394,16 @@
                   </thead>
                   <tbody *ngIf="!loading && (startedCheckins.length == 0 || activeQs.length == 0)">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0 || activeUser">
                         <p *ngIf="!showToken">No Check-ins Found</p>
                         <p *ngIf="showToken ">No tokens issued till now</p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                         {{no_service_cap}}
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && !small_device_display">
+                  <tbody *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display" >
                     <tr class="pointer-cursor" *ngFor="let checkin of startedCheckins, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="startedCheckins.length > 1">
@@ -617,19 +617,19 @@
                   </thead>
                   <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0 || activeUser">
                         <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                         <p *ngIf="statusAction === 'completed'">No completed {{(showToken) ? 'tokens' : 'check-ins'}}
                         </p>
                         <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}
                         </p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                         {{no_service_cap}}
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && !small_device_display">
+                  <tbody *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
                     <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -990,16 +990,16 @@
                 </thead>
                 <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
                   <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
+                    <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0 || activeUser">
                       <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                       <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                     </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
+                    <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                       {{no_service_cap}}
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && !small_device_display">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
                   <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="showSelectAll()">

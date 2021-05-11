@@ -75,9 +75,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   future_check_in_statuses_filter = projectConstantsLocal.FUTURE_APPT_STATUSES_FILTER;
   apis_loaded = false;
   carouselOne;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [{ title: 'Appointments' }];
-  breadcrumbs = this.breadcrumbs_init;
   screenWidth;
   small_device_display = false;
   selected_location = null;
@@ -418,7 +415,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
-    const header = document.getElementById('childActionBar');
     let qHeader = 0;
     let tabHeader = 0;
     if (document.getElementById('qHeader')) {
@@ -428,13 +424,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    if (header) {
-      // if (window.pageYOffset >= (this.topHeight + 50)) {
-      //   header.classList.add('sticky');
-      // } else {
-      //   header.classList.remove('sticky');
-      // }
-    }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
     } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
@@ -442,10 +431,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'appointments',
-      'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-    };
     if (this.groupService.getitemFromGroupStorage('selected_type')) {
       this.selected_type = this.groupService.getitemFromGroupStorage('selected_type');
     } else {
@@ -1202,7 +1187,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid) {
+      if (queueid || this.activeUser) {
         
         if(this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
@@ -1233,7 +1218,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid) {
+      if (queueid || this.activeUser) {
         if(this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
@@ -1328,7 +1313,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.activeSchedules.length > 0) {
+    if (this.activeSchedules.length > 0 || this.activeUser) {
       const promise = this.getTodayAppointmentsCount(Mfilter);
       promise.then(
         result => {
@@ -1389,7 +1374,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     }
     let Mfilter = this.setFilterForApi();
-    if (this.selQIds) {
+    if (this.selQIds || this.activeUser) {
       if(this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
       } else {
@@ -1442,10 +1427,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0 || this.activeUser) {
       const qids = this.activeSchedules.map(q => q.id);
       if(this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
+        // Mfilter['provider-eq'] = this.activeUser;
       } else {
         Mfilter['schedule-eq'] = qids.toString();
       }
@@ -2247,6 +2232,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    console.log("view Seslection");
+    console.log(view);
     this.activeUser=null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
@@ -2258,6 +2245,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!view.userType) {
       this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
+      console.log('i am a user');
       this.handleUserSelection(view);
     }
   }
@@ -2352,17 +2340,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   getQsByProvider(user?) {
-    const qs = [];
+    // const qs = [];
     if (!user || (user && user === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       this.activeUser = user.id;
-      for (let i = 0; i < this.tempActiveSchedules.length; i++) {
-        if (this.tempActiveSchedules[i].provider && this.tempActiveSchedules[i].provider.id === this.selectedUser.id) {
-          qs.push(this.tempActiveSchedules[i]);
-        }
-      }
-      this.activeSchedules = qs;
+      // for (let i = 0; i < this.tempActiveSchedules.length; i++) {
+      //   if (this.tempActiveSchedules[i].provider && this.tempActiveSchedules[i].provider.id === this.selectedUser.id) {
+      //     qs.push(this.tempActiveSchedules[i]);
+      //   }
+      // }
+      this.activeSchedules = [];
     }
     if (this.activeSchedules.length === 0) {
       this.selQIds = [];
@@ -2371,29 +2359,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeSchedules) {
         qids.push(q.id);
       }
-      // const selQids = [];
-      // if (qids.length > 0) {
-      //   if (qids.length > this.selQIds.length) {
-      //     for (const id of this.selQIds) {
-      //       const qArr = qids.filter(qid => qid === id);
-      //       if (qArr.length > 0) {
-      //         selQids.push(id);
-      //       }
-      //     }
-      //     if (selQids.length === 0) {
-      //       this.selQIds = qids;
-      //     }
-      //   } else {
-      //     this.selQIds = qids;
-      //   }
-      // } else {
-      //   this.selQIds.push(this.activeSchedules[0].id);
-      // }
       this.selQIds = qids;
     }
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
+    console.log("TimeType:" + this.time_type);
     if (this.time_type === 1) {
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
