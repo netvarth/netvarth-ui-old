@@ -719,23 +719,24 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
             const formattedDate = moment(momentDate).format("YYYY/MM/DD");
             console.log(formattedDate);
-            post_Data['dob']=formattedDate;
+            this.waitlist_for[0]['dob']=formattedDate;
             if(this.virtualInfo.islanguage==='yes'){
-                post_Data['preferredLanguage']='English';
+                this.waitlist_for[0]['preferredLanguage']='English';
             }else{
-                post_Data['preferredLanguage']=this.virtualInfo.preferredLanguage;
+                this.waitlist_for[0]['preferredLanguage']=this.virtualInfo.preferredLanguage;
             }
             const bookingLocation={};
             bookingLocation['pincode']=this.virtualInfo.pincode;
-            post_Data['bookingLocation']=bookingLocation;
+            this.waitlist_for[0]['bookingLocation']=bookingLocation;
         }
 
         }
         console.log('post_data'+ JSON.stringify(post_Data));
+        console.log(type);
         if (!this.is_wtsap_empty) {
-            if (type) {
+            if (type==='appt') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment) {
+            } else if (this.sel_ser_det.isPrePayment &&type=='appt') {
                 this.addApptAdvancePayment(post_Data);
             }
         }
@@ -743,7 +744,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     
     saveCheckin(type?) {
         console.log('insaide');
-        if(this.sel_ser_det.serviceType === 'virtualService'){
+        if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
                    console.log(list['id']);
@@ -1712,7 +1713,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.bookStep = type;
         }
         if (this.bookStep === 3) {
-            this.saveCheckin();
+            this.saveCheckin('next');
         }
     }
     addApptAdvancePayment(post_Data) {
