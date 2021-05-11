@@ -308,9 +308,16 @@ export class UserServiceChnageComponent implements OnInit {
     this.router.navigate(['provider', 'check-ins']);
   }
   selectedRow(index){
+    this.removeSelection();
     if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
       this.service_dataSource.data[index].selected = true;
+    }
   }
+
+   removeSelection() {
+    this.service_dataSource.data.map((question) => {
+      return question.selected = false;
+    });
   }
 }
 
