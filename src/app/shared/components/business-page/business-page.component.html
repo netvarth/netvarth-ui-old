@@ -423,7 +423,7 @@
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <ng-container *ngIf="showDepartments && !this.userId">
                         <ng-container *ngFor="let sps of servicesAndProviders">
-                            <div class="mgn-bt-15">
+                            <div *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" class="mgn-bt-15">
                                 <div class="dept-card" (click)="gotoDeptServicePage(sps.departmentId)">
                                     <div class="dept-img">
                                         <img src="assets/images/avatar5.png">
