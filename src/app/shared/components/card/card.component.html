@@ -87,7 +87,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #appMenu="matMenu">
-                <buttonÂ mat-menu-item *ngFor="let action of item.actions"
+                <button mat-menu-item *ngFor="let action of item.actions"
                     (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
@@ -104,7 +104,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #appMenu="matMenu">
-                <buttonÂ mat-menu-item *ngFor="let action of item.actions"
+                <button mat-menu-item *ngFor="let action of item.actions"
                     (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
