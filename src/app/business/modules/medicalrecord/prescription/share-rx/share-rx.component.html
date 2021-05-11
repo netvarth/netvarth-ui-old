@@ -27,7 +27,7 @@
           </app-field-error-display>
       </div>
       <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
-      <div class="col-md-6 col-sm-6 col-xs-12 mgn-bt-10">
+      <!-- <div class="col-md-6 col-sm-6 col-xs-12 mgn-bt-10">
       <div class="form-group" *ngIf="showthirdparty" style="display: flex;">
         <div class="input-group-prepend mob-prefix" #mobPrefix>
             <span class="input-group-text" style="margin-top:auto;">+91</span>
@@ -38,7 +38,7 @@
                 autocomplete="off">
         </mat-form-field>
     </div>
-      </div>
+      </div> -->
       <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10 mgn-bt-10 ">
     <div class="form-group" *ngIf="showthirdparty">
         <mat-form-field>
@@ -68,11 +68,13 @@
           <div style="color: red;font: italic" *ngIf = "!sms && !email && !pushnotify"> Please tick any of the options</div>
           <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
       </div>
-      <div  class="form-group" *ngIf="showthirdparty">
-        We will create a PDF of your prescription and will share Via sms and email.
-      </div>
+      <br>
+   
       <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow ">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
-
+      <div  class="col-md-12 col-lg-12 col-xs-12 col-sm-12 form-group" *ngIf="showthirdparty">
+        <!-- We will create a PDF of your prescription and will share Via sms and email. -->
+         We will create a PDF of your prescription and will share Via email. 
+      </div>
 
   </mat-dialog-content>
   <mat-dialog-actions>

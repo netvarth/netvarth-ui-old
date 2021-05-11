@@ -38,7 +38,7 @@ subscription:Subscription;
   getUsers() {
    this.subscription= this.provider_services.getUsers().subscribe(
       (data: any) => {
-        this.user_list = data.filter(obj=>obj.userType!=='ADMIN');
+        this.user_list = data.filter(obj=>obj.userType==='PROVIDER');
         this.loading=false;
       },
 

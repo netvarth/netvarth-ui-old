@@ -175,8 +175,9 @@ export class ShareRxComponent implements OnInit {
     console.log(this.sharewith);
     console.log(this.customid);
     if (this.sharewith !== 0 ) {
-      if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
-        this.api_error = 'Please enter a phone number or email';
+     // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
+       if(this.thirdpartyemail===''){
+        this.api_error = 'Please enter  email';
         this.disable = false;
         this.sharebtnloading = false;
                 return;

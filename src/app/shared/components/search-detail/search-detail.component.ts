@@ -2004,19 +2004,23 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.searchrefine_arr[indx]['showhiddendet'] = false;
   }
   communicateHandler(search_result) {
+    console.log(search_result);
     const name = search_result.fields.title || null; // providername
     const obj = search_result.id || null;
+    const uniqueId=search_result.fields.unique_id;
     if (obj) {
-      const arr = obj.split('-');
-      const providforCommunicate = arr[0];
+    //  const arr = obj.split('-');
+    //  const providforCommunicate = arr[0];
+     
+
       // check whether logged in as consumer
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          this.showCommunicate(providforCommunicate, name);
+          this.showCommunicate(uniqueId, name);
         }
       } else { // show consumer login
-        const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj };
+        const passParam = { callback: 'communicate', providerId: uniqueId, provider_name: name, current_provider: obj };
         this.doLogin('', 'consumer', passParam);
       }
     }
