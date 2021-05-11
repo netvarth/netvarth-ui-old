@@ -54,79 +54,6 @@
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation" style="background: transparent !important;">
             <div class="navbar-custom-menu width100pc">
               <ul class="nav navbar-nav width100pc" style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important;">
-                <!-- <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3">
-                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    *ngIf="selectedView" style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display && selectedView.name">
-                      {{selectedView.name}}</span>
-                    <span *ngIf="!small_device_display && !selectedView.name">
-                      <ng-container *ngIf="selectedView.businessName">
-                        {{selectedView.businessName}}</ng-container>
-                      <ng-container *ngIf="!selectedView.businessName">
-                        {{selectedView.firstName}}</ng-container>
-                    </span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <ul class="menu">
-                        <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
-                          <a class="pointer-cursor" (click)="handleViewSel(view)">
-                            <ng-container *ngIf="view.name">
-                              <h4 *ngIf="view.name.length>='27'">
-                                {{view.name.substring(0,24) }}...</h4>
-                              <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
-                            </ng-container>
-                            <ng-container *ngIf="!view.name">
-                              <h4 *ngIf="!view.businessName">
-                                <ng-container *ngIf="view.firstName.length>='27'">
-                                  {{ view.firstName.substring(0,24) }}...
-                                </ng-container>
-                                <ng-container *ngIf="view.firstName.length<'27'">
-                                  {{ view.firstName}}
-                                </ng-container>
-                              </h4>
-                              <h4 *ngIf="view.businessName">
-                                <ng-container *ngIf="view.businessName.length>='27'">
-                                  {{ view.businessName.substring(0,24) }}...
-                                </ng-container>
-                                <ng-container *ngIf="view.businessName.length<'27'">
-                                  {{ view.businessName}}
-                                </ng-container>
-                              </h4>
-                            </ng-container>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
-                  </ul>
-                </li> -->
-                <!-- <li class="pl5 dropdown messages-menu loc-lst queue-menu tok-db pull-right"
-                  *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
-                  <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display && selectedUser && selectedUser.firstName">
-                      {{selectedUser.firstName}}</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <ul class="menu">
-                        <li *ngFor="let user of users" [ngClass]="{'active': (user.id == selectedUser.id)}">
-                          <a class="pointer-cursor" (click)="handleUserSelection(user)">
-                            <h4 *ngIf="user.firstName.length>='27'">
-                              {{ user.firstName.substring(0,24) }}...</h4>
-                            <h4 *ngIf="user.firstName.length<'27'">
-                              {{(user.businessName) ? user.businessName : user.firstName}}
-                            </h4>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoUser()">Manage Users</a></li>
-                  </ul>
-                </li> -->
                 <li class="dropdown notifications-menu">
                   <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
@@ -237,14 +164,9 @@
                       <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
                       <span class="filter-head-title">Filter</span>
-                      <!-- <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Close filter window'"></i> -->
                       <i class="fa fa-angle-double-right ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Close filter window'"></i>                      
-                      <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                     </div>
                     <ul class="sidebar-menu accordion" id="accordion1">
                       <div class="card">
@@ -485,15 +407,15 @@
                   </thead>
                   <tbody *ngIf="!loading && (startedAppts.length == 0 || activeSchedules.length == 0)">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0 || activeUser">
                         No Appointments Found
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && activeSchedules.length > 0">
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
@@ -665,7 +587,7 @@
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
-                  *ngIf="time_type === 1 && statusAction == 'new' && activeSchedules.length > 0">
+                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser)">
                   <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -700,7 +622,7 @@
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar"
-                    *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
+                    *ngIf="showSelectAll() && selected_type != 'free' && (activeSchedules.length > 0 || activeUser)">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -720,14 +642,14 @@
                   <tbody
                     *ngIf="(statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0 || activeUser">
                         <p *ngIf="statusAction === 'new'">No active appointments</p>
                         <p *ngIf="statusAction === 'completed'">No completed appointments
                         </p>
                         <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                         </p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
                       </td>
                     </tr>
@@ -950,7 +872,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -1283,19 +1205,19 @@
                 </thead>
                 <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
                   <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0 || activeUser">
                       <p *ngIf="statusAction === 'new'">No active appointments</p>
                       <p *ngIf="statusAction === 'completed'">No completed appointments
                       </p>
                       <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                       </p>
                     </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                       {{no_service_cap}}
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">

@@ -1396,7 +1396,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
-    if (this.selQIds && this.selQIds.length > 0) {
+    if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if(this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
       } else {
@@ -1409,7 +1409,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.activeQs.length > 0) {
+    if (this.activeQs.length > 0 || this.activeUser) {
       const promise = this.getTodayWLCount(Mfilter);
       promise.then(
         result => {
@@ -1461,7 +1461,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     // this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
-    if (this.selQIds && this.selQIds.length > 0) {
+    if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if(this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
       } else {
@@ -1513,10 +1513,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.selQIds.length !== 0) {
     //   Mfilter['queue-eq'] = this.selQIds.toString();
     // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+    if ((this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) || this.activeUser) {
       const qids = this.activeQs.map(q => q.id);
       if(this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
+        // Mfilter['provider-eq'] = this.activeUser;
       } else {
         Mfilter['queue-eq'] = qids.toString();
       }
