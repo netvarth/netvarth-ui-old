@@ -180,6 +180,8 @@ export class UserServiceChnageComponent implements OnInit {
   uuid: any;
   source;
   selected = false;
+  userId = '';
+  selectrow = false;
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -252,7 +254,8 @@ export class UserServiceChnageComponent implements OnInit {
     return service_list;
   }
   updateUser() {
-    this.services_selected = this.selection.selected;
+    // this.services_selected = this.selection.selected;
+    console.log(this.userId);
     let msg = '';
     msg = 'Do you want change the provider?';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -270,7 +273,8 @@ export class UserServiceChnageComponent implements OnInit {
           const post_data = {
             'ynwUuid': this.uuid,
             'provider': {
-              'id': this.services_selected[0].id
+              'id':this.userId
+              // 'id': this.services_selected[0].id
             },
           };
           this.provider_services.updateUserWaitlist(post_data)
@@ -288,7 +292,8 @@ export class UserServiceChnageComponent implements OnInit {
           const post_data = {
             'uid': this.uuid,
             'provider': {
-              'id': this.services_selected[0].id
+              'id':this.userId
+              // 'id': this.services_selected[0].id
             },
           };
           this.provider_services.updateUserAppointment(post_data)
@@ -307,10 +312,15 @@ export class UserServiceChnageComponent implements OnInit {
   redirecToReports() {
     this.router.navigate(['provider', 'check-ins']);
   }
-  selectedRow(index){
+  selectedRow(index,user){
+    this.selectrow = true;
     this.removeSelection();
     if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
+      this.userId = user.id;
       this.service_dataSource.data[index].selected = true;
+    } else {
+      this.userId = '';
+      this.service_dataSource.data[index].selected = false;
     }
   }
    removeSelection() {
