@@ -15,7 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
     'selector': 'app-branchusers',
     'templateUrl': './users.component.html',
-    styleUrls: ['../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    // styleUrls: ['../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
