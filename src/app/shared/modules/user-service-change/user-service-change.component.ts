@@ -312,7 +312,6 @@ export class UserServiceChnageComponent implements OnInit {
       this.service_dataSource.data[index].selected = true;
   }
   }
-
 }
 
 
