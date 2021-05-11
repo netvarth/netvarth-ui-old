@@ -80,7 +80,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
             }
         }
-        console.log(this.selQIds);
+        console.log(this.selectedUser);
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         console.log(this.todayDate);

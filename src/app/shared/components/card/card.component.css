@@ -899,14 +899,29 @@ button.fxmenu1{
     width: 45px;
 }
 .box1, .box3 {
-    width: 30%;
+    width: 27%;
+    display: inline-block;
 }
 .box4 {
-    width: 100px;
+    width: 25%;
+    display: inline-block;
 }
-.walkin-icon {
+.walkin-icon, .online-icon {
     width: 15px !important;
 }
 .box2 {
-    width: 60px;
+    width: 15%;
+    display: inline-block;
+}
+.box5 {
+    width: 35%;
+    display: inline-block;
+}
+/* .dashboard-card {
+    display: flex;
+} */
+.dash-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

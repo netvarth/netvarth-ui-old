@@ -377,7 +377,7 @@
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar" *ngIf="startedCheckins.length > 1 || apptStartedMultiSelection">
                     <tr>
-                      <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="3">
+                      <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="5">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
                           (click)="stopprop($event)" (change)="selectAllStarted()"
                           [(ngModel)]="chkStartedSelectAppointments" [ngModelOptions]="{standalone: true}" />
@@ -388,8 +388,8 @@
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </th>
-                      <th class="childActionBar" colspan="2">
-                      </th>
+                      <!-- <th class="childActionBar" colspan="2">
+                      </th> -->
                     </tr>
                   </thead>
                   <tbody *ngIf="!loading && (startedCheckins.length == 0 || activeQs.length == 0)">
@@ -568,7 +568,7 @@
                   <tbody *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
                     <div class="waitlist-box" *ngFor="let checkin of startedCheckins, let i=index">
                       <div class="chkWth" *ngIf="startedCheckins.length > 1">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
+                        <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
@@ -818,7 +818,7 @@
                   <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
                   <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="chkWth" *ngIf="showSelectAll()">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         *ngIf="checkin.consumer" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
@@ -1175,7 +1175,7 @@
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
                   <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="chkWth" *ngIf="showSelectAll()">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         *ngIf="checkin.consumer" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
@@ -1604,7 +1604,7 @@
                   <div class="waitlist-box" *ngFor="let checkin of check_in_filtered_list, let i=index">
            
                     <div class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
