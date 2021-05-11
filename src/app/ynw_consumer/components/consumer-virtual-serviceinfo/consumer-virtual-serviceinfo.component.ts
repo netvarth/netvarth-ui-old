@@ -30,7 +30,7 @@ virtualForm:FormGroup;
   }
   onSubmit(formdata){
 
-
+console.log(formdata);
  this.dialogRef.close(formdata)
 
   }

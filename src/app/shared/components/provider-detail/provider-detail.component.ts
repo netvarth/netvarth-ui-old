@@ -1801,6 +1801,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
        this.consumerVirtualinfo=result;
+       console.log(result);
        this.showAppointment(id, place,location, date, service, 'consumer',result); 
       }
     });
@@ -1893,7 +1894,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         futureAppt: this.futureAllowed,
         service_id: service.id,
         sel_date: curdate,
-        virtual_info:virtualinfo
+        virtual_info:JSON.stringify(virtualinfo)
       };
       if (service['department']) {
         queryParam['dept'] = service['department'];
@@ -1901,6 +1902,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: queryParam
       };
+      console.log(navigationExtras);
       this.router.navigate(['consumer', 'appointment'], navigationExtras);
     }
     showcheckInButton(servcount ?) {

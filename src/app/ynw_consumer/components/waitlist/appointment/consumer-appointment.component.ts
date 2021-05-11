@@ -275,7 +275,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.getRescheduleApptDet();
                 }
                 if(params.virtual_info){
-                    this.virtualInfo=params.virtual_info;
+                    this.virtualInfo=JSON.parse(params.virtual_info);
+                    console.log(this.virtualInfo);
                 }
             });
     }
@@ -697,8 +698,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if(this.virtualInfo){
+                console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
             const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            console.log(formattedDate);
             post_Data['dob']=formattedDate;
             if(this.virtualInfo.islanguage==='yes'){
                 post_Data['preferredLanguage']='English';
@@ -707,11 +710,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             const bookingLocation={};
             bookingLocation['pincode']=this.virtualInfo.pincode;
-            post_Data['bookingLocaion']=bookingLocation;
+            post_Data['bookingLocation']=bookingLocation;
         }
 
         }
-        console.log('post_data'+ post_Data);
+        console.log('post_data'+ JSON.stringify(post_Data));
         if (!this.is_wtsap_empty) {
             if (type) {
                 this.addCheckInConsumer(post_Data);
