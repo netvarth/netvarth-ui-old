@@ -642,7 +642,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
           virtualdialogRef.afterClosed().subscribe(result => {
             if (result) {
              this.virtualInfo=result;
-             // this.confirmcheckin(type);
+             this.confirmcheckin(type);
             
             }
           });
