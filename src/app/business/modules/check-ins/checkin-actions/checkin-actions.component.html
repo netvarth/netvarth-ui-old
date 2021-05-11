@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div class="action-box pointer-cursor" *ngIf="accountType=='BRANCH'" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="accountType=='BRANCH' && changeService" (click)="changeWaitlistservice()">
         <div class="action-box-sub">
             <span class="cancel-icon"></span>
             <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>

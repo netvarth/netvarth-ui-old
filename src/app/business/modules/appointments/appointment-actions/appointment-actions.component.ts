@@ -92,6 +92,7 @@ export class AppointmentActionsComponent implements OnInit {
     showApply = false;
     buttonClicked = false;
     accountType: any;
+    changeService = true;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -402,6 +403,9 @@ export class AppointmentActionsComponent implements OnInit {
         }
         if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
             this.showAttachment = true;
+        }
+        if (this.data.timetype === 3) {
+            this.changeService = false;
         }
     }
     getLabel() {

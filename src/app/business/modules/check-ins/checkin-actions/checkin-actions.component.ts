@@ -104,6 +104,7 @@ export class CheckinActionsComponent implements OnInit {
     showApply = false;
     buttonClicked = false;
     accountType: any;
+    changeService = true;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -558,6 +559,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showAttachment = true;
+        }
+        if (this.data.timetype === 3) {
+            this.changeService = false;
         }
     }
     getLabel() {
