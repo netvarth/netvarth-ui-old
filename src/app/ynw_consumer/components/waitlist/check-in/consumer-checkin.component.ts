@@ -760,6 +760,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
           });
     }
+    
     saveCheckin(type?) {
         console.log('insaide');
         if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){

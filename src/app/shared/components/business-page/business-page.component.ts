@@ -3005,6 +3005,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getItemQty(itemObj);
       }
     }
+    
 
   }
 
