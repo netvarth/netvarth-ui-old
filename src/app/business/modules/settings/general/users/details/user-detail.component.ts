@@ -279,6 +279,7 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
+            'postalCode': this.user_data.pincode || null
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -334,7 +335,7 @@ export class BranchUserDetailComponent implements OnInit {
             // 'deptId': input.selectedDepartment,
             // 'isAdmin' :
             'userType': input.selectedUserType,
-            'postalCode': input.postalCode
+            'pincode': input.postalCode
         };
         if(input.phonenumber !==''){
             post_data1['countryCode'] = '+91',
@@ -358,13 +359,13 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         } else {
             console.log(post_data1);
-            // this.provider_services.createUser(post_data1).subscribe(() => {
-            //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
-            //     this.router.navigate(['provider', 'settings', 'general', 'users']);
-            // },
-            //     error => {
-            //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            //     });
+            this.provider_services.createUser(post_data1).subscribe(() => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.router.navigate(['provider', 'settings', 'general', 'users']);
+            },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
     }
     onCancel() {
