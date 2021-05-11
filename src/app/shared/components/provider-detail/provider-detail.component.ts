@@ -29,6 +29,7 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { ConsumerVirtualServiceinfoComponent } from '../../../ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 
 
 @Component({
@@ -291,6 +292,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   wlServices;
   apptServices;
   private subscriptions = new SubSink();
+  consumerVirtualinfo: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -1668,6 +1670,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   appointmentClicked(location, service: any) {
+    console.log('apptclicked');
     this.futureAllowed = true;
     const current_provider = {
       'id': location.id,
@@ -1703,10 +1706,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.futureAllowed = false;
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
     if (this.userType === 'consumer') {
+      console.log(service.serviceType);
+      if(service.serviceType==='virtualService'){
+        if (!this.checkVirtualRequiredFieldsEntered()) {
+          this.collectRequiredinfo(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service);
+        } else{
+          this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+        }
+      }else{
       this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      }
     } else if (this.userType === '') {
-      const passParam = { callback: 'appointment', current_provider: current_provider };
+      const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
     }
   }
@@ -1747,7 +1760,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+          if (passParam['serviceType'] === 'virtualService') {
+            if (!this.checkVirtualRequiredFieldsEntered()) {
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate']);
+
+            } else {
+              this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+            }
+          }else{
+            this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+          }
+          
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1763,665 +1786,699 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-  doSignup(passParam?) {
-    const current_provider = passParam['current_provider'];
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
+  collectRequiredinfo(id,place,location,date,service?) {
+    console.log('inside');
+    const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        is_provider: 'false',
-        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+        type: origin,
+        is_provider: false,
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
-        } else if (passParam['callback'] === 'order') {
-          if (this.orderType === 'SHOPPINGLIST') {
-            this.shoppinglistupload();
-          } else {
-            this.checkout();
-          }
-        } else {
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
+    virtualdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+       this.consumerVirtualinfo=result;
+       this.showAppointment(id, place,location, date, service, 'consumer',result); 
+      }
+    });
+  }
+
+    checkVirtualRequiredFieldsEntered() {
+      let requiredFieldsEntered = false;
+      return requiredFieldsEntered;
+
+    }
+
+
+    doSignup(passParam ?) {
+      const current_provider = passParam['current_provider'];
+      const dialogRef = this.dialog.open(SignUpComponent, {
+        width: '50%',
+        panelClass: ['signupmainclass', 'popup-class'],
+        disableClose: true,
+        data: {
+          is_provider: 'false',
+          moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
         }
-      }
-    });
-  }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?) {
-
-    // if (this.servicesjson[0] && this.servicesjson[0].department) {
-    //   deptId = this.servicesjson[0].department;
-    // }
-    const queryParam = {
-      loc_id: locid,
-      locname: locname,
-      googleMapUrl: gMapUrl,
-      sel_date: curdate,
-      cur: this.changedate_req,
-      unique_id: this.provider_id,
-      account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
-      user: this.userId,
-      service_id: service.id
-    };
-    if (service['department']) {
-      queryParam['dept'] = service['department'];
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'success') {
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.sharedFunctionobj.sendMessage(pdata);
+          this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+          if (passParam['callback'] === 'communicate') {
+            this.showCommunicate(passParam['providerId']);
+          } else if (passParam['callback'] === 'history') {
+            this.redirectToHistory();
+          } else if (passParam['callback'] === 'fav') {
+            this.getFavProviders(passParam['mod']);
+          } else if (passParam['callback'] === 'donation') {
+            this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+          } else if (passParam['callback'] === 'appointment') {
+            this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+          } else if (passParam['callback'] === 'order') {
+            if (this.orderType === 'SHOPPINGLIST') {
+              this.shoppinglistupload();
+            } else {
+              this.checkout();
+            }
+          } else {
+            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
+          }
+        }
+      });
     }
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
-    };
-    this.router.navigate(['consumer', 'checkin'], navigationExtras);
-  }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?) {
-    // let deptId;
-    // if (this.servicesjson[0] && this.servicesjson[0].department) {
-    //   deptId = this.servicesjson[0].department;
-    // }
-    const queryParam = {
-      loc_id: locid,
-      locname: locname,
-      googleMapUrl: gMapUrl,
-      cur: this.changedate_req,
-      unique_id: this.provider_id,
-      account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
-      user: this.userId,
-      futureAppt: this.futureAllowed,
-      service_id: service.id,
-      sel_date: curdate
-    };
-    if (service['department']) {
-      queryParam['dept'] = service['department'];
-    }
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
-    };
-    this.router.navigate(['consumer', 'appointment'], navigationExtras);
-  }
-  showcheckInButton(servcount?) {
-    if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
-      return true;
-    }
-  }
-  // Edited//
-  handlesearchClick() {
-  }
-  onButtonBeforeHook() {
-  }
-  onButtonAfterHook() { }
-  // Edited//
-  showExistingCheckin(locId, locName, index) {
-    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        locId: locId,
-        locName: locName,
-        terminologies: this.terminologiesjson,
-        settings: this.settingsjson
-      }
-    });
+    showCheckin(locid, locname, gMapUrl, curdate, service: any, origin ?) {
 
-    this.extChecindialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.getExistingCheckinsByLocation(locId, index);
-      }
-    });
-  }
-
-
-  showServiceDetail(serv, busname) {
-    let servData;
-    if (serv.serviceType && serv.serviceType === 'donationService') {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv,
-        serv_type: 'donation'
-      };
-    } else {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv
-      };
-    }
-
-    // const initialState = {
-    //   data: servData
-    // };
-
-    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-    //   initialState,
-    //   class: 'commonpopupmainclass popup-class specialclass serv-detail-modal',
-    //   backdrop: "static"
-    // });
-
-    // $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
-
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    });
-
-  }
-  getTerminologyTerm(term) {
-    if (this.terminologiesjson) {
-      const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-      // const terminologies = this.common_datastorage.get('terminologies');
-      if (this.terminologiesjson) {
-        return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
-      } else {
-        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
-      }
-    } else {
-      return term;
-    }
-  }
-  handleEmailPhonediv() {
-    if (this.showEmailPhonediv) {
-      this.showEmailPhonediv = false;
-    } else {
-      this.showEmailPhonediv = true;
-    }
-  }
-  handlepanelClose() {
-    this.virtualsectionHeader = 'Click here to view more details';
-  }
-  handlepanelOpen() {
-    this.virtualsectionHeader = 'Click here to hide details';
-  }
-  openCoupons(type?) {
-    this.coupondialogRef = this.dialog.open(CouponsComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: {
-        couponsList: this.s3CouponList,
-        type: type
-      }
-    });
-    this.coupondialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList.JC.length; index++) {
-      if (CouponList.JC[index].firstCheckinOnly === true) {
-        this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
-      }
-    }
-    for (let index = 0; index < CouponList.OWN.length; index++) {
-      if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
-        this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
-      }
-    }
-  }
-  nonfirstPresent(CouponList) {
-    for (let index = 0; index < CouponList.JC.length; index++) {
-      if (CouponList.JC[index].firstCheckinOnly === false) {
-        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
-      }
-    }
-    for (let index = 0; index < CouponList.OWN.length; index++) {
-      if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
-        this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
-      }
-    }
-
-  }
-
-  claimBusiness() {
-    const myidarr = this.businessjson.id;
-    if (myidarr) {
-      this.searchdetailserviceobj.getClaimmable(myidarr)
-        .subscribe(data => {
-          const claimdata = data;
-          const pass_data = {
-            accountId: myidarr,
-            sector: claimdata['sector'],
-            subSector: claimdata['subSector']
-          };
-          this.SignupforClaimmable(pass_data);
-        }, error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-    } else {
-    }
-  }
-  SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
-  }
-  payClicked(locid, locname, cdate, service) {
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      this.showDonation(locid, cdate, service);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'donation', loc_id: locid, date: cdate, service: service };
-      this.doLogin('consumer', passParam);
-    }
-  }
-  showDonation(locid, curdate, service) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
+      // if (this.servicesjson[0] && this.servicesjson[0].department) {
+      //   deptId = this.servicesjson[0].department;
+      // }
+      const queryParam = {
         loc_id: locid,
+        locname: locname,
+        googleMapUrl: gMapUrl,
         sel_date: curdate,
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
+        tel_serv_stat: this.businessjson.virtualServices,
+        user: this.userId,
         service_id: service.id
+      };
+      if (service['department']) {
+        queryParam['dept'] = service['department'];
       }
-    };
-    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
-  }
-  getSingleTime(slot) {
-    const slots = slot.split('-');
-    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-  }
-  getAvailableSlot(slots) {
-    let slotAvailable = '';
-    for (let i = 0; i < slots.length; i++) {
-      if (slots[i].active) {
-        slotAvailable = this.getSingleTime(slots[i].time);
-        break;
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam
+      };
+      this.router.navigate(['consumer', 'checkin'], navigationExtras);
+    }
+    showAppointment(locid, locname, gMapUrl, curdate, service: any, origin ? ,virtualinfo?) {
+      // let deptId;
+      // if (this.servicesjson[0] && this.servicesjson[0].department) {
+      //   deptId = this.servicesjson[0].department;
+      // }
+      const queryParam = {
+        loc_id: locid,
+        locname: locname,
+        googleMapUrl: gMapUrl,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id,
+        tel_serv_stat: this.businessjson.virtualServices,
+        user: this.userId,
+        futureAppt: this.futureAllowed,
+        service_id: service.id,
+        sel_date: curdate,
+        virtual_info:virtualinfo
+      };
+      if (service['department']) {
+        queryParam['dept'] = service['department'];
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam
+      };
+      this.router.navigate(['consumer', 'appointment'], navigationExtras);
+    }
+    showcheckInButton(servcount ?) {
+      if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
+        return true;
       }
     }
-    return slotAvailable;
-  }
-  getServiceByDept(department) {
-    if (department && department.departmentId) {
-      const service = this.servicesjson.filter(dpt => dpt.departmentId === department.departmentId);
-      if (service[0] && service[0].services) {
-        return service[0].services;
-      }
-    } else {
-      return [];
+    // Edited//
+    handlesearchClick() {
     }
-  }
-  showmore(type) {
-    this.showType = type;
-    if (type === 'less') {
-      this.apptfirstArray = this.apptServicesjson;
-    } else {
-      this.apptfirstArray = this.apptTempArray;
+    onButtonBeforeHook() {
     }
-  }
-  providerDetClicked(userId) {
-    // const account = this.provider_id + '___' + userId;
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        src: 'bp'
-      }
-    };
-    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
-    // this.routerobj.navigate([account], navigationExtras);
-    // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
-  }
+    onButtonAfterHook() { }
+    // Edited//
+    showExistingCheckin(locId, locName, index) {
+      this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class'],
+        disableClose: true,
+        data: {
+          locId: locId,
+          locName: locName,
+          terminologies: this.terminologiesjson,
+          settings: this.settingsjson
+        }
+      });
 
-  getBusinessHours(location) {
-    let message = '';
-    for (let i = 0; i < location.display_schedule.length; i++) {
-      message += location.display_schedule[i].dstr + ' ' + location.display_schedule[i].time;
+      this.extChecindialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.getExistingCheckinsByLocation(locId, index);
+        }
+      });
+    }
 
-      if (location.display_schedule[i].recurrtype === 'Once') {
-        message += '(only for today)';
+
+    showServiceDetail(serv, busname) {
+      let servData;
+      if (serv.serviceType && serv.serviceType === 'donationService') {
+        servData = {
+          bname: busname,
+          sector: this.businessjson.serviceSector.domain,
+          serdet: serv,
+          serv_type: 'donation'
+        };
+      } else {
+        servData = {
+          bname: busname,
+          sector: this.businessjson.serviceSector.domain,
+          serdet: serv
+        };
       }
 
-      message += '\r\n';
-    }
-    return message;
-  }
-  getContactInfo(phonelist, emaillist) {
-    const contactinfo = [];
-    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
-      if (phonelist.length > 0) {
-        for (let i = 0; i < phonelist.length; i++) {
-          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label);
-        }
-      }
-      if (emaillist && emaillist.length > 0) {
-        for (let i = 0; i < emaillist.length; i++) {
-          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label);
-        }
-      }
-    }
-    return contactinfo;
-  }
+      // const initialState = {
+      //   data: servData
+      // };
 
-  showContactInfo(phonelist, emaillist) {
-    const contactinfo = [];
-    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
-      if (phonelist.length > 0) {
-        for (let i = 0; i < phonelist.length; i++) {
-          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label + '<br/>');
-        }
-      }
-      if (emaillist && emaillist.length > 0) {
-        for (let i = 0; i < emaillist.length; i++) {
-          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label + '<br/>');
-        }
-      }
+      // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
+      //   initialState,
+      //   class: 'commonpopupmainclass popup-class specialclass serv-detail-modal',
+      //   backdrop: "static"
+      // });
+
+      // $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
+
+      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        disableClose: true,
+        data: servData
+      });
+      this.servicedialogRef.afterClosed().subscribe(() => {
+      });
+
     }
-    this.dialog.open(VisualizeComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'displayContent': contactinfo
-      }
-    });
-  }
-  showMoreInfo() {
-    this.showMore = !this.showMore;
-  }
-  goBack() {
-    this.userId = null;
-    this.pSource = null;
-    if (this.userId) {
-      this.router.navigate(['/']);
-    } else {
-      this.locationobj.back();
-    }
-  }
-  getPic(user) {
-    if (user.profilePicture) {
-      return this.s3Processor.getJson(user.profilePicture)['url'];
-    }
-    return 'assets/images/img-null.svg';
-  }
-  getWaitlistServices(locationId) {
-    const _this = this;
-    return new Promise(function (resolve) {
-      _this.shared_services.getServicesByLocationId(locationId)
-        .subscribe((wlServices: any) => {
-          resolve(wlServices);
-        },
-          () => {
-            resolve([]);
-          }
-        );
-    });
-  }
-  getAppointmentServices(locationId) {
-    const _this = this;
-    return new Promise(function (resolve) {
-      _this.shared_services.getServicesforAppontmntByLocationId(locationId)
-        .subscribe((apptServices: any) => {
-          resolve(apptServices);
-        },
-          () => {
-            resolve([]);
-          }
-        );
-    });
-  }
-  generateServicesAndDoctorsForLocation(providerId, locationId) {
-    this.getWaitlistServices(locationId)
-      .then((wlServices: any) => {
-        this.wlServices = wlServices;
-        this.getAppointmentServices(locationId)
-          .then((apptServices: any) => {
-            this.apptServices = apptServices;
-            this.setServiceUserDetails();
-          },
-            error => {
-              this.wordProcessor.apiErrorAutoHide(this, error);
-            });
-      },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-        });
-  }
-  setServiceUserDetails() {
-    this.servicesAndProviders = [];
-    const servicesAndProviders = [];
-    this.donationServices = [];
-    this.serviceCount = 0;
-    this.userCount = 0;
-    if (this.showDepartments) {
-      if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
-          }
-        }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
-          }
+    getTerminologyTerm(term) {
+      if (this.terminologiesjson) {
+        const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+        // const terminologies = this.common_datastorage.get('terminologies');
+        if (this.terminologiesjson) {
+          return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+        } else {
+          return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
         }
       } else {
-        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-          const deptItem = {};
-          deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
-          deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
-          deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
-          deptItem['departmentItems'] = [];
+        return term;
+      }
+    }
+    handleEmailPhonediv() {
+      if (this.showEmailPhonediv) {
+        this.showEmailPhonediv = false;
+      } else {
+        this.showEmailPhonediv = true;
+      }
+    }
+    handlepanelClose() {
+      this.virtualsectionHeader = 'Click here to view more details';
+    }
+    handlepanelOpen() {
+      this.virtualsectionHeader = 'Click here to hide details';
+    }
+    openCoupons(type ?) {
+      this.coupondialogRef = this.dialog.open(CouponsComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        disableClose: true,
+        data: {
+          couponsList: this.s3CouponList,
+          type: type
+        }
+      });
+      this.coupondialogRef.afterClosed().subscribe(() => {
+      });
+    }
+
+    firstChckinCuponCunt(CouponList) {
+      for (let index = 0; index < CouponList.JC.length; index++) {
+        if (CouponList.JC[index].firstCheckinOnly === true) {
+          this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+        }
+      }
+      for (let index = 0; index < CouponList.OWN.length; index++) {
+        if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
+          this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+        }
+      }
+    }
+    nonfirstPresent(CouponList) {
+      for (let index = 0; index < CouponList.JC.length; index++) {
+        if (CouponList.JC[index].firstCheckinOnly === false) {
+          this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+        }
+      }
+      for (let index = 0; index < CouponList.OWN.length; index++) {
+        if (CouponList.OWN[index].couponRules.firstCheckinOnly === false) {
+          this.nonfirstCouponCount = this.nonfirstCouponCount + 1;
+        }
+      }
+
+    }
+
+    claimBusiness() {
+      const myidarr = this.businessjson.id;
+      if (myidarr) {
+        this.searchdetailserviceobj.getClaimmable(myidarr)
+          .subscribe(data => {
+            const claimdata = data;
+            const pass_data = {
+              accountId: myidarr,
+              sector: claimdata['sector'],
+              subSector: claimdata['subSector']
+            };
+            this.SignupforClaimmable(pass_data);
+          }, error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      } else {
+      }
+    }
+    SignupforClaimmable(passData) {
+      this.claimdialogRef = this.dialog.open(SignUpComponent, {
+        width: '50%',
+        panelClass: ['signupmainclass', 'popup-class'],
+        disableClose: true,
+        data: {
+          is_provider: 'true',
+          claimData: passData
+        }
+      });
+      this.claimdialogRef.afterClosed().subscribe(result => {
+      });
+    }
+    payClicked(locid, locname, cdate, service) {
+      this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+      if (this.userType === 'consumer') {
+        this.showDonation(locid, cdate, service);
+      } else if (this.userType === '') {
+        const passParam = { callback: 'donation', loc_id: locid, date: cdate, service: service };
+        this.doLogin('consumer', passParam);
+      }
+    }
+    showDonation(locid, curdate, service) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          loc_id: locid,
+          sel_date: curdate,
+          cur: this.changedate_req,
+          unique_id: this.provider_id,
+          account_id: this.provider_bussiness_id,
+          service_id: service.id
+        }
+      };
+      this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
+    }
+    getSingleTime(slot) {
+      const slots = slot.split('-');
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
+    getAvailableSlot(slots) {
+      let slotAvailable = '';
+      for (let i = 0; i < slots.length; i++) {
+        if (slots[i].active) {
+          slotAvailable = this.getSingleTime(slots[i].time);
+          break;
+        }
+      }
+      return slotAvailable;
+    }
+    getServiceByDept(department) {
+      if (department && department.departmentId) {
+        const service = this.servicesjson.filter(dpt => dpt.departmentId === department.departmentId);
+        if (service[0] && service[0].services) {
+          return service[0].services;
+        }
+      } else {
+        return [];
+      }
+    }
+    showmore(type) {
+      this.showType = type;
+      if (type === 'less') {
+        this.apptfirstArray = this.apptServicesjson;
+      } else {
+        this.apptfirstArray = this.apptTempArray;
+      }
+    }
+    providerDetClicked(userId) {
+      // const account = this.provider_id + '___' + userId;
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          src: 'bp'
+        }
+      };
+      this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+      // this.routerobj.navigate([account], navigationExtras);
+      // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
+    }
+
+    getBusinessHours(location) {
+      let message = '';
+      for (let i = 0; i < location.display_schedule.length; i++) {
+        message += location.display_schedule[i].dstr + ' ' + location.display_schedule[i].time;
+
+        if (location.display_schedule[i].recurrtype === 'Once') {
+          message += '(only for today)';
+        }
+
+        message += '\r\n';
+      }
+      return message;
+    }
+    getContactInfo(phonelist, emaillist) {
+      const contactinfo = [];
+      if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
+        if (phonelist.length > 0) {
+          for (let i = 0; i < phonelist.length; i++) {
+            contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label);
+          }
+        }
+        if (emaillist && emaillist.length > 0) {
+          for (let i = 0; i < emaillist.length; i++) {
+            contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label);
+          }
+        }
+      }
+      return contactinfo;
+    }
+
+    showContactInfo(phonelist, emaillist) {
+      const contactinfo = [];
+      if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
+        if (phonelist.length > 0) {
+          for (let i = 0; i < phonelist.length; i++) {
+            contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label + '<br/>');
+          }
+        }
+        if (emaillist && emaillist.length > 0) {
+          for (let i = 0; i < emaillist.length; i++) {
+            contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label + '<br/>');
+          }
+        }
+      }
+      this.dialog.open(VisualizeComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'displayContent': contactinfo
+        }
+      });
+    }
+    showMoreInfo() {
+      this.showMore = !this.showMore;
+    }
+    goBack() {
+      this.userId = null;
+      this.pSource = null;
+      if (this.userId) {
+        this.router.navigate(['/']);
+      } else {
+        this.locationobj.back();
+      }
+    }
+    getPic(user) {
+      if (user.profilePicture) {
+        return this.s3Processor.getJson(user.profilePicture)['url'];
+      }
+      return 'assets/images/img-null.svg';
+    }
+    getWaitlistServices(locationId) {
+      const _this = this;
+      return new Promise(function (resolve) {
+        _this.shared_services.getServicesByLocationId(locationId)
+          .subscribe((wlServices: any) => {
+            resolve(wlServices);
+          },
+            () => {
+              resolve([]);
+            }
+          );
+      });
+    }
+    getAppointmentServices(locationId) {
+      const _this = this;
+      return new Promise(function (resolve) {
+        _this.shared_services.getServicesforAppontmntByLocationId(locationId)
+          .subscribe((apptServices: any) => {
+            resolve(apptServices);
+          },
+            () => {
+              resolve([]);
+            }
+          );
+      });
+    }
+    generateServicesAndDoctorsForLocation(providerId, locationId) {
+      this.getWaitlistServices(locationId)
+        .then((wlServices: any) => {
+          this.wlServices = wlServices;
+          this.getAppointmentServices(locationId)
+            .then((apptServices: any) => {
+              this.apptServices = apptServices;
+              this.setServiceUserDetails();
+            },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+              });
+        },
+          error => {
+            this.wordProcessor.apiErrorAutoHide(this, error);
+          });
+    }
+    setServiceUserDetails() {
+      this.servicesAndProviders = [];
+      const servicesAndProviders = [];
+      this.donationServices = [];
+      this.serviceCount = 0;
+      this.userCount = 0;
+      if (this.showDepartments) {
+        if (this.userId) {
           for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
               this.serviceCount++;
             }
           }
           for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
               this.serviceCount++;
             }
           }
-          if (!this.userId) {
-            for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-              const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-              const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-              this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
-              this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
-              deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
-              this.userCount++;
-            }
-          }
-          servicesAndProviders.push(deptItem);
-        }
-      }
-      this.servicesAndProviders = servicesAndProviders;
-      // });
-    } else {
-      // tslint:disable-next-line:no-shadowed-variable
-      const servicesAndProviders = [];
-      if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
-          }
-        }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
-          }
-        }
-      } else {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
-          }
-        }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
-          }
-        }
-        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-          this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-          this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-          servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.userCount++;
-        }
-      }
-      this.servicesAndProviders = servicesAndProviders;
-    }
-    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
-      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-        this.serviceCount++;
-      }
-    }
-  }
-  changeLocation(loc) {
-    this.selectedLocation = loc;
-    this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-
-  }
-  cardClicked(actionObj) {
-    if (actionObj['type'] === 'waitlist') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
-      } else {
-        this.checkinClicked(actionObj['location'], actionObj['service']);
-      }
-
-    } else if (actionObj['type'] === 'appt') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
-      } else {
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
-      }
-    } else if (actionObj['type'] === 'donation') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
-      } else {
-        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
-      }
-    } else if (actionObj['type'] === 'item') {
-      if (actionObj['action'] === 'view') {
-        this.itemDetails(actionObj['service']);
-      } else if (actionObj['action'] === 'add') {
-        this.increment(actionObj['service']);
-      } else if (actionObj['action'] === 'remove') {
-        this.decrement(actionObj['service']);
-      }
-    } else {
-      this.providerDetClicked(actionObj['userId']);
-    }
-  }
-
-
-  /**
-   * Order Related Code
-   */
-
-  getCatalogs(bprovider_id) {
-    const account_Id = this.provider_bussiness_id;
-    this.shared_services.setaccountId(account_Id);
-    this.orderItems = [];
-    if (this.orderstatus && this.userId == null) {
-      this.shared_services.getConsumerCatalogs(account_Id).subscribe(
-        (catalogs: any) => {
-          if (catalogs.length !== 0) {
-            this.catalog_loading = true;
-            this.activeCatalog = catalogs[0];
-            this.orderType = this.activeCatalog.orderType;
-            if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
-              this.catalogImage = this.activeCatalog.catalogImages[0].url;
-              this.catalogimage_list_popup = [];
-              const imgobj = new Image(0,
-                { // modal
-                  img: this.activeCatalog.catalogImages[0].url,
-                  description: ''
-                });
-              this.catalogimage_list_popup.push(imgobj);
-            }
-            // this.updateLocalStorageItems();
-            this.catlogArry();
-            this.advance_amount = this.activeCatalog.advanceAmount;
-            if (this.activeCatalog.pickUp) {
-              if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
-                this.store_pickup = true;
-                this.choose_type = 'store';
-                this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
-                this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+        } else {
+          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+            const deptItem = {};
+            deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
+            deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
+            deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
+            deptItem['departmentItems'] = [];
+            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+              if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+                this.serviceCount++;
               }
             }
-            if (this.activeCatalog.homeDelivery) {
-              if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
-                this.home_delivery = true;
+            for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+              if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+                this.serviceCount++;
+              }
+            }
+            if (!this.userId) {
+              for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+                const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+                this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
+                deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
+                this.userCount++;
+              }
+            }
+            servicesAndProviders.push(deptItem);
+          }
+        }
+        this.servicesAndProviders = servicesAndProviders;
+        // });
+      } else {
+        // tslint:disable-next-line:no-shadowed-variable
+        const servicesAndProviders = [];
+        if (this.userId) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
+        } else {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
+          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+            this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+            this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+            servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+            this.userCount++;
+          }
+        }
+        this.servicesAndProviders = servicesAndProviders;
+      }
+      if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+        for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+          this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+          this.serviceCount++;
+        }
+      }
+    }
+    changeLocation(loc) {
+      this.selectedLocation = loc;
+      this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
-                if (!this.store_pickup) {
-                  this.choose_type = 'home';
-                  this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
-                  this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
-                  this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+    }
+    cardClicked(actionObj) {
+      if (actionObj['type'] === 'waitlist') {
+        if (actionObj['action'] === 'view') {
+          this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        } else {
+          this.checkinClicked(actionObj['location'], actionObj['service']);
+        }
+
+      } else if (actionObj['type'] === 'appt') {
+        if (actionObj['action'] === 'view') {
+          this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        } else {
+          this.appointmentClicked(actionObj['location'], actionObj['service']);
+        }
+      } else if (actionObj['type'] === 'donation') {
+        if (actionObj['action'] === 'view') {
+          this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        } else {
+          this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
+        }
+      } else if (actionObj['type'] === 'item') {
+        if (actionObj['action'] === 'view') {
+          this.itemDetails(actionObj['service']);
+        } else if (actionObj['action'] === 'add') {
+          this.increment(actionObj['service']);
+        } else if (actionObj['action'] === 'remove') {
+          this.decrement(actionObj['service']);
+        }
+      } else {
+        this.providerDetClicked(actionObj['userId']);
+      }
+    }
+
+
+    /**
+     * Order Related Code
+     */
+
+    getCatalogs(bprovider_id) {
+      const account_Id = this.provider_bussiness_id;
+      this.shared_services.setaccountId(account_Id);
+      this.orderItems = [];
+      if (this.orderstatus && this.userId == null) {
+        this.shared_services.getConsumerCatalogs(account_Id).subscribe(
+          (catalogs: any) => {
+            if (catalogs.length !== 0) {
+              this.catalog_loading = true;
+              this.activeCatalog = catalogs[0];
+              this.orderType = this.activeCatalog.orderType;
+              if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
+                this.catalogImage = this.activeCatalog.catalogImages[0].url;
+                this.catalogimage_list_popup = [];
+                const imgobj = new Image(0,
+                  { // modal
+                    img: this.activeCatalog.catalogImages[0].url,
+                    description: ''
+                  });
+                this.catalogimage_list_popup.push(imgobj);
+              }
+              // this.updateLocalStorageItems();
+              this.catlogArry();
+              this.advance_amount = this.activeCatalog.advanceAmount;
+              if (this.activeCatalog.pickUp) {
+                if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+                  this.store_pickup = true;
+                  this.choose_type = 'store';
+                  this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+                  this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
                 }
               }
-            }
-            this.shared_services.setOrderDetails(this.activeCatalog);
-            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
-              const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
-              const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-              const showpric = this.activeCatalog.showPrice;
-              if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-                this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
-                this.itemCount++;
+              if (this.activeCatalog.homeDelivery) {
+                if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+                  this.home_delivery = true;
+
+                  if (!this.store_pickup) {
+                    this.choose_type = 'home';
+                    this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                    this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                    this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+                  }
+                }
               }
+              this.shared_services.setOrderDetails(this.activeCatalog);
+              for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+                const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+                const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+                const showpric = this.activeCatalog.showPrice;
+                if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
+                  this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                  this.itemCount++;
+                }
+              }
+              // this.orderItems = orderItems;
             }
-            // this.orderItems = orderItems;
-          }
-        });
+          });
+      }
     }
-  }
 
 
 
-  // OrderItem add to cart
-  addToCart(itemObj) {
-    const item = itemObj.item;
-    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
-    if (spId === null) {
-      this.orderList = [];
-      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
-      this.orderList.push(itemObj);
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      this.getTotalItemAndPrice();
-      this.getItemQty(item);
-    } else {
-      if (this.orderList !== null && this.orderList.length !== 0) {
-        if (spId !== this.provider_bussiness_id) {
-          if (this.getConfirmation()) {
-            this.lStorageService.removeitemfromLocalStorage('order');
+    // OrderItem add to cart
+    addToCart(itemObj) {
+      const item = itemObj.item;
+      const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+      if (spId === null) {
+        this.orderList = [];
+        this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+        this.orderList.push(itemObj);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.getTotalItemAndPrice();
+        this.getItemQty(item);
+      } else {
+        if (this.orderList !== null && this.orderList.length !== 0) {
+          if (spId !== this.provider_bussiness_id) {
+            if (this.getConfirmation()) {
+              this.lStorageService.removeitemfromLocalStorage('order');
+            }
+          } else {
+            this.orderList.push(itemObj);
+            this.lStorageService.setitemonLocalStorage('order', this.orderList);
+            this.getTotalItemAndPrice();
+            this.getItemQty(item);
           }
         } else {
           this.orderList.push(itemObj);
@@ -2429,79 +2486,102 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getTotalItemAndPrice();
           this.getItemQty(item);
         }
-      } else {
-        this.orderList.push(itemObj);
-        this.lStorageService.setitemonLocalStorage('order', this.orderList);
-        this.getTotalItemAndPrice();
-        this.getItemQty(item);
       }
+
     }
 
-  }
 
-
-  getConfirmation() {
-    let can_remove = false;
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': '  All added items in your cart for different Provider will be removed ! '
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        can_remove = true;
-        this.orderList = [];
-        this.lStorageService.removeitemfromLocalStorage('order_sp');
-        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-        this.lStorageService.removeitemfromLocalStorage('order_spId');
-        this.lStorageService.removeitemfromLocalStorage('order');
-        return true;
-      } else {
-        can_remove = false;
-
-      }
-    });
-    return can_remove;
-  }
-  removeFromCart(itemObj) {
-    const item = itemObj.item;
-
-    for (const i in this.orderList) {
-      if (this.orderList[i].item.itemId === item.itemId) {
-        this.orderList.splice(i, 1);
-        if (this.orderList.length > 0 && this.orderList !== null) {
-          this.lStorageService.setitemonLocalStorage('order', this.orderList);
-        } else {
+    getConfirmation() {
+      let can_remove = false;
+      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': '  All added items in your cart for different Provider will be removed ! '
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          can_remove = true;
+          this.orderList = [];
           this.lStorageService.removeitemfromLocalStorage('order_sp');
           this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
           this.lStorageService.removeitemfromLocalStorage('order_spId');
           this.lStorageService.removeitemfromLocalStorage('order');
-        }
+          return true;
+        } else {
+          can_remove = false;
 
-        break;
+        }
+      });
+      return can_remove;
+    }
+    removeFromCart(itemObj) {
+      const item = itemObj.item;
+
+      for (const i in this.orderList) {
+        if (this.orderList[i].item.itemId === item.itemId) {
+          this.orderList.splice(i, 1);
+          if (this.orderList.length > 0 && this.orderList !== null) {
+            this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          } else {
+            this.lStorageService.removeitemfromLocalStorage('order_sp');
+            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+            this.lStorageService.removeitemfromLocalStorage('order_spId');
+            this.lStorageService.removeitemfromLocalStorage('order');
+          }
+
+          break;
+        }
+      }
+      this.getTotalItemAndPrice();
+    }
+    getTotalItemAndPrice() {
+      this.price = 0;
+      this.order_count = 0;
+      for (const itemObj of this.orderList) {
+        let item_price = itemObj.item.price;
+        if (itemObj.item.showPromotionalPrice) {
+          item_price = itemObj.item.promotionalPrice;
+        }
+        const totalPrice = this.price + item_price;
+        this.price = totalPrice;
+        this.order_count = this.order_count + 1;
       }
     }
-    this.getTotalItemAndPrice();
-  }
-  getTotalItemAndPrice() {
-    this.price = 0;
-    this.order_count = 0;
-    for (const itemObj of this.orderList) {
-      let item_price = itemObj.item.price;
-      if (itemObj.item.showPromotionalPrice) {
-        item_price = itemObj.item.promotionalPrice;
+    checkout() {
+      this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+      if (this.userType === 'consumer') {
+        let blogoUrl;
+        if (this.businessjson.logo) {
+          blogoUrl = this.businessjson.logo.url;
+        } else {
+          blogoUrl = '';
+        }
+        const businessObject = {
+          'bname': this.businessjson.businessName,
+          'blocation': this.locationjson[0].place,
+          'logo': blogoUrl
+        };
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            account_id: this.provider_bussiness_id,
+            unique_id: this.provider_id,
+          }
+        };
+        this.router.navigate(['order/shoppingcart'], navigationExtras);
+
+      } else if (this.userType === '') {
+        const passParam = { callback: 'order' };
+        this.doLogin('consumer', passParam);
       }
-      const totalPrice = this.price + item_price;
-      this.price = totalPrice;
-      this.order_count = this.order_count + 1;
+
+
     }
-  }
-  checkout() {
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
+    itemDetails(item) {
       let blogoUrl;
       if (this.businessjson.logo) {
         blogoUrl = this.businessjson.logo.url;
@@ -2517,144 +2597,115 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          account_id: this.provider_bussiness_id,
-          unique_id: this.provider_id,
-        }
-      };
-      this.router.navigate(['order/shoppingcart'], navigationExtras);
-
-    } else if (this.userType === '') {
-      const passParam = { callback: 'order' };
-      this.doLogin('consumer', passParam);
-    }
-
-
-  }
-  itemDetails(item) {
-    let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
-      blogoUrl = '';
-    }
-    const businessObject = {
-      'bname': this.businessjson.businessName,
-      'blocation': this.locationjson[0].place,
-      'logo': blogoUrl
-    };
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        item: JSON.stringify(item),
-        providerId: this.provider_bussiness_id,
-        showpric: this.activeCatalog.showPrice,
-        unique_id: this.provider_id,
-        businessDetails: businessObject
-
-      }
-
-    };
-    this.router.navigate(['order', 'item-details'], navigationExtras);
-    // this.router.navigate(['consumer', 'order', 'item-details']);
-  }
-  increment(item) {
-    this.addToCart(item);
-  }
-
-  decrement(item) {
-    this.removeFromCart(item);
-  }
-  getItemQty(itemObj) {
-    let qty = 0;
-    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
-      qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
-    }
-    return qty;
-  }
-  catlogArry() {
-    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
-      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
-    }
-    this.getTotalItemAndPrice();
-  }
-
-  reset() {
-
-  }
-  showOrderFooter() {
-    let showFooter = false;
-    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
-    if (this.spId_local_id !== null) {
-      if (this.orderList !== null && this.orderList.length !== 0) {
-        if (this.spId_local_id !== this.provider_bussiness_id) {
-          showFooter = false;
-        } else {
-          showFooter = true;
-        }
-      }
-
-    }
-    return showFooter;
-  }
-
-  shoppinglistupload() {
-    const chosenDateTime = {
-      delivery_type: this.choose_type,
-      catlog_id: this.activeCatalog.id,
-      nextAvailableTime: this.nextAvailableTime,
-      order_date: this.sel_checkindate,
-      advance_amount: this.advance_amount,
-      account_id: this.provider_bussiness_id
-
-    };
-    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      let blogoUrl;
-      if (this.businessjson.logo) {
-        blogoUrl = this.businessjson.logo.url;
-      } else {
-        blogoUrl = '';
-      }
-      const businessObject = {
-        'bname': this.businessjson.businessName,
-        'blocation': this.locationjson[0].place,
-        'logo': blogoUrl
-      };
-      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-
+          item: JSON.stringify(item),
           providerId: this.provider_bussiness_id,
+          showpric: this.activeCatalog.showPrice,
+          unique_id: this.provider_id,
+          businessDetails: businessObject
+
         }
 
       };
-      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'order' };
-      this.doLogin('consumer', passParam);
+      this.router.navigate(['order', 'item-details'], navigationExtras);
+      // this.router.navigate(['consumer', 'order', 'item-details']);
     }
-  }
+    increment(item) {
+      this.addToCart(item);
+    }
 
-  qrCodegeneraterOnlineID(accEncUid) {
-    this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
-      width: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        accencUid: accEncUid,
-        path: this.wndw_path,
-        businessName: this.businessjson.businessName
+    decrement(item) {
+      this.removeFromCart(item);
+    }
+    getItemQty(itemObj) {
+      let qty = 0;
+      if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
+        qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
       }
-    });
+      return qty;
+    }
+    catlogArry() {
+      if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+        this.orderList = this.lStorageService.getitemfromLocalStorage('order');
+      }
+      this.getTotalItemAndPrice();
+    }
 
-    this.qrdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+    reset() {
+
+    }
+    showOrderFooter() {
+      let showFooter = false;
+      this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
+      if (this.spId_local_id !== null) {
+        if (this.orderList !== null && this.orderList.length !== 0) {
+          if (this.spId_local_id !== this.provider_bussiness_id) {
+            showFooter = false;
+          } else {
+            showFooter = true;
+          }
+        }
 
       }
-    });
-  }
+      return showFooter;
+    }
 
-}
+    shoppinglistupload() {
+      const chosenDateTime = {
+        delivery_type: this.choose_type,
+        catlog_id: this.activeCatalog.id,
+        nextAvailableTime: this.nextAvailableTime,
+        order_date: this.sel_checkindate,
+        advance_amount: this.advance_amount,
+        account_id: this.provider_bussiness_id
+
+      };
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+      if (this.userType === 'consumer') {
+        let blogoUrl;
+        if (this.businessjson.logo) {
+          blogoUrl = this.businessjson.logo.url;
+        } else {
+          blogoUrl = '';
+        }
+        const businessObject = {
+          'bname': this.businessjson.businessName,
+          'blocation': this.locationjson[0].place,
+          'logo': blogoUrl
+        };
+        // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+
+            providerId: this.provider_bussiness_id,
+          }
+
+        };
+        this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+      } else if (this.userType === '') {
+        const passParam = { callback: 'order' };
+        this.doLogin('consumer', passParam);
+      }
+    }
+
+    qrCodegeneraterOnlineID(accEncUid) {
+      this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          accencUid: accEncUid,
+          path: this.wndw_path,
+          businessName: this.businessjson.businessName
+        }
+      });
+
+      this.qrdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+
+        }
+      });
+    }
+
+  }

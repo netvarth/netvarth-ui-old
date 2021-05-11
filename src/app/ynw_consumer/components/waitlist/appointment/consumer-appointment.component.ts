@@ -28,6 +28,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
+
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -128,6 +129,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     changePhno = false;
     selected_phone;
     trackUuid;
+    consumer_dob;
+    consumer_location;
     selectedMessage = {
         files: [],
         base64: [],
@@ -220,6 +223,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     questionnaireLoaded = false;
     imgCaptions: any = [];
+    virtualInfo: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -269,6 +273,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.type = params.type;
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleApptDet();
+                }
+                if(params.virtual_info){
+                    this.virtualInfo=params.virtual_info;
                 }
             });
     }
@@ -689,7 +696,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
+            if(this.virtualInfo){
+            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            post_Data['dob']=formattedDate;
+            if(this.virtualInfo.islanguage==='yes'){
+                post_Data['preferredLanguage']='English';
+            }else{
+                post_Data['preferredLanguage']=this.virtualInfo.preferredLanguage;
+            }
+            const bookingLocation={};
+            bookingLocation['pincode']=this.virtualInfo.pincode;
+            post_Data['bookingLocaion']=bookingLocation;
         }
+
+        }
+        console.log('post_data'+ post_Data);
         if (!this.is_wtsap_empty) {
             if (type) {
                 this.addCheckInConsumer(post_Data);
