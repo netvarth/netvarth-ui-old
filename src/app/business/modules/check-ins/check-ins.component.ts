@@ -29,7 +29,8 @@ import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 @Component({
   selector: 'app-checkins',
-  templateUrl: './check-ins.component.html'
+  templateUrl: './check-ins.component.html',
+  styleUrls: ['./check-ins.component.css']
 })
 export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today

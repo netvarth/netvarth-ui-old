@@ -51,10 +51,10 @@
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin" id="apptsHeader" [class.index-zero]="filter_sidebar">
-          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
+          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation" style="background: transparent !important;">
             <div class="navbar-custom-menu width100pc">
-              <ul class="nav navbar-nav width100pc">
-                <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3">
+              <ul class="nav navbar-nav width100pc" style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important;">
+                <!-- <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
@@ -101,7 +101,7 @@
                     </li>
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
-                </li>
+                </li> -->
                 <!-- <li class="pl5 dropdown messages-menu loc-lst queue-menu tok-db pull-right"
                   *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
                   <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
@@ -149,6 +149,54 @@
                     data-toggle="dropdown">
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
+                </li>
+                <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3" style="margin-left: auto !important; margin-bottom: 12px !important;">
+                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
+                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+                    *ngIf="selectedView" style="padding-top: 12px !important;">
+                    <span *ngIf="!small_device_display && selectedView.name">
+                      {{selectedView.name}}</span>
+                    <span *ngIf="!small_device_display && !selectedView.name">
+                      <ng-container *ngIf="selectedView.businessName">
+                        {{selectedView.businessName}}</ng-container>
+                      <ng-container *ngIf="!selectedView.businessName">
+                        {{selectedView.firstName}}</ng-container>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <ul class="menu">
+                        <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
+                          <a class="pointer-cursor" (click)="handleViewSel(view)">
+                            <ng-container *ngIf="view.name">
+                              <h4 *ngIf="view.name.length>='27'">
+                                {{view.name.substring(0,24) }}...</h4>
+                              <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
+                            </ng-container>
+                            <ng-container *ngIf="!view.name">
+                              <h4 *ngIf="!view.businessName">
+                                <ng-container *ngIf="view.firstName.length>='27'">
+                                  {{ view.firstName.substring(0,24) }}...
+                                </ng-container>
+                                <ng-container *ngIf="view.firstName.length<'27'">
+                                  {{ view.firstName}}
+                                </ng-container>
+                              </h4>
+                              <h4 *ngIf="view.businessName">
+                                <ng-container *ngIf="view.businessName.length>='27'">
+                                  {{ view.businessName.substring(0,24) }}...
+                                </ng-container>
+                                <ng-container *ngIf="view.businessName.length<'27'">
+                                  {{ view.businessName}}
+                                </ng-container>
+                              </h4>
+                            </ng-container>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
+                  </ul>
                 </li>
               </ul>
             </div>
