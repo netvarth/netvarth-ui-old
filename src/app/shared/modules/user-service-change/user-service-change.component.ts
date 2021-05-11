@@ -314,6 +314,10 @@ export class UserServiceChnageComponent implements OnInit {
   }
   selectedRow(index,user){
     this.selectrow = true;
+    if(this.selectrow === true && user.id){
+      console.log(user.id)
+      this.updateUser()
+    }
     this.removeSelection();
     if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
       this.userId = user.id;

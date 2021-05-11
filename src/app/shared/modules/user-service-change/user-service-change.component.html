@@ -13,10 +13,10 @@
 <section >
   <div >
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
-      <div class="text-center mt-5"  *ngIf="selectrow && userId != ''">
+      <!-- <div class="text-center mt-5"  *ngIf="selectrow && userId != ''">
         <button type="button" class="btn btn-lg default profile-back"
           (click)="updateUser()">Select</button>
-      </div>
+      </div> -->
       <div class="w-dta" >
         <div class="row">
             <div class="copy">
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr [class.green]="service.selected" *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i,service)">
+          <tr class="pointer-cursor" [class.green]="service.selected" *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i,service)">
             <td data-title="Service ID">{{service.id? service.id : ''}}</td>
             <td data-title="Username">{{service.Username?service.Username : ''}}</td>
             <td data-title="User Type">{{service.userType? service.userType : ''}}</td>
