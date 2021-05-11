@@ -352,7 +352,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   endmaxday = new Date();
   statusChangeClicked = false;
   activeUser: any;
-  statusLoaded = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2729,7 +2728,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTimeType(event.index + 1);
   }
   statusClick(status) {
-    this.statusLoaded = true;
     this.allSelection = false;
     this.statusAction = status;
     this.groupService.setitemToGroupStorage('appt_action', this.statusAction);
@@ -2741,9 +2739,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, status);
     }
-    setTimeout(() => {
-      this.statusLoaded = false;
-    }, 500);
   }
   getScheduleIndex(id) {
     const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
@@ -2806,14 +2801,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   //   return this.apptStatuses.toString();
   // }
-  cardClicked(event) {
-    console.log(event);
-    if (event.type === 'note') {
-      this.showConsumerNote(event.waitlist);
-    } else if (event.type === 'note') {
-      this.openAttachmentGallery(event.waitlist);
-    } else if (event.type === 'actions') {
-      this.showCheckinActions(event.statusAction, event.waitlist);
-    }
-  }
 }

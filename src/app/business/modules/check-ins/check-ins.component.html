@@ -973,7 +973,7 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="showSelectAll()">
                   <tr>
-                    <th class="chkWth check-table-head" colspan="3">
+                    <th class="chkWth check-table-head" colspan="5">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
@@ -984,8 +984,8 @@
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
-                    <th class="childActionBar" colspan="2">
-                    </th>
+                    <!-- <th class="childActionBar" colspan="2">
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
@@ -1412,7 +1412,7 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="5">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
@@ -1423,8 +1423,8 @@
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
-                    <th class="childActionBar" colspan="2">
-                    </th>
+                    <!-- <th class="childActionBar" colspan="2">
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
