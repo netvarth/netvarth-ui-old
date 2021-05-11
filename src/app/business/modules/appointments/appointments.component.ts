@@ -1598,7 +1598,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if(this.activeUser) {
           api_filter['provider-eq'] = this.activeUser;
         } else {
-          a api_filter['schedule-eq'] = this.filteredSchedule.toString();
+          api_filter['schedule-eq'] = this.filteredSchedule.toString();
         }
        
       }
