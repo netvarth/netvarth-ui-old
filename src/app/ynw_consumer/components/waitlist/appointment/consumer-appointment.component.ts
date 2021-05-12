@@ -739,7 +739,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (!this.is_wtsap_empty) {
             if (type==='appt') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment &&type=='appt') {
+            } else if (this.sel_ser_det.isPrePayment ) {
                 this.addApptAdvancePayment(post_Data);
             }
         }
