@@ -245,11 +245,8 @@
         </div>
     </div>
 </div>
-
-
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
-
         <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && waitlist.token">
                 {{waitlist.token}}
@@ -312,9 +309,7 @@
                 </div>
             </div>
         </div>
-
         <div class="mgn-up-5 mgn-lt-5 mgn-bt-5 mgn-rt-5" *ngIf="showDetails.indexOf(waitlist) != -1">
-
             <div class="dash-item" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
                 <span> Time Window </span>
                 <span class="pull-right"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
@@ -322,7 +317,7 @@
             <div class="dash-item" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
                 <span>Date </span> <span class="pull-right">{{waitlist.date | date: newTimeDateFormat}}</span>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="getLabels(waitlist)">
+            <div class="dash-item" *ngIf="getLabels(waitlist)">
                 <span>Label </span> <span class="pull-right"> {{getLabels(waitlist)}}</span>
             </div>
             <div class="dash-item">
@@ -334,12 +329,9 @@
                 <span class="pull-right">Languages </span>
             </div>
         </div>
-
     </div>
-
     <div class="col-sm-12 col-xs-12 view-more" (click)="showMore(waitlist)">
         View More <i class="fa fa-caret-down"></i>
     </div>
 </ng-container>
-
 <!-- Card -->

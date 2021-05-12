@@ -2,7 +2,7 @@
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
-  <div class="pull-right"  *ngIf="time_type !==3">
+  <div class="pull-right" *ngIf="time_type !==3">
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
       <div class="navbar-custom-menu width100pc">
         <ul class="nav navbar-nav width100pc">
@@ -51,9 +51,11 @@
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin" id="locHeader" [class.index-zero]="filter_sidebar">
-          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation" style="background: transparent !important;">
+          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
+            style="background: transparent !important;">
             <div class="navbar-custom-menu width100pc">
-              <ul class="nav navbar-nav width100pc" style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important; flex-wrap: wrap !important;">
+              <ul class="nav navbar-nav width100pc"
+                style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important; flex-wrap: wrap !important;">
                 <!-- <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right drop-width" *ngIf="time_type !==3">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
@@ -160,7 +162,8 @@
                 <li class="dropdown notifications-menu pull-right">
 
                 </li>
-                <li class="dropdown customized-dd" *ngIf="time_type !==3" style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
+                <li class="dropdown customized-dd" *ngIf="time_type !==3"
+                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
                   <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                     *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
@@ -208,15 +211,16 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
+                    <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
+                        Views</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="(activeQs && activeQs.length > 0 && !activeUser) && time_type !==3 && !qloading"
-          id="qHeader">
+        <div class="head mgn-up-5 mgn-bt-5"
+          *ngIf="(activeQs && activeQs.length > 0 && !activeUser) && time_type !==3 && !qloading" id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
@@ -406,7 +410,8 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display" >
+                  <tbody
+                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
                     <tr class="pointer-cursor" *ngFor="let checkin of startedCheckins, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="startedCheckins.length > 1">
@@ -444,7 +449,8 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -526,7 +532,8 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -567,18 +574,19 @@
                       </td>
                     </tr>
                   </tbody>
-
-                  <tbody *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of startedCheckins, let i=index">
-                      <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="startedCheckins.length > 1">
+                  <tbody
+                    *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let checkin of startedCheckins, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                    (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'"></app-card>
-                </div>
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                        (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'">
+                      </app-card>
+                    </div>
                   </tbody>
-
                 </table>
               </div>
               <div class="">
@@ -632,7 +640,8 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
+                  <tbody
+                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
                     <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -675,7 +684,8 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -776,7 +786,8 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -817,20 +828,19 @@
                       </td>
                     </tr>
                   </tbody>
-
-                  <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
-                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="showSelectAll()">
-                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
-                        *ngIf="checkin.consumer" (click)="stopprop($event)"
-                        (change)="chkAptHistoryClicked(i, checkin)" />
+                  <tbody
+                    *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let checkin of check_in_filtered_list, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                        <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
+                          (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
+                      </div>
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                        (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                      </app-card>
                     </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                    (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
-                  </div>
                   </tbody>
-
-
                 </table>
               </div>
             </div>
@@ -1002,7 +1012,8 @@
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
                   <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1044,8 +1055,9 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"  [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                          *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
+                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1127,9 +1139,10 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"  [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></i>
@@ -1174,20 +1187,19 @@
                     </td>
                   </tr>
                 </tbody>
-
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
-                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
-                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="showSelectAll()">
-                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
-                        *ngIf="checkin.consumer" (click)="stopprop($event)"
-                        (change)="chkAptHistoryClicked(i, checkin)" />
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let checkin of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
+                        (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                    (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
+                      (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
                   </div>
                 </tbody>
-
-
               </table>
             </div>
           </mat-tab>
@@ -1308,7 +1320,7 @@
                                 class="fa meet-icon"></i>
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
                                 class="fa zoom-icon"></i>
-                                <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" 
+                              <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
                                 *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
                                 class="fa phon-icon"></i>
@@ -1475,7 +1487,8 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"  [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1562,9 +1575,10 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"  [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                         <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></i>
@@ -1602,20 +1616,18 @@
                     </td>
                   </tr>
                 </tbody>
-
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display">
-                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding" *ngFor="let checkin of check_in_filtered_list, let i=index">
-           
-                    <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5 chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]"
-                        (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
+                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let checkin of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
+                      <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
+                        (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                    (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction"></app-card>
+                      (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
                   </div>
                 </tbody>
-
-
                 <tfoot>
                   <tr>
                     <td colspan="5">
