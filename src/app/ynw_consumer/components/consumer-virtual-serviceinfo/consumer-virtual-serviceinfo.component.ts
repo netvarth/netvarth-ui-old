@@ -19,6 +19,7 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
   details: any;
   gender_cap = Messages.GENDER_CAP;
   consumer_label: any;
+  disableButton;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ConsumerVirtualServiceinfoComponent>,
@@ -75,6 +76,16 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
       this.lngknown = 'yes';
     } else {
       this.lngknown = 'no';
+    }
+  }
+  validateFields(){
+    if(this.virtualForm.get('pincode').value === '') {
+      return true;
+    }
+    if(this.lngknown==='no'){
+      if (this.virtualForm.get('preferredLanguage').value === ''){
+        return true;
+      }
     }
   }
   onSubmit(formdata) {
