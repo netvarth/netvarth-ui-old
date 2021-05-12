@@ -53,6 +53,11 @@ virtualForm:FormGroup;
       preferredLanguage: (this.details.userProfile.preferredLanguages&&this.details.userProfile.preferredLanguages)?language[0]:'',
       islanguage:(this.details.userProfile.preferredLanguages&& language[0]==='English')?'yes':'no'
     });
+    if(language[0]==='English'){
+      this.lngknown='yes';
+    }else{
+      this.lngknown='no';
+    }
   }
   onSubmit(formdata){
 
