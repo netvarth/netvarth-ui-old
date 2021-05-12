@@ -187,6 +187,7 @@ export class UserServiceChnageComponent implements OnInit {
   showDetails: any = [];
   loading = true;
   customer_label = '';
+  provider_label = '';
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -198,6 +199,7 @@ export class UserServiceChnageComponent implements OnInit {
     private wordProcessor: WordProcessor
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activated_route.params.subscribe(params => {
       this.uuid = params.id;
     });

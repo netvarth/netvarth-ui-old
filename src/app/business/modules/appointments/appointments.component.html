@@ -413,9 +413,9 @@
                       <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0 || activeUser">
                         No Appointments Found
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                   <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
@@ -652,9 +652,9 @@
                         <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                         </p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                   <tbody *ngIf="!loading && scheduleSlots.length === 0 && selected_type === 'free'">
@@ -1215,9 +1215,9 @@
                       <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                       </p>
                     </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
+                    <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                       {{no_service_cap}}
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">

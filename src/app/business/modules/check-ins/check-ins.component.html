@@ -405,9 +405,9 @@
                         <p *ngIf="!showToken">No Check-ins Found</p>
                         <p *ngIf="showToken ">No tokens issued till now</p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                   <tbody
@@ -432,12 +432,12 @@
                           (click)="gotoCustomerDetails(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
-                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
-                            *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].dob">
+                            DOB: {{checkin.waitlistingFor[0].dob | date: newTimeDateFormat}}</div>
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                             {{checkin.waitlistingFor[0].bookingLocation.localArea}},
                             {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
-                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
-                            *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].preferredLanguage">
                             {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -449,7 +449,8 @@
                       </td>
                       <td class="title td-two">
                         <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName + ' ' + checkin.provider.lastName}}
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -583,15 +584,16 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="startedCheckins.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
                     <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of startedCheckins, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
-                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="startedCheckins"
-                        (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'">
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                        [checkins]="startedCheckins" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [statusAction]="'started'">
                       </app-card>
                     </div>
                   </tbody>
@@ -643,9 +645,9 @@
                         <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}
                         </p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                   <tbody
@@ -674,12 +676,12 @@
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
-                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
-                            *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].dob">
+                            DOB: {{checkin.waitlistingFor[0].dob | date: newTimeDateFormat}}</div>
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                             {{checkin.waitlistingFor[0].bookingLocation.localArea}},
                             {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
-                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
-                            *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].preferredLanguage">
                             {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -691,7 +693,8 @@
                       </td>
                       <td class="title td-two">
                         <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName + ' ' + checkin.provider.lastName}}
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -844,15 +847,16 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
                     <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of check_in_filtered_list, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
                         <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                       </div>
-                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
-                        (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
                   </tbody>
@@ -1022,9 +1026,9 @@
                       <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                       <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                     </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
+                    <!-- <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0 && !activeUser">
                       {{no_service_cap}}
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
                 <tbody
@@ -1052,12 +1056,12 @@
                         [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
-                          *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].dob">
+                          DOB: {{checkin.waitlistingFor[0].dob | date: newTimeDateFormat}}</div>
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                           {{checkin.waitlistingFor[0].bookingLocation.localArea}},
                           {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
-                          *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].preferredLanguage">
                           {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -1069,7 +1073,8 @@
                     </td>
                     <td class="title td-two">
                       <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName + ' ' + checkin.provider.lastName}}
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1210,15 +1215,16 @@
                   </tr>
                 </tbody>
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display && !statusLoaded">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
                   <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
-                      (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
                 </tbody>
@@ -1492,13 +1498,14 @@
                         (click)="gotoCustomerDetails(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
-                          *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].dob">
+                          DOB: {{checkin.waitlistingFor[0].dob | date: newTimeDateFormat}}</div>
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                           {{checkin.waitlistingFor[0].bookingLocation.localArea}},
                           {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
-                          *ngIf="checkin.waitlistingFor[0].preferredLanguage">
-                          {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div></div>
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                          {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -1508,7 +1515,8 @@
                     </td>
                     <td class="title td-two">
                       <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName + ' ' + checkin.provider.lastName}}
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1645,15 +1653,17 @@
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0 && small_device_display">
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display">
                   <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
-                      (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
+                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
                 </tbody>

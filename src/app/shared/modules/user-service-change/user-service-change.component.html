@@ -2,7 +2,8 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      User Service change
+      Assign a {{provider_label}} for your {{customer_label}}
+      <div class="form-level-settings">Please click any {{provider_label}} to assign</div>
     </h5>
   </div>
 </section>
@@ -17,7 +18,7 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 250px;">Username</th>
+                    <th style="min-width: 250px;">{{provider_label | capitalizeFirst}} name</th>
                     <th class="display-min-none">Online status</th>
                     <th class="display-min-none" style="min-width: 125px;">Phone number</th>
                     <th class="display-min-none">Specialization</th>
@@ -59,7 +60,8 @@
                         class="fa fa-user-circle-o gray" *ngIf="!service.isAvailable" aria-hidden="true"></i>
                     </td>
                     <td class="display-min-none">
-                      +91 {{(service.mobileNo) ? service.mobileNo : ''}}
+                      <span *ngIf="service.mobileNo">
+                      +91 {{service.mobileNo}}</span>
                     </td>
                     <td class="display-min-none">
                       {{service.specialization}}
