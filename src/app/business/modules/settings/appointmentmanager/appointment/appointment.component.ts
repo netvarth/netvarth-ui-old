@@ -1807,7 +1807,8 @@ export class AppointmentComponent implements OnInit {
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         this.api_loading = true;
         this.freeSlots = [];
-        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
+        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate,this.sel_ser)
+       //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
                     this.slots = data;

@@ -24,6 +24,16 @@
         {{service_data.description | capitalizeFirst}}
       </div>
       <div class="c-ot">
+          <div class="item" *ngIf="!is_donation">
+              <span class="ttle">Number of resources</span>
+              <span > {{service_data.resoucesRequired}}
+              </span>
+            </div>
+            <div class="item" *ngIf="!is_donation">
+                <span class="ttle">Maximum bookings</span>
+                <span > {{service_data.maxBookingsAllowed}}
+                </span>
+              </div>
         <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
           <span class="ttle">Department Name</span>
           <span>{{departmentName}}</span>
@@ -182,6 +192,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
+
+     
+
+
       <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
         <mat-form-field>
           <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department"
@@ -290,6 +304,24 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  'maxlength' : 'Only 10 digits are allowed'
  })"> </app-field-error-display> -->
         </ng-container>
+      </div>
+<div class="col-md-6">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="resources"
+            placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      </div>
+      <div class="col-md-6">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="bookings"
+            placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+        </mat-form-field>
+
+      </div>
       </div>
       <!-- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
  <div>
