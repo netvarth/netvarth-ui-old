@@ -54,3 +54,62 @@
   }
   
   
+  .customersList .pitch_blu {
+    color: #1e4079 !important;
+  }
+  .customersList .hidden_th {
+    display: none !important;
+  }
+  
+  @media screen and (max-width: 1218px) {
+      .customersList .hide_th {
+        display: none !important;
+      }
+      .customersList .hidden_th {
+        display: inline-block !important;
+      }
+  } 
+  @media screen and (max-width: 385px) {
+    .customersList .card-body {
+      padding: 0 !important;
+    }
+  } 
+  
+.customersList .card {
+  border-radius: 0 !important;
+}  
+.customersList .row_data {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+.user-img {
+  border-radius: 0.42rem;
+  flex-shrink: 0 !important;
+}
+.user-img img {
+  width: 100%;
+  max-width: 50px;
+  height: 50px;
+}
+.fa {
+  font-family: 'FontAwesome' !important;
+}
+@media (max-width: 992px) {
+  .display-min-none {
+    display: none;
+  }
+}
+.table.table-vertical-center td {
+  vertical-align: baseline !important;
+}
+.view-details {
+  margin-top: 10px;
+}
+.view-details .b1 {
+  width: 30%;
+}
+.view-details .b2 {
+  width: 70%;
+  text-align: right;
+  float: right;
+}

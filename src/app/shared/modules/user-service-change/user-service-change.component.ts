@@ -165,7 +165,7 @@ import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/conf
 @Component({
   selector: 'app-user-service-change',
   templateUrl: './user-service-change.component.html',
-  styleUrls: ['./user-service-change.component.css']
+  styleUrls: ['./user-service-change.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class UserServiceChnageComponent implements OnInit {
@@ -175,13 +175,14 @@ export class UserServiceChnageComponent implements OnInit {
   select_All = Messages.SELECT_ALL;
   public service_dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  service_displayedColumns = ['select', 'username', 'userType', 'availability','phonenumber','specialization','languages'];
+  service_displayedColumns = ['select', 'username', 'userType', 'availability', 'phonenumber', 'specialization', 'languages'];
   selection = new SelectionModel(true, []);
   uuid: any;
   source;
   selected = false;
   userId = '';
   selectrow = false;
+  showDetails: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -234,21 +235,22 @@ export class UserServiceChnageComponent implements OnInit {
       let userName = '';
       let languages = '';
       userName = serviceObj.firstName + ' ' + serviceObj.lastName;
-      if(serviceObj.preferredLanguages){
+      if (serviceObj.preferredLanguages) {
         console.log(JSON.parse(serviceObj.preferredLanguages));
         languages = JSON.parse(serviceObj.preferredLanguages);
       }
-      
+
       service_list.push(
         {
           'id': serviceObj.id,
           'Username': userName,
           'userType': serviceObj.userType,
           'status': serviceObj.status,
-          'mobileNo':serviceObj.mobileNo,
-          'isAvailable':serviceObj.isAvailable,
-          'specialization':serviceObj.specialization,
-          'languages':languages
+          'mobileNo': serviceObj.mobileNo,
+          'isAvailable': serviceObj.isAvailable,
+          'specialization': serviceObj.specialization,
+          'languages': languages,
+          'locationName': (serviceObj.locationName) ? serviceObj.locationName : ''
         });
     });
     return service_list;
@@ -273,7 +275,7 @@ export class UserServiceChnageComponent implements OnInit {
           const post_data = {
             'ynwUuid': this.uuid,
             'provider': {
-              'id':this.userId
+              'id': this.userId
               // 'id': this.services_selected[0].id
             },
           };
@@ -292,7 +294,7 @@ export class UserServiceChnageComponent implements OnInit {
           const post_data = {
             'uid': this.uuid,
             'provider': {
-              'id':this.userId
+              'id': this.userId
               // 'id': this.services_selected[0].id
             },
           };
@@ -312,9 +314,9 @@ export class UserServiceChnageComponent implements OnInit {
   redirecToReports() {
     this.router.navigate(['provider', 'check-ins']);
   }
-  selectedRow(index,user){
+  selectedRow(index, user) {
     this.selectrow = true;
-    if(this.selectrow === true && user.id){
+    if (this.selectrow === true && user.id) {
       console.log(user.id)
       this.updateUser()
     }
@@ -327,10 +329,25 @@ export class UserServiceChnageComponent implements OnInit {
       this.service_dataSource.data[index].selected = false;
     }
   }
-   removeSelection() {
+  removeSelection() {
     this.service_dataSource.data.map((question) => {
       return question.selected = false;
     });
+  }
+  getUserImg(user) {
+    if (user.profilePicture) {
+      const proImage = user.profilePicture;
+      return proImage.url;
+    } else {
+      return '../../.././assets/images/avatar5.png';
+    }
+  }
+  showMoreorLess(event, index, type) {
+    event.stopPropagation();
+    this.showDetails = [];
+    if (type === 'more') {
+      this.showDetails[index] = true;
+    }
   }
 }
 
