@@ -83,7 +83,9 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
 
   }
   onChange(event) {
+
     console.log(event.value);
     this.lngknown = event.value
+
   }
 }
