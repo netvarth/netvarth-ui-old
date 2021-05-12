@@ -59,7 +59,7 @@
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].dob">
                 <span class="itemHead">Date of Birth</span>
-                <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob}}</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
                 <span class="itemHead">Phone No</span>
