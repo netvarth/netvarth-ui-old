@@ -115,4 +115,8 @@
 }
 .row_data:hover {
   box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+  border-radius: 0.4rem;
+}
+.fa-map-marker {
+  font-size: 1rem !important;
 }

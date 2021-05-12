@@ -38,13 +38,13 @@
                         </div>
                         <div class="mgn-lt-10">
                           {{service.Username?service.Username : ''}}
-                          <div class="disp-flex" *ngIf="service.locationName"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          <div class="disp-flex mgn-up-5" *ngIf="service.locationName"><i class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
                             {{service.locationName}}</div>
                         </div>
                       </div>
                       <div class="view-details" *ngIf="showDetails[i]">
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.mobileNo"> <span class="b1"> Phone number : </span><span
-                            class="b2"> {{service.mobileNo}} </span></div>
+                            class="b2"> +91 {{service.mobileNo}} </span></div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.specialization"> <span class="b1">
                             Specialization : </span> <span class="b2"> {{service.specialization}} </span></div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.languages"> <span class="b1">
@@ -56,7 +56,7 @@
                         class="fa fa-user-circle-o gray" *ngIf="!service.isAvailable" aria-hidden="true"></i>
                     </td>
                     <td class="display-min-none">
-                      {{(service.mobileNo) ? service.mobileNo : ''}}
+                      +91 {{(service.mobileNo) ? service.mobileNo : ''}}
                     </td>
                     <td class="display-min-none">
                       {{service.specialization}}
