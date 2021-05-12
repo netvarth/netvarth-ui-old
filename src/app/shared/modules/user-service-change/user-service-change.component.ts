@@ -250,7 +250,8 @@ export class UserServiceChnageComponent implements OnInit {
           'isAvailable': serviceObj.isAvailable,
           'specialization': serviceObj.specialization,
           'languages': languages,
-          'locationName': (serviceObj.locationName) ? serviceObj.locationName : ''
+          'locationName': serviceObj.locationName,
+          'profilePicture': serviceObj.profilePicture
         });
     });
     return service_list;

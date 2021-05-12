@@ -17,7 +17,7 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 150px;">Username</th>
+                    <th>Username</th>
                     <th class="display-min-none">Online status</th>
                     <th class="display-min-none" style="min-width: 105px;">Phone number</th>
                     <th class="display-min-none">Specialization</th>
@@ -25,7 +25,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="row_data border-bottom" *ngFor="let service of service_dataSource.data; let i = index;"
+                  <tr class="row_data border-bottom pointer-cursor" *ngFor="let service of service_dataSource.data; let i = index;"
                     (click)="selectedRow(i,service)">
                     <td class="">
                       <div class="disp-flex">
@@ -38,15 +38,16 @@
                         </div>
                         <div class="mgn-lt-10">
                           {{service.Username?service.Username : ''}}
-                          <div *ngIf="service.locationName"><i class="icon-location"></i> {{service.locationName}}</div>
+                          <div class="disp-flex" *ngIf="service.locationName"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                            {{service.locationName}}</div>
                         </div>
                       </div>
                       <div class="view-details" *ngIf="showDetails[i]">
-                        <div class="col-xs-12 col-sm-12 no-padding"> <span class="b1"> Phone number : </span><span
+                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.mobileNo"> <span class="b1"> Phone number : </span><span
                             class="b2"> {{service.mobileNo}} </span></div>
-                        <div class="col-xs-12 col-sm-12 no-padding" *ngIf="service.specialization"> <span class="b1">
+                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.specialization"> <span class="b1">
                             Specialization : </span> <span class="b2"> {{service.specialization}} </span></div>
-                        <div class="col-xs-12 col-sm-12 no-padding" *ngIf="service.languages"> <span class="b1">
+                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.languages"> <span class="b1">
                             Languages : </span><span class="b2"> {{service.languages}} </span></div>
                       </div>
                     </td>
@@ -55,7 +56,7 @@
                         class="fa fa-user-circle-o gray" *ngIf="!service.isAvailable" aria-hidden="true"></i>
                     </td>
                     <td class="display-min-none">
-                      {{service.mobileNo}}
+                      {{(service.mobileNo) ? service.mobileNo : ''}}
                     </td>
                     <td class="display-min-none">
                       {{service.specialization}}
