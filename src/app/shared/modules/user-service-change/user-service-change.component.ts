@@ -183,6 +183,7 @@ export class UserServiceChnageComponent implements OnInit {
   userId = '';
   selectrow = false;
   showDetails: any = [];
+  loading = true;
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -217,6 +218,9 @@ export class UserServiceChnageComponent implements OnInit {
       this.service_dataSource.data = this.setServiceDataSource(data);
     });
     console.log(this.service_dataSource.data);
+    setTimeout(() => {
+    this.loading = false;
+    }, 500);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -234,7 +238,7 @@ export class UserServiceChnageComponent implements OnInit {
     result.forEach(serviceObj => {
       let userName = '';
       let languages = '';
-      userName = serviceObj.firstName + ' ' + serviceObj.lastName;
+      userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
         console.log(JSON.parse(serviceObj.preferredLanguages));
         languages = JSON.parse(serviceObj.preferredLanguages);

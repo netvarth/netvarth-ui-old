@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { UserServiceChangeRoutingModule } from './user-service-change.routing.module';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 
 
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
       MatFormFieldModule,
       UserServiceChangeRoutingModule,
       MatInputModule,
-      FormsModule
+      FormsModule,
+      LoadingSpinnerModule
       
     ],
     declarations: [
