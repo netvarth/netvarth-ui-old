@@ -4,6 +4,7 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 
+
 @Component({
   selector: 'app-consumer-virtual-serviceinfo',
   templateUrl: './consumer-virtual-serviceinfo.component.html',
@@ -39,11 +40,18 @@ virtualForm:FormGroup;
   }
   updateForm(){
     this.details=this.data;
+    let language=[];
+    if(this.details.userProfile.preferredLanguages){
+       language=JSON.parse(this.details.userProfile.preferredLanguages);
+    }
+    
+     
+
     this.virtualForm.patchValue({
       dob: this.details.userProfile.dob,
       pincode: (this.details.bookingLocation &&this.details.bookingLocation.pincode)?this.details.bookingLocation.pincode:'' || this.details.userProfile.pinCode,
-      preferredLanguage: (this.details.preferredLanguage&&this.details.preferredLanguage[0])?this.details.preferredLanguage[0]:'',
-      isLanguage:(this.details.preferredLanguage&& this.details.preferredLanguage[0]==='English')?'yes':'no'
+      preferredLanguage: (this.details.userProfile.preferredLanguages&&this.details.userProfile.preferredLanguages)?language[0]:'',
+      islanguage:(this.details.userProfile.preferredLanguages&& language[0]==='English')?'yes':'no'
     });
   }
   onSubmit(formdata){
