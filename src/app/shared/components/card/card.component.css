@@ -11,6 +11,18 @@
     min-width: 210px !important;
 }
 
+.booking-card.card.service {
+    line-height: 1.42857143 !important;
+}
+.booking-card.card.service {
+    max-width: 300px !important;
+    height: 230px !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: space-between;
+    padding: 35px 10px 45px !important;
+}
+
 .booking-card.card.user {
     max-width: 300px !important;
     height: 230px !important;
@@ -284,19 +296,23 @@ font-weight: 500;
     align-self: center !important;
 }
 
-.booking-card.card.user .card-item-head {
+.booking-card.card.user .card-item-head,
+.booking-card.card.service .card-item-head {
     width: 30% !important;
     height: auto !important;
     align-self: stretch !important;
 }
 
-.booking-card.card.user .card-item-head .img-container {
+.booking-card.card.user .card-item-head .img-container,
+.booking-card.card.service .card-item-head .img-container {
     width: 100% !important;
     padding-top: 100% !important;
     position: relative !important;
 }
 
-.booking-card.card.user .card-item-head .img-container img {
+.booking-card.card.user .card-item-head .img-container img,
+.booking-card.card.service .card-item-head .img-container img,
+.booking-card.card.service .card-item-head .img-container .card-img {
     position: absolute !important;
     height: 100% !important;
     top: 0 !important;
@@ -310,6 +326,37 @@ font-weight: 500;
     margin: 0px !important;
     padding: 5px !important;
     box-shadow: none !important;
+    text-align: center !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.phon-icon {
+    width: 90% !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.meet-icon {
+    width: 85% !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.zoom-icon {
+    width: 130% !important;
+    margin-left: -12px !important;
+    margin-top: -8px !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.wtsapaud-icon {
+    width: 150% !important;
+    margin-top: -16px !important;
+    margin-left: -20px !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.wtsapvid-icon {
+    width: 100% !important;
+}
+
+.booking-card.card.service .card-item-head .img-container .card-img .fa.jaldeevideo-icon {
+    width: 150% !important;
+    margin-top: -20px !important;
+    margin-left: -15px !important;
 }
 
 .booking-card.card.order .card-item-head {
@@ -325,7 +372,8 @@ font-weight: 500;
     width: 100%;
 }
 
-.booking-card.card.user .card-item-content {
+.booking-card.card.user .card-item-content,
+.booking-card.card.service .card-body {
     width: 70% !important;
     padding-left: 8px !important;
     margin-top: 0 !important;
@@ -542,7 +590,8 @@ button.fxmenu1{
     pointer-events: none !important;
 }
 
-.booking-card-user.user .card-item-content .card-title.user-name {
+.booking-card-user.user .card-item-content .card-title.user-name,
+.booking-card.card.service .card-body .card-title.service-name {
     height: auto !important;
     /* font-size: 18px; */
     font-size: 15px !important;
@@ -685,7 +734,7 @@ button.fxmenu1{
     background-color: #E0A800 !important;
     border-color: #D39E00;
 }
-.booking-card.card.service .card-body .service-details .service-buttons .moreDetails {
+.booking-card.card.service .moreDetails {
     position: absolute;
     top: 0;
     right: 0;
@@ -694,10 +743,10 @@ button.fxmenu1{
     background-color: transparent;
     border-color: transparent;
 }
-.booking-card.card.service .card-body .service-details .service-buttons .moreDetails:hover {
+.booking-card.card.service .moreDetails:hover {
     color: #073B4C !important;
     background-color: transparent !important;
-    border-color: #073B4C;
+    /* border-color: #073B4C; */
 }
  
 .card.booking-card.items .card-item-head .card-img {
@@ -932,7 +981,8 @@ button.fxmenu1{
     height: 45px;
 }
 
-.booking-card.card.user p.user-availability {
+.booking-card.card.user p.user-availability,
+.booking-card.card.service p.service-availability {
     padding: 8px !important;
     font-size: 10.5px !important;
     line-height: 1.1 !important;
@@ -947,7 +997,8 @@ button.fxmenu1{
     text-transform: uppercase !important;
 }
 
-.booking-card.card.user button.user-card-button {
+.booking-card.card.user button.user-card-button,
+.booking-card.card.service button.service-booking-buttons {
     width: 100% !important;
     border: 1px solid #FFC107 !important;
     background-color: #FFC107 !important;
@@ -961,7 +1012,8 @@ button.fxmenu1{
     font-weight: 700 !important;
 }
 
-.booking-card.card.user .user-text {
+.booking-card.card.user .user-text,
+.booking-card.card.service .service-text {
     color: #073B4C !important;
     font-size: 15px !important;
     margin-top: 8px !important;
@@ -972,12 +1024,14 @@ button.fxmenu1{
     display: flex !important;
 }
 
-.booking-card.card.user .user-text > span {
+.booking-card.card.user .user-text > span,
+.booking-card.card.service .service-text > span {
     position: relative !important;
     width: 100% !important;
 }
 
-.booking-card.card.user .user-text > span > span:nth-child(1) {
+.booking-card.card.user .user-text > span > span:nth-child(1),
+.booking-card.card.service .service-text > span > span:nth-child(1) {
     position: absolute !important;
     right: 20% !important;
     border: 1px solid orange !important;
@@ -990,7 +1044,8 @@ button.fxmenu1{
     bottom: 0 !important;
 }
 
-.booking-card.card.user .user-text > span > span:nth-child(1) > span {
+.booking-card.card.user .user-text > span > span:nth-child(1) > span,
+.booking-card.card.service .service-text > span > span:nth-child(1) > span {
     background-color: orange !important;
     border-radius: 50% !important;
     width: 18px !important;
@@ -998,45 +1053,55 @@ button.fxmenu1{
     display: block !important;
 }
 
-.booking-card.card.user .user-text > span > span:nth-child(2) {
+.booking-card.card.user .user-text > span > span:nth-child(2),
+.booking-card.card.service .service-text > span > span:nth-child(2) {
     z-index: 500 !important;
     position: absolute !important;
     bottom: 0 !important;
     right: 25% !important;
 }
 
-.booking-card.card.user .modes {
+.booking-card.card.user .modes,
+.booking-card.card.service .modes {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-evenly !important;
     align-items: flex-start !important;
+    line-height: 1.42857143 !important;
 }
 
 .booking-card.card.user .modes .online, 
-.booking-card.card.user .modes .in-person {
+.booking-card.card.user .modes .in-person,
+.booking-card.card.service .modes .online, 
+.booking-card.card.service .modes .in-person {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
 }
 
-.booking-card.card.user .modes {
+.booking-card.card.user .modes,
+.booking-card.card.service .modes {
     margin-top: 8px !important;
 }
 
-.booking-card.card.user .modes .icon {
+.booking-card.card.user .modes .icon,
+.booking-card.card.service .modes .icon {
     color: #404040 !important;
     font-size: 15px !important;
     font-weight: 700 !important;
 }
 
-.booking-card.card.user .modes .icon-text {
+.booking-card.card.user .modes .icon-text,
+.booking-card.card.service .modes .icon-text {
     font-size: 7px !important;
     font-weight: 700 !important;
     color: #717171 !important;
 }
 
-.booking-card.card.user .role-and-experience {
+.booking-card.card.user .role-and-experience,
+.booking-card.card.service .donation-amount,
+.booking-card.card.service .people-ahead {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
@@ -1045,9 +1110,18 @@ button.fxmenu1{
 
 .booking-card.card.user .role-and-experience > div:nth-child(1) {
     width: 75% !important;
+    text-align: left !important;
 }
 
-.booking-card.card.user .role-and-experience > div:nth-child(1) .role {
+.booking-card.card.service .donation-amount > div:nth-child(1),
+.booking-card.card.service .people-ahead > div:nth-child(1) {
+    width: 100% !important;
+    text-align: left !important;
+}
+
+.booking-card.card.user .role-and-experience > div:nth-child(1) .role,
+.booking-card.card.service .donation-amount > div:nth-child(1) .value,
+.booking-card.card.service .people-ahead > div:nth-child(1) .value {
     color: #098686 !important;
     font-weight: 700 !important;
     font-size: 10px !important;
@@ -1080,14 +1154,16 @@ button.fxmenu1{
     border-left: 2px solid #098686 !important;
 }
 
-.booking-card.card.user .pay-section {
+.booking-card.card.user .pay-section,
+.booking-card.card.service .pay-section {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: flex-start !important;
 }
 
-.booking-card.card.user .pay-section > div {
+.booking-card.card.user .pay-section > div,
+.booking-card.card.service .pay-section > div {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -1095,15 +1171,18 @@ button.fxmenu1{
     margin-bottom: 10px !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(1){
+.booking-card.card.user .pay-section > div:nth-child(1), 
+.booking-card.card.service .pay-section > div:nth-child(1) {
     width: 30%;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(2) {
+.booking-card.card.user .pay-section > div:nth-child(2),
+.booking-card.card.service .pay-section > div:nth-child(2) {
     width: 70% !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(1) .head {
+.booking-card.card.user .pay-section > div:nth-child(1) .head,
+.booking-card.card.service .pay-section > div:nth-child(1) .head {
     color: #098686 !important;
     font-weight: 700 !important;
     font-size: 10px !important;
@@ -1112,7 +1191,8 @@ button.fxmenu1{
     border-right: 1px solid transparent !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(1) .value {
+.booking-card.card.user .pay-section > div:nth-child(1) .value,
+.booking-card.card.service .pay-section > div:nth-child(1) .value {
     color: #098686 !important;
     font-weight: 700 !important;
     font-size: 16px !important;
@@ -1121,7 +1201,8 @@ button.fxmenu1{
     border-right: 1px solid #c0c0c0 !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(2) .head {
+.booking-card.card.user .pay-section > div:nth-child(2) .head,
+.booking-card.card.service .pay-section > div:nth-child(2) .head {
     color: orange !important;
     font-weight: 700 !important;
     font-size: 10px !important;
@@ -1129,7 +1210,8 @@ button.fxmenu1{
     padding-left: 4px !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(2) .value {
+.booking-card.card.user .pay-section > div:nth-child(2) .value,
+.booking-card.card.service .pay-section > div:nth-child(2) .value {
     color: orange !important;
     font-weight: 700 !important;
     font-size: 16px !important;
@@ -1139,7 +1221,8 @@ button.fxmenu1{
     align-items: center !important;
 }
 
-.booking-card.card.user .pay-section > div:nth-child(2) .value i.fa.fa-info {
+.booking-card.card.user .pay-section > div:nth-child(2) .value i.fa.fa-info,
+.booking-card.card.service .pay-section > div:nth-child(2) .value i.fa.fa-info {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -1152,7 +1235,8 @@ button.fxmenu1{
     margin-left: 4px !important;
 }
 
-.booking-card.card.user .degrees {
+.booking-card.card.user .degrees,
+.booking-card.card.service .degrees {
     text-transform: uppercase !important;
     color: #717171 !important;
     font-size: 10px !important;
@@ -1160,7 +1244,8 @@ button.fxmenu1{
     text-align: left !important;
 }
 
-.booking-card.card.user .doctor-address {
+.booking-card.card.user .doctor-address,
+.booking-card.card.service .service-address {
     color: #717171 !important;
     font-size: 10px !important;
     font-weight: 700 !important;

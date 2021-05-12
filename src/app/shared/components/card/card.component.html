@@ -2,11 +2,64 @@
 <div class="card booking-card pointer-cursor service"
     *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
+ 
+    <p class="service-availability" *ngIf="timings">
+        {{timingCaption == "Next Available Time" ? "Available" : timingCaption}}&nbsp;{{timings}}
+    </p>
+
+    <!-- Card Head -->
+    <div class="card-item-head">
+        <div class="img-container">
+            <div class="card-img img-circle img-responsive" style="border: 0 !important;"
+                *ngIf="service.serviceType && service.serviceType == 'virtualService'">
+                <i class="fa phon-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                <i class="fa meet-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                <i class="fa zoom-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                <i class="fa wtsapaud-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                <i class="fa wtsapvid-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                <i class="fa jaldeevideo-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+            </div>
+                <img class="card-img img-circle img-responsive" src="assets/images/donation.png" style="border: 0 !important;"
+                    *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'"
+                    alt="Donation Image">
+            
+                <img class="card-img img-circle img-responsive" src="assets/images/meeting_Artboard.png" style="border: 0 !important;"
+                    *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
+                    alt="Physical Service Image">
+            
+                <img class="card-img img-circle img-responsive" src="assets/images/hindu-temple-clipart.jpg" style="border: 0 !important;"
+                    *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
+                    alt="Temple Service Image">
+        </div>
+        <div class="service-text">
+            <span>
+                <span><span>&nbsp;</span></span>
+                <span>Circle</span>
+            </span>
+        </div>
+        <div class="modes">
+            <div class="online">
+                <div class="icon"><i class="fa fa-video-camera"></i></div>
+                <div class="icon-text">Online</div>
+            </div>
+            <div class="in-person">
+                <div class="icon"><i class="fa fa-hospital-o"></i></div>
+                <div class="icon-text">In-Person</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Card content -->
-    <div class="card-body">
+    <div class="card-body" style="display: block !important;">
         <!-- Title -->
         <!-- <div class="card-head"> -->
-        <div style="height:100px;">
+        <!-- <div style="height:100px;">
             <div class="text-center service-image"
                 *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                 <i class="fa phon-icon"
@@ -38,40 +91,77 @@
                 <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg"
                     alt="Physical Service Image">
             </div>
-        </div>
-        <div class="service-details">
-            <div class="module line-clamp m-0"
+        </div> -->
+        <!-- <div class="service-details"> -->
+            <!-- <div class="module line-clamp m-0"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
                 <h4 class="card-title font-weight-bold service-title">
                     <a>{{service.name | capitalizeFirst}}</a>
                 </h4>
+            </div> -->
+            <h4 class="service-name card-title font-weight-bold module line-clamp">
+                <a>{{service.name | capitalizeFirst}}</a>
+            </h4>
+            <div class="donation-amount" *ngIf="item.type=='donation'">
+                <div>
+                    <label class="value">
+                        <span><i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
+                        To
+                        <span><i class="fa fa-inr"></i> {{service.maxDonationAmount}}</span>
+                    </label>
+                </div>
             </div>
+            <div class="people-ahead" *ngIf="personsAheadText">
+                <div>
+                    <label class="value">{{personsAheadText}}</label>
+                </div>
+            </div>
+            <div class="pay-section">
+                <div>
+                    <div class="head">You Pay</div>
+                    <div class="value">
+                        <i class="fa fa-inr"></i>&nbsp;1100
+                    </div>
+                </div>
+                <div>
+                    <div class="head">Circle Member Pays</div>
+                    <div class="value">
+                        <i class="fa fa-inr"></i>&nbsp;950
+                        <i class="fa fa-info"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="degrees">MD., DCH., DAA., FACI, EAACI </div>
+            <div class="service-address">Appolo Children Hospital Chennai, Greams Road, Chennai</div>
             <!-- </div>
         <div class="card-content"> -->
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6> -->
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
             <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>  -->
-            <p class="card-text donationAmount" *ngIf="item.type=='donation'">
+            <!-- <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                 <span class="rupee-font bold"><i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                 To
                 <span class="rupee-font bold"><i class="fa fa-inr"></i> {{service.maxDonationAmount}}</span>
             </p>
             <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
-            <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
-            <p class="card-text availability" *ngIf="timings">{{timingCaption}}
+            <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p> -->
+            <!-- <p class="card-text availability" *ngIf="timings">{{timingCaption}}
                 <br /><b>{{timings}}</b>
             </p>
-            <p class="card-text availability" *ngIf="!timings"></p>
+            <p class="card-text availability" *ngIf="!timings"></p> -->
             <!-- </div>
         <div class="card-footer"> -->
-            <div class="service-buttons">
-                <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
-                <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
-                    class="btn pointer-cursor btn-warning moreDetails">. . .</button>
-            </div>
+            <!-- <div class="service-buttons"> -->
+                <!-- <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button> -->
+                <!-- <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
+                    class="btn pointer-cursor btn-warning moreDetails">. . .</button> -->
             <!-- </div> -->
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
     </div>
+    <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
+        class="btn pointer-cursor btn-warning moreDetails">. . .</button>
+    <button type="button" class="btn btn-outline-warning service-booking-buttons">{{buttonCaption}}</button>
 </div>
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items"
