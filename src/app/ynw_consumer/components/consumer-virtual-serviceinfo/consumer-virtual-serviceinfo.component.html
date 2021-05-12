@@ -95,7 +95,7 @@ onSubmit(virtualForm.value)">
         </div>
         <div class="mat-dialog-actions "  style="background: white !important;">
             <button class="cust-logpg-submt mgn-up-20 continue-button"  type="submit" mat-button
-                (click)="onSubmit(virtualForm.value)">
+            [disabled]="validateFields()" (click)="onSubmit(virtualForm.value)">
                 <span >Submit</span>
                
             </button>
