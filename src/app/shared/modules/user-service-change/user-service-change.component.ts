@@ -161,6 +161,7 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-user-service-change',
@@ -181,9 +182,11 @@ export class UserServiceChnageComponent implements OnInit {
   source;
   selected = false;
   userId = '';
+  selectedUser;
   selectrow = false;
   showDetails: any = [];
   loading = true;
+  customer_label = '';
   constructor(
     private activated_route: ActivatedRoute,
     private router: Router,
@@ -192,7 +195,9 @@ export class UserServiceChnageComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private wordProcessor: WordProcessor
   ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activated_route.params.subscribe(params => {
       this.uuid = params.id;
     });
@@ -270,7 +275,7 @@ export class UserServiceChnageComponent implements OnInit {
     // this.services_selected = this.selection.selected;
     console.log(this.userId);
     let msg = '';
-    msg = 'Do you want change the provider?';
+    msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -327,6 +332,7 @@ export class UserServiceChnageComponent implements OnInit {
   }
   selectedRow(index, user) {
     this.selectrow = true;
+    this.selectedUser = user;
     if (this.selectrow === true && user.id) {
       console.log(user.id)
       this.updateUser()
