@@ -715,11 +715,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if(this.virtualInfo){
-                console.log(this.virtualInfo);
+               
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
             const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             console.log(formattedDate);
             this.waitlist_for[0]['dob']=formattedDate;
+            if(this.virtualInfo.gender!==''){
+                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+            }
             if(this.virtualInfo.islanguage==='yes'){
                 this.waitlist_for[0]['preferredLanguage']=['English'];
             }else{
