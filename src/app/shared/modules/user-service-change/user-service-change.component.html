@@ -17,9 +17,9 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase">
-                    <th>Username</th>
+                    <th style="min-width: 250px;">Username</th>
                     <th class="display-min-none">Online status</th>
-                    <th class="display-min-none" style="min-width: 105px;">Phone number</th>
+                    <th class="display-min-none" style="min-width: 125px;">Phone number</th>
                     <th class="display-min-none">Specialization</th>
                     <th class="display-min-none">Languages</th>
                   </tr>
@@ -37,7 +37,7 @@
                           <img [src]="getUserImg(service)">
                         </div>
                         <div class="mgn-lt-10">
-                          {{service.Username?service.Username : ''}}
+                       <div class="username">   {{service.Username?service.Username : ''}}</div>
                           <div class="disp-flex mgn-up-5" *ngIf="service.locationName"><i class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
                             {{service.locationName}}</div>
                         </div>
