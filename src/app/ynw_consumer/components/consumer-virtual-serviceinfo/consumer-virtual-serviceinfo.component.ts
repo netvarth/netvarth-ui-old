@@ -65,7 +65,8 @@ virtualForm:FormGroup;
 
   }
   onChange(event) {
-  console.log(event.value);
- this.lngknown=event.value
+ console.log(event.target.value);
+  console.log(this.virtualForm.value);
+ this.lngknown=event.target.value;
   }
 }
