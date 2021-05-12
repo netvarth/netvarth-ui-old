@@ -75,3 +75,7 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+.location {
+    font-weight: normal !important;
+    font-size: .8rem !important;
+}

@@ -24,6 +24,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() type;
     @Input() time_type;
     @Input() allLabels;
+    @Input() checkins;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -42,7 +43,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     customer_label = '';
     selectedUser;
     selQIds: any = [];
-    showDetails: any = [];
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -81,10 +81,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
             }
         }
-        console.log(this.selectedUser);
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
-        console.log(this.todayDate);
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
@@ -136,10 +134,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             default:
                 this.user = this.item.item;
-                console.log(this.user);
                 break;
         }
-        console.log(this.waitlist);
     }
     ngOnChanges() {
         // this.itemQty = this.quantity;
@@ -333,9 +329,21 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type } });
         }
     }
-    showMore(waitlist) {
-        this.showDetails = [];
-        this.showDetails.push(waitlist);
+    showMoreorLess(waitlist, type) {
+        for (let checkin of this.checkins) {
+            checkin.show = false;
+        }
+        if (type === 'more') {
+            const index = this.checkins.indexOf(waitlist);
+            this.checkins[index].show = true;
+        }
+    }
+    showDetails(waitlist) {
+        const currentcheckin = this.checkins.filter(checkin => checkin.ynwUuid === waitlist.ynwUuid);
+        if (currentcheckin[0].show) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
-
