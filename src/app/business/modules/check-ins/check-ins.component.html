@@ -636,9 +636,9 @@
                       </th> -->
                     </tr>
                   </thead>
-                  <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
+                  <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0 || activeUser">
+                      <td colspan="5" class="no-appt">
                         <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                         <p *ngIf="statusAction === 'completed'">No completed {{(showToken) ? 'tokens' : 'check-ins'}}
                         </p>
@@ -1020,9 +1020,9 @@
                     </th> -->
                   </tr>
                 </thead>
-                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
+                <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                   <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0 || activeUser">
+                    <td colspan="5" class="no-appt">
                       <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                       <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                     </td>
