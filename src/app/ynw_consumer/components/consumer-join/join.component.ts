@@ -349,7 +349,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             // 'countryCode': '+91',
             'countryCode': dialCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
-            'password': post_data.password
+            'password': post_data.password,
+            'mUniqueId' : this.lStorageService.getitemfromLocalStorage('mUniqueId')
           };
           // this.dialogRef.close();
           this.shared_functions.consumerLogin(login_data, this.moreParams)

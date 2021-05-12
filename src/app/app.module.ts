@@ -90,6 +90,7 @@ import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ProviderServices } from './ynw_provider/services/provider-services.service';
 import { DepartmentServicePageComponent } from './shared/components/department-service-page/department-service-page.component';
+import { ConsumerVirtualServiceinfoComponent } from './ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -116,7 +117,8 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     ItemDetailsSharedComponent,
     CommunicationComponent,
-    DepartmentServicePageComponent
+    DepartmentServicePageComponent,
+    ConsumerVirtualServiceinfoComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -128,7 +130,8 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     ForceDialogComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    ConsumerVirtualServiceinfoComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
