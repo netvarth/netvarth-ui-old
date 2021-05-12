@@ -42,6 +42,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     customer_label = '';
     selectedUser;
     selQIds: any = [];
+    showDetails: any = [];
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -275,13 +276,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return '../../../../assets/images/order/Items.svg';
         }
     }
-    getServiceType(){
-        if(this.service.serviceType && this.service.serviceType == 'physicalService') {
+    getServiceType() {
+        if (this.service.serviceType && this.service.serviceType == 'physicalService') {
             return 'Physical Service';
-        } 
-        else if (this.service.serviceType && this.service.serviceType == 'virtualService'){
+        }
+        else if (this.service.serviceType && this.service.serviceType == 'virtualService') {
             return 'Virtual Service';
-        }        
+        }
         else {
             /* if(this.service.virtualServiceType == 'videoService') {
                 return this.service.virtualCallingModes[0].callingMode + " " + "Video";
@@ -331,6 +332,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         } else {
             this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type } });
         }
+    }
+    showMore(waitlist) {
+        this.showDetails = [];
+        this.showDetails.push(waitlist);
     }
 }
 

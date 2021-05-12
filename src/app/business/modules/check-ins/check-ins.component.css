@@ -33,9 +33,10 @@
     }    
 }
 .waitlist-box {
-    padding: 5px;
-    margin: 20px 0px;
-    box-shadow: 0px 34px 55px #00008b1c !important;
+    margin: 10px 0px;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+    border: 1px solid #eee;
 }
 
 .dropdown.customized-dd button {

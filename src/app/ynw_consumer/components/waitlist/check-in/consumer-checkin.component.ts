@@ -641,7 +641,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    confirmcheckin(type){
+    confirmcheckin(type?){
+        console.log(type);
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -703,6 +704,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
+            if(this.virtualInfo){
+                console.log(this.virtualInfo);
+            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+            console.log(formattedDate);
+            this.waitlist_for[0]['dob']=formattedDate;
+            if(this.virtualInfo.islanguage==='yes'){
+                this.waitlist_for[0]['preferredLanguage']=['English'];
+            }else{
+                this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+            }
+            const bookingLocation={};
+            bookingLocation['pincode']=this.virtualInfo.pincode;
+            this.waitlist_for[0]['bookingLocation']=bookingLocation;
+            this.waitlist_for[0]['gender']='Male';
+        }
         }
         if(this.virtualInfo){
             console.log(this.virtualInfo);
@@ -1911,7 +1928,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.bookStep = type;
         }
         if (this.bookStep === 3) {
-            this.saveCheckin();
+            this.saveCheckin('next');
         }
     }
     addWaitlistAdvancePayment(post_Data) {
