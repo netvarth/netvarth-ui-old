@@ -19,12 +19,15 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
   details: any;
   gender_cap = Messages.GENDER_CAP;
   consumer_label: any;
+  disableButton;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ConsumerVirtualServiceinfoComponent>,
     private wordProcessor: WordProcessor,
     public fed_service: FormMessageDisplayService, private s3Processor: S3UrlProcessor) {
-    this.data = this.s3Processor.getJson(data);
+      if(data){
+        this.data = this.s3Processor.getJson(data);
+      }
   }
 
   ngOnInit(): void {
@@ -45,36 +48,59 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
       this.updateForm();
     }
   }
+  closeDialog(){
+    this.dialogRef.close();
+  }
   updateForm() {
     this.details = this.data;
+    let defaultEnglish= 'yes';
     let language = [];
     let usr_pincode = '';
-    if (this.details.userProfile.preferredLanguages) {
+    let dob = '';
+    let islanguage = '';
+    let gender='';
+    if (this.details && this.details.userProfile) {
+      dob= this.details.userProfile.dob;
+      gender = this.details.userProfile.gender;
+    }
+    if (this.details && this.details.userProfile &&  this.details.userProfile.preferredLanguages) {
       language = JSON.parse(this.details.userProfile.preferredLanguages);
+      if (language === null) {
+        language = [];
+      }
+      islanguage = (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '';
+      defaultEnglish = (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no';
     }
-    if (language === null) {
-      language = [];
-    }
-    if (this.details.userProfile.pinCode) {
+    if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
       usr_pincode = this.details.userProfile.pinCode;
     }
-    if(this.details.bookingLocation && this.details.bookingLocation.pincode){
+    if(this.details  && this.details.bookingLocation && this.details.bookingLocation.pincode){
       usr_pincode=this.details.bookingLocation.pincode;
     }
 
     
 
     this.virtualForm.patchValue({
-      dob: this.details.userProfile.dob,
+      dob: dob,
       pincode: usr_pincode,
-      preferredLanguage: (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '',
-      islanguage: (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no',
-      gender:this.details.userProfile.gender
+      preferredLanguage: islanguage,
+      islanguage: defaultEnglish,
+      gender:gender
     });
     if (language[0] === 'English') {
       this.lngknown = 'yes';
     } else {
       this.lngknown = 'no';
+    }
+  }
+  validateFields(){
+    if(this.virtualForm.get('pincode').value === '') {
+      return true;
+    }
+    if(this.lngknown==='no'){
+      if (this.virtualForm.get('preferredLanguage').value === ''){
+        return true;
+      }
     }
   }
   onSubmit(formdata) {

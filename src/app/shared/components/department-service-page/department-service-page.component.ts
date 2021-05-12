@@ -26,6 +26,7 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { ConsumerVirtualServiceinfoComponent } from '../../../ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 
 @Component({
   selector: 'app-department-service-page',
@@ -268,6 +269,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   apptServices;
   private subscriptions = new SubSink();
   deptId;
+  consumerVirtualinfo: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -1540,6 +1542,22 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
     });
   }
+  checkVirtualRequiredFieldsEntered() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
+        .subscribe(
+          data => {
+            console.log(data);
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
+  }
   checkinClicked(location, service) {
     const current_provider = {
       'id': location.id,
@@ -1577,13 +1595,45 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+
+            if (service.serviceType === 'virtualService') {
+              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate,'checkin', service, consumerdata);
+              });
+            }
+            else {
+              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+            }
+
+
+            // this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
           this.doLogin('consumer', passParam);
         }
       });
+  }
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+    console.log("Collect Required Info");
+    const _this = this;
+    const virtualdialogRef = _this.dialog.open(ConsumerVirtualServiceinfoComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: consumerdata
+    });
+    virtualdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        _this.consumerVirtualinfo = result;
+        if (type === 'appt') {
+          _this.showAppointment(id, place, location, date, service, 'consumer', result);
+        } else {
+          _this.showCheckin(id, place, location, date, service, 'consumer', result);
+        }
+
+      }
+    });
   }
   appointmentClicked(location, service: any) {
     const _this = this;
@@ -1652,6 +1702,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
+        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
@@ -1665,7 +1716,15 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+            });
+          } else {
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
+          }
+          // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1673,7 +1732,14 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+            });
+          } else {
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          }
+          // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1693,6 +1759,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
+        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
@@ -1706,7 +1773,15 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+            });
+          } else {
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
+          }
+          // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1714,12 +1789,21 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+            });
+          } else {
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          }
+
+          // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
     const queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1730,7 +1814,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       account_id: this.provider_bussiness_id,
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
-      service_id: service.id
+      service_id: service.id,
+      virtual_info: JSON.stringify(virtualinfo)
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
@@ -1740,7 +1825,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
     const queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1752,7 +1837,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
-      sel_date: curdate
+      sel_date: curdate,
+      virtual_info: JSON.stringify(virtualinfo)
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];

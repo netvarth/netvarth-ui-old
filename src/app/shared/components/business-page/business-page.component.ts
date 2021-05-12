@@ -1828,13 +1828,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {

@@ -36,7 +36,6 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
-import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
@@ -91,6 +90,7 @@ import { BookingService } from './shared/services/booking-service';
 import { ProviderServices } from './ynw_provider/services/provider-services.service';
 import { DepartmentServicePageComponent } from './shared/components/department-service-page/department-service-page.component';
 import { ConsumerVirtualServiceinfoComponent } from './ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
+import { ProviderDetailService } from './shared/services/provider-detail.service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }

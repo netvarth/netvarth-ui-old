@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ServiceMeta } from '../../services/service-meta';
+import { ServiceMeta } from './service-meta';
 @Injectable()
 export class ProviderDetailService {
 

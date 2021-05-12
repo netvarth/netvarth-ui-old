@@ -10,7 +10,6 @@ import { RatingStarModule } from '../../modules/ratingstar/ratingstart.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { PagerModule } from '../../modules/pager/pager.module';
 import { FooterModule } from '../../modules/footer/footer.module';
-import { ProviderDetailComponent } from '../provider-detail/provider-detail.component';
 import { ConsumerWaitlistHistoryComponent } from '../consumer-waitlist-history/consumer-waitlist-history.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -52,7 +51,6 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
     ],
     declarations: [
         SearchDetailComponent,
-        ProviderDetailComponent,
         ConsumerWaitlistHistoryComponent,
         QRCodeGeneratordetailComponent
     ],

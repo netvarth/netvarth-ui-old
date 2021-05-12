@@ -640,11 +640,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             
           });
           virtualdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-             this.virtualInfo=result;
-             this.confirmcheckin(type);
-            
-            }
+            if (result!=='') {
+                this.virtualInfo=result;
+                this.confirmcheckin(type);
+               
+               }else{
+                   this.goToStep('prev');
+               }
           });
     }
     confirmcheckin(type?){
@@ -739,7 +741,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (!this.is_wtsap_empty) {
             if (type==='appt') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment &&type=='appt') {
+            } else if (this.sel_ser_det.isPrePayment ) {
                 this.addApptAdvancePayment(post_Data);
             }
         }
@@ -1808,6 +1810,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
+        console.log(this.action);
         if (this.action === 'slotChange') {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();

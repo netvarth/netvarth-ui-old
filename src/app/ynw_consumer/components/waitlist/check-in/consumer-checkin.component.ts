@@ -382,7 +382,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                     setTimeout(() => {
                         this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
-                    }, 2000);
+                    }, 500);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -773,14 +773,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             
           });
           virtualdialogRef.afterClosed().subscribe(result => {
-            if (result) {
+            
+            if (result!=='') {
              this.virtualInfo=result;
              this.confirmcheckin(type);
             
+            }else{
+                this.goToStep('prev');
             }
+            
           });
     }
-    
     saveCheckin(type?) {
         console.log('insaide');
         if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
