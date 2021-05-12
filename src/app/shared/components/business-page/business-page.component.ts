@@ -1057,333 +1057,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.bLogo = '../../../assets/images/img-null.svg';
     }
   }
-  // gets3curl() {
-  //   this.retval = this.sharedFunctionobj.getS3Url('provider')
-  //     .then(
-  //       (res:any)=> {
-  //         this.s3url = res;
-  // this.getbusinessprofiledetails_json('settings', true);
-  // this.getbusinessprofiledetails_json('terminologies', true);
-  //  this.getbusinessprofiledetails_json('coupon', true);
-  //  this.getbusinessprofiledetails_json('providerCoupon', true);
-  // this.getbusinessprofiledetails_json('jaldeediscount', true);
-  // this.getbusinessprofiledetails_json('businessProfile', true);
-  // if (this.userId) {
-  //   this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
-  // } else {
-  //   this.titleService.setTitle(this.businessjson.businessName);
-  //   this.metaService.addTags([
-  //     // {name: 'keywords', content: 'Angular, Universal, Example'},
-  //     { name: 'description', content: this.businessjson.businessDesc }
-  //     // {name: 'robots', content: 'index, follow'}
-  //   ]);
-  //   this.getbusinessprofiledetails_json('virtualFields', true);
-  //   this.getbusinessprofiledetails_json('services', true);
-  //   this.getbusinessprofiledetails_json('apptServices', true);
-  //   this.getbusinessprofiledetails_json('donationServices', true);
-  //     }
-  //   },
-  //   error => {
-  //     this.wordProcessor.apiErrorAutoHide(this, error);
-  //   }
-  // );
-  // }
-  // gets the various json files based on the value of "section" parameter
-  // Some of functions copied to Consumer Home also.
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   this.showServices = false;
-  // let UTCstring = null;
-  // if (modDateReq) {
-  //   UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  // }
-  // this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //   .subscribe((res: any) => {
-  //     switch (section) {
-  // case 'businessProfile': {
-  //   this.onlinePresence = res['onlinePresence'];
-  //   this.customId = res['customId'];
-  //   this.accEncUid = res['accEncUid'];
-  //   if (!this.userId) {
-  //     this.api_loading = false;
-  //     this.pageFound = true;
-  //     this.socialMedialist = [];
-  //     this.businessjson = res;
-  //     if (this.businessjson.serviceSector.name !== 'healthCare') {
-  //       this.service_cap = 'Services';
-  //     }
-  //     if (this.businessjson.cover) {
-  //       this.bgCover = this.businessjson.cover.url;
-  //     }
-  //     this.branch_id = this.businessjson.branchId;
-  //     this.account_Type = this.businessjson.accountType;
-  //     if (this.account_Type === 'BRANCH') {
-  //       this.getbusinessprofiledetails_json('departmentProviders', true);
-  //     }
-  //     this.business_exists = true;
-  //     this.provider_bussiness_id = this.businessjson.id;
-  //     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-  //       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-  //         this.bLogo = this.businessjson.logo.url + '?' + new Date();
-  //       }
-  //     } else {
-  //       // this.bLogo = '';
-  //       this.bLogo = '../../../assets/images/img-null.svg';
-  //     }
-  //     this.specializationslist = [];
-  //     this.specializationslist_more = [];
-  //     if (this.businessjson.specialization) {
-  //       // this.specializationslist = this.businessjson.specialization;
-
-  //       for (let i = 0; i < this.businessjson.specialization.length; i++) {
-  //         if (i <= 2 && this.businessjson.specialization[i] !== 'Not Applicable') {
-  //           this.specializationslist.push(this.businessjson.specialization[i]);
-  //         } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
-  //           this.specializationslist_more.push(this.businessjson.specialization[i]);
-  //         }
-  //       }
-  //     }
-  //     if (this.businessjson.socialMedia) {
-  //       this.socialMedialist = this.businessjson.socialMedia;
-  //     }
-  //     if (this.businessjson.emails) {
-  //       this.emaillist = this.businessjson.emails;
-  //     }
-  //     if (this.businessjson.phoneNumbers) {
-  //       this.phonelist = this.businessjson.phoneNumbers;
-  //     }
-  //     this.getbusinessprofiledetails_json('gallery', true);
-  //     if (this.userType === 'consumer') {
-  //       this.getFavProviders();
-  //     }
-  //     const holdbName = this.businessjson.businessDesc || '';
-  //     const maxCnt = 120;
-  //     if (holdbName.length > maxCnt) {
-  //       this.bNameStart = holdbName.substr(0, maxCnt);
-  //       this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
-  //     } else {
-  //       this.bNameStart = holdbName;
-  //     }
-  //     this.ratingenabledCnt = this.businessjson.avgRating || 0;
-  //     if (this.ratingenabledCnt > 0) {
-  //       this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
-  //     }
-  //     const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
-  //     if (ratingenabledInt < this.ratingenabledCnt) {
-  //       this.ratingenabledHalf = true;
-  //       this.ratingenabledCnt = ratingenabledInt;
-  //       this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
-  //     } else {
-  //       this.ratingdisabledCnt = 5 - ratingenabledInt;
-  //     }
-  //     this.ratingenabledArr = [];
-  //     this.ratingdisabledArr = [];
-  //     for (let i = 0; i < this.ratingenabledCnt; i++) {
-  //       this.ratingenabledArr.push(i);
-  //     }
-  //     for (let i = 0; i < this.ratingdisabledCnt; i++) {
-  //       this.ratingdisabledArr.push(i);
-  //     }
-  //     this.getbusinessprofiledetails_json('location', true);
-  //   }
-  //   break;
-  // }
-  // case 'services': {
-  //   this.servicesjson = res;
-  //   if (this.servicesjson[0] && this.servicesjson[0].hasOwnProperty('departmentName')) {
-  //     this.showDepartments = true;
-  //     break;
-  //   }
-  //   break;
-  // }
-  // case 'apptServices': {
-  //   this.apptServicesjson = res;
-  //   setTimeout(() => {
-  //     // merge two arrays without duplicates
-  //     if (this.servicesjson && this.servicesjson.length > 0) {
-  //       const ids = new Set(this.apptServicesjson.map(d => d.id));
-  //       const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-  //       this.apptServicesjson = merged;
-  //     }
-  //     for (let i = 0; i < this.apptServicesjson.length; i++) {
-  //       if (i < 3) {
-  //         this.apptfirstArray.push(this.apptServicesjson[i]);
-  //       }
-  //     }
-  //     this.apptTempArray = this.apptfirstArray;
-  //   });
-  //   break;
-  // }
-  // case 'gallery': {
-  //   this.galleryenabledArr = []; // For showing gallery
-  //   this.image_list_popup = [];
-  //   this.tempgalleryjson = res;
-  //   if (this.tempgalleryjson.length > 5) {
-  //     this.extra_img_count = this.tempgalleryjson.length - 5;
-  //   }
-  //   let indx = 0;
-  //   if (this.bLogo !== '../../../assets/images/img-null.svg') {
-  //     this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-  //     indx = 1;
-  //   }
-  //   for (let i = 0; i < this.tempgalleryjson.length; i++) {
-  //     this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-  //   }
-  //   if (this.galleryjson.length > 0) {
-  //     this.galleryExists = true;
-  //     for (let i = 0; i < this.galleryjson.length; i++) {
-  //       const imgobj = new Image(
-  //         i,
-  //         { // modal
-  //           img: this.galleryjson[i].url,
-  //           description: this.galleryjson[i].caption || ''
-  //         });
-  //       this.image_list_popup.push(imgobj);
-  //     }
-  //   }
-  //   this.imgLength = this.image_list_popup.length;
-  //   const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
-  //   for (let i = 0; i < imgLength; i++) {
-  //     this.galleryenabledArr.push(i);
-  //   }
-  //   break;
-  // }
-  // case 'settings': {
-  //   this.settingsjson = res;
-  //   this.showToken = this.settingsjson.showTokenId;
-  //   this.settings_exists = true;
-  //   this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-  //   this.maxsize = this.settingsjson.maxPartySize;
-  //   if (this.maxsize === undefined) {
-  //     this.maxsize = 1;
-  //   }
-  //   this.showDepartments = this.settingsjson.filterByDept;
-  //   break;
-  // }
-  // case 'location': {
-  //   this.locationjson = res;
-  //   if (!this.userId) {
-  //     let apptTimearr = [];
-  //     let waitTimearr = [];
-  //     if (this.deptUsers && this.deptUsers.length > 0) {
-  //       for (let dept of this.deptUsers) {
-  //         if (!this.showDepartments) {
-  //           apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-  //           waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-  //         } else {
-  //           if (dept.users && dept.users.length > 0) {
-  //             for (let user of dept.users) {
-  //               apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-  //               waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //     this.getUserWaitingTime(waitTimearr);
-  //     this.getUserApptTime(apptTimearr);
-  //   }
-  //   this.location_exists = true;
-  //   for (let i = 0; i < this.locationjson.length; i++) {
-  //     const addres = this.locationjson[i].address;
-  //     const place = this.locationjson[i].place;
-  //     if (addres && addres.includes(place)) {
-  //       this.locationjson['isPlaceisSame'] = true;
-  //     } else {
-  //       this.locationjson['isPlaceisSame'] = false;
-  //     }
-  //     if (this.locationjson[i].parkingType) {
-  //       this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
-  //     }
-  //   }
-  //   this.changeLocation(this.locationjson[0]);
-  //   this.api_loading = false;
-  //   break;
-  // }
-  // case 'terminologies': {
-  //   this.terminologiesjson = res;
-  //   break;
-  // }
-
-  // case 'coupon': {
-  //   if (res !== undefined) {
-  //     this.s3CouponList.JC = res;
-  //   }
-  //   else {
-  //     this.s3CouponList.JC = [];
-
-  //   }
-  //   this.firstChckinCuponCunt(this.s3CouponList);
-  //   break;
-  // }
-  // case 'providerCoupon': {
-  //   if (res !== undefined) {
-  //     this.s3CouponList.OWN = res;
-  //   } else {
-  //     this.s3CouponList.OWN = [];
-
-  //   }
-  //   this.firstChckinCuponCunt(this.s3CouponList);
-  //   break;
-  // }
-  // case 'virtualFields': {
-  //   this.virtualfieldsjson = res;
-  //   this.virtualfieldsCombinedjson = [];
-  //   this.virtualfieldsDomainjson = [];
-  //   this.virtualfieldsSubdomainjson = [];
-  //   if (this.virtualfieldsjson.domain) {
-  //     this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
-  //   }
-  //   if (this.virtualfieldsjson.subdomain) {
-  //     this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
-  //   }
-  //   if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-  //     this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
-  //   } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
-  //     this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
-  //   } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-  //     this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
-  //   }
-  //   if (this.virtualfieldsCombinedjson.length > 0) {
-  //     this.showVirtualfieldsSection = true;
-  //   }
-  //   break;
-  // }
-  // case 'donationServices': {
-  //   this.donationServicesjson = res;
-  //   break;
-  // }
-  // case 'departmentProviders': {
-  //   this.deptUsers = res;
-  //   break;
-  // }
-  // case 'jaldeediscount':
-  //   this.jaldeediscountJson = res;
-  //   this.jdnlength = Object.keys(this.jaldeediscountJson).length;
-  // }
-  // },
-  // (error) => {
-  //   if (section === 'businessProfile') {
-  //     this.routerobj.navigate(['/not-found']);
-  //   }
-  // if (section === 'gallery') {
-  //   this.galleryjson = [];
-  //   if (this.bLogo !== '../../../assets/images/img-null.svg') {
-  //     this.galleryExists = true;
-  //     this.image_list_popup = [];
-  //     this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-  //     const imgobj = new Image(0,
-  //       { // modal
-  //         img: this.galleryjson[0].url,
-  //         description: this.galleryjson[0].caption || ''
-  //       });
-  //     this.image_list_popup.push(imgobj);
-  //   } else {
-  //     this.bLogo = '../../../assets/images/img-null.svg';
-  //   }
-  // }
-  // }
-  //   );
-  // }
 
   isfirstCheckinOfferProvider() {
     let firstCheckin = true;
@@ -1520,162 +1193,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
   }
-  // getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getUserbusinessprofiledetails_json(this.provider_id, userId, this.s3url, section, UTCstring)
-  //     .subscribe((res: any) => {
-  //       switch (section) {
-  //         // case 'providerBusinessProfile': {
-  //         //   this.socialMedialist = [];
-  //         //   this.businessjson = res;
-  //         //   this.titleService.setTitle(this.businessjson.businessName);
-  //         //   this.metaService.addTags([
-  //         //     // {name: 'keywords', content: 'Angular, Universal, Example'},
-  //         //     { name: 'description', content: this.businessjson.businessDesc },
-  //         //     // {name: 'robots', content: 'index, follow'}
-  //         //   ]);
-  //         //   const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
-  //         //   this.subDomainList = dom[0].subDomains;
-  //         //   const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
-  //         //   this.businessjson['serviceSubSector'] = subDom[0];
-  //         //   this.branch_id = this.businessjson.branchId;
-  //         //   this.account_Type = this.businessjson.accountType;
-  //         //   this.business_exists = true;
-  //         //   this.provider_bussiness_id = this.businessjson.id;
-  //         //   if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-  //         //     if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-  //         //       this.bLogo = this.businessjson.logo.url + '?' + new Date();
-  //         //       // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-  //         //     }
-  //         //   } else {
-  //         //     // this.bLogo = '';
-  //         //     this.bLogo = '../../../assets/images/img-null.svg';
-  //         //   }
-  //         //   if (this.businessjson.specialization) {
-  //         //     this.specializationslist = this.businessjson.specialization;
-  //         //   }
-  //         //   if (this.businessjson.socialMedia) {
-  //         //     this.socialMedialist = this.businessjson.socialMedia;
-  //         //   }
-  //         //   if (this.businessjson.emails) {
-  //         //     this.emaillist = this.businessjson.emails;
-  //         //   }
-  //         //   if (this.businessjson.phoneNumbers) {
-  //         //     this.phonelist = this.businessjson.phoneNumbers;
-  //         //   }
-  //         //   const holdbName = this.businessjson.businessDesc || '';
-  //         //   const maxCnt = 120;
-  //         //   if (holdbName.length > maxCnt) {
-  //         //     this.bNameStart = holdbName.substr(0, maxCnt);
-  //         //     this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
-  //         //   } else {
-  //         //     this.bNameStart = holdbName;
-  //         //   }
-  //         //   this.ratingenabledCnt = this.businessjson.avgRating || 0;
-  //         //   if (this.ratingenabledCnt > 0) {
-  //         //     this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
-  //         //   }
-  //         //   const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
-  //         //   if (ratingenabledInt < this.ratingenabledCnt) {
-  //         //     this.ratingenabledHalf = true;
-  //         //     this.ratingenabledCnt = ratingenabledInt;
-  //         //     this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
-  //         //   } else {
-  //         //     this.ratingdisabledCnt = 5 - ratingenabledInt;
-  //         //   }
-  //         //   this.ratingenabledArr = [];
-  //         //   this.ratingdisabledArr = [];
-  //         //   for (let i = 0; i < this.ratingenabledCnt; i++) {
-  //         //     this.ratingenabledArr.push(i);
-  //         //   }
-  //         //   for (let i = 0; i < this.ratingdisabledCnt; i++) {
-  //         //     this.ratingdisabledArr.push(i);
-  //         //   }
-  //         //   this.getUserbusinessprofiledetails_json('providerVirtualFields', this.userId, true);
-  //         //   this.getUserbusinessprofiledetails_json('providerservices', this.userId, true);
-  //         //   this.getUserbusinessprofiledetails_json('providerApptServices', this.userId, true);
-  //         //   this.getbusinessprofiledetails_json('location', true);
-  //         //   // this.api_loading = false;
-  //         //   break;
-  //         // }
-  //         // case 'providerVirtualFields': {
-  //         //   this.virtualfieldsjson = res;
-  //         //   this.virtualfieldsCombinedjson = [];
-  //         //   this.virtualfieldsDomainjson = [];
-  //         //   this.virtualfieldsSubdomainjson = [];
-  //         //   if (this.virtualfieldsjson.domain) {
-  //         //     this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
-  //         //   }
-  //         //   if (this.virtualfieldsjson.subdomain) {
-  //         //     this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
-  //         //   }
-  //         //   if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-  //         //     this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
-  //         //   } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
-  //         //     this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
-  //         //   } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-  //         //     this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
-  //         //   }
-  //         //   if (this.virtualfieldsCombinedjson.length > 0) {
-  //         //     this.showVirtualfieldsSection = true;
-  //         //   }
-  //         //   break;
-  //         // }
-  //         // case 'providerservices': {
-  //         //   // this.showDepartments = this.settingsjson.filterByDept;
-  //         //   if (this.settingsjson.filterByDept) {
-  //         //     for (const dept of res) {
-  //         //       if (dept.services && dept.services.length > 0) {
-  //         //         for (const serv of dept.services) {
-  //         //           if (this.servicesjson.indexOf(serv) === -1) {
-  //         //             this.servicesjson.push(serv);
-  //         //           }
-  //         //         }
-  //         //       }
-  //         //     }
-  //         //   } else {
-  //         //     this.servicesjson = res;
-  //         //   }
-  //         //   break;
-  //         // }
-  //         // case 'providerApptServices': {
-  //           // if (this.settingsjson.filterByDept) {
-  //           //   for (const dept of res) {
-  //           //     if (dept.services && dept.services.length > 0) {
-  //           //       for (const serv of dept.services) {
-  //           //         if (this.apptServicesjson.indexOf(serv) === -1) {
-  //           //           this.apptServicesjson.push(serv);
-  //           //         }
-  //           //       }
-  //           //     }
-  //           //   }
-  //           // } else {
-  //           //   this.apptServicesjson = res;
-  //           // }
-  //           // setTimeout(() => {
-  //           //   // merge two arrays without duplicates
-  //           //   if (this.servicesjson && this.servicesjson.length > 0) {
-  //           //     const ids = new Set(this.apptServicesjson.map(d => d.id));
-  //           //     const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-  //           //     this.apptServicesjson = merged;
-  //           //   }
-  //           //   for (let i = 0; i < this.apptServicesjson.length; i++) {
-  //           //     if (i < 3) {
-  //           //       this.apptfirstArray.push(this.apptServicesjson[i]);
-  //           //     }
-  //           //   }
-  //           //   this.apptTempArray = this.apptfirstArray;
-  //           // });
-  //         // }
-  //           // break;
-  //       }
-  //     },
-  //       () => {
-  //       });
-  // }
 
   sortVfields(dataF) {
     let temp;
@@ -2109,17 +1626,18 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
+          console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
             if (service.serviceType === 'virtualService') {
+              console.log(service);
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate,'checkin', service, consumerdata);
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
               });
             }
             else {
               _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
             }
-
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -2173,9 +1691,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             // Added by Manikandan for collecting fields
             if (service.serviceType === 'virtualService') {
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt',service, consumerdata);
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
               });
-      
+
             }
             else {
               _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
@@ -2187,7 +1705,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
   }
-  collectRequiredinfo(id, place, location, date,type, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log("Collect Required Info");
     const _this = this;
     const virtualdialogRef = _this.dialog.open(ConsumerVirtualServiceinfoComponent, {
@@ -2199,12 +1717,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
         _this.consumerVirtualinfo = result;
-        if(type==='appt'){
+        if (type === 'appt') {
           _this.showAppointment(id, place, location, date, service, 'consumer', result);
-        }else{
-          _this.showCheckin(id,place,location, date,service,'consumer',result );
+        } else {
+          _this.showCheckin(id, place, location, date, service, 'consumer', result);
         }
-        
+
       }
     });
   }
@@ -2265,9 +1783,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-
-          if (!this.checkVirtualRequiredFieldsEntered()) {
-            this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+            });
+          } else {
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
           }
 
           // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
@@ -2278,12 +1800,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-          if (passParam['serviceType'] === 'virtualService') {
+          console.log(passParam);
+          if (current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
-          }else{
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],'waitlist',current_provider['service'] );
+          } else {
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
         }
       } else if (result === 'showsignup') {
@@ -2318,8 +1841,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (!this.checkVirtualRequiredFieldsEntered()) {
-            this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
+            });
+          } else {
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
           }
           // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
@@ -2329,13 +1857,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-         
-          if (passParam['serviceType'] === 'virtualService') {
+          if (current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
-          }else{
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],'waitlist',current_provider['service'] );
+          } else {
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
           // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -3007,7 +2534,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getItemQty(itemObj);
       }
     }
-    
+
 
   }
 
