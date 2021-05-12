@@ -8,7 +8,6 @@ import { UserServiceChangeRoutingModule } from './user-service-change.routing.mo
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
-import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 
 
@@ -21,8 +20,8 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
       UserServiceChangeRoutingModule,
       MatInputModule,
       FormsModule,
-      LoadingSpinnerModule,
-      CapitalizeFirstPipeModule
+      LoadingSpinnerModule
+      
     ],
     declarations: [
        UserServiceChnageComponent 

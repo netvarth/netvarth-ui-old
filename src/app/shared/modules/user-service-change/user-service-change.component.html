@@ -2,8 +2,9 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Assign a {{provider_label}} for your {{customer_label}}
-      <div class="form-level-settings">Please click any {{provider_label}} to assign</div>
+      <div> Assign a {{provider_label}} for your {{customer_label}}
+        <div class="form-level-settings">Please click any {{provider_label}} to assign</div>
+      </div>
     </h5>
   </div>
 </section>
@@ -21,7 +22,7 @@
                     <th style="min-width: 250px;">{{provider_label}} name</th>
                     <th class="display-min-none">Online status</th>
                     <th class="display-min-none" style="min-width: 125px;">Phone number</th>
-                    <th class="display-min-none">Specialization</th>
+                    <th class="display-min-none">Specializations</th>
                     <th class="display-min-none">Languages</th>
                   </tr>
                 </thead>
@@ -49,7 +50,7 @@
                             Phone number : </span><span class="b2"> +91 {{service.mobileNo}} </span></div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.specialization"> <span
                             class="b1">
-                            Specialization : </span> <span class="b2"> {{service.specialization}} </span></div>
+                            Specializations : </span> <span class="b2"> {{service.specialization}} </span></div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-5" *ngIf="service.languages"> <span
                             class="b1">
                             Languages : </span><span class="b2"> {{service.languages}} </span></div>
@@ -61,7 +62,7 @@
                     </td>
                     <td class="display-min-none">
                       <span *ngIf="service.mobileNo">
-                      +91 {{service.mobileNo}}</span>
+                        +91 {{service.mobileNo}}</span>
                     </td>
                     <td class="display-min-none">
                       {{service.specialization}}
