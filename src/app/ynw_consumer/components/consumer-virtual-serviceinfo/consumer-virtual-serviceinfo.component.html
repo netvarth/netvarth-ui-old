@@ -27,8 +27,9 @@ onSubmit(virtualForm.value)">
             <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob" class="vt_dt no-padding mgn-up-5"> 
                 <br>
             </div>
-            <div class="form-group">
-                <label class="col-form-label" for="gender">{{gender_cap}} </label>
+            <div class="form-group" style="display: grid;">
+                <mat-label for="gender">{{gender_cap}}</mat-label>
+                <!-- <label class="col-form-label" for="gender">{{gender_cap}} </label> -->
                 <mat-radio-group formControlName="gender">
                     <mat-radio-button value="Male">Male</mat-radio-button>
                     <mat-radio-button value="Female">Female</mat-radio-button>
