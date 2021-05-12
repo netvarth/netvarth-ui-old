@@ -25,7 +25,9 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
     public dialogRef: MatDialogRef<ConsumerVirtualServiceinfoComponent>,
     private wordProcessor: WordProcessor,
     public fed_service: FormMessageDisplayService, private s3Processor: S3UrlProcessor) {
-    this.data = this.s3Processor.getJson(data);
+      if(data){
+        this.data = this.s3Processor.getJson(data);
+      }
   }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
       pincode: ['', Validators.compose([Validators.required])],
       preferredLanguage: ['', Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
-      gender: ['', Validators.compose([Validators.required])]
+      gender:['',Validators.compose([Validators.required])]
 
     });
     // console.log(this.data);
@@ -51,29 +53,39 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
   }
   updateForm() {
     this.details = this.data;
+    let defaultEnglish= 'yes';
     let language = [];
     let usr_pincode = '';
-    if (this.details.userProfile.preferredLanguages) {
+    let dob = '';
+    let islanguage = '';
+    let gender='';
+    if (this.details && this.details.userProfile) {
+      dob= this.details.userProfile.dob;
+      gender = this.details.userProfile.gender;
+    }
+    if (this.details && this.details.userProfile &&  this.details.userProfile.preferredLanguages) {
       language = JSON.parse(this.details.userProfile.preferredLanguages);
+      if (language === null) {
+        language = [];
+      }
+      islanguage = (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '';
+      defaultEnglish = (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no';
     }
-    if (language === null) {
-      language = [];
-    }
-    if (this.details.userProfile.pinCode) {
+    if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
       usr_pincode = this.details.userProfile.pinCode;
     }
-    if (this.details.bookingLocation && this.details.bookingLocation.pincode) {
-      usr_pincode = this.details.bookingLocation.pincode;
+    if(this.details  && this.details.bookingLocation && this.details.bookingLocation.pincode){
+      usr_pincode=this.details.bookingLocation.pincode;
     }
 
-
+    
 
     this.virtualForm.patchValue({
-      dob: this.details.userProfile.dob,
+      dob: dob,
       pincode: usr_pincode,
-      preferredLanguage: (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '',
-      islanguage: (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no',
-      gender: this.details.userProfile.gender
+      preferredLanguage: islanguage,
+      islanguage: defaultEnglish,
+      gender:gender
     });
     if (language[0] === 'English') {
       this.lngknown = 'yes';
