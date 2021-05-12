@@ -5,7 +5,7 @@
 onSubmit(virtualForm.value)">
     <div class="mat-dialog-title">
        
-        <div class="title"  style="font-size: 16px !important;">{{consumer_label}} Details</div>
+        <div class="title"  style="font-size: 16px !important;">{{consumer_label|capitalizeFirst}} Details</div>
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
         </button>
@@ -58,7 +58,7 @@ onSubmit(virtualForm.value)">
               <!-- Signin Password -->
               <div class="form-group" >
                 <!-- <mat-form-field> -->
-                <mat-label for="location">Is English your peffered language</mat-label> <br>
+                <mat-label for="location">Is English your preffered language</mat-label> <br>
 
                 <mat-radio-group aria-label="Select an option" (change)="onChange($event)" formControlName="islanguage" >
                     <mat-radio-button value="yes">Yes</mat-radio-button>

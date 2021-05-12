@@ -759,7 +759,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (!this.is_wtsap_empty) {
             if (type==='checkin') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment && type==='checkin') {
+            } else if (this.sel_ser_det.isPrePayment ) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
         }

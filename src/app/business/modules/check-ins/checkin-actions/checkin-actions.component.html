@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div class="action-box pointer-cursor" *ngIf="accountType=='BRANCH' && changeService" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel" (click)="changeWaitlistservice()">
         <div class="action-box-sub">
             <span class="doctor-change-icon"></span>
             <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
@@ -264,8 +264,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <p>Service Provider : {{checkin.providerAccount.businessName}} </p>
             <p *ngIf="checkin.service.deptName">Department : {{checkin.service.deptName}} </p>
-            <p *ngIf="checkin.provider">{{provider_label | capitalizeFirst}} : {{checkin.provider.firstName}}
-                {{checkin.provider.lastName}} </p>
+            <p *ngIf="checkin.provider">{{provider_label | capitalizeFirst}} : {{checkin.provider.businessName}}</p>
             <p>Location: {{checkin.queue.location.place}}</p>
             <p>Service :
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
