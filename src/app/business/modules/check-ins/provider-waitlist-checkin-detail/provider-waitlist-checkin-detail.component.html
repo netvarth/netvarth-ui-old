@@ -156,7 +156,7 @@
                           *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
                             style="width:100px; height:100px" /></a>
                       </div>
-                      <p>{{note.timeStamp | date: newTimeDateFormat}}</p>
+                      <p>{{note.timeStamp | date: newDateFormat}}</p>
                     </div>
                   </span>
                   <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
