@@ -947,14 +947,14 @@ button.fxmenu1{
 .history .main-sec {
     height: 65px !important;
 } 
-.view-details .b1 {
-    width: 30%;
+/* .view-details .b1 {
+    width: 50%;
 }
 .view-details .b2 {
-    width: 70%;
+    width: 50%;
     text-align: right;
     float: right;
-}
+} */
 .view-details {
     margin-bottom: 3px;
 }

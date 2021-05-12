@@ -219,7 +219,7 @@ export class UserServiceChnageComponent implements OnInit {
     });
     console.log(this.service_dataSource.data);
     setTimeout(() => {
-    this.loading = false;
+      this.loading = false;
     }, 500);
   }
   isAllSelected() {
@@ -238,12 +238,18 @@ export class UserServiceChnageComponent implements OnInit {
     result.forEach(serviceObj => {
       let userName = '';
       let languages = '';
+      let specialization;
       userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
         console.log(JSON.parse(serviceObj.preferredLanguages));
         languages = JSON.parse(serviceObj.preferredLanguages);
       }
-
+      if (serviceObj.specialization) {
+        specialization = serviceObj.specialization.toString();
+        if (serviceObj.specialization.length > 1) {
+          specialization = specialization.replace(/,/g, ", ");
+        }
+      }
       service_list.push(
         {
           'id': serviceObj.id,
@@ -252,7 +258,7 @@ export class UserServiceChnageComponent implements OnInit {
           'status': serviceObj.status,
           'mobileNo': serviceObj.mobileNo,
           'isAvailable': serviceObj.isAvailable,
-          'specialization': serviceObj.specialization,
+          'specialization': specialization,
           'languages': languages,
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture
@@ -355,5 +361,3 @@ export class UserServiceChnageComponent implements OnInit {
     }
   }
 }
-
-

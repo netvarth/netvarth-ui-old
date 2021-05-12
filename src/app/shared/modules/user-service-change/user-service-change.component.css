@@ -102,14 +102,14 @@
 .view-details {
   margin-top: 10px;
 }
-.view-details .b1 {
+/* .view-details .b1 {
   width: 30%;
 }
 .view-details .b2 {
   width: 60%;
   text-align: right;
   float: right;
-}
+} */
 .row_data:hover {
   box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
   border-radius: 0.4rem;
