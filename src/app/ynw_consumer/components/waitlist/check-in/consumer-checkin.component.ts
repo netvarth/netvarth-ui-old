@@ -704,30 +704,29 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-            if(this.virtualInfo){
-                console.log(this.virtualInfo);
-            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-            console.log(formattedDate);
-            this.waitlist_for[0]['dob']=formattedDate;
-            if(this.virtualInfo.islanguage==='yes'){
-                this.waitlist_for[0]['preferredLanguage']=['English'];
-            }else{
-                this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
-            }
-            const bookingLocation={};
-            bookingLocation['pincode']=this.virtualInfo.pincode;
-            this.waitlist_for[0]['bookingLocation']=bookingLocation;
-            if(this.virtualInfo.gender!==''){
-                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
-            }
+        //     if(this.virtualInfo){
+        //         console.log(this.virtualInfo);
+        //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+        //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+        //     console.log(formattedDate);
+        //     this.waitlist_for[0]['dob']=formattedDate;
+        //     if(this.virtualInfo.islanguage==='yes'){
+        //         this.waitlist_for[0]['preferredLanguage']=['English'];
+        //     }else{
+        //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+        //     }
+        //     const bookingLocation={};
+        //     bookingLocation['pincode']=this.virtualInfo.pincode;
+        //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
+        //     if(this.virtualInfo.gender!==''){
+        //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+        //     }
             
-        }
-        }
+        // }
         if(this.virtualInfo){
             console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             console.log(formattedDate);
             this.waitlist_for[0]['dob']=formattedDate;
             if(this.virtualInfo.islanguage==='yes'){
@@ -742,7 +741,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const bookingLocation={};
             bookingLocation['pincode']=this.virtualInfo.pincode;
             this.waitlist_for[0]['bookingLocation']=bookingLocation;
+            if(this.virtualInfo.gender!==''){
+                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+            }
         }
+        }
+ 
+  
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
