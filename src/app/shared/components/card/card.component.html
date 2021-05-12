@@ -261,7 +261,7 @@
                     *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
                     {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="waitlist.provider">
-                    {{waitlist.provider.businessName}}
+                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item">
                     <i class="fa meet-icon"
@@ -292,14 +292,14 @@
                     <span class="walkin-icon mgn-rt-10"
                         *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'WALK_IN_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'WALK_IN_APPOINTMENT')">
                     </span>
-                    <span class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                    <span class="dashboardarrived-icon checkin_status mgn-rt-10"
                         *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span>
-                    <span class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
+                    <span class="cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
                         (click)="stopProp($event);checkinActions(waitlist, 'note')">
                         <i class="icon-note"></i>
                     </span>
                     <span (click)="stopProp($event);checkinActions(waitlist, 'attachment')"
-                        class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.hasAttachment"><i
+                        class="cnote pointer-cursor mgn-rt-10" *ngIf="waitlist.hasAttachment"><i
                             style="font-size: 20px;" class="material-icons">attach_file</i></span>
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
@@ -309,29 +309,37 @@
                 </div>
             </div>
         </div>
-        <div class="mgn-up-5 mgn-lt-5 mgn-bt-5 mgn-rt-5" *ngIf="showDetails.indexOf(waitlist) != -1">
-            <div class="dash-item" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
-                <span> Time Window </span>
-                <span class="pull-right"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
+        <div class="mgn-up-5 mgn-lt-5 mgn-bt-5 mgn-rt-5" *ngIf="showDetails(waitlist)">
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
+                <span class="b1">Time Window : </span>
+                <span class="b2"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
             </div>
-            <div class="dash-item" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
-                <span>Date </span> <span class="pull-right">{{waitlist.date | date: newTimeDateFormat}}</span>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
+                <span class="b1">Date : </span> <span class="b2">{{waitlist.date | date: newTimeDateFormat}}</span>
             </div>
-            <div class="dash-item" *ngIf="getLabels(waitlist)">
-                <span>Label </span> <span class="pull-right"> {{getLabels(waitlist)}}</span>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(waitlist)">
+                <span class="b1">Label : </span> <span class="b2"> {{getLabels(waitlist)}}</span>
             </div>
-            <div class="dash-item">
-                <span>Location </span>
-                <span class="pull-right">Location </span>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
+                <span class="b1">Location : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].bookingLocation.localArea}},
+                    {{waitlist.waitlistingFor[0].bookingLocation.district}} </span>
             </div>
-            <div class="dash-item">
-                <span>Languages </span>
-                <span class="pull-right">Languages </span>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].preferredLanguage">
+                <span class="b1">Language : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].preferredLanguage[0]}} </span>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].dob">
+                <span class="b1">Date of Birth : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].dob | date: newTimeDateFormat}} </span>
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-xs-12 view-more" (click)="showMore(waitlist)">
+    <div class="col-sm-12 col-xs-12 view-more" (click)="showMoreorLess(waitlist, 'more')" *ngIf="!showDetails(waitlist)">
         View More <i class="fa fa-caret-down"></i>
+    </div>
+    <div class="col-sm-12 col-xs-12 view-more" (click)="showMoreorLess(waitlist, 'less')" *ngIf="showDetails(waitlist)">
+        View Less <i class="fa fa-caret-up"></i>
     </div>
 </ng-container>
 <!-- Card -->

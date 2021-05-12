@@ -922,11 +922,12 @@ button.fxmenu1{
 }
 .box4 {
     width: 30%;
-    display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
+    float: right;
+    text-align: right;
 }
 .history .box1 {
-    width: 67%;
+    width: 65%;
 }
 .consumer-name {
     font-weight: bold;
@@ -946,3 +947,14 @@ button.fxmenu1{
 .history .main-sec {
     height: 65px !important;
 } 
+.view-details .b1 {
+    width: 30%;
+}
+.view-details .b2 {
+    width: 70%;
+    text-align: right;
+    float: right;
+}
+.view-details {
+    margin-bottom: 3px;
+}

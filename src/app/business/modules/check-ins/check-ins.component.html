@@ -431,7 +431,15 @@
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="gotoCustomerDetails(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
-                          {{checkin.waitlistingFor[0].lastName}}</div>
+                          {{checkin.waitlistingFor[0].lastName}}
+                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
+                            *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                            {{checkin.waitlistingFor[0].bookingLocation.localArea}},
+                            {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
+                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
+                            *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                            {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -582,7 +590,7 @@
                         <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
-                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="startedCheckins"
                         (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="'started'">
                       </app-card>
                     </div>
@@ -666,6 +674,13 @@
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
+                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
+                            *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                            {{checkin.waitlistingFor[0].bookingLocation.localArea}},
+                            {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
+                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
+                            *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                            {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -836,7 +851,7 @@
                         <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                       </div>
-                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                      <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
                         (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
@@ -1037,6 +1052,13 @@
                         [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
+                          *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                          {{checkin.waitlistingFor[0].bookingLocation.localArea}},
+                          {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
+                          *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                          {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -1195,7 +1217,7 @@
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
                       (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
@@ -1469,7 +1491,14 @@
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="gotoCustomerDetails(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
-                        {{checkin.waitlistingFor[0].lastName}}</div>
+                        {{checkin.waitlistingFor[0].lastName}}
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Location'" class="location"
+                          *ngIf="checkin.waitlistingFor[0].bookingLocation">
+                          {{checkin.waitlistingFor[0].bookingLocation.localArea}},
+                          {{checkin.waitlistingFor[0].bookingLocation.district}}</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Languages'" class="location"
+                          *ngIf="checkin.waitlistingFor[0].preferredLanguage">
+                          {{checkin.waitlistingFor[0].preferredLanguage[0]}}</div></div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -1623,7 +1652,7 @@
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
-                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
+                    <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type" [checkins]="check_in_filtered_list"
                       (actionPerformed)="cardClicked($event)" [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
