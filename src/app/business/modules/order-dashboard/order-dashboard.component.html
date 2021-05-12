@@ -203,7 +203,9 @@
                 </span>
               </div>
               <div class="main-sec">
-                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div  class="bold grey-color"*ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
+                          {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
                 <div class="mgn-up-15 datetime bold grey-color">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
