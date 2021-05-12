@@ -773,11 +773,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             
           });
           virtualdialogRef.afterClosed().subscribe(result => {
-            if (result) {
+            
+            if (result!=='') {
              this.virtualInfo=result;
              this.confirmcheckin(type);
             
+            }else{
+                this.goToStep('prev');
             }
+            
           });
     }
     saveCheckin(type?) {

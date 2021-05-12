@@ -38,13 +38,16 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
       pincode: ['', Validators.compose([Validators.required])],
       preferredLanguage: ['', Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
-      gender:['',Validators.compose([Validators.required])]
+      gender: ['', Validators.compose([Validators.required])]
 
     });
     // console.log(this.data);
     if (this.data !== null || this.data !== undefined || this.data !== '') {
       this.updateForm();
     }
+  }
+  closeDialog(){
+    this.dialogRef.close();
   }
   updateForm() {
     this.details = this.data;
@@ -59,18 +62,18 @@ export class ConsumerVirtualServiceinfoComponent implements OnInit {
     if (this.details.userProfile.pinCode) {
       usr_pincode = this.details.userProfile.pinCode;
     }
-    if(this.details.bookingLocation && this.details.bookingLocation.pincode){
-      usr_pincode=this.details.bookingLocation.pincode;
+    if (this.details.bookingLocation && this.details.bookingLocation.pincode) {
+      usr_pincode = this.details.bookingLocation.pincode;
     }
 
-    
+
 
     this.virtualForm.patchValue({
       dob: this.details.userProfile.dob,
       pincode: usr_pincode,
       preferredLanguage: (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '',
       islanguage: (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no',
-      gender:this.details.userProfile.gender
+      gender: this.details.userProfile.gender
     });
     if (language[0] === 'English') {
       this.lngknown = 'yes';
