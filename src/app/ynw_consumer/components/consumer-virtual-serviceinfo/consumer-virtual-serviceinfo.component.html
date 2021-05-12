@@ -1,11 +1,11 @@
 <!-- join Section starts -->
 
 
-<form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component consumer-virtual-serviceinfo-component" novalidate (ngSubmit)="virtualForm.valid &&
+<form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="virtualForm.valid &&
 onSubmit(virtualForm.value)">
     <div class="mat-dialog-title">
        
-        <div class="title" style="font-size: 16px !important;">Fill the Details</div>
+        <div class="title"  style="font-size: 16px !important;">{{consumer_label}} Details</div>
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
         </button>
@@ -15,22 +15,36 @@ onSubmit(virtualForm.value)">
         <div class="mat-dialog-content" style="overflow: auto !important;">
 
             <div class="form-group dob">
-                <label for="dob">Enter your Date of Birth</label>
-                <!-- <mat-form-field color="accent" appearance="fill" class="mgn-up-10 vt_dt no-padding"> -->
-                    <!-- <mat-label>Choose a date</mat-label> -->
-                <input type="date" placeholder="DD-MM-YYYY" id="dob" formControlName="dob" class="form-control">
-                    <!-- <mat-datepicker-toggle matSuffix [for]="dob">
+                <mat-label for="dob">Enter your Date of Birth</mat-label>
+                <br/>
+                <!-- <mat-form-field color="accent" appearance="fill" class="mgn-up-10 vt_dt no-padding"> 
+                   <mat-label>Choose a date</mat-label>
+                   <input matInput  formControlName="dob" [matDatepicker]="dob"> 
+                    <mat-datepicker-toggle matSuffix [for]="dob">
                     </mat-datepicker-toggle>
-                    <mat-datepicker #dob></mat-datepicker> -->
-                <!-- </mat-form-field> -->
+                    <mat-datepicker #dob></mat-datepicker> 
+              </mat-form-field> -->
+            <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob" class="vt_dt no-padding mgn-up-5"> 
+                <br>
             </div>
-
+            <div class="form-group">
+                <label class="col-form-label" for="gender">{{gender_cap}} </label>
+                <mat-radio-group formControlName="gender">
+                    <mat-radio-button value="Male">Male</mat-radio-button>
+                    <mat-radio-button value="Female">Female</mat-radio-button>
+                    <mat-radio-button value="Others">Others</mat-radio-button>
+                </mat-radio-group>
+                <app-field-error-display
+                    [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                    errorMsg="Please select the gender.">
+                </app-field-error-display>
+            </div>
             <!-- Signin Password -->
             <div class="form-group pwd" >
                 <!-- <mat-form-field> -->
-                <label for="pincode">Pincode</label>
+                <mat-label for="pincode">Pincode</mat-label>
 
-                <input type="text" placeholder="Enter pincode here" class="form-control" id="location" formControlName="pincode">
+                <input type="text"  placeholder="Enter pincode here" class="form-control" id="location" formControlName="pincode">
                 <!-- </mat-form-field> -->
                 <div style="display: flex; justify-content: space-between;">
                     <app-field-error-display
@@ -40,35 +54,18 @@ onSubmit(virtualForm.value)">
                    
                 </div>
             </div>
+         
               <!-- Signin Password -->
-              <div class="" >
+              <div class="form-group" >
                 <!-- <mat-form-field> -->
-                <label for="location">Are you comfortable with English Language</label>
+                <mat-label for="location">Is English your peffered language</mat-label>
 
-                <!-- <mat-radio-group aria-label="Select an option" (change)="onChange($event)" formControlName="islanguage" >
+                <mat-radio-group aria-label="Select an option" (change)="onChange($event)" formControlName="islanguage" >
                     <mat-radio-button value="yes">Yes</mat-radio-button>
                     <mat-radio-button value="no">No</mat-radio-button>
-                  </mat-radio-group> -->
-                 
-                  <!-- <mat-radio-group aria-label="Select an option" (change)="onChange($event)" formControlName="islanguage" >
-                    <mat-radio-button value="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no">No</mat-radio-button>
-                  </mat-radio-group> -->
+                  </mat-radio-group>
                   
-                <div class="radio" >
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="yes" [value]="'yes'" (change)="onChange($event)" formControlName="islanguage">
-                        Yes
-                    </label>
-                </div>
-
-                <div class="radio" >
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="no" [value]="'no'" (change)="onChange($event)" formControlName="islanguage">
-                        No
-                    </label>
-                </div>
-
+                    
                 <!-- </mat-form-field> -->
                 <div style="display: flex; justify-content: space-between;">
                     <app-field-error-display
@@ -80,9 +77,9 @@ onSubmit(virtualForm.value)">
             </div>
             <div class="form-group" *ngIf="lngknown==='no'">
                 <!-- <mat-form-field> -->
-                <label for="preferredLanguage">Enter one language you are comfortable with</label>
+                <mat-label for="preferredLanguage">Enter  your preffered language</mat-label>
 
-                <input type="text" placeholder="Enter language here" class="form-control" id="preferredLanguage" formControlName="preferredLanguage">
+                <input type="text"   placeholder="Enter language here" class="form-control" id="preferredLanguage" formControlName="preferredLanguage">
                 <!-- </mat-form-field> -->
                   
                    
@@ -96,8 +93,8 @@ onSubmit(virtualForm.value)">
                 </div>
             </div>
         </div>
-        <div class="mat-dialog-actions" style="background: white !important;">
-            <button class="cust-logpg-submt mgn-up-20 continue-button" type="submit" mat-button
+        <div class="mat-dialog-actions "  style="background: white !important;">
+            <button class="cust-logpg-submt mgn-up-20 continue-button"  type="submit" mat-button
                 (click)="onSubmit(virtualForm.value)">
                 <span >Submit</span>
                
