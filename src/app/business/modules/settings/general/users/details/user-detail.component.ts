@@ -88,6 +88,9 @@ export class BranchUserDetailComponent implements OnInit {
     selectedsubDomain: any = [];
     // selected_dept;
     usercaption = 'Add User';
+    showloc = false;
+    locationDetails: any;
+    locations: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -284,6 +287,9 @@ export class BranchUserDetailComponent implements OnInit {
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
         });
+        if(this.user_data.pincode) {
+            this.blurPincodeQty(this.user_data.pincode);
+        }
 
     }
     onUserSelect(event) {
@@ -451,5 +457,31 @@ export class BranchUserDetailComponent implements OnInit {
     }
     redirecToUsersl() {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
+    }
+    keyPressed(event) {
+        if(event.length == 6) {
+            this.blurPincodeQty(event);
+        } else{
+            this.locations = [];
+        }
+    }
+    blurPincodeQty(val){  
+        this.locations = [];
+        if(val.length < 6 ){
+            this.snackbarService.openSnackBar('Please enter valid Pincode', { 'panelClass': 'snackbarerror' });
+        } else {
+            if(val.length== 6){
+              this.provider_services.getlocationbypincode(val)
+            .subscribe(
+                data => {
+                    this.locationDetails = data;
+                    this.locations = this.locationDetails[0].PostOffice;
+                    this.showloc = true;
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            }
+        }
     }
 }

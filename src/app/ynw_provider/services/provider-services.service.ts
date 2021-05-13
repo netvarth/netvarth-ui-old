@@ -2070,8 +2070,16 @@ editHoliday(data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
   }
-    deleteMRFile(mrId, fileId) {
+  deleteMRFile(mrId, fileId) {
     const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
     return this.servicemeta.httpDelete(url);
+  }
+  // getlocationbypincode(pincode) {
+  //   const url = 'provider/account/settings/locByPincode/'  + pincode;
+  //   return this.servicemeta.httpGet(url);
+  // }
+  getlocationbypincode(pincode) {
+    const url = 'provider/account/settings/locations/'  + pincode;
+    return this.servicemeta.httpGet(url);
   }
 }
