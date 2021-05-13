@@ -252,8 +252,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleWaitlistDet();
                 }
-                if(params.virtual_info){
-                    this.virtualInfo=JSON.parse(params.virtual_info);
+                if (params.virtual_info) {
+                    this.virtualInfo = JSON.parse(params.virtual_info);
                     console.log(this.virtualInfo);
                 }
             });
@@ -645,7 +645,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    confirmcheckin(type?){
+    confirmcheckin(type?) {
         console.log(type);
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
@@ -708,44 +708,44 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-            if(this.virtualInfo){
+            if (this.virtualInfo) {
                 console.log(this.virtualInfo);
-            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-            console.log(formattedDate);
-            this.waitlist_for[0]['dob']=formattedDate;
-            if(this.virtualInfo.islanguage==='yes'){
-                this.waitlist_for[0]['preferredLanguage']=['English'];
-            }else{
-                this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+                const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                console.log(formattedDate);
+                this.waitlist_for[0]['dob'] = formattedDate;
+                if (this.virtualInfo.islanguage === 'yes') {
+                    this.waitlist_for[0]['preferredLanguage'] = ['English'];
+                } else {
+                    this.waitlist_for[0]['preferredLanguage'] = [this.virtualInfo.preferredLanguage];
+                }
+                const bookingLocation = {};
+                bookingLocation['pincode'] = this.virtualInfo.pincode;
+                this.waitlist_for[0]['bookingLocation'] = bookingLocation;
+                if (this.virtualInfo.gender !== '') {
+                    this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
+                }
+
             }
-            const bookingLocation={};
-            bookingLocation['pincode']=this.virtualInfo.pincode;
-            this.waitlist_for[0]['bookingLocation']=bookingLocation;
-            if(this.virtualInfo.gender!==''){
-                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
-            }
-            
         }
-        }
-        if(this.virtualInfo){
+        if (this.virtualInfo) {
             console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
             const formattedDate = moment(momentDate).format("YYYY/MM/DD");
             console.log(formattedDate);
-            this.waitlist_for[0]['dob']=formattedDate;
-            if(this.virtualInfo.islanguage==='yes'){
+            this.waitlist_for[0]['dob'] = formattedDate;
+            if (this.virtualInfo.islanguage === 'yes') {
                 let langs = [];
                 langs.push('English');
-                this.waitlist_for[0]['preferredLanguage']=langs;
-            }else{
+                this.waitlist_for[0]['preferredLanguage'] = langs;
+            } else {
                 let langs = [];
                 langs.push(this.virtualInfo.preferredLanguage);
-                this.waitlist_for[0]['preferredLanguage']=langs;
+                this.waitlist_for[0]['preferredLanguage'] = langs;
             }
-            const bookingLocation={};
-            bookingLocation['pincode']=this.virtualInfo.pincode;
-            this.waitlist_for[0]['bookingLocation']=bookingLocation;
+            const bookingLocation = {};
+            bookingLocation['pincode'] = this.virtualInfo.pincode;
+            this.waitlist_for[0]['bookingLocation'] = bookingLocation;
         }
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
@@ -761,53 +761,53 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
         if (!this.is_wtsap_empty) {
-            if (type==='checkin') {
+            if (type === 'checkin') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment && type==='checkin') {
+            } else if (this.sel_ser_det.isPrePayment && type === 'checkin') {
                 this.addWaitlistAdvancePayment(post_Data);
             }
         }
     }
-    confirmVirtualServiceinfo(memberObject,type?){
+    confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
             data: memberObject[0]
-            
-          });
-          virtualdialogRef.afterClosed().subscribe(result => {
-            
-            if (result!=='') {
-             this.virtualInfo=result;
-             this.confirmcheckin(type);
-            
-            }else{
+
+        });
+        virtualdialogRef.afterClosed().subscribe(result => {
+
+            if (result !== '') {
+                this.virtualInfo = result;
+                this.confirmcheckin(type);
+
+            } else {
                 this.goToStep('prev');
             }
-            
-          });
+
+        });
     }
     saveCheckin(type?) {
         console.log('insaide');
-        if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
+        if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
-                   console.log(list['id']);
-                   console.log(this.familymembers);
-                  const memberObject= this.familymembers.filter(member=>member.userProfile.id===list['id']);
-                  console.log(memberObject);
-                  if(list['id']!==this.customer_data.id){
-                   this.confirmVirtualServiceinfo(memberObject,type);
-                  }else{
-                      this.confirmcheckin(type);
-                  }
+                    console.log(list['id']);
+                    console.log(this.familymembers);
+                    const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
+                    console.log(memberObject);
+                    if (list['id'] !== this.customer_data.id) {
+                        this.confirmVirtualServiceinfo(memberObject, type);
+                    } else {
+                        this.confirmcheckin(type);
+                    }
                 }
             }
-        }else{
+        } else {
             this.confirmcheckin(type);
         }
-        
+
     }
     addCheckInConsumer(postData) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
@@ -943,12 +943,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     isChecked(id) {
-        let retval = false; 
+        let retval = false;
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
-             if(this.waitlist_for[i].id==0){
-                 this.waitlist_for[i].id=this.customer_data.id;
-             }
+                if (this.waitlist_for[i].id == 0) {
+                    this.waitlist_for[i].id = this.customer_data.id;
+                }
                 if (this.waitlist_for[i].id === id) {
                     retval = true;
                 }
@@ -1510,15 +1510,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
-
-        this.newPhone = this.newWhatsapp = JSON.parse(this.selected_phone);
         this.newEmail = this.payEmail;
-// console.log(this.newPhone);
-// this.newPhone.dialCode = this.userData.userProfile.countryCode;
-// this.newWhatsapp.dialCode = this.userData.userProfile.countryCode;
-// console.log(this.newPhone);
-
-        // this.payEmail = this.userData.userProfile.email;
+        console.log(this.newPhone);
+        if (!this.newPhone) {
+            this.newPhone = {
+                dialCode: this.userData.userProfile.countryCode,
+                e164Number: this.userData.userProfile.countryCode + this.selected_phone,
+                number: this.selected_phone
+            };
+        }
+        if (!this.newWhatsapp) {
+            this.newWhatsapp = {
+                dialCode: this.userData.userProfile.countryCode,
+                e164Number: this.userData.userProfile.countryCode + this.selected_phone,
+                number: this.selected_phone
+            };
+        }
+        console.log(this.newPhone);
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -1813,77 +1821,79 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         console.log(this.newWhatsapp);
         console.log(this.newEmail);
         // if (this.editBookingFields) {
-            if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
-                this.phoneError = 'Phone number is invalid';
-                return false;
-            } else {
-                if (this.newPhone) {
-                    if (this.newPhone.e164Number.startsWith(this.newPhone.dialCode)) {
-                        phoneNum = this.newPhone.e164Number.split(this.newPhone.dialCode)[1];
-                        console.log(phoneNum);
-                        this.countryCode = this.newPhone.dialCode;
-                        this.userPhone = phoneNum;
-                        this.currentPhone = phoneNum;
-                        this.selected_phone = phoneNum;
-                    }
+        if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
+            this.phoneError = 'Phone number is invalid';
+            return false;
+        } else {
+            if (this.newPhone) {
+                if (this.newPhone.e164Number.startsWith(this.newPhone.dialCode)) {
+                    phoneNum = this.newPhone.e164Number.split(this.newPhone.dialCode)[1];
+                    console.log(phoneNum);
+                    this.countryCode = this.newPhone.dialCode;
+                    this.userPhone = phoneNum;
+                    this.currentPhone = phoneNum;
+                    this.selected_phone = phoneNum;
                 }
             }
-            console.log(this.currentPhone);
-            if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
-                this.whatsapperror = 'WhatsApp number is invalid';
-                return false;
-            } else {
-                if (this.newWhatsapp) {
-                    whatsAppNum = this.newWhatsapp.e164Number;
-                    if (this.newWhatsapp.e164Number.startsWith('+')) {
-                        whatsAppNum = this.newWhatsapp.e164Number.split('+')[1];
-                        this.callingModes = whatsAppNum;
-                    }
+        }
+        console.log(this.currentPhone);
+        if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
+            this.whatsapperror = 'WhatsApp number is invalid';
+            return false;
+        } else {
+            if (this.newWhatsapp) {
+                whatsAppNum = this.newWhatsapp.e164Number;
+                if (this.newWhatsapp.e164Number.startsWith('+')) {
+                    whatsAppNum = this.newWhatsapp.e164Number.split('+')[1];
+                    this.callingModes = whatsAppNum;
                 }
             }
-            if (this.bookingForm.get('newEmail').errors) {
-                this.emailerror = "Email is invalid";
-                return false;
-            } else {
-                emailId = this.newEmail;
-                // if (emailId && emailId != "") {
-                //     this.payEmail = emailId;
-                //     const post_data = {
-                //         'id': this.userData.userProfile.id || null,
-                //         'firstName': this.userData.userProfile.firstName || null,
-                //         'lastName': this.userData.userProfile.lastName || null,
-                //         'dob': this.userData.userProfile.dob || null,
-                //         'gender': this.userData.userProfile.gender || null,
-                //         'email': this.payEmail.trim() || ''
-                //     };
-                //     this.updateEmail(post_data).then(
-                //         () => {
-                //             this.closebutton.nativeElement.click();
-                //             setTimeout(() => {
-                //                 this.action = '';
-                //             }, 500);
-                //         },
-                //         error => {
-                //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                //             this.payEmail = this.userData.userProfile.email;
-                //             return false;
-                //         }
-                //     )
-                // } else {
-                //     this.closebutton.nativeElement.click();
-                //     setTimeout(() => {
-                //         this.action = '';
-                //     }, 500);
-                // }
-                if (emailId && emailId != "") {
-                    this.payEmail = emailId;
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
-                this.closebutton.nativeElement.click();
-                setTimeout(() => {
-                    this.action = '';
-                }, 500);
+        }
+        console.log(this.callingModes);
+        if (this.bookingForm.get('newEmail').errors) {
+            this.emailerror = "Email is invalid";
+            return false;
+        } else {
+            emailId = this.newEmail;
+            // if (emailId && emailId != "") {
+            //     this.payEmail = emailId;
+            //     const post_data = {
+            //         'id': this.userData.userProfile.id || null,
+            //         'firstName': this.userData.userProfile.firstName || null,
+            //         'lastName': this.userData.userProfile.lastName || null,
+            //         'dob': this.userData.userProfile.dob || null,
+            //         'gender': this.userData.userProfile.gender || null,
+            //         'email': this.payEmail.trim() || ''
+            //     };
+            //     this.updateEmail(post_data).then(
+            //         () => {
+            //             this.closebutton.nativeElement.click();
+            //             setTimeout(() => {
+            //                 this.action = '';
+            //             }, 500);
+            //         },
+            //         error => {
+            //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            //             this.payEmail = this.userData.userProfile.email;
+            //             return false;
+            //         }
+            //     )
+            // } else {
+            //     this.closebutton.nativeElement.click();
+            //     setTimeout(() => {
+            //         this.action = '';
+            //     }, 500);
+            // }
+            if (emailId && emailId != "") {
+                this.payEmail = emailId;
+                console.log(this.payEmail);
+                this.waitlist_for[0]['email'] = this.payEmail;
             }
+            this.closebutton.nativeElement.click();
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+        }
         // } else {
         //     this.closebutton.nativeElement.click();
         //     setTimeout(() => {

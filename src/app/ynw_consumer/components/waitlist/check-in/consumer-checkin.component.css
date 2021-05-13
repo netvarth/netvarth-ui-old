@@ -1233,7 +1233,7 @@ height: 150px !important;
   top: 8px !important;
 } */
 .serv-head {
-  background: rgba(0, 0, 0, 0.04) !important;
+  /* background: rgba(0, 0, 0, 0.04) !important; */
   padding: 10px 0 3px 10px !important;
 }
 ngx-intl-tel-input input {
@@ -1749,4 +1749,7 @@ button.next-button {
 .input-field {
   width: 210px !important;
   margin-left: auto !important;
+}
+.number-section {
+  border-top: 1px solid #eee;
 }
