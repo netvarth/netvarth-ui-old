@@ -1615,23 +1615,31 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       });
   }
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+    alert("Ddddd");
     console.log("Collect Required Info");
     const _this = this;
 
-
+console.log(consumerdata);
     let virtualFields = {}
 
-    if (consumerdata.dob && consumerdata.pincode && consumerdata.city && consumerdata.state && consumerdata.preferredLanguages && consumerdata.gender) {
-      virtualFields['dob'] = consumerdata.dob;
-      virtualFields['pincode'] = consumerdata.pincode;
-      virtualFields['gender'] = consumerdata.gender;
+    console.log(consumerdata.userProfile.dob);
+    console.log(consumerdata.userProfile.pinCode);
+    console.log(consumerdata.userProfile.city);
+    console.log(consumerdata.userProfile.state);
+    console.log(consumerdata.userProfile.preferredLanguages);
+    console.log(consumerdata.userProfile.gender);
+  
+    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+      virtualFields['dob'] = consumerdata.userProfile.dob;
+      virtualFields['pincode'] = consumerdata.userProfile.pinCode;
+      virtualFields['gender'] = consumerdata.userProfile.gender;
       let location = {};
-      location['Name'] = consumerdata.city;
-      location['State'] = consumerdata.state;
-      location['Pincode'] = consumerdata.pincode;
+      location['Name'] = consumerdata.userProfile.city;
+      location['State'] = consumerdata.userProfile.state;
+      location['Pincode'] = consumerdata.userProfile.pinCode;
 
       virtualFields['location'] = location;
-      virtualFields['preferredLanguages'] = this.s3Processor.getJson(consumerdata.preferredLanguages);
+      virtualFields['preferredLanguages'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
       if (virtualFields['preferredLanguages'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
