@@ -6,19 +6,21 @@
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'confirm'"></app-header>
                 </div>
             </div>
-            <div class="panel-body no-padding">
-                <div class="card p0">
+            <div class="panel-body no-padding" style="border-radius: 50px !important; overflow: hidden !important; padding: 10px !important;">
+                <div class="card" style="background-color: #f6f6f6 !important;">
                     <div class="copy locd" *ngIf="!apiloading">
                         <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
                             <!-- <div class="info-img">
                                 <img src="assets/images/bg-01.png">
                             </div> -->
                             <div class="details">
-                                <div class="book-head" *ngIf="type !== 'reschedule'"> Booking Confirmed </div>
-                                <div class="book-head" *ngIf="type === 'reschedule'"> Appointment rescheduled </div>
-                                <div class="book-details"> Booking details </div>
-                                <table class="book-details-sub chkntoknappt-details">
-                                    <tbody>
+                                <div class="confirm-head" *ngIf="type !== 'reschedule'"> Booking Confirmed </div>
+                                <div class="confirm-head" *ngIf="type === 'reschedule'"> Appointment rescheduled </div>
+                                <!-- <div class="book-details"> Booking details </div> -->
+                                <!-- <table class="book-details-sub chkntoknappt-details">
+                                    <tbody> -->
+                                    <div class="bookdetails">
+                                    
                                         <!-- <tr *ngIf="!appointment.provider">
                                             <td width="48%" align="right">
                                                 Provider</td>
@@ -41,11 +43,11 @@
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></td>
                                         </tr> -->
-                                        <tr>
-                                            <td width="48%" align="right">Service</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>
-                                                <span class="service-icon pull-left"
+                                        <div class="disp-flex">
+                                            <span class="billing-head">Service</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <div>
+                                                <span class="service-icon contact-section" style="display: inline-block !important;"
                                                     *ngIf="appointment.service && appointment.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -60,49 +62,50 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                {{appointment.service?.name}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td width="48%" align="right">Appointment for</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.appmtFor[0].firstName}}
-                                                {{appointment.appmtFor[0].lastName}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="48%" align="right">Appointment Time </td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.appmtDate | date: newDateFormat }},
-                                                {{getSingleTime(appointment.appmtTime)}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="48%" align="right">Booking Id</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.appointmentEncId}}</td>
-                                        </tr>
-                                        <tr *ngIf="appointment.service?.minPrePaymentAmount && type !== 'reschedule' && infoParams.prepayment">
-                                            <td width="48%" align="right">Amount paid</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
+                                                <span class="billing-value">{{appointment.service?.name}}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="billing-head">Appointment for</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value">{{appointment.appmtFor[0].firstName}}
+                                                {{appointment.appmtFor[0].lastName}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="billing-head">Appointment Time </span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value"> {{appointment.appmtDate | date: newDateFormat }},
+                                                {{getSingleTime(appointment.appmtTime)}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="billing-head">Booking Id</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value"> {{appointment.appointmentEncId}}</span>
+                                        </div>
+                                        <div *ngIf="appointment.service?.minPrePaymentAmount && type !== 'reschedule' && infoParams.prepayment">
+                                            <span class="billing-head">Amount paid</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value"><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
                                                 </span>
-                                            </td>
-                                        </tr>
-                                        <tr
+                                            </span>
+                                        </div>
+                                        <div
                                             *ngIf="appointment.service?.minPrePaymentAmount && type == 'reschedule' && appointment.amountPaid > 0">
-                                            <td width="48%" align="right">Amount paid</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">
+                                            <span class="billing-head">Amount paid</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value"><span class="rupee-font">
                                                     {{appointment.amountPaid | currency:'&#8377;'}}
                                                 </span>
-                                            </td>
-                                        </tr>
-                                        <tr *ngIf="appointment.batchId">
-                                            <td width="48%" align="right">Batch</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.batchId}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="appointment.batchId">
+                                            <span class="billing-head">Batch</span>
+                                            <span>&nbsp;:&nbsp;</span>
+                                            <span class="billing-value"> {{appointment.batchId}}</span>
+                                        </div>
+                                    </div>
+                                    <!-- </tbody>
+                                </table> -->
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
                                 <!-- <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}

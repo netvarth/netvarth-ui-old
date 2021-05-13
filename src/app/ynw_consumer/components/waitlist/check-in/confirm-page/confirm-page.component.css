@@ -159,3 +159,91 @@
 .book-details-sub tbody {
   vertical-align: baseline !important;
 }
+
+.confirm-head {
+  /* text-align: center; */
+  /* font-size: 1.5rem;
+  font-weight: bold; */
+  /* font: normal normal bold 18px/22px Roboto; */
+
+  margin-bottom: 20px;
+  color: #59345d;
+  text-align: center;
+  letter-spacing: 0px;
+  opacity: 1;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color: darkblue !important;
+  line-height: 2;
+}
+
+.billing-head {
+  text-align: left !important;
+  /* font: normal normal bold 15px/18px Roboto !important; */
+  letter-spacing: 0px !important;
+  color: #A986AC !important;
+}
+
+.billing-value {
+  text-align: left;
+  /* font: normal normal normal 15px/18px Roboto; */
+  letter-spacing: 0px;
+  color: #363636;
+}
+
+.contact-section .wtsapaud-icon{
+  width: 25px !important;
+  top: 4px !important;
+}
+ 
+.contact-section .meet-icon {
+  width: 15px !important;
+  margin-top: 5px !important;
+}
+
+.service-icon {
+  display: block !important;
+  font-size: 1.5rem !important;
+}
+
+.service-icon .meet-icon, .service-icon .phon-icon {
+  width: 25px !important;
+  margin-top: 5px !important;
+}
+/* .service-icon .phon-icon {
+  margin-bottom: 5px;
+} */
+.service-icon .zoom-icon {
+  width: 30px !important; 
+  margin-top: 5px !important;
+}
+.service-icon .wtsapaud-icon {
+  width: 40px !important;
+}
+.service-icon .wtsapvid-icon {
+  width: 20px !important;
+}
+
+/* .service-icon {
+  top: 0 !important;
+  padding-right: 0 !important;
+  margin-top: -6px !important;
+  margin-right: 5px !important;
+} */
+.meet-icon,.zoom-icon,.service-icon{
+  /* top: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 3px !important;
+  margin-right: 5px !important;*/
+  height: 35px; 
+  margin-top: -10px !important;
+  margin-right: 2px;
+}
+.service-icon .fa-phone{
+  color: #7a7a7a !important
+}
