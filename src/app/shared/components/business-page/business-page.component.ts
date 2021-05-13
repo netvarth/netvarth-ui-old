@@ -1629,7 +1629,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           if (_this.userType === 'consumer') {
             if (service.serviceType === 'virtualService') {
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate,'checkin', service, consumerdata);
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
               });
             }
             else {
@@ -1706,23 +1706,48 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log("Collect Required Info");
     const _this = this;
-    const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
-      width: '100%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: consumerdata
-    });
-    virtualdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        _this.consumerVirtualinfo = result;
-        if (type === 'appt') {
-          _this.showAppointment(id, place, location, date, service, 'consumer', result);
-        } else {
-          _this.showCheckin(id, place, location, date, service, 'consumer', result);
-        }
+    let virtualFields = {};
+    if (consumerdata.dob && consumerdata.pincode && consumerdata.city && consumerdata.state && consumerdata.preferredLanguages && consumerdata.gender) {
+      virtualFields['dob'] = consumerdata.dob;
+      virtualFields['pincode'] = consumerdata.pincode;
+      virtualFields['gender'] = consumerdata.gender;
+      let location = {};
+      location['Name'] = consumerdata.city;
+      location['State'] = consumerdata.state;
+      location['Pincode'] = consumerdata.pincode;
 
+      virtualFields['location'] = location;
+      virtualFields['preferredLanguages'] = this.s3Processor.getJson(consumerdata.preferredLanguages);
+      if (virtualFields['preferredLanguages'][0] === 'English') {
+        virtualFields['islanguage'] = 'yes';
       }
-    });
+
+      if (type === 'appt') {
+        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
+      } else {
+        _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
+      }
+    } else {
+
+
+      const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
+        width: '100%',
+        panelClass: ['loginmainclass', 'popup-class'],
+        disableClose: true,
+        data: consumerdata
+      });
+      virtualdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          _this.consumerVirtualinfo = result;
+          if (type === 'appt') {
+            _this.showAppointment(id, place, location, date, service, 'consumer', result);
+          } else {
+            _this.showCheckin(id, place, location, date, service, 'consumer', result);
+          }
+
+        }
+      });
+    }
   }
 
   checkVirtualRequiredFieldsEntered() {

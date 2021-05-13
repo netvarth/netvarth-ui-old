@@ -708,50 +708,38 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-        //     if(this.virtualInfo){
-        //         console.log(this.virtualInfo);
-        //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-        //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-        //     console.log(formattedDate);
-        //     this.waitlist_for[0]['dob']=formattedDate;
-        //     if(this.virtualInfo.islanguage==='yes'){
-        //         this.waitlist_for[0]['preferredLanguage']=['English'];
-        //     }else{
-        //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
-        //     }
-        //     const bookingLocation={};
-        //     bookingLocation['pincode']=this.virtualInfo.pincode;
-        //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
-        //     if(this.virtualInfo.gender!==''){
-        //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
-        //     }
-            
-        // }
-        if(this.virtualInfo){
-            console.log(this.virtualInfo);
-            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-            console.log(formattedDate);
-            this.waitlist_for[0]['dob'] = formattedDate;
-            if (this.virtualInfo.islanguage === 'yes') {
-                let langs = [];
-                langs.push('English');
-                this.waitlist_for[0]['preferredLanguage'] = langs;
-            } else {
-                let langs = [];
-                langs.push(this.virtualInfo.preferredLanguage);
-                this.waitlist_for[0]['preferredLanguage'] = langs;
-            }
-            const bookingLocation = {};
-            bookingLocation['pincode'] = this.virtualInfo.pincode;
-            this.waitlist_for[0]['bookingLocation'] = bookingLocation;
-            if(this.virtualInfo.gender!==''){
-                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+            if (this.virtualInfo) {
+                console.log(this.virtualInfo);
+                const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                console.log(formattedDate);
+                this.waitlist_for[0]['dob'] = formattedDate;
+                const virtualFields = this.lStorageService.getitemfromLocalStorage('customerInfo');
+                // if (this.virtualInfo.islanguage === 'yes') {
+                //     let langs = [];
+                //     langs.push('English');
+
+                if (virtualFields['preferredLanguage']) {
+                    this.waitlist_for[0]['preferredLanguage'] = virtualFields['preferredLanguage'];
+                }
+                if (virtualFields['location']) {
+                    const bookingLocation = {};
+                    bookingLocation['pincode'] = virtualFields['pincode'];
+                    bookingLocation['state'] = virtualFields['location']['State'];
+                    bookingLocation['district'] = virtualFields['location']['District'];                    
+                    bookingLocation['localArea'] = virtualFields['location']['Name'];
+                    this.waitlist_for[0]['bookingLocation'] = bookingLocation;                    
+                }
+                if (virtualFields['gender']) {
+                    this.waitlist_for[0]['gender'] = virtualFields['gender'];
+                }
+                if (virtualFields['dob']) {
+                    this.waitlist_for[0]['dob'] = virtualFields['dob'];
+                }
             }
         }
-        }
- 
-  
+
+
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -1406,112 +1394,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
 
-
-    // gets3curl() {
-    //     this.api_loading1 = true;
-    //     this.retval = this.sharedFunctionobj.getS3Url()
-    //         .then(
-    //             res => {
-    //                 this.s3url = res;
-    //                 this.getbusinessprofiledetails_json('businessProfile', true);
-    //                 this.getbusinessprofiledetails_json('settings', true);
-    //                 this.getbusinessprofiledetails_json('coupon', true);
-    //                 this.getbusinessprofiledetails_json('providerCoupon', true);
-    //                 if (!this.terminologiesjson) {
-    //                     this.getbusinessprofiledetails_json('terminologies', true);
-    //                 } else {
-    //                     if (this.terminologiesjson.length === 0) {
-    //                         this.getbusinessprofiledetails_json('terminologies', true);
-    //                     } else {
-    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
-    //                     }
-    //                 }
-    //                 this.api_loading1 = false;
-    //             },
-    //             () => {
-    //                 this.api_loading1 = false;
-    //             }
-    //         );
-    // }
-    // gets the various json files based on the value of "section" parameter
-    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    //     let UTCstring = null;
-    //     if (modDateReq) {
-    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    //     }
-    //     this.subs.sink = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-    //         .subscribe(res => {
-    //             switch (section) {
-    //                 case 'settings':
-    //                     this.settingsjson = res;
-    //                     this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-    //                     break;
-    //                 case 'terminologies':
-    //                     this.terminologiesjson = res;
-    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
-    //                     break;
-    //                 case 'businessProfile':
-    //                     this.businessjson = res;
-    //                     this.accountType = this.businessjson.accountType;
-    //                     if (this.accountType === 'BRANCH') {
-    //                         this.getbusinessprofiledetails_json('departmentProviders', true);
-    //                         this.getProviderDepart(this.businessjson.id);
-    //                     }
-    //                     this.domain = this.businessjson.serviceSector.domain;
-    //                     if (this.domain === 'foodJoints') {
-    //                         this.note_placeholder = 'Item No Item Name Item Quantity';
-    //                         this.note_cap = 'Add Note / Delivery address';
-    //                     } else {
-    //                         this.note_placeholder = '';
-    //                         this.note_cap = 'Add Note';
-    //                     }
-    //                     this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
-    //                     break;
-    //                 case 'coupon':
-    //                     if (res != undefined) {
-    //                         this.s3CouponsList.JC = res;
-    //                     } else {
-    //                         this.s3CouponsList.JC = [];
-    //                     }
-
-    //                     if (this.s3CouponsList.JC.length > 0) {
-    //                         this.showCouponWB = true;
-    //                     }
-    //                     break;
-    //                 case 'providerCoupon':
-    //                     if (res != undefined) {
-    //                         this.s3CouponsList.OWN = res;
-    //                     } else {
-    //                         this.s3CouponsList.OWN = [];
-    //                     }
-
-    //                     if (this.s3CouponsList.OWN.length > 0) {
-    //                         this.showCouponWB = true;
-    //                     }
-    //                     break
-    //                 case 'departmentProviders': {
-    //                     let deptProviders: any = [];
-    //                     deptProviders = res;
-    //                     if (!this.filterDepart) {
-    //                         this.users = deptProviders;
-    //                     } else {
-    //                         deptProviders.forEach(depts => {
-    //                             if (depts.users.length > 0) {
-    //                                 this.users = this.users.concat(depts.users);
-    //                             }
-    //                         });
-    //                     }
-    //                     if (this.selectedUserParam) {
-    //                         this.setUserDetails(this.selectedUserParam);
-    //                     }
-    //                     break;
-    //                 }
-    //             }
-    //         },
-    //             () => {
-    //             }
-    //         );
-    // }
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;

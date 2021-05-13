@@ -44,7 +44,24 @@ export class VirtualFieldsComponent implements OnInit {
     }
   }
 
+  setVirtualFields(userProfile) {
+    if (userProfile.pinCode) {
+
+    } 
+    if (userProfile.gender) {
+
+    }
+    if (userProfile.preferredLanguages) {
+      this.languages = this.s3Processor.getJson(userProfile);
+    }
+
+  }
+
   ngOnInit(): void {
+
+
+
+
     this.createForm();
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -57,11 +74,11 @@ export class VirtualFieldsComponent implements OnInit {
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])]
     });
-    this.virtualForm.patchValue({gender: 'Male', islanguage:'yes'});
-    // console.log(this.data);
-    // if (this.data !== null || this.data !== undefined || this.data !== '') {
-    //   this.updateForm();
-    // }
+    this.virtualForm.patchValue({gender: 'male', islanguage:'yes', pincode: ''});
+    console.log(this.data);
+    if (this.data) {
+      this.updateForm();
+    }
   }
   closeDialog() {
     this.dialogRef.close();
@@ -73,11 +90,12 @@ export class VirtualFieldsComponent implements OnInit {
     let usr_pincode = '';
     let dob = '';
     let islanguage = '';
-    let gender = 'Male';
+    let gender = 'male';
+    console.log(this.details);
     if (this.details && this.details.userProfile) {
       dob = this.details.userProfile.dob;
       gender = this.details.userProfile.gender;
-    }
+    } 
     if (this.details && this.details.userProfile && this.details.userProfile.preferredLanguages) {
       language = JSON.parse(this.details.userProfile.preferredLanguages);
       if (language === null) {
@@ -92,7 +110,9 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.details && this.details.bookingLocation && this.details.bookingLocation.pincode) {
       usr_pincode = this.details.bookingLocation.pincode;
     }
-
+    if (this.details && this.details.userProfile) {
+      this.details.userProfile.preferredLanguage
+    }
     // this.selectedLocation = this.details.location;
 
 
@@ -157,12 +177,15 @@ export class VirtualFieldsComponent implements OnInit {
 
   onSubmit(formdata) {
     console.log(formdata);
+    if (this.lngknown === 'yes') {
+      formdata['preferredLanguage'] = ["English"];
+    }
     this.lStorageService.setitemonLocalStorage('customerInfo', formdata);
     this.dialogRef.close(formdata)
 
   }
   onChange(event) {
-
+    
     console.log(event.value);
     this.lngknown = event.value
 
