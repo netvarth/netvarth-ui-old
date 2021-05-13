@@ -20,6 +20,7 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { QuestionnaireModule } from '../../../../shared/components/questionnaire
         PagerModule,
         HeaderModule,
         NgxIntlTelInputModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        VirtualFieldsModule
     ],
     entryComponents: [
         CheckinConfirmPopupComponent

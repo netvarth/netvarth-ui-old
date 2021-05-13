@@ -10,7 +10,7 @@ import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
@@ -89,8 +89,10 @@ import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ProviderServices } from './ynw_provider/services/provider-services.service';
 import { DepartmentServicePageComponent } from './shared/components/department-service-page/department-service-page.component';
-import { ConsumerVirtualServiceinfoComponent } from './ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
 import { ProviderDetailService } from './shared/services/provider-detail.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -117,8 +119,7 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     ItemDetailsSharedComponent,
     CommunicationComponent,
-    DepartmentServicePageComponent,
-    ConsumerVirtualServiceinfoComponent
+    DepartmentServicePageComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -130,8 +131,7 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     ForceDialogComponent,
     JdnComponent,
-    UpdateProfilePopupComponent,
-    ConsumerVirtualServiceinfoComponent
+    UpdateProfilePopupComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -165,8 +165,12 @@ export function init_app(globalService: GlobalService) {
     CardModule,
     MatStepperModule,
     NgxIntlTelInputModule,
+    MatSelectModule,
     ModalModule.forRoot(),
-    ShareIconsModule
+    ShareIconsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    VirtualFieldsModule
   ],
   providers: [
     BsModalService,
@@ -209,6 +213,8 @@ export function init_app(globalService: GlobalService) {
     LivetrackService,
     TeleBookingService,
     BookingService,
+    MatDatepickerModule,  
+    MatNativeDateModule,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

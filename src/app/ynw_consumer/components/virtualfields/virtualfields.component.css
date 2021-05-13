@@ -49,3 +49,15 @@ label {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+.mgn-bt-5 {
+    margin-bottom: 5px !important;
+}
+
+.virtual-fields div, .virtual-fields .mat-radio-label-content, .virtual-fields .mat-radio-label{
+    font-size: 1rem !important;
+}
+
+.virtual-fields .mat-select {
+    padding: 10px !important;
+    border:1px solid #ccc !important;
+}

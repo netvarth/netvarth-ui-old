@@ -28,7 +28,7 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-import { ConsumerVirtualServiceinfoComponent } from '../../../ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
+import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 
 @Component({
   selector: 'app-business-page',
@@ -1706,8 +1706,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log("Collect Required Info");
     const _this = this;
-    const virtualdialogRef = _this.dialog.open(ConsumerVirtualServiceinfoComponent, {
-      width: '40%',
+    const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
+      width: '100%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: consumerdata
