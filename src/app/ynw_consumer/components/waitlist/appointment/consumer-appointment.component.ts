@@ -798,19 +798,25 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 const retData = data;
                 this.uuidList = [];
+                let parentUid;
+                console.log(retData);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         this.prepayAmount = retData['_prepaymentAmount'];
                     } else {
                         this.trackUuid = retData[key];
-                        this.uuidList.push(retData[key]);
+                       // this.uuidList.push(retData[key]); 
+                       if (key !== 'parent_uuid') {
+                            this.uuidList.push(retData[key]);
+                        }
                     }
+                    parentUid = retData['parent_uuid'];
                 });
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
                 }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
-                    this.submitQuestionnaire(this.uuidList[0]);
+                    this.submitQuestionnaire(parentUid);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment();
