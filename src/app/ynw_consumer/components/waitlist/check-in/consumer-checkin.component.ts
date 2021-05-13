@@ -26,10 +26,10 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
-import { JcCouponNoteComponent } from '../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
-import { ConsumerVirtualServiceinfoComponent } from '../../consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
+import { JcCouponNoteComponent } from '../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
+import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -708,30 +708,29 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-            if (this.virtualInfo) {
-                console.log(this.virtualInfo);
-                const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-                const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-                console.log(formattedDate);
-                this.waitlist_for[0]['dob'] = formattedDate;
-                if (this.virtualInfo.islanguage === 'yes') {
-                    this.waitlist_for[0]['preferredLanguage'] = ['English'];
-                } else {
-                    this.waitlist_for[0]['preferredLanguage'] = [this.virtualInfo.preferredLanguage];
-                }
-                const bookingLocation = {};
-                bookingLocation['pincode'] = this.virtualInfo.pincode;
-                this.waitlist_for[0]['bookingLocation'] = bookingLocation;
-                if (this.virtualInfo.gender !== '') {
-                    this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
-                }
-
-            }
-        }
-        if (this.virtualInfo) {
+        //     if(this.virtualInfo){
+        //         console.log(this.virtualInfo);
+        //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+        //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+        //     console.log(formattedDate);
+        //     this.waitlist_for[0]['dob']=formattedDate;
+        //     if(this.virtualInfo.islanguage==='yes'){
+        //         this.waitlist_for[0]['preferredLanguage']=['English'];
+        //     }else{
+        //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+        //     }
+        //     const bookingLocation={};
+        //     bookingLocation['pincode']=this.virtualInfo.pincode;
+        //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
+        //     if(this.virtualInfo.gender!==''){
+        //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+        //     }
+            
+        // }
+        if(this.virtualInfo){
             console.log(this.virtualInfo);
             const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY/MM/DD");
+            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             console.log(formattedDate);
             this.waitlist_for[0]['dob'] = formattedDate;
             if (this.virtualInfo.islanguage === 'yes') {
@@ -746,7 +745,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const bookingLocation = {};
             bookingLocation['pincode'] = this.virtualInfo.pincode;
             this.waitlist_for[0]['bookingLocation'] = bookingLocation;
+            if(this.virtualInfo.gender!==''){
+                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+            }
         }
+        }
+ 
+  
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -769,8 +774,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmVirtualServiceinfo(memberObject, type?) {
-        const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
-            width: '40%',
+        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+            width: '100%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
             data: memberObject[0]

@@ -1737,7 +1737,7 @@ button.next-button {
   color: #747474 !important;
   opacity: 1 !important;
 }
-.mgn-lt-36 {
+ .mgn-lt-36 {
   margin-left: 36px !important;
 }
 
@@ -1752,4 +1752,7 @@ button.next-button {
 }
 .number-section {
   border-top: 1px solid #eee;
+}
+.mat-dialog-content{
+  height: 100vh !important;
 }
