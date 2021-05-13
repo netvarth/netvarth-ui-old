@@ -196,6 +196,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     questionnaireLoaded = false;
     imgCaptions: any = [];
     virtualInfo: any;
+
+    newPhone;
+    newEmail;
+    newWhatsapp;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1506,6 +1510,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
+
+        this.newPhone = this.newWhatsapp = JSON.parse(this.selected_phone);
+        this.newEmail = this.payEmail;
+// console.log(this.newPhone);
+// this.newPhone.dialCode = this.userData.userProfile.countryCode;
+// this.newWhatsapp.dialCode = this.userData.userProfile.countryCode;
+// console.log(this.newPhone);
+
         // this.payEmail = this.userData.userProfile.email;
     }
     clearCouponErrors() {
@@ -1797,29 +1809,34 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         let whatsAppNum;
         let phoneNum;
         let emailId;
-        if (this.editBookingFields) {
-            if ((this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value.number.trim() != '') && this.bookingForm.get('newPhone').errors && !this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode + '55')) {
+        console.log(this.newPhone);
+        console.log(this.newWhatsapp);
+        console.log(this.newEmail);
+        // if (this.editBookingFields) {
+            if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
                 this.phoneError = 'Phone number is invalid';
                 return false;
             } else {
-                if (this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value != "") {
-                    if (this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode)) {
-                        phoneNum = this.bookingForm.get('newPhone').value.e164Number.split(this.bookingForm.get('newPhone').value.dialCode)[1];
-                        this.countryCode = this.bookingForm.get('newPhone').value.dialCode;
+                if (this.newPhone) {
+                    if (this.newPhone.e164Number.startsWith(this.newPhone.dialCode)) {
+                        phoneNum = this.newPhone.e164Number.split(this.newPhone.dialCode)[1];
+                        console.log(phoneNum);
+                        this.countryCode = this.newPhone.dialCode;
                         this.userPhone = phoneNum;
                         this.currentPhone = phoneNum;
                         this.selected_phone = phoneNum;
                     }
                 }
             }
-            if ((this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value.number.trim() != '') && this.bookingForm.get('newWhatsapp').errors && !this.bookingForm.get('newWhatsapp').value.e164Number.startsWith(this.bookingForm.get('newWhatsapp').value.dialCode + '55')) {
+            console.log(this.currentPhone);
+            if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
                 this.whatsapperror = 'WhatsApp number is invalid';
                 return false;
             } else {
-                if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value != "") {
-                    whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number;
-                    if (this.bookingForm.get('newWhatsapp').value.e164Number.startsWith('+')) {
-                        whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
+                if (this.newWhatsapp) {
+                    whatsAppNum = this.newWhatsapp.e164Number;
+                    if (this.newWhatsapp.e164Number.startsWith('+')) {
+                        whatsAppNum = this.newWhatsapp.e164Number.split('+')[1];
                         this.callingModes = whatsAppNum;
                     }
                 }
@@ -1828,7 +1845,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.emailerror = "Email is invalid";
                 return false;
             } else {
-                emailId = this.bookingForm.get('newEmail').value;
+                emailId = this.newEmail;
                 // if (emailId && emailId != "") {
                 //     this.payEmail = emailId;
                 //     const post_data = {
@@ -1867,12 +1884,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.action = '';
                 }, 500);
             }
-        } else {
-            this.closebutton.nativeElement.click();
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-        }
+        // } else {
+        //     this.closebutton.nativeElement.click();
+        //     setTimeout(() => {
+        //         this.action = '';
+        //     }, 500);
+        // }
         this.editBookingFields = false;
     }
     updateEmail(post_data) {

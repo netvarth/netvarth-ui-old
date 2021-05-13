@@ -86,7 +86,7 @@
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
-                    <div class="col-12"
+                    <div class="col-12 no-padding"
                         *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
@@ -101,7 +101,7 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for toggel boolean -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
+                    <div class="col-12 no-padding" *ngIf="getQuestion(question).fieldDataType === 'bool'">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
                                 <input type="radio" name="radio2" [disabled]="disableInput()"
@@ -134,7 +134,7 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Date -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                    <div class="col-12 no-padding" *ngIf="getQuestion(question).fieldDataType === 'date'">
                         <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
                             id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
                             min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"

@@ -14116,3 +14116,7 @@ app-confirm-page .ot-bx {
 .panel-default .panel-heading {
   border: none !important;
 }
+.consumer_appt ngx-intl-tel-input input {
+  height: 32px !important;
+  font-size: 12px !important;
+}

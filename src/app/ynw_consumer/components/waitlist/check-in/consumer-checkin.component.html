@@ -535,33 +535,88 @@
                                                                     send to
                                                                 </h5>
                                                             </div>
-                                                            <div class="consumer_appt mgn-bt-10 brd-bt">
-                                                                <p class="m0 mgn-lt-10 mgn-up-10">
+                                                            <div class="consumer_appt mgn-bt-10">
+                                                                <div class="mgn-bt-20 mgn-lt-10 mgn-up-10 disp-flex" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                    Phone#:
-                                                                    <b>{{countryCode}}
-                                                                        {{selected_phone}}</b>
-                                                                </p>
-                                                                <p class="m0 mgn-up-10-m"
+                                                                 <div class="number-caption">   Phone#:</div>
+                                                                    <!-- <b>{{countryCode}}
+                                                                        {{selected_phone}}</b> -->
+
+                                                                        <ngx-intl-tel-input
+                                                                        style="width: 210px !important;margin-left: auto"
+                                                                        [cssClass]="'custom'"
+                                                                        [preferredCountries]="preferredCountries"
+                                                                        [enableAutoCountrySelect]="true"
+                                                                        [enablePlaceholder]="true"
+                                                                        [searchCountryFlag]="true"
+                                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                                        [selectFirstCountry]="false"
+                                                                        [maxLength]="15"
+                                                                        [phoneValidation]="true"
+                                                                        [selectedCountryISO]="selectedCountry"
+                                                                        [separateDialCode]="separateDialCode"
+                                                                        [numberFormat]="PhoneNumberFormat.National"
+                                                                        name="newPhone"
+                                                                        [(ngModel)]="newPhone">
+                                                                    </ngx-intl-tel-input>
+
+
+                                                                </div>
+                                                                <div class="mgn-bt-10 mgn-up-10-m disp-flex"
                                                                     *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                     <i class="fa wtsapaud-icon wtsap-cal"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10" style="width: 20px;"
+                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10" style="width: 20px;margin-top: -10px"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                    <span>WhatsApp#:
-                                                                        <b>+{{callingModes}}</b></span>
-                                                                </p>
-                                                                <p class="mgn-up-5 mgn-lt-10" *ngIf="payEmail">
-                                                                    Email :
-                                                                    <b>{{payEmail}}</b>
-                                                                </p>
-                                                                <p class="mgn-up-5 mgn-lt-10"
+                                                                        <div class="number-caption">   WhatsApp#:</div>
+                                                                        <!-- <b>+{{callingModes}}</b> -->
+
+                                                                        <ngx-intl-tel-input
+                                                                        style="width: 210px !important;margin-left: auto"
+                                                                        [cssClass]="'custom'"
+                                                                        [preferredCountries]="preferredCountries"
+                                                                        [enableAutoCountrySelect]="true"
+                                                                        [enablePlaceholder]="true"
+                                                                        [searchCountryFlag]="true"
+                                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                                        [selectFirstCountry]="false"
+                                                                        [maxLength]="15"
+                                                                        [phoneValidation]="true"
+                                                                        [selectedCountryISO]="selectedCountry"
+                                                                        [separateDialCode]="separateDialCode"
+                                                                        [numberFormat]="PhoneNumberFormat.National"
+                                                                        name="newWhatsapp"
+                                                                        [(ngModel)]="newWhatsapp">
+                                                                    </ngx-intl-tel-input>
+
+
+                                                                </div>
+                                                                <div class="mgn-up-5 mgn-lt-10 disp-flex" *ngIf="payEmail" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                    <div class="number-caption">     Email: </div>
+                                                                    <!-- <b>{{payEmail}}</b> -->
+
+                                                                    <input
+                                                                    class="width100 height40 email-border input-field"
+                                                                    id="newEmail"
+                                                                    placeholder="Email(user@xyz.com)"
+                                                                    name="newEmail"
+                                                                    [(ngModel)]="newEmail"
+                                                                    autocomplete="off"
+                                                                    onpaste="return false;"
+                                                                    oncopy="return false"
+                                                                    oncut="return false"
+                                                                    ondrag="return false"
+                                                                    ondrop="return false">
+
+
+                                                                </div>
+                                                                <!-- <p class="mgn-up-5 mgn-lt-10"
                                                                     *ngIf="!editBookingFields">To Change the
                                                                     Number/Email <a class="bold"
                                                                         (click)="changeBookingFields()">Click
                                                                         Here</a>
-                                                                </p>
+                                                                </p> -->
                                                             </div>
                                                             <div class="mgn-up-20 mgn-bt-20" *ngIf="editBookingFields">
                                                                 <form [formGroup]="bookingForm" class="" novalidate>
@@ -890,8 +945,8 @@
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
-                                        <div class="pad-20 quest-head">
-                                            Provide us information to complete your booking
+                                        <div class="quest-head">
+                                            We need some more information
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList"
                                             [questionAnswers]="questionAnswers" [source]="'consCheckin'"
@@ -900,7 +955,7 @@
                                         <div class="d-flex flex-column-fluid width-100">
                                             <div class="col-xl-12 force_center">
                                                 <div class="form-group card mgn-0">
-                                                    <label class="col-12 quest">Add any other notes to the provider or upload any files for provider view
+                                                    <label class="col-12 quest">Add additional notes or upload files that you may have
                                                     </label>
                                                     <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
                                                         <a #modal data-toggle="modal" data-target="#exampleModalCenter">

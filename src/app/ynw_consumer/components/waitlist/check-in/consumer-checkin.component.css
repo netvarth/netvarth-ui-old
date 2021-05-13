@@ -934,6 +934,7 @@ ul.bus-actions li a.lnk {
 }
 ul.member-ul {
   list-style: none;
+  padding-left: 15px;
 }
 .servicesdiv {
   border: 1px solid #ddd!important;
@@ -1222,14 +1223,15 @@ height: 150px !important;
   width: 100%;
 }
 .height40 {
-  height: 40px;
+  height: 32px;
+  font-size: 12px !important;
 }
 .mgn-up-10-m {
   margin-top: -10px !important;
 }
-.consumer_appt i.wtsapaud-icon {
+/* .consumer_appt i.wtsapaud-icon {
   top: 8px !important;
-}
+} */
 .serv-head {
   background: rgba(0, 0, 0, 0.04) !important;
   padding: 10px 0 3px 10px !important;
@@ -1431,6 +1433,7 @@ body.modal-open {
  }
 }
 .modal-body {
+  padding: .5rem !important;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
@@ -1508,7 +1511,7 @@ body.modal-open {
   text-align: left !important;
 }
 .modal-footer {
-  padding-top: 0px !important;
+  padding: 0px !important;
 }
 .loading-hgt {
   height: 85vh;
@@ -1636,14 +1639,14 @@ button.next-button {
   opacity: 1 !important;
 }
 
-@media (max-width: 550px) {
+/* @media (max-width: 550px) {
   .quest-head {
     padding: 20px 0 !important;
   }
-}
+} */
 
 .force_center {
-  padding: 0 20px !important;
+  padding: 0 !important;
 }
 
 .force_center .form-group {
@@ -1656,7 +1659,7 @@ button.next-button {
   padding-left: 0 !important;
   color: #312f2f !important;
   font-size: 1.2rem !important;
-  font-weight: 700 !important;
+  /* font-weight: 700 !important; */
 }
 
 .force_center .form-group .chk-btns-div {
@@ -1734,4 +1737,16 @@ button.next-button {
   color: #747474 !important;
   opacity: 1 !important;
 }
- 
+.mgn-lt-36 {
+  margin-left: 36px !important;
+}
+
+.number-caption {
+  margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.input-field {
+  width: 210px !important;
+  margin-left: auto !important;
+}

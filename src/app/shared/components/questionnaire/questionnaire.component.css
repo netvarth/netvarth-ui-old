@@ -111,7 +111,7 @@
 
 .form-group label.quest {
     color: #312f2f !important;
-    font-weight: 700 !important;
+    /* font-weight: 700 !important; */
     font-size: 1.2rem !important;
 }
 
@@ -157,6 +157,6 @@
 
 @media (max-width: 550px) {
     .force_center {
-        padding: 20px 0 !important;
+        padding: 0 !important;
     }
 }
