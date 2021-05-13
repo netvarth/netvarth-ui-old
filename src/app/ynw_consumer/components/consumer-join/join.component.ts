@@ -140,6 +140,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.phoneExists = false;
   }
   onSubmit(data) {
+    const _this = this;
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
 
@@ -210,8 +211,29 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             },
             error => {
               if (error.status === 401 && error.error === 'Session already exists.') {
-                this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                this.dialogRef.close('success');
+
+                const user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                console.log(user);
+                console.log(data);
+                if (user && (user.loginId === data.loginId && user.countryCode===data.countryCode)) {
+                  this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                  this.dialogRef.close('success');
+                } else {
+                  _this.shared_services.ConsumerLogout().subscribe(
+                    () => {
+                      _this.shared_functions.consumerLogin(post_data, _this.moreParams)
+                      .then(
+                        () => {
+                          _this.lStorageService.setitemonLocalStorage('jld', data.password);
+                          _this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                          _this.dialogRef.close('success');
+                        })
+                    }
+                  )
+                }
+                
+
+               
               } else {
                 ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                 this.api_loading = false;
@@ -230,7 +252,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     const dialCode = this.loginForm.get('phone').value.dialCode;
     const pN = this.loginForm.get('phone').value.e164Number;
     let loginId = pN.split(dialCode)[1];
-
     if (this.phoneDialCode !== '+91' && !this.loginForm.get('emailId').value) {
       this.api_error = 'Email Id required';
       if (document.getElementById('emailId')) {

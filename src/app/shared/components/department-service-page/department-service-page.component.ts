@@ -1615,7 +1615,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       });
   }
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    alert("Ddddd");
     console.log("Collect Required Info");
     const _this = this;
 
@@ -1639,8 +1638,8 @@ console.log(consumerdata);
       location['Pincode'] = consumerdata.userProfile.pinCode;
 
       virtualFields['location'] = location;
-      virtualFields['preferredLanguages'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-      if (virtualFields['preferredLanguages'][0] === 'English') {
+      virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
+      if (virtualFields['preferredLanguage'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
 

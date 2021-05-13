@@ -1704,7 +1704,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    alert("Dd");
     console.log("Collect Required Info");
     console.log(consumerdata);
     const _this = this;
@@ -1719,8 +1718,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       location['Pincode'] = consumerdata.userProfile.pinCode;
 
       virtualFields['location'] = location;
-      virtualFields['preferredLanguages'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-      if (virtualFields['preferredLanguages'][0] === 'English') {
+      virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
+      if (virtualFields['preferredLanguage'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
 
