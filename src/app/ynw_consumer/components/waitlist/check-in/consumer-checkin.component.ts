@@ -200,6 +200,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newPhone;
     newEmail;
     newWhatsapp;
+    virtualFields: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -253,8 +254,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.getRescheduleWaitlistDet();
                 }
                 if (params.virtual_info) {
-                    this.virtualInfo = JSON.parse(params.virtual_info);
-                    console.log(this.virtualInfo);
+                    this.virtualInfo = this.s3Processor.getJson(params.virtual_info);
+                    this.lStorageService.setitemonLocalStorage('customerInfo',this.virtualInfo);                 
                 }
             });
     }
@@ -715,10 +716,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 console.log(formattedDate);
                 this.waitlist_for[0]['dob'] = formattedDate;
                 const virtualFields = this.lStorageService.getitemfromLocalStorage('customerInfo');
-                // if (this.virtualInfo.islanguage === 'yes') {
-                //     let langs = [];
-                //     langs.push('English');
-
+                console.log(virtualFields);
                 if (virtualFields['preferredLanguage']) {
                     this.waitlist_for[0]['preferredLanguage'] = virtualFields['preferredLanguage'];
                 }
@@ -1285,6 +1283,34 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         } else {
                             _this.emailExist = false;
                         }
+                        let consumerdata = _this.userData;
+console.log("hhh");
+                        console.log(consumerdata);
+
+                        if (_this.lStorageService.getitemfromLocalStorage('customerInfo')) {
+                            _this.virtualFields = _this.lStorageService.getitemfromLocalStorage('customerInfo');
+                        } else {
+                            const virtualFields = {}
+                            if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+                                virtualFields['dob'] = consumerdata.userProfile.dob;
+                                virtualFields['pincode'] = consumerdata.userProfile.pinCode;
+                                virtualFields['gender'] = consumerdata.userProfile.gender;
+                                let location = {};
+                                location['Name'] = consumerdata.userProfile.city;
+                                location['State'] = consumerdata.userProfile.state;
+                                location['Pincode'] = consumerdata.userProfile.pinCode;
+                          
+                                virtualFields['location'] = location;
+                                virtualFields['preferredLanguage'] = _this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
+                                if (virtualFields['preferredLanguage'][0] === 'English') {
+                                  virtualFields['islanguage'] = 'yes';
+                                }
+                                _this.lStorageService.setitemonLocalStorage('customerInfo', virtualFields);
+                                _this.virtualFields = virtualFields;
+                            }
+                        }
+
+
                         resolve(true);
                     });
         });

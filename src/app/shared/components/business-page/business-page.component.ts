@@ -1708,27 +1708,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(consumerdata);
     const _this = this;
     let virtualFields = {};
-    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+    // if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
       virtualFields['dob'] = consumerdata.userProfile.dob;
       virtualFields['pincode'] = consumerdata.userProfile.pinCode;
       virtualFields['gender'] = consumerdata.userProfile.gender;
-      let location = {};
-      location['Name'] = consumerdata.userProfile.city;
-      location['State'] = consumerdata.userProfile.state;
-      location['Pincode'] = consumerdata.userProfile.pinCode;
+      let locationObj = {};
+      locationObj['Name'] = consumerdata.userProfile.city;
+      locationObj['State'] = consumerdata.userProfile.state;
+      locationObj['Pincode'] = consumerdata.userProfile.pinCode;
 
-      virtualFields['location'] = location;
+      virtualFields['location'] = locationObj;
       virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
       if (virtualFields['preferredLanguage'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
 
-      if (type === 'appt') {
-        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
-      } else {
-        _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-      }
-    } else {
+    //   if (type === 'appt') {
+    //     _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
+    //   } else {
+    //     _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
+    //   }
+    // } else {
 
 
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
@@ -1748,7 +1748,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
         }
       });
-    }
+    // }
   }
 
   checkVirtualRequiredFieldsEntered() {

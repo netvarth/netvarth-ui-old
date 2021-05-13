@@ -1618,7 +1618,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     console.log("Collect Required Info");
     const _this = this;
 
-console.log(consumerdata);
     let virtualFields = {}
 
     console.log(consumerdata.userProfile.dob);
@@ -1628,27 +1627,27 @@ console.log(consumerdata);
     console.log(consumerdata.userProfile.preferredLanguages);
     console.log(consumerdata.userProfile.gender);
   
-    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+    // if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
       virtualFields['dob'] = consumerdata.userProfile.dob;
       virtualFields['pincode'] = consumerdata.userProfile.pinCode;
       virtualFields['gender'] = consumerdata.userProfile.gender;
-      let location = {};
-      location['Name'] = consumerdata.userProfile.city;
-      location['State'] = consumerdata.userProfile.state;
-      location['Pincode'] = consumerdata.userProfile.pinCode;
+      let locationObj = {};
+      locationObj['Name'] = consumerdata.userProfile.city;
+      locationObj['State'] = consumerdata.userProfile.state;
+      locationObj['Pincode'] = consumerdata.userProfile.pinCode;
 
-      virtualFields['location'] = location;
+      virtualFields['location'] = locationObj;
       virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
       if (virtualFields['preferredLanguage'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
 
-      if (type === 'appt') {
-        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
-      } else {
-        _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-      }
-    } else {
+    //   if (type === 'appt') {
+    //     _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
+    //   } else {
+    //     _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
+    //   }
+    // } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '100%',
         panelClass: ['loginmainclass', 'popup-class'],
@@ -1669,7 +1668,7 @@ console.log(consumerdata);
           return false;
         }
       });
-    }
+    // }
 
   }
   appointmentClicked(location, service: any) {

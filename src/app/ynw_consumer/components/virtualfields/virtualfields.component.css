@@ -1,5 +1,7 @@
 .vt_dt {
-    padding:0 !important;
+    padding: 10px !important;
+    width: 70%;
+    border: 1px solid #ccc;
 }
 
 .form-control {
@@ -60,4 +62,8 @@ label {
 .virtual-fields .mat-select {
     padding: 10px !important;
     border:1px solid #ccc !important;
+}
+form.virtual-fields, form.virtual-fields .mat-dialog-content {
+    height: 100vh !important;
+    max-height: 100vh !important;
 }

@@ -13,9 +13,15 @@
     <!-- step 1 for mobile number entering  -->
     <div class="cust-loginpge-color">
         <div class="mat-dialog-content" style="overflow: auto !important;">
+            <div>
+                Please provide us with some information to start with your booking
+            </div>
 
-
-            <div class="form-group col-md-7 no-padding picker-form-group">
+            <div class="form-group col-xs-12 dob no-padding mgn-up-20">
+                <label class="col-form-label" for="dob">Your Date of Birth <span class="red">*</span></label>
+                <br />
+                <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
+                class="vt_dt no-padding mgn-up-5">
                 <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dob" placeholder="Date of birth"
                         #inputdob formControlName="dob" disabled
@@ -30,11 +36,10 @@
             </div>
 
 
-
-            <div class="form-group dob">
+<!-- 
+            <div class="form-group dob"> -->
                 <!-- <mat-label for="dob"></mat-label> -->
-                <label class="col-form-label" for="dob">Your Date of Birth <span class="red">*</span></label>
-                <br />
+                
                 <!-- <mat-form-field class="mgn-up-10 vt_dt no-padding">  -->
                    <!-- <mat-label>Choose a date</mat-label>
                    <input matInput  formControlName="dob" [matDatepicker]="dob"> 
@@ -42,10 +47,9 @@
                     </mat-datepicker-toggle>
                     <mat-datepicker #dob></mat-datepicker>  -->
               <!-- </mat-form-field> -->
-                <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
-                    class="vt_dt no-padding mgn-up-5">
+<!--                
                 <br />
-            </div>
+            </div> -->
             <div class="form-group">
                 <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
 
@@ -66,7 +70,7 @@
                 <label for="pincode" class="col-form-label">Enter the pin code where you live <span
                         class="red">*</span></label>
                 <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
-                    formControlName="pincode" (blur)="showLocations()">
+                    formControlName="pincode" (keyup)="showLocations($event)">
                 <!-- </mat-form-field> -->
                 <div style="display: flex; justify-content: space-between;">
                     <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"

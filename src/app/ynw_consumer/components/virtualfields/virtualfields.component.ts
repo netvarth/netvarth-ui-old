@@ -26,10 +26,22 @@ export class VirtualFieldsComponent implements OnInit {
   disableButton;
   loading = false;
   languages = [
-    "Malayalam",
-    "Tamil",
-    "Telugu",
-    "Urdu"
+    "Assamese",
+"Bengali",
+"Gujarati",
+"Hindi",
+"Kannada",
+"Konkani",
+"Malayalam",
+"Marathi",
+"Manipuri",
+"Oriya",
+"Punjabi",
+"Rajasthani",
+"Sanskrit",
+"Tamil",
+"Telugu",
+"Urdu"
   ];
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,7 +59,7 @@ export class VirtualFieldsComponent implements OnInit {
   setVirtualFields(userProfile) {
     if (userProfile.pinCode) {
 
-    } 
+    }
     if (userProfile.gender) {
 
     }
@@ -74,7 +86,9 @@ export class VirtualFieldsComponent implements OnInit {
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])]
     });
-    this.virtualForm.patchValue({gender: 'male', islanguage:'yes', pincode: ''});
+    this.virtualForm.patchValue({ gender: 'male' });
+    this.virtualForm.patchValue({ islanguage: 'yes' });
+    console.log('here');
     console.log(this.data);
     if (this.data) {
       this.updateForm();
@@ -84,56 +98,39 @@ export class VirtualFieldsComponent implements OnInit {
     this.dialogRef.close();
   }
   updateForm() {
+    this.lngknown = 'yes';
     this.details = this.data;
-    let defaultEnglish = 'yes';
-    let language = [];
-    let usr_pincode = '';
-    let dob = '';
-    let islanguage = '';
-    let gender = 'male';
     console.log(this.details);
     if (this.details && this.details.userProfile) {
-      dob = this.details.userProfile.dob;
-      gender = this.details.userProfile.gender;
-    } 
+      this.virtualForm.patchValue({ dob: this.details.userProfile.dob });
+      this.virtualForm.patchValue({ gender: this.details.userProfile.gender });
+    }
     if (this.details && this.details.userProfile && this.details.userProfile.preferredLanguages) {
-      language = JSON.parse(this.details.userProfile.preferredLanguages);
-      if (language === null) {
-        language = [];
-      }
-      islanguage = (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages) ? language[0] : '';
-      defaultEnglish = (this.details.userProfile.preferredLanguages && language[0] === 'English') ? 'yes' : 'no';
+      let defaultEnglish = (this.details.userProfile.preferredLanguages && this.s3Processor.getJson(this.details.userProfile.preferredLanguages)[0] === 'English') ? 'yes' : 'no';
+      this.virtualForm.patchValue({ islanguage: defaultEnglish });
+      this.lngknown = defaultEnglish;
+      this.virtualForm.patchValue({ preferredLanguage: this.s3Processor.getJson(this.details.userProfile.preferredLanguages) });
     }
     if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
-      usr_pincode = this.details.userProfile.pinCode;
-    }
-    if (this.details && this.details.bookingLocation && this.details.bookingLocation.pincode) {
-      usr_pincode = this.details.bookingLocation.pincode;
-    }
-    if (this.details && this.details.userProfile) {
-      this.details.userProfile.preferredLanguage
+      this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
+      this.showLocations(this.details.userProfile.pinCode);
     }
     // this.selectedLocation = this.details.location;
 
 
-    this.virtualForm.patchValue({
-      dob: dob,
-      pincode: usr_pincode,
-      preferredLanguage: islanguage,
-      islanguage: defaultEnglish,
-      gender: gender
-    });
-    if (language[0] === 'English') {
-      this.lngknown = 'yes';
-    } else {
-      this.lngknown = 'no';
-    }
+    // this.virtualForm.patchValue({
+    //   dob: dob,
+    //   pincode: usr_pincode,
+    //   preferredLanguage: islanguage,
+    //   islanguage: defaultEnglish,
+    //   gender: gender
+    // });
   }
   validateFields() {
-    if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length!==6) {
+    if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
       return true;
     }
-    console.log(this.virtualForm.get('dob').value );
+    console.log(this.virtualForm.get('dob').value);
     if (this.virtualForm.get('dob').value === '') {
       return true;
     }
@@ -159,20 +156,28 @@ export class VirtualFieldsComponent implements OnInit {
     });
   }
 
-  showLocations () {
+  showLocations(event) {
+    console.log(event);
     let pincode = this.virtualForm.get('pincode').value;
-    if (pincode.length !== 6)
-    return false;
-    this.loading = true;
     console.log(pincode);
-    this.fetchLocationByPincode(pincode).then(
-      (locations) => {
-        this.locations = locations[0];
-        this.virtualForm.patchValue({location: locations[0]['PostOffice'][0]}); 
-        console.log(this.locations);
-        this.loading = false;
-      }
-    )
+    if (pincode.length === 6) {
+      this.loading = true;
+      console.log(pincode);
+      this.fetchLocationByPincode(pincode).then(
+        (locations: any) => {
+          if (locations.length > 0) {
+            this.locations = locations[0];
+            this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
+            console.log(this.locations);
+          } else {
+            this.locations = [];
+          }
+          this.loading = false;
+        }
+      )
+    } else {
+      this.locations = [];
+    }
   }
 
   onSubmit(formdata) {
@@ -185,10 +190,10 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   onChange(event) {
-    
+
     console.log(event.value);
     this.lngknown = event.value
 
   }
-  
+
 }
