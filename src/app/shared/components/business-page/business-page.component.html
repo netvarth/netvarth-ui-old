@@ -151,6 +151,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="question-main-outer" *ngIf="socialMedialist.length>0">
+                                                <div class="question-header">Social Media Links and Listing Sites</div>
+                                                <div class="question-value1">
+                                                    <ul class="details socialmedia m0 no-padding">
+                                                        <li *ngFor="let soc of socialMedialist"><a rel="noopener"
+                                                                [href]="soc.value" target="_blank"><i
+                                                                    [class]="getSocialdet(soc.resource, 'iconClass')"
+                                                                    [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                             <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
                                                 (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
                                                 selectedLocation?.locationVirtualFields?.docambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||

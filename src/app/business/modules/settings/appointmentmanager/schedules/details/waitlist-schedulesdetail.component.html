@@ -90,11 +90,10 @@
                                                 <span class="ttle">Maximum {{customer_label}}s served</span> <span
                                                     class="icon-customer-line">{{queue_data.capacity}}</span>
                                             </div> -->
-                                            <!-- <div class="item">
-                                                <span class="ttle">{{customer_label | capitalizeFirst}}s served at a
-                                                    time</span> <span
+                                            <div class="item">
+                                                <span class="ttle">Resources available</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
-                                            </div> -->
+                                            </div>
                                             <!-- <div class="item"
                                                 *ngIf="queue_data.calculationMode==='NoCalc' && queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
@@ -415,6 +414,23 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </mat-form-field>
                             </div> -->
                             <div class="form-group row" *ngIf="showAdvancedSettings">
+                                    <div class="mgn-lt-10" >
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput min="1" max="{{parallellimit}}" type="text"
+                                                    class="number-ip-sm"
+                                                    placeholder="Resources available *"
+                                                    formControlName="qserveonce" autocomplete="off"
+                                                    (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
+                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+                {
+                  'required' : 'Please enter the resources available' ,
+                  'maxlength' : 'Only 4 digits are allowed'
+                })">
+                                            </app-field-error-display>
+                                        </div>
                                 <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
                                     <mat-form-field>
                                         <input matInput [matDatepicker]="picker"
