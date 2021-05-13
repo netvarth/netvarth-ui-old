@@ -26,11 +26,11 @@
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
                   | capitalizeFirst}}</span><br>
                 <span *ngIf="waitlist_data.provider" class="mgn-up-10 sub-user-name">
+                    <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
+                      </span><br>
                   <span>{{provider_label | capitalizeFirst}} : </span>
-                  <!-- <span>{{spfname | capitalizeFirst}} {{splname}}
-                  </span> -->
-                  <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
-                  </span>
+                  <span>
+                  {{waitlist_data.provider.firstName | capitalizeFirst}}&nbsp;{{waitlist_data.provider.lastName}}</span>
                 </span>
               </h2>
               <!-- Content -->

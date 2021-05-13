@@ -154,7 +154,7 @@ import { Messages } from '../../constants/project-messages';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Router, ActivatedRoute } from '@angular/router';
+import {  ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { GroupStorageService } from '../../services/group-storage.service';
@@ -162,6 +162,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { WordProcessor } from '../../services/word-processor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-service-change',
@@ -190,13 +191,13 @@ export class UserServiceChnageComponent implements OnInit {
   provider_label = '';
   constructor(
     private activated_route: ActivatedRoute,
-    private router: Router,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    public location: Location,
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -300,7 +301,8 @@ export class UserServiceChnageComponent implements OnInit {
           this.provider_services.updateUserWaitlist(post_data)
             .subscribe(
               data => {
-                this.router.navigate(['provider', 'check-ins']);
+                //this.router.navigate(['provider', 'check-ins']);
+                this.location.back();
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -319,7 +321,8 @@ export class UserServiceChnageComponent implements OnInit {
           this.provider_services.updateUserAppointment(post_data)
             .subscribe(
               data => {
-                this.router.navigate(['provider', 'check-ins']);
+               // this.router.navigate(['provider', 'check-ins']);
+               this.location.back();
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -330,7 +333,8 @@ export class UserServiceChnageComponent implements OnInit {
     });
   }
   redirecToReports() {
-    this.router.navigate(['provider', 'check-ins']);
+   // this.router.navigate(['provider', 'check-ins']);
+   this.location.back();
   }
   selectedRow(index, user) {
     this.selectrow = true;
