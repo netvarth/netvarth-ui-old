@@ -1671,6 +1671,8 @@ button.next-button {
   font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
   color: #A986AC !important;
+  width: 33% !important;
+  display: inline-block !important;
 }
 
 .billing-value {
@@ -1692,11 +1694,15 @@ button.next-button {
 .containerAppt > div:nth-child(1),
 .containerAppt > div:nth-child(2) {
   text-align: center !important;
-  font: normal normal medium 18px/22px Roboto !important;
+  font: normal medium 18px/22px Roboto !important;
   letter-spacing: 0px !important;
   color: #59345D !important;
   opacity: 1 !important;
   margin-top: 0 !important;
+}
+
+.containerAppt > div:nth-child(2) {
+  text-transform: capitalize !important;
 }
 
 .containerAppt > div:nth-child(3) {

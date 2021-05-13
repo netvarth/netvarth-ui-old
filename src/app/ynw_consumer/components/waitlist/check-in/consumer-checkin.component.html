@@ -1088,10 +1088,10 @@
                                                 </div>
                                             
                                         </div>
-                                        <div class="containerAppt textcenter">
+                                        <div class="containerAppt textcenter" style="padding-bottom: 10px !important;">
                                             <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 14px !important;">Token For:</div>
                                             <div class="mgn-up-10 no-mgn-bt bold">{{sel_ser_det.name}}</div>
-                                            <div class="mgn-bt-5">
+                                            <div class="mgn-bt-5" style="font-size: 1.4rem !important; margin-top: 5px !important; margin-bottom: 5px !important;">
                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
                                                     newDateFormat}},
@@ -1100,7 +1100,7 @@
                                                     {{selectedQTime}}
                                                 </span>
                                             </div>
-                                            <div class="no-mgn-bt bold" style="color: #59345D;"> Waiting in line</div>
+                                            <!-- <div class="no-mgn-bt bold" style="color: #59345D;"> Waiting in line</div>
                                             <div class="mgn-bt-10 pad-bt-10" style="color: #59345D;">
                                                 <span *ngIf="personsAhead <= 0">0 People</span>
                                                 <span *ngIf="personsAhead == 1">1<span>
@@ -1119,7 +1119,7 @@
                                                             </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="pay-section"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
