@@ -929,21 +929,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.views = [];
     const qsActive = this.getDefaultViewQs(queues);
     return new Promise(function (resolve, reject) {
-      let tempView = {};
+      const tempView = {};
       tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].queues = qsActive;
       _this.selectedView = tempView;
-
-      const loggedUser = _this.groupService.getitemFromGroupStorage('ynw-user');
-      if (!loggedUser.adminPrivilege) {
-        _this.selectedView = loggedUser;
-        tempView = loggedUser;
-      }
       _this.getViews().then(
         (data: any) => {
-          console.log(data);
           const qViewList = data;
           for (let i = 0; i < qViewList.length; i++) {
             if (qViewList[i].type === 'Waitlist') {
@@ -1054,6 +1047,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source, type?) {
+
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege) {
+      this.activeUser = loggedUser.id;
+    } else {
+
     this.activeQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
@@ -1088,6 +1087,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+  }
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
