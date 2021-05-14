@@ -67,3 +67,6 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
     height: 100vh !important;
     max-height: 100vh !important;
 }
+.justify {
+    text-align: justify !important;
+}

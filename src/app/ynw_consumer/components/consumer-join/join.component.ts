@@ -252,6 +252,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     const dialCode = this.loginForm.get('phone').value.dialCode;
     const pN = this.loginForm.get('phone').value.e164Number;
     let loginId = pN.split(dialCode)[1];
+
     if (this.phoneDialCode !== '+91' && !this.loginForm.get('emailId').value) {
       this.api_error = 'Email Id required';
       if (document.getElementById('emailId')) {

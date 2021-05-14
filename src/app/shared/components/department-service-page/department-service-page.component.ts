@@ -1627,7 +1627,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     console.log(consumerdata.userProfile.preferredLanguages);
     console.log(consumerdata.userProfile.gender);
   
-    // if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
       virtualFields['dob'] = consumerdata.userProfile.dob;
       virtualFields['pincode'] = consumerdata.userProfile.pinCode;
       virtualFields['gender'] = consumerdata.userProfile.gender;
@@ -1641,6 +1641,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       if (virtualFields['preferredLanguage'][0] === 'English') {
         virtualFields['islanguage'] = 'yes';
       }
+    }
 
     //   if (type === 'appt') {
     //     _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);

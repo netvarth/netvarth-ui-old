@@ -27,22 +27,23 @@ export class VirtualFieldsComponent implements OnInit {
   loading = false;
   languages = [
     "Assamese",
-"Bengali",
-"Gujarati",
-"Hindi",
-"Kannada",
-"Konkani",
-"Malayalam",
-"Marathi",
-"Manipuri",
-"Oriya",
-"Punjabi",
-"Rajasthani",
-"Sanskrit",
-"Tamil",
-"Telugu",
-"Urdu"
+    "Bengali",
+    "Gujarati",
+    "Hindi",
+    "Kannada",
+    "Konkani",
+    "Malayalam",
+    "Marathi",
+    "Manipuri",
+    "Oriya",
+    "Punjabi",
+    "Rajasthani",
+    "Sanskrit",
+    "Tamil",
+    "Telugu",
+    "Urdu"
   ];
+  hideLanguages = true;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -97,13 +98,20 @@ export class VirtualFieldsComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+  editLanguage() {
+    this.hideLanguages = false;
+  }
   updateForm() {
     this.lngknown = 'yes';
     this.details = this.data;
     console.log(this.details);
-    if (this.details && this.details.userProfile) {
+    if (this.details && this.details.userProfile && this.details.userProfile.dob) {
       this.virtualForm.patchValue({ dob: this.details.userProfile.dob });
+    }
+    if (this.details && this.details.userProfile && this.details.userProfile.gender) {
       this.virtualForm.patchValue({ gender: this.details.userProfile.gender });
+    } else {
+      this.virtualForm.patchValue({ gender: 'male' });
     }
     if (this.details && this.details.userProfile && this.details.userProfile.preferredLanguages) {
       let defaultEnglish = (this.details.userProfile.preferredLanguages && this.s3Processor.getJson(this.details.userProfile.preferredLanguages)[0] === 'English') ? 'yes' : 'no';
@@ -115,6 +123,7 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
       this.showLocations(this.details.userProfile.pinCode);
     }
+
     // this.selectedLocation = this.details.location;
 
 
@@ -125,6 +134,35 @@ export class VirtualFieldsComponent implements OnInit {
     //   islanguage: defaultEnglish,
     //   gender: gender
     // });
+  }
+  saveLanguages() {
+    if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+      return false;
+    }
+    this.hideLanguages = true;
+  }
+  langSel(sel) {
+    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
+      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(sel);
+      if (existindx === -1) {
+        this.virtualForm.get('preferredLanguage').value.push(sel);
+      } else {
+        this.virtualForm.get('preferredLanguage').value.splice(existindx, 1);
+      }
+    } else {
+      this.virtualForm.get('preferredLanguage').value.push(sel);
+    }
+  }
+  checklangExists(lang) {
+    console.log("Lang:" + lang);
+    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
+      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(lang);
+      if (existindx !== -1) {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
   validateFields() {
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
@@ -193,7 +231,16 @@ export class VirtualFieldsComponent implements OnInit {
 
     console.log(event.value);
     this.lngknown = event.value
-
+    if (this.lngknown === 'yes') {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+    }
+    if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length === 0) {
+      this.hideLanguages = false;
+    } 
+    if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length > 0 && this.virtualForm.get('preferredLanguage').value[0]==='English') {
+      this.virtualForm.get('preferredLanguage').setValue([]);
+      this.hideLanguages = false;
+    }
   }
 
 }
