@@ -1734,11 +1734,11 @@ console.log("hhh");
         console.log(this.newWhatsapp);
         console.log(this.newEmail);
         // if (this.editBookingFields) {
-        if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
-            this.phoneError = 'Phone number is invalid';
-            return false;
-        } else {
-            if (this.newPhone) {
+        // if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
+        //     this.phoneError = 'Phone number is invalid';
+        //     return false;
+        // } else {
+            if (this.newPhone && this.newPhone.e164Number !== '') {
                 if (this.newPhone.e164Number.startsWith(this.newPhone.dialCode)) {
                     phoneNum = this.newPhone.e164Number.split(this.newPhone.dialCode)[1];
                     console.log(phoneNum);
@@ -1748,26 +1748,43 @@ console.log("hhh");
                     this.selected_phone = phoneNum;
                 }
             }
-        }
+        // }
         console.log(this.currentPhone);
-        if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
-            this.whatsapperror = 'WhatsApp number is invalid';
-            return false;
-        } else {
-            if (this.newWhatsapp) {
+        // if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
+        //     this.whatsapperror = 'WhatsApp number is invalid';
+        //     return false;
+        // } else {
+            if (this.newWhatsapp && this.newWhatsapp.e164Number !== '') {
                 whatsAppNum = this.newWhatsapp.e164Number;
                 if (this.newWhatsapp.e164Number.startsWith('+')) {
                     whatsAppNum = this.newWhatsapp.e164Number.split('+')[1];
                     this.callingModes = whatsAppNum;
                 }
             }
-        }
+        // }
         console.log(this.callingModes);
-        if (this.bookingForm.get('newEmail').errors) {
+
+        if (this.newEmail && this.newEmail.trim() !== '') {
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+        const result = pattern.test(this.newEmail);
+        if (!result) {
             this.emailerror = "Email is invalid";
             return false;
         } else {
             emailId = this.newEmail;
+            if (emailId && emailId != "") {
+                this.payEmail = emailId;
+                console.log(this.payEmail);
+                this.waitlist_for[0]['email'] = this.payEmail;
+            }
+        }
+    }
+            
+        // if (this.bookingForm.get('newEmail').errors) {
+        //     this.emailerror = "Email is invalid";
+        //     return false;
+        // } else {
+        //     emailId = this.newEmail;
             // if (emailId && emailId != "") {
             //     this.payEmail = emailId;
             //     const post_data = {
@@ -1797,22 +1814,17 @@ console.log("hhh");
             //         this.action = '';
             //     }, 500);
             // }
-            if (emailId && emailId != "") {
-                this.payEmail = emailId;
-                console.log(this.payEmail);
-                this.waitlist_for[0]['email'] = this.payEmail;
-            }
-            this.closebutton.nativeElement.click();
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-        }
+        // }
         // } else {
         //     this.closebutton.nativeElement.click();
         //     setTimeout(() => {
         //         this.action = '';
         //     }, 500);
         // }
+        this.closebutton.nativeElement.click();
+        setTimeout(() => {
+            this.action = '';
+        }, 500);
         this.editBookingFields = false;
     }
     updateEmail(post_data) {

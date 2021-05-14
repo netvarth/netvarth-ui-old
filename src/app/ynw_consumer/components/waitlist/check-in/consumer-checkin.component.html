@@ -560,7 +560,10 @@
                                                                         name="newPhone"
                                                                         [(ngModel)]="newPhone">
                                                                     </ngx-intl-tel-input>
-
+                                                                    <div class="sts-msg error"
+                                                                    *ngIf="phoneError">
+                                                                    {{phoneError}}
+                                                                </div>
 
                                                                 </div>
                                                                 <div class="mgn-bt-10 mgn-up-10-m disp-flex"
@@ -589,11 +592,13 @@
                                                                         name="newWhatsapp"
                                                                         [(ngModel)]="newWhatsapp">
                                                                     </ngx-intl-tel-input>
-
+                                                                    <div class="sts-msg error"
+                                                                    *ngIf="whatsapperror">
+                                                                    {{whatsapperror}}</div>
 
                                                                 </div>
-                                                                <div class="mgn-up-5 mgn-lt-10 disp-flex" *ngIf="payEmail" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                    <div class="number-caption">     Email: </div>
+                                                                <div class="mgn-up-5 mgn-lt-10" *ngIf="payEmail" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                    <div class="number-caption" style="display: inline-block;">     Email: </div>
                                                                     <!-- <b>{{payEmail}}</b> -->
 
                                                                     <input
@@ -609,6 +614,11 @@
                                                                     ondrag="return false"
                                                                     ondrop="return false">
 
+                                                                    <app-field-error-display class="red"
+                                                                    [displayError]="true"
+                                                                    *ngIf="emailerror != null"
+                                                                    errorMsg={{emailerror}}>
+                                                                </app-field-error-display>
 
                                                                 </div>
                                                                 <!-- <p class="mgn-up-5 mgn-lt-10"
