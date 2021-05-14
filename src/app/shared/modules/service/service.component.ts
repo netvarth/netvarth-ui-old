@@ -237,6 +237,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         this.serviceForm.setValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'resoucesRequired': this.service_data['resoucesRequired'] || this.serviceForm.get('resoucesRequired').value,
+                                            'maxBookingsAllowed': this.service_data['maxBookingsAllowed'] || this.serviceForm.get('maxBookingsAllowed').value,
                                             'department': this.service_data['department'] || this.serviceForm.get('department').value,
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
@@ -275,6 +277,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         this.serviceForm.setValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'resoucesRequired': this.service_data['resoucesRequired'] || this.serviceForm.get('resoucesRequired').value,
+                                            'maxBookingsAllowed': this.service_data['maxBookingsAllowed'] || this.serviceForm.get('maxBookingsAllowed').value,
                                             'department': this.service_data['department'] || this.serviceForm.get('department').value,
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
@@ -603,6 +607,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                     description: ['', Validators.compose([Validators.maxLength(500)])],
+                    resoucesRequired: [''],
+                    maxBookingsAllowed: [''],
                     department: ['', Validators.compose([Validators.maxLength(500)])],
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
@@ -614,7 +620,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     notification: [true],
                     livetrack: [false]
                 });
-
+                this.serviceForm.get('resoucesRequired').setValue('1');
+                this.serviceForm.get('maxBookingsAllowed').setValue('1');
                 if (this.action === 'add') {
                     this.serviceForm.get('serviceType').setValue('physicalService');
                 }
@@ -642,12 +649,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                     description: ['', Validators.compose([Validators.maxLength(500)])],
+                    resoucesRequired: [''],
+                    maxBookingsAllowed: [''],
                     department: ['', Validators.compose([Validators.maxLength(500)])],
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     notification: [true],
                     livetrack: [false]
                 });
+                this.serviceForm.get('resoucesRequired').setValue('1');
+                this.serviceForm.get('maxBookingsAllowed').setValue('1');
             }
         }
         if (this.action === 'add') {

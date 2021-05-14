@@ -1079,21 +1079,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  getAppointmentsPerSlot(appointments) {
-    let date;
-    if (this.time_type === 1) {
-      date = this.dateTimeProcessor.transformToYMDFormat(this.server_date);
-    }
-    if (this.time_type === 2) {
-      date = this.dateTimeProcessor.transformToYMDFormat(this.filter.future_appt_date);
-    }
-    if (this.selQIds && date) {
-      this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
-        this.availableSlotDetails = data;
-        this.timeSlotAppts = this.shared_functions.groupBy(appointments, 'appmtTime');
-      });
-    }
-  }
+  // getAppointmentsPerSlot(appointments) {
+  //   let date;
+  //   if (this.time_type === 1) {
+  //     date = this.dateTimeProcessor.transformToYMDFormat(this.server_date);
+  //   }
+  //   if (this.time_type === 2) {
+  //     date = this.dateTimeProcessor.transformToYMDFormat(this.filter.future_appt_date);
+  //   }
+  //   if (this.selQIds && date) {
+  //     this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
+  //       this.availableSlotDetails = data;
+  //       this.timeSlotAppts = this.shared_functions.groupBy(appointments, 'appmtTime');
+  //     });
+  //   }
+  // }
   getActiveTimeSlot(slots) {
     const curDate = new Date();
     const curTime = curDate.getHours() + ':' + curDate.getMinutes();
@@ -1113,51 +1113,51 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param action Scheduled/Started/Cancelled/Completed
    * @param type Today/Future/History
    */
-  viewStatusFilterBtnClicked(action, type?) {
-    this.statusAction = action;
-    this.resetCheckList();
-    if (action === 'new') {
-      if (type === 1) {
-        if (!this.isBatch) {
-          this.check_in_filtered_list = this.getScheduledAppointment(this.todayAppointments);
-        } else {
-          this.getAppointmentsPerSlot(this.getScheduledAppointment(this.todayAppointments));
-        }
-      } else {
-        if (!this.isBatch) {
-          this.check_in_filtered_list = this.getScheduledAppointment(this.futureAppointments);
-        } else {
-          this.getAppointmentsPerSlot(this.getScheduledAppointment(this.futureAppointments));
-        }
-      }
-    } else if (action === 'started') {
-      if (!this.isBatch) {
-        this.check_in_filtered_list = this.getStartedAppointment(this.todayAppointments);
-      } else {
-        this.getAppointmentsPerSlot(this.getStartedAppointment(this.todayAppointments));
-      }
-    } else if (action === 'completed') {
-      if (!this.isBatch) {
-        this.check_in_filtered_list = this.getCompletedAppointment(this.todayAppointments);
-      } else {
-        this.getAppointmentsPerSlot(this.getCompletedAppointment(this.todayAppointments));
-      }
-    } else {
-      if (type === 1) {
-        if (!this.isBatch) {
-          this.check_in_filtered_list = this.getCancelledAppointment(this.todayAppointments);
-        } else {
-          this.getAppointmentsPerSlot(this.getCancelledAppointment(this.todayAppointments));
-        }
-      } else {
-        if (!this.isBatch) {
-          this.check_in_filtered_list = this.getCancelledAppointment(this.futureAppointments);
-        } else {
-          this.getAppointmentsPerSlot(this.getCancelledAppointment(this.futureAppointments));
-        }
-      }
-    }
-  }
+  // viewStatusFilterBtnClicked(action, type?) {
+  //   this.statusAction = action;
+  //   this.resetCheckList();
+  //   if (action === 'new') {
+  //     if (type === 1) {
+  //       if (!this.isBatch) {
+  //         this.check_in_filtered_list = this.getScheduledAppointment(this.todayAppointments);
+  //       } else {
+  //         this.getAppointmentsPerSlot(this.getScheduledAppointment(this.todayAppointments));
+  //       }
+  //     } else {
+  //       if (!this.isBatch) {
+  //         this.check_in_filtered_list = this.getScheduledAppointment(this.futureAppointments);
+  //       } else {
+  //         this.getAppointmentsPerSlot(this.getScheduledAppointment(this.futureAppointments));
+  //       }
+  //     }
+  //   } else if (action === 'started') {
+  //     if (!this.isBatch) {
+  //       this.check_in_filtered_list = this.getStartedAppointment(this.todayAppointments);
+  //     } else {
+  //       this.getAppointmentsPerSlot(this.getStartedAppointment(this.todayAppointments));
+  //     }
+  //   } else if (action === 'completed') {
+  //     if (!this.isBatch) {
+  //       this.check_in_filtered_list = this.getCompletedAppointment(this.todayAppointments);
+  //     } else {
+  //       this.getAppointmentsPerSlot(this.getCompletedAppointment(this.todayAppointments));
+  //     }
+  //   } else {
+  //     if (type === 1) {
+  //       if (!this.isBatch) {
+  //         this.check_in_filtered_list = this.getCancelledAppointment(this.todayAppointments);
+  //       } else {
+  //         this.getAppointmentsPerSlot(this.getCancelledAppointment(this.todayAppointments));
+  //       }
+  //     } else {
+  //       if (!this.isBatch) {
+  //         this.check_in_filtered_list = this.getCancelledAppointment(this.futureAppointments);
+  //       } else {
+  //         this.getAppointmentsPerSlot(this.getCancelledAppointment(this.futureAppointments));
+  //       }
+  //     }
+  //   }
+  // }
   getCount(list, status) {
     return list.filter(function (elem) {
       return elem.apptStatus === status;

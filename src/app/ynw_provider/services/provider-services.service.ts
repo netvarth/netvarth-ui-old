@@ -1277,10 +1277,14 @@ editHoliday(data) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
     return this.servicemeta.httpGet(url);
   }
-  getAppointmentSlotsByDate(scheduleid, date) {
-    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
+  getAppointmentSlotsByDate(scheduleid, date,serviceid) {
+    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date +'/' + serviceid;
     return this.servicemeta.httpGet(url);
   }
+  // getAppointmentSlotsByDate(scheduleid, date) {
+  //   const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
+  //   return this.servicemeta.httpGet(url);
+  // }
   addLabeltoAppointment(uuid, data) {
     const url = 'provider/appointment/addLabel/' + uuid;
     return this.servicemeta.httpPost(url, data);
