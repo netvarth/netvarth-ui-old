@@ -597,10 +597,10 @@
                                                                     {{whatsapperror}}</div>
 
                                                                 </div>
-                                                                <div class="mgn-up-5 mgn-lt-10" *ngIf="payEmail" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                    <div class="number-caption" style="display: inline-block;">     Email: </div>
+                                                                <div class="mgn-up-5 mgn-lt-10 disp-flex" *ngIf="payEmail" [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                    <div class="number-caption">     Email: </div>
                                                                     <!-- <b>{{payEmail}}</b> -->
-
+<div style="margin-left: auto;">
                                                                     <input
                                                                     class="width100 height40 email-border input-field pull-right"
                                                                     id="newEmail"
@@ -619,7 +619,7 @@
                                                                     *ngIf="emailerror != null"
                                                                     errorMsg={{emailerror}}>
                                                                 </app-field-error-display>
-
+                                                            </div>
                                                                 </div>
                                                                 <!-- <p class="mgn-up-5 mgn-lt-10"
                                                                     *ngIf="!editBookingFields">To Change the
