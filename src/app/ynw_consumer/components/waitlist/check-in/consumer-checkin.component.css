@@ -911,7 +911,7 @@ ul.bus-actions li a.lnk {
   transition: all .3s ease;
   cursor: pointer;
   padding: 7px !important;
-  background: #334b99 !important;
+  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
   font-weight: 500;
@@ -1671,7 +1671,7 @@ button.next-button {
   font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
   color: #A986AC !important;
-  width: 33% !important;
+  width: 30% !important;
   display: inline-block !important;
 }
 
@@ -1680,6 +1680,7 @@ button.next-button {
   font: normal normal normal 15px/18px Roboto;
   letter-spacing: 0px;
   color: #363636;
+  width: 70%;
 }
 
 .containerAppt {

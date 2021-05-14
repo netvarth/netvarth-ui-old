@@ -72,7 +72,7 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for checkbox -->
-                    <div class="col-12"
+                    <div class="col-12 no-padding"
                         *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers > 1">
                         <div class="checkbox-list">
                             <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">

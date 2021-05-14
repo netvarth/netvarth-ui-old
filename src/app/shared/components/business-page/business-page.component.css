@@ -1882,13 +1882,13 @@ img.ordericon.home {
   font-size: 16px !important;
 }
 
-@media (max-width: 450px) {
+/* @media (max-width: 450px) {
   .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-share a .display-text,
   .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-coup a .display-text,
   .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-message a .display-text {
     display: none !important;
   }
-}
+} */
 
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-more-less {
   margin: 0 !important;

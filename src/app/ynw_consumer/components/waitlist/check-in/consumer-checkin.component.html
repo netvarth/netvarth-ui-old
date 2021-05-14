@@ -346,7 +346,7 @@
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <div class="mode-hint mgn-bt-5">
-                                                                            The provider will contact you in this
+                                                                            The doctor will contact you in this
                                                                             number
                                                                         </div>
                                                                     </div>
@@ -910,7 +910,7 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{sel_ser_det.consumerNoteTitle}}
                                                             <div class="form-level-settings">
-                                                                Add any other notes to the provider
+                                                                Add any other notes to the doctor
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -1025,29 +1025,29 @@
                                             'token': 'check-in' }} details</div>
                                         <div class="bookdetails">
                                             
-                                                <div *ngIf="!sel_ser_det.provider">
+                                                <div class="disp-flex" *ngIf="!sel_ser_det.provider">
                                                     <span class="billing-head">
                                                         Provider</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value name-line-ht">{{businessjson.businessName}}</span>
                                                 </div>
-                                                <div *ngIf="sel_ser_det.provider">
+                                                <div class="disp-flex" *ngIf="sel_ser_det.provider">
                                                     <span class="billing-head">
                                                         Provider</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
                                                         {{businessjson.businessName}}</span>
                                                 </div>
-                                                <div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head">Location </span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value"> {{locationName}}<a [href]="googleMapUrl" target="_blank"
                                                             class="icon-location" matTooltip="Click to navigate">
                                                         </a></span>
                                                 </div>
-                                                <div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head">Service</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value">
                                                         <span class="service-icon" style="display: inline-block !important;"
                                                             *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -1067,12 +1067,12 @@
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </span>
                                                 </div>
-                                                <div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head" *ngIf="settingsjson.showTokenId">
                                                         Token for</span>
                                                     <span class="billing-head" *ngIf="!settingsjson.showTokenId">
                                                         Check-in for</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value">
                                                         <span *ngFor="let customer of waitlist_for; let i = index;">
                                                             {{customer.firstName}}
@@ -1080,20 +1080,20 @@
                                                         </span>
                                                     </span>
                                                 </div>
-                                                <div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head">Contact #</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value">{{countryCode}} {{userPhone}}</span>
                                                 </div>
-                                                <div
+                                                <div class="disp-flex"
                                                     *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                     <span class="billing-head">WhatsApp #</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value"> +{{callingModes}}</span>
                                                 </div>
-                                                <div *ngIf="payEmail">
+                                                <div class="disp-flex" *ngIf="payEmail">
                                                     <span class="billing-head">Email</span>
-                                                    <span>&nbsp;:&nbsp;</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value" style="word-break: break-all;">{{payEmail}}</span>
                                                 </div>
                                             

@@ -14103,7 +14103,7 @@ app-confirm-page .ot-bx {
 .msg-icon {
   content: url(../images/Asset.png);    
   width: 15px;
-  margin-top: 5px;
+  margin-bottom: -5px;
 }
 .fa-arrow-left {
   color: white !important;

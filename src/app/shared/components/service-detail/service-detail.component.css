@@ -75,7 +75,8 @@
     cursor: pointer;
     justify-content: center;
     z-index: 121;
-    opacity: 1 !important;
+    opacity: 1 !important;    
+    margin-left: auto;
 }
 
 .modal-header.service-detail-header button span {
@@ -303,4 +304,7 @@
     margin: 0 5px;
     /* display: flex;
     align-items: center; */
+}
+.wtsapvid-icon {
+    width: 20px !important;
 }
