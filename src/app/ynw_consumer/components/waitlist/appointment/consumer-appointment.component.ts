@@ -28,7 +28,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
-import { ConsumerVirtualServiceinfoComponent } from '../../consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
+import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 
 @Component({
     selector: 'app-consumer-appointment',
@@ -632,7 +632,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     confirmVirtualServiceinfo(memberObject,type?){
-        const virtualdialogRef = this.dialog.open(ConsumerVirtualServiceinfoComponent, {
+        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
