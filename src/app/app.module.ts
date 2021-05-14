@@ -108,7 +108,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
-import { ConsumerVirtualServiceinfoComponent } from './ynw_consumer/components/consumer-virtual-serviceinfo/consumer-virtual-serviceinfo.component';
+import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -145,8 +145,7 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ServicePageHealthcareComponent,
-    ListRecordingsDialogComponent,
-    ConsumerVirtualServiceinfoComponent
+    ListRecordingsDialogComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -163,8 +162,7 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     AddAddressComponent,
-    ListRecordingsDialogComponent,
-    ConsumerVirtualServiceinfoComponent
+    ListRecordingsDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -205,7 +203,8 @@ export function init_app(globalService: GlobalService) {
     NgxIntlTelInputModule,
     ModalModule.forRoot(),
     ShareIconsModule,
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    VirtualFieldsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BsModalService,
