@@ -121,7 +121,7 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
-      this.showLocations(this.details.userProfile.pinCode);
+      // this.showLocations(this.details.userProfile.pinCode);
     }
 
     // this.selectedLocation = this.details.location;

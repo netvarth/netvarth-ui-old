@@ -13,7 +13,7 @@
     <div class="cust-loginpge-color">
         <div class="mat-dialog-content" style="overflow: auto !important;" >
             <div *ngIf="hideLanguages">
-                <div class="justify">
+                <div class="">
                     Please provide Information about you(one time setup). This information will be saved in your profile
                 </div>
                 <div class="mgn-up-10">
@@ -163,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="hideLanguages" class="mgn-bt-50">
                 <button class="cust-logpg-submt mgn-up-20 continue-button" mat-button [disabled]="validateFields()"
                     (click)="onSubmit(virtualForm.value)">
                     <span>Save</span>
