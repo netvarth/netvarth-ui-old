@@ -11151,7 +11151,7 @@ image-cropper img {
 }
 
 .title-gb i {
-  color: #00aef2 !important;
+  color: black !important;
   cursor: pointer;
 }
 
@@ -14108,7 +14108,6 @@ app-confirm-page .ot-bx {
 .fa-arrow-left {
   color: white !important;
   font-size: 1.25rem;
-  margin-top: 10px;
 }
 .background-img {
   background-image: url(../images/heartfulness/BG.jpg);    

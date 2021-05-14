@@ -2227,3 +2227,6 @@
   .question-header {
     color: #59345D !important;
   }
+  .fa-arrow-left {
+    margin-top: 10px;
+  }
