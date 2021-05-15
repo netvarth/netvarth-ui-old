@@ -474,7 +474,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -482,6 +482,7 @@ export class CheckinActionsComponent implements OnInit {
             data: {
                 checkin_id: this.checkin.ynwUuid
             }
+            
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
