@@ -49,6 +49,7 @@ export class VirtualFieldsComponent implements OnInit {
   new_member;
   private subs = new SubSink();
   is_parent = true;
+  activeUser: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -60,6 +61,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (data) {
       this.data = this.s3Processor.getJson(data);
       this.customer_data = this.data;
+      this.activeUser =this.customer_data;
     }
     this.api_loading1 = true;
     this.getFamilyMembers();
@@ -90,11 +92,13 @@ export class VirtualFieldsComponent implements OnInit {
     this.is_parent = true;
     const chosen_person = event.value;
     if (chosen_person !== 'new_member') {
+      this.activeUser =chosen_person;
+      console.log(this.activeUser);
       if (chosen_person.parent) {
         this.is_parent = false;
-        this.setMemberDetails(chosen_person);
+        this.setMemberDetails(this.activeUser);
       } else {
-        this.setparentDetails(chosen_person);
+        this.setparentDetails(this.activeUser);
       }
     } else {
       this.is_parent = false;
@@ -129,6 +133,8 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
+    console.log("Active User:");
+    console.log(memberObj);
   }
   serviceFormReset() {
     this.virtualForm.controls['dob'].setValue('');
@@ -271,12 +277,24 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
+    console.log("onSubmit");
+    console.log(this.activeUser);
     if (this.is_parent) {
-      this.updateParentInfo(formdata);
+      this.updateParentInfo(formdata).then(
+        ()=> {
+          this.dialogRef.close(formdata);
+        }
+      );
     } else {
-      this.updateMemberInfo(formdata);
+      console.log("hhh");
+      console.log(this.activeUser);
+      this.updateMemberInfo(formdata).then(
+        ()=> {
+          this.dialogRef.close(formdata);
+        }
+      );
     }
-    this.dialogRef.close(formdata);
+    
   }
   updateParentInfo(formdata) {
     console.log(formdata);
@@ -313,26 +331,36 @@ export class VirtualFieldsComponent implements OnInit {
     });
   }
   updateMemberInfo(formdata) {
-    // const _this = this;
+    const _this = this;
+    alert('hi');
     console.log("updateMemberInfo");
-    console.log(formdata);
-    return new Promise(function (resolve, reject) {
-      const memberInfo = formdata['serviceFor'];
+    // console.log(formdata);
+    console.log(_this.activeUser);
+    const memberInfo = formdata['serviceFor'];
       memberInfo.userProfile = {}
+      memberInfo.bookingLocation = {}
       memberInfo.userProfile['gender'] = formdata.gender;
+      memberInfo.userProfile['firstName'] = _this.activeUser.userProfile.firstName;
+      memberInfo.userProfile['lastName'] = _this.activeUser.userProfile.lastName;
       memberInfo.userProfile['dob'] = formdata.dob;
-      memberInfo.userProfile['pinCode'] = formdata.pinCode;
-      memberInfo.userProfile['preferredLanguages'] = formdata.preferredLanguages;
+      memberInfo.userProfile['pinCode'] = formdata.pincode;
+      memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+      if(formdata.location.State && formdata.location.Name) {
+        memberInfo.bookingLocation ['state'] = formdata.location.State;
+        memberInfo.bookingLocation ['city'] = formdata.location.Name
+      }
+    return new Promise(function (resolve, reject) {
+      
+    
       console.log(memberInfo);
-resolve(true);
-      // _this.sharedServices.editMember(memberInfo).subscribe(
-      //   () => {
-      //     resolve(true);
-      //   }, (error) => {
-      //     console.log(error);
-      //     resolve(false);
-      //   }
-      // )
+      _this.sharedServices.editMember(memberInfo).subscribe(
+        () => {
+          resolve(true);
+        }, (error) => {
+          console.log(error);
+          resolve(false);
+        }
+      )
     });
 
     // {
