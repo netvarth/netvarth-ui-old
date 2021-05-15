@@ -27,6 +27,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { instantQueueComponent } from './instantQ/instantQueue.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -340,6 +341,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusChangeClicked = false;
   activeUser: any;
   statusLoaded = false;
+  qAvailability;
+  instantdialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -476,6 +479,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
+    this.isAvailableNow();
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
@@ -3292,5 +3296,38 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
+  }
+  isAvailableNow() {
+    this.shared_services.isAvailableNow()
+      .subscribe(data => {
+        this.qAvailability = data;
+        console.log(this.qAvailability);
+      },
+        () => {
+        });
+  }
+  redirectinstantQ(){
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    const userid = loggedUser.id
+    if (loggedUser.adminPrivilege) {
+      this.router.navigate(['provider','settings', 'q-manager','queues']);
+    } else {
+      this.router.navigate(['provider','settings', 'general', 'users', userid ,'settings','queues']);
+    }
+    
+  }
+  createInstantQ(){
+    this.instantdialogRef = this.dialog.open(instantQueueComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+       location:this.selected_location
+      }
+    });
+    this.instantdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

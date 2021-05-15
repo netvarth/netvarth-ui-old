@@ -36,6 +36,7 @@ import { CardModule } from '../../../shared/components/card/card.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
+import { instantQueueComponent } from './instantQ/instantQueue.component';
 
 
 @NgModule({
@@ -77,13 +78,15 @@ import { UserServiceChangeModule } from '../../../shared/modules/user-service-ch
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
         ProviderWaitlistCheckInDetailComponent,
-        CheckinActionsComponent
+        CheckinActionsComponent,
+        instantQueueComponent
         // DateRangePickerJComponent
 
     ],
     entryComponents: [
         AdjustQueueDelayComponent,
-        CheckinActionsComponent
+        CheckinActionsComponent,
+        instantQueueComponent
     ],
     exports: [CheckInsComponent]
 })
