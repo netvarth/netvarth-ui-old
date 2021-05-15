@@ -559,7 +559,7 @@
 												<option *ngFor="let discount of discounts; let i = index"
 													[value]="discount.id">{{discount.name}}</option>
 											</select>
-											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control"
+											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control  select-height"
 												[(ngModel)]="selOrderProviderCoupon">
 												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
