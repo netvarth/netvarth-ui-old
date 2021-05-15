@@ -622,20 +622,26 @@ button.fxmenu {
     justify-content: space-around;
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton {
-    width: 80%;
+    /* width: 80%; */
+    width: 90%;
     color: white;
-    font-weight: 600;
+    /* font-weight: 600; */
     border-radius: 15px;
     background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     box-shadow: 15px 15px 40px #DBA8C4;
     opacity: 1;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    margin-top: 5px;
+    margin-bottom: 10px;
     padding: 8px;
+    border: none !important;
+
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton:hover {
-    color: #073B4C !important;
-    background-color: #b67ab670 !important;
-    border-color: #b67ab670;
+    /* color: #073B4C !important; */
+    background-color: rgba(180,76,154,1) !important;
+    background-image: none !important;
+    /* border-color: #b67ab670; */
 }
 .booking-card.card.service .card-body .service-details .service-buttons .moreDetails {
     position: absolute;
@@ -882,4 +888,13 @@ button.fxmenu {
 }
 .service-details .module {
     height: 45px;
+}
+
+.booking-card h4.service-title.card-title a {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    display: inline-block;
+    text-transform: capitalize;
 }

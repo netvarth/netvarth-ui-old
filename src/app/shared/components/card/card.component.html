@@ -40,9 +40,8 @@
             </div>
         </div>
         <div class="service-details">
-            <div class="module line-clamp m-0"
-                [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
-                <h4 class="card-title font-weight-bold service-title">
+            <div>
+                <h4 class="card-title font-weight-bold service-title" style="padding: 0 15px !important;">
                     <a>{{service.name | capitalizeFirst}}</a>
                 </h4>
             </div>
@@ -58,14 +57,14 @@
             </p>
             <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
             <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
-            <p class="card-text availability" *ngIf="timings">{{timingCaption}}
+            <!-- <p class="card-text availability" *ngIf="timings">{{timingCaption}}
                 <br /><b>{{timings}}</b>
             </p>
-            <p class="card-text availability" *ngIf="!timings"></p>
+            <p class="card-text availability" *ngIf="!timings"></p> -->
             <!-- </div>
         <div class="card-footer"> -->
             <div class="service-buttons">
-                <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption | uppercase}}</button>
+                <button type="button" class="btn bookingButton">{{buttonCaption | uppercase}}</button>
                 <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
                     class="btn pointer-cursor btn-warning moreDetails">. . .</button>
             </div>
