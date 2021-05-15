@@ -14,6 +14,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-header',
@@ -463,5 +464,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/']);
     }
+  }
+  gotoDetails() {
+    this.router.navigate([projectConstantsLocal.ACCOUNTENC_ID]);
   }
 }
