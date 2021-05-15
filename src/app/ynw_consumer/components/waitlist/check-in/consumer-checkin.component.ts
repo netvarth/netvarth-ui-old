@@ -442,11 +442,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.api_loading1 = false;
             if(this.virtualInfo &&this.virtualInfo.newMemberId){
                 this.newMember=this.virtualInfo.newMemberId;
-               const current_member=this.familymembers.filter(member=>member.id===this.newMember);
+               const current_member=this.familymembers.filter(member=>member.userProfile.id===this.newMember);
                this.waitlist_for.push({ id: this.newMember, firstName: current_member.userProfile.firstName, lastName: current_member.userprofile.lastName });
-            }if(this.virtualInfo&& this.virtualInfo.serviceFor.userProfile){
-               const current_member=this.familymembers.filter(member=>member.id===this.virtualInfo.serviceFor.userProfile.id);
-               this.waitlist_for.push({ id: this.newMember, firstName: current_member.userProfile.firstName, lastName: current_member.userprofile.lastName }); 
+            }if(this.virtualInfo&& this.virtualInfo.serviceFor.user){
+               const current_member=this.familymembers.filter(member=>member.userProfile.id===this.virtualInfo.serviceFor.user);
+               console.log(current_member);
+         this.waitlist_for.push({ id: this.newMember, firstName: current_member.userProfile.firstName, lastName: current_member.userprofile.lastName }); 
             }
         },
             () => {
