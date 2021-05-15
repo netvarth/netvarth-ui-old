@@ -308,7 +308,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 <div class="col-md-6">
       <div class="form-group" *ngIf="!is_donation">
         <mat-form-field>
-          <input matInput type="text" class="form-control" id="resources"
+          <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
             placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
         </mat-form-field>
 
@@ -317,7 +317,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <div class="col-md-6">
       <div class="form-group" *ngIf="!is_donation">
         <mat-form-field>
-          <input matInput type="text" class="form-control" id="bookings"
+          <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
             placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
         </mat-form-field>
 
