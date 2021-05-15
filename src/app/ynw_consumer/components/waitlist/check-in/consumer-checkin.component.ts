@@ -30,6 +30,7 @@ import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Co
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
+
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -196,6 +197,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     questionnaireLoaded = false;
     imgCaptions: any = [];
     virtualInfo: any;
+    newMember: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -250,7 +252,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if(params.virtual_info){
                     this.virtualInfo=JSON.parse(params.virtual_info);
-                    console.log(this.virtualInfo);
+                   
                 }
             });
     }
@@ -438,6 +440,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             }
             this.api_loading1 = false;
+            if(this.virtualInfo &&this.virtualInfo.newMemberId){
+                this.newMember=this.virtualInfo.newMemberId;
+               const current_member=this.familymembers.filter(member=>member.id===this.newMember);
+               this.waitlist_for.push({ id: this.newMember, firstName: current_member.userProfile.firstName, lastName: current_member.userprofile.lastName });
+            }if(this.virtualInfo&& this.virtualInfo.serviceFor.userProfile){
+               const current_member=this.familymembers.filter(member=>member.id===this.virtualInfo.serviceFor.userProfile.id);
+               this.waitlist_for.push({ id: this.newMember, firstName: current_member.userProfile.firstName, lastName: current_member.userprofile.lastName }); 
+            }
         },
             () => {
                 this.api_loading1 = false;

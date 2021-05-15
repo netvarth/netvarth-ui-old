@@ -49,6 +49,7 @@ export class VirtualFieldsComponent implements OnInit {
   new_member;
   private subs = new SubSink();
   is_parent = true;
+  chosen_person: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -85,19 +86,18 @@ export class VirtualFieldsComponent implements OnInit {
       });
   }
   onServiceForChange(event) {
-    console.log("Event: ");
-    console.log(event.value);
     this.is_parent = true;
-    const chosen_person = event.value;
-    if (chosen_person !== 'new_member') {
-      if (chosen_person.parent) {
+    this.chosen_person = event.value;
+    if (this.chosen_person !== 'new_member') {
+      if (this.chosen_person.parent) {
         this.is_parent = false;
-        this.setMemberDetails(chosen_person);
+        this.setMemberDetails(this.chosen_person);
       } else {
-        this.setparentDetails(chosen_person);
+        this.setparentDetails(this.chosen_person);
       }
     } else {
       this.is_parent = false;
+      this.serviceFormReset();
     }
   }
   setMemberDetails(memberObj) {
@@ -163,6 +163,8 @@ export class VirtualFieldsComponent implements OnInit {
   }
   createForm() {
     this.virtualForm = this.fb.group({
+      firstName:[''],
+      lastName:[''],
       serviceFor: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
       pincode: ['', Validators.compose([Validators.required])],
@@ -234,6 +236,14 @@ export class VirtualFieldsComponent implements OnInit {
         return true;
       }
     }
+    if(this.virtualForm.get('serviceFor').value==='new_member'){
+      if(this.virtualForm.get('firstName').value==''){
+        return true;
+      }
+      if(this.virtualForm.get('lastName').value==''){
+        return true;
+      }
+    }
   }
 
   fetchLocationByPincode(pincode) {
@@ -271,12 +281,28 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
+  
     if (this.is_parent) {
-      this.updateParentInfo(formdata);
+      this.updateParentInfo(formdata).then(
+        ()=> {
+          this.dialogRef.close(formdata);
+        }
+      );
     } else {
-      this.updateMemberInfo(formdata);
+
+      this.updateMemberInfo(formdata).then(
+        ()=> {
+          this.dialogRef.close(formdata);
+        }
+      );
+    } if(formdata.serviceFor==='new_member'){
+     this.saveMember(formdata).then(data=>{
+      this.dialogRef.close({newMemberId:data});
+     })
+      
+     
     }
-    this.dialogRef.close(formdata);
+    
   }
   updateParentInfo(formdata) {
     console.log(formdata);
@@ -313,48 +339,80 @@ export class VirtualFieldsComponent implements OnInit {
     });
   }
   updateMemberInfo(formdata) {
-    // const _this = this;
-    console.log("updateMemberInfo");
-    console.log(formdata);
-    return new Promise(function (resolve, reject) {
-      const memberInfo = formdata['serviceFor'];
+    const _this = this;
+    console.log(_this.chosen_person);
+   const firstName=_this.chosen_person.userProfile.firstName;
+   const lastName=_this.chosen_person.userProfile.lastName;
+    const memberInfo = formdata['serviceFor'];
       memberInfo.userProfile = {}
+      memberInfo.bookingLocation = {}
       memberInfo.userProfile['gender'] = formdata.gender;
+      memberInfo.userProfile['firstName'] = firstName;
+      memberInfo.userProfile['lastName'] = lastName;
       memberInfo.userProfile['dob'] = formdata.dob;
-      memberInfo.userProfile['pinCode'] = formdata.pinCode;
-      memberInfo.userProfile['preferredLanguages'] = formdata.preferredLanguages;
+      memberInfo.userProfile['pincode'] = formdata.pincode;
+      if(formdata.islanguage==='yes'){
+        memberInfo['preferredLanguages'] =['English'];
+      }else{
+        memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+      }
+     
+      if(formdata.location.State && formdata.location.Name) {
+        memberInfo.bookingLocation ['state'] = formdata.location.State;
+        memberInfo.bookingLocation ['city'] = formdata.location.Name
+      }
+    return new Promise(function (resolve, reject) {
+    
       console.log(memberInfo);
-resolve(true);
-      // _this.sharedServices.editMember(memberInfo).subscribe(
-      //   () => {
-      //     resolve(true);
-      //   }, (error) => {
-      //     console.log(error);
-      //     resolve(false);
-      //   }
-      // )
+      _this.sharedServices.editMember(memberInfo).subscribe(
+        () => {
+          resolve(true);
+        }, (error) => {
+          console.log(error);
+          resolve(false);
+        }
+      )
     });
 
-    // {
-    //   "parent": 4,
-    //   "user": 3,
-    //   "userProfile": {
-    //     "id": 3,
-    //     "firstName": "nene",
-    //     "lastName": "nene",
-    //     "dob": "1993-06-12",
-    //     "gender": "Male"
-    //   },
-    //   "bookingLocation": {
-    //     "state": "Kerala",
-    //     "district": "Wayanad",
-    //     "localArea": "Mananthavady",
-    //     "pincode": "670645"
-    //   },
-    //   "preferredLanguages": [
-    //     "malayalam"
-    //   ]
-    // }
+   
+
+  }
+  saveMember(formdata) {
+    const _this = this;
+    console.log(_this.chosen_person);
+
+    const memberInfo = {};
+      memberInfo['userProfile'] = {}
+      memberInfo['bookingLocation'] = {}
+      memberInfo['userProfile']['gender'] = formdata.gender;
+      memberInfo['userProfile']['firstName'] = formdata.firstName;
+      memberInfo['userProfile']['lastName'] = formdata.lastName;
+      memberInfo['userProfile']['dob'] = formdata.dob;
+      memberInfo['userProfile']['pincode'] = formdata.pincode;
+      if(formdata.islanguage==='yes'){
+        memberInfo['preferredLanguages'] =['English'];
+      }else{
+        memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+      }
+     
+      if(formdata.location.State && formdata.location.Name) {
+        memberInfo['bookingLocation'] ['state'] = formdata.location.State;
+        memberInfo['bookingLocation'] ['city'] = formdata.location.Name
+      }
+    return new Promise(function (resolve, reject) {
+    
+      console.log(memberInfo);
+      _this.sharedServices.addMembers(memberInfo).subscribe(
+        (data) => {
+          resolve(data);
+        }, (error) => {
+          console.log(error);
+          resolve(false);
+        }
+      )
+    });
+
+
   }
   onChange(event) {
     this.lngknown = event.value
