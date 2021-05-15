@@ -342,7 +342,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'user'], { queryParams: { source: 'appt' } });
     }
     removeProvider() {
-        this.dialogRef.close();
         let msg = '';
         msg = 'Do you want to remove this' + this.provider_label;
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
