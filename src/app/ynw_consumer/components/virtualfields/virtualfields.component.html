@@ -17,18 +17,23 @@
                     Please provide necessary information (one time setup). This information will be saved in your profile
                 </div>
                 <div class="mgn-up-10">
-                    <label class="col-form-label" for="name">Service For </label>
+                    <label class="col-form-label" for="name">Consultation is For </label>
                     <br />
-                    <mat-form-field appearance="fill">
+                    <!-- <mat-form-field> -->
+                        <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
+                            <mat-radio-button [value]="customer_data">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button [value]="member" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button value="new_member">Someone else</mat-radio-button>
+                        </mat-radio-group>
                         <!-- <mat-label>Service For</mat-label> -->
-                        <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
+                        <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
                             <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
                           <mat-option *ngFor="let member of familymembers" [value]="member.userProfile.id">
                             {{member.userProfile.firstName}} {{member.userProfile.lastName}}
                           </mat-option>
                           <mat-option  [value]="new_member">Others  </mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                        </mat-select> -->
+                      <!-- </mat-form-field> -->
                     <!-- {{getFamilyMembers()}} -->
                     <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
                 </div>
@@ -38,7 +43,7 @@
                     {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
                 </div>
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
-                    <label class="col-form-label" for="dob">Your Date of Birth <span class="red">*</span></label>
+                    <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                     <br />
                     <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
                         class="vt_dt no-padding mgn-up-5">
@@ -87,7 +92,7 @@
                 <!-- Signin Password -->
                 <div class="form-group pwd">
                     <!-- <mat-form-field> -->
-                    <label for="pincode" class="col-form-label">Enter the pin code where you live <span
+                    <label for="pincode" class="col-form-label">Residing Pincode <span
                             class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
                         formControlName="pincode" (keyup)="showLocations($event)">

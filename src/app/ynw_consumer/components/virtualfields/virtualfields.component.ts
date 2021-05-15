@@ -6,10 +6,7 @@ import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.servic
 import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../shared/services/shared-services';
-// import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
-
 
 @Component({
   selector: 'app-virtualfields',
@@ -51,33 +48,25 @@ export class VirtualFieldsComponent implements OnInit {
   familymembers: any[];
   new_member;
   private subs = new SubSink();
-  is_parent=true;
+  is_parent = true;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
     private wordProcessor: WordProcessor,
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
-    private sharedServices: SharedServices,
-    private groupService: GroupStorageService,
-   // private lStorageService: LocalStorageService
-    ) {
+    private sharedServices: SharedServices
+  ) {
     if (data) {
       this.data = this.s3Processor.getJson(data);
+      this.customer_data = this.data;
     }
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.api_loading1 = true;
-    if (activeUser) {
-        this.customer_data = activeUser;
-    }
     this.getFamilyMembers();
   }
 
-
-
   ngOnInit(): void {
     this.createForm();
- 
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   getFamilyMembers() {
@@ -85,90 +74,96 @@ export class VirtualFieldsComponent implements OnInit {
     let fn;
     fn = this.sharedServices.getConsumerFamilyMembers();
     this.subs.sink = fn.subscribe(data => {
-        this.familymembers = [];
-        for (const mem of data) {
-           this.familymembers.push(mem);
-        }
-        this.api_loading1 = false;
+      this.familymembers = [];
+      for (const mem of data) {
+        this.familymembers.push(mem);
+      }
+      this.api_loading1 = false;
     },
-        () => {
-            this.api_loading1 = false;
-        });
-}
-onServiceForChange(event) {
-this.is_parent=true;
-const chosen_person=event.value;
-if(chosen_person!=='new_member'){
-  const memberObj=this.familymembers.filter(member=>{member.id===chosen_person})
-  if(memberObj!==null||memberObj!==undefined){
-    this.is_parent=false;
-    this.setMemberDetails(memberObj);
-    
-  }else{
-    this.setparentDetails(chosen_person);
+      () => {
+        this.api_loading1 = false;
+      });
   }
-}else{
-  this.is_parent=false;
-}
-}
-setMemberDetails(memberObj){
-
-  if (memberObj.userProfile && memberObj.userProfile.dob) {
-    this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
-  }
-  if (memberObj.userProfile && memberObj.userProfile.gender) {
-    this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
-  } else {
-    this.virtualForm.patchValue({ gender: 'Male' });
-  }
-  if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
-    const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
-
-    let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-    if (defaultEnglish === 'no') {
-      if (memberObj.preferredLanguages.length > 0) {
-        this.virtualForm.patchValue({ islanguage: defaultEnglish });
-        this.lngknown = defaultEnglish;
+  onServiceForChange(event) {
+    console.log("Event: ");
+    console.log(event.value);
+    this.is_parent = true;
+    const chosen_person = event.value;
+    if (chosen_person !== 'new_member') {
+      if (chosen_person.parent) {
+        this.is_parent = false;
+        this.setMemberDetails(chosen_person);
       } else {
-        this.virtualForm.patchValue({ islanguage: '' });
+        this.setparentDetails(chosen_person);
       }
     } else {
-      this.virtualForm.patchValue({ islanguage: defaultEnglish });
-      this.lngknown = defaultEnglish;
+      this.is_parent = false;
     }
-
-    this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
   }
-  if ( memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
-    this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
-  }
-}
-setparentDetails(customer){
-  if (customer.userProfile && customer.userProfile.dob) {
-    this.virtualForm.patchValue({ dob: customer.userProfile.dob });
-  }
-  if (customer.userProfile && customer.userProfile.gender) {
-    this.virtualForm.patchValue({ gender: customer.userProfile.gender });
-  } else {
-    this.virtualForm.patchValue({ gender: 'Male' });
-  }
-  if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
-    const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
-    if (preferredLanguage !== null) {
+  setMemberDetails(memberObj) {
+    this.serviceFormReset();
+    if (memberObj.userProfile && memberObj.userProfile.dob) {
+      this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
+    }
+    if (memberObj.userProfile && memberObj.userProfile.gender) {
+      this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
+    } else {
+      this.virtualForm.patchValue({ gender: 'Male' });
+    }
+    if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
+      const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
       let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-      this.virtualForm.patchValue({ islanguage: defaultEnglish });
-      this.lngknown = defaultEnglish;
+      if (defaultEnglish === 'no') {
+        if (memberObj.preferredLanguages.length > 0) {
+          this.virtualForm.patchValue({ islanguage: defaultEnglish });
+          this.lngknown = defaultEnglish;
+        } else {
+          this.virtualForm.patchValue({ islanguage: '' });
+        }
+      } else {
+        this.virtualForm.patchValue({ islanguage: defaultEnglish });
+        this.lngknown = defaultEnglish;
+      }
       this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
     }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
+      this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
+    }
   }
-  if (customer.userProfile && customer.userProfile.pinCode) {
-    this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+  serviceFormReset() {
+    this.virtualForm.controls['dob'].setValue('');
+    this.virtualForm.controls['gender'].setValue('male');
+    this.virtualForm.controls['islanguage'].setValue('yes');
+    this.virtualForm.controls['preferredLanguage'].setValue([]);
+    this.virtualForm.controls['pincode'].setValue('');
+    this.virtualForm.controls['location'].setValue('');
   }
+  setparentDetails(customer) {
+    if (customer.userProfile && customer.userProfile.dob) {
+      this.virtualForm.patchValue({ dob: customer.userProfile.dob });
+    }
+    if (customer.userProfile && customer.userProfile.gender) {
+      this.virtualForm.patchValue({ gender: customer.userProfile.gender });
+    } else {
+      this.virtualForm.patchValue({ gender: 'Male' });
+    }
+    if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
+      const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
+      if (preferredLanguage !== null) {
+        let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+        this.virtualForm.patchValue({ islanguage: defaultEnglish });
+        this.lngknown = defaultEnglish;
+        this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+      }
+    }
+    if (customer.userProfile && customer.userProfile.pinCode) {
+      this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+    }
 
-}
+  }
   createForm() {
     this.virtualForm = this.fb.group({
-      serviceFor:['', Validators.compose([Validators.required])],
+      serviceFor: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
       pincode: ['', Validators.compose([Validators.required])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
@@ -192,15 +187,10 @@ setparentDetails(customer){
   updateForm() {
     this.lngknown = 'yes';
     this.details = this.data;
-    console.log(this.details);
-  
     if (this.details.parent) {
       this.setMemberDetails(this.details);
-      
     } else {
       this.setparentDetails(this.details);
-      
-
     }
 
   }
@@ -269,7 +259,6 @@ setparentDetails(customer){
           if (locations.length > 0) {
             this.locations = locations[0];
             this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
-
           } else {
             this.locations = [];
           }
@@ -282,26 +271,92 @@ setparentDetails(customer){
   }
 
   onSubmit(formdata) {
-// if(this.is_parent){
-//   this.updateParentInfo(formdata);
-// }else{
-//  this.updateMemberInfo(formdata);
-// }
-this.dialogRef.close(formdata);
+    if (this.is_parent) {
+      this.updateParentInfo(formdata);
+    } else {
+      this.updateMemberInfo(formdata);
+    }
+    this.dialogRef.close(formdata);
   }
   updateParentInfo(formdata) {
-const userProfile={}
-userProfile['gender']=formdata.gender;
-userProfile['dob']=formdata.dob;
-userProfile['pinCode']=formdata.pinCode;
-userProfile['preferredLanguages']=formdata.preferredLanguages;
+    console.log(formdata);
+    return new Promise(function (resolve, reject) {
+      const userObj = {};
+      userObj['id'] = formdata['id'];
+      const userProfile = {}
+      userProfile['gender'] = formdata.gender;
+      userProfile['dob'] = formdata.dob;
+      userProfile['pinCode'] = formdata.pinCode;
+      userProfile['preferredLanguages'] = formdata.preferredLanguages;
+      userObj['userProfile'] = userProfile;
+      resolve(true);
+      // {
+      //   "id": 4,
+      //   "userProfile": {
+      //     "city": "Mananthavady",
+      //     "state": "Kerala",
+      //     "dob": "2004-01-12",
+      //     "gender": "Male",
+         
+      //     "pinCode": "670645",
+      //     "preferredLanguages": "[\"English\"]"
+      //   }
+      // }
+      // this.sharedServices.updateProfile(userProfile, 'consumer').subscribe(
+      //   () => {
+      //     resolve(true);
+      //   }, (error) => {
+      //     console.log(error);
+      //     resolve(false);
+      //   }
+      // )
+    });
   }
-  updateMemberInfo(formdata){
+  updateMemberInfo(formdata) {
+    // const _this = this;
+    console.log("updateMemberInfo");
+    console.log(formdata);
+    return new Promise(function (resolve, reject) {
+      const memberInfo = formdata['serviceFor'];
+      memberInfo.userProfile = {}
+      memberInfo.userProfile['gender'] = formdata.gender;
+      memberInfo.userProfile['dob'] = formdata.dob;
+      memberInfo.userProfile['pinCode'] = formdata.pinCode;
+      memberInfo.userProfile['preferredLanguages'] = formdata.preferredLanguages;
+      console.log(memberInfo);
+resolve(true);
+      // _this.sharedServices.editMember(memberInfo).subscribe(
+      //   () => {
+      //     resolve(true);
+      //   }, (error) => {
+      //     console.log(error);
+      //     resolve(false);
+      //   }
+      // )
+    });
 
+    // {
+    //   "parent": 4,
+    //   "user": 3,
+    //   "userProfile": {
+    //     "id": 3,
+    //     "firstName": "nene",
+    //     "lastName": "nene",
+    //     "dob": "1993-06-12",
+    //     "gender": "Male"
+    //   },
+    //   "bookingLocation": {
+    //     "state": "Kerala",
+    //     "district": "Wayanad",
+    //     "localArea": "Mananthavady",
+    //     "pincode": "670645"
+    //   },
+    //   "preferredLanguages": [
+    //     "malayalam"
+    //   ]
+    // }
   }
   onChange(event) {
-
-    console.log(event.value);
     this.lngknown = event.value
     if (this.lngknown === 'yes') {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
@@ -314,5 +369,4 @@ userProfile['preferredLanguages']=formdata.preferredLanguages;
       this.hideLanguages = false;
     }
   }
-
 }

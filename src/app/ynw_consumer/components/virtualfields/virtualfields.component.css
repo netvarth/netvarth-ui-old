@@ -70,3 +70,7 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
 .justify {
     text-align: justify !important;
 }
+.userGroup .mat-radio-button {
+    display:block !important;
+    padding:3px 0px 3px 0px !important;
+}
