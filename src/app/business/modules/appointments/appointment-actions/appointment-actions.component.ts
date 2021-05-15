@@ -316,7 +316,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
