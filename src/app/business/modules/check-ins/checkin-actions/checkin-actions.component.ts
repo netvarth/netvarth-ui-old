@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 
 @Component({
@@ -118,7 +119,7 @@ export class CheckinActionsComponent implements OnInit {
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
-        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');    
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
         this.apiloading = true;
@@ -144,9 +145,8 @@ export class CheckinActionsComponent implements OnInit {
             this.apiloading = false;
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-        console.log(this.provider_label);
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.accountType = user.accountType;   
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -498,6 +498,40 @@ export class CheckinActionsComponent implements OnInit {
     changeWaitlistservice() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
+    }
+    removeProvider() {
+        // this.dialogRef.close();
+        let msg = '';
+        msg = 'Do you want to remove this ' + this.provider_label;
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'ynwUuid': this.checkin.ynwUuid,
+                    'provider': {
+                        'id': this.checkin.provider.id
+                    },
+                };
+                this.provider_services.unassignUserWaitlist(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
@@ -893,7 +927,6 @@ export class CheckinActionsComponent implements OnInit {
     }
     gotoQuestionnaire(booking) {
         this.dialogRef.close();
-        console.log(booking);
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 uuid: booking.ynwUuid,

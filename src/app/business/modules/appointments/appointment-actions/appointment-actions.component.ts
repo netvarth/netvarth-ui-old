@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -338,7 +339,41 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeWaitlistservice() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'check-ins', this.appt.uid , 'user'] ,{ queryParams: { source: 'appt' } });
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'user'], { queryParams: { source: 'appt' } });
+    }
+    removeProvider() {
+        this.dialogRef.close();
+        let msg = '';
+        msg = 'Do you want to remove this' + this.provider_label;
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'uid': this.appt.uid,
+                    'provider': {
+                        'id': this.appt.provider.id
+                    },
+                };
+                this.provider_services.unassignUserAppointment(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)

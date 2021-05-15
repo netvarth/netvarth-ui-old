@@ -92,7 +92,13 @@
             <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
             <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
         </div>
-    </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel && checkin.provider" (click)="removeProvider()">
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showArrived"
             (click)="!buttonClicked && changeWaitlistStatus('REPORT')">
             <div class="action-box-sub">
