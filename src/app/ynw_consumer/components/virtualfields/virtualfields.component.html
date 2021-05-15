@@ -14,12 +14,23 @@
         <div class="mat-dialog-content" style="overflow: auto !important;" >
             <div *ngIf="hideLanguages">
                 <div class="">
-                    Please provide Information about you(one time setup). This information will be saved in your profile
+                    Please provide necessary information (one time setup). This information will be saved in your profile
                 </div>
                 <div class="mgn-up-10">
-                    <label class="col-form-label" for="name">Name </label>
+                    <label class="col-form-label" for="name">Service For </label>
                     <br />
-                    {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}}
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Service For</mat-label> -->
+                        <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
+                            <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
+                          <mat-option *ngFor="let member of familymembers" [value]="member.userProfile.id">
+                            {{member.userProfile.firstName}} {{member.userProfile.lastName}}
+                          </mat-option>
+                          <mat-option  [value]="new_member">Others  </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <!-- {{getFamilyMembers()}} -->
+                    <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
                 </div>
                 <div class="mgn-up-10">
                     <label class="col-form-label" for="phone">Phone # </label>

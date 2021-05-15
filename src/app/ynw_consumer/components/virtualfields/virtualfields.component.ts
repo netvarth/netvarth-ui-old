@@ -6,7 +6,9 @@ import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.servic
 import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
+// import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -44,6 +46,12 @@ export class VirtualFieldsComponent implements OnInit {
     "Urdu"
   ];
   hideLanguages = true;
+  api_loading1: boolean;
+  customer_data: any;
+  familymembers: any[];
+  new_member;
+  private subs = new SubSink();
+  is_parent=true;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -51,35 +59,116 @@ export class VirtualFieldsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
-    private lStorageService: LocalStorageService) {
+    private groupService: GroupStorageService,
+   // private lStorageService: LocalStorageService
+    ) {
     if (data) {
       this.data = this.s3Processor.getJson(data);
     }
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.api_loading1 = true;
+    if (activeUser) {
+        this.customer_data = activeUser;
+    }
+    this.getFamilyMembers();
   }
 
-  setVirtualFields(userProfile) {
-    if (userProfile.pinCode) {
 
-    }
-    if (userProfile.gender) {
-
-    }
-    if (userProfile.preferredLanguages) {
-      this.languages = this.s3Processor.getJson(userProfile);
-    }
-
-  }
 
   ngOnInit(): void {
-
-
-
-
     this.createForm();
+ 
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
+  getFamilyMembers() {
+    this.api_loading1 = true;
+    let fn;
+    fn = this.sharedServices.getConsumerFamilyMembers();
+    this.subs.sink = fn.subscribe(data => {
+        this.familymembers = [];
+        for (const mem of data) {
+           this.familymembers.push(mem);
+        }
+        this.api_loading1 = false;
+    },
+        () => {
+            this.api_loading1 = false;
+        });
+}
+onServiceForChange(event) {
+this.is_parent=true;
+const chosen_person=event.value;
+if(chosen_person!=='new_member'){
+  const memberObj=this.familymembers.filter(member=>{member.id===chosen_person})
+  if(memberObj!==null||memberObj!==undefined){
+    this.is_parent=false;
+    this.setMemberDetails(memberObj);
+    
+  }else{
+    this.setparentDetails(chosen_person);
+  }
+}else{
+  this.is_parent=false;
+}
+}
+setMemberDetails(memberObj){
+
+  if (memberObj.userProfile && memberObj.userProfile.dob) {
+    this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
+  }
+  if (memberObj.userProfile && memberObj.userProfile.gender) {
+    this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
+  } else {
+    this.virtualForm.patchValue({ gender: 'Male' });
+  }
+  if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
+    const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
+
+    let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+    if (defaultEnglish === 'no') {
+      if (memberObj.preferredLanguages.length > 0) {
+        this.virtualForm.patchValue({ islanguage: defaultEnglish });
+        this.lngknown = defaultEnglish;
+      } else {
+        this.virtualForm.patchValue({ islanguage: '' });
+      }
+    } else {
+      this.virtualForm.patchValue({ islanguage: defaultEnglish });
+      this.lngknown = defaultEnglish;
+    }
+
+    this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+  }
+  if ( memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
+    this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
+  }
+}
+setparentDetails(customer){
+  if (customer.userProfile && customer.userProfile.dob) {
+    this.virtualForm.patchValue({ dob: customer.userProfile.dob });
+  }
+  if (customer.userProfile && customer.userProfile.gender) {
+    this.virtualForm.patchValue({ gender: customer.userProfile.gender });
+  } else {
+    this.virtualForm.patchValue({ gender: 'Male' });
+  }
+  if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
+    const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
+    if (preferredLanguage !== null) {
+      let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+      this.virtualForm.patchValue({ islanguage: defaultEnglish });
+      this.lngknown = defaultEnglish;
+      this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+    }
+  }
+  if (customer.userProfile && customer.userProfile.pinCode) {
+    this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+  }
+
+}
   createForm() {
     this.virtualForm = this.fb.group({
+      serviceFor:['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
       pincode: ['', Validators.compose([Validators.required])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
@@ -88,9 +177,8 @@ export class VirtualFieldsComponent implements OnInit {
       location: ['', Validators.compose([Validators.required])]
     });
     this.virtualForm.patchValue({ gender: 'male' });
-    this.virtualForm.patchValue({ islanguage: 'yes' });
-    console.log('here');
-    console.log(this.data);
+    this.virtualForm.patchValue({ islanguage: 'yes' })
+    this.virtualForm.get('serviceFor').setValue(this.customer_data);
     if (this.data) {
       this.updateForm();
     }
@@ -105,56 +193,13 @@ export class VirtualFieldsComponent implements OnInit {
     this.lngknown = 'yes';
     this.details = this.data;
     console.log(this.details);
-    if (this.details && this.details.userProfile && this.details.userProfile.dob) {
-      this.virtualForm.patchValue({ dob: this.details.userProfile.dob });
-    }
-    if (this.details && this.details.userProfile && this.details.userProfile.gender) {
-      this.virtualForm.patchValue({ gender: this.details.userProfile.gender });
-    } else {
-      this.virtualForm.patchValue({ gender: 'Male' });
-    }
+  
     if (this.details.parent) {
-
-      if (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages !== null) {
-        const preferredLanguage = this.s3Processor.getJson(this.details.userProfile.preferredLanguages);
-
-        let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-        if (defaultEnglish === 'no') {
-          if (this.details.preferredLanguages.length > 0) {
-            this.virtualForm.patchValue({ islanguage: defaultEnglish });
-            this.lngknown = defaultEnglish;
-          } else {
-            this.virtualForm.patchValue({ islanguage: '' });
-          }
-        } else {
-          this.virtualForm.patchValue({ islanguage: defaultEnglish });
-          this.lngknown = defaultEnglish;
-        }
-
-
-
-        this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
-      }
-      if (this.details && this.details.bookingLocation && this.details.bookingLocation.pincode) {
-        this.virtualForm.patchValue({ pincode: this.details.bookingLocation.pincode });
-        // this.showLocations(this.details.userProfile.pinCode);
-      }
+      this.setMemberDetails(this.details);
+      
     } else {
-      console.log(this.details.userProfile.preferredLanguages);
-      if (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages !== null) {
-        const preferredLanguage = this.s3Processor.getJson(this.details.userProfile.preferredLanguages);
-        console.log(preferredLanguage);
-        if (preferredLanguage !== null) {
-          let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-          this.virtualForm.patchValue({ islanguage: defaultEnglish });
-          this.lngknown = defaultEnglish;
-          this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
-        }
-      }
-      if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
-        this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
-      }
-
+      this.setparentDetails(this.details);
+      
 
     }
 
@@ -191,12 +236,10 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
       return true;
     }
-    console.log(this.virtualForm.get('dob').value);
     if (this.virtualForm.get('dob').value === '') {
       return true;
     }
     if (this.lngknown === 'no') {
-      console.log(this.virtualForm.get('preferredLanguage').value);
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         return true;
       }
@@ -218,18 +261,15 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   showLocations(event) {
-    console.log(event);
     let pincode = this.virtualForm.get('pincode').value;
-    console.log(pincode);
     if (pincode.length === 6) {
       this.loading = true;
-      console.log(pincode);
       this.fetchLocationByPincode(pincode).then(
         (locations: any) => {
           if (locations.length > 0) {
             this.locations = locations[0];
             this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
-            console.log(this.locations);
+
           } else {
             this.locations = [];
           }
@@ -242,12 +282,21 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
-    console.log(formdata);
-    if (this.lngknown === 'yes') {
-      formdata['preferredLanguage'] = ["English"];
-    }
-    this.lStorageService.setitemonLocalStorage('customerInfo', formdata);
-    this.dialogRef.close(formdata)
+// if(this.is_parent){
+//   this.updateParentInfo(formdata);
+// }else{
+//  this.updateMemberInfo(formdata);
+// }
+this.dialogRef.close(formdata);
+  }
+  updateParentInfo(formdata) {
+const userProfile={}
+userProfile['gender']=formdata.gender;
+userProfile['dob']=formdata.dob;
+userProfile['pinCode']=formdata.pinCode;
+userProfile['preferredLanguages']=formdata.preferredLanguages;
+  }
+  updateMemberInfo(formdata){
 
   }
   onChange(event) {
