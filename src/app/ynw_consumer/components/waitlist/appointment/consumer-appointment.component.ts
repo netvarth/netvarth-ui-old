@@ -728,7 +728,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if(this.virtualInfo.islanguage==='yes'){
                 this.waitlist_for[0]['preferredLanguage']=['English'];
             }else{
-                this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+                this.waitlist_for[0]['preferredLanguage']=this.virtualInfo.preferredLanguage;
             }
             const bookingLocation={};
             bookingLocation['pincode']=this.virtualInfo.pincode;

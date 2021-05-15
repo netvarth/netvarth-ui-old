@@ -735,7 +735,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['preferredLanguage']=langs;
             }else{
                 let langs = [];
-                langs.push(this.virtualInfo.preferredLanguage);
+                langs=this.virtualInfo.preferredLanguage;
                 this.waitlist_for[0]['preferredLanguage']=langs;
             }
             const bookingLocation={};

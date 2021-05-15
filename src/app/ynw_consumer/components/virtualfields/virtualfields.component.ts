@@ -111,29 +111,53 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.details && this.details.userProfile && this.details.userProfile.gender) {
       this.virtualForm.patchValue({ gender: this.details.userProfile.gender });
     } else {
-      this.virtualForm.patchValue({ gender: 'male' });
+      this.virtualForm.patchValue({ gender: 'Male' });
     }
-    if (this.details && this.details.userProfile && this.details.userProfile.preferredLanguages) {
-      let defaultEnglish = (this.details.userProfile.preferredLanguages && this.s3Processor.getJson(this.details.userProfile.preferredLanguages)[0] === 'English') ? 'yes' : 'no';
-      this.virtualForm.patchValue({ islanguage: defaultEnglish });
-      this.lngknown = defaultEnglish;
-      this.virtualForm.patchValue({ preferredLanguage: this.s3Processor.getJson(this.details.userProfile.preferredLanguages) });
-    }
-    if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
-      this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
-      // this.showLocations(this.details.userProfile.pinCode);
+    if (this.details.parent) {
+
+      if (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages !== null) {
+        const preferredLanguage = this.s3Processor.getJson(this.details.userProfile.preferredLanguages);
+
+        let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+        if (defaultEnglish === 'no') {
+          if (this.details.preferredLanguages.length > 0) {
+            this.virtualForm.patchValue({ islanguage: defaultEnglish });
+            this.lngknown = defaultEnglish;
+          } else {
+            this.virtualForm.patchValue({ islanguage: '' });
+          }
+        } else {
+          this.virtualForm.patchValue({ islanguage: defaultEnglish });
+          this.lngknown = defaultEnglish;
+        }
+
+
+
+        this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+      }
+      if (this.details && this.details.bookingLocation && this.details.bookingLocation.pincode) {
+        this.virtualForm.patchValue({ pincode: this.details.bookingLocation.pincode });
+        // this.showLocations(this.details.userProfile.pinCode);
+      }
+    } else {
+      console.log(this.details.userProfile.preferredLanguages);
+      if (this.details.userProfile.preferredLanguages && this.details.userProfile.preferredLanguages !== null) {
+        const preferredLanguage = this.s3Processor.getJson(this.details.userProfile.preferredLanguages);
+        console.log(preferredLanguage);
+        if (preferredLanguage !== null) {
+          let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+          this.virtualForm.patchValue({ islanguage: defaultEnglish });
+          this.lngknown = defaultEnglish;
+          this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+        }
+      }
+      if (this.details && this.details.userProfile && this.details.userProfile.pinCode) {
+        this.virtualForm.patchValue({ pincode: this.details.userProfile.pinCode });
+      }
+
+
     }
 
-    // this.selectedLocation = this.details.location;
-
-
-    // this.virtualForm.patchValue({
-    //   dob: dob,
-    //   pincode: usr_pincode,
-    //   preferredLanguage: islanguage,
-    //   islanguage: defaultEnglish,
-    //   gender: gender
-    // });
   }
   saveLanguages() {
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
@@ -154,7 +178,6 @@ export class VirtualFieldsComponent implements OnInit {
     }
   }
   checklangExists(lang) {
-    console.log("Lang:" + lang);
     if (this.virtualForm.get('preferredLanguage').value.length > 0) {
       const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(lang);
       if (existindx !== -1) {
@@ -236,8 +259,8 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.hideLanguages = false;
-    } 
-    if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length > 0 && this.virtualForm.get('preferredLanguage').value[0]==='English') {
+    }
+    if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length > 0 && this.virtualForm.get('preferredLanguage').value[0] === 'English') {
       this.virtualForm.get('preferredLanguage').setValue([]);
       this.hideLanguages = false;
     }
