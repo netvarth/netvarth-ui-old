@@ -19,12 +19,46 @@
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <div class="action-box pointer-cursor"
+        <!-- <div class="action-box pointer-cursor"
             *ngIf="(checkin.waitlistStatus=='checkedIn' || checkin.waitlistStatus == 'arrived') && checkin.questionnaire && checkin.questionnaire.questionAnswers && checkin.questionnaire.questionAnswers.length > 0"
             (click)="gotoQuestionnaire(checkin)">
             <div class="action-box-sub">
                 <span class="add-appt-icon"></span>
                 <div class="icon-text">{{customer_label | capitalizeFirst}} info</div>
+            </div>
+        </div> -->
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
+            (click)="goToCheckinDetails()">
+            <div class="action-box-sub">
+                <span class="viewdetails-icon"></span>
+                <div class="icon-text">View Details</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showUndo"
+        (click)="!buttonClicked && changeWaitlistStatus('CHECK_IN')">
+        <div class="action-box-sub">
+            <span class="changestatus-icon"></span>
+            <div class="icon-text">Status change</div>
+        </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel" (click)="changeWaitlistservice()">
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
+                <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+            </div>
+            </div>
+            <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel && checkin.provider" (click)="removeProvider()">
+                <div class="action-box-sub">
+                    <span class="doctor-change-icon"></span>
+                    <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>
+                </div>
+            </div>
+            <div class="action-box pointer-cursor" *ngIf="showArrived"
+            (click)="!buttonClicked && changeWaitlistStatus('REPORT')">
+            <div class="action-box-sub">
+                <span class="arrived-icon"></span>
+                <div class="icon-text">Mark as Arrived</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
@@ -38,19 +72,7 @@
                 <div class="icon-text">Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'"
-            (click)="addCustomerDetails()">
-            <div class="action-box-sub">
-                <span class="add-appt-icon"></span>
-                <div class="icon-text">Add {{customer_label}}</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
-            <div class="action-box-sub">
-                <span class="unblock-appt-icon"></span>
-                <div class="icon-text">Unblock</div>
-            </div>
-        </div>
+        
         <div class="action-box pointer-cursor" *ngIf="showStart"
             (click)="!buttonClicked && changeWaitlistStatus('STARTED')">
             <div class="action-box-sub">
@@ -78,6 +100,14 @@
                 </div>
             </div>
         </div>
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
+            (click)="rescheduleActionClicked()">
+            <div class="action-box-sub">
+                <span class="reschedule-icon"></span>
+                <div class="icon-text">Reschedule</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showCancel"
             (click)="!buttonClicked && changeWaitlistStatus('CANCEL')">
             <div class="action-box-sub">
@@ -85,46 +115,31 @@
                 <div class="icon-text">Cancel {{(checkin.showToken) ? 'token' : 'check-in'}}</div>
             </div>
         </div>
-
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
+            <div class="action-box-sub">
+                <span class="mail-icon"></span>
+                <div class="icon-text">Share Booking Info</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
+        (click)="printCheckin()">
         <div class="action-box-sub">
-            <span class="doctor-change-icon"></span>
-            <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
-            <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+            <span class="printer-icon"></span>
+            <div class="icon-text">Print</div>
         </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel && checkin.provider" (click)="removeProvider()">
-            <div class="action-box-sub">
-                <span class="doctor-change-icon"></span>
-                <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showArrived"
-            (click)="!buttonClicked && changeWaitlistStatus('REPORT')">
-            <div class="action-box-sub">
-                <span class="arrived-icon"></span>
-                <div class="icon-text">Mark as Arrived</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
-            (click)="!buttonClicked && changeWaitlistStatus('DONE')">
-            <div class="action-box-sub">
-                <span class="complete-icon"></span>
-                <div class="icon-text">Complete</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo"
-            (click)="!buttonClicked && changeWaitlistStatus('CHECK_IN')">
-            <div class="action-box-sub">
-                <span class="changestatus-icon"></span>
-                <div class="icon-text">Status change</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
+    </div>
+         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
             (click)="gotoCustomerDetails()">
             <div class="action-box-sub">
                 <span class="customerdetails-icon"></span>
                 <div class="icon-text">{{customer_label | capitalizeFirst}} details</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
+            (click)="addProviderNote()">
+            <div class="action-box-sub">
+                <span class="notes-icon"></span>
+                <div class="icon-text">Private Notes</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
@@ -138,60 +153,6 @@
             <div class="action-box-sub">
                 <span><i class="material-icons">attach_file</i></span>
                 <div class="icon-text">Send Attachments</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
-            <div class="action-box-sub">
-                <span class="mail-icon"></span>
-                <div class="icon-text">Share Booking Info</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
-            <div class="action-box-sub">
-                <span class="locate-icon"></span>
-                <div class="icon-text">Where is my
-                    customer</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showBill" (click)="viewBillPage()">
-            <div class="action-box-sub">
-                <span class="bill-icon"></span>
-                <div class="icon-text">Billing</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
-            (click)="addProviderNote()">
-            <div class="action-box-sub">
-                <span class="notes-icon"></span>
-                <div class="icon-text">Private Notes</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
-            (click)="goToCheckinDetails()">
-            <div class="action-box-sub">
-                <span class="viewdetails-icon"></span>
-                <div class="icon-text">View Details</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus!=='blocked'" (click)="showLabels()">
-            <div class="action-box-sub">
-                <span class="label-icon"></span>
-                <div class="icon-text">Labels</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
-            (click)="printCheckin()">
-            <div class="action-box-sub">
-                <span class="printer-icon"></span>
-                <div class="icon-text">Print</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
-            (click)="rescheduleActionClicked()">
-            <div class="action-box-sub">
-                <span class="reschedule-icon"></span>
-                <div class="icon-text">Reschedule</div>
             </div>
         </div>
         <div *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && !data.multiSelection &&  showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'"
@@ -210,6 +171,55 @@
                 <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
+        
+        
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
+            (click)="!buttonClicked && changeWaitlistStatus('DONE')">
+            <div class="action-box-sub">
+                <span class="complete-icon"></span>
+                <div class="icon-text">Complete</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'"
+        (click)="addCustomerDetails()">
+        <div class="action-box-sub">
+            <span class="add-appt-icon"></span>
+            <div class="icon-text">Add {{customer_label}}</div>
+        </div>
+    </div>
+    <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
+        <div class="action-box-sub">
+            <span class="unblock-appt-icon"></span>
+            <div class="icon-text">Unblock</div>
+        </div>
+    </div>
+       
+       
+        
+        <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
+            <div class="action-box-sub">
+                <span class="locate-icon"></span>
+                <div class="icon-text">Where is my
+                    customer</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showBill" (click)="viewBillPage()">
+            <div class="action-box-sub">
+                <span class="bill-icon"></span>
+                <div class="icon-text">Billing</div>
+            </div>
+        </div>
+        
+        
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus!=='blocked'" (click)="showLabels()">
+            <div class="action-box-sub">
+                <span class="label-icon"></span>
+                <div class="icon-text">Labels</div>
+            </div>
+        </div>
+       
+        
+        
         <!--Added By Mani for Video Play-->
          <div *ngIf="!data.multiSelection && checkin.service.serviceType === 'virtualService' && checkin.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">
