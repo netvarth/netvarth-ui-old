@@ -2230,3 +2230,7 @@
   .fa-arrow-left {
     margin-top: 10px;
   }
+
+::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-border-radius-0 mat-dialog-container {
+  border-radius: 0 !important;
+}

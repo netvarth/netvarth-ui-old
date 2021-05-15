@@ -176,11 +176,11 @@
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration .duration{
     display: inline-block;
     border-radius: 15px;
-    background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
-    box-shadow: 15px 15px 40px #dba8c4;
+    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
+    /* box-shadow: 15px 15px 40px #dba8c4; */
     opacity: 1;
     padding: 8px;    
-    width: 80%;
+    /* width: 80%; */
     text-align: center;
 }
 

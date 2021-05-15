@@ -1914,7 +1914,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
 
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
       disableClose: true,
       data: servData
     });

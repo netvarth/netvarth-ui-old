@@ -2294,3 +2294,8 @@ img.ordericon.home {
 .bSection .dept {
   font-size: 1.25rem !important;
 }
+
+
+::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-bor-rad-0 mat-dialog-container {
+  border-radius: 0 !important;
+}
