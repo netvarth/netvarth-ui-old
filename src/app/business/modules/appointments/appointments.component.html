@@ -475,7 +475,7 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -489,7 +489,7 @@
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
@@ -725,7 +725,7 @@
                         </td>
                         <td class="td-three">
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                            <span class="dashboardrescheduled-icon mgn-rt-10"
+                            <!-- <span class="dashboardrescheduled-icon mgn-rt-10"
                               *ngIf="apptByTimeSlot[appt.time][0].isRescheduled" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Rescheduled'">
                             </span>
@@ -743,7 +743,7 @@
                             </span>
                             <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                               class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' && !apptByTimeSlot[appt.time][0].virtualService"></span>
+                              *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' && !apptByTimeSlot[appt.time][0].virtualService"></span> -->
                             <span
                               [matTooltip]="apptByTimeSlot[appt.time][0].service.consumerNoteTitle | capitalizeFirst"
                               class="pull-left cnote  pointer-cursor mgn-rt-10"
@@ -931,7 +931,7 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -945,7 +945,7 @@
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
@@ -1275,7 +1275,7 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
                         <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -1289,7 +1289,7 @@
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
@@ -1651,7 +1651,7 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
                         <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -1665,7 +1665,7 @@
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
