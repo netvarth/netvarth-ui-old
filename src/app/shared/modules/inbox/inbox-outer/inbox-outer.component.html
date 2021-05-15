@@ -1,19 +1,19 @@
-<section class="container cons-inbox no-padding-small">
-  <div class="content comn-cls m0 p0">
-    <div class="panel panel-default">
+<section class="container cons-inbox no-padding-small" style="height: 100vh; margin-bottom: -20px;">
+  <div class="content comn-cls m0 p0" style="height: -webkit-fill-available;">
+    <div class="panel panel-default" style="height: -webkit-fill-available; display: flex; flex-direction: column;">
       <div class="panel-heading top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
           <app-header *ngIf="shared_functions.checkLogin()"></app-header>
         </div>
       </div>
-      <div class="panel-body no-padding">
-        <div class="c-outer m0 p0">
-          <div class="c-body">
+      <div class="panel-body no-padding" style="flex: 1;">
+        <div class="c-outer m0 p0" style="height: 100%;">
+          <div class="c-body" style="display: flex; flex-direction: column;">
             <div class="card title-gb">
               <h5 class="mgn-up-10 bold">Messages <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                     class="fa fa-arrow-left"></i></a></h5>
             </div>
-            <div class="card p0">
+            <div class="card p0" style="flex: 1;">
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                 <div class="d-flex flex-row minhgt-80" *ngIf="messages.length==0 || !selectedUserMessages">
@@ -61,15 +61,15 @@
                     </div>
                     <div class="flex-row-fluid" id="kt_chat_content"
                       *ngIf="(selectedProvider != '' && !small_device_display) || (small_device_display && showChat)">
-                      <div class="card card-custom">
+                      <div class="card card-custom" style="height: 100%;">
                         <div class="card-header align-items-center px-4 py-3">
                           <div class="text-center flex-grow-1">
                             <div class="text-dark-75 font-weight-bold font-size-h5">
                               {{selectedProviderName}}</div>
                           </div>
                         </div>
-                        <div class="card-body no-padding-small">
-                          <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.vh': 55}">
+                        <div class="card-body no-padding-small" style="position: relative; overflow: auto;">
+                          <div class="scroll scroll-pull over-scroll" #scrollMe style="position: absolute; margin-right: 0;">      <!-- [ngStyle]="{'height.vh': 55}" -->
                             <div class="messages" *ngFor="let msg of selectedUserMessages">
                               <div *ngIf="msg.owner.id!==userDet.id" class="d-flex flex-column mb-5 align-items-start">
                                 <div class="d-flex align-items-center">
