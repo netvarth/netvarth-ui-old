@@ -1021,8 +1021,9 @@
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
-                                        <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ?
-                                            'token': 'check-in' }} details</div>
+                                        <!-- <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ?
+                                            'token': 'check-in' }} details</div> -->
+                                        <div class="confirm-head mgn-up-20">Review & Confirm</div>
                                         <div class="bookdetails">
                                             
                                                 <div class="disp-flex" *ngIf="!sel_ser_det.provider">
@@ -1041,9 +1042,11 @@
                                                 <div class="disp-flex">
                                                     <span class="billing-head">Location </span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value"> {{locationName}}<a [href]="googleMapUrl" target="_blank"
+                                                    <span class="billing-value"> {{locationName}}
+                                                        <!-- <a [href]="googleMapUrl" target="_blank"
                                                             class="icon-location" matTooltip="Click to navigate">
-                                                        </a></span>
+                                                        </a> -->
+                                                    </span>
                                                 </div>
                                                 <div class="disp-flex">
                                                     <span class="billing-head">Service</span>
@@ -1098,7 +1101,7 @@
                                                 </div>
                                             
                                         </div>
-                                        <div class="containerAppt textcenter" style="padding-bottom: 10px !important;">
+                                        <!-- <div class="containerAppt textcenter" style="padding-bottom: 10px !important;">
                                             <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 14px !important;">Token For:</div>
                                             <div class="mgn-up-10 no-mgn-bt bold">{{sel_ser_det.name}}</div>
                                             <div class="mgn-bt-5" style="font-size: 1.4rem !important; margin-top: 5px !important; margin-bottom: 5px !important;">
@@ -1109,7 +1112,7 @@
                                                 <span>
                                                     {{selectedQTime}}
                                                 </span>
-                                            </div>
+                                            </div> -->
                                             <!-- <div class="no-mgn-bt bold" style="color: #59345D;"> Waiting in line</div>
                                             <div class="mgn-bt-10 pad-bt-10" style="color: #59345D;">
                                                 <span *ngIf="personsAhead <= 0">0 People</span>
@@ -1130,7 +1133,7 @@
                                                     </ng-container>
                                                 </span>
                                             </div> -->
-                                        </div>
+                                        <!-- </div> -->
                                         <div class="pay-section"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
@@ -1196,7 +1199,7 @@
                                             </div>
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 pl-0 width-100">
                                             <div class="mr-2">
                                                 <button type="button" style="color: white !important;"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"

@@ -184,16 +184,19 @@
 
 .billing-head {
   text-align: left !important;
-  /* font: normal normal bold 15px/18px Roboto !important; */
+  font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
   color: #A986AC !important;
+  width: 30% !important;
+  display: inline-block !important;
 }
 
 .billing-value {
   text-align: left;
-  /* font: normal normal normal 15px/18px Roboto; */
+  font: normal normal normal 15px/18px Roboto;
   letter-spacing: 0px;
   color: #363636;
+  width: 70%;
 }
 
 .contact-section .wtsapaud-icon{
@@ -246,4 +249,51 @@
 }
 .service-icon .fa-phone{
   color: #7a7a7a !important
+}
+
+.containerAppt {
+  font-size: 1.7rem;
+  margin: auto;
+  color: darkblue !important;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border: 1px solid #00008b26;
+  box-shadow: 0px 0px 2px 2px #cac8c880;
+}
+
+@media (min-width: 768px) {
+  .containerAppt {
+    width: 80%;
+  }
+}
+
+.containerAppt {
+  background: #FFFFFF 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 34px 55px #28282814 !important;
+  border-radius: 21px !important;
+  opacity: 1 !important;
+  border: 0 !important;
+  padding-top: 10px !important;
+}
+
+.containerAppt > div:nth-child(1),
+.containerAppt > div:nth-child(2) {
+  text-align: center !important;
+  /* font: normal medium 18px/22px Roboto !important; */
+  letter-spacing: 0px !important;
+  color: #59345D !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+.containerAppt > div:nth-child(2) {
+  text-transform: capitalize !important;
+}
+
+.containerAppt > div:nth-child(3) {
+  text-align: center !important;
+  /* font: normal normal normal 15px/18px Roboto !important; */
+  letter-spacing: 0px !important;
+  color: #A986AC !important;
+  opacity: 1 !important;
 }

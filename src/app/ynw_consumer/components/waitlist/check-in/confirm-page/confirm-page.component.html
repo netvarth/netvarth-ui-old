@@ -26,31 +26,31 @@
                                     <tbody> -->
                                     <div class="bookdetails">
                                     
-                                        <!-- <tr *ngIf="!wtlst.provider">
-                                            <td width="48%" align="right">
-                                                Provider</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td class="name-line-ht">{{wtlst.providerAccount?.businessName}}</td>
-                                        </tr> -->
-                                        <!-- <tr *ngIf="wtlst.provider">
-                                            <td width="48%" align="right">
-                                                Provider</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td class="name-line-ht">{{wtlst.provider.businessName}},
-                                                {{wtlst.providerAccount?.businessName}}</td>
-                                        </tr> -->
-                                        <!-- <tr>
-                                            <td width="48%" align="right">Location </td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{wtlst.queue?.location.place}}<a
+                                        <div class="disp-flex" *ngIf="!wtlst.provider" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Provider</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value">{{wtlst.providerAccount?.businessName}}</span>
+                                        </div>
+                                        <div class="disp-flex" *ngIf="wtlst.provider" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Provider</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value">{{wtlst.provider.businessName}},
+                                                {{wtlst.providerAccount?.businessName}}</span>
+                                        </div>
+                                        <div class="disp-flex" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Location </span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value"> {{wtlst.queue?.location.place}}
+                                                <!-- <a
                                                     [href]="wtlst.queue.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
-                                                </a></td>
-                                        </tr> -->
+                                                </a> -->
+                                            </span>
+                                        </div>
                                         <div class="disp-flex">
                                             <span class="billing-head">Service</span>
-                                            <span>:&nbsp;</span>
-                                            <div>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value">
                                                 <span class="service-icon contact-section" style="display: inline-block !important;"
                                                     *ngIf="wtlst.service && wtlst.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -66,54 +66,63 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="wtlst.service.virtualCallingModes && wtlst.service.virtualCallingModes[0].callingMode === 'WhatsApp' && wtlst.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="billing-value">{{wtlst.service?.name}}</span>
-                                            </div>
+                                                <span>{{wtlst.service?.name}}</span>
+                                            </span>
                                         </div>
-                                        <div *ngIf="wtlst.token">
+                                        <!-- <div class="disp-flex" *ngIf="wtlst.token" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Token No</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value">{{wtlst.token}}</span>
-                                        </div>
-                                        <div *ngIf="wtlst.token">
+                                        </div> -->
+                                        <div class="disp-flex" *ngIf="wtlst.token" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Token for</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value">{{wtlst.waitlistingFor[0].firstName}}
                                                 {{wtlst.waitlistingFor[0].lastName}}</span>
                                         </div>
-                                        <div *ngIf="!wtlst.token">
+                                        <div class="disp-flex" *ngIf="!wtlst.token" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Check-in for</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value">{{wtlst.waitlistingFor[0].firstName}}
                                                 {{wtlst.waitlistingFor[0].lastName}}</span>
                                         </div>
-                                        <div>
+                                        <div class="disp-flex" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Time window</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value"> {{wtlst.date | date: newDateFormat }},
                                                 {{wtlst.queue.queueStartTime}}-{{wtlst.queue.queueEndTime}}</span>
                                         </div>
-                                        <div>
+                                        <!-- <div class="disp-flex" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Booking Id</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value"> {{wtlst.checkinEncId}}</span>
-                                        </div>
-                                        <div
+                                        </div> -->
+                                        <div class="disp-flex" style="margin-bottom: 5px !important;"
                                             *ngIf="!wtlst.parentUuid && wtlst.service?.minPrePaymentAmount && infoParams.type != 'waitlistreschedule' && infoParams.prepayment">
                                             <span class="billing-head">Amount paid</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value"><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
                                                 </span>
                                             </span>
                                         </div>
-                                        <div
+                                        <div class="disp-flex" style="margin-bottom: 5px !important;"
                                             *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">
                                             <span class="billing-head">Amount paid</span>
-                                            <span>:&nbsp;</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value"><span class="rupee-font">
                                                     {{wtlst.amountPaid | currency:'&#8377;'}}</span>
                                             </span>
                                         </div>
                                     </div>
+
+                                    <div class="containerAppt textcenter" style="padding-bottom: 10px !important;">
+                                        <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 14px !important;">Booking Id</div>
+                                        <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 1.3rem !important;">{{wtlst.checkinEncId}}</div>
+                                        <div class="mgn-bt-5" style="font-size: 1.7rem !important; margin-top: 5px !important; margin-bottom: 5px !important;">
+                                            Token No: {{wtlst.token}}
+                                        </div>
+                                    </div>
+
                                     <!-- </tbody>
                                 </table> -->
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
