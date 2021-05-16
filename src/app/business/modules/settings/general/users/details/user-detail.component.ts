@@ -287,9 +287,9 @@ export class BranchUserDetailComponent implements OnInit {
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
         });
-        if(this.user_data.pincode) {
-            this.blurPincodeQty(this.user_data.pincode);
-        }
+        // if(this.user_data.pincode) {
+        //     this.blurPincodeQty(this.user_data.pincode);
+        // }
 
     }
     onUserSelect(event) {
