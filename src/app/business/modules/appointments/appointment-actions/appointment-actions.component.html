@@ -30,14 +30,14 @@
                 <div class="icon-text">Change Status</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')" (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div *ngIf="appt.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
                 <div *ngIf="!appt.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && showCancel && appt.provider" (click)="removeProvider()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider" (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>

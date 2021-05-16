@@ -16,8 +16,8 @@
                         <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
                             <div class="d-flex align-items-end">
                                 <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <div class="stats-item line-hgt"
+                                    <div class="d-flex flex-column line-hgt">
+                                        <div class="stats-item"
                                             *ngIf="waiting_type == 'checkin' && (data.waitlistingFor[0].firstName || data.waitlistingFor[0].lastName)">
                                             <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
                                                 *ngFor="let user of data.waitlistingFor">
