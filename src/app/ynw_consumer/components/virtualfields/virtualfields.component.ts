@@ -7,6 +7,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SubSink } from 'subsink';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-virtualfields',
@@ -50,6 +52,7 @@ export class VirtualFieldsComponent implements OnInit {
   private subs = new SubSink();
   is_parent = true;
   chosen_person: any;
+  maxDate=moment(new Date()).format('YYYY-MM-DD')
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -67,6 +70,7 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.createForm();
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }

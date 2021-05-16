@@ -495,11 +495,11 @@
                                                                         </mat-radio-group>
                                                                     </ng-container>
                                                                     <ng-container *ngIf="sel_ser_det.serviceType === 'virtualService'">
-                                                                        <h6 class="card-title service mgn-bt-10"
+                                                                        <div class="card-title service mgn-bt-10"
                                                                         *ngFor="let member of waitlist_for">
                                                                         {{member.firstName | capitalizeFirst}}
                                                                         {{member.lastName | capitalizeFirst}}
-                                                                    </h6>
+                                                                    </div>
                                                                     </ng-container>
                                                                 </ul>
                                                             </div>

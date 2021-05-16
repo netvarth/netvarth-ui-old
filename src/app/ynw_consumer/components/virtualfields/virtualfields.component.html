@@ -55,7 +55,7 @@
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
                     <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                     <br />
-                    <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
+                    <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob" formControlName="dob"
                         class="vt_dt no-padding mgn-up-5">
                     <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dob" placeholder="Date of birth"
