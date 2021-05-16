@@ -196,7 +196,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     questionnaireLoaded = false;
     imgCaptions: any = [];
     virtualInfo: any;
-
+	newMember: any;
     newPhone;
     newEmail;
     newWhatsapp;
@@ -342,6 +342,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.isFuturedate = true;
                 }
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+
             }
         );
     }
