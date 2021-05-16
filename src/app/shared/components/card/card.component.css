@@ -908,12 +908,14 @@ button.fxmenu1{
     border-radius: 20px;
 }
 .token {
+    margin-top: 5px;
+    vertical-align: top;
     border: 1px solid #eee;
-    padding: 20px 0px;
-    width: 70px;
+    padding: 10px 0px;
+    width: 50px;
     text-align: center;    
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: inline-block;
 }
 .box1 {
@@ -944,9 +946,9 @@ button.fxmenu1{
 .mgn-bt-minus {
     margin-bottom: -10px
 }
-.history .main-sec {
-    height: 65px !important;
-} 
+/* .history .main-sec {
+    height: 120px !important;
+}  */
 /* .view-details .b1 {
     width: 50%;
 }
@@ -959,12 +961,14 @@ button.fxmenu1{
     margin-bottom: 3px;
 }
 .user-token {
+    margin-top: 5px;
+    vertical-align: top;
     border: 1px solid #eee;
-    padding: 20px 0px;
-    width: 70px;
+    padding: 10px 0px;
+    width: 50px;
     text-align: center;    
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: inline-block;
     color: white;
     background: #1E4079;
