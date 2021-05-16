@@ -457,14 +457,14 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
                                                             <div class="pull-left"> Booking for
                                                             </div>
-                                                            <a class="lnk pointer-cursoraction mgn-lt-20"
+                                                            <a class="lnk pointer-cursoraction mgn-lt-20"*ngIf="sel_ser_det.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
                                                         <div class="member-outer">
                                                             <div class="member-list mgn-up-10">
                                                                 <ul class="member-ul">
-                                                                    <ng-container *ngIf="multipleMembers_allowed">
+                                                                    <ng-container *ngIf="multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
                                                                         <li *ngFor="let memb of familymembers">
                                                                             <mat-checkbox
                                                                                 (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
@@ -477,7 +477,7 @@
                                                                             </mat-checkbox>
                                                                         </li>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="!multipleMembers_allowed">
+                                                                    <ng-container *ngIf="!multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
                                                                         <mat-radio-group>
                                                                             <li *ngFor="let memb of familymembers"
                                                                                 class="members">
@@ -493,6 +493,13 @@
                                                                                 </mat-radio-button>
                                                                             </li>
                                                                         </mat-radio-group>
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="sel_ser_det.serviceType === 'virtualService'">
+                                                                        <h6 class="card-title service mgn-bt-10"
+                                                                        *ngFor="let member of waitlist_for">
+                                                                        {{member.firstName | capitalizeFirst}}
+                                                                        {{member.lastName | capitalizeFirst}}
+                                                                    </h6>
                                                                     </ng-container>
                                                                 </ul>
                                                             </div>

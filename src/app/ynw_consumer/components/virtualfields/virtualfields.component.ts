@@ -323,7 +323,7 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
-        userObj['preferredLanguages']  =['English'];
+        userObj['preferredLanguages']  =JSON.stringify(['English']);
       }else{
         userObj['preferredLanguages'] = formdata.preferredLanguages;
       }
