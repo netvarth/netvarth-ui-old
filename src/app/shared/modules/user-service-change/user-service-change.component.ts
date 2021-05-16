@@ -431,34 +431,33 @@ export class UserServiceChnageComponent implements OnInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.filter.firstName !== '') {
-        api_filter['firstName-eq'] = this.filter.firstName;
+      api_filter['firstName-eq'] = this.filter.firstName;
     }
     if (this.filter.lastName !== '') {
-        api_filter['lastName-eq'] = this.filter.lastName;
+      api_filter['lastName-eq'] = this.filter.lastName;
     }
     if (this.filter.location !== '') {
-        api_filter['locationName-eq'] = this.filter.location;
+      api_filter['locationName-eq'] = this.filter.location;
     }
-     if (this.filter.pincode !== '') {
-        api_filter['pinCode-eq'] = this.filter.pincode;
+    if (this.filter.pincode !== '') {
+      api_filter['pinCode-eq'] = this.filter.pincode;
     }
     if (this.filter.primaryMobileNo !== '') {
-        const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
-        const mval = pattern.test(this.filter.primaryMobileNo);
-        if (mval) {
-            api_filter['primaryMobileNo-eq'] = this.filter.primaryMobileNo;
-        } else {
-            this.filter.primaryMobileNo = '';
-        }
+      const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+      const mval = pattern.test(this.filter.primaryMobileNo);
+      if (mval) {
+        api_filter['primaryMobileNo-eq'] = this.filter.primaryMobileNo;
+      } else {
+        this.filter.primaryMobileNo = '';
+      }
     }
     return api_filter;
 
-}
-focusInput(ev) {
-  const kCode = parseInt(ev.keyCode, 10);
-  if (kCode === 13) {
-      this.doSearch();
-
   }
-}
+  focusInput(ev) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) {
+      this.doSearch();
+    }
+  }
 }
