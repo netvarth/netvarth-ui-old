@@ -49,6 +49,7 @@ export class instantQueueComponent implements OnInit {
     api_error = null;
   api_success = null;
     location: any;
+    userId;
   constructor(
     public dialogRef: MatDialogRef<instantQueueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,26 +65,27 @@ export class instantQueueComponent implements OnInit {
   ) {
     console.log(data);
     this.location = data.location;
+    this.userId = data.userId;
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
-
-    this.isAvailableNow().then(
-        () => {
             this.getServices().then(
                 () => {
-            if (!this.qAvailability.availableNow) {
+                    if(this.services_list.length === 0){
+                        this.getglobalServices().then(
+                            () => {
+
+                            });
+                    }
                 this.initInstantQForm();
-               
-            }
         }
         );
-        }
-    );
+       
      
   }
-  initInstantQForm(queue?) {
+  initInstantQForm() {
+    console.log('kio');
     this.shared_services.getSystemDate()
         .subscribe(
             res => {
@@ -93,9 +95,9 @@ export class instantQueueComponent implements OnInit {
                 this.createForm(server_date);
                // this.showInstantQFlag = true;
                 // this.selectAllService();
-                if (queue) {
+                //if (queue) {
                 //    this.updateForm(queue);
-                }
+                //}
             });
 }
 
@@ -106,17 +108,19 @@ createForm(server_date) {
     // tslint:disable-next-line:radix
     this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
     this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
-    if (!this.qAvailability.availableNow) {
-        this.fromDateCaption = 'Now';
-        if (this.qAvailability.timeRange) {
-            this.toDateCaption = this.qAvailability.timeRange.eTime;
-        } else {
-            this.toDateCaption = '11:59 PM';
-        }
-    } else {
-        this.fromDateCaption = this.qAvailability.timeRange.eTime;
-        this.toDateCaption = '11:59 PM';
-    }
+    // if (!this.qAvailability.availableNow) {
+    //     this.fromDateCaption = 'Now';
+    //     if (this.qAvailability.timeRange) {
+    //         this.toDateCaption = this.qAvailability.timeRange.eTime;
+    //     } else {
+    //         this.toDateCaption = '11:59 PM';
+    //     }
+    // } else {
+    //     this.fromDateCaption = this.qAvailability.timeRange.eTime;
+    //     this.toDateCaption = '11:59 PM';
+    // }
+    this.fromDateCaption = 'Now';
+    this.toDateCaption = '11:59 PM';
     if (this.fromDateCaption === 'Now') {
         this.instantQForm = this.fb.group({
             // tslint:disable-next-line:radix
@@ -175,7 +179,21 @@ editEndTime() {
     });
 }
 getServices() {
-    const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
+    const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' ,'provider-eq':this.userId};
+    return new Promise<void>((resolve, reject) => {
+        this.provider_services.getServicesList(params)
+            .subscribe(data => {
+                this.services_list = data;
+
+                resolve();
+            },
+                (error) => {
+                    reject(error);
+                });
+    });
+}
+getglobalServices() {
+    const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' ,'scope-eq': 'account' };
     return new Promise<void>((resolve, reject) => {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
@@ -243,6 +261,7 @@ handleServicechecbox(index) {
 }
 
 onSubmit(instantQ) {
+    console.log(instantQ);
     this.resetApiErrors();
     const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -290,8 +309,11 @@ onSubmit(instantQ) {
     //     }
     //     this.locid = { 'id': this.selectedQlocation.id };
     // }
+    const serv=[];
+    serv.push({'id':this.services_list[0].id});
     instantQInput['location'] =this.location.id;
-    instantQInput['services'] = services;
+   // instantQInput['services'] = services;
+   instantQInput['services'] = serv;
     instantQInput['queueSchedule'] = instantScheduleJson;
     instantQInput['name'] = (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
     instantQInput['onlineCheckin'] = true;
