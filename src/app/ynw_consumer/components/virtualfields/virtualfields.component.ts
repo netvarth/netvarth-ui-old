@@ -237,6 +237,9 @@ export class VirtualFieldsComponent implements OnInit {
       }
     }
     if(this.virtualForm.get('serviceFor').value==='new_member'){
+      console.log('inside');
+      console.log(this.virtualForm.get('firstName').value);
+      console.log(this.virtualForm.get('lastName').value);
       if(this.virtualForm.get('firstName').value==''){
         return true;
       }
@@ -307,36 +310,33 @@ export class VirtualFieldsComponent implements OnInit {
   }
   updateParentInfo(formdata) {
     console.log(formdata);
+    const _this = this;
+    const firstName=_this.customer_data.userProfile.firstName
+    const lastName=_this.customer_data.userProfile.lastName;
     return new Promise(function (resolve, reject) {
       const userObj = {};
-      userObj['id'] = formdata['id'];
-      const userProfile = {}
-      userProfile['gender'] = formdata.gender;
-      userProfile['dob'] = formdata.dob;
-      userProfile['pinCode'] = formdata.pinCode;
-      userProfile['preferredLanguages'] = formdata.preferredLanguages;
-      userObj['userProfile'] = userProfile;
-      resolve(true);
-      // {
-      //   "id": 4,
-      //   "userProfile": {
-      //     "city": "Mananthavady",
-      //     "state": "Kerala",
-      //     "dob": "2004-01-12",
-      //     "gender": "Male",
-         
-      //     "pinCode": "670645",
-      //     "preferredLanguages": "[\"English\"]"
-      //   }
-      // }
-      // this.sharedServices.updateProfile(userProfile, 'consumer').subscribe(
-      //   () => {
-      //     resolve(true);
-      //   }, (error) => {
-      //     console.log(error);
-      //     resolve(false);
-      //   }
-      // )
+      userObj['id'] = _this.customer_data.id;
+     // const userProfile = {}
+      userObj['gender'] = formdata.gender;
+      userObj['firstName']=firstName;
+      userObj['lastName']=lastName;
+      userObj['dob'] = formdata.dob;
+      userObj['pinCode'] = formdata.pincode;
+      if(formdata.islanguage==='yes'){
+        userObj['preferredLanguages']  =['English'];
+      }else{
+        userObj['preferredLanguages'] = formdata.preferredLanguages;
+      }
+     // userObj['userProfile'] = userProfile;
+
+      _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
+        () => {
+          resolve(true);
+        }, (error) => {
+          console.log(error);
+          resolve(false);
+        }
+      )
     });
   }
   updateMemberInfo(formdata) {

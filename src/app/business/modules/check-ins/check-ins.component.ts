@@ -3330,4 +3330,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  getAge(age) {
+    age = age.split(',');
+    return age[0];
+}
 }
