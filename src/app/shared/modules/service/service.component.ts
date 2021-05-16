@@ -79,6 +79,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     paymentsettings;
     taxsettings;
     subdomainsettings;
+    showResources;
     showService = false;
     advanced = false;
     duration = { hour: 0, minute: 0 };
@@ -181,6 +182,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
+                    this.showResources = this.subdomainsettings.serviceSharing;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
                     if (this.action === 'add') {

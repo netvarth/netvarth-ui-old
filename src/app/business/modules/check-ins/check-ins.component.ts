@@ -470,6 +470,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.active_user);
     if (this.active_user.adminPrivilege) {
       this.admin = true;
     }
@@ -3317,13 +3318,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     
   }
   createInstantQ(){
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.instantdialogRef = this.dialog.open(instantQueueComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
        location:this.selected_location,
-       userId:this.activeUser
+       userId:loggedUser.id
       }
     });
     this.instantdialogRef.afterClosed().subscribe(result => {

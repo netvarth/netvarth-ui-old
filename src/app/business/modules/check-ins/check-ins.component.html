@@ -29,6 +29,11 @@
               <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
+          <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1">
+            <a  (click)="createInstantQ()">
+             <span class="bold make-avail-txt-red">Make me available</span>
+           </a>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -169,11 +174,11 @@
                    <span class="bold">I am not available now</span>
                  </a>
                 </li> -->
-                <li class="dropdown notifications-menu " *ngIf="account_type == 'BRANCH' && active_user.userType == 1">
+                <!-- <li class="dropdown notifications-menu " *ngIf="account_type == 'BRANCH' && active_user.userType == 1">
                   <a  (click)="createInstantQ()">
                    <span class="bold">Make me available</span>
                  </a>
-                </li>
+                </li> -->
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
                   style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
                   <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"

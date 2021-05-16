@@ -24,12 +24,12 @@
         {{service_data.description | capitalizeFirst}}
       </div>
       <div class="c-ot">
-          <div class="item" *ngIf="!is_donation">
+          <div class="item" *ngIf="!is_donation && showResources">
               <span class="ttle">Number of resources</span>
               <span > {{service_data.resoucesRequired}}
               </span>
             </div>
-            <div class="item" *ngIf="!is_donation">
+            <div class="item" *ngIf="!is_donation && showResources">
                 <span class="ttle">Maximum bookings</span>
                 <span > {{service_data.maxBookingsAllowed}}
                 </span>
@@ -305,7 +305,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  })"> </app-field-error-display> -->
         </ng-container>
       </div>
-<div class="col-md-6">
+<div class="col-md-6" *ngIf="showResources">
       <div class="form-group" *ngIf="!is_donation">
         <mat-form-field>
           <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
@@ -314,7 +314,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
       </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="showResources">
       <div class="form-group" *ngIf="!is_donation">
         <mat-form-field>
           <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
