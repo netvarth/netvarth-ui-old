@@ -9,7 +9,7 @@
 <div class="action-section col-md-12 no-padding" *ngIf="action==='' && !apiloading">
     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10" *ngIf="!data.multiSelection">
         <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''" style="font-weight: bold;">
-            Appointment for : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
+            {{customer_label | capitalizeFirst}} Name : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
         <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''" style="font-weight: bold;;">
             {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
         <p style="font-weight: bold;">Appointment Time : {{getSingleTime(appt.appmtTime)}}

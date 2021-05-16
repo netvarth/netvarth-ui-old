@@ -8,11 +8,12 @@
 </div>
 <div class="action-section col-md-12 no-padding" *ngIf="action === '' && !apiloading">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!data.multiSelection">
+        
         <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">
-            Token for : {{checkin.waitlistingFor[0].firstName}}
+            {{customer_label | capitalizeFirst}} Name : {{checkin.waitlistingFor[0].firstName}}
             {{checkin.waitlistingFor[0].lastName}}</p>
         <p *ngIf="!checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">
-            Check-in for : {{checkin.waitlistingFor[0].firstName}}
+            {{customer_label | capitalizeFirst}} Name : {{checkin.waitlistingFor[0].firstName}}
             {{checkin.waitlistingFor[0].lastName}}</p>
         <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
             {{customer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
