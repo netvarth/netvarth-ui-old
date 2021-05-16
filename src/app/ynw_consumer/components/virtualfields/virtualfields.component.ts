@@ -289,16 +289,17 @@ export class VirtualFieldsComponent implements OnInit {
         }
       );
     } else {
-
+      if(formdata.serviceFor==='new_member'){
+        this.saveMember(formdata).then(data=>{
+         this.dialogRef.close({newMemberId:data});
+        })
+      }else{
       this.updateMemberInfo(formdata).then(
         ()=> {
           this.dialogRef.close(formdata);
         }
       );
-    } if(formdata.serviceFor==='new_member'){
-     this.saveMember(formdata).then(data=>{
-      this.dialogRef.close({newMemberId:data});
-     })
+    } 
       
      
     }
@@ -346,11 +347,12 @@ export class VirtualFieldsComponent implements OnInit {
     const memberInfo = formdata['serviceFor'];
       memberInfo.userProfile = {}
       memberInfo.bookingLocation = {}
+      memberInfo.userProfile['id'] = formdata.serviceFor['user'];
       memberInfo.userProfile['gender'] = formdata.gender;
       memberInfo.userProfile['firstName'] = firstName;
       memberInfo.userProfile['lastName'] = lastName;
       memberInfo.userProfile['dob'] = formdata.dob;
-      memberInfo.userProfile['pincode'] = formdata.pincode;
+      memberInfo.bookingLocation['pincode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
         memberInfo['preferredLanguages'] =['English'];
       }else{
@@ -388,7 +390,7 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo['userProfile']['firstName'] = formdata.firstName;
       memberInfo['userProfile']['lastName'] = formdata.lastName;
       memberInfo['userProfile']['dob'] = formdata.dob;
-      memberInfo['userProfile']['pincode'] = formdata.pincode;
+      memberInfo['bookingLocation']['pincode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
         memberInfo['preferredLanguages'] =['English'];
       }else{
