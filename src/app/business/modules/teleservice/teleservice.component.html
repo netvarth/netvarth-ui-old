@@ -21,7 +21,7 @@
 
                 <div class="card col-md-12 col-lg-12 col-sm-12 col-xs-12">
                     <div class="card-body p-0">
-                        <div class="col-12 col-sm-7 col-lg-7 p-0">
+                        <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
                         <div class="d-flex align-items-end">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex flex-column">
@@ -73,9 +73,9 @@
                                             <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].email}}</span>
                                         </div>
                                         <div class="stats-item" *ngIf="data.appmtFor[0].gender">
-                                            <i *ngIf="data.appmtFor[0].gender == 'male'"
+                                            <i *ngIf="data.appmtFor[0].gender == 'Male'"
                                                 class="fas fa-mars text-success"></i>
-                                            <i *ngIf="data.appmtFor[0].gender == 'female'"
+                                            <i *ngIf="data.appmtFor[0].gender == 'Female'"
                                                 class="fas fa-mars-stroke text-success"></i>
                                             <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].gender |
                                                 capitalizeFirst}}</span>
@@ -85,7 +85,7 @@
                             </div>
                         </div>
 </div>
-<div class="card-toolbar col-12 col-sm-5 col-lg-5 p-0 disp-grid">
+<div class="card-toolbar col-md-3 col-sm-3 col-xs-12 col-lg-3 p-0 disp-grid">
     <div class="action-buttons-container">
         <a (click)="shareBookingActions()" class="btn mb-2 action-button">
             Actions
@@ -194,18 +194,18 @@
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
                                 *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
                                
-
-                                <button *ngIf="is_web && waiting_type == 'checkin'" (click)="changeWaitlistStatus(data, 'STARTED')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                
+                                <button *ngIf="is_web && waiting_type == 'checkin' && data.waitlistStatus != 'started'" (click)="changeWaitlistStatus(data, 'STARTED')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
                                     <i class="start-icon"
                                         aria-hidden="true"></i>
                                     <a class="tspace">Move to In progress</a>
                                 </button>
-                                <button *ngIf="is_web && waiting_type != 'checkin'" (click)="changeWaitlistStatus(data, 'Started')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                <button *ngIf="is_web && waiting_type != 'checkin' && data.apptStatus != 'Started'" (click)="changeWaitlistStatus(data, 'Started')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
                                     <i class="start-icon"
                                         aria-hidden="true"></i>
                                     <a class="tspace">Move to In progress</a>
                                 </button>
-                               
+                                
                                 <button type="button" (click)="endmeeting()"
                                     class="cs-btn bt1 btn-red txt-trans-none">End
                                     Meeting</button>
