@@ -346,4 +346,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return false;
         }
     }
+    getAge(age) {
+        age = age.split(',');
+        return age[0];
+    }
 }
