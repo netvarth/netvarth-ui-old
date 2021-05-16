@@ -169,7 +169,7 @@
                    <span class="bold">I am not available now</span>
                  </a>
                 </li> -->
-                <li class="dropdown notifications-menu " *ngIf="qAvailability && !qAvailability.availableNow && active_user.userType == 1">
+                <li class="dropdown notifications-menu " *ngIf="account_type == 'BRANCH' && active_user.userType == 1">
                   <a  (click)="createInstantQ()">
                    <span class="bold">Make me available</span>
                  </a>
@@ -491,10 +491,10 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
                         </div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
+                        <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
-                        </div>
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
@@ -744,10 +744,10 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
                         </div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
+                        <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
-                        </div>
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
@@ -1134,10 +1134,10 @@
                         {{checkin.service.name}}
 
                       </div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
+                      <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                         {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
-                      </div>
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
@@ -1584,10 +1584,10 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         {{checkin.service.name}}
                       </div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
+                      <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                         {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
-                      </div>
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"

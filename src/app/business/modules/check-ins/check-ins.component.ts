@@ -3322,7 +3322,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-       location:this.selected_location
+       location:this.selected_location,
+       userId:this.activeUser
       }
     });
     this.instantdialogRef.afterClosed().subscribe(result => {

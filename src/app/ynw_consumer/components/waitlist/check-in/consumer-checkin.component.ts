@@ -805,6 +805,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     console.log(memberObject);
                     if (list['id'] !== this.customer_data.id) {
                        // this.confirmVirtualServiceinfo(memberObject, type);
+                       this.confirmcheckin(type);
                     } else {
                         this.confirmcheckin(type);
                     }
