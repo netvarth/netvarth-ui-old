@@ -55,6 +55,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   showMenuSection = false;
   action = '';
   phoneNumber = '';
+  userData;
+  userDetails: any = [];
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -106,6 +108,10 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.getBusinessdetFromLocalstorage();
       // this.connect();
     });
+    this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
+      this.getUserDetails();
+    }
   }
   closeMenu() {
     const screenWidth = window.innerWidth;
@@ -177,11 +183,23 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
-      this.bname = bdetails.bn || 'User';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
+      if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
+        this.bname = this.userData.userName || 'User';
+        this.blogo = this.userDetails.profilePicture.url || '../../../assets/images/img-null.svg';
+      } else {
+        this.bname = bdetails.bn || 'User';
+        this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
+      }
     }
+  }
+  getUserDetails() {
+    this.provider_services.getUser(this.userData.id)
+      .subscribe(
+        res => {
+          this.userDetails = res;
+        });
   }
   ngOnInit() {
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
