@@ -91,9 +91,9 @@
                     <label class="col-form-label" for="gender">{{gender_cap}} <span class="red">*</span></label>
                     <br />
                     <mat-radio-group formControlName="gender" class="mgn-up-5">
-                        <mat-radio-button value="Male">Male</mat-radio-button>
-                        <mat-radio-button value="Female">Female</mat-radio-button>
-                        <mat-radio-button value="Others">Other</mat-radio-button>
+                        <mat-radio-button value="male">Male</mat-radio-button>
+                        <mat-radio-button value="female">Female</mat-radio-button>
+                        <mat-radio-button value="others">Other</mat-radio-button>
                     </mat-radio-group>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
                         errorMsg="Please select the gender.">

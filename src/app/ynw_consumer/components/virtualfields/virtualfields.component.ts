@@ -108,7 +108,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
     } else {
-      this.virtualForm.patchValue({ gender: 'Male' });
+      this.virtualForm.patchValue({ gender: 'male' });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
@@ -145,7 +145,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
     } else {
-      this.virtualForm.patchValue({ gender: 'Male' });
+      this.virtualForm.patchValue({ gender: 'male' });
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
