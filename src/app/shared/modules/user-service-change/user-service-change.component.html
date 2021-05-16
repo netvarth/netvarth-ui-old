@@ -67,7 +67,7 @@
                     <td class="display-min-none">
                       {{service.languages}}
                     </td>
-                    <td class="display-min-none">
+                    <td class="display-min-none" [ngClass]="service.isAvailable ? 'greenc' : 'red'">
                       {{(service.isAvailable) ? 'Available' : 'Not Available'}}
                     </td>
                 </tbody>

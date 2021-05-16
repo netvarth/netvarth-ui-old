@@ -4,7 +4,7 @@
     border: 1px solid #ccc;
 }
 
-.form-control {
+.virtual-fields .form-control {
     display: block !important;
     width: 100% !important;
     height: 34px !important;
