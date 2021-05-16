@@ -114,3 +114,53 @@ textarea {
         width: 20px !important;
     }
 }
+
+
+
+
+.action-buttons-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+}
+
+.action-button {
+    color: #1E4079 !important;
+    background-color: white !important;
+    border: 1px solid #1E4079 !important;
+    font-weight: 700 !important;
+    padding: 5px !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    min-width: 31% !important;
+    max-width: 100% !important;
+    margin-left: 2.5px !important;
+    margin-right: 2.5px !important;
+    flex: 1 1 auto !important;
+    white-space: normal !important;
+}
+
+.action-button:hover {
+    color: white !important;
+    background: #1E4079 !important;
+    font-weight: 500 !important;
+}
+
+.action-button i.fa {
+    font-family: 'FontAwesome' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    color: inherit !important;
+    vertical-align: baseline !important;
+}
+@media (min-width: 992px) {
+    .content {
+        padding: 25px 10px !important;
+    }
+}
+.start-icon {
+    width: 20px !important;
+    margin-bottom: -5px !important;
+}

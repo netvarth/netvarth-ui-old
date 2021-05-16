@@ -1,21 +1,104 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button> -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToPreviousPage()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         
-        
-           
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToPreviousPage()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </h5>
     </div>
 </section>
 <section class="teleservicePopup">
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     <div class="content loc-list" *ngIf="!api_loading">
-        <div class="col-md-12 no-padding-small">
+        <div class="col-md-12">
             <div class="row">
+
+
+
+
+
+
+
+
+                <div class="card col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="card-body p-0">
+                        <div class="col-12 col-sm-7 col-lg-7 p-0">
+                        <div class="d-flex align-items-end">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column">
+                                    <div class="stats-item"
+                                        *ngIf="waiting_type == 'checkin' && (data.waitlistingFor[0].firstName || data.waitlistingFor[0].lastName)">
+                                        <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
+                                            *ngFor="let user of data.waitlistingFor">
+                                            {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                        </h5>
+                                        <div class="stats-item" *ngIf="data.waitlistingFor[0].id">
+                                            <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
+                                                {{data.waitlistingFor[0].memberJaldeeId}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.waitlistPhoneNumber">
+                                            <i class="fas fa-mobile-alt text-success"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.countryCode}}
+                                                {{data.waitlistPhoneNumber}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.waitlistingFor[0].email">
+                                            <i class="text-success far fa-envelope"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].email}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.waitlistingFor[0].gender">
+                                            <i *ngIf="data.waitlistingFor[0].gender == 'Male'"
+                                                class="fas fa-mars text-success"></i>
+                                            <i *ngIf="data.waitlistingFor[0].gender == 'Female'"
+                                                class="fas fa-mars-stroke text-success"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].gender |
+                                                capitalizeFirst}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mgn-up-10 stats-item"
+                                        *ngIf="waiting_type != 'checkin' && (data.appmtFor[0].firstName || data.appmtFor[0].lastName)">
+                                        <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
+                                            *ngFor="let user of data.appmtFor">
+                                            {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                        </h5>
+                                        <div class="stats-item" *ngIf="data.appmtFor[0].id">
+                                            <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
+                                                {{data.appmtFor[0].memberJaldeeId}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.phoneNumber">
+                                            <i class="fas fa-mobile-alt text-success"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.countryCode}}
+                                                {{data.phoneNumber}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.appmtFor[0].email">
+                                            <i class="text-success far fa-envelope"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].email}}</span>
+                                        </div>
+                                        <div class="stats-item" *ngIf="data.appmtFor[0].gender">
+                                            <i *ngIf="data.appmtFor[0].gender == 'male'"
+                                                class="fas fa-mars text-success"></i>
+                                            <i *ngIf="data.appmtFor[0].gender == 'female'"
+                                                class="fas fa-mars-stroke text-success"></i>
+                                            <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].gender |
+                                                capitalizeFirst}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+</div>
+<div class="card-toolbar col-12 col-sm-5 col-lg-5 p-0 disp-grid">
+    <div class="action-buttons-container">
+        <a (click)="shareBookingActions()" class="btn mb-2 action-button">
+            Actions
+        </a>
+    </div>
+</div>
+                    </div>
+                </div>
+
+
+
+
+
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 no-padding">
@@ -26,8 +109,10 @@
                                     <div>
                                         <h2 class="serv-name-color fnt-lrge">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon "></i>
-                                            <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon video-wdth"></i>
-                                            <i class="fa jvideo-icon jvideo-icon-sm jvideo-icon-mgm5" *ngIf="callingModes === 'VideoCall'"></i>
+                                            <i *ngIf="callingModes === 'GoogleMeet'"
+                                                class="fa meet-icon video-wdth"></i>
+                                            <i class="fa jvideo-icon jvideo-icon-sm jvideo-icon-mgm5"
+                                                *ngIf="callingModes === 'VideoCall'"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'audioService'"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'videoService'"
@@ -35,7 +120,8 @@
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon video-wdth"></i>
                                             &nbsp;{{serv_name}}
                                         </h2><br>
-                                        <h6 class="txt-grn" *ngIf="servStarted">{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} consultation in progress...</h6>
+                                        <h6 class="txt-grn" *ngIf="servStarted">{{(servDetails?.virtualServiceType ==
+                                            'videoService')? 'Video' : 'Audio'}} consultation in progress...</h6>
                                     </div>
                                 </div>
                                 <!-- Warning If telemode is WhatsApp/Phone -->
@@ -43,17 +129,22 @@
                                     *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
                                     <div>
                                         <div class="custmer-font-wght">
-                                            <span
-                                                class="text-red">*{{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}</span>
+                                            <span class="text-red">*{{(callingModes == 'Phone')? 'Phone' :
+                                                'WhatsApp'}}</span>
                                             <span class="text-red"> {{notSupported}}</span><br>
                                             <span><a (click)="meetingDetails()">
-                                                Send {{(servDetails?.virtualServiceType == 'videoService')? 'video' : 'audio'}} call {{ph_or_tab_cap}}
+                                                    Send {{(servDetails?.virtualServiceType == 'videoService')? 'video'
+                                                    : 'audio'}} call {{ph_or_tab_cap}}
                                                     {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
                                                     {{installed_cap}}
                                                 </a></span>
                                         </div>
                                     </div>
+
                                     <div class="mgn-up-10">
+                                         +{{data.virtualService['WhatsApp']}}
+                                    </div>
+                                    <!-- <div class="mgn-up-10">
                                         <i class="fa fa-file-text-o fnt-file"
                                             aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <img class="nxt-icon" src="assets/images/next.png" alt="nexticon">
@@ -62,21 +153,21 @@
                                             src="assets/images/whtsapLogo.png" alt="WhatsAppicon">
                                         <img *ngIf="callingModes === 'Phone'" class="wtsap-img"
                                             src="assets/images/phone.png" alt="phoneicon">
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
-                                        <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
-                                        <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                        <!-- <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon"> -->
+                                        <!-- <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                             <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
                                                     *ngIf="waiting_type === 'checkin'">
                                                     {{consumer_lname | capitalizeFirst}}
                                                 </span></b>
-                                        </div>
+                                        </div> -->
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                            <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none">
+                                            <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
                                                 <i *ngIf="!servStarted" class="fa fa-bell fa-blk"
                                                     aria-hidden="true"></i>
                                                 <i *ngIf="servStarted" class="fa fa-envelope-o fa-blk fnt-600"
@@ -86,7 +177,8 @@
                                             <button (click)="meetingDetails()"
                                                 class="btn-primary-n tele-btn txt-trans-none">
                                                 <i class="fa fa-share-alt fa-blk" aria-hidden="true"></i>
-                                                <a class="tspace">Share {{(servDetails?.virtualServiceType == 'videoService')? 'video' : 'audio'}} call instructions</a>
+                                                <a class="tspace">Share {{(servDetails?.virtualServiceType ==
+                                                    'videoService')? 'video' : 'audio'}} call instructions</a>
                                             </button>
                                             <!-- <button *ngIf = "serv_type === 'audioService'" (click)="meetingDetails()"
                                                 class="btn-primary-n tele-btn txt-trans-none">
@@ -101,26 +193,39 @@
                             <!-- End Meeting for whatsapp/phone if opened in web -->
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
                                 *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
+                               
+
+                                <button *ngIf="is_web && waiting_type == 'checkin'" (click)="changeWaitlistStatus(data, 'STARTED')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                    <i class="start-icon"
+                                        aria-hidden="true"></i>
+                                    <a class="tspace">Move to In progress</a>
+                                </button>
+                                <button *ngIf="is_web && waiting_type != 'checkin'" (click)="changeWaitlistStatus(data, 'Started')" class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                    <i class="start-icon"
+                                        aria-hidden="true"></i>
+                                    <a class="tspace">Move to In progress</a>
+                                </button>
+                               
                                 <button type="button" (click)="endmeeting()"
                                     class="cs-btn bt1 btn-red txt-trans-none">End
                                     Meeting</button>
                             </div>
-
-
 
                             <!-- Start consultation for gmeet/zoom/wtsap/phone-->
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10"
                                 *ngIf="(step === 1 && !servStarted)">
                                 <div
                                     [ngClass]="{'dv-launch-video-serv' : ((servDetails?.virtualServiceType === 'videoService') || (servDetails?.virtualServiceType === 'VideoCall')), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
-                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone') && (callingModes !== 'VideoCall')" class="strtvideo">
+                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone') && (callingModes !== 'VideoCall')"
+                                        class="strtvideo">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <b>
                                                 Start
-                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' :
+                                                'Audio'}}
                                                 Consultation
                                             </b>
                                         </button>
@@ -128,23 +233,24 @@
                                     </div>
                                     <!-- If teleservice is wtsap/phone modes -->
 
-                                    <div
-                                        *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web" class="strtaudio">
+                                    <div *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web"
+                                        class="strtaudio">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
-                                            <i *ngIf="callingModes === 'WhatsApp'"
-                                                class="fa wtsapaud-icon"></i>
+                                            <i *ngIf="callingModes === 'WhatsApp'" class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon"></i>
                                             <b> &nbsp;Start
-                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' :
+                                                'Audio'}}
                                                 Consultation
                                             </b>
                                         </button>
                                     </div>
-                                    <div  *ngIf="callingModes === 'VideoCall'" class="strtvideo">
+                                    <div *ngIf="callingModes === 'VideoCall'" class="strtvideo">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
-                                            <i *ngIf="callingModes === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                            <i *ngIf="callingModes === 'VideoCall'"
+                                                class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
                                             <b> &nbsp;Start Video Consultation</b>
                                         </button>
                                     </div>
@@ -153,28 +259,33 @@
                             <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-20  no-padding"
-                                *ngIf="servStarted && ((callingModes === 'Zoom' || callingModes === 'GoogleMeet' || callingModes === 'VideoCall') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
-                                <button type="button" (click)="endmeeting()"
-                                    class="cs-btn bt1 btn-red txt-trans-none mgn-bt-10">Done with {{(servDetails?.virtualServiceType == 'videoService')? 'video' : 'audio'}} consultation</button> &nbsp;&nbsp;&nbsp;
-                                <a *ngIf="(callingModes !== 'Phone' && callingModes !== 'VideoCall')" target="_blank" [href]="starting_url">
-                                    <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch {{callingModes}}
-                                    </button>
-                                </a>
-                                <a *ngIf="(callingModes === 'VideoCall')" target="_self" (click)="relauchMeeting(starting_url)" >
-                                    <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch {{callingModes}}
-                                    </button>
-                                </a>
-                                <a *ngIf="(callingModes === 'Phone')" target="_blank" [href]="'tel:' + starting_url">
-                                    <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch {{callingModes}}
-                                    </button>
-                                </a>
-                            </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-20  no-padding"
+                                        *ngIf="servStarted && ((callingModes === 'Zoom' || callingModes === 'GoogleMeet' || callingModes === 'VideoCall') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
+                                        <button type="button" (click)="endmeeting()"
+                                            class="cs-btn bt1 btn-red txt-trans-none mgn-bt-10">Done with
+                                            {{(servDetails?.virtualServiceType == 'videoService')? 'video' : 'audio'}}
+                                            consultation</button> &nbsp;&nbsp;&nbsp;
+                                        <a *ngIf="(callingModes !== 'Phone' && callingModes !== 'VideoCall')"
+                                            target="_blank" [href]="starting_url">
+                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                                {{callingModes}}
+                                            </button>
+                                        </a>
+                                        <a *ngIf="(callingModes === 'VideoCall')" target="_self"
+                                            (click)="relauchMeeting(starting_url)">
+                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                                {{callingModes}}
+                                            </button>
+                                        </a>
+                                        <a *ngIf="(callingModes === 'Phone')" target="_blank"
+                                            [href]="'tel:' + starting_url">
+                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                                {{callingModes}}
+                                            </button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="lbr col-sm-12 col-md-6 col-lg-6 col-xs-12 no-padding">
-
                         </div>
                     </div>
                 </div>
