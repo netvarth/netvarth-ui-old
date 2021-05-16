@@ -307,36 +307,33 @@ export class VirtualFieldsComponent implements OnInit {
   }
   updateParentInfo(formdata) {
     console.log(formdata);
+    const _this = this;
+    const firstName=_this.customer_data.userProfile.firstName
+    const lastName=_this.customer_data.userProfile.lastName;
     return new Promise(function (resolve, reject) {
       const userObj = {};
-      userObj['id'] = formdata['id'];
+      userObj['id'] = _this.customer_data.id;
       const userProfile = {}
       userProfile['gender'] = formdata.gender;
+      userProfile['firstName']=firstName;
+      userProfile['lastName']=lastName;
       userProfile['dob'] = formdata.dob;
-      userProfile['pinCode'] = formdata.pinCode;
+      userProfile['pinCode'] = formdata.pincode;
+      if(formdata.islanguage==='yes'){
+      userProfile['preferredLanguages']  =['English'];
+      }else{
       userProfile['preferredLanguages'] = formdata.preferredLanguages;
+      }
       userObj['userProfile'] = userProfile;
-      resolve(true);
-      // {
-      //   "id": 4,
-      //   "userProfile": {
-      //     "city": "Mananthavady",
-      //     "state": "Kerala",
-      //     "dob": "2004-01-12",
-      //     "gender": "Male",
-         
-      //     "pinCode": "670645",
-      //     "preferredLanguages": "[\"English\"]"
-      //   }
-      // }
-      // this.sharedServices.updateProfile(userProfile, 'consumer').subscribe(
-      //   () => {
-      //     resolve(true);
-      //   }, (error) => {
-      //     console.log(error);
-      //     resolve(false);
-      //   }
-      // )
+
+      _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
+        () => {
+          resolve(true);
+        }, (error) => {
+          console.log(error);
+          resolve(false);
+        }
+      )
     });
   }
   updateMemberInfo(formdata) {
