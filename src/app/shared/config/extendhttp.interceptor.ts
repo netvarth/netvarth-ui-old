@@ -19,25 +19,13 @@ import { LocalStorageService } from '../services/local-storage.service';
 export class ExtendHttpInterceptor implements HttpInterceptor {
   no_redirect_path = [
     base_url + 'consumer/login',
-    base_url + 'superadmin/login',
-    base_url + 'support/login',
-    base_url + 'marketing/login',
-    base_url + 'provider/login',
     base_url + 'consumer/login/reset/\d{10,12}'
   ];
   reload_path = [
     base_url + 'consumer/communications/unreadCount',
     base_url + 'consumer/waitlist',
-    base_url + 'provider/communications/unreadCount',
-    base_url + 'provider/waitlist/history/count/?location-eq=\d{10,12}',
-    base_url + 'provider/waitlist/future/count/?location-eq=\d{10,12}',
-    base_url + 'provider/waitlist/history/count/',
-    base_url + 'provider/waitlist/future/count/',
-    base_url + 'provider/waitlist/today',
     base_url + 'provider/alerts/count',
-    base_url + 'provider/today/count',
-    base_url + 'provider/communications/unreadCount',
-    base_url + 'provider/alerts/count?ackStatus-eq=false'
+    base_url + 'provider/communications/unreadCount'
   ];
   loaderDisplayed = false;
   loginAttempted = false;

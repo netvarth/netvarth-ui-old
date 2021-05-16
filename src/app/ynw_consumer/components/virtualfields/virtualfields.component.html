@@ -14,20 +14,46 @@
         <div class="mat-dialog-content" style="overflow: auto !important;" >
             <div *ngIf="hideLanguages">
                 <div class="">
-                    Please provide Information about you(one time setup). This information will be saved in your profile
+                    Please provide necessary information (one time setup). This information will be saved in your profile
                 </div>
                 <div class="mgn-up-10">
-                    <label class="col-form-label" for="name">Name </label>
+                    <label class="col-form-label" for="name">Consultation is For </label>
                     <br />
-                    {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}}
+                    <!-- <mat-form-field> -->
+                        <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
+                            <mat-radio-button [value]="customer_data">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button [value]="member" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button value="new_member">Someone else</mat-radio-button>
+                        </mat-radio-group>
+                        <!-- <mat-label>Service For</mat-label> -->
+                        <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
+                            <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
+                          <mat-option *ngFor="let member of familymembers" [value]="member.userProfile.id">
+                            {{member.userProfile.firstName}} {{member.userProfile.lastName}}
+                          </mat-option>
+                          <mat-option  [value]="new_member">Others  </mat-option>
+                        </mat-select> -->
+                      <!-- </mat-form-field> -->
+                    <!-- {{getFamilyMembers()}} -->
+                    <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
                 </div>
                 <div class="mgn-up-10">
                     <label class="col-form-label" for="phone">Phone # </label>
                     <br />
                     {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
                 </div>
+                <div class="form-group col-xs-12" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                    <mat-form-field>
+                        <input matInput placeholder="First Name"  formControlName="firstName">
+                      </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12"  *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                    <mat-form-field>
+                        <input matInput placeholder="Last Name"  formControlName="lastName">
+                      </mat-form-field>
+                </div>
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
-                    <label class="col-form-label" for="dob">Your Date of Birth <span class="red">*</span></label>
+                    <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                     <br />
                     <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
                         class="vt_dt no-padding mgn-up-5">
@@ -76,7 +102,7 @@
                 <!-- Signin Password -->
                 <div class="form-group pwd">
                     <!-- <mat-form-field> -->
-                    <label for="pincode" class="col-form-label">Enter the pin code where you live <span
+                    <label for="pincode" class="col-form-label">Residing Pincode <span
                             class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
                         formControlName="pincode" (keyup)="showLocations($event)">
@@ -120,7 +146,7 @@
             <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
                 <label class="col-form-label" for="preferredLanguage">Your preferred language
                     </label><br/>
-                <div class="col-form-label"><span >{{virtualForm.get('preferredLanguage').value}}</span>
+                <div class="col-form-label"><span style="word-wrap: break-word;" >{{virtualForm.get('preferredLanguage').value}}</span>
                     
                 <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x" style="font-size: large;"></i></span></div>
             </div>
