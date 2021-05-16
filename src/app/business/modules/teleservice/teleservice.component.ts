@@ -506,7 +506,6 @@ export class TeleServiceComponent implements OnInit {
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
-
         });
     }
     shareBookingActions() {
