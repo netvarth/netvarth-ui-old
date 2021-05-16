@@ -433,7 +433,10 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
+                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                          {{checkin.token}}</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
@@ -679,7 +682,10 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
+                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                          {{checkin.token}}</div>
+                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
@@ -1065,8 +1071,11 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
+                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                         {{checkin.token}}</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                          {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: newTimeDateFormat}}</div>
@@ -1514,8 +1523,11 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
+                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                         {{checkin.token}}</div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                          {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: newTimeDateFormat}}</div>
