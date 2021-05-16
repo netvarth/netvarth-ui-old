@@ -544,4 +544,8 @@ export class TeleServiceComponent implements OnInit {
             });
         }
     }
+    getAge(age) {
+        age = age.split(',');
+        return age[0];
+    }
 }

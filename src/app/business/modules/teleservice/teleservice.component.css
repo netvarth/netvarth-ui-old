@@ -164,3 +164,10 @@ textarea {
     width: 20px !important;
     margin-bottom: -5px !important;
 }
+i {
+    color: black !important;
+    width: 20px;
+}
+.line-hgt {
+    line-height: 1.7;
+}
