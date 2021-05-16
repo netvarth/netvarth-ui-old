@@ -8,6 +8,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SubSink } from 'subsink';
 import * as moment from 'moment';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class VirtualFieldsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
-    private sharedServices: SharedServices
+    private sharedServices: SharedServices,
+    private snackbarService: SnackbarService,
   ) {
     if (data) {
       this.data = this.s3Processor.getJson(data);
@@ -116,6 +118,7 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
+      if(preferredLanguage!==null && preferredLanguage.length>0){
       let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
       if (defaultEnglish === 'no') {
         if (memberObj.preferredLanguages.length > 0) {
@@ -130,6 +133,9 @@ export class VirtualFieldsComponent implements OnInit {
       }
       this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
     }
+  }else{
+    this.virtualForm.patchValue({ islanguage: 'yes' });
+  }
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
@@ -153,11 +159,13 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
-      if (preferredLanguage !== null) {
+      if (preferredLanguage !== null&&preferredLanguage.length>0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
         this.lngknown = defaultEnglish;
         this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+      }else{
+        this.virtualForm.patchValue({ islanguage: 'yes' });
       }
     }
     if (customer.userProfile && customer.userProfile.pinCode) {
@@ -191,7 +199,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.hideLanguages = false;
   }
   updateForm() {
-    this.lngknown = 'yes';
+    // this.lngknown = 'yes';
     this.details = this.data;
     if (this.details.parent) {
       this.setMemberDetails(this.details);
@@ -229,15 +237,17 @@ export class VirtualFieldsComponent implements OnInit {
     }
   }
   validateFields() {
+    let isinvalid=false;
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-      return true;
+      isinvalid =true;
     }
     if (this.virtualForm.get('dob').value === '') {
-      return true;
+      isinvalid = true;
     }
-    if (this.lngknown === 'no') {
+    console.log( this.virtualForm.get('islanguage').value);
+    if ( this.virtualForm.get('islanguage').value=== 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
-        return true;
+        isinvalid = true;
       }
     }
     if(this.virtualForm.get('serviceFor').value==='new_member'){
@@ -245,12 +255,14 @@ export class VirtualFieldsComponent implements OnInit {
       console.log(this.virtualForm.get('firstName').value);
       console.log(this.virtualForm.get('lastName').value);
       if(this.virtualForm.get('firstName').value==''){
-        return true;
+        isinvalid = true;
       }
       if(this.virtualForm.get('lastName').value==''){
-        return true;
+        isinvalid = true;
       }
     }
+    console.log(isinvalid);
+    return isinvalid;
   }
 
   fetchLocationByPincode(pincode) {
@@ -288,28 +300,34 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
-  
-    if (this.is_parent) {
-      this.updateParentInfo(formdata).then(
-        ()=> {
-          this.dialogRef.close(formdata);
-        }
-      );
-    } else {
-      if(formdata.serviceFor==='new_member'){
-        this.saveMember(formdata).then(data=>{
-         this.dialogRef.close({newMemberId:data});
-        })
-      }else{
-      this.updateMemberInfo(formdata).then(
-        ()=> {
-          this.dialogRef.close(formdata);
-        }
-      );
-    } 
-      
-     
+    if(this.validateFields()===true){
+      this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
+    }else{
+      if (this.is_parent) {
+        this.updateParentInfo(formdata).then(
+          ()=> {
+            this.dialogRef.close(formdata);
+          }
+        );
+      } else {
+        if(formdata.serviceFor==='new_member'){
+          this.saveMember(formdata).then(data=>{
+           this.dialogRef.close({newMemberId:data});
+          })
+        }else{
+        this.updateMemberInfo(formdata).then(
+          ()=> {
+            this.dialogRef.close(formdata);
+          }
+        );
+      } 
+        
+       
+      }
+
     }
+  
+   
     
   }
   updateParentInfo(formdata) {
@@ -327,7 +345,7 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
-        userObj['preferredLanguages']  =JSON.stringify(['English']);
+        userObj['preferredLanguages']  =['English'];
       }else{
         userObj['preferredLanguages'] = formdata.preferredLanguages;
       }
