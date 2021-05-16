@@ -23,9 +23,57 @@
                     <th class="display-min-none" style="min-width: 125px;">Phone number</th>
                     <th class="display-min-none" style="width: 30%;">Specializations</th>
                     <th class="display-min-none">Languages</th>
-                    <th class="display-min-none">Availability</th>
+                    <th class="display-min-none" style="width: 150px;">Availability
+                      <i class="icon-filter-one pointer-cursor" (click)="showFilterSidebar()">
+                      </i>
+                    </th>
                   </tr>
                 </thead>
+                <aside class="filterSidebar" *ngIf="filter_sidebar">
+                  <section class="sidebar" style="overflow:auto;height:568px">
+                    <div class="filterClosebtn">
+                      <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
+                        [matTooltip]="'Close filter window'"></i>
+                      <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                        [matTooltip]="'Reset filter'"> Clear
+                        All</span>
+                    </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
+                            (blur)="doSearch()" (keyup)="focusInput($event)" maxlength="20" class="filterTextbox"
+                            placeholder="First Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName (blur)="doSearch()"
+                            (keyup)="focusInput($event)" maxlength="10" class="filterTextbox" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode (blur)="doSearch()"
+                            (keyup)="focusInput($event)" maxlength="10" class="filterTextbox" placeholder="Pincode">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="location" [(ngModel)]="filter.location" #location (blur)="doSearch()"
+                            (keyup)="focusInput($event)" maxlength="20" class="filterTextbox" placeholder="Location">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo" #primaryMobileNo
+                            (blur)="doSearch()" (keyup)="focusInput($event)" maxlength="10" class="filterTextbox"
+                            placeholder="Phone Number">
+                        </li>
+                      </div>
+                    </ul>
+                  </section>
+                </aside>
                 <tbody>
                   <tr class="row_data border-bottom pointer-cursor"
                     *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i,service)">

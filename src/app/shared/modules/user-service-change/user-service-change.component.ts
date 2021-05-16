@@ -154,7 +154,7 @@ import { Messages } from '../../constants/project-messages';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { GroupStorageService } from '../../services/group-storage.service';
@@ -163,6 +163,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-user-service-change',
@@ -189,6 +190,24 @@ export class UserServiceChnageComponent implements OnInit {
   loading = true;
   customer_label = '';
   provider_label = '';
+  filter_sidebar = false;
+  filterapplied = false;
+
+  filter = {
+    firstName: '',
+    lastName: '',
+    location: '',
+    pincode: '',
+    primaryMobileNo: ''
+  };
+
+  filters: any = {
+    'firstName': false,
+    'lastName': '',
+    'location': false,
+    'pincode': false,
+    'primaryMobileNo': false
+  };
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -220,7 +239,8 @@ export class UserServiceChnageComponent implements OnInit {
     this.getProviders();
   }
   getProviders() {
-    const apiFilter = {};
+    let apiFilter = {};
+    apiFilter = this.setFilterForApi();
     apiFilter['userType-eq'] = 'PROVIDER';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.service_dataSource.data = this.setServiceDataSource(data);
@@ -321,8 +341,8 @@ export class UserServiceChnageComponent implements OnInit {
           this.provider_services.updateUserAppointment(post_data)
             .subscribe(
               data => {
-               // this.router.navigate(['provider', 'check-ins']);
-               this.location.back();
+                // this.router.navigate(['provider', 'check-ins']);
+                this.location.back();
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -333,8 +353,8 @@ export class UserServiceChnageComponent implements OnInit {
     });
   }
   redirecToReports() {
-   // this.router.navigate(['provider', 'check-ins']);
-   this.location.back();
+    // this.router.navigate(['provider', 'check-ins']);
+    this.location.back();
   }
   selectedRow(index, user) {
     this.selectrow = true;
@@ -372,4 +392,73 @@ export class UserServiceChnageComponent implements OnInit {
       this.showDetails[index] = true;
     }
   }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+    this.clearFilter();
+  }
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.getProviders();
+  }
+  resetFilter() {
+    this.filters = {
+      'firstName': false,
+      'lastName': false,
+      'location': false,
+      'pincode': false,
+      'primaryMobileNo': false
+    };
+    this.filter = {
+      firstName: '',
+      lastName: '',
+      location: '',
+      pincode: '',
+      primaryMobileNo: ''
+    };
+  }
+  doSearch() {
+    this.getProviders();
+    if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+  }
+  setFilterForApi() {
+    const api_filter = {};
+    if (this.filter.firstName !== '') {
+        api_filter['firstName-eq'] = this.filter.firstName;
+    }
+    if (this.filter.lastName !== '') {
+        api_filter['lastName-eq'] = this.filter.lastName;
+    }
+    if (this.filter.location !== '') {
+        api_filter['locationName-eq'] = this.filter.location;
+    }
+     if (this.filter.pincode !== '') {
+        api_filter['pinCode-eq'] = this.filter.pincode;
+    }
+    if (this.filter.primaryMobileNo !== '') {
+        const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+        const mval = pattern.test(this.filter.primaryMobileNo);
+        if (mval) {
+            api_filter['primaryMobileNo-eq'] = this.filter.primaryMobileNo;
+        } else {
+            this.filter.primaryMobileNo = '';
+        }
+    }
+    return api_filter;
+
+}
+focusInput(ev) {
+  const kCode = parseInt(ev.keyCode, 10);
+  if (kCode === 13) {
+      this.doSearch();
+
+  }
+}
 }
