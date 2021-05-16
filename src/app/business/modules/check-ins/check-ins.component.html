@@ -446,7 +446,7 @@
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="location" *ngIf="checkin.waitlistingFor[0].age">
-                            Age: {{checkin.waitlistingFor[0].age}}</div>
+                            Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
                             Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
                               <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
@@ -695,7 +695,7 @@
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].age">
-                            Age: {{checkin.waitlistingFor[0].age}}</div>
+                            Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
                             <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
                               Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
                                 <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
@@ -1080,7 +1080,7 @@
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                         <div class="location" *ngIf="checkin.waitlistingFor[0].age">
-                          Age: {{checkin.waitlistingFor[0].age}}</div>
+                          Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
                             Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
                               <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
@@ -1527,7 +1527,7 @@
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="location" *ngIf="checkin.waitlistingFor[0].age">
-                          Age: {{checkin.waitlistingFor[0].age}}</div>
+                          Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
                             Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
                               <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
