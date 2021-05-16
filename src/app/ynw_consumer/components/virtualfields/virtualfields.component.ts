@@ -316,18 +316,18 @@ export class VirtualFieldsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      const userProfile = {}
-      userProfile['gender'] = formdata.gender;
-      userProfile['firstName']=firstName;
-      userProfile['lastName']=lastName;
-      userProfile['dob'] = formdata.dob;
-      userProfile['pinCode'] = formdata.pincode;
+     // const userProfile = {}
+      userObj['gender'] = formdata.gender;
+      userObj['firstName']=firstName;
+      userObj['lastName']=lastName;
+      userObj['dob'] = formdata.dob;
+      userObj['pinCode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
-      userProfile['preferredLanguages']  =['English'];
+        userObj['preferredLanguages']  =['English'];
       }else{
-      userProfile['preferredLanguages'] = formdata.preferredLanguages;
+        userObj['preferredLanguages'] = formdata.preferredLanguages;
       }
-      userObj['userProfile'] = userProfile;
+     // userObj['userProfile'] = userProfile;
 
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
