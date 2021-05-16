@@ -248,7 +248,10 @@
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
         <div class="main-sec">
-            <div class="token" *ngIf="time_type!==3 && waitlist.token">
+            <div class="token" *ngIf="time_type!==3 && waitlist.token && !waitlist.provider">
+                {{waitlist.token}}
+            </div>
+            <div class="user-token" *ngIf="time_type!==3 && waitlist.token && waitlist.provider">
                 {{waitlist.token}}
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
@@ -281,7 +284,7 @@
             </div>
             <div class="box4">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
-                    <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
+                    <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
                     </span>
                     <span class="online-icon mgn-rt-10"
                         *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'ONLINE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'ONLINE_APPOINTMENT')">
@@ -293,7 +296,7 @@
                         *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'WALK_IN_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'WALK_IN_APPOINTMENT')">
                     </span>
                     <span class="dashboardarrived-icon checkin_status mgn-rt-10"
-                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span>
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span> -->
                     <span class="cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
                         (click)="stopProp($event);checkinActions(waitlist, 'note')">
                         <i class="icon-note"></i>

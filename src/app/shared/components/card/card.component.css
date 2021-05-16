@@ -958,3 +958,14 @@ button.fxmenu1{
 .view-details {
     margin-bottom: 3px;
 }
+.user-token {
+    border: 1px solid #eee;
+    padding: 20px 0px;
+    width: 70px;
+    text-align: center;    
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+    color: white;
+    background: #1E4079;
+}
