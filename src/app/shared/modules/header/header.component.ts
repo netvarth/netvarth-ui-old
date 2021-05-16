@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
@@ -135,7 +135,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           break;
         case 'load_unread_count':
           if (!message.action) {
-            this.getInboxUnreadCnt();
+            // this.getInboxUnreadCnt();
           } else if (message.action === 'setzero') {
             this.inboxUnreadCnt = 0;
             this.inboxCntFetched = true;
@@ -175,18 +175,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
     // Section which handles the periodic reload
-    if (this.ctype === 'consumer' || this.ctype === 'provider') {
-      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-        this.reloadHandler();
-      });
-    } else {
+    // if (this.ctype === 'consumer' || this.ctype === 'provider') {
+    //   this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+    //     this.reloadHandler();
+    //   });
+    // } else {
       // if (this.cronHandle) {
       //   this.cronHandle.unsubscribe();
       // }
-    }
-    if (this.ctype === 'consumer') {
-      this.getInboxUnreadCnt();
-    }
+    // }
+    // if (this.ctype === 'consumer') {
+    //   this.getInboxUnreadCnt();
+    // }
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
@@ -234,9 +234,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.cronHandle.unsubscribe();
     }
   }
-  reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections
-    this.getInboxUnreadCnt();
-  }
+  // reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections
+  //   this.getInboxUnreadCnt();
+  // }
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenHeight = window.innerHeight;
@@ -396,17 +396,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  getInboxUnreadCnt() {
-    let usertype;
-    usertype = this.ctype;
-    this.shared_service.getInboxUnreadCount(usertype)
-      .subscribe(data => {
-        this.inboxCntFetched = true;
-        this.inboxUnreadCnt = data;
-      },
-        () => {
-        });
-  }
+  // getInboxUnreadCnt() {
+  //   let usertype;
+  //   usertype = this.ctype;
+  //   this.shared_service.getInboxUnreadCount(usertype)
+  //     .subscribe(data => {
+  //       this.inboxCntFetched = true;
+  //       this.inboxUnreadCnt = data;
+  //     },
+  //       () => {
+  //       });
+  // }
   gototop() {
     window.scrollTo(0, 0);
   }

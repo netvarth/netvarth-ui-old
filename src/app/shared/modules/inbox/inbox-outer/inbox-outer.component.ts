@@ -9,7 +9,7 @@ import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { interval as observableInterval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
@@ -75,9 +75,9 @@ export class InboxOuterComponent implements OnInit {
     this.loading = true;
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
-    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
-      this.getInboxMessages();
-    });
+    // this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+    //   this.getInboxMessages();
+    // });
   }
   ngOnDestroy() {
     if (this.cronHandle) {

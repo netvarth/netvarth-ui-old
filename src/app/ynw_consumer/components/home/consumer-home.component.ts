@@ -1042,15 +1042,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.getAppointmentFuture();
             //  this.getWaitlist();
             // this.getWaitlistFuture();
-          } else if (data === 'reloadlist' && type === 'order') {
-            this.total_tdy_order = [];
-            this.todayOrderslst = [];
-            this.todayOrderslst_more = [];
-            this.total_future_order = [];
-            this.futureOrderslst = [];
-            this.futureOrderslst_more = [];
-            this.getTdyOrder();
-            this.getFutureOrder();
           }
 
         },
@@ -1409,17 +1400,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
-    } else {
-
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: checkin.uid,
-          accountId: checkin.providerAccount.id,
-          type: 'order',
-          'paidStatus': false
-        }
-      };
-      this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
     }
   }
   getMapUrl(latitude, longitude) {
@@ -1442,8 +1422,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getWaitlist();
       } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
-      } else if (result === 'reloadlist' && type === 'order') {
-        this.getTdyOrder();
       }
     });
   }
@@ -1839,18 +1817,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
-  // getWaitlistToday() {
-  //   this.consumer_services.getWaitlistToday()
-  //     .subscribe(
-  //       data => {
-  //         this.waitlists = data;
-  //       },
-  //       error => {
-  //       }
-  //     );
-  // }
-
   getWaitlistFuture() {
     const params = { 'waitlistStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
     this.subs.sink = this.consumer_services.getWaitlistFuture(params)
@@ -1859,7 +1825,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.future_waitlists = data;
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
           this.loading = false;
-          this.getTdyOrder();
           this.futureBookings = [];
           this.futureBookings_more = [];
           for (let i = 0; i < this.future_totalbookings.length; i++) {
@@ -1979,83 +1944,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Order Functions
-
-  getTdyOrder() {
-    this.orders = '';
-    this.total_tdy_order = [];
-    this.todayOrderslst = [];
-    this.todayOrderslst_more = [];
-    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
-    const params = {
-      'orderDate-eq': this.tDate
-    };
-    this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
-      this.orders = data; // saving todays orders
-      this.total_tdy_order = this.orders;
-      if (data) {
-        this.getFutureOrder();
-      }
-      // show more
-      this.todayOrderslst = [];
-      this.todayOrderslst_more = [];
-      for (let i = 0; i < this.total_tdy_order.length; i++) {
-        if (i <= 2) {
-          this.todayOrderslst.push(this.total_tdy_order[i]);
-        } else {
-          this.todayOrderslst_more.push(this.total_tdy_order[i]);
-        }
-      }
-    });
-  }
-  getFutureOrder() {
-    this.future_orders = '';
-    this.total_future_order = [];
-    this.futureOrderslst = [];
-    this.futureOrderslst_more = [];
-    // const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    // const serverdate = moment(server).format();
-    // const servdate = new Date(serverdate);
-    // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-    //   const params = {
-    //     'orderDate-gt': this.tDate
-    //   };
-    this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
-      this.future_orders = data; // saving future orders
-      this.total_future_order = this.future_orders;
-      // if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
-      //   this.showOrder = true;
-      // }
-      // show more
-      this.futureOrderslst = [];
-      this.futureOrderslst_more = [];
-      for (let i = 0; i < this.total_future_order.length; i++) {
-        if (i <= 2) {
-          this.futureOrderslst.push(this.total_future_order[i]);
-        } else {
-          this.futureOrderslst_more.push(this.total_future_order[i]);
-        }
-      }
-    });
-  }
-
-  showMoreTdyOrders() {
-    this.more_tdyOrdersShow = true;
-  }
-  showlessTdyOrders() {
-    this.more_tdyOrdersShow = false;
-  }
-  showMoreFutOrders() {
-    this.more_futrOrdersShow = true;
-  }
-  showlessFutOrders() {
-    this.more_futrOrdersShow = false;
-  }
-  showOrders() {
-    this.showOrder = true;
-    this.lStorageService.setitemonLocalStorage('orderStat', true);
-  }
   showBookings() {
     this.showOrder = false;
     this.lStorageService.setitemonLocalStorage('orderStat', false);

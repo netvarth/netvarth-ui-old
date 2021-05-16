@@ -709,30 +709,45 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
+            //     if(this.virtualInfo){
+            //         console.log(this.virtualInfo);
+            //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+            //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+            //     console.log(formattedDate);
+            //     this.waitlist_for[0]['dob']=formattedDate;
+            //     if(this.virtualInfo.islanguage==='yes'){
+            //         this.waitlist_for[0]['preferredLanguage']=['English'];
+            //     }else{
+            //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+            //     }
+            //     const bookingLocation={};
+            //     bookingLocation['pincode']=this.virtualInfo.pincode;
+            //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
+            //     if(this.virtualInfo.gender!==''){
+            //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+            //     }
+
+            // }
             if (this.virtualInfo) {
                 console.log(this.virtualInfo);
                 const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                 const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 console.log(formattedDate);
                 this.waitlist_for[0]['dob'] = formattedDate;
-                const virtualFields = this.lStorageService.getitemfromLocalStorage('customerInfo');
-                console.log(virtualFields);
-                if (virtualFields['preferredLanguage']) {
-                    this.waitlist_for[0]['preferredLanguage'] = virtualFields['preferredLanguage'];
+                if (this.virtualInfo.islanguage === 'yes') {
+                    let langs = [];
+                    langs.push('English');
+                    this.waitlist_for[0]['preferredLanguage'] = langs;
+                } else {
+                    let langs = [];
+                    langs = this.virtualInfo.preferredLanguage;
+                    this.waitlist_for[0]['preferredLanguage'] = langs;
                 }
-                if (virtualFields['location']) {
-                    const bookingLocation = {};
-                    bookingLocation['pincode'] = virtualFields['pincode'];
-                    bookingLocation['state'] = virtualFields['location']['State'];
-                    bookingLocation['district'] = virtualFields['location']['District'];                    
-                    bookingLocation['localArea'] = virtualFields['location']['Name'];
-                    this.waitlist_for[0]['bookingLocation'] = bookingLocation;                    
-                }
-                if (virtualFields['gender']) {
-                    this.waitlist_for[0]['gender'] = virtualFields['gender'];
-                }
-                if (virtualFields['dob']) {
-                    this.waitlist_for[0]['dob'] = virtualFields['dob'];
+                const bookingLocation = {};
+                bookingLocation['pincode'] = this.virtualInfo.pincode;
+                this.waitlist_for[0]['bookingLocation'] = bookingLocation;
+                if (this.virtualInfo.gender !== '') {
+                    this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
                 }
             }
         }
@@ -789,7 +804,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
                     console.log(memberObject);
                     if (list['id'] !== this.customer_data.id) {
-                        this.confirmVirtualServiceinfo(memberObject, type);
+                       // this.confirmVirtualServiceinfo(memberObject, type);
                     } else {
                         this.confirmcheckin(type);
                     }
@@ -1023,6 +1038,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.apiSuccess = '';
         }, 2000);
     }
+    setVirtualTeleserviceCustomer() {
+        if (this.virtualInfo && this.virtualInfo.newMemberId) {
+            this.waitlist_for = [];
+            this.newMember = this.virtualInfo.newMemberId;
+            const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
+            this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+        } if (this.virtualInfo && this.virtualInfo.serviceFor &&this.virtualInfo.serviceFor.user) {
+            this.waitlist_for = [];
+            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor.user);
+            console.log(current_member);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor.user, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+        }
+    }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
@@ -1144,6 +1172,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.getConsumerQuestionnaire();
                     } else {
                         this.questionnaireLoaded = true;
+                        if (this.sel_ser_det.serviceType === 'virtualService') {
+                            this.setVirtualTeleserviceCustomer();
+                        }
+
                     }
                 }
                 this.api_loading1 = false;
@@ -1283,34 +1315,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         } else {
                             _this.emailExist = false;
                         }
-                        let consumerdata = _this.userData;
-console.log("hhh");
-                        console.log(consumerdata);
-
-                        if (_this.lStorageService.getitemfromLocalStorage('customerInfo')) {
-                            _this.virtualFields = _this.lStorageService.getitemfromLocalStorage('customerInfo');
-                        } else {
-                            const virtualFields = {}
-                            if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
-                                virtualFields['dob'] = consumerdata.userProfile.dob;
-                                virtualFields['pincode'] = consumerdata.userProfile.pinCode;
-                                virtualFields['gender'] = consumerdata.userProfile.gender;
-                                let location = {};
-                                location['Name'] = consumerdata.userProfile.city;
-                                location['State'] = consumerdata.userProfile.state;
-                                location['Pincode'] = consumerdata.userProfile.pinCode;
-                          
-                                virtualFields['location'] = location;
-                                virtualFields['preferredLanguage'] = _this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-                                if (virtualFields['preferredLanguage'][0] === 'English') {
-                                  virtualFields['islanguage'] = 'yes';
-                                }
-                                _this.lStorageService.setitemonLocalStorage('customerInfo', virtualFields);
-                                _this.virtualFields = virtualFields;
-                            }
-                        }
-
-
                         resolve(true);
                     });
         });
@@ -2016,6 +2020,10 @@ console.log("hhh");
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
+            console.log(this.sel_ser);
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                this.setVirtualTeleserviceCustomer();
+            }
         });
     }
     showJCCouponNote(coupon) {

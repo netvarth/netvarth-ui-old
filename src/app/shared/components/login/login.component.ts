@@ -223,9 +223,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
-              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-              this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-              this.lStorageService.setitemonLocalStorage('qrp', data.password);
+              // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              this.lStorageService.setitemonLocalStorage('jld', data.password);
+              // this.lStorageService.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
             },
             error => {
