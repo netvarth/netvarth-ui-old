@@ -296,10 +296,12 @@ export class UserServiceChnageComponent implements OnInit {
     return service_list;
   }
   updateUser() {
-    // this.services_selected = this.selection.selected;
-    console.log(this.userId);
     let msg = '';
-    msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
+    if(this.selectedUser.isAvailable){
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
+     } else {
+      msg = this.selectedUser.Username + ' seems to be unavailable now. Assign anyway ? ';
+    }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
