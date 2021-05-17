@@ -242,6 +242,7 @@ export class UserServiceChnageComponent implements OnInit {
     let apiFilter = {};
     apiFilter = this.setFilterForApi();
     apiFilter['userType-eq'] = 'PROVIDER';
+    apiFilter['status-eq'] = 'ACTIVE';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.service_dataSource.data = this.setServiceDataSource(data);
     });

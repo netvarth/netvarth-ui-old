@@ -277,7 +277,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showloc">                        
                                         <div *ngFor="let locationDetails of locations; let idx = index">
                                             <mat-radio-button [checked]="idx === 0">
-                                               {{locationDetails.Name}} {{locationDetails.Block}} &nbsp;{{locationDetails.Region}}&nbsp;{{locationDetails.State}}
+                                               {{locationDetails.Name}},&nbsp;{{locationDetails.Block}},&nbsp;{{locationDetails.Region}},&nbsp;{{locationDetails.State}}
                                             </mat-radio-button>
                                         </div>
                                     </div>
