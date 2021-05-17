@@ -97,3 +97,10 @@
     color: green;
     font-size: small;
 }
+.avail-till {
+    background: green;
+    color: white;
+}
+.make-ofline-btn {
+    background: white;
+}
