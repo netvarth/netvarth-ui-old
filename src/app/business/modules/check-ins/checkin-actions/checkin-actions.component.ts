@@ -502,7 +502,7 @@ export class CheckinActionsComponent implements OnInit {
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
-        msg = 'Do you want to remove this ' + this.provider_label;
+        msg = 'Do you want to remove this ' + this.provider_label +'?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
