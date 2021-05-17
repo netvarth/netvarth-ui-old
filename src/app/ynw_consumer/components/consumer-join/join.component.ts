@@ -20,7 +20,7 @@ import { SubSink } from 'subsink';
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.scss'] 
+  styleUrls: ['./join.component.css'] 
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
@@ -216,7 +216,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                 console.log(user);
                 console.log(data);
                 if (user && (user.loginId === data.loginId && user.countryCode===data.countryCode)) {
-                  this.lStorageService.setitemonLocalStorage('jld', data.password);
+                  // this.lStorageService.setitemonLocalStorage('jld', data.password);
                   this.dialogRef.close('success');
                 } else {
                   _this.shared_services.ConsumerLogout().subscribe(

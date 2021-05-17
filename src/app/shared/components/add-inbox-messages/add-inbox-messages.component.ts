@@ -17,7 +17,8 @@ import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 @Component({
   selector: 'app-add-inbox-messages',
-  templateUrl: './add-inbox-messages.component.html'
+  templateUrl: './add-inbox-messages.component.html',
+  styleUrls: ['./add-inbox-messages.component.css']
 })
 export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   amForm: FormGroup;

@@ -108,7 +108,9 @@ private subs=new SubSink();
   addNote(pass_ob) {
     this.notedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

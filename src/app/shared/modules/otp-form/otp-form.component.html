@@ -54,21 +54,21 @@
           <!-- </mat-form-field> -->
         </div>
       </div>
-      <div class="mat-dialog-actions" style="padding: 0 !important;">
-        <button type="submit" mat-button class="cust-logpg-submt no-margin verify-button"
+      <div  style="padding: 0 !important;">
+        <button type="submit" mat-button class="cust-logpg-submt no-margin ok-button"
           [ngClass]="{'margin-bottom-20': type!='signup'}"
           [disabled]="buttonclicked || !otp_form.valid">verify</button>
-        <div class="mgn-bt-10 t-and-c" *ngIf="type=='signup'">
+        <!-- <div class="mgn-bt-10 t-and-c" *ngIf="type=='signup'">
           <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
               [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
-        </div>
-        <div class="resendouter" style="text-align: center !important;" *ngIf="resetCounterVal==0">
+        </div> -->
+        <div class="resendouter mgn-up-20" style="text-align: center !important;" *ngIf="resetCounterVal==0">
           <span class="resend-main" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
               *ngIf="type=='change_email'">
               Email</ng-container></span>
           <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>{{resend_otp_email}}</span>
         </div>
-        <div class="counter-outer resend-counter" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
+        <div class="counter-outer resend-counter mgn-up-20" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
           {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}} {{seconds_cap}}</span>
         </div>
       </div>
@@ -83,7 +83,7 @@
     <!-- <h1> &nbsp;</h1> -->
     <form [formGroup]="email_form" novalidate *ngIf="email_otp_req"
       (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)" (keyup)="doResetApiErrors()">
-      <mat-dialog-content *ngIf="!consumerlogin">
+      <!-- <mat-dialog-content *ngIf="!consumerlogin"> -->
         <!-- <div class="form-group pholder">
           <mat-form-field>
             <input type="email" [formControl]="email_form.controls['otp_email']" matInput
@@ -94,7 +94,7 @@
             errorMsg="Please enter a valid email.">
           </app-field-error-display>
         </div> -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Enter Email</label> 
           <input type="email" class="form-control form-control-solid form-control-lg" [formControl]="email_form.controls['otp_email']" 
           autocomplete="off"/>
@@ -102,7 +102,7 @@
             errorMsg="Please enter a valid email.">
           </app-field-error-display>
         </div>
-      </mat-dialog-content>
+      </mat-dialog-content> -->
 
       <mat-dialog-content *ngIf="consumerlogin" style="padding: 0 0 20px 0 !important;">
         <div class="form-group email-field">
@@ -120,19 +120,19 @@
         </div>
       </mat-dialog-content>
 
-      <mat-dialog-actions *ngIf="!consumerlogin">
+      <!-- <div class="form-group"  *ngIf="!consumerlogin">
         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
           <button type="button" class="cs-btn bt2 otpbtn" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
           <button mat-button [disabled]="!email_form.valid" class="cs-btn bt1">{{resend_btn_cap}}</button>
         </div>
-      </mat-dialog-actions>
+      </div> -->
 
-      <mat-dialog-actions style="padding: 0 !important;" *ngIf="consumerlogin">
+      <div class="form-group" style="padding: 0 !important;" *ngIf="consumerlogin">
         <div class="col-md-12" style="padding: 0 !important; display: flex !important; justify-content: space-between !important;">
-          <button type="button" class="cs-btn bt2 otpbtn cancel-button" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+          <button type="button" mat-button class="cs-btn bt2 otpbtn cancel-button" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
           <button mat-button [disabled]="!email_form.valid" class="cs-btn bt1 resend-button">{{resend_btn_cap}}</button>
         </div>
-      </mat-dialog-actions>
+      </div>
     </form>
   </div>
 </ng-container>

@@ -104,10 +104,9 @@ export class ForgotPasswordComponent {
 
     this.resetApiErrors();
     if(this.consumerlogin){
-      console.log(this.consumerlogin);
-      console.log(this.fpForm.get('phone').value.e164Number);
-      console.log(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1]);
-      if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number)) {
+      this.fed_service.validateAllFormFields(this.fpForm);
+  
+      if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value && this.fpForm.get('phone').value.e164Number)) {
         console.log(this.fpForm.get('phone').value.e164Number);
         const dialCode = this.fpForm.get('phone').value.dialCode;
         

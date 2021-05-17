@@ -193,8 +193,10 @@ export class ItemDetailsSharedComponent implements OnInit {
   doLogin(origin?, passParam?) {
     const is_test_account = true;
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
+      width: '50%',
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         type: origin,

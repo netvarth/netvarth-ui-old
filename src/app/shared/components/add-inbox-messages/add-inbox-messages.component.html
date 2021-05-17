@@ -1,96 +1,128 @@
+<!-- <h1 class="mat-dialog-title service-detail-title"> -->
+<div class="modal-header service-detail-header disp-flex">
+    <h1 class="modal-title pull-left service-detail-title">
+        <span class="name">
+            <span class="dispvalue">
+                {{title}}
+            </span>
 
-<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-    (keyup)="resetApiErrors()">
-    <h1 class="mat-dialog-title">{{title}}
-        <button #queue mat-dialog-close class="modal_close">
-            <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
+        </span>
     </h1>
-    <mat-dialog-content>
-        <div class="form-group" *ngIf="!api_loading">
-            <mat-form-field>
-                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} * "
-                    formControlName="message" maxlength="330">
-            </textarea>
-           </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
-                errorMsg="Please enter a message.">
-            </app-field-error-display>
-        </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple' || !api_loading &&  source ==='provider-waitlist' || !api_loading && data.source === 'customer-list'">
-            Send message via
-            <div class="coupon-outer">
-                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' ) || is_noSMS"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
-                    SMS
-                </mat-checkbox>
-                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id" class="mgright50 example-margin" [(ngModel)]="email"
-                    [ngModelOptions]="{standalone: true}">Email
-                </mat-checkbox>
-                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null') || !jaldeeConsumer" class="mgright50 example-margin" [(ngModel)]="pushnotify"
-                    [ngModelOptions]="{standalone: true}">App
-                    notification
-                </mat-checkbox>
-            </div>
-            <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
-        </div>
-        <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">{{SEND_MESSAGE}}</div>
-        <div *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with upload files will be send to Jaldee inbox.</div>
-        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <ng-container *ngIf="selectedMessage">
-            <div class="row col-md-12 no-padding-small" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
-                <div class="col-md-7 no-padding-small">
-                    <span class="ln-hgt-40">{{item.name}}</span>
-                </div>
-                <div class="col-md-5 no-padding-small">
-                    <span class="mbt comm-menu-imgs">
-                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <!-- <button type="button" mat-menu-item (click)="captionMenuClicked(i)">
-                                <i class="icon-edit"></i>
-                                <span>Add caption</span>
-                            </button> -->
-                            <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                                <i class="icon-delete"></i>
-                                <span>delete</span>
-                            </button>
-                        </mat-menu>
-                    </span>
-                </div>
-                <div style="margin-top: 15px" class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
-                    *ngIf="showCaptionBox[i]">
-                    <div class="input-group">
-                        <input placeholder="Enter image caption" type="text" class="form-control"
-                            [(ngModel)]="activeImageCaption[i]" [ngModelOptions]="{standalone: true}">
-                        <span class="input-group-btn">
-                            <!-- <button class="btn bt3 btn-default coupon-apply-btn"
-                                (click)="addCaption(activeImageCaption, i)" type="button">Add</button>&nbsp; -->
-                            <button class="btn bt3 btn-default coupon-apply-btn" (click)="closeCaptionMenu(i)"
-                                type="button">Cancel</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-        <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-            <button type="button" mat-dialog-close class="cs-btn bt2"
-                [disabled]="disableButton">{{cancel_btn_cap}}</button>
-            <button type="submit" mat-button [disabled]="amForm.get('message').value.trim() === '' || !amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
-                class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
-            <button type="button"
-                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common')"
-                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
-                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event)">
-                <span><i class="material-icons">attach_file</i></span>
-            </button>
-        </div>
-    </mat-dialog-actions>
-    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-    </app-form-success-display>
-</form>
+<div class="modal-body service-detail-content service-popup-content">
+    <div class="servicedet_outer">
+        <div class="outer">
+            <div class="outer1 line">
+                <div class="description">
+                    <form [formGroup]="amForm" class="ynw-common-form" novalidate
+                        (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()">
+                        <!-- <mat-dialog-content> -->
+                        <div class="form-group" *ngIf="!api_loading">
+                            <!-- <mat-form-field> -->
+                                <textarea  class="form-control" id="message" placeholder="{{message_label}} * "
+                                    formControlName="message" maxlength="330">
+                                </textarea>
+                            <!-- </mat-form-field> -->
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+                                errorMsg="Please enter a message.">
+                            </app-field-error-display>
+                        </div>
+                        <div class="mgtop40 form-group"
+                            *ngIf="!api_loading && typeOfMsg === 'multiple' || !api_loading &&  source ==='provider-waitlist' || !api_loading && data.source === 'customer-list'">
+                            Send message via
+                            <div class="coupon-outer">
+                                <mat-checkbox
+                                    [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' ) || is_noSMS"
+                                    class="mgright50 example-margin" [(ngModel)]="sms"
+                                    [ngModelOptions]="{standalone: true}">
+                                    SMS
+                                </mat-checkbox>
+                                <mat-checkbox
+                                    [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id"
+                                    class="mgright50 example-margin" [(ngModel)]="email"
+                                    [ngModelOptions]="{standalone: true}">Email
+                                </mat-checkbox>
+                                <mat-checkbox
+                                    [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null') || !jaldeeConsumer"
+                                    class="mgright50 example-margin" [(ngModel)]="pushnotify"
+                                    [ngModelOptions]="{standalone: true}">App
+                                    notification
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div style="color: red;"
+                            *ngIf="typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">
+                            {{SEND_MESSAGE}}</div>
+                        <div
+                            *ngIf="!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0">
+                            <i class="fa fa-bell-o"></i>&nbsp;Messages with upload files will be send to Jaldee
+                            inbox.
+                        </div>
+                        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+                        <!-- </mat-dialog-content> -->
+                        <mat-dialog-actions>
+                            <ng-container *ngIf="selectedMessage">
+                                <div class="row col-md-12 no-padding-small" style="display: flex;"
+                                    *ngFor="let item of selectedMessage.files; let i = index">
+                                    <div class="col-md-7 no-padding-small">
+                                        <span class="ln-hgt-40">{{item.name}}</span>
+                                    </div>
+                                    <div class="col-md-5 no-padding-small">
+                                        <span class="mbt comm-menu-imgs">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                                    <i class="icon-delete"></i>
+                                                    <span>delete</span>
+                                                </button>
+                                            </mat-menu>
+                                        </span>
+                                    </div>
+                                    <div style="margin-top: 15px"
+                                        class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                                        *ngIf="showCaptionBox[i]">
+                                        <div class="input-group">
+                                            <input placeholder="Enter image caption" type="text" class="form-control"
+                                                [(ngModel)]="activeImageCaption[i]"
+                                                [ngModelOptions]="{standalone: true}">
+                                            <span class="input-group-btn">
+                                                <button class="btn bt3 btn-default coupon-apply-btn"
+                                                    (click)="closeCaptionMenu(i)" type="button">Cancel</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                <button type="button" mat-dialog-close class="cs-btn bt2"
+                                    [disabled]="disableButton">{{cancel_btn_cap}}</button>
+                                <button type="submit" mat-button
+                                    [disabled]="amForm.get('message').value.trim() === '' || !amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
+                                    class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
+                                <button type="button"
+                                    *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common')"
+                                    class="cs-btn btn-attach bt_attach" (click)="logofile.click()"
+                                    [matTooltip]="'Upload files'">
+                                    <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
+                                        multiple (change)="filesSelected($event)">
+                                    <span><i class="material-icons">attach_file</i></span>
+                                </button>
+                            </div>
+                        </mat-dialog-actions>
+                        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+                        </app-field-error-display>
+
+                        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+                        </app-form-success-display>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

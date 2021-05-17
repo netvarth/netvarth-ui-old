@@ -5504,9 +5504,6 @@ i.notavail {
   color: #f2cd61 !important
 }
 
-.mat-button {
-  background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
-}
 
 .mailbox .title-color {
   color: #3c8dbc !important;
@@ -14123,4 +14120,13 @@ app-confirm-page .ot-bx {
   .consumer_appt .iti .iti__country-list {
       width: 50vw !important;
   }
+}
+
+.mat-button {
+  background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+}
+.sts-msg.error {
+  /* font-size: small !important; */
+  color: #f24949 !important;
+  background-color: transparent !important;
 }

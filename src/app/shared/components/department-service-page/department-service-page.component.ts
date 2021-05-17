@@ -1453,7 +1453,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
@@ -1723,8 +1725,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     const current_provider = passParam['current_provider'];
     const is_test_account = true;
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
+      width: '50%',
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         type: origin,

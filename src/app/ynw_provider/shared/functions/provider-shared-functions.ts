@@ -435,8 +435,10 @@ export class ProviderSharedFuctions {
     return new Promise<void>((resolve, reject) => {
       Cthis.sendmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+      disableClose: true,
         data: {
           typeOfMsg: type,
           uuid: ynwUuid,
@@ -501,8 +503,10 @@ export class ProviderSharedFuctions {
     return new Promise<void>((resolve, reject) => {
       this.sendglobalmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+      disableClose: true,
         data: {
           typeOfMsg: type,
           uuid: ynwcustid,

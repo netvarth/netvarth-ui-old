@@ -156,7 +156,9 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

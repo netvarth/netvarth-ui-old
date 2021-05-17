@@ -1501,7 +1501,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
@@ -1776,8 +1778,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }
     // }
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
+      width: '50%',
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         type: origin,

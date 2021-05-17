@@ -7,6 +7,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SubSink } from 'subsink';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-virtualfields',
@@ -50,6 +52,7 @@ export class VirtualFieldsComponent implements OnInit {
   private subs = new SubSink();
   is_parent = true;
   chosen_person: any;
+  maxDate=moment(new Date()).format('YYYY-MM-DD')
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -67,6 +70,7 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.createForm();
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -108,7 +112,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
     } else {
-      this.virtualForm.patchValue({ gender: 'Male' });
+      this.virtualForm.patchValue({ gender: 'male' });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
@@ -145,7 +149,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
     } else {
-      this.virtualForm.patchValue({ gender: 'Male' });
+      this.virtualForm.patchValue({ gender: 'male' });
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
@@ -323,7 +327,7 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
       if(formdata.islanguage==='yes'){
-        userObj['preferredLanguages']  =['English'];
+        userObj['preferredLanguages']  =JSON.stringify(['English']);
       }else{
         userObj['preferredLanguages'] = formdata.preferredLanguages;
       }

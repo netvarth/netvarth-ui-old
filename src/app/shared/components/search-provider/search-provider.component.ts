@@ -570,7 +570,9 @@ export class SearchProviderComponent implements OnInit, OnChanges, OnDestroy {
   showCommunicate(provid, name?) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
       disableClose: true,
       data: {
         caption: 'Enquiry',

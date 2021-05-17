@@ -68,17 +68,18 @@
                                     <label class="col-form-label" for="dob">Date of Birth <span
                                             class="red">*</span></label>
                                     <br />
-                                    <input type="date" placeholder="dd-mm-yyyy" matInput id="dob" formControlName="dob"
-                                        class="vt_dt no-padding mgn-up-5">
+                                    <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob" formControlName="dob"
+                        class="vt_dt no-padding mgn-up-5">
                                 </div>
+                                <div class="clearfix"></div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="gender">{{gender_cap}} <span
                                             class="red">*</span></label>
                                     <br />
                                     <mat-radio-group formControlName="gender" class="mgn-up-5">
-                                        <mat-radio-button value="Male">Male</mat-radio-button>
-                                        <mat-radio-button value="Female">Female</mat-radio-button>
-                                        <mat-radio-button value="Others">Other</mat-radio-button>
+                                        <mat-radio-button value="male">Male</mat-radio-button>
+                                        <mat-radio-button value="female">Female</mat-radio-button>
+                                        <mat-radio-button value="others">Other</mat-radio-button>
                                     </mat-radio-group>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
