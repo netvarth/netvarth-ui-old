@@ -1721,15 +1721,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log(this.userType);
     if (this.userType === 'consumer') {
       console.log(service.serviceType);
-      if (service.serviceType === 'virtualService') {
-        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-        });
+      // if (service.serviceType === 'virtualService') {
+      //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+      //     this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+      //   });
 
-      }
-      else {
+      // }
+      // else {
         this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-      }
+     // }
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1774,16 +1774,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (passParam['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+        //  if (passParam['serviceType'] === 'virtualService') {
+          //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
 
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
-            });
+          //     this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
+          //   });
 
-          }
-          else {
+          // }
+          // else {
             this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
-          }
+         // }
 
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
