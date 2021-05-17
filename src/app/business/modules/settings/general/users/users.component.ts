@@ -15,7 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
     'selector': 'app-branchusers',
     'templateUrl': './users.component.html',
-    styleUrls: ['./user.component.css','../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    styleUrls: ['./user.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
@@ -104,6 +104,11 @@ export class BranchUsersComponent implements OnInit {
     disply_name: any;
     warningdialogRef: any;
     loading = true;
+    languages_arr: any = [];
+    specialization_arr: any = [];
+    user;
+    selectedLanguages: any = [];
+    selectedSpecialization: any = [];
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -115,14 +120,16 @@ export class BranchUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getLicenseUsage();
+        this.getSpokenLanguages();
+        this.getSpecializations();
     }
 
     addBranchSP() {
@@ -211,29 +218,22 @@ export class BranchUsersComponent implements OnInit {
             .then(
                 result => {
                     if (from_oninit) { this.user_count = result; }
-                    filter = this.setPaginationFilter(filter);
-                    let apiFilter = {};
-                    apiFilter = this.setFilterForApi();
-                    apiFilter['userType-eq'] = 'PROVIDER';
-                    // apiFilter['status-eq'] = 'ACTIVE';
-                    this.provider_services.getUsers(apiFilter).subscribe(
+                    // filter = this.setPaginationFilter(filter);
+                    this.provider_services.getUsers(filter).subscribe(
                         (data: any) => {
                             this.provider_services.getDepartments().subscribe(
                                 (data1: any) => {
                                     this.departments = data1.departments;
-                                    // this.users_list.data = this.setServiceDataSource(data);
                                     this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 },
-
                                 (error: any) => {
-                                    // this.users_list = data;
+                                    this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 });
                         },
-
                         (error: any) => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
@@ -242,39 +242,6 @@ export class BranchUsersComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
-    setServiceDataSource(result) {
-        const service_list: any = [];
-        result.forEach(serviceObj => {
-          let userName = '';
-          let languages = '';
-          let specialization;
-          userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
-          if (serviceObj.preferredLanguages) {
-            console.log(JSON.parse(serviceObj.preferredLanguages));
-            languages = JSON.parse(serviceObj.preferredLanguages);
-          }
-          if (serviceObj.specialization) {
-            specialization = serviceObj.specialization.toString();
-            if (serviceObj.specialization.length > 1) {
-              specialization = specialization.replace(/,/g, ", ");
-            }
-          }
-          service_list.push(
-            {
-              'id': serviceObj.id,
-              'Username': userName,
-              'userType': serviceObj.userType,
-              'status': serviceObj.status,
-              'mobileNo': serviceObj.mobileNo,
-              'isAvailable': serviceObj.isAvailable,
-              'specialization': specialization,
-              'languages': languages,
-              'locationName': serviceObj.locationName,
-              'profilePicture': serviceObj.profilePicture
-            });
-        });
-        return service_list;
-      }
     getDepartmentNamebyId(id) {
         let departmentName;
         for (let i = 0; i < this.departments.length; i++) {
@@ -287,12 +254,12 @@ export class BranchUsersComponent implements OnInit {
     }
     getUserImg(user) {
         if (user.profilePicture) {
-          const proImage = user.profilePicture;
-          return proImage.url;
+            const proImage = user.profilePicture;
+            return proImage.url;
         } else {
-          return '../../.././assets/images/avatar5.png';
+            return '../../.././assets/images/avatar5.png';
         }
-      }
+    }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
@@ -329,10 +296,12 @@ export class BranchUsersComponent implements OnInit {
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
+        this.selectedSpecialization = [];
+        this.selectedLanguages = [];
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -377,6 +346,12 @@ export class BranchUsersComponent implements OnInit {
             } else {
                 this.filter.primaryMobileNo = '';
             }
+        }
+        if (this.selectedLanguages.length > 0) {
+            api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+        }
+        if (this.selectedSpecialization.length > 0) {
+            api_filter['specialization-eq'] = this.selectedSpecialization.toString();
         }
         return api_filter;
 
@@ -436,5 +411,50 @@ export class BranchUsersComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+    }
+    getSpokenLanguages() {
+        this.provider_services.getSpokenLanguages()
+            .subscribe(data => {
+                this.languages_arr = data;
+            });
+    }
+    getSpecializations() {
+        this.provider_services.getSpecializations(this.user.sector, this.user.subSector)
+            .subscribe(data => {
+                this.specialization_arr = data;
+            });
+    }
+    setFilterDataCheckbox(type, value) {
+        if (type === 'languages') {
+            const indx = this.selectedLanguages.indexOf(value);
+            if (indx === -1) {
+                this.selectedLanguages.push(value);
+            } else {
+                this.selectedLanguages.splice(indx, 1);
+            }
+        }
+        if (type === 'specializations') {
+            const indx = this.selectedSpecialization.indexOf(value);
+            if (indx === -1) {
+                this.selectedSpecialization.push(value);
+            } else {
+                this.selectedSpecialization.splice(indx, 1);
+            }
+        }
+        this.doSearch();
+    }
+    getLanguages(languages) {
+        languages = JSON.parse(languages).toString();
+        if (languages.length > 1) {
+            languages = languages.replace(/,/g, ", ");
+        }
+        return languages;
+    }
+    getSpecialization(specialization) {
+        if (specialization.length > 1) {
+            specialization = specialization.toString();
+            return specialization.replace(/,/g, ", ");
+        }
+        return specialization;
     }
 }
