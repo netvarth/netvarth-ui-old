@@ -1662,7 +1662,7 @@
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                        *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                        *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started') && checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span

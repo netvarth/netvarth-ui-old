@@ -1719,7 +1719,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
-                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started') && appt.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(appt)">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"

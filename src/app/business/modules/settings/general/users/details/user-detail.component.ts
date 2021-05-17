@@ -349,11 +349,11 @@ export class BranchUserDetailComponent implements OnInit {
         }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
-            post_data1['admin'] = input.privileges;
-            console.log(input.privileges);
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
+        post_data1['admin'] = input.privileges;
+        console.log(input.privileges);
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
