@@ -38,8 +38,8 @@
             
             </li>
             <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-10" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
-              <span>I am not available <br>
-                <span class="make-avail-txt-green pointer-cursor" (click)="createInstantQ()">Make me Online</span>
+              <span class="btn-play not-avail">I am not available <br>
+                <span class="make-avail-txt-green pointer-cursor btn-play make-online-btn pull-right" (click)="createInstantQ()">Make me Online</span>
               </span>
              
                

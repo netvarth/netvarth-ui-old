@@ -104,3 +104,10 @@
 .make-ofline-btn {
     background: white;
 }
+.not-avail {
+    background: red;
+    color: white;
+}
+.make-online-btn {
+    background: white;
+}
