@@ -198,6 +198,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     imgCaptions: any = [];
     virtualInfo: any;
     newMember: any;
+    consumerType: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -816,6 +817,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
 
     }
+    virtualModal() {
+    const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+            disableClose: true,
+            data: {'id':this.virtualInfo.serviceFor}
+
+        });
+        virtualdialogRef.afterClosed().subscribe(result => {
+        if(result){
+            this.virtualInfo=result;
+            this.setVirtualTeleserviceCustomer();
+        }
+          
+
+        });
+
+    }
     addCheckInConsumer(postData) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
@@ -1040,16 +1059,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }, 2000);
     }
     setVirtualTeleserviceCustomer() {
+        console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
             this.newMember = this.virtualInfo.newMemberId;
+            this.virtualInfo.serviceFor=this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-        } if (this.virtualInfo && this.virtualInfo.serviceFor &&this.virtualInfo.serviceFor.user) {
+        } if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            this.consumerType='member';
             this.waitlist_for = [];
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor.user);
+            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor.user, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
         }
     }
     calculateDate(days) {

@@ -1812,9 +1812,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log('inisdee  collecte required ingo');
     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
       width: '40%',
+      height:'auto',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: consumerdata
+      data: {'consumer':consumerdata,'type':''}
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {

@@ -9,6 +9,9 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SubSink } from 'subsink';
 import * as moment from 'moment';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+
+
 
 
 @Component({
@@ -46,7 +49,8 @@ export class VirtualFieldsComponent implements OnInit {
     "Urdu"
   ];
   hideLanguages = true;
-  api_loading1: boolean;
+  api_loading=true;
+  api_loading1 = true;
   customer_data: any;
   familymembers: any[];
   new_member;
@@ -54,36 +58,73 @@ export class VirtualFieldsComponent implements OnInit {
   is_parent = true;
   chosen_person: any;
   maxDate=moment(new Date()).format('YYYY-MM-DD')
+  consumerType='';
+  activeUser: any;
+  memberObject: any;
   constructor(private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
     private wordProcessor: WordProcessor,
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
+    private groupService:GroupStorageService
   ) {
-    if (data) {
-      this.data = this.s3Processor.getJson(data);
-      this.customer_data = this.data;
+    if (dialogData) {
+      this.dialogData = this.s3Processor.getJson(dialogData);
+        this. activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.getActiveUserInfo().then(data=>{
+          this.customer_data=data;
+          this.createForm();
+          this.getFamilyMembers();
+        });
+        
+      
+     
+    
     }
-    this.api_loading1 = true;
-    this.getFamilyMembers();
+
+
+   
   }
 
   ngOnInit(): void {
 
-    this.createForm();
+  
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+   // this.getFamilyMembers();
+  }
+  getActiveUserInfo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
+        .subscribe(
+          data => {
+            console.log(data);
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
   }
   getFamilyMembers() {
+    console.log(this.customer_data);
     this.api_loading1 = true;
     let fn;
     fn = this.sharedServices.getConsumerFamilyMembers();
     this.subs.sink = fn.subscribe(data => {
       this.familymembers = [];
       for (const mem of data) {
+        console.log(mem);
         this.familymembers.push(mem);
+      }
+      if(this.dialogData.id){
+        this.virtualForm.patchValue({'serviceFor':this.dialogData.id});
+        this.onServiceForChange(this.dialogData.id);
       }
       this.api_loading1 = false;
     },
@@ -92,20 +133,39 @@ export class VirtualFieldsComponent implements OnInit {
       });
   }
   onServiceForChange(event) {
-    this.is_parent = true;
-    this.chosen_person = event.value;
-    if (this.chosen_person !== 'new_member') {
-      if (this.chosen_person.parent) {
-        this.is_parent = false;
-        this.setMemberDetails(this.chosen_person);
-      } else {
-        this.setparentDetails(this.chosen_person);
-      }
-    } else {
-      this.is_parent = false;
-      this.serviceFormReset();
-    }
+    console.log(event);
+     this.is_parent = true;
+    if(event!=='new_member'){
+  const chosen_Object=this.familymembers.filter(memberObj=>memberObj.user===event);
+  if(chosen_Object.length!==0){
+    this.is_parent = false;
+    this.chosen_person=chosen_Object[0]
+      this.setMemberDetails(chosen_Object[0]);
+  }else{
+    this.chosen_person=this.customer_data
+    this.setparentDetails(this.customer_data);
   }
+    // this.is_parent = true;
+    // this.chosen_person = event.value;
+    // if (this.chosen_person !== 'new_member') {
+    //   if (this.chosen_person.parent) {
+    //     this.is_parent = false;
+    //     this.setMemberDetails(this.chosen_person);
+    //   } else {
+    //     this.setparentDetails(this.chosen_person);
+    //   }
+    // } else {
+    //   this.is_parent = false;
+    //   this.serviceFormReset();
+    // }
+  }else {
+    this.is_parent = false;
+    this.chosen_person='new_member'
+    this.serviceFormReset();
+  }
+
+  
+}
   setMemberDetails(memberObj) {
     this.serviceFormReset();
     if (memberObj.userProfile && memberObj.userProfile.dob) {
@@ -187,10 +247,17 @@ export class VirtualFieldsComponent implements OnInit {
     });
     this.virtualForm.patchValue({ gender: 'male' });
     this.virtualForm.patchValue({ islanguage: 'yes' })
-    this.virtualForm.get('serviceFor').setValue(this.customer_data);
-    if (this.data) {
+    if(this.dialogData.type!=='member'){
+      this.virtualForm.patchValue({serviceFor:this.customer_data.id});
+    }else{
+      this.virtualForm.patchValue({serviceFor:this.dialogData.consumer});
+     
+    }
+    
+    if (this.dialogData) {
       this.updateForm();
     }
+    this.api_loading=false;
   }
   closeDialog() {
     this.dialogRef.close();
@@ -199,8 +266,13 @@ export class VirtualFieldsComponent implements OnInit {
     this.hideLanguages = false;
   }
   updateForm() {
-    // this.lngknown = 'yes';
-    this.details = this.data;
+   if(this.dialogData.type &&this.dialogData.type==='member'){
+     this.details=this.dialogData.consumer
+   }else{
+    this.details = this.customer_data;
+   }
+   
+    console.log(this.details);
     if (this.details.parent) {
       this.setMemberDetails(this.details);
     } else {
@@ -244,16 +316,13 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.virtualForm.get('dob').value === '') {
       isinvalid = true;
     }
-    console.log( this.virtualForm.get('islanguage').value);
     if ( this.virtualForm.get('islanguage').value=== 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
       }
     }
     if(this.virtualForm.get('serviceFor').value==='new_member'){
-      console.log('inside');
-      console.log(this.virtualForm.get('firstName').value);
-      console.log(this.virtualForm.get('lastName').value);
+
       if(this.virtualForm.get('firstName').value==''){
         isinvalid = true;
       }
@@ -261,7 +330,6 @@ export class VirtualFieldsComponent implements OnInit {
         isinvalid = true;
       }
     }
-    console.log(isinvalid);
     return isinvalid;
   }
 
@@ -366,10 +434,10 @@ export class VirtualFieldsComponent implements OnInit {
     console.log(_this.chosen_person);
    const firstName=_this.chosen_person.userProfile.firstName;
    const lastName=_this.chosen_person.userProfile.lastName;
-    const memberInfo = formdata['serviceFor'];
+    let memberInfo :any={};
       memberInfo.userProfile = {}
       memberInfo.bookingLocation = {}
-      memberInfo.userProfile['id'] = formdata.serviceFor['user'];
+      memberInfo.userProfile['id'] = formdata.serviceFor;
       memberInfo.userProfile['gender'] = formdata.gender;
       memberInfo.userProfile['firstName'] = firstName;
       memberInfo.userProfile['lastName'] = lastName;

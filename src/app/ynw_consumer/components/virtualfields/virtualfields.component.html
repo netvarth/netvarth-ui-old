@@ -10,7 +10,8 @@
         </button>
     </div>
     <!-- step 1 for mobile number entering  -->
-    <div class="cust-loginpge-color">
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="cust-loginpge-color" *ngIf="!api_loading">
         <div class="mat-dialog-content" style="overflow: auto !important;" >
             <div *ngIf="hideLanguages">
                 <div class="">
@@ -20,11 +21,16 @@
                     <label class="col-form-label" for="name">Consultation is For </label>
                     <br />
                     <!-- <mat-form-field> -->
-                        <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
-                            <mat-radio-button [value]="customer_data">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
-                            <mat-radio-button [value]="member" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                        <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event.value)">
+                            <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button [value]="member.user" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
                             <mat-radio-button value="new_member">Someone else</mat-radio-button>
                         </mat-radio-group>
+                        <!-- <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
+                            <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button [value]="member.userProfile.id" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                            <mat-radio-button value="new_member">Someone else</mat-radio-button>
+                        </mat-radio-group> -->
                         <!-- <mat-label>Service For</mat-label> -->
                         <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
                             <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
@@ -93,7 +99,7 @@
                     <mat-radio-group formControlName="gender" class="mgn-up-5">
                         <mat-radio-button value="male">Male</mat-radio-button>
                         <mat-radio-button value="female">Female</mat-radio-button>
-                        <mat-radio-button value="others">Other</mat-radio-button>
+                        <mat-radio-button value="other">Other</mat-radio-button>
                     </mat-radio-group>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
                         errorMsg="Please select the gender.">
@@ -150,7 +156,7 @@
                     
                 <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x" style="font-size: large;"></i></span></div>
             </div>
-            <div *ngIf="!hideLanguages && lngknown=='no'">
+            <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
                 <div class="form-group" *ngIf="lngknown==='no'">
                     <!-- <mat-form-field> -->
                     <label class="col-form-label" for="preferredLanguage">Choose your preferred language
