@@ -172,3 +172,11 @@
 td, .d-lg-none .mgn-up-5 {
   word-break: break-all !important;
 }
+.user-filter mat-checkbox {
+  display: block;
+}
+::ng-deep .user-filter .mat-checkbox-layout .mat-checkbox-label {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}

@@ -208,6 +208,11 @@ export class UserServiceChnageComponent implements OnInit {
     'pincode': false,
     'primaryMobileNo': false
   };
+  languages_arr: any = [];
+  specialization_arr: any = [];
+  user;
+  selectedLanguages: any = [];
+  selectedSpecialization: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -226,8 +231,8 @@ export class UserServiceChnageComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       this.source = qparams.source;
     });
-    const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.accountType = user.accountType;
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.accountType = this.user.accountType;
   }
   applyFilter(filterValue: string) {
     this.selection.clear();
@@ -237,6 +242,8 @@ export class UserServiceChnageComponent implements OnInit {
   }
   ngOnInit() {
     this.getProviders();
+    this.getSpokenLanguages();
+    this.getSpecializations();
   }
   getProviders() {
     let apiFilter = {};
@@ -246,7 +253,6 @@ export class UserServiceChnageComponent implements OnInit {
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.service_dataSource.data = this.setServiceDataSource(data);
     });
-    console.log(this.service_dataSource.data);
     setTimeout(() => {
       this.loading = false;
     }, 500);
@@ -270,7 +276,6 @@ export class UserServiceChnageComponent implements OnInit {
       let specialization;
       userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
-        console.log(JSON.parse(serviceObj.preferredLanguages));
         languages = JSON.parse(serviceObj.preferredLanguages);
       }
       if (serviceObj.specialization) {
@@ -299,9 +304,9 @@ export class UserServiceChnageComponent implements OnInit {
   }
   updateUser() {
     let msg = '';
-    if(this.selectedUser.isAvailable){
+    if (this.selectedUser.isAvailable) {
       msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
-     } else {
+    } else {
       msg = this.selectedUser.Username + ' seems to be unavailable now. Assign anyway ? ';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -365,7 +370,6 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectrow = true;
     this.selectedUser = user;
     if (this.selectrow === true && user.id) {
-      console.log(user.id)
       this.updateUser()
     }
     this.removeSelection();
@@ -424,10 +428,12 @@ export class UserServiceChnageComponent implements OnInit {
       pincode: '',
       primaryMobileNo: ''
     };
+    this.selectedSpecialization = [];
+    this.selectedLanguages = [];
   }
   doSearch() {
     this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -456,13 +462,52 @@ export class UserServiceChnageComponent implements OnInit {
         this.filter.primaryMobileNo = '';
       }
     }
+    console.log(this.selectedLanguages);
+    console.log(this.selectedSpecialization);
+    if (this.selectedLanguages.length > 0) {
+      api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+    }
+    if (this.selectedSpecialization.length > 0) {
+      api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+    }
     return api_filter;
-
   }
   focusInput(ev) {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) {
       this.doSearch();
     }
+  }
+
+  getSpokenLanguages() {
+    this.provider_services.getSpokenLanguages()
+      .subscribe(data => {
+        this.languages_arr = data;
+      });
+  }
+  getSpecializations() {
+    this.provider_services.getSpecializations(this.user.sector, this.user.subSector)
+      .subscribe(data => {
+        this.specialization_arr = data;
+      });
+  }
+  setFilterDataCheckbox(type, value) {
+    if (type === 'languages') {
+      const indx = this.selectedLanguages.indexOf(value);
+      if (indx === -1) {
+        this.selectedLanguages.push(value);
+      } else {
+        this.selectedLanguages.splice(indx, 1);
+      }
+    }
+    if (type === 'specializations') {
+      const indx = this.selectedSpecialization.indexOf(value);
+      if (indx === -1) {
+        this.selectedSpecialization.push(value);
+      } else {
+        this.selectedSpecialization.splice(indx, 1);
+      }
+    }
+    this.doSearch();
   }
 }
