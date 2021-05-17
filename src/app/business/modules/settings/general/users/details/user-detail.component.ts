@@ -79,7 +79,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'PROVIDER' }, { value: 'ADMIN', name: 'ADMIN' }];
+    userTypesFormfill: any = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Doctor' }, { value: 'ADMIN', name: 'Admin' }];
     dept: any;
     subDom;
     deptLength;
@@ -131,9 +131,9 @@ export class BranchUserDetailComponent implements OnInit {
         this.sector = user.sector;
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector === 'healthCare') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
-        }
+        // if (this.sector === 'healthCare') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
+        // }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {

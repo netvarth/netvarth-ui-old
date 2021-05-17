@@ -32,8 +32,8 @@ export class BranchUsersComponent implements OnInit {
     filter = {
         firstName: '',
         lastName: '',
-        location:'',
-        pincode:'',
+        location: '',
+        pincode: '',
         primaryMobileNo: '',
         userType: '',
         page_count: projectConstants.PERPAGING_LIMIT,
@@ -44,7 +44,7 @@ export class BranchUsersComponent implements OnInit {
     filters: any = {
         'firstName': false,
         'lastName': '',
-        'location':false,
+        'location': false,
         'pincode': false,
         'primaryMobileNo': false,
         'userType': false
@@ -66,7 +66,20 @@ export class BranchUsersComponent implements OnInit {
         }
     ];
 
-    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    // userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    userTypesFormfill: any = [
+        {
+            name: 'ASSISTANT',
+            displayName: 'Assistant'
+        },
+        {
+            name: 'PROVIDER',
+            displayName: 'Doctor'
+        },
+        {
+            name: 'ADMIN',
+            displayName: 'Admin'
+        }];
     api_loading: boolean;
     departments: any;
     loadComplete = false;
@@ -125,10 +138,10 @@ export class BranchUsersComponent implements OnInit {
 
             });
         } else {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'Add' }
-        };
-        this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
+            const navigationExtras: NavigationExtras = {
+                queryParams: { type: 'Add' }
+            };
+            this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
         }
     }
     personalProfile(user) {
@@ -153,22 +166,34 @@ export class BranchUsersComponent implements OnInit {
         if (user.userType === 'PROVIDER') {
             let msg;
             if (passingStatus === 'Disable') {
-               msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
+                msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
             } else {
-               msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
+                msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
             }
 
-        this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': msg
-            }
-        });
-        this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.provider_services.disableEnableuser(user.id, passingStatus)
+            this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': msg
+                }
+            });
+            this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.provider_services.disableEnableuser(user.id, passingStatus)
+                        .subscribe(
+                            () => {
+                                this.getUsers();
+                            },
+                            (error) => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                this.getUsers();
+                            });
+                }
+            });
+        } else {
+            this.provider_services.disableEnableuser(user.id, passingStatus)
                 .subscribe(
                     () => {
                         this.getUsers();
@@ -177,19 +202,7 @@ export class BranchUsersComponent implements OnInit {
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getUsers();
                     });
-            }
-        });
-    } else {
-             this.provider_services.disableEnableuser(user.id, passingStatus)
-            .subscribe(
-                () => {
-                    this.getUsers();
-                },
-                (error) => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getUsers();
-                });
-    }
+        }
     }
     getUsers(from_oninit = false) {
         let filter = this.setFilterForApi();
@@ -254,7 +267,7 @@ export class BranchUsersComponent implements OnInit {
         this.filters = {
             'firstName': false,
             'lastName': false,
-            'location':false,
+            'location': false,
             'pincode': false,
             'primaryMobileNo': false,
             'userType': false
@@ -262,7 +275,7 @@ export class BranchUsersComponent implements OnInit {
         this.filter = {
             firstName: '',
             lastName: '',
-            location:'',
+            location: '',
             pincode: '',
             primaryMobileNo: '',
             userType: '',
@@ -272,7 +285,7 @@ export class BranchUsersComponent implements OnInit {
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName  || this.filter.location ||  this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -303,7 +316,7 @@ export class BranchUsersComponent implements OnInit {
         if (this.filter.location !== '') {
             api_filter['locationName-eq'] = this.filter.location;
         }
-         if (this.filter.pincode !== '') {
+        if (this.filter.pincode !== '') {
             api_filter['pinCode-eq'] = this.filter.pincode;
         }
         if (this.filter.userType !== '') {
@@ -342,35 +355,35 @@ export class BranchUsersComponent implements OnInit {
         this.pagination.startpageval = pg;
         this.filter.page = pg;
         this.getUsers();
-      }
+    }
     makeDefalutAdmin(id) {
         this.provider_services.makeDefalutAdmin(id)
-        .subscribe(
-            () => {
-                this.getUsers();
-            },
-            (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getUsers();
-            });
+            .subscribe(
+                () => {
+                    this.getUsers();
+                },
+                (error) => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getUsers();
+                });
 
     }
     redirecToGeneral() {
         this.routerobj.navigate(['provider', 'settings', 'general']);
-      }
-      redirecToHelp() {
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
     }
     getLicenseUsage() {
         this.provider_services.getLicenseUsage()
             .subscribe(
                 data => {
-                   this.use_metric = data;
-                   this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
-                   this.adon_total = this.adon_info[0].total;
-                   this.adon_used = this.adon_info[0].used;
-                   this.disply_name = this.adon_info[0].metricName;
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
