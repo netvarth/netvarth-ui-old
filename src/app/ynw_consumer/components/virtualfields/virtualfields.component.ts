@@ -287,10 +287,14 @@ export class VirtualFieldsComponent implements OnInit {
       return false;
     }
     this.hideLanguages = true;
+    let elmnt = document.getElementById("plng");
+    elmnt.scrollIntoView();
   }
   cancelLanguageSelection(){
     this.hideLanguages=true;
     this.updateForm();
+    let elmnt = document.getElementById("plng");
+  elmnt.scrollIntoView();
   }
   langSel(sel) {
     if (this.virtualForm.get('preferredLanguage').value.length > 0) {
@@ -436,7 +440,7 @@ export class VirtualFieldsComponent implements OnInit {
       )
     });
   }
-  
+
   updateMemberInfo(formdata) {
     const _this = this;
     console.log(_this.chosen_person);
