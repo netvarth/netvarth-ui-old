@@ -12,7 +12,7 @@
         </h5>
     </div>
 </section>
-<section>
+<section class="user-create-window">
     <div class="content loc-list bsp">
         <div class="col-md-12 no-padding-small">
             <div class="row">
@@ -292,18 +292,18 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;">
                                         <div class="form-group">
-                                                <mat-checkbox  formControlName="privileges">
-                                                    Admin Privileges
-                                                </mat-checkbox>
+                                            <mat-checkbox  formControlName="privileges">
+                                                Admin Privileges
+                                            </mat-checkbox>
+                                            <div class="form-level-settings">This privilege will allow the user to create new user, modify existing user etc.</div>
                                         </div>
                                     </div>
 
-
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20">
+                                        <h3><a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a></h3>
                                     </div>
                                     
-                                    <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20" *ngIf="showAdvancedSection">
                                         <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <mat-form-field>
@@ -320,12 +320,13 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </div>
                                         </div> -->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-form-label" for="gender">{{gender_cap}} </label>
+                                            <div class="form-group ">
+                                                <label class="col-form-label gender mgn-up-10" for="gender">{{gender_cap}} </label>
                                                 <mat-radio-group formControlName="gender">
-                                                    <mat-radio-button class="mgright50" value="male">{{male_cap}}
+                                                    <mat-radio-button class="mgn-rt-10" value="male">{{male_cap}}
                                                     </mat-radio-button>
-                                                    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                                    <mat-radio-button class="mgn-rt-10" value="female">{{female_cap}}</mat-radio-button>
+                                                    <mat-radio-button value="other">Other</mat-radio-button>
                                                 </mat-radio-group>
                                                 <app-field-error-display
                                                     [displayError]="fed_service.isFieldValid(userForm,'gender')"
@@ -334,7 +335,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group col-md-7 no-padding picker-form-group">
+                                            <div class="form-group col-md-12 no-padding picker-form-group">
                                                 <mat-form-field>
                                                     <input matInput [matDatepicker]="picker" placeholder="Date of birth"
                                                         #inputdob formControlName="dob" [max]="tday" [min]="minday"

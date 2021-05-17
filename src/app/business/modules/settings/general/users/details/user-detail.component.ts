@@ -17,7 +17,8 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     'selector': 'app-branchuser-detail',
-    'templateUrl': './user-detail.component.html'
+    'templateUrl': './user-detail.component.html',
+    'styleUrls': ['./user-detail.component.css']
 })
 export class BranchUserDetailComponent implements OnInit {
     first_name_cap = Messages.F_NAME_CAP;
@@ -214,7 +215,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            gender: [''],
+            gender: ['male'],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
