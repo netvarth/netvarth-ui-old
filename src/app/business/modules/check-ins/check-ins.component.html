@@ -29,12 +29,12 @@
               <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
-          <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && active_user.isAvailableNow">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
             <a  (click)="createInstantQ()">
              <span class="bold make-avail-txt-green">Go offline</span>
            </a>
-          </li> -->
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && !active_user.isAvailableNow">
+          </li>
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
             <a  (click)="createInstantQ()">
              <span class="bold make-avail-txt-red">Go online</span>
            </a>

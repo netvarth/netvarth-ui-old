@@ -480,7 +480,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
-    this.isAvailableNow();
+    this.isuserAvailableNow();
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
@@ -3298,8 +3298,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
   }
-  isAvailableNow() {
-    this.shared_services.isAvailableNow()
+  isuserAvailableNow() {
+    console.log(this.active_user.id);
+    this.shared_services.isuserAvailableNow(this.active_user.id)
       .subscribe(data => {
         this.qAvailability = data;
         console.log(this.qAvailability);
@@ -3319,6 +3320,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ(){
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(loggedUser);
     this.instantdialogRef = this.dialog.open(instantQueueComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -3330,6 +3332,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.instantdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.isuserAvailableNow();
       }
     });
   }
