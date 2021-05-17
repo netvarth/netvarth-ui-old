@@ -296,8 +296,8 @@ export class UserServiceChnageComponent implements OnInit {
           'languages': languages,
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture,
-          'city':serviceObj.city,
-          'state':serviceObj.state
+          'city': serviceObj.city,
+          'state': serviceObj.state
         });
     });
     return service_list;
@@ -462,8 +462,6 @@ export class UserServiceChnageComponent implements OnInit {
         this.filter.primaryMobileNo = '';
       }
     }
-    console.log(this.selectedLanguages);
-    console.log(this.selectedSpecialization);
     if (this.selectedLanguages.length > 0) {
       api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
     }

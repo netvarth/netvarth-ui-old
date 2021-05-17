@@ -107,7 +107,7 @@
                         <div class="mgn-lt-10">
                           <div class="username"> {{service.Username?service.Username : ''}}
                           </div>
-                          <div class="disp-flex mgn-up-5" *ngIf="service.locationName"><i
+                          <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
                               class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
                               {{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
