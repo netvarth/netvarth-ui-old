@@ -29,7 +29,7 @@
               <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
               <span >I am available till {{qAvailability.timeRange.eTime}} <br>
                 <span class="make-avail-txt-red" (click)="createInstantQ()">Make me Offline</span>
               </span>
@@ -37,7 +37,7 @@
                
             
             </li>
-            <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
               <span>I am not available <br>
                 <span class="make-avail-txt-green" (click)="createInstantQ()">Make me Online</span>
               </span>

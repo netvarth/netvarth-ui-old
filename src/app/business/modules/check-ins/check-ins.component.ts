@@ -3308,6 +3308,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.qAvailability.availableNow) {
           this.instaQid = this.qAvailability.instanceQueueId;
         }
+        this.apiloading = false;
       },
         () => {
         });
@@ -3324,7 +3325,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
-      const msg = 'Do you want to remove this' + this.provider_label + '?';
+      const msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -3336,6 +3337,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       dialogrefd.afterClosed().subscribe(result => {
         if (result) {
+          this.apiloading = true;
           this.provider_services.changeProviderQueueStatus(this.instaQid, 'disable')
             .subscribe(() => {
               this.isuserAvailableNow();
