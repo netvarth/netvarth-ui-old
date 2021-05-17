@@ -1,0 +1,15 @@
+.user-create-window .picker-form-group {
+    width: 175px !important;
+}
+.user-create-window label, .user-create-window label.mat-radio-label-content span{
+    font-weight: normal !important;
+}
+label.gender {
+    color: #3f51b5 !important;
+}
+.mgn-rt-10 {
+    margin-right: 10px !important;
+}
+.user-create-window .ynw-common-form-nm .mob-prefix span{
+    padding: 21px 10px 0px 5px !important;
+}

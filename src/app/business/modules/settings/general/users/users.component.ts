@@ -15,7 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
     'selector': 'app-branchusers',
     'templateUrl': './users.component.html',
-    // styleUrls: ['../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    styleUrls: ['./user.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
@@ -32,8 +32,8 @@ export class BranchUsersComponent implements OnInit {
     filter = {
         firstName: '',
         lastName: '',
-        location:'',
-        pincode:'',
+        location: '',
+        pincode: '',
         primaryMobileNo: '',
         userType: '',
         page_count: projectConstants.PERPAGING_LIMIT,
@@ -44,7 +44,7 @@ export class BranchUsersComponent implements OnInit {
     filters: any = {
         'firstName': false,
         'lastName': '',
-        'location':false,
+        'location': false,
         'pincode': false,
         'primaryMobileNo': false,
         'userType': false
@@ -66,7 +66,20 @@ export class BranchUsersComponent implements OnInit {
         }
     ];
 
-    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    // userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    userTypesFormfill: any = [
+        {
+            name: 'ASSISTANT',
+            displayName: 'Assistant'
+        },
+        {
+            name: 'PROVIDER',
+            displayName: 'Doctor'
+        },
+        {
+            name: 'ADMIN',
+            displayName: 'Admin'
+        }];
     api_loading: boolean;
     departments: any;
     loadComplete = false;
@@ -90,6 +103,12 @@ export class BranchUsersComponent implements OnInit {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    loading = true;
+    languages_arr: any = [];
+    specialization_arr: any = [];
+    user;
+    selectedLanguages: any = [];
+    selectedSpecialization: any = [];
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -101,14 +120,16 @@ export class BranchUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getLicenseUsage();
+        this.getSpokenLanguages();
+        this.getSpecializations();
     }
 
     addBranchSP() {
@@ -125,10 +146,10 @@ export class BranchUsersComponent implements OnInit {
 
             });
         } else {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'Add' }
-        };
-        this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
+            const navigationExtras: NavigationExtras = {
+                queryParams: { type: 'Add' }
+            };
+            this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
         }
     }
     personalProfile(user) {
@@ -153,22 +174,34 @@ export class BranchUsersComponent implements OnInit {
         if (user.userType === 'PROVIDER') {
             let msg;
             if (passingStatus === 'Disable') {
-               msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
+                msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
             } else {
-               msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
+                msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
             }
 
-        this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': msg
-            }
-        });
-        this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.provider_services.disableEnableuser(user.id, passingStatus)
+            this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': msg
+                }
+            });
+            this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.provider_services.disableEnableuser(user.id, passingStatus)
+                        .subscribe(
+                            () => {
+                                this.getUsers();
+                            },
+                            (error) => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                this.getUsers();
+                            });
+                }
+            });
+        } else {
+            this.provider_services.disableEnableuser(user.id, passingStatus)
                 .subscribe(
                     () => {
                         this.getUsers();
@@ -177,19 +210,7 @@ export class BranchUsersComponent implements OnInit {
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getUsers();
                     });
-            }
-        });
-    } else {
-             this.provider_services.disableEnableuser(user.id, passingStatus)
-            .subscribe(
-                () => {
-                    this.getUsers();
-                },
-                (error) => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getUsers();
-                });
-    }
+        }
     }
     getUsers(from_oninit = false) {
         let filter = this.setFilterForApi();
@@ -197,7 +218,7 @@ export class BranchUsersComponent implements OnInit {
             .then(
                 result => {
                     if (from_oninit) { this.user_count = result; }
-                    filter = this.setPaginationFilter(filter);
+                    // filter = this.setPaginationFilter(filter);
                     this.provider_services.getUsers(filter).subscribe(
                         (data: any) => {
                             this.provider_services.getDepartments().subscribe(
@@ -207,14 +228,12 @@ export class BranchUsersComponent implements OnInit {
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 },
-
                                 (error: any) => {
                                     this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 });
                         },
-
                         (error: any) => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
@@ -232,6 +251,14 @@ export class BranchUsersComponent implements OnInit {
             }
         }
         return departmentName;
+    }
+    getUserImg(user) {
+        if (user.profilePicture) {
+            const proImage = user.profilePicture;
+            return proImage.url;
+        } else {
+            return '../../.././assets/images/avatar5.png';
+        }
     }
     performActions(action) {
         if (action === 'learnmore') {
@@ -254,7 +281,7 @@ export class BranchUsersComponent implements OnInit {
         this.filters = {
             'firstName': false,
             'lastName': false,
-            'location':false,
+            'location': false,
             'pincode': false,
             'primaryMobileNo': false,
             'userType': false
@@ -262,17 +289,19 @@ export class BranchUsersComponent implements OnInit {
         this.filter = {
             firstName: '',
             lastName: '',
-            location:'',
+            location: '',
             pincode: '',
             primaryMobileNo: '',
             userType: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
+        this.selectedSpecialization = [];
+        this.selectedLanguages = [];
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName  || this.filter.location ||  this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -303,7 +332,7 @@ export class BranchUsersComponent implements OnInit {
         if (this.filter.location !== '') {
             api_filter['locationName-eq'] = this.filter.location;
         }
-         if (this.filter.pincode !== '') {
+        if (this.filter.pincode !== '') {
             api_filter['pinCode-eq'] = this.filter.pincode;
         }
         if (this.filter.userType !== '') {
@@ -317,6 +346,12 @@ export class BranchUsersComponent implements OnInit {
             } else {
                 this.filter.primaryMobileNo = '';
             }
+        }
+        if (this.selectedLanguages.length > 0) {
+            api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+        }
+        if (this.selectedSpecialization.length > 0) {
+            api_filter['specialization-eq'] = this.selectedSpecialization.toString();
         }
         return api_filter;
 
@@ -342,40 +377,84 @@ export class BranchUsersComponent implements OnInit {
         this.pagination.startpageval = pg;
         this.filter.page = pg;
         this.getUsers();
-      }
+    }
     makeDefalutAdmin(id) {
         this.provider_services.makeDefalutAdmin(id)
-        .subscribe(
-            () => {
-                this.getUsers();
-            },
-            (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getUsers();
-            });
+            .subscribe(
+                () => {
+                    this.getUsers();
+                },
+                (error) => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getUsers();
+                });
 
     }
     redirecToGeneral() {
         this.routerobj.navigate(['provider', 'settings', 'general']);
-      }
-      redirecToHelp() {
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
     }
     getLicenseUsage() {
         this.provider_services.getLicenseUsage()
             .subscribe(
                 data => {
-                   this.use_metric = data;
-                   this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
-                   this.adon_total = this.adon_info[0].total;
-                   this.adon_used = this.adon_info[0].used;
-                   this.disply_name = this.adon_info[0].metricName;
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
-
+    getSpokenLanguages() {
+        this.provider_services.getSpokenLanguages()
+            .subscribe(data => {
+                this.languages_arr = data;
+            });
+    }
+    getSpecializations() {
+        this.provider_services.getSpecializations(this.user.sector, this.user.subSector)
+            .subscribe(data => {
+                this.specialization_arr = data;
+            });
+    }
+    setFilterDataCheckbox(type, value) {
+        if (type === 'languages') {
+            const indx = this.selectedLanguages.indexOf(value);
+            if (indx === -1) {
+                this.selectedLanguages.push(value);
+            } else {
+                this.selectedLanguages.splice(indx, 1);
+            }
+        }
+        if (type === 'specializations') {
+            const indx = this.selectedSpecialization.indexOf(value);
+            if (indx === -1) {
+                this.selectedSpecialization.push(value);
+            } else {
+                this.selectedSpecialization.splice(indx, 1);
+            }
+        }
+        this.doSearch();
+    }
+    getLanguages(languages) {
+        languages = JSON.parse(languages).toString();
+        if (languages.length > 1) {
+            languages = languages.replace(/,/g, ", ");
+        }
+        return languages;
+    }
+    getSpecialization(specialization) {
+        if (specialization.length > 1) {
+            specialization = specialization.toString();
+            return specialization.replace(/,/g, ", ");
+        }
+        return specialization;
+    }
 }

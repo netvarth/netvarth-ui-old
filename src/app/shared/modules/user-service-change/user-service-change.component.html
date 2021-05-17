@@ -14,8 +14,8 @@
   </div>
 </section>
 
-<aside class="filterSidebar" *ngIf="filter_sidebar">
-  <section class="sidebar" style="overflow:auto;height:568px">
+<aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
+  <section class="sidebar" style="overflow:auto;" [ngStyle]="{'height.vh': 90}">
     <div class="filterClosebtn">
       <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
         [matTooltip]="'Close filter window'"></i>
@@ -55,6 +55,24 @@
             placeholder="Phone Number">
         </li>
       </div>
+      <div class="filterTextinput">
+        <label class="filterHeaders">Languages</label>
+        <li class="filterli">
+          <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
+            [checked]="selectedLanguages.indexOf(language.name) !== -1"
+            (change)="setFilterDataCheckbox('languages', language.name)">
+            {{language.displayName}}</mat-checkbox>
+        </li>
+      </div>
+      <div class="filterTextinput">
+        <label class="filterHeaders">Specializations</label>
+        <li class="filterli">
+          <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
+            [checked]="selectedSpecialization.indexOf(special.name) !== -1"
+            (change)="setFilterDataCheckbox('specializations', special.name)">
+            {{special.displayName}}</mat-checkbox>
+        </li>
+      </div>
     </ul>
   </section>
 </aside>
@@ -89,9 +107,9 @@
                         <div class="mgn-lt-10">
                           <div class="username"> {{service.Username?service.Username : ''}}
                           </div>
-                          <div class="disp-flex mgn-up-5" *ngIf="service.locationName"><i
+                          <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
                               class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
-                            {{service.locationName}}</div>
+                              {{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
                             <div class="mgn-up-5" *ngIf="service.mobileNo"> <span class="b1">
                                 Phone number : </span><span class="b2"> +91 {{service.mobileNo}} </span></div>

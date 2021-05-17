@@ -91,7 +91,23 @@
 }
 .make-avail-txt-red{
     color: red;
+    font-size: small;
 }
 .make-avail-txt-green{
     color: green;
+    font-size: small;
+}
+.avail-till {
+    background: green;
+    color: white;
+}
+.make-ofline-btn {
+    background: white;
+}
+.not-avail {
+    background: red;
+    color: white;
+}
+.make-online-btn {
+    background: white;
 }
