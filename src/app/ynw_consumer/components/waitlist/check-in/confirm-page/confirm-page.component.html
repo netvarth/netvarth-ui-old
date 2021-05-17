@@ -158,7 +158,7 @@
                                 <div class="notes"
                                     *ngIf="wtlst.service && wtlst.service.postInfoEnabled && wtlst.service.postInfoTitle">
                                     <div class="preinfo-title">{{wtlst.service.postInfoTitle}} </div>
-                                    <div [innerHTML]="wtlst.service.postInfoText">
+                                    <div class="value-text" [innerHTML]="wtlst.service.postInfoText">
                                     </div>
                                 </div>
                                 <div class="ok-btn" *ngIf="i == (waitlist.length-1)">
