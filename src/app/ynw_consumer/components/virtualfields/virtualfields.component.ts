@@ -436,6 +436,7 @@ export class VirtualFieldsComponent implements OnInit {
       )
     });
   }
+  
   updateMemberInfo(formdata) {
     const _this = this;
     console.log(_this.chosen_person);
