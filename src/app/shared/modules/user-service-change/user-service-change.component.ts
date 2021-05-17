@@ -290,7 +290,9 @@ export class UserServiceChnageComponent implements OnInit {
           'specialization': specialization,
           'languages': languages,
           'locationName': serviceObj.locationName,
-          'profilePicture': serviceObj.profilePicture
+          'profilePicture': serviceObj.profilePicture,
+          'city':serviceObj.city,
+          'state':serviceObj.state
         });
     });
     return service_list;

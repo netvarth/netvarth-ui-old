@@ -91,6 +91,7 @@ export class BranchUserDetailComponent implements OnInit {
     showloc = false;
     locationDetails: any;
     locations: any = [];
+    editloc = true;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -459,6 +460,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     keyPressed(event) {
+        this.editloc = false;
         if(event.length == 6) {
             this.blurPincodeQty(event);
         } else{
@@ -477,6 +479,7 @@ export class BranchUserDetailComponent implements OnInit {
                     this.locationDetails = data;
                     this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
+                    this.editloc = false;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
