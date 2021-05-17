@@ -437,5 +437,4 @@ export class BranchUsersComponent implements OnInit {
                 }
             );
     }
-
 }
