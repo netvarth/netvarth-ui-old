@@ -276,7 +276,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                                     <div class="col-md-6 col-sm-6 col-xs-12">          
                                         <div *ngIf="actionparam.type === 'edit' && editloc" > 
-                                             <span> {{user_data.city}},&nbsp;{{user_data.state}}</span>
+                                             <span *ngIf="user_data.city && user_data.state"> {{user_data.city}},&nbsp;{{user_data.state}}</span>
                                         </div>   
                                         <div *ngIf="showloc">
                                             <div *ngFor="let locationDetails of locations; let idx = index">
