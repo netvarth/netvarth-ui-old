@@ -1,41 +1,34 @@
+
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Users
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </h5>
+      <h5 class="mgn-up-10 disp-flex">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
+        <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-auto">
+          <i class="icon-filter-one">
+          </i>
+          Filter
+        </a>
+      </h5>
     </div>
-</section>
+  </section>
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="card p0 w-dta">
+               
                 <div class="col-md-12 no-padding">
-                    <div class="card" *ngIf="api_loading">
-                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                    </div>
-                </div>
-                <div class="col-md-12 no-padding" *ngIf="!api_loading">
                     <ul class="nav jd-custom-nav chkn-dash">
-                        <li class="dropdown notifications-menu pull-right">
+                        <li class="pull-right">
                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
-                                class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                class="navbar-item-color bold pointer-cursor">
                                 <span>
                                     <i class="fa fa-plus"></i> User
                                 </span>
                             </a>
                         </li>
 
-                        <li class="dropdown notifications-menu pull-right">
-                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                                data-toggle="control-sidebar">
-                                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                    [matTooltip]="filtericonTooltip">
-                                </i>
-                            </a>
-                        </li>
+                       
                     </ul>
 
                 </div>
@@ -107,84 +100,103 @@
                     </section>
                 </aside>
 
-                <table class="table childDetails singleDash" style="font-size: .875rem;">
-                    <tbody *ngIf="users_list.length==0 && !api_loading">
-                        <tr>
-                            <td colspan="5" class="no-appt">
-                                No Users Found.
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngFor="let user of users_list | orderBy: order">
-                        <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
-                            <td>
-                                <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'"
-                                    class="bold pull-left mgn-lt-5 teli-wtsap-a">
-                                    {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
-
-                                </div>
-                                <div *ngIf="user.userType === 'PROVIDER' "
-                                    class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
-                                    (click)="manageSettings(user.id)">
-                                    {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
-
-                                </div>
-                            </td>
-                            <td>
-                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label |
-                                    capitalizeFirst}}</span>
-                                <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label |
-                                    capitalizeFirst}}</span>
-                                <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
-                            </td>
-                            <td>
-                                <span
-                                    *ngIf="user.userType === 'PROVIDER' && user.deptId">{{getDepartmentNamebyId(user.deptId)}}</span>
-                            </td>
-                            <td>
-                                <div *ngIf="user.userType === 'PROVIDER' ">Jaldee online:
-                                    <span class="greenc" *ngIf="user.searchEnabled">On</span>
-                                    <span class="red" *ngIf="!user.searchEnabled">Off</span>
-                                </div>
-                            </td>
-
-
-                            <td>
-                                <div class="copy">
-                                    <span class="mbt" style="top: -18px;">
-                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                    </span>
-                                    <mat-menu #appMenu="matMenu">
-                                        <button mat-menu-item (click)="personalProfile(user.id)">
-                                            Personal Details
-                                        </button>
-                                        <button *ngIf="user.userType === 'PROVIDER'" mat-menu-item
-                                            (click)="manageSettings(user.id)">
-                                            Settings
-                                        </button>
-                                        <button mat-menu-item (click)="changeUserStatus(user)">
-                                            <i *ngIf="user.status=='INACTIVE' || !user.status" class="icon-enable"></i>
-                                            <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>
-                                            {{(user.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                        </button>
-                                    </mat-menu>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
-                                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
-                                    [curpage]="pagination.startpageval">
-                                </app-pager>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                <section class="customersList">
+                    <div class="row p-3">
+                      <div class="col-lg-12">
+                        <div class="card card-custom card-stretch gutter-b no-padding">
+                          <div class="card-body pt-0 pb-3 no-padding">
+                            <div class="tab-content">
+                              <div class="table-responsive1">
+                                <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                  <thead>
+                                    <tr class="text-left text-uppercase">
+                                      <th class="display-min-none" style="min-width: 250px;">{{provider_label}} name</th>
+                                      <th class="display-min-none" style="min-width: 125px;">Phone number</th>
+                                      <th class="display-min-none" style="width: 30%;">Specializations</th>
+                                      <th class="display-min-none">Languages</th>
+                                      <th class="display-min-none">Availability</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="row_data border-bottom pointer-cursor"
+                                      *ngFor="let service of users_list; let i = index;">
+                                      <td class="waitlist-box">
+                                        <!-- <span class="mgn-up-5 d-lg-none pull-right"><a class="assign-btn">Assign</a>
+                                        </span> -->
+                                        <div class="disp-flex">
+                                          <div class="user-img img-min-width">
+                                            <img [src]="getUserImg(service)">
+                                          </div>
+                                          <div class="mgn-lt-10">
+                                            <div class="username"> {{service.Username?service.Username : service.firstName}}
+                                            </div>
+                                            <div class="disp-flex mgn-up-5" *ngIf="service.locationName"><i
+                                                class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
+                                              {{service.locationName}}</div>
+                                            <div class="d-lg-none">
+                                              <div class="mgn-up-5" *ngIf="service.mobileNo"> <span class="b1">
+                                                  Phone number : </span><span class="b2"> +91 {{service.mobileNo}} </span></div>
+                                              <div class="mgn-up-5" *ngIf="service.specialization"> <span class="b1">
+                                                  Specializations : </span> <span class="b2"> {{service.specialization}} </span></div>
+                                              <div class="mgn-up-5" *ngIf="service.languages"> <span class="b1">
+                                                  Languages : </span><span class="b2"> {{service.languages}} </span></div>
+                                              <div class="mgn-up-5"> <span class="b1">
+                                                  Availability : </span><span class="b2"> {{(service.isAvailable) ? 'Available' : 'Not
+                                                  Available'}} </span></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="display-min-none">
+                                        <span *ngIf="service.mobileNo">
+                                          +91 {{service.mobileNo}}</span>
+                                      </td>
+                                      <td class="display-min-none">
+                                        {{service.specialization}}
+                                      </td>
+                                      <td class="display-min-none">
+                                        <!-- {{service.preferredLanguages}} -->
+                                      </td>
+                                      <td class="display-min-none" [ngClass]="service.isAvailable ? 'greenc' : 'red'">
+                                        {{(service.isAvailable) ? 'Available' : 'Not Available'}}
+                                      </td>
+                                      <td>
+                                        <div class="copy">
+                                            <span class="mbt" style="top: 10px;">
+                                                <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                            </span>
+                                            <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item (click)="personalProfile(service.id)">
+                                                    Personal Details
+                                                </button>
+                                                <button *ngIf="service.userType === 'PROVIDER'" mat-menu-item
+                                                    (click)="manageSettings(service.id)">
+                                                    Settings
+                                                </button>
+                                                <button mat-menu-item (click)="changeUserStatus(service)">
+                                                    <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable"></i>
+                                                    <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
+                                                    {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    <tr *ngIf="users_list.length == 0">
+                                      No {{provider_label}} found
+                                    </tr>
+                                  </tbody>
+                                  <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
             </div>
 
 

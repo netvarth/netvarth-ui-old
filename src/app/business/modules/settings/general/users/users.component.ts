@@ -15,7 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
     'selector': 'app-branchusers',
     'templateUrl': './users.component.html',
-    // styleUrls: ['../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    styleUrls: ['./user.component.css','../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
@@ -103,6 +103,7 @@ export class BranchUsersComponent implements OnInit {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    loading = true;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -211,18 +212,23 @@ export class BranchUsersComponent implements OnInit {
                 result => {
                     if (from_oninit) { this.user_count = result; }
                     filter = this.setPaginationFilter(filter);
-                    this.provider_services.getUsers(filter).subscribe(
+                    let apiFilter = {};
+                    apiFilter = this.setFilterForApi();
+                    apiFilter['userType-eq'] = 'PROVIDER';
+                    // apiFilter['status-eq'] = 'ACTIVE';
+                    this.provider_services.getUsers(apiFilter).subscribe(
                         (data: any) => {
                             this.provider_services.getDepartments().subscribe(
                                 (data1: any) => {
                                     this.departments = data1.departments;
+                                    // this.users_list.data = this.setServiceDataSource(data);
                                     this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 },
 
                                 (error: any) => {
-                                    this.users_list = data;
+                                    // this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 });
@@ -236,6 +242,39 @@ export class BranchUsersComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
+    setServiceDataSource(result) {
+        const service_list: any = [];
+        result.forEach(serviceObj => {
+          let userName = '';
+          let languages = '';
+          let specialization;
+          userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
+          if (serviceObj.preferredLanguages) {
+            console.log(JSON.parse(serviceObj.preferredLanguages));
+            languages = JSON.parse(serviceObj.preferredLanguages);
+          }
+          if (serviceObj.specialization) {
+            specialization = serviceObj.specialization.toString();
+            if (serviceObj.specialization.length > 1) {
+              specialization = specialization.replace(/,/g, ", ");
+            }
+          }
+          service_list.push(
+            {
+              'id': serviceObj.id,
+              'Username': userName,
+              'userType': serviceObj.userType,
+              'status': serviceObj.status,
+              'mobileNo': serviceObj.mobileNo,
+              'isAvailable': serviceObj.isAvailable,
+              'specialization': specialization,
+              'languages': languages,
+              'locationName': serviceObj.locationName,
+              'profilePicture': serviceObj.profilePicture
+            });
+        });
+        return service_list;
+      }
     getDepartmentNamebyId(id) {
         let departmentName;
         for (let i = 0; i < this.departments.length; i++) {
@@ -246,6 +285,14 @@ export class BranchUsersComponent implements OnInit {
         }
         return departmentName;
     }
+    getUserImg(user) {
+        if (user.profilePicture) {
+          const proImage = user.profilePicture;
+          return proImage.url;
+        } else {
+          return '../../.././assets/images/avatar5.png';
+        }
+      }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
