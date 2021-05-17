@@ -166,6 +166,7 @@ export class VirtualFieldsComponent implements OnInit {
 
   
 }
+
   setMemberDetails(memberObj) {
     this.serviceFormReset();
     if (memberObj.userProfile && memberObj.userProfile.dob) {
@@ -221,6 +222,7 @@ export class VirtualFieldsComponent implements OnInit {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
       if (preferredLanguage !== null&&preferredLanguage.length>0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+        console.log(defaultEnglish);
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
         this.lngknown = defaultEnglish;
         this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
@@ -285,6 +287,10 @@ export class VirtualFieldsComponent implements OnInit {
       return false;
     }
     this.hideLanguages = true;
+  }
+  cancelLanguageSelection(){
+    this.hideLanguages=true;
+    this.updateForm();
   }
   langSel(sel) {
     if (this.virtualForm.get('preferredLanguage').value.length > 0) {
@@ -412,13 +418,14 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['lastName']=lastName;
       userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
+      console.log(formdata.islanguage);
       if(formdata.islanguage==='yes'){
         userObj['preferredLanguages']  =['English'];
       }else{
-        userObj['preferredLanguages'] = formdata.preferredLanguages;
+        userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
      // userObj['userProfile'] = userProfile;
-
+ console.log(userObj);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
           resolve(true);
