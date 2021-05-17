@@ -117,8 +117,7 @@
                                         </div>
                                 </section>
                         </div> -->
-                        <div class="c-ot row col-sm-12"
-                                style="margin-top: 10px">
+                        <div class="c-ot row col-sm-12">
                                 <div class="item">
                                         <span class="ttle">Maximum
                                                 {{consumer_label}}s
@@ -126,7 +125,7 @@
                                         <span *ngIf="!capacityEditable"
                                                 class="icon-customer-line pointer-cursor"
                                                 (click)="capacityClick()">
-                                                <span
+                                               &nbsp; <span
                                                         style="color: #00aef2">10</span>
                                         </span>
                                         <div class="form-group num qerrmsg"
@@ -149,13 +148,13 @@
                                                 </app-field-error-display>
                                         </div>
                                 </div>
-                                <div class="item">
+                                <div class="item mgn-up-10 mgn-bt-10">
                                         <span class="ttle">{{consumer_label | capitalizeFirst}}s
                                                 served at a time</span>
                                         <span *ngIf="!parallelServeEditable"
                                                 class="icon-customer-served pointer-cursor"
                                                 (click)="servedClick()">
-                                                <span
+                                                &nbsp;<span
                                                         style="color: #00aef2">1</span>
                                         </span>
                                         <div class="form-group num qerrmsg"

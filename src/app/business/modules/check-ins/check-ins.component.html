@@ -29,18 +29,22 @@
               <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right"
-            *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
-            <a (click)="createInstantQ()">
-              <span class="bold make-avail-txt-green">Go offline</span>
-            </a>
-          </li>
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right"
-            *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
-            <a (click)="createInstantQ()">
-              <span class="bold make-avail-txt-red">Go online</span>
-            </a>
-          </li>
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
+              <span >I am available till {{qAvailability.timeRange.eTime}} <br>
+                <span class="make-avail-txt-red" (click)="createInstantQ()">Make me Offline</span>
+              </span>
+              
+               
+            
+            </li>
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
+              <span>I am not available <br>
+                <span class="make-avail-txt-green" (click)="createInstantQ()">Make me Online</span>
+              </span>
+             
+               
+            
+            </li>
         </ul>
       </div>
     </nav>

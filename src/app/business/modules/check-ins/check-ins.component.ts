@@ -343,6 +343,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusLoaded = false;
   qAvailability;
   instantdialogRef: any;
+  instaQid: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -3304,6 +3305,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(data => {
         this.qAvailability = data;
         console.log(this.qAvailability);
+        if(this.qAvailability.availableNow){
+          this.instaQid=this.qAvailability.instanceQueueId;
+        }
       },
         () => {
         });
@@ -3327,7 +3331,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
        location:this.selected_location,
-       userId:loggedUser.id
+       userId:loggedUser.id,
+       instaQid:this.instaQid
       }
     });
     this.instantdialogRef.afterClosed().subscribe(result => {
