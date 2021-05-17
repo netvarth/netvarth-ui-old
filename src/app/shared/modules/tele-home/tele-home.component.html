@@ -130,7 +130,8 @@
                                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5" >
                                                             <div class="pull-left col-xs-6 no-padding" *ngIf="booking.userName">
                                                                 <div class="prov_lbl">Provider</div>
-                                                                <div class="prov_nme">{{booking.userName}}</div>
+                                                                <!-- <div class="prov_nme">{{booking.userName}}</div> -->
+                                                                <div class="prov_nme">{{booking.provider.businessName}}</div>
                                                             </div>
                                                             <div class="col-xs-6 " [class.no-padding]="!booking.userName">
                                                                 <div class="prov_lbl">Video Status</div>

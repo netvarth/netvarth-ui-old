@@ -154,16 +154,19 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-    // const date = new Date(holiday.startDay);
     const date = new Date(holiday.holidaySchedule.startDate);
-    // const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    const end_date = new Date(holiday.holidaySchedule.terminator.endDate);    
     const date_format = this.dateformat.transformToMonthlyDate(date);
+    const end_date_format1 = this.dateformat.transformToMonthlyDate(end_date);
+    let msg = this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format);
+    msg = msg.replace('[date1]', end_date_format1);
+
     this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
+        'message': msg
       }
     });
     this.remholdialogRef.afterClosed().subscribe(result => {

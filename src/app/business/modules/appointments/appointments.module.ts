@@ -23,6 +23,10 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { CardModule } from '../../../shared/components/card/card.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
 
 
 @NgModule({
@@ -46,7 +50,11 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        QuestionnaireModule
+        QuestionnaireModule,
+        CardModule,
+        MatTableModule,
+        MatCheckboxModule,
+        UserServiceChangeModule
     ],
     declarations: [
         AppointmentsComponent,

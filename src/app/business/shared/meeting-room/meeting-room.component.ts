@@ -239,6 +239,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Method to connect to a room
      */
     joinRoom() {
+        this.btnClicked = true;
         if (this.consumerReady) {
             this.twilioService.localVideo = this.localVideo;
             this.twilioService.remoteVideo = this.remoteVideo;

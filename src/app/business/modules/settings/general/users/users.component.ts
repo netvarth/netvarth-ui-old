@@ -14,7 +14,8 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 @Component({
 
     'selector': 'app-branchusers',
-    'templateUrl': './users.component.html'
+    'templateUrl': './users.component.html',
+    // styleUrls: ['../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
@@ -31,6 +32,8 @@ export class BranchUsersComponent implements OnInit {
     filter = {
         firstName: '',
         lastName: '',
+        location:'',
+        pincode:'',
         primaryMobileNo: '',
         userType: '',
         page_count: projectConstants.PERPAGING_LIMIT,
@@ -41,6 +44,8 @@ export class BranchUsersComponent implements OnInit {
     filters: any = {
         'firstName': false,
         'lastName': '',
+        'location':false,
+        'pincode': false,
         'primaryMobileNo': false,
         'userType': false
 
@@ -249,12 +254,16 @@ export class BranchUsersComponent implements OnInit {
         this.filters = {
             'firstName': false,
             'lastName': false,
+            'location':false,
+            'pincode': false,
             'primaryMobileNo': false,
             'userType': false
         };
         this.filter = {
             firstName: '',
             lastName: '',
+            location:'',
+            pincode: '',
             primaryMobileNo: '',
             userType: '',
             page_count: projectConstants.PERPAGING_LIMIT,
@@ -263,7 +272,7 @@ export class BranchUsersComponent implements OnInit {
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName || this.filter.primaryMobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName  || this.filter.location ||  this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -290,6 +299,12 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.filter.lastName !== '') {
             api_filter['lastName-eq'] = this.filter.lastName;
+        }
+        if (this.filter.location !== '') {
+            api_filter['locationName-eq'] = this.filter.location;
+        }
+         if (this.filter.pincode !== '') {
+            api_filter['pinCode-eq'] = this.filter.pincode;
         }
         if (this.filter.userType !== '') {
             api_filter['userType-eq'] = this.filter.userType;

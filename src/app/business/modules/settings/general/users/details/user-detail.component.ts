@@ -88,6 +88,9 @@ export class BranchUserDetailComponent implements OnInit {
     selectedsubDomain: any = [];
     // selected_dept;
     usercaption = 'Add User';
+    showloc = false;
+    locationDetails: any;
+    locations: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -216,6 +219,10 @@ export class BranchUserDetailComponent implements OnInit {
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
+            // location : ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+            postalCode: ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+
+
             selectedDepartment: [],
             privileges: [''],
             selectedUserType: [],
@@ -275,10 +282,14 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
+            'postalCode': this.user_data.pincode || null
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
         });
+        // if(this.user_data.pincode) {
+        //     this.blurPincodeQty(this.user_data.pincode);
+        // }
 
     }
     onUserSelect(event) {
@@ -329,7 +340,8 @@ export class BranchUserDetailComponent implements OnInit {
             // 'state': input.state,
             // 'deptId': input.selectedDepartment,
             // 'isAdmin' :
-            'userType': input.selectedUserType
+            'userType': input.selectedUserType,
+            'pincode': input.postalCode
         };
         if(input.phonenumber !==''){
             post_data1['countryCode'] = '+91',
@@ -337,11 +349,11 @@ export class BranchUserDetailComponent implements OnInit {
         }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
-            post_data1['admin'] = input.privileges;
-            console.log(input.privileges);
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
+        post_data1['admin'] = input.privileges;
+        console.log(input.privileges);
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
@@ -352,6 +364,7 @@ export class BranchUserDetailComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else {
+            console.log(post_data1);
             this.provider_services.createUser(post_data1).subscribe(() => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'general', 'users']);
@@ -444,5 +457,31 @@ export class BranchUserDetailComponent implements OnInit {
     }
     redirecToUsersl() {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
+    }
+    keyPressed(event) {
+        if(event.length == 6) {
+            this.blurPincodeQty(event);
+        } else{
+            this.locations = [];
+        }
+    }
+    blurPincodeQty(val){  
+        this.locations = [];
+        if(val.length < 6 ){
+            this.snackbarService.openSnackBar('Please enter valid Pincode', { 'panelClass': 'snackbarerror' });
+        } else {
+            if(val.length== 6){
+              this.provider_services.getlocationbypincode(val)
+            .subscribe(
+                data => {
+                    this.locationDetails = data;
+                    this.locations = this.locationDetails[0].PostOffice;
+                    this.showloc = true;
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            }
+        }
     }
 }

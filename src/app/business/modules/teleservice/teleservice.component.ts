@@ -11,12 +11,14 @@ import { Location } from '@angular/common';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { CheckinActionsComponent } from '../check-ins/checkin-actions/checkin-actions.component';
+import { AppointmentActionsComponent } from '../appointments/appointment-actions/appointment-actions.component';
 
 
 @Component({
     selector: 'app-teleservice',
     templateUrl: './teleservice.component.html',
-    styleUrls: ['./teleservice.component.css']
+    styleUrls: ['./teleservice.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../assets/css/style.bundle.css']
 })
 export class TeleServiceComponent implements OnInit {
     customer_label: any;
@@ -39,7 +41,7 @@ export class TeleServiceComponent implements OnInit {
     emailPresent: boolean;
     consumer_fname: any;
     phNo: any;
-    api_loading = false;
+    api_loading = true;
     step = 1;
     startTeledialogRef: any;
     consumer_lname: any;
@@ -68,6 +70,7 @@ export class TeleServiceComponent implements OnInit {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
     ngOnInit() {
+        this.api_loading = true;
         this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
@@ -143,6 +146,7 @@ export class TeleServiceComponent implements OnInit {
                             this.phNo = this.data.waitlistingFor[0].phoneNo;
                         }
                     }
+                    this.api_loading = false;
                 });
     }
     getProviderApptById() {
@@ -168,30 +172,31 @@ export class TeleServiceComponent implements OnInit {
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
                     this.phoneNumber = this.servDetails.virtualCallingModes[0].value;
-                   
+
                     this.getMeetingDetails();
                     if (this.data.providerConsumer.email) {
                         this.emailPresent = true;
                     }
                     // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
+                    this.api_loading = false;
                 });
     }
 
     // Back btn navigation
     redirecToPreviousPage() {
         // if (this.step === 1) {
-            if (this.callingModes === 'VideoCall') {
-                if (this.waiting_type === 'appt') {
-                    this.router.navigate(['provider', 'appointments']);
-                } else {
-                    this.router.navigate(['provider', 'check-ins']);
-                }
-                
+        if (this.callingModes === 'VideoCall') {
+            if (this.waiting_type === 'appt') {
+                this.router.navigate(['provider', 'appointments']);
             } else {
-                this._location.back();
+                this.router.navigate(['provider', 'check-ins']);
             }
-        
+
+        } else {
+            this._location.back();
+        }
+
         // }
         // const navigationExtras: NavigationExtras = {
         //     queryParams: {
@@ -262,7 +267,7 @@ export class TeleServiceComponent implements OnInit {
                 subscribe((meetingdata) => {
                     console.log(meetingdata);
                     this.meetlink_data = meetingdata;
-                    if(this.callingModes === 'VideoCall') {
+                    if (this.callingModes === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;
                     } else {
                         this.starting_url = this.meetlink_data.startingUl;
@@ -272,12 +277,12 @@ export class TeleServiceComponent implements OnInit {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
-                    if(this.callingModes === 'VideoCall') {
+                    if (this.callingModes === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;
                     } else {
                         this.starting_url = this.meetlink_data.startingUl;
                     }
-                   
+
                 });
         }
     }
@@ -292,6 +297,7 @@ export class TeleServiceComponent implements OnInit {
         }
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+        this.api_loading = true;
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
@@ -321,14 +327,16 @@ export class TeleServiceComponent implements OnInit {
                                 //   };
                                 //   console.log(navigationExtras)
                                 console.log(this.uuid);
-                                this.router.navigate(['meeting', 'provider' , this.uuid], { replaceUrl: true });
+                                this.router.navigate(['meeting', 'provider', this.uuid], { replaceUrl: true });
                             } else {
                                 this.getProviderWaitlstById();
                             }
-                            
+
                         }
                     }
-                },
+                }, error => {
+                    this.api_loading = false;
+                }
                 );
         } else {
             console.log(action);
@@ -356,7 +364,7 @@ export class TeleServiceComponent implements OnInit {
                                 //       type: usertype
                                 //     }
                                 //   };
-                                this.router.navigate(['meeting', 'provider' , this.uuid], { replaceUrl: true });
+                                this.router.navigate(['meeting', 'provider', this.uuid], { replaceUrl: true });
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
                                 //         this.router.navigate(['provider', 'video', videoId]);
@@ -365,9 +373,11 @@ export class TeleServiceComponent implements OnInit {
                             } else {
                                 this.getProviderApptById();
                             }
-                            
+
                         }
                     }
+                }, error => {
+                    this.api_loading = false;
                 });
         }
     }
@@ -496,7 +506,45 @@ export class TeleServiceComponent implements OnInit {
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
-
         });
+    }
+    shareBookingActions() {
+        if (this.waiting_type === 'checkin') {
+            const type = this.groupService.getitemFromGroupStorage('pdtyp');
+            const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+                disableClose: true,
+                data: {
+                    checkinData: this.data,
+                    timetype: type,
+                    multiSelection: false,
+                    status: status,
+                    teleservice: true
+                }
+            });
+            actiondialogRef.afterClosed().subscribe(data => {
+            });
+        } else {
+            const type = this.groupService.getitemFromGroupStorage('apptType');
+            const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+                disableClose: true,
+                data: {
+                    checkinData: this.data,
+                    timetype: type,
+                    multiSelection: false,
+                    status: status,
+                    teleservice: true
+                }
+            });
+            actiondialogRef.afterClosed().subscribe(data => {
+            });
+        }
+    }
+    getAge(age) {
+        age = age.split(',');
+        return age[0];
     }
 }

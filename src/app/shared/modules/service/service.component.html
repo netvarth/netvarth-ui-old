@@ -15,6 +15,8 @@
           class="fa wtsapaud-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'"
           class="fa wtsapvid-icon"></i>
+        <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'VideoCall'"
+          class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
         {{service_data.name | capitalizeFirst}}
         <span *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
       </h4>
@@ -22,6 +24,16 @@
         {{service_data.description | capitalizeFirst}}
       </div>
       <div class="c-ot">
+          <div class="item" *ngIf="!is_donation && showResources">
+              <span class="ttle">Number of resources</span>
+              <span > {{service_data.resoucesRequired}}
+              </span>
+            </div>
+            <div class="item" *ngIf="!is_donation && showResources">
+                <span class="ttle">Maximum bookings</span>
+                <span > {{service_data.maxBookingsAllowed}}
+                </span>
+              </div>
         <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
           <span class="ttle">Department Name</span>
           <span>{{departmentName}}</span>
@@ -180,6 +192,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
+
+     
+
+
       <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
         <mat-form-field>
           <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department"
@@ -289,6 +305,24 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  })"> </app-field-error-display> -->
         </ng-container>
       </div>
+<div class="col-md-6" *ngIf="showResources">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
+            placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      </div>
+      <div class="col-md-6" *ngIf="showResources">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
+            placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      </div>
       <!-- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
  <div>
  <label style="margin-bottom: 0 !important;">{{enable_prepayment_cap}}
@@ -379,7 +413,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       style="font-size: 1.1rem;">
       {{customer_label | capitalizeFirst}} Info</label>
     <div class="settings_info" *ngIf="!is_donation">
-        Would you like to collect more information from your customer/patient along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+        Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
       </div>
   </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">

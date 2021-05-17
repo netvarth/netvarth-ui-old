@@ -50,7 +50,7 @@ export const Messages = {
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
   'HOLIDAY_UPDATED': 'Non Working Day updated successfully',
-  'HOLIDAY_DELETE': 'Do you really want to remove the Non Working Day "[date]"?',
+  'HOLIDAY_DELETE': 'Do you really want to remove the Non Working Day "[date]" - "[date1]"?',
   'HOLIDAY_STIME': 'Start time should be greater than current time',
   'HOLIDAY_ETIME': 'Closing time should be greater than Start time',
   'HOLIDAY_LISTEMPTY': 'No scheduled holidays',

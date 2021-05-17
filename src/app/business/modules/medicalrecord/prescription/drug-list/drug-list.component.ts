@@ -170,6 +170,7 @@ export class DrugListComponent implements OnInit {
           this.drugList.push(det);
         }
       }
+      console.log(this.drugList);
     });
   }
 
@@ -191,7 +192,7 @@ export class DrugListComponent implements OnInit {
           this.drugList.push(det);
         }
       }
-
+console.log(this.drugList);
     });
   }
 

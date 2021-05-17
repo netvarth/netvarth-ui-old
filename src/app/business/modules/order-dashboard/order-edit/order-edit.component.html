@@ -565,7 +565,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button #closeDatepickerModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                    <button type="button" [disabled]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
+                                    <button type="button" [hidden]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
                                   </div>
                                 </div>
 
@@ -699,7 +699,7 @@
                   </div> -->
                   <div>
 
-                    <button [disabled]="placeOrderDisabled ||!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                    <button [disabled]="placeOrderDisabled" [hidden]="!isfutureAvailableTime" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
                       Update Order
                     </button>

@@ -41,6 +41,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     source;
     account;
     recordingFlag = false;
+    btnClicked = false;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -274,6 +275,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     joinRoom() {
         // console.log(this.meetObj);
+        this.btnClicked = true;
         this.twilioService.localVideo = this.localVideo;
         this.twilioService.remoteVideo = this.remoteVideo;
         this.connect(this.meetObj);

@@ -48,6 +48,19 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.checkinEncId}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].bookingLocation">
+                <span class="itemHead">Location</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].bookingLocation.localArea}},
+                  {{waitlist_data.waitlistingFor[0].bookingLocation.district}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].preferredLanguage">
+                <span class="itemHead">Language</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].dob">
+                <span class="itemHead">Date of Birth</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
@@ -60,7 +73,6 @@
                 <span class="itemHead">Department</span>
                 <span class="itemVal">{{waitlist_data.service.deptName}}</span>
               </div>
-
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.batchName">
                 <span class="itemHead">Batch</span>
                 <span>
@@ -101,68 +113,67 @@
                     {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}
                   </span>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
-                  <div *ngIf="showToken">
-                    <span class="status-label">TOKEN NO</span><br>
-                    <span>
-                      {{waitlist_data.token}}
-                    </span>
-                  </div>
-                  <div
-                    *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived') && (waitlist_data && !waitlist_data.appointmentTime)">
-                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
-                      Time</span>
-                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service
-                      Time</span><br>
-                    <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
-                      {{getAppxTime(waitlist_data)}}</span>
-                  </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="showToken">
+                  <span class="status-label">TOKEN NO</span>
+                  <span>
+                    {{waitlist_data.token}}
+                  </span>
+               
+                <div
+                  *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived') && (waitlist_data && !waitlist_data.appointmentTime)">
+                  <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
+                    Time</span>
+                  <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service
+                    Time</span><br>
+                  <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
+                    {{getAppxTime(waitlist_data)}}</span>
                 </div>
               </div>
-
-              <!-- View more and Less -->
-              <div class="more_view mgn-up-20">
-                <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
-                    more</a></span>
-                <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a class="fl-left">View
-                    less</a></span>
               </div>
+            </div>
 
-              <!-- Instructions,messages,notes -->
-              <div class="more_view" *ngIf="view_more" class="mgn-up-30">
-                <mat-tab-group animationDuration="10ms" class="index-head">
-                  <mat-tab label="Private Notes" *ngIf="waitlist_data.waitlistStatus !== 'blocked'">
-                    <span>
-                      <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
-                        <p [innerHTML]="note.note | nl2br"></p>
-                        <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
-                          (click)="showImagesection(i)">
-                          <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
-                            {{note.attachment.length}} Attachment(s) </a>
-                        </div>
-                        <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
-                          <a class="mg-10" target="_blank" [href]="attachment.s3path"
-                            *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
-                              style="width:100px; height:100px" /></a>
-                        </div>
-                        <p>{{note.timeStamp | date: newTimeDateFormat}}</p>
+            <!-- View more and Less -->
+            <div class="more_view mgn-up-20">
+              <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
+                  more</a></span>
+              <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a class="fl-left">View
+                  less</a></span>
+            </div>
+
+            <!-- Instructions,messages,notes -->
+            <div class="more_view" *ngIf="view_more" class="mgn-up-30">
+              <mat-tab-group animationDuration="10ms" class="index-head">
+                <mat-tab label="Private Notes" *ngIf="waitlist_data.waitlistStatus !== 'blocked'">
+                  <span>
+                    <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
+                      <p [innerHTML]="note.note | nl2br"></p>
+                      <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
+                        (click)="showImagesection(i)">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+                          {{note.attachment.length}} Attachment(s) </a>
                       </div>
-                    </span>
-                    <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
-                  </mat-tab>
-                  <mat-tab label="Messages">
-                    <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                      (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
-                  </mat-tab>
-                  <mat-tab label="{{waitlist_data.service.consumerNoteTitle | capitalizeFirst}}">
-                    <span *ngIf="waitlist_data && waitlist_data.consumerNote">
-                      <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
-                      <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
-                    </span>
-                    <span *ngIf="waitlist_data && !waitlist_data.consumerNote">{{no_cus_notes_cap}}</span>
-                  </mat-tab>
-                </mat-tab-group>
-              </div>
+                      <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
+                        <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                          *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
+                            style="width:100px; height:100px" /></a>
+                      </div>
+                      <p>{{note.timeStamp | date: newDateFormat}}</p>
+                    </div>
+                  </span>
+                  <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
+                </mat-tab>
+                <mat-tab label="Messages">
+                  <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+                    (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                </mat-tab>
+                <mat-tab label="{{waitlist_data.service.consumerNoteTitle | capitalizeFirst}}">
+                  <span *ngIf="waitlist_data && waitlist_data.consumerNote">
+                    <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
+                    <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
+                  </span>
+                  <span *ngIf="waitlist_data && !waitlist_data.consumerNote">{{no_cus_notes_cap}}</span>
+                </mat-tab>
+              </mat-tab-group>
             </div>
           </div>
           <!-- Questionnaire starts-->
@@ -180,22 +191,22 @@
           </div>
           <!-- Questionnaire end-->
         </div>
-        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
-          <div class="card">
-            <h2 *ngIf="!showToken">{{checkin_label |capitalizeFirst}} History</h2>
-            <h2 *ngIf="showToken">Token History</h2>
-            <div class="c-history-outer">
-              <ul class="c-history">
-                <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                  <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
-                </li>
-              </ul>
-              <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
-            </div>
+      <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+        <div class="card">
+          <h2 *ngIf="!showToken">{{checkin_label |capitalizeFirst}} History</h2>
+          <h2 *ngIf="showToken">Token History</h2>
+          <div class="c-history-outer">
+            <ul class="c-history">
+              <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
+              </li>
+            </ul>
+            <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>

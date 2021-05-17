@@ -14,7 +14,8 @@ const routes: Routes = [
             { path: 'adjustdelay', component: AdjustqueueDelayComponent },
             { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
-            { path: ':id/add-label', component: ApplyLabelComponent }
+            { path: ':id/add-label', component: ApplyLabelComponent },
+            { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
         ]
     }
 ];

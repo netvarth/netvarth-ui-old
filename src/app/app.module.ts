@@ -76,6 +76,7 @@ import { BookingService } from './shared/services/booking-service';
 import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -135,7 +136,8 @@ export function init_app(globalService: GlobalService) {
     SalesChannelModule,
     JoyrideModule.forRoot(),
     TruncateModule,
-    CardModule
+    CardModule,
+    VirtualFieldsModule
   ],
   providers: [
     AuthGuardConsumer,

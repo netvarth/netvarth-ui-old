@@ -218,7 +218,7 @@ export class AppointmentmanagerComponent implements OnInit {
 
     }
     getServiceCount() {
-        const filter = { 'serviceType-neq': 'donationService' };
+        const filter = { 'serviceType-neq': 'donationService','status-eq': 'ACTIVE' };
         this.provider_services.getServiceCount(filter)
             .subscribe(
                 data => {

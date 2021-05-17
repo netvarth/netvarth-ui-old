@@ -1,0 +1,97 @@
+.dropdown.notifications-menu a {
+    height: 100px !important;
+    margin-bottom: 12px !important;
+    border: 0 !important;
+    background: white !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+    color: #1E4079 !important;
+    width: 100px !important;
+    text-align: center !important;
+}
+
+.dropdown.notifications-menu a i {
+    display: block !important;
+    font-size: 50px !important;
+    text-align: center !important;
+    margin-top: 5px !important;
+    color: #1E4079 !important;
+    margin-bottom: 10px !important;
+}
+
+@media (max-width: 576px) {
+    .dropdown.notifications-menu a {
+        padding-top: 2px !important;
+        line-height: 1.4 !important;
+        height: 60px !important;
+        width: 60px !important;
+    }
+    
+    .dropdown.notifications-menu a i {
+        font-size: 30px !important;
+        margin-bottom: 0px !important;
+    }    
+}
+.waitlist-box {
+    margin: 10px 0px;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+    border: 1px solid #eee;
+}
+
+.dropdown.customized-dd button {
+    background-color: white !important;
+}
+
+.dropdown.customized-dd:hover button{
+    background-color: #f4f4f4 !important;
+    color: #444 !important;
+}
+
+.dropdown.customized-dd .dd-menu {
+    list-style-type: none !important;
+    padding: 5px !important;
+    width: max-content !important;
+}
+
+.dropdown.customized-dd .dd-menu h4 {
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+    color: #777 !important;
+    font-weight: 500 !important;
+}
+
+.dropdown.customized-dd .manage-views {
+    background: #f0f0f0 !important;
+    height: 30px !important;
+}
+
+.dropdown.customized-dd .manage-views a {
+    text-align: center !important;
+    color: #1E4079 !important;
+    height: 100% !important;
+    font-weight: 600 !important;
+    line-height: 30px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.location {
+    font-weight: normal !important;
+    font-size: .8rem !important;
+}
+.user-token-circle {
+    color: white;
+    background: #1E4079;
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 15px;
+    padding: 10px 0px 10px 0px;
+}
+.make-avail-txt-red{
+    color: red;
+}
+.make-avail-txt-green{
+    color: green;
+}
