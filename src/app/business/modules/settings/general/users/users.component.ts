@@ -458,3 +458,4 @@ export class BranchUsersComponent implements OnInit {
         return specialization;
     }
 }
+
