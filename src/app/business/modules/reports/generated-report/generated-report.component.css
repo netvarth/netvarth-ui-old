@@ -2,6 +2,7 @@
 table{
   width: 100%;
  }
+
  td {
   word-wrap: break-word;
   margin:auto;
@@ -16,7 +17,7 @@ table{
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-  text-align: center;
+  text-align: justify !important;
   vertical-align: middle;
 }
 @media print {
