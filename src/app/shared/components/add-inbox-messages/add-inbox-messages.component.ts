@@ -768,4 +768,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       });
     }
   }
+  keyPressed(event) {
+    if(event.length == 330) {
+      this.snackbarService.openSnackBar('Character limit reached ');
+    } 
+  }
 }

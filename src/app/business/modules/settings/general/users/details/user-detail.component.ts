@@ -17,7 +17,8 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     'selector': 'app-branchuser-detail',
-    'templateUrl': './user-detail.component.html'
+    'templateUrl': './user-detail.component.html',
+    'styleUrls': ['./user-detail.component.css']
 })
 export class BranchUserDetailComponent implements OnInit {
     first_name_cap = Messages.F_NAME_CAP;
@@ -79,7 +80,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'PROVIDER' }, { value: 'ADMIN', name: 'ADMIN' }];
+    userTypesFormfill: any = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Doctor' }, { value: 'ADMIN', name: 'Admin' }];
     dept: any;
     subDom;
     deptLength;
@@ -91,6 +92,7 @@ export class BranchUserDetailComponent implements OnInit {
     showloc = false;
     locationDetails: any;
     locations: any = [];
+    editloc = true;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -131,9 +133,9 @@ export class BranchUserDetailComponent implements OnInit {
         this.sector = user.sector;
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector === 'healthCare') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
-        }
+        // if (this.sector === 'healthCare') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
+        // }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
@@ -213,7 +215,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            gender: [''],
+            gender: ['male'],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
@@ -459,6 +461,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     keyPressed(event) {
+        this.editloc = false;
         if(event.length == 6) {
             this.blurPincodeQty(event);
         } else{
@@ -477,6 +480,7 @@ export class BranchUserDetailComponent implements OnInit {
                     this.locationDetails = data;
                     this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
+                    this.editloc = false;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -50,6 +50,10 @@ export class instantQueueComponent implements OnInit {
   api_success = null;
     location: any;
     userId;
+    action: string;
+    qId: any;
+    instantQId;
+    queue_list: any={};
   constructor(
     public dialogRef: MatDialogRef<instantQueueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -67,6 +71,13 @@ export class instantQueueComponent implements OnInit {
     this.location = data.location;
     this.userId = data.userId;
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+    if(data.instaQid){
+        this.instantQId = data.instaQid;
+        this.action ='edit';
+        this.getProviderQueuedetails();
+
+    }
+    
   }
 
   ngOnInit() {
@@ -84,6 +95,14 @@ export class instantQueueComponent implements OnInit {
        
      
   }
+  getProviderQueuedetails() {
+   
+    this.provider_services.getQueueDetail(this.instantQId)
+        .subscribe(data => { 
+            this.queue_list = data;
+            console.log(this.queue_list);
+        });
+}
   initInstantQForm() {
     console.log('kio');
     this.shared_services.getSystemDate()
@@ -92,16 +111,18 @@ export class instantQueueComponent implements OnInit {
                 this.lStorageService.setitemonLocalStorage('sysdate', res);
                 let server_date;
                 server_date = res;
+                 console.log('kio1');
                 this.createForm(server_date);
                // this.showInstantQFlag = true;
                 // this.selectAllService();
-                //if (queue) {
-                //    this.updateForm(queue);
-                //}
+                if (this.queue_list) {
+                   this.updateForm(this.queue_list);
+                }
             });
 }
 
 createForm(server_date) {
+    console.log('kio2');
     const todaydt = new Date(server_date);
     // tslint:disable-next-line:radix
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
@@ -140,6 +161,43 @@ createForm(server_date) {
             qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
         });
     }
+}
+
+updateForm(q) {
+    this.qId = q.id;
+    this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
+    this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
+    const sttime = {
+        hour: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
+            ['h:mm A']).format('HH'), 10),
+        minute: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
+            ['h:mm A']).format('mm'), 10)
+    };
+    const edtime = {
+        hour: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
+            ['h:mm A']).format('HH'), 10),
+        minute: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
+            ['h:mm A']).format('mm'), 10)
+    };
+    this.instantQForm.setValue({
+        dstart_time: sttime || null,
+        dend_time: edtime || null,
+        qcapacity: q.capacity || null,
+        qserveonce: q.parallelServing || null
+    });
+    for (let j = 0; j < q.services.length; j++) {
+        for (let k = 0; k < this.services_list.length; k++) {
+            if (q.services[j].id === this.services_list[k].id) {
+                this.services_list[k].checked = true;
+                this.services_selected.push(q.services[j].id);
+            }
+        }
+    }
+    if (this.services_selected.length === this.services_list.length) {
+        this.isAllServicesSelected = true;
+    }
+   // this.loc_name = q.location.place;
+    //this.location = q.location;
 }
 editStartTime() {
     this.sTimeEditable = true;
@@ -300,10 +358,10 @@ onSubmit(instantQ) {
     for (let i = 0; i < this.servicelist.length; i++) {
         services.push({ 'id': this.servicelist[i].id });
     }
-    // if (this.action === 'edit') {
-    //     this.locid = { 'id': this.location.id };
-    //     instantQInput['id'] = this.qId;
-    // } else {
+    if (this.action === 'edit') {
+        instantQInput['id'] = this.qId;
+    } 
+    //else {
     //     if (this.selectedQlocation === null) {
     //         this.selectedQlocation = this.selected_location;
     //     }
@@ -313,7 +371,10 @@ onSubmit(instantQ) {
     serv.push({'id':this.services_list[0].id});
     instantQInput['location'] =this.location.id;
    // instantQInput['services'] = services;
-   instantQInput['services'] = serv;
+   if (this.action !== 'edit') {
+    instantQInput['services'] = serv;
+   }
+  
     instantQInput['queueSchedule'] = instantScheduleJson;
     instantQInput['name'] = (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
     instantQInput['onlineCheckin'] = true;
@@ -322,6 +383,7 @@ onSubmit(instantQ) {
     instantQInput['capacity'] = instantQ.qcapacity;
     instantQInput['queueState'] = 'ENABLED';
     instantQInput['instantQueue'] = true;
+    instantQInput['provider'] = {'id': this.userId }
     if (!this.sharedfunctionObj.checkIsInteger(instantQ.qcapacity)) {
         this.api_error = 'Please enter an integer value for Maximum ' + this.consumer_label + 's served';
        // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -337,11 +399,11 @@ onSubmit(instantQ) {
        // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
     }else {
-        // if (this.action === 'edit') {
-        //     this.updateInstantQ(instantQInput);
-        // } else {
+         if (this.action === 'edit') {
+             this.updateInstantQ(instantQInput);
+         } else {
             this.createInstantQ(instantQInput);
-       // }
+       }
     }
 }
 createInstantQ(post_data) {
@@ -358,6 +420,22 @@ createInstantQ(post_data) {
                 //this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
+}
+updateInstantQ(post_data) {
+    
+        this.provider_services.editProviderQueue(post_data)
+            .subscribe(
+                () => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                    this.dialogRef.close('reloadlist');
+                    //this.showInstantQFlag = false;
+                    //this.initializeQs();
+                },
+                (error) => {
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                }
+            );
+   
 }
 isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);

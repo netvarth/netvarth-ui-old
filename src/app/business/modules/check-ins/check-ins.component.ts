@@ -28,6 +28,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { instantQueueComponent } from './instantQ/instantQueue.component';
+import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 declare let cordova: any;
 @Component({
   selector: 'app-checkins',
@@ -344,6 +345,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusLoaded = false;
   qAvailability;
   instantdialogRef: any;
+  instaQid: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -481,6 +483,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
+    this.isuserAvailableNow();
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
@@ -835,13 +838,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   getServiceName(serviceName) {
-    let name='';
-  if(serviceName.length>20){
-   name=serviceName.substring(0,20) +'...';
-  }else{
-    name = serviceName;
-  }
-  return name;
+    let name = '';
+    if (serviceName.length > 20) {
+      name = serviceName.substring(0, 20) + '...';
+    } else {
+      name = serviceName;
+    }
+    return name;
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
@@ -1058,41 +1061,41 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeUser = loggedUser.id;
     } else {
 
-    this.activeQs = [];
-    const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
-    if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeQs = groupbyQs['ENABLED'];
-    }
-    // const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
-    if (view.name !== Messages.DEFAULTVIEWCAP) {
-      if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
-        this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
+      this.activeQs = [];
+      const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
+      if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
+        this.activeQs = groupbyQs['ENABLED'];
       }
-    }
-    const qids = [];
-    for (const q of this.activeQs) {
-      qids.push(q.id);
-    }
-    if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
-      this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
-    } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
-      this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
-    } else {
-      if (this.time_type !== 1) {
-        this.selQIds = this.getActiveQIdsFromView(view);
-        this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
-        this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
+      // const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
+      if (view.name !== Messages.DEFAULTVIEWCAP) {
+        if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
+          this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
+        }
+      }
+      const qids = [];
+      for (const q of this.activeQs) {
+        qids.push(q.id);
+      }
+      if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
+        this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+      } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
+        this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
       } else {
-        this.selQIds = [];
-        if (qids && qids.length > 0) {
-          this.selQIds = qids;
-          this.groupService.setitemToGroupStorage('selQ', this.selQIds);
+        if (this.time_type !== 1) {
+          this.selQIds = this.getActiveQIdsFromView(view);
+          this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+          this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
         } else {
-          this.loading = false;
+          this.selQIds = [];
+          if (qids && qids.length > 0) {
+            this.selQIds = qids;
+            this.groupService.setitemToGroupStorage('selQ', this.selQIds);
+          } else {
+            this.loading = false;
+          }
         }
       }
     }
-  }
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
@@ -1265,7 +1268,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
-    this.activeUser=null;
+    this.activeUser = null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
     tempUser['id'] = 'all';
@@ -1474,7 +1477,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
-      if(this.activeUser) {
+      if (this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
       } else {
         Mfilter['queue-eq'] = this.selQIds;
@@ -1527,7 +1530,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if ((this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) || this.activeUser) {
       const qids = this.activeQs.map(q => q.id);
-      if(this.activeUser) {
+      if (this.activeUser) {
         // Mfilter['provider-eq'] = this.activeUser;
       } else {
         Mfilter['queue-eq'] = qids.toString();
@@ -1637,7 +1640,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQIds = this.getActiveQIdsFromView(selectedView);
         this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       }
-      
+
     }
     const stype = this.groupService.getitemFromGroupStorage('pdStyp');
     if (stype) {
@@ -1703,7 +1706,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid && queueid !== '') {
-        if(this.activeUser) {
+        if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
           Mfilter['queue-eq'] = queueid;
@@ -1734,13 +1737,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['location-eq'] = this.selected_location.id;
       }
       if (queueid) {
-        if(this.activeUser) {
+        if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
           Mfilter['queue-eq'] = queueid;
         }
       } else {
-        if(this.activeUser) {
+        if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
           Mfilter['queue-eq'] = this.selQIds;
@@ -1785,7 +1788,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
       const qids = this.activeQs.map(q => q.id);
-      if(this.activeUser) {
+      if (this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
       } else {
         Mfilter['queue-eq'] = qids.toString();
@@ -1973,7 +1976,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('wlfilter');
     console.log(filter);
-    if(filter){
+    if (filter) {
       api_filter = filter;
     }
     // if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
@@ -2033,8 +2036,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
-        
-        if(this.activeUser) {
+
+        if (this.activeUser) {
           api_filter['provider-eq'] = this.activeUser;
         } else {
           api_filter['queue-eq'] = this.filterQ.toString();
@@ -2089,7 +2092,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
-   
+
     // this.filter.waitlist_status !== 'all'
     this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.endminday = this.filter.check_in_start_date;
@@ -2102,9 +2105,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.groupService.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
-     || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') 
-     {
+      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
+      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       console.log('fdg');
       this.filterapplied = true;
     } else {
@@ -3299,43 +3301,77 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
   }
-  isAvailableNow() {
-    this.shared_services.isAvailableNow()
+  isuserAvailableNow() {
+    console.log(this.active_user.id);
+    this.shared_services.isuserAvailableNow(this.active_user.id)
       .subscribe(data => {
         this.qAvailability = data;
         console.log(this.qAvailability);
+        if (this.qAvailability.availableNow) {
+          this.instaQid = this.qAvailability.instanceQueueId;
+        }
+        this.apiloading = false;
       },
         () => {
         });
   }
-  redirectinstantQ(){
+  redirectinstantQ() {
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     const userid = loggedUser.id
     if (loggedUser.adminPrivilege) {
-      this.router.navigate(['provider','settings', 'q-manager','queues']);
+      this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
     } else {
-      this.router.navigate(['provider','settings', 'general', 'users', userid ,'settings','queues']);
+      this.router.navigate(['provider', 'settings', 'general', 'users', userid, 'settings', 'queues']);
     }
-    
+
   }
-  createInstantQ(){
-    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.instantdialogRef = this.dialog.open(instantQueueComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-       location:this.selected_location,
-       userId:loggedUser.id
-      }
-    });
-    this.instantdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
+  createInstantQ() {
+    if (this.qAvailability.availableNow) {
+      const msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': msg,
+          'type': 'yes/no'
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result) {
+          this.apiloading = true;
+          this.provider_services.changeProviderQueueStatus(this.instaQid, 'disable')
+            .subscribe(() => {
+              this.isuserAvailableNow();
+            },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              });
+        }
+      });
+    } else {
+      const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+      console.log(loggedUser);
+      this.instantdialogRef = this.dialog.open(instantQueueComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          location: this.selected_location,
+          userId: loggedUser.id,
+          instaQid: this.instaQid
+        }
+      });
+      this.instantdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+          this.isuserAvailableNow();
+        }
+      });
+    }
   }
   getAge(age) {
     age = age.split(',');
     return age[0];
+  }
 }
-}
+

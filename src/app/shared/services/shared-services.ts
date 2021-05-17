@@ -589,6 +589,10 @@ export class SharedServices {
     const url = 'provider/waitlist/queues/isAvailableNow/today';
     return this.servicemeta.httpGet(url);
   }
+  isuserAvailableNow(id) {
+    const url = 'provider/waitlist/queues/isAvailableNow/today/'+ id;
+    return this.servicemeta.httpGet(url);
+  }
   getLicenseDetails() {
     // return this.servicemeta.httpGet('accounts/license');
     return this.servicemeta.httpGet('provider/license');

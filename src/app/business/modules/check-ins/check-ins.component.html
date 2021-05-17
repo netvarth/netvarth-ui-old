@@ -29,16 +29,22 @@
               <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
-          <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && active_user.isAvailableNow">
-            <a  (click)="createInstantQ()">
-             <span class="bold make-avail-txt-green">Go offline</span>
-           </a>
-          </li> -->
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type == 'BRANCH' && active_user.userType == 1 && !active_user.isAvailableNow">
-            <a  (click)="createInstantQ()">
-             <span class="bold make-avail-txt-red">Go online</span>
-           </a>
-          </li>
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-10" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
+              <span class="btn-play avail-till" >I am available till {{qAvailability.timeRange.eTime}} <br>
+                <span class="make-avail-txt-red pointer-cursor btn-play make-ofline-btn pull-right" (click)="createInstantQ()">Make me Offline</span>
+              </span>
+              
+               
+            
+            </li>
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-10" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
+              <span class="btn-play not-avail">I am not available <br>
+                <span class="make-avail-txt-green pointer-cursor btn-play make-online-btn pull-right" (click)="createInstantQ()">Make me Online</span>
+              </span>
+             
+               
+            
+            </li>
         </ul>
       </div>
     </nav>
@@ -237,7 +243,7 @@
                         Views</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </nav>
@@ -443,10 +449,12 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                          class="pull-left mgn-lt-5 date circle-token bold"
+                          *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                          class="pull-left mgn-lt-5 date user-token-circle bold"
+                          *ngIf="time_type!==3 && checkin.token && checkin.provider">
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
@@ -461,10 +469,7 @@
                           <div class="location" *ngIf="checkin.waitlistingFor[0].age">
                             Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
-                            Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'others'" class="fa fa-transgender"></i>
-                            </span> {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
+                            Gender: {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
                           </div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                             {{checkin.waitlistingFor[0].bookingLocation.district}},
@@ -584,8 +589,14 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span *ngIf="!small_device_display">
+                          <span
+                            *ngIf="!small_device_display && checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                          </span>
+                          <span
+                            *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                            {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                            checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
@@ -693,10 +704,12 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                          class="pull-left mgn-lt-5 date circle-token bold"
+                          *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                           {{checkin.token}}</div>
-                          <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                          class="pull-left mgn-lt-5 date user-token-circle bold"
+                          *ngIf="time_type!==3 && checkin.token && checkin.provider">
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
@@ -713,12 +726,9 @@
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].age">
                             Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
-                            <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
-                              Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
-                                <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
-                                <i *ngIf="checkin.waitlistingFor[0].gender == 'others'" class="fa fa-transgender"></i>
-                              </span> {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
-                            </div>
+                          <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
+                            Gender: {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
+                          </div>
                           <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                             {{checkin.waitlistingFor[0].bookingLocation.district}},
                             {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
@@ -820,7 +830,7 @@
                           </span>
                           <i class="dashboardcall-icon" *ngIf="!checkin.callingStatus"></i>
                           <span *ngIf="!small_device_display && !checkin.callingStatus">
-                            &nbsp;Call</span>
+                            &nbsp;Alert</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);addCustomerDetails(checkin)"
@@ -856,8 +866,14 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span *ngIf="!small_device_display">
+                          <span
+                            *ngIf="!small_device_display && checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                          </span>
+                          <span
+                            *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                            {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                            checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
@@ -1083,11 +1099,13 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                        class="pull-left mgn-lt-5 date circle-token bold"
+                        *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                         {{checkin.token}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
-                          {{checkin.token}}</div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                        class="pull-left mgn-lt-5 date user-token-circle bold"
+                        *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                        {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: newTimeDateFormat}}</div>
@@ -1102,12 +1120,9 @@
                         <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                         <div class="location" *ngIf="checkin.waitlistingFor[0].age">
                           Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
-                          <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
-                            Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'others'" class="fa fa-transgender"></i>
-                            </span> {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
-                          </div>
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
+                          Gender: {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
+                        </div>
                         <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                           {{checkin.waitlistingFor[0].bookingLocation.district}},
                           {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
@@ -1227,8 +1242,14 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         <span
                           *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                        <span *ngIf="!small_device_display">
+                        <span
+                          *ngIf="!small_device_display && checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                        </span>
+                        <span
+                          *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                          {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                          checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
@@ -1536,11 +1557,13 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                        class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token && !checkin.provider">
+                        class="pull-left mgn-lt-5 date circle-token bold"
+                        *ngIf="time_type!==3 && checkin.token && !checkin.provider">
                         {{checkin.token}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
-                          class="pull-left mgn-lt-5 date user-token-circle bold" *ngIf="time_type!==3 && checkin.token && checkin.provider">
-                          {{checkin.token}}</div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
+                        class="pull-left mgn-lt-5 date user-token-circle bold"
+                        *ngIf="time_type!==3 && checkin.token && checkin.provider">
+                        {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: newTimeDateFormat}}</div>
@@ -1553,12 +1576,9 @@
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="location" *ngIf="checkin.waitlistingFor[0].age">
                           Age: {{getAge(checkin.waitlistingFor[0].age)}}</div>
-                          <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
-                            Gender: <span><i *ngIf="checkin.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
-                              <i *ngIf="checkin.waitlistingFor[0].gender == 'others'" class="fa fa-transgender"></i>
-                            </span> {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
-                          </div>
+                        <div class="location" *ngIf="checkin.waitlistingFor[0].gender">
+                          Gender: {{checkin.waitlistingFor[0].gender | capitalizeFirst}}
+                        </div>
                         <div class="location" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                           {{checkin.waitlistingFor[0].bookingLocation.district}},
                           {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
@@ -1682,8 +1702,14 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         <span
                           *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                        <span *ngIf="!small_device_display">
+                        <span
+                          *ngIf="!small_device_display && checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                        </span>
+                        <span
+                          *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                          {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                          checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
