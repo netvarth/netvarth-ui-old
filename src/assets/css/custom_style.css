@@ -12189,7 +12189,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Canacel-01.svg);
   width: 40px;
 }
-
+.doctor-change-icon {
+  content: url(../images/dashboard-icons/doc.png);
+  width: 40px;
+}
 .changestatus-icon {
   content: url(../images/dashboard-icons/Changestatus.svg);
   width: 40px;

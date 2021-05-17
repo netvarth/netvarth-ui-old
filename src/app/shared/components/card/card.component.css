@@ -882,3 +882,94 @@ button.fxmenu1{
 .service-details .module {
     height: 45px;
 }
+.action-btn {
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    color: black;
+    border-radius: 5px;
+    border-color: #1e4079 !important;
+}
+.action-btn:hover {
+    background: #1e4079 !important;
+    color: white;
+    box-shadow: 0 4px 4px 0 #1e4079;
+}
+.wtsapvid-icon {
+    width: 14px !important;
+}
+.walkin-icon, .online-icon {
+    width: 15px !important;
+}
+.view-more {
+    padding: 0px 10px;
+    border: 1px solid #eee;
+    text-align: center;
+    font-size: .7rem;
+    border-radius: 20px;
+}
+.token {
+    margin-top: 5px;
+    vertical-align: top;
+    border: 1px solid #eee;
+    padding: 10px 0px;
+    width: 50px;
+    text-align: center;    
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-block;
+}
+.box1 {
+    width: 45%;
+    display: inline-block;
+}
+.box4 {
+    width: 30%;
+    margin-right: 10px;
+    float: right;
+    text-align: right;
+}
+.history .box1 {
+    width: 65%;
+}
+.consumer-name {
+    font-weight: bold;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dash-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mgn-bt-minus {
+    margin-bottom: -10px
+}
+/* .history .main-sec {
+    height: 120px !important;
+}  */
+/* .view-details .b1 {
+    width: 50%;
+}
+.view-details .b2 {
+    width: 50%;
+    text-align: right;
+    float: right;
+} */
+.view-details {
+    margin-bottom: 3px;
+}
+.user-token {
+    margin-top: 5px;
+    vertical-align: top;
+    border: 1px solid #eee;
+    padding: 10px 0px;
+    width: 50px;
+    text-align: center;    
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-block;
+    color: white;
+    background: #1E4079;
+}

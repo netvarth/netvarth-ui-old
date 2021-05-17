@@ -599,7 +599,7 @@
                                                                                         </button>
                                                                                         <button mat-menu-item
                                                                                                 (click)="addEditProviderQueue('editFromList', queue)"
-                                                                                                *ngIf="queue.queueState == 'EXPIRED'">
+                                                                                                *ngIf="queue.queueState == 'EXPIRED'&& !queue.provider">
                                                                                                 <i
                                                                                                         class="icon-edit"></i>Edit
                                                                                         </button>

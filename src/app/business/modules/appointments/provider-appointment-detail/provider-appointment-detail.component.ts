@@ -335,12 +335,12 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   gotoPrev() {
     this.locationobj.back();
   }
-  getTimeSlots() {
-    this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule.id, this.waitlist_data.appmtDate).subscribe(data => {
-      this.availableSlots = data;
-      this.availableSlotDetails = this.availableSlots.availableSlots.filter(slot => slot.noOfAvailbleSlots !== '0' || (slot.time === this.waitlist_data.appmtTime && slot.noOfAvailbleSlots === '0'));
-    });
-  }
+  // getTimeSlots() {
+  //   this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule.id, this.waitlist_data.appmtDate).subscribe(data => {
+  //     this.availableSlots = data;
+  //     this.availableSlotDetails = this.availableSlots.availableSlots.filter(slot => slot.noOfAvailbleSlots !== '0' || (slot.time === this.waitlist_data.appmtTime && slot.noOfAvailbleSlots === '0'));
+  //   });
+  // }
   getAppxTime(waitlist, retcap?) {
     if (this.checkTimedisplayAllowed(waitlist)) {
       if (waitlist.queue.queueStartTime !== undefined) {

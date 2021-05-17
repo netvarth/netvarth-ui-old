@@ -84,6 +84,10 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.dialogRef.close(this.mrId);
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
     }
+    closeUploadFile() {
+      this.dialogRef.close();
+      this.router.navigate(['provider', 'license','addons']);
+    }
     imageSelect(event) {
         this.error_msg = '';
         this.error_list = [];

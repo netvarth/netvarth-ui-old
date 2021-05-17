@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 declare let cordova: any;
 
 
@@ -104,6 +105,8 @@ export class CheckinActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     buttonClicked = false;
+    accountType: any;
+    changeService = true;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -124,6 +127,7 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
+        console.log(this.checkin);
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
@@ -143,6 +147,7 @@ export class CheckinActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -472,7 +477,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -480,6 +485,7 @@ export class CheckinActionsComponent implements OnInit {
             data: {
                 checkin_id: this.checkin.ynwUuid
             }
+            
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
@@ -491,6 +497,44 @@ export class CheckinActionsComponent implements OnInit {
             this.buttonClicked = true;
         }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
+    }
+    changeWaitlistservice() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
+    }
+    removeProvider() {
+        // this.dialogRef.close();
+        let msg = '';
+        msg = 'Do you want to remove this ' + this.provider_label;
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'ynwUuid': this.checkin.ynwUuid,
+                    'provider': {
+                        'id': this.checkin.provider.id
+                    },
+                };
+                this.provider_services.unassignUserWaitlist(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
@@ -518,13 +562,13 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked') {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice) {
             this.showUndo = true;
         }
-        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
             this.showArrived = true;
         }
-        if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
+        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && !this.data.teleservice) {
             this.showCancel = true;
         }
         if (this.data.timetype === 1 && this.checkin.service.livetrack && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
@@ -536,13 +580,13 @@ export class CheckinActionsComponent implements OnInit {
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showMsg = true;
         }
-        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService')) {
+        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService') && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.checkin.service.serviceType === 'virtualService')  && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
-        if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
+        if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived') && !this.data.teleservice) {
             this.showCall = true;
         }
         if (this.pos && this.checkin.waitlistStatus !== 'blocked' && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
@@ -553,6 +597,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showAttachment = true;
+        }
+        if (this.data.timetype === 3) {
+            this.changeService = false;
         }
     }
     getLabel() {
@@ -883,7 +930,6 @@ export class CheckinActionsComponent implements OnInit {
     }
     gotoQuestionnaire(booking) {
         this.dialogRef.close();
-        console.log(booking);
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 uuid: booking.ynwUuid,
