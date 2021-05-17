@@ -98,6 +98,13 @@
             </div>
 
         </div>
+        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
+            (click)="!buttonClicked && changeWaitlistStatus('Completed')">
+            <div class="action-box-sub">
+                <span class="complete-icon"></span>
+                <div class="icon-text">Complete</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
             (click)="rescheduleActionClicked()">
@@ -170,13 +177,7 @@
                 <!-- <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
-            (click)="!buttonClicked && changeWaitlistStatus('Completed')">
-            <div class="action-box-sub">
-                <span class="complete-icon"></span>
-                <div class="icon-text">Complete</div>
-            </div>
-        </div>
+        
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="unBlockAppt()">
             <div class="action-box-sub">
                 <span class="unblock-appt-icon"></span>
