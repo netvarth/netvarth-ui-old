@@ -109,6 +109,8 @@ export class BranchUsersComponent implements OnInit {
     user;
     selectedLanguages: any = [];
     selectedSpecialization: any = [];
+    selectedUser;
+  selectrow = false;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -477,5 +479,15 @@ export class BranchUsersComponent implements OnInit {
         }
         return specialization;
     }
+    selectedRow(index, user) {
+        this.selectrow = true;
+        this.selectedUser = user;
+        if (this.selectrow === true && user.id) {
+            this.manageSettings(user.id)
+        }
+      }
+      stopprop(event) {
+        event.stopPropagation();
+      }
 }
 
