@@ -127,7 +127,7 @@
                                                         <th class="display-min-none" style="width: 30%;">Specializations
                                                         </th>
                                                         <th class="display-min-none">Languages</th>
-                                                        <!-- <th class="display-min-none">Availability</th> -->
+                                                        <th class="display-min-none">Availability</th>
                                                         <th class="display-min-none"></th>
                                                     </tr>
                                                 </thead>
@@ -181,11 +181,11 @@
                                                                                 {{getLanguages(service.preferredLanguages)}}
                                                                             </span>
                                                                         </div>
-                                                                        <!-- <div class="mgn-up-5"> <span class="b1">
-                                                                                Availability : </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'">
+                                                                        <div class="mgn-up-5"> <span class="b1" *ngIf="service.userType === 'PROVIDER' ">
+                                                                                Availability : </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'" *ngIf="service.userType === 'PROVIDER' ">
                                                                                 {{(service.isAvailable) ? 'Available' :
                                                                                 'Not
-                                                                                Available'}} </span></div> -->
+                                                                                Available'}} </span></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -214,10 +214,13 @@
                                                                 {{getLanguages(service.preferredLanguages)}}
                                                             </span>
                                                         </td>
-                                                        <!-- <td class="display-min-none"
-                                                            [ngClass]="service.isAvailable ? 'greenc' : 'red'">
-                                                            {{(service.isAvailable) ? 'Available' : 'Not Available'}}
-                                                        </td> -->
+                                                        <td class="display-min-none"
+                                                            >
+                                                            <span *ngIf="service.userType === 'PROVIDER' " [ngClass]="service.isAvailable ? 'greenc' : 'red'">
+                                                                {{(service.isAvailable) ? 'Available' : 'Not Available'}}
+                                                            </span>
+                                                            
+                                                        </td>
                                                         <td>
                                                             <div class="copy">
                                                                 <span class="mbt" style="top: 5px;">
