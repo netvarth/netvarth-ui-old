@@ -13,15 +13,12 @@ import { Messages } from '../../../../shared/constants/project-messages';
 export class ConfirmBoxComponent {
   ok_btn_cap = 'OK';
   cancel_btn_cap = 'NO';
-  showOk = true;
+
   constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (this.data.type || (this.data.type && this.data.type === 'instantQ' && this.data.qId)) {
+    if (this.data.type) {
       this.ok_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;
-    }
-    if (this.data.type && this.data.type === 'instantQ' && !this.data.qId) {
-      this.showOk = false;
     }
   }
 
