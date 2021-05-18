@@ -98,15 +98,16 @@
     font-size: small;
 }
 .avail-till {
-    background: green;
-    color: white;
+    border: 1.5px solid green;
+    /* color: white; */
 }
 .make-ofline-btn {
     background: white;
 }
 .not-avail {
-    background: red;
-    color: white;
+    border: 1.5px solid red;
+    /* background: red; */
+    /* color: white; */
 }
 .make-online-btn {
     background: white;

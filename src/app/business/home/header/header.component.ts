@@ -57,6 +57,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   phoneNumber = '';
   userData;
   userDetails: any = [];
+  branchName = '';
+  location;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -112,6 +114,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
       this.getUserDetails();
     }
+    this.location = this.groupService.getitemFromGroupStorage('loc_id');
+    console.log(this.location);
   }
   closeMenu() {
     const screenWidth = window.innerWidth;
@@ -186,6 +190,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
       if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
+        this.branchName = bdetails.bn || 'User';
         this.bname = this.userData.userName || 'User';
         this.blogo = (this.userDetails.profilePicture) ? this.userDetails.profilePicture.url : './assets/images/img-null.svg';
       } else {

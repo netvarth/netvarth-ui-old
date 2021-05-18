@@ -1371,7 +1371,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   showPayment() {
-    this.amountpay = this.bill_data.amountDue;
+    this.amountpay = this.bill_data.amountDue.toFixed(2);
     this.showPayWorkBench = true;
   }
   hidePayWorkBench() {
