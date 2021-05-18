@@ -30,16 +30,16 @@
             </ul>
           </li>
           <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
-              <span class="btn-play avail-till" >I am available till {{qAvailability.timeRange.eTime}} <br>
-                <span class="make-avail-txt-red pointer-cursor btn-play make-ofline-btn" (click)="createInstantQ()" *ngIf="instaQid">Make me Offline</span>
+              <span class="btn-play avail-till" >I'm available till {{qAvailability.timeRange.eTime}} <br>
+                <span class="make-avail-txt-red pointer-cursor btn-play make-ofline-btn" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
               </span>
               
                
             
             </li>
             <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
-              <span class="btn-play not-avail">I am not available <br>
-                <span class="make-avail-txt-green pointer-cursor btn-play make-online-btn" (click)="createInstantQ()">Make me Online</span>
+              <span class="btn-play not-avail">I'm not available <br>
+                <span class="make-avail-txt-green pointer-cursor btn-play make-online-btn" (click)="createInstantQ()">Make me available</span>
               </span>
              
                
@@ -253,18 +253,20 @@
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
-                <button class="item cust-button-3"
+                <ng-container *ngFor="let queue of activeQs;let i = index">
+                <button class="item cust-button-3" *ngIf="!queue.instantQueue"
                   [ngClass]="{active: isQueueSelected(queue.id)?true:false, disabled: queue.queueState === 'ENABLED'?false:true}"
-                  (click)="viewQClicked(queue)" *ngFor="let queue of activeQs;let i = index">
-                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br /><input style="margin:0px;"
+                  (click)="viewQClicked(queue)">
+                  <span>{{queue.name}}<br /><input style="margin:0px;"
                       [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left" />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                     queue.queueSchedule.timeSlots[0]['eTime']}}</span>
-                  <span *ngIf="queue.instantQueue">InstantQ<br /><input style="margin:0px;"
+                  <!-- <span *ngIf="queue.instantQueue">InstantQ<br /><input style="margin:0px;"
                       [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left" />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
-                    queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                    queue.queueSchedule.timeSlots[0]['eTime']}}</span> -->
                 </button>
+              </ng-container>
               </owl-carousel>
               <div class="owl-theme">
                 <div class="owl-controls">

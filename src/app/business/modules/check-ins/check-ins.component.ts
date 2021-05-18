@@ -3344,6 +3344,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.isuserAvailableNow();
             },
               error => {
+                this.apiloading = false;
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               });
         }
