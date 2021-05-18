@@ -127,7 +127,7 @@
                                                         <th class="display-min-none" style="width: 30%;">Specializations
                                                         </th>
                                                         <th class="display-min-none">Languages</th>
-                                                        <th class="display-min-none">Availability</th>
+                                                        <!-- <th class="display-min-none">Availability</th> -->
                                                         <th class="display-min-none"></th>
                                                     </tr>
                                                 </thead>
@@ -149,7 +149,9 @@
                                                                             class="fa fa-map-marker mgn-rt-5"
                                                                             aria-hidden="true"></i>
                                                                         {{service.locationName}}</div>
-                                                                        <div class="disp-flex mgn-up-5"
+                                                                       
+                                                                    <div class="d-lg-none">
+                                                                        <div class=" mgn-up-5"
                                                                         *ngIf="service.userType">
                                                                         <span class="b1">
                                                                             User Type : </span>&nbsp;
@@ -160,7 +162,6 @@
                                                                             <span class="b2" *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                            
                                                                        </div>
-                                                                    <div class="d-lg-none">
                                                                         <div class="mgn-up-5" *ngIf="service.mobileNo">
                                                                             <span class="b1">
                                                                                 Phone number : </span><span class="b2">
@@ -180,11 +181,11 @@
                                                                                 {{getLanguages(service.preferredLanguages)}}
                                                                             </span>
                                                                         </div>
-                                                                        <div class="mgn-up-5"> <span class="b1">
+                                                                        <!-- <div class="mgn-up-5"> <span class="b1">
                                                                                 Availability : </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'">
                                                                                 {{(service.isAvailable) ? 'Available' :
                                                                                 'Not
-                                                                                Available'}} </span></div>
+                                                                                Available'}} </span></div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -213,10 +214,10 @@
                                                                 {{getLanguages(service.preferredLanguages)}}
                                                             </span>
                                                         </td>
-                                                        <td class="display-min-none"
+                                                        <!-- <td class="display-min-none"
                                                             [ngClass]="service.isAvailable ? 'greenc' : 'red'">
                                                             {{(service.isAvailable) ? 'Available' : 'Not Available'}}
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <div class="copy">
                                                                 <span class="mbt" style="top: 5px;">
