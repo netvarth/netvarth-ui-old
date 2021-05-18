@@ -706,9 +706,9 @@ ul.bus-actions li a.lnk {
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
-.service-icon .phon-icon {
+/* .service-icon .phon-icon {
   margin-bottom: 5px;
-}
+} */
 .service-icon .zoom-icon {
   width: 30px !important; 
 }
@@ -717,7 +717,7 @@ ul.bus-actions li a.lnk {
 }
 .service-icon .wtsapvid-icon {
   width: 20px !important;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
   margin-bottom: -5px !important;
@@ -1516,3 +1516,81 @@ body.modal-open {
   width: 80px;    
   font-size: .7rem;
 }
+
+.billing-head {
+  text-align: left !important;
+  font: normal normal bold 15px/18px Roboto !important;
+  letter-spacing: 0px !important;
+  width: 15% !important;
+  display: inline-block !important;
+}
+
+.billing-value {
+  text-align: left;
+  font: normal normal normal 15px/18px Roboto;
+  letter-spacing: 0px;
+  width: 85%;
+}
+
+@media (max-width: 1200px) {
+  .billing-head {
+    width: 20% !important;
+  }
+  
+  .billing-value {
+    width: 80%;
+  }  
+}
+
+@media (max-width: 991px) {
+  .billing-head {
+    width: 25% !important;
+  }
+  
+  .billing-value {
+    width: 75%;
+  }  
+}
+
+@media (max-width: 767px) {
+  .billing-head {
+    width: 15% !important;
+  }
+  
+  .billing-value {
+    width: 85%;
+  }  
+}
+
+@media (max-width: 576px) {
+  .billing-head {
+    width: 20% !important;
+  }
+  
+  .billing-value {
+    width: 80%;
+  }  
+}
+
+@media (max-width: 500px) {
+  .billing-head {
+    width: 30% !important;
+  }
+  
+  .billing-value {
+    width: 70%;
+  }  
+}
+
+.bookdetails {
+  width: 80% !important;
+  margin: 0 auto 20px !important;
+}
+
+@media (max-width: 767px) {
+  .bookdetails {
+    width: 90% !important;
+    margin: 0 auto 20px !important;
+  }  
+}
+
