@@ -72,7 +72,7 @@
                                         maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                 </li>
                             </div>
-                            <div>
+                            <div class="filterTextinput">
                                 <li class="filterli filterDatepicker">
                                     <mat-form-field class="userfilter">
                                         <mat-select id="userType" #userType [(ngModel)]="filter.userType"
@@ -94,7 +94,7 @@
                                         {{language.displayName}}</mat-checkbox>
                                 </li>
                             </div>
-                            <div class="filterTextinput">
+                            <div>
                                 <label class="filterHeaders">Specializations</label>
                                 <li class="filterli">
                                     <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
@@ -125,14 +125,13 @@
                                                         </th>
                                                         <th class="display-min-none">Languages</th>
                                                         <th class="display-min-none">Availability</th>
+                                                        <th class="display-min-none"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr class="row_data border-bottom pointer-cursor"
                                                         *ngFor="let service of users_list; let i = index;">
                                                         <td class="waitlist-box">
-                                                            <!-- <span class="mgn-up-5 d-lg-none pull-right"><a class="assign-btn">Assign</a>
-                                        </span> -->
                                                             <div class="disp-flex">
                                                                 <div class="user-img img-min-width">
                                                                     <img [src]="getUserImg(service)">
@@ -195,7 +194,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="copy">
-                                                                <span class="mbt" style="top: 10px;">
+                                                                <span class="mbt" style="top: 5px;">
                                                                     <button type="button" mat-icon-button
                                                                         [matMenuTriggerFor]="appMenu">
                                                                         <mat-icon>more_vert</mat-icon>
@@ -224,11 +223,11 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr *ngIf="users_list.length == 0">
+                                                    <tr *ngIf="users_list.length == 0 && !api_loading">
                                                         No {{provider_label}} found
                                                     </tr>
                                                 </tbody>
-                                                <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                                                <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                                             </table>
                                         </div>
                                     </div>
