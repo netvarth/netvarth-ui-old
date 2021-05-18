@@ -412,7 +412,7 @@ createInstantQ(post_data) {
     this.provider_services.addInstantQ(post_data)
         .subscribe(
             () => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MADE_YOURSELF_AVAIL_NOW'), { 'panelClass': 'snackbarnormal' });
                 this.dialogRef.close('reloadlist');
                 // this.showInstantQFlag = false;
                 // this.initializeQs();
@@ -428,7 +428,7 @@ updateInstantQ(post_data) {
         this.provider_services.editProviderQueue(post_data)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MADE_YOURSELF_AVAIL_NOW'), { 'panelClass': 'snackbarnormal' });
                     this.dialogRef.close('reloadlist');
                     //this.showInstantQFlag = false;
                     //this.initializeQs();

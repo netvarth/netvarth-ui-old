@@ -138,6 +138,7 @@ export const Messages = {
   'WAITLIST_LOCATION_CHG_STATLOCATION': 'Location "[locname]" has been [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
   'WAITLIST_QUEUE_CREATED': 'Queue created successfully',
+  'MADE_YOURSELF_AVAIL_NOW': 'You have made yourself available now',
   'WAITLIST_QUEUE_UPDATED': 'Queue updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
