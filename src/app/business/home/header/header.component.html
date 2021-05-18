@@ -132,7 +132,7 @@
         <a class="font-weight-bold text-dark-75 text-hover-primary" *ngIf="branchName !== ''">
           {{branchName}}
         </a>
-        <div class="text-muted mt-1 sub-sec" *ngIf="userData.accountType === 'BRANCH'">
+        <div class="text-muted mt-1 sub-sec" *ngIf="userData.accountType === 'BRANCH' && location">
           <i class="icon-location"></i>{{location.place}}
         </div>
         <div class="text-muted mt-1">
