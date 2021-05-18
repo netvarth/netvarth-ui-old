@@ -30,7 +30,7 @@
             </ul>
           </li>
           <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
-              <span class="btn-play avail-till" >I am available till {{qAvailability.timeRange.eTime}} <br>
+              <span class="btn-play avail-till" >I'm available till {{qAvailability.timeRange.eTime}} <br>
                 <span class="make-avail-txt-red pointer-cursor btn-play make-ofline-btn" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
               </span>
               
@@ -38,7 +38,7 @@
             
             </li>
             <li class="dropdown messages-menu loc-lst queue-menu pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
-              <span class="btn-play not-avail">I am not available <br>
+              <span class="btn-play not-avail">I'm not available <br>
                 <span class="make-avail-txt-green pointer-cursor btn-play make-online-btn" (click)="createInstantQ()">Make me available</span>
               </span>
              
