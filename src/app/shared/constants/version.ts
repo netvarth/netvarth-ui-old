@@ -6,4 +6,3 @@ const versionString = {
     // 'updateUrl': 'https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1'
 };
 export const version = versionString;
-
