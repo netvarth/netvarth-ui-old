@@ -6,6 +6,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { MedicalrecordService } from '../../medicalrecord.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-add-drug',
@@ -57,6 +59,11 @@ export class AddDrugComponent implements OnInit {
   fromWhr;
   drugData;
   addAnother = false;
+  customerDetails: any;
+  serviceName = 'Consultation';
+  display_PatientId: any;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  customer_label = '';
 
   constructor(
     public dialogRef: MatDialogRef<AddDrugComponent>,
@@ -66,7 +73,10 @@ export class AddDrugComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private medicalService: MedicalrecordService,
+    private wordProcessor: WordProcessor,
   ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.formMode = data.type;
     if (this.formMode === 'edit') {
       this.drugData = data.drugDetails;
@@ -75,6 +85,18 @@ export class AddDrugComponent implements OnInit {
   }
   taxDetails: any = [];
   ngOnInit() {
+    this.customerDetails = this.medicalService.getPatientDetails();
+    if (this.customerDetails.memberJaldeeId) {
+      this.display_PatientId = this.customerDetails.memberJaldeeId;
+    } else if (this.customerDetails.jaldeeId) {
+      this.display_PatientId = this.customerDetails.jaldeeId;
+    }
+    const servname = this.medicalService.getServiceName();
+    if(servname){
+      this.serviceName = servname;
+    }
+    console.log(this.customerDetails);
+    console.log(this.serviceName);
     this.api_loading = false;
     this.createForm();
   }
