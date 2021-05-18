@@ -3337,13 +3337,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         disableClose: true,
         data: {
           'message': msg,
-          'type': 'yes/no'
+          'type': 'instantQ',
+          'qId': this.instaQid
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
         if (result && this.instaQid) {
           this.apiloading = true;
-          this.provider_services.changeProviderQueueStatus(this.instaQid, 'disable')
+          this.provider_services.terminateInstantQ(this.instaQid)
             .subscribe(() => {
               this.isuserAvailableNow();
             },
