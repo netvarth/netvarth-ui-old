@@ -116,7 +116,7 @@
     </a>
   </div>
   <div class="offcanvas-content pr-5 mr-n5">
-    <div class="d-flex align-items-center mt-5">
+    <div class="d-flex mt-5">
       <div class="symbol symbol-100 mr-5">
         <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
         </div>
@@ -132,8 +132,8 @@
         <a class="font-weight-bold text-dark-75 text-hover-primary" *ngIf="branchName !== ''">
           {{branchName}}
         </a>
-        <div class="text-muted mt-1 sub-sec" *ngIf="userData.accountType === 'BRANCH' && location">
-          <i class="icon-location"></i>{{location.place}}
+        <div class="text-muted mt-1 sub-sec" *ngIf="locName">
+          <i class="icon-location"></i>{{locName}}
         </div>
         <div class="text-muted mt-1">
           {{bsector}}

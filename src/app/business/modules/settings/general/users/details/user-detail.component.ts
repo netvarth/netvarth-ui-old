@@ -233,7 +233,7 @@ export class BranchUserDetailComponent implements OnInit {
             // city: []
         });
 
-        this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].name);
+        this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].value);
         this.getWaitlistMgr();
     }
     getUserData() {

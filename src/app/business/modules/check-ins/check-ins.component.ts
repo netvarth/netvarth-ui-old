@@ -3326,20 +3326,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
-      let msg = '';
-      if (this.instaQid) {
-      msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
-      } else {
-        msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
-      }
+      const msg = 'Make myself unavailable from today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime;
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
           'message': msg,
-          'type': 'instantQ',
-          'qId': this.instaQid
+          'type': 'yes/no'
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
@@ -3350,6 +3344,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.isuserAvailableNow();
             },
               error => {
+                this.apiloading = false;
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               });
         }
