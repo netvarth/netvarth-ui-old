@@ -68,6 +68,10 @@
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
+                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'VideoCall')"
+                                                        class="joinMeeting"
+                                                        (click)="joinMeetitng('wl')"
+                                                        target="blank">Join Now</a>
                                                 </span>
                                             </div>
                                         </div>
