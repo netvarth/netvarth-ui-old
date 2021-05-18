@@ -945,9 +945,86 @@
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
-                                        <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ?
-                                            'token': 'check-in' }} details</div>
-                                        <table class="bookdetails">
+                                        <!-- <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ?
+                                            'token': 'check-in' }} details</div> -->
+                                        <div class="confirm-head mgn-up-20">Review & Confirm</div>
+                                        
+                                        <div class="bookdetails">
+                                            
+                                            <div class="disp-flex" *ngIf="!sel_ser_det.provider">
+                                                <span class="billing-head">Provider</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value name-line-ht">{{businessjson.businessName}}</span>
+                                            </div>
+                                            <div class="disp-flex" *ngIf="sel_ser_det.provider">
+                                                <span class="billing-head">Provider</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
+                                                    {{businessjson.businessName}}</span>
+                                            </div>
+                                            <div class="disp-flex">
+                                                <span class="billing-head">Location</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value"> {{locationName}}
+                                                    <!-- <a [href]="googleMapUrl" target="_blank"
+                                                        class="icon-location" matTooltip="Click to navigate">
+                                                    </a> -->
+                                                </span>
+                                            </div>
+                                            <div class="disp-flex">
+                                                <span class="billing-head" style="display: flex !important; align-items: center !important;">Service</span>
+                                                <span style="display: flex !important; align-items: center !important;">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value disp-flex align-items-center">
+                                                    <span class="service-icon" style="display: inline-block !important;"
+                                                        *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                        <i class="fa phon-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        <i class="fa meet-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        <i class="fa zoom-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                            *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
+                                                    </span>
+                                                    <span>{{sel_ser_det.name}}</span>
+                                                </span>
+                                            </div>
+                                            <div class="disp-flex">
+                                                <span class="billing-head" *ngIf="settingsjson.showTokenId">Token for</span>
+                                                <span class="billing-head" *ngIf="!settingsjson.showTokenId">Check-in for</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value">
+                                                    <span *ngFor="let customer of waitlist_for; let i = index;">
+                                                        {{customer.firstName}}
+                                                        {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : ""}}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="disp-flex">
+                                                <span class="billing-head">Contact #</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value">{{countryCode}} {{userPhone}}</span>
+                                            </div>
+                                            <div class="disp-flex"
+                                                *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <span class="billing-head">WhatsApp #</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value"> +{{callingModes}}</span>
+                                            </div>
+                                            <div class="disp-flex" *ngIf="payEmail">
+                                                <span class="billing-head">Email</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="billing-value" style="word-break: break-all;">{{payEmail}}</span>
+                                            </div>
+                                        
+                                        </div>
+
+
+                                        <!-- <table class="bookdetails">
                                             <tbody>
                                                 <tr *ngIf="!sel_ser_det.provider">
                                                     <td width="48%" align="right">
@@ -1021,7 +1098,8 @@
                                                     <td style="word-break: break-all;">{{payEmail}}</td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                        </table> -->
+
                                         <div class="containerAppt textcenter">
                                             <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
                                             <div class="mgn-bt-5">
