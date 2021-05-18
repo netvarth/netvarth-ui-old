@@ -383,7 +383,8 @@ onSubmit(instantQ) {
     instantQInput['parallelServing'] = instantQ.qserveonce;
     instantQInput['capacity'] = instantQ.qcapacity;
     instantQInput['queueState'] = 'ENABLED';
-    instantQInput['instantQueue'] = true;
+    instantQInput['availabilityQueue'] = true;
+    instantQInput['instantQueue'] = "true";
     instantQInput['provider'] = {'id': this.userId }
     if (!this.sharedfunctionObj.checkIsInteger(instantQ.qcapacity)) {
         this.api_error = 'Please enter an integer value for Maximum ' + this.consumer_label + 's served';
@@ -408,6 +409,7 @@ onSubmit(instantQ) {
     }
 }
 createInstantQ(post_data) {
+    console.log(post_data)
     this.provider_services.addInstantQ(post_data)
         .subscribe(
             () => {
