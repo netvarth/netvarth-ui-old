@@ -15,7 +15,8 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 
 @Component({
   selector: 'app-instantQueue',
-  templateUrl: './instantQueue.component.html'
+  templateUrl: './instantQueue.component.html',
+  styleUrls: ['./instantQueue.component.css']
 })
 
 export class instantQueueComponent implements OnInit {

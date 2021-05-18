@@ -3007,6 +3007,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           const thumbPath = communications[comIndex].thumbPath;
           let imagePath = thumbPath;
           const description = communications[comIndex].s3path;
+          const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
           if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
@@ -3015,7 +3016,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             count,
             { // modal
               img: imagePath,
-              // description: description
+              description: caption || ''
             },
           );
           this.image_list_popup_temp.push(imgobj);
@@ -3327,12 +3328,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
-      let msg = '';
-      if (this.instaQid) {
-      msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
-      } else {
-        msg = 'Are you sure you want to make yourself offline? This means you will be marked as offline';
-      }
+      const msg = 'Make myself unavailable from today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime;
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -3345,11 +3341,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       dialogrefd.afterClosed().subscribe(result => {
         if (result && this.instaQid) {
           this.apiloading = true;
-          this.provider_services.changeProviderQueueStatus(this.instaQid, 'disable')
+          this.provider_services.terminateInstantQ(this.instaQid)
             .subscribe(() => {
               this.isuserAvailableNow();
             },
               error => {
+                this.apiloading = false;
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               });
         }

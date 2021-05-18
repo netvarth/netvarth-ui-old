@@ -1,17 +1,29 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">Instant Queue
+
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">Set your availability
     
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
-  <mat-dialog-content style="padding-top: 0px;display: grid;">
+  <!-- <mat-dialog-container class="mat-dialog-container">
+        <div class="addContainer">
+                <div class="modalHeader">
+                </div>
+                <div class="mat-dialog-content">
+                        
+                </div>
+        </div>
+  </mat-dialog-container> -->
+  <mat-dialog-content  style="padding-top: 0px;display: grid;">
     <div class="row m0" >
         <div class="col-md-12 p0">
+                <div class="mgn-up-30">
+                        This enables you to instatly make yourself available today for consultation within the time range you choose.
+                </div>
                 <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                 onSubmit(instantQForm.value)" >
                         <div class="instant-ed">
-                                <span [class.label-margin]="true"><strong>I am
-                                                available</strong>&nbsp;from</span>
+                                <span [class.label-margin]="true"><strong>Make me available</strong>&nbsp;from</span>
                                 <span class="learnmore-pointer"
                                         (click)="editStartTime()"
                                         [class.label-margin]="true"
@@ -43,7 +55,7 @@
                                         </div>
                                 </div>
                         </div>
-                        <div class="lgmem"
+                        <!-- <div class="lgmem"
                                 style="margin-bottom: 10px; margin-top: 15px; display: flex;">
                                 <label class="new_locStyle"
                                         style="font-weight: 500">Location
@@ -53,30 +65,10 @@
                                                 <span>{{location.place}}</span>
                                                 <span class="icon-location dash"></span>
                                         </span>
-                                        <!-- <span class="lgin">
-                                                <span class="loc-name"
-                                                        mat-icon-button
-                                                        [matMenuTriggerFor]="menu"
-                                                        *ngIf="locations && locations.length > 1">
-                                                        <span class="selct-loctin pointer-cursor"
-                                                                *ngIf="selected_location">{{selected_location.place | capitalizeFirst}}</span>
-                                                        <span
-                                                                class="icon-location dash link"></span>
-                                                </span>
-                                                <mat-menu #menu="matMenu">
-                                                        <button mat-menu-item
-                                                                *ngFor="let location of locations;let i = index"
-                                                                (click)="onChangeLocationSelect(i)">
-                                                                <strong>
-                                                                        {{ location.place | capitalizeFirst }}</strong>
-                                                        </button>
-                                                </mat-menu>
-                                        </span> -->
+                                       
                                 </div>
-                                <!-- <div *ngIf="action=='edit'">
-                                        <div>{{loc_name}} <span class="icon-location dash"></span></div>
-                                </div> -->
-                        </div>
+                              
+                        </div> -->
                         <!-- <div class="form-group">
                                 <div class="schselectall">
                                         <label>All Services</label>
@@ -117,7 +109,7 @@
                                         </div>
                                 </section>
                         </div> -->
-                        <div class="c-ot row col-sm-12">
+                        <div class="c-ot row col-sm-12 mgn-up-10">
                                 <div class="item">
                                         <span class="ttle">Maximum
                                                 {{consumer_label}}s
@@ -182,11 +174,10 @@
                                 </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="actiondiv" style="display: flex">
+                        <div class="actiondiv mgn-up-10" style="display: flex">
                                 <button type="button" class="cs-btn bt3"
-                                        style="margin-right:10px" (click)="close()">Cancel</button>
-                                <button class="cs-btn bt3">Make Me
-                                        Available</button>
+                                        style="margin-right:10px" (click)="close()">CANCEL</button>
+                                <button class="cs-btn bt3">CONFIRM</button>
                         </div>
                 </form>
         </div>
