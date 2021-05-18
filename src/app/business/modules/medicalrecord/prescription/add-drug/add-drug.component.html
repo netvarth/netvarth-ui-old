@@ -11,7 +11,7 @@
               <label>{{customer_label | capitalizeFirst}} Id  </label>&nbsp; <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
               <label *ngIf="serviceName">Service/Consultation</label>&nbsp;<span *ngIf="serviceName">{{serviceName | capitalizeFirst}}</span><br  *ngIf="serviceName">
               <label  *ngIf="customerDetails.dob">DOB </label> &nbsp;<span  *ngIf="customerDetails.dob">{{customerDetails.dob  | date:newDateFormat}} </span> <br  *ngIf="customerDetails.dob">
-              <label *ngIf="customerDetails.gender">Gender </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span><br  *ngIf="customerDetails.gender">
+              <label *ngIf="customerDetails.gender">Gender </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
               
           </div>
           

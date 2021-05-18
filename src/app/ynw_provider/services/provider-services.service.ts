@@ -2094,4 +2094,8 @@ editHoliday(data) {
     const url = 'provider/account/settings/locations/'  + pincode;
     return this.servicemeta.httpGet(url);
   }
+  terminateInstantQ(id) {
+    const url = 'provider/waitlist/queues/instant/terminate/' + id;
+    return this.servicemeta.httpPut(url);
+  }
 }
