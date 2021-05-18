@@ -2426,6 +2426,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           const thumbPath = communications[comIndex].thumbPath;
           let imagePath = thumbPath;
           const description = communications[comIndex].s3path;
+          const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
           if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
@@ -2434,7 +2435,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             count,
             { // modal
               img: imagePath,
-              // description: description
+              description: caption || ''
             },
           );
           this.image_list_popup_temp.push(imgobj);
