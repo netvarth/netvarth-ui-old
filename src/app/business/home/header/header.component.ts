@@ -59,6 +59,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   userDetails: any = [];
   branchName = '';
   location;
+  locName;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -114,8 +115,24 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
       this.getUserDetails();
     }
-    this.location = this.groupService.getitemFromGroupStorage('loc_id');
-    console.log(this.location);
+    if (this.userData.accountType === 'BRANCH') {
+      const location = this.groupService.getitemFromGroupStorage('loc_id');
+      if (location) {
+        this.locName = location.place;
+      } else {
+        this.getProviderLocation();
+      }
+    }
+  }
+  getProviderLocation() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          this.location = data;
+          if (this.location.length > 0) {
+            this.locName = this.location[0].place;
+          }
+        });
   }
   closeMenu() {
     const screenWidth = window.innerWidth;
@@ -480,4 +497,3 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings']);
   }
 }
-

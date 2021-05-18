@@ -172,7 +172,7 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display"
+                                *ngIf="!small_device_display" [class.disabled]="message==''"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
