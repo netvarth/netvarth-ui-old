@@ -43,19 +43,23 @@
                     <!-- {{getFamilyMembers()}} -->
                     <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
                 </div>
-                <div class="mgn-up-10">
+                <div class="mgn-up-10 mgn-bt-10">
                     <label class="col-form-label" for="phone">Phone # </label>
                     <br />
                     {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
                 </div>
                 <div class="form-group col-xs-12" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                        <label class="col-form-label" for="firstName">First Name <span class="red">*</span></label>
                     <mat-form-field>
-                        <input matInput placeholder="First Name"  formControlName="firstName">
+                           
+                        <input  matInput placeholder="Enter your first name"  formControlName="firstName">
                       </mat-form-field>
                 </div>
                 <div class="form-group col-xs-12"  *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                        <label class="col-form-label" for="lastName">Last Name <span class="red">*</span></label>
                     <mat-form-field>
-                        <input matInput placeholder="Last Name"  formControlName="lastName">
+                            
+                        <input matInput placeholder="Enter your last name"  formControlName="lastName">
                       </mat-form-field>
                 </div>
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
