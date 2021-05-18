@@ -40,7 +40,7 @@
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i *ngIf="his_wait.token" [matTooltip]="'Token'"  class="fa token-icon"></i>
-                                                            <i *ngIf="!his_wait.token"  [matTooltip]="'Waitlist'" class="fa chckn-icon"></i>
+                                                            <i *ngIf="!his_wait.token"  [matTooltip]="'check-ins'" class="fa chckn-icon"></i>
                                                         </div>
                                                         <span>&nbsp;{{his_wait.date | date: newDateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
                                                             -

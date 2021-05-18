@@ -295,6 +295,7 @@ export class BranchUserDetailComponent implements OnInit {
 
     }
     onUserSelect(event) {
+        this.type = event.value;
         if (event.value === 'PROVIDER') {
             this.showPrvdrFields = true;
         } else {
@@ -354,8 +355,10 @@ export class BranchUserDetailComponent implements OnInit {
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
+        if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;
         console.log(input.privileges);
+        }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {

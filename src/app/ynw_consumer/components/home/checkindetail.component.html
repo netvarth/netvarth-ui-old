@@ -17,7 +17,6 @@
                                         src="assets/images/myjaldee/Group92.png" style="width: 400px;">
                                 </span>
                             </div> -->
-
                             <!-- Title with back option -->
                             <div class="card title-gb">
                                 <h5 class="mgn-up-10 index-head">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
@@ -68,6 +67,10 @@
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
+                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'VideoCall')"
+                                                        class="joinMeeting"
+                                                        (click)="joinMeetitng('wl')"
+                                                        target="blank">Join Now</a>
                                                 </span>
                                             </div>
                                         </div>

@@ -28,7 +28,6 @@
                                     <app-common-innerloading-spinner> </app-common-innerloading-spinner>
                                 </div>
                                 <div class="card" *ngIf="appt && api_loading">
-
                                     <!-- Header -->
                                     <div class="mgn-bt-20 temp-style index-head">
                                         <div class="pad-10">
@@ -65,6 +64,10 @@
                                                         class="joinMeeting"
                                                         href="{{appt.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
+                                                    <a *ngIf="appt.apptStatus!=='Completed' && appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'VideoCall')"
+                                                        class="joinMeeting"
+                                                        (click)="joinMeetitng('appt')"
+                                                        target="blank">Join Now</a>
                                                 </span>
                                             </div>
                                         </div>

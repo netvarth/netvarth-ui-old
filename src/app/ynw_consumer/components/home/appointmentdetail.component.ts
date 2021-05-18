@@ -15,6 +15,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -95,6 +96,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
+        console.log(this.appt)
         this.api_loading = true;
         this.generateQR();
         this.getAppointmentHistory(this.appt.uid, this.appt.providerAccount.id);
@@ -283,7 +285,6 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getAppointmentHistory(u_id, accid) {
     this.subs.sink = this.consumer_services.getApptHistory(u_id, accid)
       .subscribe(
@@ -294,5 +295,24 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  joinMeetitng(actionObj) {
+    if(actionObj === 'appt'){
+      this.getMeetingDetails(this.appt, 'appt');
+    }
+  }
+  getMeetingDetails(details, source) {
+    const passData = {
+      'type': source,
+      'details': details
+    };
+    this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: passData
+    });
+    this.addnotedialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

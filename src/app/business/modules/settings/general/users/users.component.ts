@@ -419,7 +419,27 @@ export class BranchUsersComponent implements OnInit {
             });
     }
     getSpecializations() {
-        this.provider_services.getSpecializations(this.user.sector, this.user.subSector)
+        let subDomain;
+        if (this.user.sector === 'healthCare') {
+            if (this.user.subSector === 'hospital') {
+                subDomain = 'physiciansSurgeons';
+            } else if (this.user.subSector === 'dentalHosp') {
+                subDomain = 'dentists';
+            } else if (this.user.subSector === 'alternateMedicineHosp') {
+                subDomain = 'alternateMedicinePractitioners';
+            }
+        } else if (this.user.sector === 'personalCare') {
+            subDomain = 'beautyCare';
+        } else if (this.user.sector === 'finance') {
+            subDomain = 'bank';
+        } else if (this.user.sector === 'veterinaryPetcare') {
+            if (this.user.subSector === 'veterinaryhospital') {
+                subDomain = 'veterinarydoctor';
+            }
+        } else if (this.user.sector === 'retailStores') {
+            subDomain = 'groceryShops';
+        }
+        this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
             });
@@ -458,3 +478,4 @@ export class BranchUsersComponent implements OnInit {
         return specialization;
     }
 }
+
