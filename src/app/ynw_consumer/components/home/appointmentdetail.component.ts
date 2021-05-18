@@ -285,7 +285,6 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getAppointmentHistory(u_id, accid) {
     this.subs.sink = this.consumer_services.getApptHistory(u_id, accid)
       .subscribe(

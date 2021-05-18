@@ -271,7 +271,6 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-
   addFavProvider(id, event) {
     event.stopPropagation();
     if (!id) {
