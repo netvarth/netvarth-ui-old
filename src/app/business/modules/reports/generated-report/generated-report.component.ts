@@ -6,6 +6,7 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
 import { ExportReportService } from '../export-report.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 export class Group {
@@ -46,6 +47,7 @@ export class GeneratedReportComponent implements OnInit {
   reprtdialogRef: any;
   hide_criteria_save = false;
   groupingColumn;
+  customer_label: any;
 
 
   constructor(
@@ -53,11 +55,13 @@ export class GeneratedReportComponent implements OnInit {
     private router: Router,
     public dateformat: DateFormatPipe,
     private dialog: MatDialog,
+    private wordProcessor: WordProcessor,
     private activated_route: ActivatedRoute,
     private exportReportService: ExportReportService
   ) {
     this.report = this.report_data_service.getReport();
     this.report_type = this.report.reportType.toLowerCase();
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.tableColums = this.report.reportContent.columns;
     this.objectKeys = Object.keys;
     this.reportCriteriaHeader = this.report.reportContent.reportHeader;
@@ -92,6 +96,11 @@ export class GeneratedReportComponent implements OnInit {
     this.buildDataSource();
 
   }
+  replacewithTerminologies(columnname) {
+    const column = columnname;
+    const replaceString = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1);
+    return column.replace('Customer', replaceString);
+  }
   getDateFormat(date) {
     return this.dateformat.transformToMonthlyDate(date);
   }
@@ -106,9 +115,7 @@ export class GeneratedReportComponent implements OnInit {
     let collapsedGroups = reducedGroups;
     if (!reducedGroups) { collapsedGroups = []; }
     const customReducer = (accumulator, currentValue) => {
-      console.log(currentValue);
       const currentGroup = currentValue[column];
-      console.log(currentGroup);
       if (!accumulator[currentGroup]) {
         accumulator[currentGroup] = [{
           groupName: `${currentValue[column]}`,
@@ -191,12 +198,12 @@ export class GeneratedReportComponent implements OnInit {
   exportReport() {
     const reportData = this.report.reportContent.data;
     const tableHeader = this.tableColums;
-
+    const _this = this;
     const reportResult = [];
     reportData.forEach(function (object) {
       const newSet = {};
       Object.keys(tableHeader).forEach(function (key) {
-        const newKey = tableHeader[key];
+        const newKey = _this.replacewithTerminologies(tableHeader[key]);
         const newValue = object[key];
         newSet[newKey] = newValue;
 

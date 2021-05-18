@@ -161,9 +161,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="email"
                                                     formControlName="email" placeholder="Email(user@xyz.com)"
-                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
-                                                    oncut="return false" ondrag="return false"
-                                                    ondrop="return false">
+                                                    autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display [displayError]="true"
                                                 *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
@@ -290,7 +288,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                             
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;" *ngIf="type != 'ADMIN'">
                                         <div class="form-group">
                                             <mat-checkbox  formControlName="privileges">
                                                 Admin Privileges
@@ -356,7 +354,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button type="submit" mat-button [disabled]="!userForm.valid && showloc"
+                                            <button type="submit" mat-button [disabled]="!userForm.valid"
                                                 class="cs-btn bt2">{{button_title}}</button>
                                         </div>
                                     </div>
