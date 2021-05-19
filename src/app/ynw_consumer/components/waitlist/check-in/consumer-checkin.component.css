@@ -1754,8 +1754,23 @@ button.next-button {
   margin-bottom: auto;
 }
 .input-field {
-  width: 210px !important;
-  margin-left: auto !important;
+  width: 120px !important;
+  padding: 5px;
+}
+.email-field {
+  width: 160px !important;
+  padding: 5px;
+}
+.code-field {
+  width: 40px !important;
+}
+.codenumber {
+  display: flex;
+  margin-left: auto;
+}
+.codenumber #countryCode,
+.codenumber #whatsappCountryCode {
+  border-right: none;
 }
 .number-section {
   border-top: 1px solid #eee;
