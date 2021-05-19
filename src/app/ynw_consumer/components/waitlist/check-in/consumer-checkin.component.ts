@@ -778,8 +778,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '40%',
-            panelClass: ['loginmainclass', 'popup-class'],
+            width: '50%',
+            minHeight: '100vh',
+            minWidth: '100vw',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
             disableClose: true,
             data: memberObject[0]
 
@@ -820,8 +822,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     virtualModal() {
     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '40%',
-            panelClass: ['loginmainclass', 'popup-class'],
+            width: '50%',
+            minHeight: '100vh',
+            minWidth: '100vw',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
             disableClose: true,
             data: {'id':this.virtualInfo.serviceFor}
 
@@ -1721,7 +1725,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
             width: '50%',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+            minHeight: '100vh',
+            minWidth: '100vw',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
             disableClose: true,
             data: servData
         });
@@ -2021,7 +2027,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (coupon.value.value === '0.0') {
                 this.dialog.open(JcCouponNoteComponent, {
                     width: '50%',
-                    panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+                    minHeight: '100vh',
+                    minWidth: '100vw',
+                    panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
                     disableClose: true,
                     data: {
                         jCoupon: coupon

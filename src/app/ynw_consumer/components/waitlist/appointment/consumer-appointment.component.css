@@ -808,10 +808,6 @@ ul.bus-actions li a.lnk {
   color: #bbb !important;
 }
 
-.border-tp {
-  /* border-top: 1px solid #EBEDF3 !important; */
-}
-
 .border-bt {
   border-bottom: 1px solid #EBEDF3 !important;
 }
@@ -1210,9 +1206,6 @@ height: 150px !important;
    .contact-section .meet-icon {
     width: 15px !important;
     margin-top: 5px !important;
-   }
-   .changephemail {
-     /* width: 65px !important; */
    }
   .changephemail .wtsapaud-icon {
     top: 5px !important;

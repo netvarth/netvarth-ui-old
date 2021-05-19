@@ -1699,55 +1699,115 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
   }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log("Collect Required Info");
-    console.log(consumerdata);
     const _this = this;
     let virtualFields = {};
-    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
-      virtualFields['dob'] = consumerdata.userProfile.dob;
-      virtualFields['pincode'] = consumerdata.userProfile.pinCode;
-      virtualFields['gender'] = consumerdata.userProfile.gender;
-      let locationObj = {};
-      locationObj['Name'] = consumerdata.userProfile.city;
-      locationObj['State'] = consumerdata.userProfile.state;
-      locationObj['Pincode'] = consumerdata.userProfile.pinCode;
-
-      virtualFields['location'] = locationObj;
-      virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-      if (virtualFields['preferredLanguage'][0] === 'English') {
-        virtualFields['islanguage'] = 'yes';
-      }
-    }
-    //   if (type === 'appt') {
-    //     _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
-    //   } else {
-    //     _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-    //   }
-    // } else {
-
-
-    const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
-      width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
-      disableClose: true,
-      data: consumerdata
-    });
-    virtualdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        _this.consumerVirtualinfo = result;
-        if (type === 'appt') {
-          _this.showAppointment(id, place, location, date, service, 'consumer', result);
-        } else {
-          _this.showCheckin(id, place, location, date, service, 'consumer', result);
+    if(this.checkallvirtualFilledByConsumer(consumerdata)){
+      if(consumerdata.parent){
+        virtualFields['dob'] = consumerdata.userProfile.dob;
+        virtualFields['gender'] = consumerdata.userProfile.gender;
+        let locationObj = {};
+        locationObj['Name'] = consumerdata.bookingLocation.city;
+        locationObj['State'] = consumerdata.bookingLocation.state;
+        locationObj['Pincode'] = consumerdata.bookingLocation.pincode;
+  
+        virtualFields['location'] = locationObj;
+        virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.preferredLanguages);
+        if (virtualFields['preferredLanguage'][0] === 'English') {
+          virtualFields['islanguage'] = 'yes';
         }
-
+      }else{
+        virtualFields['dob'] = consumerdata.userProfile.dob;
+        virtualFields['gender'] = consumerdata.userProfile.gender;
+        let locationObj = {};
+        locationObj['Name'] = consumerdata.userProfile.city;
+        locationObj['State'] = consumerdata.userProfile.state;
+        locationObj['Pincode'] = consumerdata.userProfile.pinCode;
+  
+        virtualFields['location'] = locationObj;
+        virtualFields['pincode'] = consumerdata.userProfile.pinCode;
+        virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
+        if (virtualFields['preferredLanguage'][0] === 'English') {
+          virtualFields['islanguage'] = 'yes';
+        } 
       }
-    });
+      if (type === 'appt') {
+        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
+      } else {
+        _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
+      }
+     
+    
+      
+    }else{
+      const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
+        width: '50%',
+        minHeight: '100vh',
+        minWidth: '100vw',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
+        disableClose: true,
+        data: consumerdata
+      });
+      virtualdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          _this.consumerVirtualinfo = result;
+          if (type === 'appt') {
+            _this.showAppointment(id, place, location, date, service, 'consumer', result);
+          } else {
+            _this.showCheckin(id, place, location, date, service, 'consumer', result);
+          }
+  
+        }
+      });
+    
+    }
+    // if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
+    //   virtualFields['dob'] = consumerdata.userProfile.dob;
+    //   virtualFields['pincode'] = consumerdata.userProfile.pinCode;
+    //   virtualFields['gender'] = consumerdata.userProfile.gender;
+    //   let locationObj = {};
+    //   locationObj['Name'] = consumerdata.userProfile.city;
+    //   locationObj['State'] = consumerdata.userProfile.state;
+    //   locationObj['Pincode'] = consumerdata.userProfile.pinCode;
+
+    //   virtualFields['location'] = locationObj;
+    //   virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
+    //   if (virtualFields['preferredLanguage'][0] === 'English') {
+    //     virtualFields['islanguage'] = 'yes';
+    //   }
     // }
+
+    // const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
+    //   width: '40%',
+    //   panelClass: ['loginmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: consumerdata
+    // });
+    // virtualdialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     _this.consumerVirtualinfo = result;
+    //     if (type === 'appt') {
+    //       _this.showAppointment(id, place, location, date, service, 'consumer', result);
+    //     } else {
+    //       _this.showCheckin(id, place, location, date, service, 'consumer', result);
+    //     }
+
+    //   }
+    // });
   }
+  checkallvirtualFilledByConsumer(consumerdata){
+    let allrequiredFieldsFilled=false;
+    if(consumerdata.parent){
+    if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.preferredLanguages&&consumerdata.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.bookingLocation.pincode&&consumerdata.bookingLocation.pincode.trim()!==''){
+      allrequiredFieldsFilled=true;
+    }
+
+  }else if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages&&consumerdata.userProfile.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.userProfile.pinCode&&consumerdata.userProfile.pinCode.trim()!==''){
+    allrequiredFieldsFilled=true;
+  }
+  return allrequiredFieldsFilled;
+}
 
   checkVirtualRequiredFieldsEntered() {
     const _this = this;

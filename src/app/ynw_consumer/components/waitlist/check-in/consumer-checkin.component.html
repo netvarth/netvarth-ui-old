@@ -286,7 +286,7 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                                             <div
-                                                                class="appointment-custom-headingcol-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"  *ngIf="sel_ser_det.serviceType!=='virtualService'">
+                                                                class="appointment-custom-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"  *ngIf="sel_ser_det.serviceType!=='virtualService'">
                                                                 Booking
                                                                 For <a *ngIf="type !== 'waitlistreschedule'"
                                                                     class="change-button changeitem  pointer-cursor  mgn-lt-5 pull-right"
@@ -299,26 +299,28 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType==='virtualService'">
                                                             Booking
                                                             For <a *ngIf="type !== 'waitlistreschedule'"
-                                                                class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                              
+                                                                class="change-button changeitem  pointer-cursor  mgn-lt-5  pull-right"                                                              
                                                                 (click)="virtualModal()">Change 
                                                             </a>
+                                                        </div>
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk no-padding">
+                                                            <div *ngIf="type !== 'waitlistreschedule'">
+                                                                <h6 class="card-title service mgn-bt-10" style="font-size: 14px !important; color: #363636 !important;"
+                                                                    *ngFor="let member of waitlist_for">
+                                                                    {{member.firstName | capitalizeFirst}}
+                                                                    {{member.lastName | capitalizeFirst}}
+                                                                </h6>
+                                                            </div>
+                                                            <h6 class="card-title service mgn-bt-10" style="font-size: 14px !important; color: #363636 !important;"
+                                                                *ngIf="type === 'waitlistreschedule'">
+                                                                {{wtlst_for_fname | capitalizeFirst}}
+                                                                {{wtlst_for_lname | capitalizeFirst}}
+                                                            </h6>
                                                         </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding" style="margin-right:0 !important">
-                                                                    <div *ngIf="type !== 'waitlistreschedule'">
-                                                                        <h6 class="card-title service mgn-bt-10" style="font-size: 14px !important; color: #363636 !important;"
-                                                                            *ngFor="let member of waitlist_for">
-                                                                            {{member.firstName | capitalizeFirst}}
-                                                                            {{member.lastName | capitalizeFirst}}
-                                                                        </h6>
-                                                                    </div>
-                                                                    <h6 class="card-title service mgn-bt-10" style="font-size: 14px !important; color: #363636 !important;"
-                                                                        *ngIf="type === 'waitlistreschedule'">
-                                                                        {{wtlst_for_fname | capitalizeFirst}}
-                                                                        {{wtlst_for_lname | capitalizeFirst}}
-                                                                    </h6>
+                                                                    
                                                                     <div class="contact-section contact">
                                                                         <!-- <i class="fa fa-mobile "></i>
                                                                         <ng-container
@@ -339,7 +341,7 @@
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <div class="pull-right" *ngIf="sel_ser_det.serviceType==='virtualService'"><a *ngIf="type !== 'waitlistreschedule'"
-                                                                            class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                            class="change-button changeitem  pointer-cursor  mgn-lt-5  pull-right"
                                                                             data-toggle="modal"
                                                                             data-target="#exampleModalCenter"
                                                                             (click)="handleSideScreen('members')">Edit
@@ -456,19 +458,15 @@
                                                                 <div class="bill-labels">{{coupon.key}} </div>&nbsp;
                                                                 <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                                                 currency:'&#8377;'}}</div>
-                                                              </div> -->
-                                                            <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
+                                                              </div> -->  
                                                                 <div
-                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                                    <div class="checkin-btn-bp pointer-cursor"
-                                                                        *ngIf="type == 'waitlistreschedule'"
+                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="type == 'waitlistreschedule'">
+                                                                    <div class="checkin-btn-bp pointer-cursor"                                                                        
                                                                         [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
                                                                         (click)="rescheduleWaitlist()">
                                                                         Reschedule
                                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                                    </div>
-                                                                </div>
+                                                                    </div>                                                              
                                                             </div>
                                                         </div>
                                                     </div>
@@ -486,22 +484,34 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                    <div class="modal fade book-alerts-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="book-alerts" role="document">
+                                            <div class="modal-header service-detail-header disp-flex">
+                                                <h1 class="modal-title pull-left service-detail-title">
+                                                    <span class="name">
+                                                        <span class="dispvalue">
+                                                            &nbsp;
+                                                        </span>
+                                                    </span>
+                                                </h1>
+                                                <button type="button" class="close" aria-label="Close"
+                                                        data-dismiss="modal" (click)="popupClosed()">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                             <div class="modal-content">
-                                                <div class="close-btn">
+                                                <!-- <div class="close-btn">
                                                     <button type="button" class="close" aria-label="Close"
                                                         data-dismiss="modal" (click)="popupClosed()">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
-                                                </div>
+                                                </div> -->
                                                 <ng-container *ngIf="action=='members'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
-                                                            <div class="pull-left"> Booking for
-                                                            </div>
+                                                            <div class="pull-left"> Booking for</div>                                                            
                                                             <a class="lnk pointer-cursoraction mgn-lt-20"*ngIf="sel_ser_det.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
@@ -739,7 +749,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='attachment'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
                                                             <mat-chip-list class="btns">
                                                                 <mat-chip><a class="lnk action pointer-cursor"
@@ -796,7 +806,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='timeChange'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                                             Choose
@@ -854,7 +864,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='coupons'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             Apply
                                                             Coupon Code
@@ -928,7 +938,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='note'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{sel_ser_det.consumerNoteTitle}}
                                                             <div class="form-level-settings">
@@ -945,7 +955,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='addmember'">
-                                                    <div class="modal-body">
+                                                    <div class="col-xs-12">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
                                                             <i class="fa fa-arrow-left pointer-cursor"
                                                                 (click)="goBack()"></i>
@@ -958,11 +968,11 @@
                                                         </div>
                                                     </div>
                                                 </ng-container>
-                                                <div class="modal-footer">
-                                                    <button type="button"
-                                                        class="disp-none btn btn-light-primary font-weight-bold"
+                                                <div class="col-xs-12 mgn-up-20">
+                                                    <button type="button" matButton
+                                                        class="btn cancel-button"
                                                         data-dismiss="modal" #closebutton>Cancel</button>
-                                                    <button type="button" class="btn btn-primary font-weight-bold"
+                                                    <button type="button" matButton class="btn btn-primary font-weight-bold ok-button"
                                                         (click)="actionCompleted()">Ok</button>
                                                 </div>
                                                 <div class="error-section" *ngIf="apiError !== ''">

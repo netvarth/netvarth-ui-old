@@ -101,7 +101,6 @@ export class VirtualFieldsComponent implements OnInit {
       _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
         .subscribe(
           data => {
-            console.log(data);
             resolve(data);
           },
           () => {
@@ -112,14 +111,12 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   getFamilyMembers() {
-    console.log(this.customer_data);
     this.api_loading1 = true;
     let fn;
     fn = this.sharedServices.getConsumerFamilyMembers();
     this.subs.sink = fn.subscribe(data => {
       this.familymembers = [];
       for (const mem of data) {
-        console.log(mem);
         this.familymembers.push(mem);
       }
       if(this.dialogData.id){
@@ -133,7 +130,6 @@ export class VirtualFieldsComponent implements OnInit {
       });
   }
   onServiceForChange(event) {
-    console.log(event);
      this.is_parent = true;
     if(event!=='new_member'){
   const chosen_Object=this.familymembers.filter(memberObj=>memberObj.user===event);
@@ -222,7 +218,6 @@ export class VirtualFieldsComponent implements OnInit {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
       if (preferredLanguage !== null&&preferredLanguage.length>0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-        console.log(defaultEnglish);
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
         this.lngknown = defaultEnglish;
         this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
@@ -385,18 +380,27 @@ export class VirtualFieldsComponent implements OnInit {
         this.updateParentInfo(formdata).then(
           ()=> {
             this.dialogRef.close(formdata);
+          },
+          () => {
+           return false;
           }
         );
       } else {
         if(formdata.serviceFor==='new_member'){
           this.saveMember(formdata).then(data=>{
            this.dialogRef.close({newMemberId:data});
-          })
+          },
+          () => {
+            return false;
+           })
         }else{
         this.updateMemberInfo(formdata).then(
           ()=> {
             this.dialogRef.close(formdata);
-          }
+          },
+          () => {
+            return false;
+           }
         );
       } 
         
@@ -434,7 +438,7 @@ export class VirtualFieldsComponent implements OnInit {
         () => {
           resolve(true);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
@@ -472,7 +476,7 @@ export class VirtualFieldsComponent implements OnInit {
         () => {
           resolve(true);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
@@ -510,7 +514,7 @@ export class VirtualFieldsComponent implements OnInit {
         (data) => {
           resolve(data);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )

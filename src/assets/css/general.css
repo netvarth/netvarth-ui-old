@@ -12593,9 +12593,7 @@ hr {
 .recent .mr-rx-icon {
   width: 20px !important;
 }
-.recent .medicalrecord-icon {
-  width: 20px !important;
-}
+
 .drugdetail .mat-form-field-label{
   color: #3f51b5 !important;
 }
@@ -12685,9 +12683,7 @@ hr {
 .confirmcontent {
   max-height: 75vh !important;
 }
-.customers .nav .label-icon {
-  width: 20px !important;
-}
+
 .amountSaved {
   text-align: left;
   color: limegreen;
@@ -13509,4 +13505,9 @@ app-confirm-page .ot-bx {
 .fa-arrow-left {
   color: white !important;
   font-size: 1.25rem;
+}
+
+.book-alerts-modal .modal-header {
+  justify-content: left !important;
+  display: block !important;
 }

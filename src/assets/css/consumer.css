@@ -5344,12 +5344,6 @@
   background: rgb(113 137 173);
   color: rgb(255 255 255) !important;
 }
-.consumer-dash .card.c-checkins .bg-yelow {
-  /* background: rgb(242 183 22 / 76%); */
-}
-/* .consumer-dash .card.c-checkins table h4:hover {
-  color: rgb(187 144 30);
-} */
 .consumer-dash .card.c-checkins table h6 {
   display: flex !important;
 }

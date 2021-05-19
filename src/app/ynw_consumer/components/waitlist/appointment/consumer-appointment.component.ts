@@ -231,7 +231,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
         public route: ActivatedRoute,
-        public provider_services: ProviderServices,
+        public provider_services: ProviderServices, 
         public datastorage: CommonDataStorageService,
         public location: Location,
         private wordProcessor: WordProcessor,
@@ -275,10 +275,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleApptDet();
                 }
-                if(params.virtual_info){
-                    this.virtualInfo=JSON.parse(params.virtual_info);
-                    console.log(this.virtualInfo);
-                }
+                // if(params.virtual_info){
+                //     this.virtualInfo=JSON.parse(params.virtual_info);
+                //     console.log(this.virtualInfo);
+                // }
             });
     }
     ngOnDestroy(): void {
@@ -633,7 +633,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     confirmVirtualServiceinfo(memberObject,type?){
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '100%',
+            width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
             data: memberObject[0]
@@ -716,24 +716,24 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-            if(this.virtualInfo){
+           // if(this.virtualInfo){
                
-            const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-            console.log(formattedDate);
-            this.waitlist_for[0]['dob']=formattedDate;
-            if(this.virtualInfo.gender!==''){
-                this.waitlist_for[0]['gender']=this.virtualInfo.gender;
-            }
-            if(this.virtualInfo.islanguage==='yes'){
-                this.waitlist_for[0]['preferredLanguage']=['English'];
-            }else{
-                this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
-            }
-            const bookingLocation={};
-            bookingLocation['pincode']=this.virtualInfo.pincode;
-            this.waitlist_for[0]['bookingLocation']=bookingLocation;
-        }
+        //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+        //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+        //     console.log(formattedDate);
+        //     this.waitlist_for[0]['dob']=formattedDate;
+        //     if(this.virtualInfo.gender!==''){
+        //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+        //     }
+        //     if(this.virtualInfo.islanguage==='yes'){
+        //         this.waitlist_for[0]['preferredLanguage']=['English'];
+        //     }else{
+        //         this.waitlist_for[0]['preferredLanguage']=this.virtualInfo.preferredLanguage;
+        //     }
+        //     const bookingLocation={};
+        //     bookingLocation['pincode']=this.virtualInfo.pincode;
+        //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
+        // }
 
         }
         console.log('post_data'+ JSON.stringify(post_Data));
@@ -749,23 +749,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     
     saveCheckin(type?) {
       
-        if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
-            if (this.waitlist_for.length !== 0) {
-                for (const list of this.waitlist_for) {
-                   console.log(list['id']);
-                   console.log(this.familymembers);
-                  const memberObject= this.familymembers.filter(member=>member.userProfile.id===list['id']);
-                  console.log(memberObject);
-                  if(list['id']!==this.customer_data.id){
-                   this.confirmVirtualServiceinfo(memberObject,type);
-                  }else{
-                      this.confirmcheckin(type);
-                  }
-                }
-            }
-        }else{
+        // if(this.sel_ser_det.serviceType === 'virtualService' && type==='next'){
+        //     if (this.waitlist_for.length !== 0) {
+        //         for (const list of this.waitlist_for) {
+        //            console.log(list['id']);
+        //            console.log(this.familymembers);
+        //           const memberObject= this.familymembers.filter(member=>member.userProfile.id===list['id']);
+        //           console.log(memberObject);
+        //           if(list['id']!==this.customer_data.id){
+        //            this.confirmVirtualServiceinfo(memberObject,type);
+        //           }else{
+        //               this.confirmcheckin(type);
+        //           }
+        //         }
+        //     }
+        // }else{
             this.confirmcheckin(type);
-        }
+       // }
 
     }
     rescheduleAppointment() {
@@ -1810,7 +1810,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     getAttachLength() {
         let length = this.selectedMessage.files.length;
-        if (this.type == 'waitlistreschedule' && this.appointment && this.appointment.attchment && this.appointment.attchment[0] && this.appointment.attchment[0].thumbPath) {
+        if (this.type == 'reschedule' && this.appointment && this.appointment.attchment && this.appointment.attchment[0] && this.appointment.attchment[0].thumbPath) {
             length = length + this.appointment.attchment.length;
         }
         return length;
@@ -1946,7 +1946,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.paymentDetails = data;
             },
-                error => {
+             error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
