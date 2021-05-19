@@ -112,3 +112,39 @@
 .make-online-btn {
     background: white;
 }
+
+.status-buttons-li {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    margin: 10px 15px 10px 5px !important;
+}
+
+.status-buttons-li .status-val {
+    font-size: 0.85rem !important;
+    color: #1E4079 !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    margin-bottom: 5px !important;
+}
+
+.status-buttons-li.make-available span.btn {
+    max-width: 165px !important;
+    margin-left: auto !important;
+}
+
+.status-buttons-li.make-available span.btn:hover {
+    color: white !important;
+    background-color: #2e752e !important;
+    border-color: #2e752e !important;
+}
+
+.status-buttons-li.make-unavailable span.btn {
+    max-width: 185px !important;
+    margin-left: auto !important;
+}
+
+.status-buttons-li.make-unavailable span.btn:hover {
+    color: white !important;
+    background-color: #ce4430 !important;
+    border-color: #ce4430 !important;
+}
