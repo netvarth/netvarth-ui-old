@@ -1217,7 +1217,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="pad-10" *ngIf="businessjson && businessjson.uniqueId == heartfulnessId">
+                                        <div class="pad-10" *ngIf="heartfulnessAccount">
                                             <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
@@ -1242,7 +1242,6 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-
                                                             <h6>OVERVIEW</h6>
                                                             <p>In order to use the services of this app, you are
                                                                 required to register yourself by
@@ -1393,8 +1392,8 @@
                                                 <!-- <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
                                                     Cancellation Policy
                                                 </button> -->
-                                                <button type="button" (click)="saveCheckin('checkin')"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="heartfulnessAccount">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>

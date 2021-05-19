@@ -199,7 +199,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualInfo: any;
     newMember: any;
     consumerType: string;
-    heartfulnessId = 128007;
+    heartfulnessAccount = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -806,8 +806,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
                     console.log(memberObject);
                     if (list['id'] !== this.customer_data.id) {
-                       // this.confirmVirtualServiceinfo(memberObject, type);
-                       this.confirmcheckin(type);
+                        // this.confirmVirtualServiceinfo(memberObject, type);
+                        this.confirmcheckin(type);
                     } else {
                         this.confirmcheckin(type);
                     }
@@ -819,19 +819,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
     }
     virtualModal() {
-    const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
-            data: {'id':this.virtualInfo.serviceFor}
+            data: { 'id': this.virtualInfo.serviceFor }
 
         });
         virtualdialogRef.afterClosed().subscribe(result => {
-        if(result){
-            this.virtualInfo=result;
-            this.setVirtualTeleserviceCustomer();
-        }
-          
+            if (result) {
+                this.virtualInfo = result;
+                this.setVirtualTeleserviceCustomer();
+            }
+
 
         });
 
@@ -1064,11 +1064,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
             this.newMember = this.virtualInfo.newMemberId;
-            this.virtualInfo.serviceFor=this.virtualInfo.newMemberId;
+            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
-            this.consumerType='member';
+            this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
@@ -1388,6 +1388,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
+                if (this.businessjson.uniqueId === 128007) {
+                    this.heartfulnessAccount = true;
+                }
                 this.accountType = this.businessjson.accountType;
                 if (this.accountType === 'BRANCH') {
                     // this.getbusinessprofiledetails_json('departmentProviders', true);
