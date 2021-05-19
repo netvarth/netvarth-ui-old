@@ -1061,3 +1061,4 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             );
     }
 }
+
