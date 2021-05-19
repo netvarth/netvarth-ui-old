@@ -439,7 +439,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-    if (!appPopupDisplayed) {
+    if (!appPopupDisplayed && this.provider_id !== 128007) {
       this.popUp.nativeElement.style.display = 'block';
     }
   }
