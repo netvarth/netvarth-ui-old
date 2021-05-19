@@ -12,6 +12,13 @@
         </h5>
     </div>
 </section>
+<section class="" *ngIf="filterapplied">
+    <div class="card title-gb"> 
+        <h6 class="mgn-up-10 disp-flex">
+            <span ></span>{{user_count_filterApplied}}&nbsp;&nbsp;Result Found
+        </h6>
+    </div>
+</section>
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
@@ -25,7 +32,8 @@
                                     <i class="fa fa-plus"></i> User
                                 </span>
                             </a>
-                        </li>
+                        </li><br>
+                    
                     </ul>
                 </div>
                 <aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
@@ -133,7 +141,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr class="row_data border-bottom pointer-cursor"
-                                                        *ngFor="let service of users_list; let i = index;" (click)="selectedRow(i,service)">
+                                                        *ngFor="let service of users_list; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
                                                         <td class="waitlist-box">
                                                             <div class="disp-flex">
                                                                 <div class="user-img img-min-width">
@@ -242,7 +250,7 @@
                                                                     <button mat-menu-item
                                                                         (click)="changeUserStatus(service)">
                                                                         <i *ngIf="service.status=='INACTIVE' || !service.status"
-                                                                            class="icon-enable"></i>
+                                                                            class="icon-enable disabled "></i>
                                                                         <i *ngIf="service.status=='ACTIVE'"
                                                                             class="icon-disable"></i>
                                                                         {{(service.status=='ACTIVE') ? 'Disable'

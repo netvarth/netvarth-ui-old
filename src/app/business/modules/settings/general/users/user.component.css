@@ -132,6 +132,9 @@ td, .d-lg-none .mgn-up-5 {
 .user-filter mat-checkbox {
   display: block;
 }
+.disabled-group {
+  background: #dbdbdb !important;
+ }
 ::ng-deep .user-filter .mat-checkbox-layout .mat-checkbox-label {
   text-overflow: ellipsis !important;
   overflow: hidden !important;

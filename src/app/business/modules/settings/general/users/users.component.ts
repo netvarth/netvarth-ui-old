@@ -110,7 +110,8 @@ export class BranchUsersComponent implements OnInit {
     selectedLanguages: any = [];
     selectedSpecialization: any = [];
     selectedUser;
-  selectrow = false;
+    selectrow = false;
+    user_count_filterApplied: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -227,6 +228,7 @@ export class BranchUsersComponent implements OnInit {
                                 (data1: any) => {
                                     this.departments = data1.departments;
                                     this.users_list = data;
+                                    this.user_count_filterApplied = this.users_list.length;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 },
@@ -367,6 +369,7 @@ export class BranchUsersComponent implements OnInit {
                     data => {
                         this.pagination.totalCnt = data;
                         this.user_count = this.pagination.totalCnt;
+                        console.log(this.user_count)
                         resolve(data);
                     },
                     error => {
