@@ -485,8 +485,10 @@ export class BranchUsersComponent implements OnInit {
     selectedRow(index, user) {
         this.selectrow = true;
         this.selectedUser = user;
-        if (this.selectrow === true && user.id) {
+        if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
             this.manageSettings(user.id)
+        }else{
+            this.personalProfile(user.id)
         }
       }
       stopprop(event) {
