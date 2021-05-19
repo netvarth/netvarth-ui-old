@@ -140,3 +140,9 @@ td, .d-lg-none .mgn-up-5 {
   overflow: hidden !important;
   white-space: nowrap !important;
 }
+
+.action-button-add:hover {
+  color: white !important;
+  background: #1E4079 !important;
+  font-weight: 500 !important;
+}
