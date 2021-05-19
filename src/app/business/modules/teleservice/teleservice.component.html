@@ -24,43 +24,43 @@
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </h5>
                                             <div class="stats-item" *ngIf="data.waitlistingFor[0].id">
-                                                <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
+                                                <span class="sub-texts">{{customer_label | capitalizeFirst}} Id:
                                                     {{data.waitlistingFor[0].memberJaldeeId}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.waitlistPhoneNumber">
                                                 <i class="fas fa-mobile-alt"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.countryCode}}
+                                                <span class="mgn-lt-5 sub-texts">{{data.countryCode}}
                                                     {{data.waitlistPhoneNumber}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.waitlistingFor[0].email">
                                                 <i class="far fa-envelope"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].email}}</span>
+                                                    class="mgn-lt-5 sub-texts">{{data.waitlistingFor[0].email}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.waitlistingFor[0].gender">
                                                 <i *ngIf="data.waitlistingFor[0].gender == 'Male' || data.waitlistingFor[0].gender == 'male'"
                                                     class="fas fa-mars"></i>
                                                 <i *ngIf="data.waitlistingFor[0].gender == 'Female' || data.waitlistingFor[0].gender == 'female'"
                                                     class="fas fa-mars-stroke"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].gender |
+                                                <span class="mgn-lt-5 sub-texts">{{data.waitlistingFor[0].gender |
                                                     capitalizeFirst}}</span>
                                             </div>
                                             <div class="stats-item"
                                                 *ngIf="data.waitlistingFor[0].preferredLanguage && data.waitlistingFor[0].preferredLanguage.length > 0">
                                                 <i class="fa lang-icon"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].preferredLanguage}}</span>
+                                                    class="mgn-lt-5 sub-texts">{{data.waitlistingFor[0].preferredLanguage}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.waitlistingFor[0].bookingLocation">
                                                 <i class="fa locat-icon"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].bookingLocation.localArea}},
+                                                    class="mgn-lt-5 sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}},
                                                     {{data.waitlistingFor[0].bookingLocation.district}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.waitlistingFor[0].age">
                                                 <i class="fa fa-user"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{getAge(data.waitlistingFor[0].age)}}</span>
+                                                    class="mgn-lt-5 sub-texts">{{getAge(data.waitlistingFor[0].age)}}</span>
                                             </div>
                                         </div>
                                         <div class="mgn-up-10 stats-item"
@@ -70,41 +70,41 @@
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </h5>
                                             <div class="stats-item" *ngIf="data.appmtFor[0].id">
-                                                <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
+                                                <span class="sub-texts">{{customer_label | capitalizeFirst}} Id:
                                                     {{data.appmtFor[0].memberJaldeeId}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.phoneNumber">
                                                 <i class="fas fa-mobile-alt"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.countryCode}}
+                                                <span class="mgn-lt-5 sub-texts">{{data.countryCode}}
                                                     {{data.phoneNumber}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.appmtFor[0].email">
                                                 <i class="far fa-envelope"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].email}}</span>
+                                                <span class="mgn-lt-5 sub-texts">{{data.appmtFor[0].email}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.appmtFor[0].gender">
                                                 <i *ngIf="data.appmtFor[0].gender == 'Male' || data.appmtFor[0].gender == 'male'"
                                                     class="fas fa-mars"></i>
                                                 <i *ngIf="data.appmtFor[0].gender == 'Female' || data.appmtFor[0].gender == 'female'"
                                                     class="fas fa-mars-stroke"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].gender |
+                                                <span class="mgn-lt-5 sub-texts">{{data.appmtFor[0].gender |
                                                     capitalizeFirst}}</span>
                                             </div>
                                             <div class="stats-item"
                                                 *ngIf="data.appmtFor[0].preferredLanguage && data.appmtFor[0].preferredLanguage.length >0">
                                                 <i class="fa lang-icon"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{data.appmtFor[0].preferredLanguage}}</span>
+                                                    class="mgn-lt-5 sub-texts">{{data.appmtFor[0].preferredLanguage}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.appmtFor[0].bookingLocation">
                                                 <i class="fa locat-icon"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].localArea}},
+                                                <span class="mgn-lt-5 sub-texts">{{data.appmtFor[0].localArea}},
                                                     {{data.appmtFor[0].district}}</span>
                                             </div>
                                             <div class="stats-item" *ngIf="data.appmtFor[0].age">
                                                 <i class="fa fa-user"></i>
                                                 <span
-                                                    class="mgn-lt-5 text-muted">{{getAge(data.appmtFor[0].age)}}</span>
+                                                    class="mgn-lt-5 sub-texts">{{getAge(data.appmtFor[0].age)}}</span>
                                             </div>
                                         </div>
                                     </div>
