@@ -1614,11 +1614,6 @@ body.modal-open {
   color: #522E5A !important;
 }
 
-#tcModal .modal-dialog .modal-content .modal-body {
-  max-height: -webkit-fill-available !important;
-  padding: 15px 10px !important;
-}
-
 #tcModal .modal-dialog .modal-content .modal-body h6 {
   font-weight: 700 !important;
   text-decoration: underline !important;
