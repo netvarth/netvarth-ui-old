@@ -39,7 +39,7 @@
                         <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy">
-                                        <div class="col-md-12 no-padding" style="display: flex">
+                                        <div class="col-md-12 no-padding" style="display: flex" *ngIf="accountType !='BRANCH'">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
                                                 <mat-panel-description class="acc-plus-btn pointer-cursor"
