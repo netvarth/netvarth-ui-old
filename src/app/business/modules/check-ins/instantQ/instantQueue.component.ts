@@ -116,14 +116,16 @@ export class instantQueueComponent implements OnInit {
                 this.createForm(server_date);
                // this.showInstantQFlag = true;
                 // this.selectAllService();
-                if (this.queue_list) {
-                   this.updateForm(this.queue_list);
-                }
+                // if (this.queue_list) {
+                //    this.updateForm(this.queue_list);
+                // }
             });
 }
 
 createForm(server_date) {
     console.log('kio2');
+    this.qId = this.queue_list.id;
+    console.log(this.qId)
     const todaydt = new Date(server_date);
     // tslint:disable-next-line:radix
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
@@ -143,7 +145,6 @@ createForm(server_date) {
     // }
     this.fromDateCaption = 'Now';
     this.toDateCaption = '11:59 PM';
-    if (this.fromDateCaption === 'Now') {
         this.instantQForm = this.fb.group({
             // tslint:disable-next-line:radix
             dstart_time: [{ hour: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH')), minute: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm')) }, Validators.compose([Validators.required])],
@@ -152,20 +153,11 @@ createForm(server_date) {
             // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
             // qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
         });
-    } else {
-        this.instantQForm = this.fb.group({
-            // tslint:disable-next-line:radix
-            dstart_time: [{ hour: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
-            // tslint:disable-next-line:radix
-            dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])]
-            // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-            // qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
-        });
-    }
 }
 
 updateForm(q) {
     this.qId = q.id;
+    console.log(this.qId)
     this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
     this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
     const sttime = {
@@ -180,6 +172,7 @@ updateForm(q) {
         minute: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
             ['h:mm A']).format('mm'), 10)
     };
+    console.log(edtime)
     this.instantQForm.setValue({
         dstart_time: sttime || null,
         dend_time: edtime || null,
@@ -233,6 +226,7 @@ editEndTime() {
         hour: curtime['hour'],
         minute: curtime['minutes']
     };
+    console.log(sttime)
     this.instantQForm.patchValue({
         dend_time: sttime || null,
     });
