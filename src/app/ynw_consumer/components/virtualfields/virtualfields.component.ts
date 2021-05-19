@@ -49,7 +49,7 @@ export class VirtualFieldsComponent implements OnInit {
     "Urdu"
   ];
   hideLanguages = true;
-  api_loading=true;
+  api_loading = true;
   api_loading1 = true;
   customer_data: any;
   familymembers: any[];
@@ -57,8 +57,8 @@ export class VirtualFieldsComponent implements OnInit {
   private subs = new SubSink();
   is_parent = true;
   chosen_person: any;
-  maxDate=moment(new Date()).format('YYYY-MM-DD')
-  consumerType='';
+  maxDate = moment(new Date()).format('YYYY-MM-DD')
+  consumerType = '';
   activeUser: any;
   memberObject: any;
   constructor(private fb: FormBuilder,
@@ -69,31 +69,31 @@ export class VirtualFieldsComponent implements OnInit {
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
-    private groupService:GroupStorageService
+    private groupService: GroupStorageService
   ) {
     if (dialogData) {
       this.dialogData = this.s3Processor.getJson(dialogData);
-        this. activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.getActiveUserInfo().then(data=>{
-          this.customer_data=data;
-          this.createForm();
-          this.getFamilyMembers();
-        });
-        
-      
-     
-    
+      this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+      this.getActiveUserInfo().then(data => {
+        this.customer_data = data;
+        this.createForm();
+        this.getFamilyMembers();
+      });
+
+
+
+
     }
 
 
-   
+
   }
 
   ngOnInit(): void {
 
-  
+
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-   // this.getFamilyMembers();
+    // this.getFamilyMembers();
   }
   getActiveUserInfo() {
     const _this = this;
@@ -122,8 +122,8 @@ export class VirtualFieldsComponent implements OnInit {
         console.log(mem);
         this.familymembers.push(mem);
       }
-      if(this.dialogData.id){
-        this.virtualForm.patchValue({'serviceFor':this.dialogData.id});
+      if (this.dialogData.id) {
+        this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
         this.onServiceForChange(this.dialogData.id);
       }
       this.api_loading1 = false;
@@ -134,38 +134,38 @@ export class VirtualFieldsComponent implements OnInit {
   }
   onServiceForChange(event) {
     console.log(event);
-     this.is_parent = true;
-    if(event!=='new_member'){
-  const chosen_Object=this.familymembers.filter(memberObj=>memberObj.user===event);
-  if(chosen_Object.length!==0){
-    this.is_parent = false;
-    this.chosen_person=chosen_Object[0]
-      this.setMemberDetails(chosen_Object[0]);
-  }else{
-    this.chosen_person=this.customer_data
-    this.setparentDetails(this.customer_data);
-  }
-    // this.is_parent = true;
-    // this.chosen_person = event.value;
-    // if (this.chosen_person !== 'new_member') {
-    //   if (this.chosen_person.parent) {
-    //     this.is_parent = false;
-    //     this.setMemberDetails(this.chosen_person);
-    //   } else {
-    //     this.setparentDetails(this.chosen_person);
-    //   }
-    // } else {
-    //   this.is_parent = false;
-    //   this.serviceFormReset();
-    // }
-  }else {
-    this.is_parent = false;
-    this.chosen_person='new_member'
-    this.serviceFormReset();
-  }
+    this.is_parent = true;
+    if (event !== 'new_member') {
+      const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
+      if (chosen_Object.length !== 0) {
+        this.is_parent = false;
+        this.chosen_person = chosen_Object[0]
+        this.setMemberDetails(chosen_Object[0]);
+      } else {
+        this.chosen_person = this.customer_data
+        this.setparentDetails(this.customer_data);
+      }
+      // this.is_parent = true;
+      // this.chosen_person = event.value;
+      // if (this.chosen_person !== 'new_member') {
+      //   if (this.chosen_person.parent) {
+      //     this.is_parent = false;
+      //     this.setMemberDetails(this.chosen_person);
+      //   } else {
+      //     this.setparentDetails(this.chosen_person);
+      //   }
+      // } else {
+      //   this.is_parent = false;
+      //   this.serviceFormReset();
+      // }
+    } else {
+      this.is_parent = false;
+      this.chosen_person = 'new_member'
+      this.serviceFormReset();
+    }
 
-  
-}
+
+  }
 
   setMemberDetails(memberObj) {
     this.serviceFormReset();
@@ -179,24 +179,24 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
-      if(preferredLanguage!==null && preferredLanguage.length>0){
-      let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-      if (defaultEnglish === 'no') {
-        if (memberObj.preferredLanguages.length > 0) {
+      if (preferredLanguage !== null && preferredLanguage.length > 0) {
+        let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+        if (defaultEnglish === 'no') {
+          if (memberObj.preferredLanguages.length > 0) {
+            this.virtualForm.patchValue({ islanguage: defaultEnglish });
+            this.lngknown = defaultEnglish;
+          } else {
+            this.virtualForm.patchValue({ islanguage: '' });
+          }
+        } else {
           this.virtualForm.patchValue({ islanguage: defaultEnglish });
           this.lngknown = defaultEnglish;
-        } else {
-          this.virtualForm.patchValue({ islanguage: '' });
         }
-      } else {
-        this.virtualForm.patchValue({ islanguage: defaultEnglish });
-        this.lngknown = defaultEnglish;
+        this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
       }
-      this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+    } else {
+      this.virtualForm.patchValue({ islanguage: 'yes' });
     }
-  }else{
-    this.virtualForm.patchValue({ islanguage: 'yes' });
-  }
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
@@ -220,13 +220,13 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
-      if (preferredLanguage !== null&&preferredLanguage.length>0) {
+      if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         console.log(defaultEnglish);
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
         this.lngknown = defaultEnglish;
         this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
-      }else{
+      } else {
         this.virtualForm.patchValue({ islanguage: 'yes' });
       }
     }
@@ -237,8 +237,8 @@ export class VirtualFieldsComponent implements OnInit {
   }
   createForm() {
     this.virtualForm = this.fb.group({
-      firstName:[''],
-      lastName:[''],
+      firstName: [''],
+      lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
       pincode: ['', Validators.compose([Validators.required])],
@@ -249,17 +249,17 @@ export class VirtualFieldsComponent implements OnInit {
     });
     this.virtualForm.patchValue({ gender: 'male' });
     this.virtualForm.patchValue({ islanguage: 'yes' })
-    if(this.dialogData.type!=='member'){
-      this.virtualForm.patchValue({serviceFor:this.customer_data.id});
-    }else{
-      this.virtualForm.patchValue({serviceFor:this.dialogData.consumer});
-     
+    if (this.dialogData.type !== 'member') {
+      this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
+    } else {
+      this.virtualForm.patchValue({ serviceFor: this.dialogData.consumer });
+
     }
-    
+
     if (this.dialogData) {
       this.updateForm();
     }
-    this.api_loading=false;
+    this.api_loading = false;
   }
   closeDialog() {
     this.dialogRef.close();
@@ -268,12 +268,12 @@ export class VirtualFieldsComponent implements OnInit {
     this.hideLanguages = false;
   }
   updateForm() {
-   if(this.dialogData.type &&this.dialogData.type==='member'){
-     this.details=this.dialogData.consumer
-   }else{
-    this.details = this.customer_data;
-   }
-   
+    if (this.dialogData.type && this.dialogData.type === 'member') {
+      this.details = this.dialogData.consumer
+    } else {
+      this.details = this.customer_data;
+    }
+
     console.log(this.details);
     if (this.details.parent) {
       this.setMemberDetails(this.details);
@@ -290,11 +290,11 @@ export class VirtualFieldsComponent implements OnInit {
     let elmnt = document.getElementById("plng");
     elmnt.scrollIntoView();
   }
-  cancelLanguageSelection(){
-    this.hideLanguages=true;
+  cancelLanguageSelection() {
+    this.hideLanguages = true;
     this.updateForm();
     let elmnt = document.getElementById("plng");
-  elmnt.scrollIntoView();
+    elmnt.scrollIntoView();
   }
   langSel(sel) {
     if (this.virtualForm.get('preferredLanguage').value.length > 0) {
@@ -319,24 +319,24 @@ export class VirtualFieldsComponent implements OnInit {
     }
   }
   validateFields() {
-    let isinvalid=false;
+    let isinvalid = false;
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-      isinvalid =true;
+      isinvalid = true;
     }
     if (this.virtualForm.get('dob').value === '') {
       isinvalid = true;
     }
-    if ( this.virtualForm.get('islanguage').value=== 'no') {
+    if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
       }
     }
-    if(this.virtualForm.get('serviceFor').value==='new_member'){
+    if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
-      if(this.virtualForm.get('firstName').value==''){
+      if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
       }
-      if(this.virtualForm.get('lastName').value==''){
+      if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
       }
     }
@@ -378,72 +378,78 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
-    if(this.validateFields()===true){
+    if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
-    }else{
+    } else {
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
-          ()=> {
-            this.dialogRef.close(formdata);
+          (result) => {
+            if (result !== false) {
+              this.dialogRef.close(formdata);
+            }
           },
-          () => {
-           return false;
+          (error) => {
+            return false;
           }
         );
       } else {
-        if(formdata.serviceFor==='new_member'){
-          this.saveMember(formdata).then(data=>{
-           this.dialogRef.close({newMemberId:data});
+        if (formdata.serviceFor === 'new_member') {
+          this.saveMember(formdata).then(data => {
+            if (data !== false) {
+              this.dialogRef.close({ newMemberId: data });
+            }
           },
-          () => {
-            return false;
-           })
-        }else{
-        this.updateMemberInfo(formdata).then(
-          ()=> {
-            this.dialogRef.close(formdata);
-          },
-          () => {
-            return false;
-           }
-        );
-      } 
-        
-       
+            () => {
+              return false;
+            })
+        } else {
+          this.updateMemberInfo(formdata).then(
+            (data) => {
+              if (data !== false) {
+                this.dialogRef.close(formdata);
+              }
+            },
+            () => {
+              return false;
+            }
+          );
+        }
+
+
       }
 
     }
-  
-   
-    
+
+
+
   }
   updateParentInfo(formdata) {
     console.log(formdata);
     const _this = this;
-    const firstName=_this.customer_data.userProfile.firstName
-    const lastName=_this.customer_data.userProfile.lastName;
+    const firstName = _this.customer_data.userProfile.firstName
+    const lastName = _this.customer_data.userProfile.lastName;
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-     // const userProfile = {}
+      // const userProfile = {}
       userObj['gender'] = formdata.gender;
-      userObj['firstName']=firstName;
-      userObj['lastName']=lastName;
+      userObj['firstName'] = firstName;
+      userObj['lastName'] = lastName;
       userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
       console.log(formdata.islanguage);
-      if(formdata.islanguage==='yes'){
-        userObj['preferredLanguages']  =['English'];
-      }else{
+      if (formdata.islanguage === 'yes') {
+        userObj['preferredLanguages'] = ['English'];
+      } else {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
-     // userObj['userProfile'] = userProfile;
- console.log(userObj);
+      // userObj['userProfile'] = userProfile;
+      console.log(userObj);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
           resolve(true);
         }, (error) => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
@@ -453,41 +459,41 @@ export class VirtualFieldsComponent implements OnInit {
   updateMemberInfo(formdata) {
     const _this = this;
     console.log(_this.chosen_person);
-   const firstName=_this.chosen_person.userProfile.firstName;
-   const lastName=_this.chosen_person.userProfile.lastName;
-    let memberInfo :any={};
-      memberInfo.userProfile = {}
-      memberInfo.bookingLocation = {}
-      memberInfo.userProfile['id'] = formdata.serviceFor;
-      memberInfo.userProfile['gender'] = formdata.gender;
-      memberInfo.userProfile['firstName'] = firstName;
-      memberInfo.userProfile['lastName'] = lastName;
-      memberInfo.userProfile['dob'] = formdata.dob;
-      memberInfo.bookingLocation['pincode'] = formdata.pincode;
-      if(formdata.islanguage==='yes'){
-        memberInfo['preferredLanguages'] =['English'];
-      }else{
-        memberInfo['preferredLanguages'] = formdata.preferredLanguage;
-      }
-     
-      if(formdata.location.State && formdata.location.Name) {
-        memberInfo.bookingLocation ['state'] = formdata.location.State;
-        memberInfo.bookingLocation ['city'] = formdata.location.Name
-      }
+    const firstName = _this.chosen_person.userProfile.firstName;
+    const lastName = _this.chosen_person.userProfile.lastName;
+    let memberInfo: any = {};
+    memberInfo.userProfile = {}
+    memberInfo.bookingLocation = {}
+    memberInfo.userProfile['id'] = formdata.serviceFor;
+    memberInfo.userProfile['gender'] = formdata.gender;
+    memberInfo.userProfile['firstName'] = firstName;
+    memberInfo.userProfile['lastName'] = lastName;
+    memberInfo.userProfile['dob'] = formdata.dob;
+    memberInfo.bookingLocation['pincode'] = formdata.pincode;
+    if (formdata.islanguage === 'yes') {
+      memberInfo['preferredLanguages'] = ['English'];
+    } else {
+      memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+    }
+
+    if (formdata.location.State && formdata.location.Name) {
+      memberInfo.bookingLocation['state'] = formdata.location.State;
+      memberInfo.bookingLocation['city'] = formdata.location.Name
+    }
     return new Promise(function (resolve, reject) {
-    
+
       console.log(memberInfo);
       _this.sharedServices.editMember(memberInfo).subscribe(
         () => {
           resolve(true);
         }, (error) => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
     });
 
-   
+
 
   }
   saveMember(formdata) {
@@ -495,31 +501,31 @@ export class VirtualFieldsComponent implements OnInit {
     console.log(_this.chosen_person);
 
     const memberInfo = {};
-      memberInfo['userProfile'] = {}
-      memberInfo['bookingLocation'] = {}
-      memberInfo['userProfile']['gender'] = formdata.gender;
-      memberInfo['userProfile']['firstName'] = formdata.firstName;
-      memberInfo['userProfile']['lastName'] = formdata.lastName;
-      memberInfo['userProfile']['dob'] = formdata.dob;
-      memberInfo['bookingLocation']['pincode'] = formdata.pincode;
-      if(formdata.islanguage==='yes'){
-        memberInfo['preferredLanguages'] =['English'];
-      }else{
-        memberInfo['preferredLanguages'] = formdata.preferredLanguage;
-      }
-     
-      if(formdata.location.State && formdata.location.Name) {
-        memberInfo['bookingLocation'] ['state'] = formdata.location.State;
-        memberInfo['bookingLocation'] ['city'] = formdata.location.Name
-      }
+    memberInfo['userProfile'] = {}
+    memberInfo['bookingLocation'] = {}
+    memberInfo['userProfile']['gender'] = formdata.gender;
+    memberInfo['userProfile']['firstName'] = formdata.firstName;
+    memberInfo['userProfile']['lastName'] = formdata.lastName;
+    memberInfo['userProfile']['dob'] = formdata.dob;
+    memberInfo['bookingLocation']['pincode'] = formdata.pincode;
+    if (formdata.islanguage === 'yes') {
+      memberInfo['preferredLanguages'] = ['English'];
+    } else {
+      memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+    }
+
+    if (formdata.location.State && formdata.location.Name) {
+      memberInfo['bookingLocation']['state'] = formdata.location.State;
+      memberInfo['bookingLocation']['city'] = formdata.location.Name
+    }
     return new Promise(function (resolve, reject) {
-    
+
       console.log(memberInfo);
       _this.sharedServices.addMembers(memberInfo).subscribe(
         (data) => {
           resolve(data);
         }, (error) => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
