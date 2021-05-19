@@ -199,6 +199,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualInfo: any;
     newMember: any;
     consumerType: string;
+    heartfulnessId = 128007;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

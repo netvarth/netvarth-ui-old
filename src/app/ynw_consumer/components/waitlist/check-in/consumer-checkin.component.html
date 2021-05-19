@@ -19,7 +19,8 @@
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
                                 <div class="col-xl-12" *ngIf="questionnaireLoaded">
-                                    <div class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
+                                    <div
+                                        class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
                                         <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
@@ -256,8 +257,8 @@
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
-                                                            <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType!=='virtualService'">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                                *ngIf="sel_ser_det.serviceType!=='virtualService'">
                                                                 Booking
                                                                 For <a *ngIf="type !== 'waitlistreschedule'"
                                                                     class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
@@ -266,15 +267,14 @@
                                                                     (click)="handleSideScreen('members')">Change
                                                                 </a>
                                                             </div>
-                                                            <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType==='virtualService'">
-                                                            Booking
-                                                            For <a *ngIf="type !== 'waitlistreschedule'"
-                                                                class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                              
-                                                                (click)="virtualModal()">Change 
-                                                            </a>
-                                                        </div>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                                *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                                Booking
+                                                                For <a *ngIf="type !== 'waitlistreschedule'"
+                                                                    class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                    (click)="virtualModal()">Change
+                                                                </a>
+                                                            </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="">
@@ -296,7 +296,8 @@
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon mgn-lt-5" style="width: 20px;"
+                                                                            <i class="fa wtsapvid-icon mgn-lt-5"
+                                                                                style="width: 20px;"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
@@ -309,12 +310,14 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="pull-right" *ngIf="sel_ser_det.serviceType==='virtualService'"><a *ngIf="type !== 'waitlistreschedule'"
-                                                                            class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                                            data-toggle="modal"
-                                                                            data-target="#exampleModalCenter"
-                                                                            (click)="handleSideScreen('members')">Edit
-                                                                        </a> </div>
+                                                                        <div class="pull-right"
+                                                                            *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                                            <a *ngIf="type !== 'waitlistreschedule'"
+                                                                                class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                                data-toggle="modal"
+                                                                                data-target="#exampleModalCenter"
+                                                                                (click)="handleSideScreen('members')">Edit
+                                                                            </a> </div>
                                                                         <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact you in this
@@ -393,9 +396,11 @@
                                                             <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
                                                                 style="text-align: initial;">
                                                                 <small class="black rupee-font"
-                                                                    *ngIf="coupon.value.value !== '0.0'">You saved 
+                                                                    *ngIf="coupon.value.value !== '0.0'">You saved
                                                                     <!-- <i class="fa fa-inr black"></i> -->
-                                                                    {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</small>
+                                                                    {{coupon.value.value | currency:'&#8377;'}} on
+                                                                    {{coupon.key}}
+                                                                </small>
                                                                 <small class="black"
                                                                     *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
                                                                     will be honored if all the rules are met
@@ -408,8 +413,10 @@
                                                                 *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
                                                                 <small class="black rupee-font"
                                                                     *ngIf="coupon.value.value !== '0.0'">You saved
-                                                                     <!-- <i class="fa fa-inr black"></i> -->
-                                                                    {{coupon.value.value | currency:'&#8377;'}} on {{coupon.key}}</small>
+                                                                    <!-- <i class="fa fa-inr black"></i> -->
+                                                                    {{coupon.value.value | currency:'&#8377;'}} on
+                                                                    {{coupon.key}}
+                                                                </small>
                                                                 <small class="black"
                                                                     *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
                                                                     will be honored if all the rules are met
@@ -472,14 +479,16 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
                                                             <div class="pull-left"> Booking for
                                                             </div>
-                                                            <a class="lnk pointer-cursoraction mgn-lt-20"*ngIf="sel_ser_det.serviceType !== 'virtualService'"
+                                                            <a class="lnk pointer-cursoraction mgn-lt-20"
+                                                                *ngIf="sel_ser_det.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
                                                         <div class="member-outer">
                                                             <div class="member-list mgn-up-10">
                                                                 <ul class="member-ul">
-                                                                    <ng-container *ngIf="multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
+                                                                    <ng-container
+                                                                        *ngIf="multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
                                                                         <li *ngFor="let memb of familymembers">
                                                                             <mat-checkbox
                                                                                 (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
@@ -492,7 +501,8 @@
                                                                             </mat-checkbox>
                                                                         </li>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="!multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
+                                                                    <ng-container
+                                                                        *ngIf="!multipleMembers_allowed && sel_ser_det.serviceType !== 'virtualService'">
                                                                         <mat-radio-group>
                                                                             <li *ngFor="let memb of familymembers"
                                                                                 class="members">
@@ -509,12 +519,13 @@
                                                                             </li>
                                                                         </mat-radio-group>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="sel_ser_det.serviceType === 'virtualService'">
+                                                                    <ng-container
+                                                                        *ngIf="sel_ser_det.serviceType === 'virtualService'">
                                                                         <div class="card-title service mgn-bt-10"
-                                                                        *ngFor="let member of waitlist_for">
-                                                                        {{member.firstName | capitalizeFirst}}
-                                                                        {{member.lastName | capitalizeFirst}}
-                                                                    </div>
+                                                                            *ngFor="let member of waitlist_for">
+                                                                            {{member.firstName | capitalizeFirst}}
+                                                                            {{member.lastName | capitalizeFirst}}
+                                                                        </div>
                                                                     </ng-container>
                                                                 </ul>
                                                             </div>
@@ -539,7 +550,8 @@
                                                                     *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                     <i class="fa wtsapaud-icon wtsap-cal"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10" style="width: 20px;"
+                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10"
+                                                                        style="width: 20px;"
                                                                         *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                     <span>WhatsApp#:
                                                                         <b>+{{callingModes}}</b></span>
@@ -686,7 +698,8 @@
                                                                                     *ngIf="selectedMessage.base64[i]">
                                                                             </div>
                                                                             <div class="gal-input">
-                                                                                <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
+                                                                                <input type="text" placeholder="Caption"
+                                                                                    [(ngModel)]="imgCaptions[i]">
                                                                             </div>
                                                                             <div class="gal_action"
                                                                                 (click)="deleteTempImage(i)">
@@ -892,7 +905,8 @@
                                         <div class="d-flex flex-column-fluid width-100">
                                             <div class="col-xl-12 force_center">
                                                 <div class="form-group card mgn-0">
-                                                    <label class="col-12 quest">Add any other notes to the provider or upload any files for provider view
+                                                    <label class="col-12 quest">Add any other notes to the provider or
+                                                        upload any files for provider view
                                                     </label>
                                                     <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
                                                         <a #modal data-toggle="modal" data-target="#exampleModalCenter">
@@ -948,18 +962,20 @@
                                         <!-- <div class="confirm-head mgn-up-20">Confirm your {{(settingsjson.showTokenId) ?
                                             'token': 'check-in' }} details</div> -->
                                         <div class="confirm-head mgn-up-20">Review & Confirm</div>
-                                        
+
                                         <div class="bookdetails">
-                                            
+
                                             <div class="disp-flex" *ngIf="!sel_ser_det.provider">
                                                 <span class="billing-head">Provider</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value name-line-ht">{{businessjson.businessName}}</span>
+                                                <span
+                                                    class="billing-value name-line-ht">{{businessjson.businessName}}</span>
                                             </div>
                                             <div class="disp-flex" *ngIf="sel_ser_det.provider">
                                                 <span class="billing-head">Provider</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
+                                                <span
+                                                    class="billing-value name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
                                                     {{businessjson.businessName}}</span>
                                             </div>
                                             <div class="disp-flex">
@@ -972,8 +988,10 @@
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
-                                                <span class="billing-head" style="display: flex !important; align-items: center !important;">Service</span>
-                                                <span style="display: flex !important; align-items: center !important;">&nbsp;:&nbsp;</span>
+                                                <span class="billing-head"
+                                                    style="display: flex !important; align-items: center !important;">Service</span>
+                                                <span
+                                                    style="display: flex !important; align-items: center !important;">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value disp-flex align-items-center">
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -994,15 +1012,17 @@
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
-                                                <span class="billing-head" *ngIf="settingsjson.showTokenId">Token for</span>
-                                                <span class="billing-head" *ngIf="!settingsjson.showTokenId">Check-in for</span>
+                                                <span class="billing-head" *ngIf="settingsjson.showTokenId">Token
+                                                    for</span>
+                                                <span class="billing-head" *ngIf="!settingsjson.showTokenId">Check-in
+                                                    for</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value">
                                                     <span *ngFor="let customer of waitlist_for; let i = index;">
                                                         {{customer.firstName}}
-                                                        {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : ""}}
+                                                        {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : "" }}
+                                                            </span>
                                                     </span>
-                                                </span>
                                             </div>
                                             <div class="disp-flex">
                                                 <span class="billing-head">Contact #</span>
@@ -1018,9 +1038,10 @@
                                             <div class="disp-flex" *ngIf="payEmail">
                                                 <span class="billing-head">Email</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value" style="word-break: break-all;">{{payEmail}}</span>
+                                                <span class="billing-value"
+                                                    style="word-break: break-all;">{{payEmail}}</span>
                                             </div>
-                                        
+
                                         </div>
 
 
@@ -1178,7 +1199,7 @@
                                                                 <li>If the consumer cancels the appointment, 3% will be
                                                                     deducted from the amount(which includes Jaldee
                                                                     service charges and Online Gateway fees).</li>
-                                                                <li>Refund will be received directly to the  consumer’s
+                                                                <li>Refund will be received directly to the consumer’s
                                                                     bank account after he/she cancels the future
                                                                     bookings.</li>
                                                                 <li>If the booking is cancelled on the date of booking,
@@ -1196,107 +1217,159 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-                                        <div>
-                                            <div class="t-and-c pad-10">
+                                        <div class="pad-10" *ngIf="businessjson && businessjson.uniqueId == heartfulnessId">
+                                            <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
-                                                      <input type="checkbox" value="" onchange="document.getElementById('stepThreeConfirmButton').disabled = !this.checked;">
-                                                      <span>I accept the&nbsp;
-                                                      <a data-toggle="modal" data-target="#tcModal">Terms and Conditions</a></span>
+                                                        <input type="checkbox" value=""
+                                                            onchange="document.getElementById('stepThreeConfirmButton').disabled = !this.checked;">
+                                                        <span>I accept the&nbsp;
+                                                            <a data-toggle="modal" data-target="#tcModal">Terms and
+                                                                Conditions</a></span>
                                                     </label>
                                                 </div>
                                             </div>
-
                                             <div class="modal fade" id="tcModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="tcModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog " role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="tcModalLabel">PRIVACY POLICY & DISCLAIMER</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h4 class="modal-title" id="tcModalLabel">PRIVACY POLICY &
+                                                                DISCLAIMER</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
                                                                 <i aria-hidden="true" class="ki ki-close"></i>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            
+
                                                             <h6>OVERVIEW</h6>
-                                                            <p>In order to use the services of this app, you are required to register yourself by 
-                                                            verifying the authorized device. This privacy policy applies to information that we 
-                                                            collect and receive on and through Heartfulness Covid Care app. It does not apply 
-                                                            to practices of businesses that we do not own or control or people we do not employ. 
-                                                            By using this app, you agree to the terms of this privacy policy. Please read the 
-                                                            following to understand how your personal information will be treated as you use this 
-                                                            site and its services.</p>
-                                                            <p>Heartfulness Institute or â€œHFIâ€� in short, the creator of this privacy policy shall 
-                                                            ensure its commitment to your privacy with regard to the protection of your information. 
-                                                            This policy contains information about our app â€œHeartfulness Covid Careâ€�. In order to 
-                                                            provide you with uninterrupted use of our services, free of cost, we may collect and, 
-                                                            in some circumstances, disclose information about you. Such information may be classified 
-                                                            as personal information under the purview of applicable provisions of the Information 
-                                                            Technology Act/ Rules framed thereunder.</p>
-                                                            
+                                                            <p>In order to use the services of this app, you are
+                                                                required to register yourself by
+                                                                verifying the authorized device. This privacy policy
+                                                                applies to information that we
+                                                                collect and receive on and through Heartfulness Covid
+                                                                Care app. It does not apply
+                                                                to practices of businesses that we do not own or control
+                                                                or people we do not employ.
+                                                                By using this app, you agree to the terms of this
+                                                                privacy policy. Please read the
+                                                                following to understand how your personal information
+                                                                will be treated as you use this
+                                                                site and its services.</p>
+                                                            <p>Heartfulness Institute or â€œHFIâ€� in short, the creator
+                                                                of this privacy policy shall
+                                                                ensure its commitment to your privacy with regard to the
+                                                                protection of your information.
+                                                                This policy contains information about our app
+                                                                â€œHeartfulness Covid Careâ€�. In order to
+                                                                provide you with uninterrupted use of our services, free
+                                                                of cost, we may collect and,
+                                                                in some circumstances, disclose information about you.
+                                                                Such information may be classified
+                                                                as personal information under the purview of applicable
+                                                                provisions of the Information
+                                                                Technology Act/ Rules framed thereunder.</p>
+
                                                             <h6>COLLECTION OF INFORMATION</h6>
-                                                            <p>Personal data of the user such as, but not limited to, name, age, date of birth, 
-                                                            occupation, gender, e-mail, contact information, location and such other information 
-                                                            necessary for rendering appropriate medical advise. The user's data sent across through 
-                                                            the app shall be processed and stored automatically. As a user of Heartfulness Covid Care 
-                                                            app, you may provide information about yourself, your spouse, family, friends, health 
-                                                            issues, previous medication taken, previous medical conditions, allergies, etc. All 
-                                                            information shall be used for further processing of the case, diagnosis, treatment, follow 
-                                                            ups etc. and shall also be saved by the technology service provider. </p>
-                                                            
+                                                            <p>Personal data of the user such as, but not limited to,
+                                                                name, age, date of birth,
+                                                                occupation, gender, e-mail, contact information,
+                                                                location and such other information
+                                                                necessary for rendering appropriate medical advise. The
+                                                                user's data sent across through
+                                                                the app shall be processed and stored automatically. As
+                                                                a user of Heartfulness Covid Care
+                                                                app, you may provide information about yourself, your
+                                                                spouse, family, friends, health
+                                                                issues, previous medication taken, previous medical
+                                                                conditions, allergies, etc. All
+                                                                information shall be used for further processing of the
+                                                                case, diagnosis, treatment, follow
+                                                                ups etc. and shall also be saved by the technology
+                                                                service provider. </p>
+
                                                             <h6>USE OF INFORMATION</h6>
-                                                            <p>The information provided by you shall be used to contact you when necessary and analysis. 
-                                                            We may use your data for tracking, identification and gather broad demographic information. 
-                                                            The information is also used to customize your experience of using Heartfulness Covid Care 
-                                                            app, research purposes and learning.</p>
+                                                            <p>The information provided by you shall be used to contact
+                                                                you when necessary and analysis.
+                                                                We may use your data for tracking, identification and
+                                                                gather broad demographic information.
+                                                                The information is also used to customize your
+                                                                experience of using Heartfulness Covid Care
+                                                                app, research purposes and learning.</p>
 
                                                             <h6>PROTECTION OF PERSONAL INFORMATION</h6>
-                                                            <p>HFI has adopted a protection of personal information policy which aims to protect your 
-                                                            private life, in accordance with the applicable laws in effect. HFI has taken and applies 
-                                                            appropriate security measures while using this app, including the encoding of certain data. 
-                                                            However, public communication networks such as the internet are open systems with links shared 
-                                                            by many users. You recognize that HFI does not guarantee that some personal information won't 
-                                                            be intercepted and manipulated by third parties. This information will never be the object 
-                                                            of a communication, transfer, sale, assignment or any other commercial transaction with third 
-                                                            parties without your authorization. This information may however be transferred between various 
-                                                            internal departments or with distributors adhering to a protection of personal information policy, 
-                                                            for the purpose of administration and management.</p>
-                                                            
+                                                            <p>HFI has adopted a protection of personal information
+                                                                policy which aims to protect your
+                                                                private life, in accordance with the applicable laws in
+                                                                effect. HFI has taken and applies
+                                                                appropriate security measures while using this app,
+                                                                including the encoding of certain data.
+                                                                However, public communication networks such as the
+                                                                internet are open systems with links shared
+                                                                by many users. You recognize that HFI does not guarantee
+                                                                that some personal information won't
+                                                                be intercepted and manipulated by third parties. This
+                                                                information will never be the object
+                                                                of a communication, transfer, sale, assignment or any
+                                                                other commercial transaction with third
+                                                                parties without your authorization. This information may
+                                                                however be transferred between various
+                                                                internal departments or with distributors adhering to a
+                                                                protection of personal information policy,
+                                                                for the purpose of administration and management.</p>
+
                                                             <h6>CONTROL</h6>
-                                                            <p>We will not sell, distribute or lease your personal information to third parties unless we have 
-                                                            your permission or are required to do so, by law. We may use your personal information to send 
-                                                            you promotional information about third parties which we think you may find interesting if you 
-                                                            tell us that you wish this to happen. If you believe that any information we are holding on you 
-                                                            is incorrect or incomplete, please send us an email, as soon as possible to: __________________. 
-                                                            We will be happy to correct any information found to be incorrect.</p>
-                                                            
+                                                            <p>We will not sell, distribute or lease your personal
+                                                                information to third parties unless we have
+                                                                your permission or are required to do so, by law. We may
+                                                                use your personal information to send
+                                                                you promotional information about third parties which we
+                                                                think you may find interesting if you
+                                                                tell us that you wish this to happen. If you believe
+                                                                that any information we are holding on you
+                                                                is incorrect or incomplete, please send us an email, as
+                                                                soon as possible to: __________________.
+                                                                We will be happy to correct any information found to be
+                                                                incorrect.</p>
+
                                                             <h6>TERMS</h6>
-                                                            <p>By downloading and / or using this app, you hereby agree to be bound by the terms of use / 
-                                                            service, privacy policy, and other policies as set forth on the website www.heartfulnesscovidcare.com</p>
-                                                            <p>It is hereby further specified that all the terms and policies on the website shall be coterminous 
-                                                            to these terms.</p>
+                                                            <p>By downloading and / or using this app, you hereby agree
+                                                                to be bound by the terms of use /
+                                                                service, privacy policy, and other policies as set forth
+                                                                on the website www.heartfulnesscovidcare.com</p>
+                                                            <p>It is hereby further specified that all the terms and
+                                                                policies on the website shall be coterminous
+                                                                to these terms.</p>
 
                                                             <h6>DISCLAIMER</h6>
-                                                            <p>The content found in this programme or on the or heartfulnesscovidcare.com Website, including: 
-                                                            text, images, audio, or other formats were created for information and guidance purposes only. 
-                                                            Offerings are clearly identified and appropriate target audience as well. The Content is not intended 
-                                                            to be a substitute for any professional medical advice, diagnosis, or treatment. You are requested 
-                                                            to seek advice from your physician or other qualified health service provider with any questions you 
-                                                            may have regarding your medical condition. Never disregard professional medical advice or delay in 
-                                                            seeking it because of something you have read on this Website/ Programme. Our services are free of 
-                                                            cost for humanitarian considerations.</p>
-                                                            <p>If you think you may have a medical emergency, call your doctor, go for emergency check-up or 
-                                                            treatment immediately. Reliance on any information provided by volunteers, employees, or medical 
-                                                            professionals presenting this content is solely at your discretion and risk.</p>
-                                                            <p>If you find any material offensive, you may voluntarily want to disassociate or refrain from using 
-                                                            our materials/ information/ app. The office bearers of our organization or that of the technology service 
-                                                            provider do not undertake any liability for its pro-bono services.</p>
-
-
+                                                            <p>The content found in this programme or on the or
+                                                                heartfulnesscovidcare.com Website, including:
+                                                                text, images, audio, or other formats were created for
+                                                                information and guidance purposes only.
+                                                                Offerings are clearly identified and appropriate target
+                                                                audience as well. The Content is not intended
+                                                                to be a substitute for any professional medical advice,
+                                                                diagnosis, or treatment. You are requested
+                                                                to seek advice from your physician or other qualified
+                                                                health service provider with any questions you
+                                                                may have regarding your medical condition. Never
+                                                                disregard professional medical advice or delay in
+                                                                seeking it because of something you have read on this
+                                                                Website/ Programme. Our services are free of
+                                                                cost for humanitarian considerations.</p>
+                                                            <p>If you think you may have a medical emergency, call your
+                                                                doctor, go for emergency check-up or
+                                                                treatment immediately. Reliance on any information
+                                                                provided by volunteers, employees, or medical
+                                                                professionals presenting this content is solely at your
+                                                                discretion and risk.</p>
+                                                            <p>If you find any material offensive, you may voluntarily
+                                                                want to disassociate or refrain from using
+                                                                our materials/ information/ app. The office bearers of
+                                                                our organization or that of the technology service
+                                                                provider do not undertake any liability for its pro-bono
+                                                                services.</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button"
@@ -1306,11 +1379,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
-
-
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
