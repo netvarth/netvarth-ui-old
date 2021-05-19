@@ -61,7 +61,9 @@ export class GalleryComponent implements OnInit, OnChanges {
         // if (!this.service_data.id) { return false; }
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
             width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
+            minHeight: '100vh',
+            minWidth: '100vw',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
             disableClose: true,
             data: {
                 type: 'edit',
@@ -101,7 +103,7 @@ export class GalleryComponent implements OnInit, OnChanges {
                 this.image_list_popup.push(imgobj);
             }
         }
-        this.img_lst_lngth=this.image_list_popup.length;
+        this.img_lst_lngth = this.image_list_popup.length;
     }
     confirmDelete(file, indx) {
         const skey = this.image_list[indx].keyName;

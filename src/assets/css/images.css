@@ -1,0 +1,320 @@
+.myjld-payment {
+    content: url(../images/myjaldee/common/payments-01.svg);
+    position: relative;
+    width: 20px;
+}
+.myjld-meetingdetail {
+    content: url(../images/myjaldee/common/sticky-notes.svg);
+    position: relative;
+    width: 15px;
+}
+
+.select-wrapper {
+    background: url(../images/add_image_icon.svg) no-repeat;
+    background-size: cover;
+    display: block;
+    position: relative;
+    width: 33px;
+    height: 26px;
+}
+
+.info-lst {
+    margin: 0;
+    padding: 0 0 0 34px;
+    background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/24px 24px;
+}
+
+.bookin_ico {
+    content: url(../images/myjaldee/booking/calendar.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    top: -1px;
+}
+.myjld-histry {
+    content: url(../images/myjaldee/common/history.svg);
+    position: relative;
+    width: 22px;
+    top: -2px;
+    margin-right: 3px;
+}         
+.consumer-dash .appt-icon {
+content: url(../images/myjaldee/booking/Appoinment-01.svg);
+position: relative;
+padding-right: 1px;
+width: 25px;
+margin-top: 7px;
+}
+.consumer-dash .grid-card .appt-icon {
+    content: url(../images/myjaldee/booking/Appoinment-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 45px;
+    margin-top: 7px;
+    margin-left: 10px;
+    border: 2px solid #b67ab670 !important;
+    padding: 4px;
+    border-radius: 20%;
+    background: #b67ab61c !important;
+}   
+.consumer-reschedule-icon {
+  content: url(../images/myjaldee/booking/Reschedule-01-01.svg);
+  width: 20px;
+}
+.consumer-dash .grid-card .consumer-reschedule-icon {
+    content: url(../images/myjaldee/booking/Reschedule-01-01.svg);
+    position: relative;
+    padding-right: 1px;
+    margin-top: 7px;
+    margin-left: 10px;
+    border: 2px solid #b67ab670 !important;
+    padding: 4px;
+    border-radius: 20%;
+    background: #b67ab61c !important;
+}
+.consumer-dash .grid-card .resche_ico_wtlist {
+    content: url(../images/myjaldee/booking/Reschedule-01-01.svg);
+    width: 25px;
+    position: absolute;
+    right: 0;
+    padding-right: 5px;
+    z-index: 5;
+}
+.resch-box .consumer-reschedule-icon {
+    margin-top: 7px;
+    margin-left: 10px;
+    border: 2px solid #f5c84d;
+}
+.consumer-dash .chckn-icon {
+    content: url(../images/myjaldee/booking/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.consumer-dash .grid-card .chckn-icon {
+    content: url(../images/myjaldee/booking/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 43px;
+    margin-top: 7px;
+    margin-left: 10px;
+    border: 2px solid #f5c84d;
+    padding: 4px;
+    border-radius: 20%;
+    background: #fcebbe54;
+}
+.consumer-dash .token-icon {
+    content: url(../images/myjaldee/booking/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.consumer-dash .grid-card .token-icon {
+    content: url(../images/myjaldee/booking/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 45px;
+    margin-top: 7px;
+    margin-left: 10px;
+    border: 2px solid #b67ab670 !important;
+    padding: 4px;
+    border-radius: 20%;
+    background: #b67ab61c !important;
+}
+.chat-icon {
+    content: url(../images/enquiry.jpeg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+    }
+    .cross-icon {
+    content: url(../images/error.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+    }
+    .paytm-icon {
+    content: url(../images/paytm.png);
+    width: 150px;
+    padding: 10px;
+    height: 58px;
+    background: white;
+    }
+    .razorpay-icon {
+    content: url(../images/razorpay.png);
+    width: 200px;
+    padding: 10px;
+    background: white;
+    }
+    .phon-icon {
+        content: url(../images/teleservice/audio.svg);
+        top: 3px;
+        position: relative;
+        padding-right: 1px;
+        width: 15px;
+      }
+
+      .zoom-icon {
+        content: url(../images/teleservice/Zoom-01.svg);
+        top: 4px;
+        position: relative;
+        padding-right: 1px;
+        width: 25px;
+      }
+      
+      .meet-icon {
+        content: url(../images/teleservice/gmeet.svg);
+        top: 3px;
+        position: relative;
+        padding-right: 1px;
+        width: 15px;
+      }
+      
+      .wtsapaud-icon {
+        content: url(../images/teleservice/whatsapp_audio.svg);
+        top: 4px !important;
+        position: relative;
+        padding-right: 1px;
+        width: 26px;
+      }
+      
+      .wtsapvid-icon {
+        content: url(../images/teleservice/whatsapVideo.svg);
+        top: 4px;
+        position: relative;
+        padding-right: 1px;
+        width: 24px;
+      }
+      
+      .jaldeevideo-icon {
+        content: url(../images/teleservice/video-icon.png);
+        top: 3px;
+        position: relative;
+        padding-right: 1px;
+        width: 65%;
+      }
+      .jvideo-icon {
+        content: url(../images/teleservice/video-icon-small.png);
+        position: relative;
+        padding-right: 1px;
+      }
+      .jvideo-icon-s {
+        width: 20px !important;
+      }
+      .jvideo-icon-sm {
+        width: 28px !important;
+      }
+      .phon-icon {
+        content: url(../images/teleservice/audio.svg);
+        top: 3px;
+        position: relative;
+        padding-right: 1px;
+        width: 15px;
+      }
+     
+      
+      .cons-payments .donate-icon {
+        content: url(../images/donation2.svg);
+        position: relative;
+        padding-right: 1px;
+        width: 25px;
+        margin-top: 7px;
+      }
+           
+      .consumer-appthistory .appt-icon,
+      .cons-payments .appt-icon  {
+        content: url(../images/myjaldee/booking/Appoinment-01.svg);
+        position: relative;
+        padding-right: 1px;
+        width: 25px;
+        margin-top: 7px;
+      }
+       
+      .consumer-appthistory .chckn-icon,
+      .cons-payments .chckn-icon {
+        content: url(../images/myjaldee/booking/Checkin-01.svg);
+        position: relative;
+        padding-right: 1px;
+        width: 29px;
+        margin-top: 5px;
+      }
+      
+      .consumer-appthistory .token-icon {
+        content: url(../images/myjaldee/booking/token-01.svg);
+        position: relative;
+        padding-right: 1px;
+        width: 25px;
+        margin-top: 7px;
+      }
+      .msg-icon {
+        content: url(../images/Asset.png);    
+        width: 15px;
+        margin-bottom: -5px;
+      }
+      .nomsg-img {
+        content: url(../images/Nomsgs.svg);
+        width: 300px;
+        margin: auto;
+      }
+      .mr-rx-icon-customer{
+        content: url(../images/dashboard-icons/prescription2.svg);
+        width: 20px;
+      }
+     .inbox-nullimg {
+        content: url(../images/inbox.png);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .booking-img {
+        content: url(../images/bookingwindow.png);
+        width: inherit;
+        margin: auto;
+        margin-top: 50px;
+        padding: 20px;
+    } 
+    .youTube {
+      content: url(../images/yt_icon_rgb.png) !important;
+      width: 20px;
+    }
+    .instagram {
+      content: url(../images/insta.png) !important;
+      width: 20px;
+    }
+    .bizyGlobe {
+      content: url(../images/BG_icon.png) !important;
+      width: 20px;
+    }
+    .bill-icon {
+      content: url(../images/dashboard-icons/Bill-01-01.svg);
+      width: 40px;
+    }
+    .bill-icon-history {
+      content: url(../images/dashboard-icons/Bill-01-01.svg);
+      position: relative;
+      padding-right: 1px;
+      width: 20px;
+    }
+    .mr-rx-icon{
+      content: url(../images/dashboard-icons/prescription.svg);
+       width: 40px;
+    }
+    
+.reschedule-icon {
+  content: url(../images/dashboard-icons/Reschedule-01.svg);
+  width: 40px;
+}
+/* .BizyGlobe {
+  background: url(../images/BG_icon.png) no-repeat scroll 0 0/20px 20px !important;
+}
+ */
+.info-lst {
+  padding: 0 0 0 20px !important;
+  background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
+}
+
+.button_filter {
+  background-image: url(../images/filter.png);
+}
+

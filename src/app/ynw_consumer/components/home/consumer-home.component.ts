@@ -1981,7 +1981,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(pass_ob);
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      minHeight: '100vh',
+      minWidth: '100vw',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
       disableClose: true,
       data: {
         source_id: 'consumerimages',

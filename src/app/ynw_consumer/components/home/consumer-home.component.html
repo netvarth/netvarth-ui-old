@@ -33,21 +33,6 @@
                                 *ngIf="!showOrder">MY BOOKINGS</div>
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9 no-padding-small">
                                 <div class="fl-right disply-flex">
-                                    <!--  <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
-                                       <button *ngIf="!showOrder" class="flat-btn full-wdth" mat-flat-button
-                                            (click)="showOrders()">My Orders</button>
-                                        <button *ngIf="!showOrder" class="flat-icon-btn" mat-flat-button
-                                            (click)="showOrders()" [matTooltip]="'Orders'">
-                                            <i class="fa ordr_ico"></i>
-                                        </button>
-
-                                        <button *ngIf="showOrder" class="flat-btn full-wdth" mat-flat-button
-                                            (click)="showBookings()">My Bookings</button>
-                                        <button *ngIf="showOrder" class="flat-icon-btn" mat-flat-button
-                                            (click)="showBookings()" [matTooltip]="'Bookings'">
-                                            <i class="fa bookin_ico"></i>
-                                        </button> 
-                                    </div>-->
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                         <button (click)="paymentsClicked()" class="flat-btn full-wdth"
                                             mat-flat-button>My
@@ -56,16 +41,7 @@
                                             [matTooltip]="'My Payments'">
                                             <i class="fa myjld-payment"></i>
                                         </button>
-                                    </div>
-                                    <!-- <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
-                                        <button class="flat-btn full-wdth" mat-flat-button
-                                            (click)="getmyfavourites()">My
-                                            Favourites</button>
-                                        <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
-                                            [matTooltip]="'My Favourites'">
-                                            <i class="fa myjld-fav"></i>
-                                        </button>
-                                    </div> -->
+                                    </div>                                   
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                         <button class="flat-btn full-wdth" mat-flat-button
                                             (click)="gotoHistory()">History</button>

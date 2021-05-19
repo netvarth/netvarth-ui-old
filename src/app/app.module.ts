@@ -8,7 +8,7 @@ import { ScrollbarModule } from 'ngx-scrollbar';
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+// import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
@@ -141,7 +141,7 @@ export function init_app(globalService: GlobalService) {
     AppRoutingModule,
     MatDialogModule,
     FormMessageDisplayModule,
-    AngularMultiSelectModule,
+    // AngularMultiSelectModule,
     SearchModule,
     PagerModule,
     SharedModule,

@@ -962,14 +962,6 @@ export const projectConstantsLocal = {
     { value: 'Rejected', class: 'red' },
     { value: 'Confirmed', class: 'greenc' }
   ],
-  ADDON_ICON_CLASS: [
-    { value: 'Cloud Storage', class: 'fa ico_cloud' },
-    { value: 'Jaldee Search Keywords', class: 'fa ico_searchky' },
-    { value: 'QBoards', class: 'fa ico_qbods' },
-    { value: 'Jaldee Messaging', class: 'fa ico_sms' },
-    { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
-    { value: 'Multi User', class: 'fa ico_usr' },
-  ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
@@ -999,6 +991,6 @@ export const projectConstantsLocal = {
     BOOKINGS: 'Bookings'
   },
   PROVIDER_ACCOUNT_ID: 126643,
-  ACCOUNTENC_ID: '5397yl0'
-  // ACCOUNTENC_ID: '46805'
+  // ACCOUNTENC_ID: '5397yl0'
+  ACCOUNTENC_ID: '46805'
 };

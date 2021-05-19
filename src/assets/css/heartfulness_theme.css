@@ -1,0 +1,37 @@
+.background-img {
+    background-image: url(../images/heartfulness/BG.jpg) !important;    
+  }
+  .panel-default .panel-heading {
+    border: none !important;
+  }
+  .consumer_appt ngx-intl-tel-input input {
+    height: 32px !important;
+    font-size: 12px !important;
+  }
+  @media screen and (max-width: 479px) {
+    .consumer_appt .iti .iti__country-list {
+        width: 50vw !important;
+    }
+  }
+  
+  .mat-button {
+    background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  }
+  .panel {
+      background: transparent !important;
+  }
+  
+.panel-heading.top-row {
+    background: #522e5a 0% 0% no-repeat padding-box !important;
+    height: 50px !important;
+  }
+  
+  .panel-heading.top-row img {
+    height: 50px !important;
+  }
+  
+  @media(max-width:575px) {
+    .panel-heading.top-row img {
+      width: 50px !important;
+    }
+  }

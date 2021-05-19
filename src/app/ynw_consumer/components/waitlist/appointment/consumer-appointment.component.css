@@ -1346,19 +1346,6 @@ ngx-intl-tel-input input {
     width: 100px !important;
   }
 }
-.paytm-icon {
-  content: url(../../../../../assets/images/paytm.png);
-  width: 150px;
-  padding: 10px;
-  height: 58px;
-  background: white;
-}
-.razorpay-icon {
-  content: url(../../../../../assets/images/razorpay.png);
-  width: 200px;
-  padding: 10px;
-  background: white;
-}
 .fa-file-text-o, .fa-paperclip {
   color: #3c8dbc !important;
 }

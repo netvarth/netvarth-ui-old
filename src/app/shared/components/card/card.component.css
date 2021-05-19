@@ -564,12 +564,13 @@ button.fxmenu {
 	font-size: 80px;
 }
 .booking-card.card.service .card-body .service-image i.wtsapaud-icon,
-.booking-card.card.service .card-body .service-image i.wtsapvid-icon,
+/* .booking-card.card.service .card-body .service-image i.wtsapvid-icon, */
 .booking-card.card.service .card-body .service-image i.zoom-icon {
     width: 100% !important;
 }
 .booking-card.card.service .card-body .service-image i.phon-icon,
-.booking-card.card.service .card-body .service-image i.meet-icon {
+.booking-card.card.service .card-body .service-image i.meet-icon,
+.booking-card.card.service .card-body .service-image i.wtsapvid-icon {
     width: 60% !important;
 }
 .booking-card.card.service .card-body .service-details {

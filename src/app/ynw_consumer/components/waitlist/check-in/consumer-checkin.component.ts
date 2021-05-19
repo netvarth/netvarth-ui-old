@@ -201,6 +201,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newEmail;
     newWhatsapp;
     virtualFields: any;
+    consumerType: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -254,8 +255,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.getRescheduleWaitlistDet();
                 }
                 if (params.virtual_info) {
-                    this.virtualInfo = this.s3Processor.getJson(params.virtual_info);
-                    this.lStorageService.setitemonLocalStorage('customerInfo',this.virtualInfo);                 
+                    this.virtualInfo = JSON.parse(params.virtual_info);
+
                 }
             });
     }
@@ -770,14 +771,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (!this.is_wtsap_empty) {
             if (type === 'checkin') {
                 this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment && type === 'checkin') {
+            } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
         }
     }
     confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '100%',
+            width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
             data: memberObject[0]
@@ -815,6 +816,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.confirmcheckin(type);
         }
+
+    }
+    virtualModal() {
+    const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+            disableClose: true,
+            data: {'id':this.virtualInfo.serviceFor}
+
+        });
+        virtualdialogRef.afterClosed().subscribe(result => {
+        if(result){
+            this.virtualInfo=result;
+            this.setVirtualTeleserviceCustomer();
+        }
+          
+
+        });
 
     }
     addCheckInConsumer(postData) {
@@ -1041,16 +1060,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }, 2000);
     }
     setVirtualTeleserviceCustomer() {
+        console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
             this.newMember = this.virtualInfo.newMemberId;
+            this.virtualInfo.serviceFor=this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-        } if (this.virtualInfo && this.virtualInfo.serviceFor &&this.virtualInfo.serviceFor.user) {
+        } if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            this.consumerType='member';
             this.waitlist_for = [];
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor.user);
+            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor.user, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
         }
     }
     calculateDate(days) {
@@ -1429,23 +1451,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
-        this.newEmail = this.payEmail;
-        console.log(this.newPhone);
-        if (!this.newPhone) {
-            this.newPhone = {
-                dialCode: this.userData.userProfile.countryCode,
-                e164Number: this.userData.userProfile.countryCode + this.selected_phone,
-                number: this.selected_phone
-            };
-        }
-        if (!this.newWhatsapp) {
-            this.newWhatsapp = {
-                dialCode: this.userData.userProfile.countryCode,
-                e164Number: this.userData.userProfile.countryCode + this.selected_phone,
-                number: this.selected_phone
-            };
-        }
-        console.log(this.newPhone);
+        // this.payEmail = this.userData.userProfile.email;
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -1736,101 +1742,82 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         let whatsAppNum;
         let phoneNum;
         let emailId;
-        console.log(this.newPhone);
-        console.log(this.newWhatsapp);
-        console.log(this.newEmail);
-        // if (this.editBookingFields) {
-        // if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
-        //     this.phoneError = 'Phone number is invalid';
-        //     return false;
-        // } else {
-            if (this.newPhone && this.newPhone.e164Number !== '') {
-                if (this.newPhone.e164Number.startsWith(this.newPhone.dialCode)) {
-                    phoneNum = this.newPhone.e164Number.split(this.newPhone.dialCode)[1];
-                    console.log(phoneNum);
-                    this.countryCode = this.newPhone.dialCode;
-                    this.userPhone = phoneNum;
-                    this.currentPhone = phoneNum;
-                    this.selected_phone = phoneNum;
+        if (this.editBookingFields) {
+            if ((this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value.number.trim() != '') && this.bookingForm.get('newPhone').errors && !this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode + '55')) {
+                this.phoneError = 'Phone number is invalid';
+                return false;
+            } else {
+                if (this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value != "") {
+                    if (this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode)) {
+                        phoneNum = this.bookingForm.get('newPhone').value.e164Number.split(this.bookingForm.get('newPhone').value.dialCode)[1];
+                        this.countryCode = this.bookingForm.get('newPhone').value.dialCode;
+                        this.userPhone = phoneNum;
+                        this.currentPhone = phoneNum;
+                        this.selected_phone = phoneNum;
+                    }
                 }
             }
-        // }
-        console.log(this.currentPhone);
-        // if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
-        //     this.whatsapperror = 'WhatsApp number is invalid';
-        //     return false;
-        // } else {
-            if (this.newWhatsapp && this.newWhatsapp.e164Number !== '') {
-                whatsAppNum = this.newWhatsapp.e164Number;
-                if (this.newWhatsapp.e164Number.startsWith('+')) {
-                    whatsAppNum = this.newWhatsapp.e164Number.split('+')[1];
-                    this.callingModes = whatsAppNum;
+            if ((this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value.number.trim() != '') && this.bookingForm.get('newWhatsapp').errors && !this.bookingForm.get('newWhatsapp').value.e164Number.startsWith(this.bookingForm.get('newWhatsapp').value.dialCode + '55')) {
+                this.whatsapperror = 'WhatsApp number is invalid';
+                return false;
+            } else {
+                if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value != "") {
+                    whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number;
+                    if (this.bookingForm.get('newWhatsapp').value.e164Number.startsWith('+')) {
+                        whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
+                        this.callingModes = whatsAppNum;
+                    }
                 }
             }
-        // }
-        console.log(this.callingModes);
-
-        if (this.newEmail && this.newEmail.trim() !== '') {
-        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-        const result = pattern.test(this.newEmail);
-        if (!result) {
-            this.emailerror = "Email is invalid";
-            return false;
+            if (this.bookingForm.get('newEmail').errors) {
+                this.emailerror = "Email is invalid";
+                return false;
+            } else {
+                emailId = this.bookingForm.get('newEmail').value;
+                // if (emailId && emailId != "") {
+                //     this.payEmail = emailId;
+                //     const post_data = {
+                //         'id': this.userData.userProfile.id || null,
+                //         'firstName': this.userData.userProfile.firstName || null,
+                //         'lastName': this.userData.userProfile.lastName || null,
+                //         'dob': this.userData.userProfile.dob || null,
+                //         'gender': this.userData.userProfile.gender || null,
+                //         'email': this.payEmail.trim() || ''
+                //     };
+                //     this.updateEmail(post_data).then(
+                //         () => {
+                //             this.closebutton.nativeElement.click();
+                //             setTimeout(() => {
+                //                 this.action = '';
+                //             }, 500);
+                //         },
+                //         error => {
+                //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                //             this.payEmail = this.userData.userProfile.email;
+                //             return false;
+                //         }
+                //     )
+                // } else {
+                //     this.closebutton.nativeElement.click();
+                //     setTimeout(() => {
+                //         this.action = '';
+                //     }, 500);
+                // }
+                if (emailId && emailId != "") {
+                    this.payEmail = emailId;
+                    this.waitlist_for[0]['email'] = this.payEmail;
+                }
+                this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+            }
         } else {
-            emailId = this.newEmail;
-            if (emailId && emailId != "") {
-                this.payEmail = emailId;
-                console.log(this.payEmail);
-                this.waitlist_for[0]['email'] = this.payEmail;
-            }
+            this.closebutton.nativeElement.click();
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
         }
-    }
-            
-        // if (this.bookingForm.get('newEmail').errors) {
-        //     this.emailerror = "Email is invalid";
-        //     return false;
-        // } else {
-        //     emailId = this.newEmail;
-            // if (emailId && emailId != "") {
-            //     this.payEmail = emailId;
-            //     const post_data = {
-            //         'id': this.userData.userProfile.id || null,
-            //         'firstName': this.userData.userProfile.firstName || null,
-            //         'lastName': this.userData.userProfile.lastName || null,
-            //         'dob': this.userData.userProfile.dob || null,
-            //         'gender': this.userData.userProfile.gender || null,
-            //         'email': this.payEmail.trim() || ''
-            //     };
-            //     this.updateEmail(post_data).then(
-            //         () => {
-            //             this.closebutton.nativeElement.click();
-            //             setTimeout(() => {
-            //                 this.action = '';
-            //             }, 500);
-            //         },
-            //         error => {
-            //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            //             this.payEmail = this.userData.userProfile.email;
-            //             return false;
-            //         }
-            //     )
-            // } else {
-            //     this.closebutton.nativeElement.click();
-            //     setTimeout(() => {
-            //         this.action = '';
-            //     }, 500);
-            // }
-        // }
-        // } else {
-        //     this.closebutton.nativeElement.click();
-        //     setTimeout(() => {
-        //         this.action = '';
-        //     }, 500);
-        // }
-        this.closebutton.nativeElement.click();
-        setTimeout(() => {
-            this.action = '';
-        }, 500);
         this.editBookingFields = false;
     }
     updateEmail(post_data) {

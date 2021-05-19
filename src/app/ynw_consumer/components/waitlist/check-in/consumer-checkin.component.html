@@ -295,6 +295,15 @@
                                                                     (click)="handleSideScreen('members')">Change
                                                                 </a>
                                                             </div>
+                                                            <div
+                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                            Booking
+                                                            For <a *ngIf="type !== 'waitlistreschedule'"
+                                                                class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                              
+                                                                (click)="virtualModal()">Change 
+                                                            </a>
+                                                        </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding" style="margin-right:0 !important">
@@ -329,6 +338,12 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
+                                                                        <div class="pull-right" *ngIf="sel_ser_det.serviceType==='virtualService'"><a *ngIf="type !== 'waitlistreschedule'"
+                                                                            class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#exampleModalCenter"
+                                                                            (click)="handleSideScreen('members')">Edit
+                                                                        </a> </div>
                                                                         <!-- <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact you in this
@@ -1205,7 +1220,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div>
                                             <div class="t-and-c">
                                                 <div class="checkbox">
@@ -1237,9 +1251,9 @@
                                                             By using this app, you agree to the terms of this privacy policy. Please read the 
                                                             following to understand how your personal information will be treated as you use this 
                                                             site and its services.</p>
-                                                            <p>Heartfulness Institute or “HFI” in short, the creator of this privacy policy shall 
+                                                            <p>Heartfulness Institute or â€œHFIâ€� in short, the creator of this privacy policy shall 
                                                             ensure its commitment to your privacy with regard to the protection of your information. 
-                                                            This policy contains information about our app “Heartfulness Covid Care”. In order to 
+                                                            This policy contains information about our app â€œHeartfulness Covid Careâ€�. In order to 
                                                             provide you with uninterrupted use of our services, free of cost, we may collect and, 
                                                             in some circumstances, disclose information about you. Such information may be classified 
                                                             as personal information under the purview of applicable provisions of the Information 

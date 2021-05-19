@@ -326,7 +326,7 @@
 }
 
 .service-detail-content.service-popup-content .ok-button{
-  width: 35% !important;
+  width: 40% !important;
   color: white !important;
   /* background-color: #ccc !important; */
   border-radius: 4px !important;
@@ -334,7 +334,7 @@
   padding: 10px 10px !important;
 }
 .service-detail-content.service-popup-content .cancel-button {
-  width: 35% !important;
+  width: 40% !important;
   color: white !important;
   background-color: #ccc !important;
   border-radius: 4px !important;

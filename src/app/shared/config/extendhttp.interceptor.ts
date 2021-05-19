@@ -12,6 +12,7 @@ import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenan
 import { SnackbarService } from '../services/snackbar.service';
 import { SessionStorageService } from '../services/session-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { Router } from '@angular/router';
 // import { version } from '../constants/version' ;
 
 @Injectable()
@@ -32,7 +33,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private shared_functions: SharedFunctions,
+  constructor(private router: Router, private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private sessionStorageService: SessionStorageService,
@@ -215,8 +216,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return this._ifSessionExpiredN().pipe(
                 switchMap(() => {
                   // return next.handle(this.updateHeader(req, url));
-                  // this.router.navigate(['/']);
-                  window.location.reload();
+                  this.router.navigate(['/']);
+                  // window.location.reload();
                   return EMPTY;
                 })
               );

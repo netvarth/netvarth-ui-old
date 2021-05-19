@@ -14,7 +14,7 @@
 </div>
 
 <div class="modal-body service-detail-content service-popup-content">
-    <div class="servicedet_outer">
+    <div class="servicedet_outer mgn-up-20">
         <div class="outer">
             <div class="outer1 line">
                 <div class="description">
@@ -64,7 +64,7 @@
                         </div>
                         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                         <!-- </mat-dialog-content> -->
-                        <mat-dialog-actions>
+                        <div class="form-group">
                             <ng-container *ngIf="selectedMessage">
                                 <div class="row col-md-12 no-padding-small" style="display: flex;"
                                     *ngFor="let item of selectedMessage.files; let i = index">
@@ -99,22 +99,22 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                <button type="button" mat-dialog-close class="cs-btn bt2"
+                            <div class="form-group" style="margin-top: 15px">
+                                <button type="button" mat-button mat-dialog-close class="back-button"
                                     [disabled]="disableButton">{{cancel_btn_cap}}</button>
                                 <button type="submit" mat-button
                                     [disabled]="amForm.get('message').value.trim() === '' || !amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
-                                    class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
+                                    class="ok-button mgn-lt-10">{{send_btn_cap}}</button>
                                 <button type="button"
                                     *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common')"
                                     class="cs-btn btn-attach bt_attach" (click)="logofile.click()"
                                     [matTooltip]="'Upload files'">
                                     <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                                         multiple (change)="filesSelected($event)">
-                                    <span><i class="material-icons">attach_file</i></span>
+                                    <span><i class="material-icons attache-i">attach_file</i></span>
                                 </button>
                             </div>
-                        </mat-dialog-actions>
+                        </div>
                         <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
                         </app-field-error-display>
 
