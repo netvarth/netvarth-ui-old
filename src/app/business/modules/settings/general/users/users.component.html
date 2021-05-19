@@ -30,6 +30,10 @@
                                 class="navbar-item-color bold pointer-cursor">
                                 
                                 <button type="button" class="btn btn-primary ml-3 px-8 py-1 action-button-add">  <i class="fa fa-plus"></i>User </button>
+                                <!-- <span>
+                                    <i class="fa fa-plus"></i> User
+                                </span> -->
+                                <!-- <button _ngcontent-jyl-c560="" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-4 ng-star-inserted"> Next </button> -->
 
                             </a>
 
@@ -142,7 +146,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr class="row_data border-bottom pointer-cursor"
-                                                        *ngFor="let service of users_list; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
+                                                        *ngFor="let service of users_list | orderBy: order; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
                                                         <td class="waitlist-box">
                                                             <div class="disp-flex">
                                                                 <div class="user-img img-min-width">

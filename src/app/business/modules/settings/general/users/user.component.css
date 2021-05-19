@@ -134,6 +134,7 @@ td, .d-lg-none .mgn-up-5 {
 }
 .disabled-group {
   background: #dbdbdb !important;
+  /* cursor: not-allowed !important; */
  }
 ::ng-deep .user-filter .mat-checkbox-layout .mat-checkbox-label {
   text-overflow: ellipsis !important;
