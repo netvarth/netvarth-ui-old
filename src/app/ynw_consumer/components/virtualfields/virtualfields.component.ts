@@ -385,18 +385,27 @@ export class VirtualFieldsComponent implements OnInit {
         this.updateParentInfo(formdata).then(
           ()=> {
             this.dialogRef.close(formdata);
+          },
+          () => {
+           return false;
           }
         );
       } else {
         if(formdata.serviceFor==='new_member'){
           this.saveMember(formdata).then(data=>{
            this.dialogRef.close({newMemberId:data});
-          })
+          },
+          () => {
+            return false;
+           })
         }else{
         this.updateMemberInfo(formdata).then(
           ()=> {
             this.dialogRef.close(formdata);
-          }
+          },
+          () => {
+            return false;
+           }
         );
       } 
         
@@ -434,7 +443,7 @@ export class VirtualFieldsComponent implements OnInit {
         () => {
           resolve(true);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
@@ -472,7 +481,7 @@ export class VirtualFieldsComponent implements OnInit {
         () => {
           resolve(true);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
@@ -510,7 +519,7 @@ export class VirtualFieldsComponent implements OnInit {
         (data) => {
           resolve(data);
         }, (error) => {
-          console.log(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           resolve(false);
         }
       )
