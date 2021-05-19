@@ -409,7 +409,7 @@ onSubmit(instantQ) {
     }
 }
 createInstantQ(post_data) {
-    this.provider_services.addInstantQ(post_data)
+    this.provider_services.addMyAvailbility(post_data)
         .subscribe(
             () => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MADE_YOURSELF_AVAIL_NOW'), { 'panelClass': 'snackbarnormal' });
