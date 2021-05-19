@@ -174,3 +174,24 @@ textarea {
 .sub-texts{
     color: #848484;
 }
+
+@media (max-width: 575px) {
+    .card-body {
+        position: relative !important;
+    }
+
+    .card-toolbar {
+        position: static !important;
+    }
+
+    .action-buttons-container .action-button {
+        position: absolute !important;
+        right: 0 !important;
+        top: 0 !important;
+        max-width: 80px !important;
+        min-width: auto !important;
+        margin-right: 0 !important;
+        margin-bottom: 0 !important;
+        margin-left: 15px !important;
+    }
+}
