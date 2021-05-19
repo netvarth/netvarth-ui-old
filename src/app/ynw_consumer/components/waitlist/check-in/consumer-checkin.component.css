@@ -1594,3 +1594,61 @@ body.modal-open {
   }  
 }
 
+#tcModal .modal-dialog .modal-content .modal-header {
+  padding: 15px 10px !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-header::before,
+#tcModal .modal-dialog .modal-content .modal-header::after {
+  content: none !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-header h4 {
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-position: under !important;
+  text-transform: uppercase !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-header button i {
+  color: #522E5A !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-body {
+  max-height: -webkit-fill-available !important;
+  padding: 15px 10px !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-body h6 {
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-position: under !important;
+  text-transform: uppercase !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-body p {
+  text-align: justify !important;
+}
+
+#tcModal .modal-dialog .modal-content .modal-footer button {
+  border: 0 !important;
+  border-radius: 30px !important;
+  height: 50px !important;
+  padding: 10px 30px !important;
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+  opacity: 1 !important;
+  color: white !important;
+  margin: 8px 10px !important;
+}
+
+.t-and-c .checkbox label {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 15px !important;
+}
+
+.t-and-c .checkbox label a {
+  color: #A986AC !important;
+  font-weight: 700 !important;
+}
