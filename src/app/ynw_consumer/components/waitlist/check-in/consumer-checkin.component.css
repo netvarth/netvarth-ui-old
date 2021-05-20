@@ -758,7 +758,7 @@ ul.bus-actions li a.lnk {
 }
 .c-checkin-new .btns .lnk.action{
   font-size: 0.8rem !important;
-  color: #3c8dbc !important;
+  color: #3c8dbc ;
 }
 .c-checkin-new .lnk.action .fa {
   font-size: 0.8rem !important;
@@ -1286,7 +1286,7 @@ ngx-intl-tel-input input {
 .bookdetails {
   margin-bottom: 20px;
   width: 100%;
-  color: darkblue !important;
+  color: darkblue ;
   line-height: 2;
 }
 .bookdetails td {
@@ -1299,7 +1299,7 @@ ngx-intl-tel-input input {
 .containerAppt {
   font-size: 1.7rem;
   margin: auto;
-  color: darkblue !important;
+  color: darkblue;
   font-weight: bold;
   margin-bottom: 20px;
   border: 1px solid #00008b26;

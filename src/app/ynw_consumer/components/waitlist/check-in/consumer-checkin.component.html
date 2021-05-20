@@ -455,7 +455,7 @@
                                             <div *ngIf="type != 'waitlistreschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10">
                                                 <button type="button"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Next
@@ -942,14 +942,14 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back
                                                 </button>
                                             </div>
                                             <div>
                                                 <button type="button"
-                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')">
                                                     Next
                                                 </button>
@@ -1383,7 +1383,7 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back
                                                 </button>

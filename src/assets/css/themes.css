@@ -49,10 +49,13 @@ color:#fff !important;
     color: #fff !important;
     font-weight: 500 !important;
   }
-  .heartfulness_theme1.c-checkin-new  a.changeitem{
+  .heartfulness_theme1.c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
-
+  .heartfulness_theme1.c-checkin-new .btns .lnk.action{
+    font-size: 0.8rem !important;
+    color:#522e5a !important
+  }
   .heartfulness_theme1.c-checkin-new .card-title.serv-time {
     font-size: 2rem !important;
     color:#522e5a !important;
@@ -60,4 +63,32 @@ color:#fff !important;
 }
 .heartfulness_theme1 .lgmem .lgin{
   color:#fff !important;
+}
+.heartfulness_theme1 button.next-button {
+  border: 0 !important;
+  border-radius: 30px !important;
+  height: 50px !important;
+  padding: 10px 30px !important;
+  color:#fff!important;
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 15px 15px 40px #DBA8C4;
+  opacity: 1;
+}
+.heartfulness_theme1 .quest-head{
+  color:#522e5a !important;
+}
+.heartfulness_theme1 .bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#522e5a !important;
+  line-height: 2;
+}
+.heartfulness_theme1 .containerAppt {
+  font-size: 1.7rem;
+  margin: auto;
+  color:#522e5a !important;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border: 1px solid #00008b26;
+  box-shadow: 0px 0px 2px 2px #cac8c880;
 }
