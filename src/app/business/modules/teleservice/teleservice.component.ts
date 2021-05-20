@@ -524,7 +524,13 @@ export class TeleServiceComponent implements OnInit {
                 }
             });
             actiondialogRef.afterClosed().subscribe(data => {
-            });
+                this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
+                   .subscribe((waitdata: any) => {
+                        if(waitdata.waitlistStatus === 'done' ){
+                            this.redirecToPreviousPage();
+                        }
+                       });
+                    });
         } else {
             const type = this.groupService.getitemFromGroupStorage('apptType');
             const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
