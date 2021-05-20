@@ -391,12 +391,12 @@ onSubmit(instantQ) {
     //     this.api_error = this.consumer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.consumer_label + 's served.';
     //     return;
     // }else {
-         if (this.action === 'edit') {
-             this.updateInstantQ(instantQInput);
-         } else {
+        //  if (this.action === 'edit') {
+        //      this.updateInstantQ(instantQInput);
+        //  } else {
             this.createInstantQ(instantQInput);
     //    }
-    }
+    // }
 }
 createInstantQ(post_data) {
     this.provider_services.addMyAvailbility(post_data)
