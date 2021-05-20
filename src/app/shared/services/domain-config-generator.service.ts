@@ -64,4 +64,13 @@ export class DomainConfigGenerator {
         const path = 'ynwConf/businessDomains';
         return this.servicemeta.httpGet(path);
     }
+
+    /**
+     * 
+     */
+     getUIAccountConfig() {
+        const path = 'http://localhost:4200/assets/json/version.json';
+        // const path = projectConstants.PATH + 'assets/json/config.json';
+        return this.servicemeta.httpGet(path);
+    }
 }

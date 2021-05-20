@@ -12,7 +12,6 @@ import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 // import { HeaderModule } from './shared/modules/header/header.module';
@@ -23,7 +22,6 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
 import { LoginComponent } from './shared/components/login/login.component';
-import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
@@ -56,7 +54,6 @@ import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
-import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
@@ -65,7 +62,6 @@ import { TruncateModule } from './shared/pipes/limitTo.module';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
 import { MatStepperModule } from '@angular/material/stepper';
-import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { CookieProcessor } from './shared/services/cookie-processor.service';
@@ -93,6 +89,8 @@ import { ProviderDetailService } from './shared/services/provider-detail.service
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
+import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
+import { QRCodeGeneratordetailComponent } from './shared/components/qrcodegenerator/qrcodegeneratordetail.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -114,12 +112,11 @@ export function init_app(globalService: GlobalService) {
     BusinessPageComponent,
     ForceDialogComponent,
     ConsumerJoinComponent,
-    PaymentLinkComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    ItemDetailsSharedComponent,
     CommunicationComponent,
-    DepartmentServicePageComponent
+    DepartmentServicePageComponent,
+    QRCodeGeneratordetailComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -142,7 +139,6 @@ export function init_app(globalService: GlobalService) {
     MatDialogModule,
     FormMessageDisplayModule,
     // AngularMultiSelectModule,
-    SearchModule,
     PagerModule,
     SharedModule,
     RatingStarModule,
@@ -195,7 +191,6 @@ export function init_app(globalService: GlobalService) {
     SharedFunctions,
     FormMessageDisplayService,
     ErrorMessagingService,
-    SearchDetailServices,
     ProviderDetailService,
     ShareService,
     SessionStorageService,
@@ -217,6 +212,7 @@ export function init_app(globalService: GlobalService) {
     MatNativeDateModule,
     Title,
     CommonDataStorageService,
+    SearchDetailServices,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

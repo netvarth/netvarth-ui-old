@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 
 @Component({
   selector: 'app-home',
@@ -26,15 +27,62 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private routerobj: Router,
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private configHandler: DomainConfigGenerator
   ) {
-    this.routerobj.navigate([projectConstantsLocal.ACCOUNTENC_ID]);
+
+    this.getCompatibilityVersion().then(
+      (status) => {
+          if (status !== 'supported' && status !== 'notsupported' ) {
+            alert(status);
+          } else {
+            this.routerobj.navigate([projectConstantsLocal.ACCOUNTENC_ID]);
+          }
+      }
+    )
+
+    
    }
 ngOnDestroy() {
 }
 ngAfterViewInit() {
 }
+
+getCompatibilityVersion() {
+  const _this = this;
+  return new Promise(function (resolve, reject) {
+    const curVerion = _this.lStorageService.getitemfromLocalStorage('app-version');
+    _this.configHandler.getUIAccountConfig().subscribe(
+      (config: any) => {
+        if (config) {
+          if (curVerion) {
+            if (curVerion !== config['version']) {
+              resolve(config['error']);
+            } else {
+              resolve("supported");
+            }
+          }  else {
+            _this.lStorageService.setitemonLocalStorage('app-version', config['version']);
+            resolve("supported");
+          }
+        } else {
+          resolve("notsupported");
+        }
+      }, error => {
+        reject(error);
+      }
+    )
+
+    resolve(true);
+  })
+}
   ngOnInit() {
+
+
+    
+
+
+
     this.setSystemDate();
     // calling the method to get the list of domains
     this.getDomainList();

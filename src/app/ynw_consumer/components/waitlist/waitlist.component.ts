@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../services/consumer-services.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -47,8 +46,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   canceldialogRef;
   remfavdialogRef;
 
-  public searchfields: SearchFields = new SearchFields();
-private subs=new SubSink();
+  private subs = new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_functions: SharedFunctions,
     private router: Router,
@@ -58,7 +56,7 @@ private subs=new SubSink();
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    this.subs.sink=this.route.params
+    this.subs.sink = this.route.params
       .subscribe((data) => {
         this.provider_id = data.provider_id;
         this.waitlist_id = data.uuid;
@@ -83,7 +81,7 @@ private subs=new SubSink();
     const params = {
       account: this.provider_id
     };
-    this.subs.sink=this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
+    this.subs.sink = this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
       .subscribe(
         data => {
           this.waitlist_detail = data;
@@ -174,7 +172,7 @@ private subs=new SubSink();
       return false;
     }
 
-    this.subs.sink=this.shared_services.addProvidertoFavourite(id)
+    this.subs.sink = this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         () => {
 
@@ -187,7 +185,7 @@ private subs=new SubSink();
 
 
   getCommunicationHistory() {
-    this.subs.sink=this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
+    this.subs.sink = this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
       .subscribe(
         data => {
           const history: any = data;
@@ -216,7 +214,5 @@ private subs=new SubSink();
         return 0;
       }
     });
-
   }
-
 }

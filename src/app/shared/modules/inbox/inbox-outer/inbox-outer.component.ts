@@ -15,7 +15,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 @Component({
   selector: 'app-inbox-outer',
   templateUrl: './inbox-outer.component.html',
-  styleUrls: ['./inbox-outer.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./inbox-outer.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css']
 })
 export class InboxOuterComponent implements OnInit {
 

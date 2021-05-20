@@ -4390,64 +4390,12 @@ i.notavail {
   cursor: pointer !important;
 }
 
-.popular-searches a {
-  margin-right: 10px !important;
-  font-weight: 500 !important;
-  margin-bottom: 10px !important;
-}
-
-.popular-searches a:hover {
-  text-decoration: underline !important;
-}
-
-.popular_more {
-  color: #00aef2 !important;
-  cursor: pointer !important;
-  font-weight: 500 !important;
-}
-
 .headerpop {
   top: 150px !important;
 }
 
-.popular-searches .owl-theme .owl-nav [class*='owl-'] {
-  background: transparent !important;
-}
-
-.popular-searches .owl-theme .owl-nav:hover [class*='owl-'] {
-  background: transparent !important;
-}
-
-.popular-searches .owl-theme .owl-nav {
-  margin-top: 0px !important;
-}
-
-.popular-searches .custom-nav {
-  top: 15% !important;
-}
-
-.popular-searches .custom-nav .owl-next i, .popular-searches .custom-nav .owl-prev i {
-  font-size: 2rem !important;
-  color: #bcb9b9 !important;
-}
-
-.popular-searches .topStyle {
-  top: 18% !important;
-}
-
-.popular-searches a {
-  cursor: pointer !important;
-  margin-right: 15px !important;
-}
-
 .qerrmsg {
   color: #f24949 !important;
-}
-
-.popular a {
-  margin-left: 0px !important;
-  margin-right: 15px !important;
-  cursor: pointer !important;
 }
 
 @media (max-width: 1199px) {

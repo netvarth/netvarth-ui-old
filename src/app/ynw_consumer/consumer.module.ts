@@ -5,7 +5,6 @@ import { SharedModule } from '../shared/modules/common/shared.module';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ConsumerRoutingModule } from './consumer-routing.module';
-import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
 // import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
@@ -42,7 +41,6 @@ import { ConsumerDonationModule } from './components/donations/consumer-donation
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
-import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 import { ConsumerFooterModule } from './components/footer/footer.module';
 // import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
@@ -73,7 +71,6 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../shared/component
     CapitalizeFirstPipeModule,
     ConsumerRoutingModule,
     CommonModule,
-    SearchModule,
     SharedModule,
     HeaderModule,
     // CheckInModule,
@@ -89,7 +86,6 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../shared/component
     CheckinAddMemberModule,
     ConsumerAppointmentModule,
     ConsumerDonationModule,
-    SearchFormModule,
     ConsumerFooterModule,
     NgxQRCodeModule,
     ShareButtonsModule,

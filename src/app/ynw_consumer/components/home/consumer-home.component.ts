@@ -10,7 +10,6 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
@@ -105,7 +104,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   settings_exists = false;
   futuredate_allowed = false;
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
-  public searchfields: SearchFields = new SearchFields();
   reload_history_api = { status: true };
   subscription: Subscription;
   cronHandle: Subscription;
