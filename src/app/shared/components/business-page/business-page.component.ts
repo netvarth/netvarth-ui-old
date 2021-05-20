@@ -1768,8 +1768,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         width: '40%',
         panelClass: ['loginmainclass', 'popup-class'],
         disableClose: true,
-        data: consumerdata
-        //data: {consumer:consumerdata,theme:this.theme}
+        //data: consumerdata
+        data: {consumer:consumerdata,theme:this.theme}
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {

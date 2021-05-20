@@ -82,7 +82,7 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
    }
   okClick(waitlist) {
     if (waitlist.service.livetrack) {
-      this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id } });
+      this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id ,theme:this.theme} });
     } else {
       this.router.navigate(['consumer']);
     }

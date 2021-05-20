@@ -61,6 +61,7 @@ export class VirtualFieldsComponent implements OnInit {
   consumerType = '';
   activeUser: any;
   memberObject: any;
+  theme: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -72,7 +73,15 @@ export class VirtualFieldsComponent implements OnInit {
     private groupService: GroupStorageService
   ) {
     if (dialogData) {
-      this.dialogData = this.s3Processor.getJson(dialogData);
+      if(dialogData.consumer){
+      this.dialogData = this.s3Processor.getJson(dialogData.consumer);
+      }else{
+        this.dialogData=this.s3Processor.getJson(dialogData);
+      }
+      if(dialogData.theme){
+        this.theme=dialogData.theme;
+      }
+      console.log(this.theme);
       this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
       this.getActiveUserInfo().then(data => {
         this.customer_data = data;
