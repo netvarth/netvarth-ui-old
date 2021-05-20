@@ -195,3 +195,260 @@ textarea {
         margin-left: 15px !important;
     }
 }
+
+.head-card .user-names {
+    margin-top: 5px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-bottom: 0 !important;
+    color: #1E4079 !important;
+    font-weight: 700 !important;
+    font-size: 1.3rem !important;
+    text-transform: capitalize !important;
+    text-overflow: ellipsis !important;
+    width: calc(100% - 20px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+}
+
+@media (max-width: 575px) {
+    .head-card .user-names {
+        width: calc(100% - 85px) !important;
+        margin-top: 0 !important;
+    }
+}
+
+.head-card .icon {
+    color: #0bc7c7 !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    font-family: 'FontAwesome' !important;
+    margin-right: 5px !important;
+    font-weight: 500 !important;
+}
+
+.head-card .icon.fa.fa-map-marker {
+    font-size: 18px !important;
+}
+
+.head-card .icon.fa.fa-mobile {
+    font-size: 22px !important;
+}
+
+.head-card .sub-texts {
+    color: #909090 !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+}
+
+.head-card .e-mail .sub-texts {
+    text-transform: none !important;
+}
+
+.body-card .service-name {
+    color: #1E4079 !important;
+    font-weight: 700 !important;
+    text-transform: capitalize !important;
+}
+
+.body-card .service-status {
+    color: #0ba50b !important;
+    margin-top: 30px !important;
+    margin-bottom: 10px !important;
+    font-weight: 700 !important;
+    text-transform: capitalize !important;
+}
+
+.body-card .custom-red {
+    color: red !important;
+    font-weight: 700 !important;
+}
+
+.body-card .call-inst {
+    color: #1E4079 !important;
+    font-weight: 700 !important;
+}
+
+.body-card .call-inst:hover {
+    text-decoration: underline !important;
+    text-underline-position: under !important;
+}
+
+.body-card .direct-call-inst {
+    color: #888888 !important;
+    font-weight: 700 !important;
+}
+
+.body-card .functionality-btn {
+    color: #1E4079 !important;
+    border-color: #1E4079 !important;
+    background: white !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    border-radius: 5px !important;
+    margin-right: 10px !important;
+}
+
+.body-card .functionality-btn i {
+    color: inherit !important;
+    font-family: 'FontAwesome' !important;
+    font-weight: inherit !important;
+}
+
+.body-card .functionality-btn:hover {
+    color: white !important;
+    border-color: #1E4079 !important;
+    background: #1E4079 !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    border-radius: 5px !important;
+    margin-right: 10px !important;
+}
+
+.body-card .start-button button {
+    border-radius: 5px !important;
+    background-color: white !important;
+    border: 1px solid #1ea91e !important;
+    color: #1ea91e !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+}
+
+.body-card .start-button button:hover {
+    border-radius: 5px !important;
+    background-color: #1ea91e !important;
+    border: 1px solid #1ea91e !important;
+    color: white !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+}
+
+.body-card .start-button i.wtsapaud-icon {
+    width: 30px !important;
+    margin-top: -15px !important;
+    margin-right: -5px !important;
+    margin-bottom: -2px !important;
+}
+
+.body-card .start-button i.phon-icon {
+    width: 20px !important;
+    margin-top: -5px !important;
+    margin-bottom: -2px !important;
+}
+
+.body-card .start-button i.meet-icon {
+    width: 20px !important;
+    margin-top: -5px !important;
+    margin-bottom: -4px !important;
+}
+
+.body-card .start-button i.zoom-icon {
+    width: 40px !important;
+    margin-top: -10px !important;
+    margin-right: -5px !important;
+}
+
+.body-card .start-button i.jvideo-icon {
+    width: 25px !important;
+    margin-top: -5px !important;
+}
+
+.body-card .relaunch-end-buttons .end-button {
+    border-radius: 5px !important;
+    background-color: white !important;
+    border: 1px solid #d20a0a !important;
+    color: #d20a0a !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+    margin-right: 10px !important;
+}
+
+.body-card .relaunch-end-buttons .end-button:hover {
+    border-radius: 5px !important;
+    background-color: #d20a0a !important;
+    border: 1px solid #d20a0a !important;
+    color: white !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+    margin-right: 10px !important;
+}
+
+.body-card .relaunch-end-buttons .relaunch-button {
+    border-radius: 5px !important;
+    background-color: white !important;
+    border: 1px solid #1E4079 !important;
+    color: #1E4079 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+}
+
+.body-card .relaunch-end-buttons .relaunch-button:hover {
+    border-radius: 5px !important;
+    background-color: #1E4079 !important;
+    border: 1px solid #1E4079 !important;
+    color: white !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+}
+
+
+.body-card .inprogress-end-buttons .end-button {
+    border-radius: 5px !important;
+    background-color: white !important;
+    border: 1px solid #d20a0a !important;
+    color: #d20a0a !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+}
+
+.body-card .inprogress-end-buttons .end-button:hover {
+    border-radius: 5px !important;
+    background-color: #d20a0a !important;
+    border: 1px solid #d20a0a !important;
+    color: white !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+}
+
+.body-card .inprogress-end-buttons .inprogress-button {
+    border-radius: 5px !important;
+    background-color: white !important;
+    border: 1px solid #1E4079 !important;
+    color: #1E4079 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+    margin-right: 10px !important;
+}
+
+.body-card .inprogress-end-buttons .inprogress-button:hover {
+    border-radius: 5px !important;
+    background-color: #1E4079 !important;
+    border: 1px solid #1E4079 !important;
+    color: white !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+    margin-right: 10px !important;
+}
