@@ -789,7 +789,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
                     setTimeout(() => {
-                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule',theme:this.theme } });
                     }, 500);
                 },
                 error => {
@@ -827,7 +827,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.payuPayment();
                     } else {
                         setTimeout(() => {
-                            this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                            this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid,theme:this.theme } });
                         }, 2000);
                     }
                 }
@@ -1864,7 +1864,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
             } else {
-                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid ,theme:this.theme} });
             }
         },
             error => {

@@ -748,7 +748,7 @@ ul.bus-actions li a.lnk {
 }
 
 .c-checkin-new .lnk a {
-  color: #1572a8 !important;
+  color: #1572a8;
 }
 
 .c-checkin-new .lnk {
@@ -762,7 +762,7 @@ ul.bus-actions li a.lnk {
 }
 .c-checkin-new .btns .lnk.action{
   font-size: 0.8rem !important;
-  color: #3c8dbc !important;
+  color: #3c8dbc ;
 }
 .c-checkin-new .lnk.action .fa {
   font-size: 0.8rem !important;
@@ -787,7 +787,7 @@ ul.bus-actions li a.lnk {
 .c-checkin-new .card-title.serv-time {
   /* line-height: 40px !important; */
   font-size: 2rem !important;
-  color: #334b99 !important;
+  color: #334b99;
   font-weight: 700 !important;
 }
 
@@ -1257,10 +1257,10 @@ ngx-intl-tel-input input {
 }
 .tab-selected h3,
 .tab-selected i {
-  color: darkblue !important;
+  color: darkblue ;
 }
 .tab-selected .step-icon {
-  background: darkblue !important;
+  background: darkblue ;
 }
 .fa {
   font: normal normal normal 14px/1 FontAwesome !important;
@@ -1290,7 +1290,7 @@ ngx-intl-tel-input input {
 .bookdetails {
   margin-bottom: 20px;
   width: 100%;
-  color: darkblue !important;
+  color: darkblue ;
   line-height: 2;
 }
 .bookdetails td {
@@ -1303,7 +1303,7 @@ ngx-intl-tel-input input {
 .containerAppt {
   font-size: 1.7rem;
   margin: auto;
-  color: darkblue !important;
+  color: darkblue;
   font-weight: bold;
   margin-bottom: 20px;
   border: 1px solid #00008b26;

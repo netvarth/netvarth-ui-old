@@ -92,3 +92,16 @@ color:#fff !important;
   border: 1px solid #00008b26;
   box-shadow: 0px 0px 2px 2px #cac8c880;
 }
+.heartfulness_theme1 table.bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#522e5a !important;
+  line-height: 2;
+}
+.heartfulness_theme1  .tab-selected h3,
+.heartfulness_theme1 .tab-selected i {
+  color:#522e5a !important;
+}
+.heartfulness_theme1 .tab-selected .step-icon {
+  background:#522e5a !important;
+}

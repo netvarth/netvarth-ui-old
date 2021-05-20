@@ -391,7 +391,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.consumerNoteAndFileSave(uid);
                     }
                     setTimeout(() => {
-                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
+                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule',theme:this.theme } });
                     }, 500);
                 },
                 error => {
@@ -907,7 +907,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else {
                     multiple = false;
                 }
-                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple,theme:this.theme } });
             }
         },
             error => {

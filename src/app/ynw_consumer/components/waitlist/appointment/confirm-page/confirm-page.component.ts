@@ -35,6 +35,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   provider_label;
   type = 'appt';
   private subs=new SubSink();
+  theme: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
@@ -53,6 +54,9 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         }
         if (params.type) {
           this.type = params.type;
+        }
+        if(params.theme){
+          this.theme=params.theme;
         }
       });
   }

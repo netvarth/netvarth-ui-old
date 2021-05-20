@@ -1253,10 +1253,10 @@ ngx-intl-tel-input input {
 }
 .tab-selected h3,
 .tab-selected i {
-  color: darkblue !important;
+  color: darkblue;
 }
 .tab-selected .step-icon {
-  background: darkblue !important;
+  background: darkblue ;
 }
 .fa {
   font: normal normal normal 14px/1 FontAwesome !important;
