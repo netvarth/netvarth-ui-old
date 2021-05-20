@@ -1754,11 +1754,11 @@ button.next-button {
   margin-bottom: auto;
 }
 .input-field {
-  width: 120px !important;
+  /* width: 120px !important; */
   padding: 5px;
 }
 .email-field {
-  width: 160px !important;
+  width: 196px !important;
   padding: 5px;
 }
 .code-field {
