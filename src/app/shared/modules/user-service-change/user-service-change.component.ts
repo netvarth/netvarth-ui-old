@@ -299,7 +299,9 @@ export class UserServiceChnageComponent implements OnInit {
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
-          'state': serviceObj.state
+          'state': serviceObj.state,
+          'currentWlCount':serviceObj.currentWlCount
+          
         });
     });
     return service_list;

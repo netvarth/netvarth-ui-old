@@ -111,7 +111,8 @@
                           <img [src]="getUserImg(service)">
                         </div>
                         <div class="mgn-lt-10">
-                          <div class="username"> {{service.Username?service.Username : ''}}
+                          <div class="username">{{service.Username?service.Username : ''}}
+                              <span style="color: green;" *ngIf="service.currentWlCount">({{service.currentWlCount}})</span>
                           </div>
                           <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
                               class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
