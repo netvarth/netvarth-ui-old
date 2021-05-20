@@ -72,6 +72,7 @@ export class EditProfileComponent implements OnInit {
     private location: Location,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
+    private _location: Location,
     private snackbarService: SnackbarService
   ) { }
   goBack () {
@@ -251,6 +252,7 @@ export class EditProfileComponent implements OnInit {
     this.editProfileForm.get('dob').setValue(null);
   }
   redirecToSettings() {
-    this.router.navigate(['provider', 'settings', 'bprofile']);
+    this._location.back();
+    // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
 }
