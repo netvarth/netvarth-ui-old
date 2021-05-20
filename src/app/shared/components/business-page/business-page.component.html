@@ -623,7 +623,7 @@
                                 {{sps.departmentName}}
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                     [terminology]='terminologiesjson' [loc]="selectedLocation"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
@@ -633,14 +633,14 @@
                     </ng-container>
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
                         <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
@@ -697,7 +697,7 @@
                 <ng-container
                     *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-I" *ngFor="let item of orderItems">
-                        <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
+                        <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">

@@ -1867,6 +1867,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         type: origin,
         is_provider: false,
         test_account: is_test_account,
+        theme: this.theme,
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });

@@ -105,3 +105,50 @@ color:#fff !important;
 .heartfulness_theme1 .tab-selected .step-icon {
   background:#522e5a !important;
 }
+
+.heartfulness_theme1.custom-login-form {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.forgot-password-component {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.custom-sp-form {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.custom-login-form.login-form .mat-dialog-title,
+.heartfulness_theme1.custom-login-form .mat-dialog-title,
+.heartfulness_theme1 .custom-login-form.mat-dialog-title {
+  background: #59345D 0% 0% no-repeat padding-box !important;
+  background-color: rgb(89, 52, 93) !important;
+}
+
+.heartfulness_theme1.custom-login-form button,
+.heartfulness_theme1.custom-login-form .go-back,
+.heartfulness_theme1.forgot-password-component button,
+.heartfulness_theme1.forgot-password-component .back-button,
+.heartfulness_theme1.custom-sp-form button {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+}
+
+.heartfulness_theme1.c-checkin-new button.hf-btn {
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #DBA8C4 !important;
+  opacity: 1 !important;
+  border-radius: 32px !important;
+  border: none !important;
+}
+
+.heartfulness_theme1.card.booking-card.service {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.card.booking-card.service .hf-btn {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+  border: none !important;
+  color: white !important;
+}

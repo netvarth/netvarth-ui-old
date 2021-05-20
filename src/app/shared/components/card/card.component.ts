@@ -25,6 +25,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() time_type;
     @Input() allLabels;
     @Input() checkins;
+    @Input() theme;
     // @Input() pos;
     @Input() statusAction;
     service: any;
