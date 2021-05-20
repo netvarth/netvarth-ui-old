@@ -30,7 +30,6 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
-
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -292,6 +291,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   apptServices;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
+  accountProperties: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -316,6 +316,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+
+
+
   }
 
   ngOnInit() {
@@ -407,11 +410,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: string) => {
                 this.provider_id = id;
-                this.gets3curl();
+                this.domainConfigService.getUIAccountConfig().subscribe(
+                  (uiconfig: any)=> {
+                    if (uiconfig && uiconfig[this.provider_id]) {
+                      this.accountProperties = uiconfig[this.provider_id];                      
+                    }
+                    this.gets3curl();
+                  }
+                )
+                
               }
-            )
+            );
           }
         )
+        //   }
+        // )
       });
   }
 
@@ -1696,8 +1709,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // }
             // else {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-           // }
+            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+            // }
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1709,44 +1722,44 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("Collect Required Info");
     const _this = this;
     let virtualFields = {};
-    if(this.checkallvirtualFilledByConsumer(consumerdata)){
-      if(consumerdata.parent){
+    if (this.checkallvirtualFilledByConsumer(consumerdata)) {
+      if (consumerdata.parent) {
         virtualFields['dob'] = consumerdata.userProfile.dob;
         virtualFields['gender'] = consumerdata.userProfile.gender;
         let locationObj = {};
         locationObj['Name'] = consumerdata.bookingLocation.city;
         locationObj['State'] = consumerdata.bookingLocation.state;
         locationObj['Pincode'] = consumerdata.bookingLocation.pincode;
-  
+
         virtualFields['location'] = locationObj;
         virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.preferredLanguages);
         if (virtualFields['preferredLanguage'][0] === 'English') {
           virtualFields['islanguage'] = 'yes';
         }
-      }else{
+      } else {
         virtualFields['dob'] = consumerdata.userProfile.dob;
         virtualFields['gender'] = consumerdata.userProfile.gender;
         let locationObj = {};
         locationObj['Name'] = consumerdata.userProfile.city;
         locationObj['State'] = consumerdata.userProfile.state;
         locationObj['Pincode'] = consumerdata.userProfile.pinCode;
-  
+
         virtualFields['location'] = locationObj;
         virtualFields['pincode'] = consumerdata.userProfile.pinCode;
         virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
         if (virtualFields['preferredLanguage'][0] === 'English') {
           virtualFields['islanguage'] = 'yes';
-        } 
+        }
       }
       if (type === 'appt') {
         _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
       } else {
         _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
       }
-     
-    
-      
-    }else{
+
+
+
+    } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '40%',
         panelClass: ['loginmainclass', 'popup-class'],
@@ -1761,10 +1774,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             _this.showCheckin(id, place, location, date, service, 'consumer', result);
           }
-  
+
         }
       });
-    
+
     }
     // if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
     //   virtualFields['dob'] = consumerdata.userProfile.dob;
@@ -1800,18 +1813,18 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }
     // });
   }
-  checkallvirtualFilledByConsumer(consumerdata){
-    let allrequiredFieldsFilled=false;
-    if(consumerdata.parent){
-    if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.preferredLanguages&&consumerdata.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.bookingLocation.pincode&&consumerdata.bookingLocation.pincode.trim()!==''){
-      allrequiredFieldsFilled=true;
-    }
+  checkallvirtualFilledByConsumer(consumerdata) {
+    let allrequiredFieldsFilled = false;
+    if (consumerdata.parent) {
+      if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.preferredLanguages && consumerdata.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.bookingLocation.pincode && consumerdata.bookingLocation.pincode.trim() !== '') {
+        allrequiredFieldsFilled = true;
+      }
 
-  }else if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages&&consumerdata.userProfile.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.userProfile.pinCode&&consumerdata.userProfile.pinCode.trim()!==''){
-    allrequiredFieldsFilled=true;
+    } else if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.userProfile.pinCode && consumerdata.userProfile.pinCode.trim() !== '') {
+      allrequiredFieldsFilled = true;
+    }
+    return allrequiredFieldsFilled;
   }
-  return allrequiredFieldsFilled;
-}
 
   checkVirtualRequiredFieldsEntered() {
     const _this = this;
@@ -1869,14 +1882,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-         // if (current_provider['service']['serviceType'] === 'virtualService') {
+          // if (current_provider['service']['serviceType'] === 'virtualService') {
           //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
           //     this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
           //   });
           // } else {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
-        //  }
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
+          //  }
 
           // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {

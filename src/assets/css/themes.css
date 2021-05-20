@@ -1,0 +1,42 @@
+.heartfulness_theme1 .panel, .heartfulness_theme1 .serv-head.service-serv-head{
+    background: #522e5a 0% 0% no-repeat padding-box !important; 
+    background-color: transparent !important; 
+}
+.heartfulness_theme1 .mat-button {
+    background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  }
+  .heartfulness_theme1 .panel-heading.top-row {
+    background: #522e5a 0% 0% no-repeat padding-box !important;
+    height: 50px !important;
+  }
+  .heartfulness_theme1 { 
+    /* color: #fff !important; */
+    background-image: url(../images/heartfulness/BG.jpg) !important; 
+    background-repeat: no-repeat  !important; ;
+    background-attachment: fixed  !important; ;
+    background-size: 100% 100%  !important; ;
+  }
+  .heartfulness_theme1 .serv-head.service-serv-head {
+    color: #fff !important;
+  }
+  .heartfulness_theme1.bus-page .dept-title-h4.department-title {
+    text-decoration: none !important;
+    padding: 12px 15px !important;
+    /* background-color: darkslategrey !important; */
+    /* color: white !important; */
+    /* font-weight: 500 !important; */
+    text-transform: capitalize !important;
+    font-size: 19px !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    font-style: normal !important;
+    background-color: transparent !important;
+  }
+  .heartfulness_theme1.bus-page .dept-title-h4  {
+      color: #fff  !important;
+  }
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .message a,
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a{
+color:#fff !important;
+  }
