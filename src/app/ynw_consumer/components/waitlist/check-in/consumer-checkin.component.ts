@@ -874,7 +874,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             multiple = false;
                         }
                         setTimeout(() => {
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple,theme:this.theme } });
                         }, 2000);
                     }
                 }

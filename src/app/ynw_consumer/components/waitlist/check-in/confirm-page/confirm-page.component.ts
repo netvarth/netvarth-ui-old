@@ -36,6 +36,7 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   provider_label;
   type;
   uuids: any = [];
+  theme: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
@@ -67,6 +68,9 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
                 this.apiloading = false;
               });
           }
+        }
+        if(params.theme){
+          this.theme=params.theme;
         }
       });
   }
