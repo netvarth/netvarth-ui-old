@@ -33,6 +33,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { UploadFileComponent } from './uploadfile/uploadfile.component';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
 import { ShowuploadfileComponent } from './uploadfile/showuploadfile/showuploadfile.component';
+import { AddNoteComponent } from './prescription/add-note/add-note.component';
 
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
@@ -56,7 +57,8 @@ import { ShowuploadfileComponent } from './uploadfile/showuploadfile/showuploadf
               UploadSignatureComponent,
               UploadFileComponent,
               MrfileuploadpopupComponent,
-              ShowuploadfileComponent
+              ShowuploadfileComponent,
+              AddNoteComponent
               // SignaturePadModule
             ],
   imports: [
@@ -81,7 +83,8 @@ import { ShowuploadfileComponent } from './uploadfile/showuploadfile/showuploadf
   InstructionsComponent,
   ImagesviewComponent,
   MrfileuploadpopupComponent,
-  ShowuploadfileComponent
+  ShowuploadfileComponent,
+  AddNoteComponent
   ],
   providers: [
     MedicalrecordService
