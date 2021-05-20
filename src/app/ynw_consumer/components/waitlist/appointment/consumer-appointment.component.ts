@@ -225,6 +225,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     questionnaireLoaded = false;
     imgCaptions: any = [];
     virtualInfo: any;
+    theme: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -274,6 +275,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.type = params.type;
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleApptDet();
+                }
+                if(params.theme){
+                    this.theme=params.theme;
+                    console.log(this.theme);
                 }
                 // if(params.virtual_info){
                 //     this.virtualInfo=JSON.parse(params.virtual_info);

@@ -2157,7 +2157,7 @@ img.ordericon.home {
 .serv-head.service-serv-head h5 {
   /* color: gold !important;
   font-weight: 500 !important; */
-  color: darkslategrey !important;
+  color: darkslategrey;
   font-weight: 700 !important;
 }
 

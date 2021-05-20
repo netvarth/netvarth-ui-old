@@ -19,6 +19,9 @@
   .heartfulness_theme1 .serv-head.service-serv-head {
     color: #fff !important;
   }
+  .heartfulness_theme1 .serv-head.service-serv-head h5 {
+    color: #fff !important;
+  }
   .heartfulness_theme1.bus-page .dept-title-h4.department-title {
     text-decoration: none !important;
     padding: 12px 15px !important;
@@ -40,3 +43,19 @@
   .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a{
 color:#fff !important;
   }
+  .heartfulness_theme1 .modal-header .service-detail-header{
+    background: #522e5a 0% 0% no-repeat padding-box !important;
+    font-size: 1.25rem !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+  }
+  .heartfulness_theme1 .c-checkin-new.lnk a{
+    color:#522e5a !important
+  }
+
+  .heartfulness_theme1 .c-checkin-new .card-title.serv-time {
+    font-size: 2rem !important;
+    color:#522e5a !important;
+    font-weight: 700 !important;
+    background:#fff !important;
+}

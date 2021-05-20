@@ -292,6 +292,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
   accountProperties: any;
+  theme: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -413,12 +414,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.domainConfigService.getUIAccountConfig().subscribe(
                   (uiconfig: any)=> {
                     if (uiconfig && uiconfig[this.provider_id]) {
-                      this.accountProperties = uiconfig[this.provider_id];                      
+                      this.accountProperties = uiconfig[this.provider_id]; 
+                      this.theme=this.accountProperties['theme'];                     
                     }
                     this.gets3curl();
                   }
                 )
                 
+              },()=>{
+                this.gets3curl();
               }
             );
           }
@@ -1765,6 +1769,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['loginmainclass', 'popup-class'],
         disableClose: true,
         data: consumerdata
+        //data: {consumer:consumerdata,theme:this.theme}
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {
@@ -1989,6 +1994,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
+      queryParam['theme']=this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
@@ -2018,6 +2024,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
+      queryParam['theme']=this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
@@ -2191,7 +2198,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        service_id: service.id
+        service_id: service.id,
+        theme:this.theme
       }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);

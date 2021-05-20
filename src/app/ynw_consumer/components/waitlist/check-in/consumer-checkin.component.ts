@@ -200,6 +200,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newMember: any;
     consumerType: string;
     heartfulnessAccount = false;
+    theme: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -255,6 +256,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (params.virtual_info) {
                     this.virtualInfo = JSON.parse(params.virtual_info);
 
+                }
+                if(params.theme){
+                    this.theme=params.theme;
+                    console.log(this.theme);
                 }
             });
     }
@@ -823,7 +828,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
             disableClose: true,
-            data: { 'id': this.virtualInfo.serviceFor }
+            data: { 'id': this.virtualInfo.serviceFor,theme:this.theme }
 
         });
         virtualdialogRef.afterClosed().subscribe(result => {

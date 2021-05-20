@@ -1,4 +1,4 @@
-<section class="c-checkin-new container no-padding">
+<section class="c-checkin-new container no-padding" [ngClass]="theme?theme:''">
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
@@ -196,13 +196,13 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
-                                                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
-                                                                    (click)="changeTime()" data-toggle="modal"
+                                                            <span ><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
+                                                                 (click)="changeTime()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a></span>
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                            <h6 class="card-title serv-time border-style">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
+                                                            <h6 class="card-title serv-time border-style" >
                                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
                                                                     newDateFormat}},
