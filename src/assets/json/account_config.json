@@ -6,6 +6,7 @@
         "showSpecialization": false,
         "showQualification": false,
         "showVirtualFields": false,
+        "showCoverPicture": false,
         "manifest": {
             "name": "Heartfulness Care",
             "short_name": "Heartfulness Care",
@@ -73,6 +74,7 @@
         "showSpecialization": true,
         "showQualification": true,
         "showVirtualFields": true,
+        "showCoverPicture": true,
         "manifest": {
             "name": "Dhyan Clinic",
             "short_name": "Dhyan Clinic",
