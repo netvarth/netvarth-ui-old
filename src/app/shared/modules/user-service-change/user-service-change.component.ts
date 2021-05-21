@@ -452,7 +452,7 @@ export class UserServiceChnageComponent implements OnInit {
       api_filter['lastName-like'] = this.filter.lastName;
     }
     if (this.filter.location !== '') {
-      api_filter['locationName-eq'] = this.filter.location;
+      api_filter['locationName-like'] = this.filter.location;
     }
     if (this.filter.pincode !== '') {
       api_filter['pinCode-eq'] = this.filter.pincode;

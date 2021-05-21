@@ -160,15 +160,17 @@
                                                                         {{(service.businessName) ? service.businessName
                                                                         : service.firstName + ' ' + service.lastName}}
                                                                     </div>
-                                                                    <div class="disp-flex mgn-up-5"
+                                                                    <!-- <div class="disp-flex mgn-up-5"
                                                                         >
                                                                        <span *ngIf="service.city"> <i
                                                                         class="fa fa-map-marker mgn-rt-5"
                                                                         aria-hidden="true"></i>
                                                                     {{service.city}},&nbsp;{{service.state}}</span>
                                                                    
-                                                                       </div>
-                                                                     
+                                                                       </div> -->
+                                                                       <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
+                                                                        class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
+                                                                        {{service.locationName}},<br>{{service.city}},&nbsp;{{service.state}}</div>
                                                                         <!-- <div class="disp-flex mgn-up-5"
                                                                         *ngIf="service.state">
                                                                         {{service.state}}</div> -->
