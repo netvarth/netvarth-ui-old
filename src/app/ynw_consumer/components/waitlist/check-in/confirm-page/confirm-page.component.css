@@ -390,7 +390,7 @@
 }
 
 .notes {
-  margin: 0 0 40px !important;
+  margin: auto auto 40px !important;
   border: 0 !important;
   max-height: 200px !important;
   border-radius: 10px !important;
@@ -400,6 +400,12 @@
   align-items: center !important;
   justify-content: flex-start !important;
   background: linear-gradient(180deg, #ffffff 0%, #e8e8e8 100%) !important;
+}
+
+@media (max-width: 500px) {
+  .notes {
+    width: 90% !important;
+  }
 }
 
 .notes .preinfo-title {

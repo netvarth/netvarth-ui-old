@@ -1,5 +1,5 @@
-<section class="container no-padding confirm-aptckn no-padding-small"  [ngClass]="theme?theme:''">
-    <div class="content p0 loc-list">
+<section class="container no-padding confirm-aptckn hf-no-bg no-padding-small"  [ngClass]="theme?theme:''">
+    <div class="content p0 loc-list hf-bg-white hf-no-padding">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -10,7 +10,7 @@
                 <div class="card p0">
                     <div class="copy locd block-level" *ngIf="!apiloading">
                         <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngFor="let wtlst of waitlist;let i=index">
-                            <div class="info-img">
+                            <div class="info-img" *ngIf="!theme || theme != 'heartfulness_theme1'">
                                 <img src="assets/images/bg-01.png">
                             </div>
                             <div class="details">
@@ -173,17 +173,18 @@
                         </div> -->
                                 <div class="notes"
                                     *ngIf="wtlst.service && wtlst.service.postInfoEnabled && wtlst.service.postInfoTitle">
-                                    <div class="preinfo-title">{{wtlst.service.postInfoTitle}} </div>
+                                    <div class="preinfo-title"  *ngIf="!theme || theme != 'heartfulness_theme1'">{{wtlst.service.postInfoTitle}} </div>
+                                    <div class="preinfo-title"  *ngIf="!(!theme || theme != 'heartfulness_theme1')">Post Instructions </div>
                                     <div class="value-text" [innerHTML]="wtlst.service.postInfoText">
                                     </div>
                                 </div>
                                 <div class="ok-btn" *ngIf="i == (waitlist.length-1)">
-                                    <span class="pointer-cursor" (click)="okClick(wtlst)">
+                                    <span class="pointer-cursor hf-btn" (click)="okClick(wtlst)">
                                         <strong>OK</strong></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="powered-by">
+                        <div class="powered-by"  *ngIf="!theme || theme != 'heartfulness_theme1'">
                             <div class="poweredby-text">
                                 <div class="one">powered by</div>
                                 <div class="two">

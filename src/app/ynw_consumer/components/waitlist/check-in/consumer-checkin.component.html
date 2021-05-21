@@ -1121,7 +1121,7 @@
                                             </tbody>
                                         </table> -->
 
-                                        <div class="containerAppt textcenter">
+                                        <div class="containerAppt textcenter" *ngIf="!theme || theme != 'heartfulness_theme1'">
                                             <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
                                             <div class="mgn-bt-5">
                                                 <span *ngIf="!isFuturedate">Today, </span>
