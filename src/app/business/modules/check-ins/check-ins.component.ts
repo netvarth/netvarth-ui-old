@@ -1056,7 +1056,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view, source, type?) {
 
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege) {
+    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
 

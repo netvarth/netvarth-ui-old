@@ -412,8 +412,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               (id: string) => {
                 this.provider_id = id;
                 const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-                // if (!appPopupDisplayed && this.provider_id !== 128007) {
-                if (!appPopupDisplayed && this.provider_id !== 152877) {
+                // if (!appPopupDisplayed && JSON.parse(this.provider_id) !== 128007) {
+                if (!appPopupDisplayed && JSON.parse(this.provider_id) !== 152877) {
                   this.popUp.nativeElement.style.display = 'block';
                 } else {
                   this.popUp.nativeElement.style.display = 'none';
