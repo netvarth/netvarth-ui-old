@@ -15,6 +15,7 @@ import { LocalStorageService } from '../../../../../../shared/services/local-sto
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { UserConfirmBoxComponent } from '../confirm-box/user-confirm-box.component';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html',
@@ -371,12 +372,14 @@ export class BranchUserDetailComponent implements OnInit {
         } else {
             console.log(post_data1);
             this.provider_services.createUser(post_data1).subscribe(() => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'general', 'users']);
+                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
+               
+              
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+                this.userAddConfirm()
         }
     }
     onCancel() {
@@ -491,4 +494,21 @@ export class BranchUserDetailComponent implements OnInit {
             }
         }
     }
+    userAddConfirm() {
+        const dialogref = this.dialog.open(UserConfirmBoxComponent, {
+          width: '60%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            // profile: this.profile
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            this.router.navigate(['provider', 'settings', 'general', 'users']);
+            // if (result) {
+            // }
+          }
+        );
+      }
 }

@@ -132,8 +132,18 @@ td, .d-lg-none .mgn-up-5 {
 .user-filter mat-checkbox {
   display: block;
 }
+.disabled-group {
+  background: #dbdbdb !important;
+  /* cursor: not-allowed !important; */
+ }
 ::ng-deep .user-filter .mat-checkbox-layout .mat-checkbox-label {
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   white-space: nowrap !important;
+}
+
+.action-button-add:hover {
+  color: white !important;
+  background: #1E4079 !important;
+  font-weight: 500 !important;
 }

@@ -55,6 +55,7 @@ export class DrugListComponent implements OnInit {
   navigationParams: any;
   removedrugdialogRef;
   customer_label = '';
+  note = '';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -142,8 +143,9 @@ export class DrugListComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
-          if (data && data.length !== 0) {
-            this.drugList = data;
+          if (data) {
+            this.drugList = data['prescriptionsList'];
+            this.note = data['notes'];
             this.loading = false;
           } else {
             this.loading = false;
@@ -211,7 +213,10 @@ console.log(this.drugList);
         this.drugList.splice(index, 1);
         if (this.deleteFromDb) {
           if (this.mrId) {
-            this.provider_services.updateMRprescription(this.drugList, this.mrId).
+             let passdata = {
+      "prescriptionsList":this.drugList
+    }
+            this.provider_services.updateMRprescription(passdata, this.mrId).
               subscribe(res => {
               });
           }
@@ -222,9 +227,13 @@ console.log(this.drugList);
    
   }
   saveRx() {
+    let passdata = {
+      "prescriptionsList":this.drugList,
+      "notes": this.note
+    }
     this.disable = true;
     if (this.mrId) {
-      this.provider_services.updateMRprescription(this.drugList, this.mrId).
+      this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
           this.showSave = false;
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -234,7 +243,7 @@ console.log(this.drugList);
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
-      this.medicalrecord_service.createMR('prescriptions', this.drugList)
+      this.medicalrecord_service.createMR('prescriptions', passdata)
         .then((data: number) => {
           this.mrId = data;
 

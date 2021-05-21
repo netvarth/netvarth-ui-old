@@ -1,0 +1,154 @@
+.heartfulness_theme1 .panel, .heartfulness_theme1 .serv-head.service-serv-head{
+    background: #522e5a 0% 0% no-repeat padding-box !important; 
+    background-color: transparent !important; 
+}
+.heartfulness_theme1 .mat-button {
+    background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  }
+  .heartfulness_theme1 .panel-heading.top-row {
+    background: #522e5a 0% 0% no-repeat padding-box !important;
+    height: 50px !important;
+  }
+  .heartfulness_theme1 { 
+    /* color: #fff !important; */
+    background-image: url(../images/heartfulness/BG.jpg) !important; 
+    background-repeat: no-repeat  !important; ;
+    background-attachment: fixed  !important; ;
+    background-size: 100% 100%  !important; ;
+  }
+  .heartfulness_theme1 .serv-head.service-serv-head {
+    color: #fff !important;
+  }
+  .heartfulness_theme1 .serv-head.service-serv-head h5 {
+    color: #fff !important;
+  }
+  .heartfulness_theme1.bus-page .dept-title-h4.department-title {
+    text-decoration: none !important;
+    padding: 12px 15px !important;
+    /* background-color: darkslategrey !important; */
+    /* color: white !important; */
+    /* font-weight: 500 !important; */
+    text-transform: capitalize !important;
+    font-size: 19px !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    font-style: normal !important;
+    background-color: transparent !important;
+  }
+  .heartfulness_theme1.bus-page .dept-title-h4  {
+      color: #fff  !important;
+  }
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .message a,
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a{
+color:#fff !important;
+  }
+  .heartfulness_theme1 .modal-header .service-detail-header{
+    background: #522e5a 0% 0% no-repeat padding-box !important;
+    font-size: 1.25rem !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+  }
+  .heartfulness_theme1.c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
+    color:#522e5a !important
+  }
+  .heartfulness_theme1.c-checkin-new .btns .lnk.action{
+    font-size: 0.8rem !important;
+    color:#522e5a !important
+  }
+  .heartfulness_theme1.c-checkin-new .card-title.serv-time {
+    font-size: 2rem !important;
+    color:#522e5a !important;
+    font-weight: 700 !important;
+}
+.heartfulness_theme1 .lgmem .lgin{
+  color:#fff !important;
+}
+.heartfulness_theme1 button.next-button {
+  border: 0 !important;
+  border-radius: 30px !important;
+  height: 50px !important;
+  padding: 10px 30px !important;
+  color:#fff!important;
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 15px 15px 40px #DBA8C4;
+  opacity: 1;
+}
+.heartfulness_theme1 .quest-head{
+  color:#522e5a !important;
+}
+.heartfulness_theme1 .bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#522e5a !important;
+  line-height: 2;
+}
+.heartfulness_theme1 .containerAppt {
+  font-size: 1.7rem;
+  margin: auto;
+  color:#522e5a !important;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border: 1px solid #00008b26;
+  box-shadow: 0px 0px 2px 2px #cac8c880;
+}
+.heartfulness_theme1 table.bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#522e5a !important;
+  line-height: 2;
+}
+.heartfulness_theme1  .tab-selected h3,
+.heartfulness_theme1 .tab-selected i {
+  color:#522e5a !important;
+}
+.heartfulness_theme1 .tab-selected .step-icon {
+  background:#522e5a !important;
+}
+
+.heartfulness_theme1.custom-login-form {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.forgot-password-component {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.custom-sp-form {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.custom-login-form.login-form .mat-dialog-title,
+.heartfulness_theme1.custom-login-form .mat-dialog-title,
+.heartfulness_theme1 .custom-login-form.mat-dialog-title {
+  background: #59345D 0% 0% no-repeat padding-box !important;
+  background-color: rgb(89, 52, 93) !important;
+}
+
+.heartfulness_theme1.custom-login-form button,
+.heartfulness_theme1.custom-login-form .go-back,
+.heartfulness_theme1.forgot-password-component button,
+.heartfulness_theme1.forgot-password-component .back-button,
+.heartfulness_theme1.custom-sp-form button {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+}
+
+.heartfulness_theme1.c-checkin-new button.hf-btn {
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #DBA8C4 !important;
+  opacity: 1 !important;
+  border-radius: 32px !important;
+  border: none !important;
+}
+
+.heartfulness_theme1.card.booking-card.service {
+  background-image: none !important;
+}
+
+.heartfulness_theme1.card.booking-card.service .hf-btn {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+  border: none !important;
+  color: white !important;
+}

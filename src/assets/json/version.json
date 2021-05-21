@@ -1,19 +1,7 @@
 {
     "name": "Jaldee",
-    "version": "1.6.7",
+    "version": "1.0.0",
     "license": "Jaldee Inc",
-    "releaseNotes":[
-        "Force update version message changes",
-        "Restricted special characters in otp field",
-        "Redirection to consumer dashboard after check-in",
-        "Rupees format changes",
-        "Learn more updation",
-        "Message changes in sign-up/sign-in pages",
-        "Validation for address in wizard page",
-        "Message for provider when turn off customers self pay",
-        "Alignment problem when user logouts from another tab",
-        "Validations in payment settings",
-        "Pre-payment amount display in services list",
-        "Login as provider issue"
-    ]
+    "warning":"This apk is only for temporary",
+    "error": "This app is no longer usable. please download one from your appstore"
 }

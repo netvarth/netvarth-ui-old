@@ -1,8 +1,11 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10 disp-flex">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToGeneral()"></span>&nbsp;&nbsp; -->
+                <!-- &nbsp; -->
+                <!-- &nbsp; -->
+                &nbsp;
                 Users
             <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-auto">
                 <i class="icon-filter-one">
@@ -12,20 +15,33 @@
         </h5>
     </div>
 </section>
+<section class="">
+    <div class="card title-gb"> 
+        <h6 class="mgn-up-10 disp-flex">
+            <span ></span>{{user_count_filterApplied}}&nbsp;&nbsp;Result Found
+        </h6>
+    </div>
+</section>
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="card p0 w-dta">
                 <div class="col-md-12 no-padding">
-                    <ul class="nav jd-custom-nav chkn-dash">
+                    <ul class="nav chkn-dash">
                         <li class="pull-right">
                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
                                 class="navbar-item-color bold pointer-cursor">
-                                <span>
+                                
+                                <button type="button" class="btn btn-primary ml-3 px-8 py-1 action-button-add">  <i class="fa fa-plus"></i>User </button>
+                                <!-- <span>
                                     <i class="fa fa-plus"></i> User
-                                </span>
+                                </span> -->
+                                <!-- <button _ngcontent-jyl-c560="" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-4 ng-star-inserted"> Next </button> -->
+
                             </a>
-                        </li>
+
+                        </li><br>
+                    
                     </ul>
                 </div>
                 <aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
@@ -133,7 +149,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr class="row_data border-bottom pointer-cursor"
-                                                        *ngFor="let service of users_list; let i = index;" (click)="selectedRow(i,service)">
+                                                        *ngFor="let service of users_list | orderBy: order; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
                                                         <td class="waitlist-box">
                                                             <div class="disp-flex">
                                                                 <div class="user-img img-min-width">
@@ -145,10 +161,17 @@
                                                                         : service.firstName + ' ' + service.lastName}}
                                                                     </div>
                                                                     <div class="disp-flex mgn-up-5"
-                                                                        *ngIf="service.locationName"><i
-                                                                            class="fa fa-map-marker mgn-rt-5"
-                                                                            aria-hidden="true"></i>
-                                                                        {{service.locationName}}</div>
+                                                                        >
+                                                                       <span *ngIf="service.city"> <i
+                                                                        class="fa fa-map-marker mgn-rt-5"
+                                                                        aria-hidden="true"></i>
+                                                                    {{service.city}},&nbsp;{{service.state}}</span>
+                                                                   
+                                                                       </div>
+                                                                     
+                                                                        <!-- <div class="disp-flex mgn-up-5"
+                                                                        *ngIf="service.state">
+                                                                        {{service.state}}</div> -->
                                                                        
                                                                     <div class="d-lg-none">
                                                                         <div class=" mgn-up-5"
@@ -242,7 +265,7 @@
                                                                     <button mat-menu-item
                                                                         (click)="changeUserStatus(service)">
                                                                         <i *ngIf="service.status=='INACTIVE' || !service.status"
-                                                                            class="icon-enable"></i>
+                                                                            class="icon-enable disabled "></i>
                                                                         <i *ngIf="service.status=='ACTIVE'"
                                                                             class="icon-disable"></i>
                                                                         {{(service.status=='ACTIVE') ? 'Disable'

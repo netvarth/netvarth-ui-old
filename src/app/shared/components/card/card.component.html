@@ -1,5 +1,5 @@
 <!-- Card -->
-<div class="card booking-card pointer-cursor service"
+<div class="card booking-card pointer-cursor service" [ngClass]="theme?theme:''"
     *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
     <!-- Card content -->
@@ -65,7 +65,7 @@
             <!-- </div>
         <div class="card-footer"> -->
             <div class="service-buttons">
-                <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
+                <button type="button" class="hf-btn btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
                 <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
                     class="btn pointer-cursor btn-warning moreDetails">. . .</button>
             </div>
@@ -260,12 +260,24 @@
                     {{waitlist.waitlistingFor[0].firstName}}
                     {{waitlist.waitlistingFor[0].lastName}}
                 </div>
+                
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
                     {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="waitlist.provider">
                     {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
                 </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
+                    <!-- <span class="b1">Location : </span> -->
+                    <span>{{waitlist.waitlistingFor[0].bookingLocation.localArea}},
+                        {{waitlist.waitlistingFor[0].bookingLocation.district}}, 
+                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
+                </div>
+                <div class="col-xs-12 col-sm-12 no-padding view-details">
+                    <span *ngIf="waitlist.waitlistingFor[0].age">Age: {{getAge(waitlist.waitlistingFor[0].age)}}</span>&nbsp;
+                    <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender | capitalizeFirst}}</span>&nbsp;
+                    <span *ngIf="waitlist.waitlistingFor[0].preferredLanguage">{{waitlist.waitlistingFor[0].preferredLanguage}}</span>
+                    </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item">
                     <i class="fa meet-icon"
                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -292,20 +304,15 @@
                     <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(waitlist)">
                         <span class="b1">Label : </span> <span class="b2"> {{getLabels(waitlist)}}</span>
                     </div>
-                    <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].age">
-                        Age: {{getAge(waitlist.waitlistingFor[0].age)}}</div>
-                      <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].gender">
+                   
+                      <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].gender">
                         Gender: {{waitlist.waitlistingFor[0].gender | capitalizeFirst}}
-                      </div>
-                    <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
-                        <span class="b1">Location : </span>
-                        <span class="b2">{{waitlist.waitlistingFor[0].bookingLocation.localArea}},
-                            {{waitlist.waitlistingFor[0].bookingLocation.district}} </span>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].preferredLanguage">
+                      </div> -->
+                   
+                    <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].preferredLanguage">
                         <span class="b1">Language : </span>
                         <span class="b2">{{waitlist.waitlistingFor[0].preferredLanguage}} </span>
-                    </div>
+                    </div> -->
                 </div>
                 
             </div>

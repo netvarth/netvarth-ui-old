@@ -1,4 +1,4 @@
-<section class="content bus-page">
+<section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
@@ -11,11 +11,12 @@
                     </div>
                 </div>
                 <!-- Cover Foto -->
-                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
+                <div *ngIf="bgCover && (!accountProperties || (accountProperties && accountProperties['showCoverPicture'])" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
                 </div>
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
-                        <div class="badge-smalldv  visible-xs visible-sm">
+                        <div class="badge-smalldv  visible-xs visible-sm"
+                            *ngIf="accountProperties && accountProperties['showVerified']">
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                     class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
@@ -40,7 +41,8 @@
                     </div>
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="businessjson">
-                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding">
+                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                            *ngIf="(!accountProperties || (accountProperties && accountProperties['showSpecialization'] || accountProperties['showProfile']))">
                             <div class="no-padding right-padding-md-15"
                                 [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
@@ -64,7 +66,7 @@
                                             2).join(',').length)}}</a>
                                     </h6>
                                 </div>
-                                
+
                                 <div class="about question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
                                     *ngIf="bNameStart!='' || bNameEnd!=''">
                                     <div class="question-outer">
@@ -84,15 +86,17 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1"
-                                    class="specialization-header question-header mgn-up-5">
+                                <div *ngIf="specializationslist.length == 1 && (!accountProperties || (accountProperties && accountProperties['showSpecialization']))"
+                                    class="specialization-header question-header mgn-up-5"
+                                    >
                                     Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1"
+                                <div *ngIf="specializationslist.length > 1 && (!accountProperties || (accountProperties && accountProperties['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5">
                                     Specializations
                                 </div>
-                                <div class="specialization-value question-value1">
+                                <div class="specialization-value question-value1"
+                                    *ngIf="!accountProperties || (accountProperties && accountProperties['showSpecialization'])">
                                     <ul class="comma-list">
                                         <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
@@ -106,7 +110,8 @@
                                     </ul>
                                 </div>
 
-                                <div class="showmoresec" *ngIf="showMore">
+                                <div class="showmoresec" *ngIf="showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"
+                                    >
                                     <div class="" *ngIf="showMore">
                                         <div class="">
                                             <!-- <div class="question-main-outer" *ngIf="!userId">
@@ -351,9 +356,9 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="share" [matTooltip]="'Coupon'"  *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
-                                    <a class="like-btn" (click)="openCoupons()"
-                                       >
+                                <li class="share" [matTooltip]="'Coupon'"
+                                    *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
+                                    <a class="like-btn" (click)="openCoupons()">
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
 
@@ -361,18 +366,19 @@
                                     </a>
                                 </li>
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="!showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
                                     </a></li>
                                 <li [matTooltip]="'Less Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- Less Info -->...
                                     </a></li>
                             </ul>
                         </div>
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10 width-100" *ngIf="settings_exists && business_exists">
+                            <ul class="bus-actions no-padding mgn-up-10 width-100"
+                                *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
@@ -400,9 +406,9 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-share centeralign" *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0">
-                                    <a class="like-btn" 
-                                        (click)="openCoupons()">
+                                <li class="small-devices-share centeralign"
+                                    *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0">
+                                    <a class="like-btn" (click)="openCoupons()">
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;{{coupon}}</span>
@@ -617,7 +623,7 @@
                                 {{sps.departmentName}}
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                     [terminology]='terminologiesjson' [loc]="selectedLocation"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
@@ -627,14 +633,14 @@
                     </ng-container>
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
                         <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
@@ -691,7 +697,7 @@
                 <ng-container
                     *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-I" *ngFor="let item of orderItems">
-                        <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
+                        <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">

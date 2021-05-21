@@ -1,6 +1,6 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <ng-container *ngIf="!loading">
-  <div class="mgn-up-30" *ngIf="drugList.length === 0 && uploadlist.length === 0">
+  <div class="mgn-up-30" *ngIf="prescList">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10">
       <span class="b-link">
         <h5 class="heading3b">You can create prescription in two ways:</h5>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <ng-container>
-  <div class="mgn-up-20" *ngIf="drugList.length>0">
+  <div class="mgn-up-20" *ngIf="drugList && drugList.length>0">
       <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
    
       <div class="w-dta" >
@@ -60,6 +60,8 @@
           </tr>
         </tbody>
       </table>
+      <label  *ngIf="note" style="color: #3c8dbc;">Note</label><br>
+      <span>{{note}}</span><br>
       <span (click)="updatePrescription()" class="lnk action pointlist"
         style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>
@@ -88,7 +90,7 @@
 </ng-container>
 
 
-  <div class="mgn-up-20" *ngIf="uploadlist.length>0">
+  <div class="mgn-up-20" *ngIf="uploadlist && uploadlist.length>0">
       <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
       <div class="w-dta" >
         <div class="row">

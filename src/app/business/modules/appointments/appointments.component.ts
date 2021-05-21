@@ -1631,6 +1631,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
+    if (this.filter.apptStatus === 'all') {
+      api_filter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
     // if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
     //   api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     // }

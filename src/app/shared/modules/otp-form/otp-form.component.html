@@ -1,4 +1,4 @@
-<ng-container *ngIf="showOTPContainer">
+<ng-container *ngIf="showOTPContainer" [ngClass]="theme?theme:''">
   <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)"
     class="ynw-common-form otp_scr" (keyup)="doResetApiErrors()">
     <mat-dialog-content *ngIf="!consumerlogin">

@@ -42,17 +42,18 @@
             <div class="icon-text">Change Status</div>
         </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')" (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
-                <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
-                <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+                <div class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+                <!-- <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
+                <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div> -->
             </div>
             </div>
             <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider" (click)="removeProvider()">
                 <div class="action-box-sub">
                     <span class="doctor-change-icon"></span>
-                    <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>
+                    <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
                 </div>
             </div>
             <div class="action-box pointer-cursor" *ngIf="showArrived"
