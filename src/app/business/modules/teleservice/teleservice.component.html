@@ -158,11 +158,13 @@
                                                 class="fa wtsapvid-icon mgn-lt-20"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon video-wdth"
                                                 style="width: 45px !important; margin-top: -5px !important;"></i>
-                                            &nbsp;{{serv_name}}
+                                            &nbsp;
+                                            <div class="mgn-up-10">{{serv_name}}
+                                            <h6 *ngIf="servStarted" class="service-status">Status:
+                                                {{(servDetails?.virtualServiceType ==
+                                                'videoService')? 'Video' : 'Audio'}} Consultation in-progress</h6>
+                                            </div>
                                         </h2>
-                                        <h6 *ngIf="servStarted" class="service-status">Status:
-                                            {{(servDetails?.virtualServiceType ==
-                                            'videoService')? 'Video' : 'Audio'}} Consultation in-progress</h6>
                                     </div>
                                 </div>
                                 <!-- Warning If telemode is WhatsApp/Phone -->
