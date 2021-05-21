@@ -446,10 +446,10 @@ export class UserServiceChnageComponent implements OnInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.filter.firstName !== '') {
-      api_filter['firstName-eq'] = this.filter.firstName;
+      api_filter['firstName-like'] = this.filter.firstName;
     }
     if (this.filter.lastName !== '') {
-      api_filter['lastName-eq'] = this.filter.lastName;
+      api_filter['lastName-like'] = this.filter.lastName;
     }
     if (this.filter.location !== '') {
       api_filter['locationName-eq'] = this.filter.location;
