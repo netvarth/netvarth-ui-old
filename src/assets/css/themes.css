@@ -201,3 +201,25 @@ color:#fff !important;
     max-width: 100% !important;
   }
 }
+
+.heartfulness_theme1.c-checkin-new .hf-double-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: space-between !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.heartfulness_theme1.c-checkin-new .hf-single-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: center !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.heartfulness_theme1.c-checkin-new .panel-heading i.fa.fa-arrow-left {
+  color: white !important;
+}
+
+.heartfulness_theme1.c-checkin-new .hf-panel-body {
+  background-color: white !important;
+}
