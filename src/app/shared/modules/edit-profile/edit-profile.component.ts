@@ -184,7 +184,7 @@ export class EditProfileComponent implements OnInit {
           'firstName': sub_data.first_name.trim() || null,
           'lastName': sub_data.last_name.trim() || null,
           'dob': date_format || null,
-          'gender': sub_data.gender || null,
+          'gender': (sub_data.gender!=='')?sub_data.gender:null || null,
           'email': sub_data.email || ''
         };
         passtyp = 'consumer';
@@ -195,7 +195,7 @@ export class EditProfileComponent implements OnInit {
             'firstName': sub_data.first_name.trim() || null,
             'lastName': sub_data.last_name.trim() || null,
             'dob': date_format || null,
-            'gender': sub_data.gender || null,
+            'gender': (sub_data.gender!=='')? sub_data.gender:null || null,
             'email': sub_data.email || ''
           }
         };
