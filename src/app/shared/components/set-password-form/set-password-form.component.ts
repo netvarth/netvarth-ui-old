@@ -25,6 +25,10 @@ export class SetPasswordFormComponent implements OnInit {
   spForm;
   disableButton = false;
   @Input() type;
+<<<<<<< HEAD
+=======
+  @Input() theme;
+>>>>>>> refs/remotes/origin/1.8-Android-App
   @Input() checkConsumerOrProvider;
   @Input() consumerlogin;
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();

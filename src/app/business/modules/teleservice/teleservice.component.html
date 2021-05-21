@@ -14,102 +14,90 @@
                 <div class="card col-md-9 col-lg-9 col-sm-12 col-xs-12">
                     <div class="card-body p-0">
                         <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
-                            <div class="d-flex align-items-end">
+                            <!-- <div class="d-flex align-items-end">
                                 <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-column line-hgt">
-                                        <div class="stats-item"
+                                    <div class="d-flex flex-column line-hgt"> -->
+                                        <div class="stats-item head-card"
                                             *ngIf="waiting_type == 'checkin' && (data.waitlistingFor[0].firstName || data.waitlistingFor[0].lastName || data.waitlistingFor[0].memberJaldeeId)">
-                                            <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
+                                            <h5 class="user-names"
                                                 *ngFor="let user of data.waitlistingFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </h5>
-                                            <div class="stats-item" *ngIf="data.waitlistingFor[0].id">
-                                                <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
-                                                    {{data.waitlistingFor[0].memberJaldeeId}}</span>
+                                            <div class="jaldee-id" *ngIf="data.waitlistingFor[0].id">      
+                                                <i class="fa fa-id-card-o icon"></i>
+                                                <span class="sub-texts">{{customer_label | capitalizeFirst}} Id: {{data.waitlistingFor[0].memberJaldeeId}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.waitlistPhoneNumber">
-                                                <i class="fas fa-mobile-alt"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.countryCode}}
-                                                    {{data.waitlistPhoneNumber}}</span>
+                                            <div class="mobile-no" *ngIf="data.waitlistPhoneNumber">    
+                                                <i class="fa fa-mobile icon"></i>
+                                                <span class="sub-texts">{{data.countryCode}}-{{data.waitlistPhoneNumber}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.waitlistingFor[0].email">
-                                                <i class="far fa-envelope"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].email}}</span>
+                                            <div class="e-mail" *ngIf="data.waitlistingFor[0].email">     
+                                                <i class="fa fa-envelope icon"></i>
+                                                <span class="sub-texts">{{data.waitlistingFor[0].email}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.waitlistingFor[0].gender">
+                                            <div class="gender" *ngIf="data.waitlistingFor[0].gender">     
                                                 <i *ngIf="data.waitlistingFor[0].gender == 'Male' || data.waitlistingFor[0].gender == 'male'"
-                                                    class="fas fa-mars"></i>
+                                                    class="fa fa-mars icon"></i>      
                                                 <i *ngIf="data.waitlistingFor[0].gender == 'Female' || data.waitlistingFor[0].gender == 'female'"
-                                                    class="fas fa-mars-stroke"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].gender |
-                                                    capitalizeFirst}}</span>
+                                                    class="fa fa-venus icon"></i>             
+                                                <span class="sub-texts">{{data.waitlistingFor[0].gender | capitalizeFirst}}</span>
                                             </div>
-                                            <div class="stats-item"
+                                            <div class="pref-language"
                                                 *ngIf="data.waitlistingFor[0].preferredLanguage && data.waitlistingFor[0].preferredLanguage.length > 0">
-                                                <i class="fa lang-icon"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].preferredLanguage}}</span>
+                                                <i class="fa fa-language icon"></i>
+                                                <span class="sub-texts">{{data.waitlistingFor[0].preferredLanguage}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.waitlistingFor[0].bookingLocation">
-                                                <i class="fa locat-icon"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{data.waitlistingFor[0].bookingLocation.localArea}},
-                                                    {{data.waitlistingFor[0].bookingLocation.district}}</span>
+                                            <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation">      
+                                                <i class="fa fa-map-marker icon"></i>
+                                                <span class="sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}}, {{data.waitlistingFor[0].bookingLocation.district}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.waitlistingFor[0].age">
-                                                <i class="fa fa-user"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{getAge(data.waitlistingFor[0].age)}}</span>
+                                            <div class="user-age" *ngIf="data.waitlistingFor[0].age">    
+                                                <i class="fa fa-user icon"></i>
+                                                <span class="sub-texts">{{getAge(data.waitlistingFor[0].age)}}</span>
                                             </div>
                                         </div>
-                                        <div class="mgn-up-10 stats-item"
+                                        <div class="stats-item head-card"
                                             *ngIf="waiting_type != 'checkin' && (data.appmtFor[0].firstName || data.appmtFor[0].lastName)">
-                                            <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
+                                            <h5 class="user-names"
                                                 *ngFor="let user of data.appmtFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </h5>
-                                            <div class="stats-item" *ngIf="data.appmtFor[0].id">
-                                                <span class="text-muted">{{customer_label | capitalizeFirst}} Id:
-                                                    {{data.appmtFor[0].memberJaldeeId}}</span>
+                                            <div class="jaldee-id" *ngIf="data.appmtFor[0].id">     
+                                                <i class="fa fa-id-card-o icon"></i>
+                                                <span class="sub-texts">{{customer_label | capitalizeFirst}} Id: {{data.appmtFor[0].memberJaldeeId}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.phoneNumber">
-                                                <i class="fas fa-mobile-alt"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.countryCode}}
-                                                    {{data.phoneNumber}}</span>
+                                            <div class="mobile-no" *ngIf="data.phoneNumber">      
+                                                <i class="fa fa-mobile icon"></i>
+                                                <span class="sub-texts">{{data.countryCode}}-{{data.phoneNumber}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.appmtFor[0].email">
-                                                <i class="far fa-envelope"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].email}}</span>
+                                            <div class="e-mail" *ngIf="data.appmtFor[0].email">    
+                                                <i class="fa fa-envelope icon"></i>
+                                                <span class="sub-texts">{{data.appmtFor[0].email}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.appmtFor[0].gender">
+                                            <div class="gender" *ngIf="data.appmtFor[0].gender">    
                                                 <i *ngIf="data.appmtFor[0].gender == 'Male' || data.appmtFor[0].gender == 'male'"
-                                                    class="fas fa-mars"></i>
+                                                    class="fa fa-mars icon"></i>         
                                                 <i *ngIf="data.appmtFor[0].gender == 'Female' || data.appmtFor[0].gender == 'female'"
-                                                    class="fas fa-mars-stroke"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].gender |
-                                                    capitalizeFirst}}</span>
+                                                    class="fa fa-venus icon"></i>    
+                                                <span class="sub-texts">{{data.appmtFor[0].gender | capitalizeFirst}}</span>
                                             </div>
-                                            <div class="stats-item"
+                                            <div class="pref-language"
                                                 *ngIf="data.appmtFor[0].preferredLanguage && data.appmtFor[0].preferredLanguage.length >0">
-                                                <i class="fa lang-icon"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{data.appmtFor[0].preferredLanguage}}</span>
+                                                <i class="fa fa-language icon"></i>
+                                                <span class="sub-texts">{{data.appmtFor[0].preferredLanguage}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.appmtFor[0].bookingLocation">
-                                                <i class="fa locat-icon"></i>
-                                                <span class="mgn-lt-5 text-muted">{{data.appmtFor[0].localArea}},
-                                                    {{data.appmtFor[0].district}}</span>
+                                            <div class="location-place" *ngIf="data.appmtFor[0].bookingLocation">      
+                                                <i class="fa fa-map-marker icon"></i>
+                                                <span class="sub-texts">{{data.appmtFor[0].localArea}}, {{data.appmtFor[0].district}}</span>
                                             </div>
-                                            <div class="stats-item" *ngIf="data.appmtFor[0].age">
-                                                <i class="fa fa-user"></i>
-                                                <span
-                                                    class="mgn-lt-5 text-muted">{{getAge(data.appmtFor[0].age)}}</span>
+                                            <div class="user-age" *ngIf="data.appmtFor[0].age">         
+                                                <i class="fa fa-user icon"></i>
+                                                <span class="sub-texts">{{getAge(data.appmtFor[0].age)}}</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    <!-- </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-toolbar col-md-3 col-sm-3 col-xs-12 col-lg-3 p-0 disp-grid mgn-up-5">
                             <div class="action-buttons-container">
@@ -120,40 +108,43 @@
                         </div>
                     </div>
                 </div>
-                <div class="card p0 col-md-9 col-lg-9 col-sm-12 col-xs-12">
+                <div class="body-card card p0 col-md-9 col-lg-9 col-sm-12 col-xs-12">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding">
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" style="padding: 30px !important;">
                             <!-- First Page -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding " *ngIf="step === 1">
                                 <!-- Service Name -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign p0">
                                     <div>
-                                        <h2 class="serv-name-color fnt-lrge">
-                                            <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon "></i>
-                                            <i *ngIf="callingModes === 'GoogleMeet'"
+                                        <h2 class="service-name serv-name-color fnt-lrge disp-flex align-items-center justify-content-center">
+                                            <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon " 
+                                                style="width: 60px !important; margin-top: -5px !important; margin-right: -10px !important;"></i>
+                                            <i *ngIf="callingModes === 'GoogleMeet'" style="width: 40px !important;"
                                                 class="fa meet-icon video-wdth"></i>
-                                            <i class="fa jvideo-icon jvideo-icon-sm jvideo-icon-mgm5"
+                                            <i class="fa jvideo-icon jvideo-icon-sm jvideo-icon-mgm5" style="width: 45px !important;"
                                                 *ngIf="callingModes === 'VideoCall'"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'audioService'"
+                                                style="width: 75px !important; margin-top: -10px !important; margin-right: -12px !important;"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'videoService'"
-                                                class="fa wtsapvid-icon"></i>
-                                            <i *ngIf="callingModes === 'Phone'" class="fa phon-icon video-wdth"></i>
+                                                class="fa wtsapvid-icon" style="margin-top: -5px !important;"></i>
+                                            <i *ngIf="callingModes === 'Phone'" class="fa phon-icon video-wdth"
+                                                style="width: 45px !important; margin-top: -5px !important;"></i>
                                             &nbsp;{{serv_name}}
-                                        </h2><br>
-                                        <h6 class="txt-grn" *ngIf="servStarted">{{(servDetails?.virtualServiceType ==
-                                            'videoService')? 'Video' : 'Audio'}} consultation in progress...</h6>
+                                        </h2>
+                                        <h6 *ngIf="servStarted" class="service-status" >Status: {{(servDetails?.virtualServiceType ==
+                                            'videoService')? 'Video' : 'Audio'}} Consultation in-progress</h6>
                                     </div>
                                 </div>
                                 <!-- Warning If telemode is WhatsApp/Phone -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10"
-                                    *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10 px-0"
+                                    *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">          
                                     <div>
                                         <div class="custmer-font-wght">
-                                            <span class="text-red">*{{(callingModes == 'Phone')? 'Phone' :
+                                            <span class="custom-red">Note: {{(callingModes == 'Phone')? 'Phone' :
                                                 'WhatsApp'}}</span>
-                                            <span class="text-red"> {{notSupported}}</span><br>
-                                            <span><a (click)="meetingDetails()">
+                                            <span class="custom-red" style="text-transform: lowercase !important;"> {{notSupported}}</span><br>
+                                            <span class="call-inst"><a (click)="meetingDetails()">
                                                     Send {{(servDetails?.virtualServiceType == 'videoService')? 'video'
                                                     : 'audio'}} call {{ph_or_tab_cap}}
                                                     {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
@@ -161,8 +152,11 @@
                                                 </a></span>
                                         </div>
                                     </div>
-                                    <div class="mgn-up-10">
+                                    <div class="mgn-up-20 direct-call-inst"  *ngIf="callingModes === 'WhatsApp'" >
                                         You can call the {{customer_label}} directly at +{{data.virtualService['WhatsApp']}}
+                                    </div>
+                                    <div class="mgn-up-20 direct-call-inst"  *ngIf="callingModes === 'Phone'"> 
+                                        You can call the {{customer_label}} directly at +{{data.virtualService['Phone']}}   
                                     </div>
                                     <!-- <div class="mgn-up-10">
                                         <i class="fa fa-file-text-o fnt-file"
@@ -177,7 +171,7 @@
                                 </div>
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
-                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign">
                                         <!-- <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon"> -->
                                         <!-- <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                             <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
@@ -188,15 +182,15 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
                                             <button (click)="reminder()"
-                                                class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                                class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-rt-5">
                                                 <i *ngIf="!servStarted" class="fa fa-bell fa-blk"
                                                     aria-hidden="true"></i>
-                                                <i *ngIf="servStarted" class="fa chat-icon fa-blk"
+                                                <i *ngIf="servStarted" class="fa fa-comments-o fa-blk"
                                                     aria-hidden="true"></i>
                                                 <a class="tspace">Send {{servStarted ? 'Message' : 'Reminder'}}</a>
                                             </button>
                                             <button (click)="meetingDetails()"
-                                                class="btn-primary-n tele-btn txt-trans-none mgn-up-5">
+                                                class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-up-5">
                                                 <i class="fa fa-share-alt fa-blk" aria-hidden="true"></i>
                                                 <a class="tspace">Share {{(servDetails?.virtualServiceType ==
                                                     'videoService')? 'video' : 'audio'}} call instructions</a>
@@ -211,26 +205,26 @@
                                 </div>
                             </div>
                             <!-- End Meeting for whatsapp/phone if opened in web -->
-                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10 inprogress-end-buttons"
                                 *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
-                                <button *ngIf="is_web && waiting_type == 'checkin' && data.waitlistStatus != 'started'"
+                                <button style="height: 40px !important;" *ngIf="is_web && waiting_type == 'checkin' && data.waitlistStatus != 'started'"
                                     (click)="changeWaitlistStatus(data, 'STARTED')"
-                                    class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
-                                    <i class="start-icon" aria-hidden="true"></i>
+                                    class="inprogress-button btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                    <i class="start-icon" style="margin-bottom: 0 !important;" aria-hidden="true"></i>
                                     <a class="tspace">Move to In progress</a>
                                 </button>
-                                <button *ngIf="is_web && waiting_type != 'checkin' && data.apptStatus != 'Started'"
+                                <button style="height: 40px !important;" *ngIf="is_web && waiting_type != 'checkin' && data.apptStatus != 'Started'"
                                     (click)="changeWaitlistStatus(data, 'Started')"
-                                    class="btn-primary-n tele-btn txt-trans-none mgn-rt-5">
-                                    <i class="start-icon" aria-hidden="true"></i>
+                                    class="inprogress-button btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                    <i class="start-icon" style="margin-bottom: 0 !important;" aria-hidden="true"></i>
                                     <a class="tspace">Move to In progress</a>
                                 </button>
-                                <button type="button" (click)="endmeeting()"
-                                    class="cs-btn bt1 btn-red txt-trans-none">End
+                                <button style="margin-top: -12px !important;" type="button" (click)="endmeeting()"
+                                    class="end-button cs-btn bt1 btn-red txt-trans-none">End
                                     Meeting</button>
                             </div>
                             <!-- Start consultation for gmeet/zoom/wtsap/phone-->
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10"
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 start-button"
                                 *ngIf="(step === 1 && !servStarted)">
                                 <div
                                     [ngClass]="{'dv-launch-video-serv' : ((servDetails?.virtualServiceType === 'videoService') || (servDetails?.virtualServiceType === 'VideoCall')), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
@@ -240,12 +234,12 @@
                                             (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
-                                            <b>
+                                            <a>
                                                 Start
                                                 {{(servDetails?.virtualServiceType == 'videoService')? 'Video' :
                                                 'Audio'}}
                                                 Consultation
-                                            </b>
+                                            </a>
                                         </button>
 
                                     </div>
@@ -256,11 +250,11 @@
                                             (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'WhatsApp'" class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon"></i>
-                                            <b> &nbsp;Start
+                                            <a> &nbsp;Start
                                                 {{(servDetails?.virtualServiceType == 'videoService')? 'Video' :
                                                 'Audio'}}
                                                 Consultation
-                                            </b>
+                                            </a>
                                         </button>
                                     </div>
                                     <div *ngIf="callingModes === 'VideoCall'" class="strtvideo">
@@ -268,35 +262,35 @@
                                             (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'VideoCall'"
                                                 class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
-                                            <b> &nbsp;Start Video Consultation</b>
+                                            <a> &nbsp;Start Video Consultation</a>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10 relaunch-end-buttons">
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-20  no-padding"
                                         *ngIf="servStarted && ((callingModes === 'Zoom' || callingModes === 'GoogleMeet' || callingModes === 'VideoCall') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
                                         <button type="button" (click)="endmeeting()"
-                                            class="cs-btn bt1 btn-red txt-trans-none mgn-bt-10">Done with
+                                            class="end-button cs-btn bt1 btn-red txt-trans-none mgn-bt-10">Done with
                                             {{(servDetails?.virtualServiceType == 'videoService')? 'video' : 'audio'}}
                                             consultation</button> &nbsp;&nbsp;&nbsp;
                                         <a *ngIf="(callingModes !== 'Phone' && callingModes !== 'VideoCall')"
                                             target="_blank" [href]="starting_url">
-                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                            <button class="relaunch-button cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
                                                 {{callingModes}}
                                             </button>
                                         </a>
                                         <a *ngIf="(callingModes === 'VideoCall')" target="_self"
                                             (click)="relauchMeeting(starting_url)">
-                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                            <button class="relaunch-button cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
                                                 {{callingModes}}
                                             </button>
                                         </a>
                                         <a *ngIf="(callingModes === 'Phone')" target="_blank"
                                             [href]="'tel:' + starting_url">
-                                            <button class="cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
+                                            <button class="relaunch-button cs-btn bt1 btn-blue mgn-bt-10 txt-trans-none">Relaunch
                                                 {{callingModes}}
                                             </button>
                                         </a>

@@ -115,6 +115,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     showtoken = false;
     tokenOrcheckinCount;
     tokencount;
+    accountType;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -141,6 +142,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getUser();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.api_loading = true;
         if (this.groupService.getitemFromGroupStorage('loc_id')) {
@@ -1059,3 +1061,4 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             );
     }
 }
+

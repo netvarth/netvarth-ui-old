@@ -60,6 +60,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   branchName = '';
   location;
   locName;
+  active_user;
+  account_type;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -70,6 +72,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
+    private routerobj: Router,
     private titleService: Title,
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
@@ -112,6 +115,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       // this.connect();
     });
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.userData);
+    this.account_type = this.userData.accountType;
     if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
       this.getUserDetails();
     }
@@ -199,7 +204,15 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.gotoActiveHome();
   }
   gotoProfile() {
-    this.router.navigate(['provider', 'settings', 'bprofile']);
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    const userid = loggedUser.id
+    if(this.account_type == 'BRANCH' && this.userData.userType == 1){
+      this.routerobj.navigate(['provider', 'settings', 'general', 'users', userid, 'settings']);
+    }else{
+      this.router.navigate(['provider', 'settings', 'bprofile']);
+    }
+  
+
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
@@ -224,6 +237,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         });
   }
   ngOnInit() {
+   
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       this.sessionStorage = true;
     }

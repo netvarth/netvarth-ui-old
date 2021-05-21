@@ -2074,9 +2074,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    // if (this.filter.waitlist_status === 'all') {
-    //   api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    // }
+    if (this.filter.waitlist_status === 'all') {
+      api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
@@ -3328,7 +3328,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
-      const msg = 'Make myself unavailable from today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime;
+      const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime;
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

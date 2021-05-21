@@ -213,6 +213,7 @@ export class UserServiceChnageComponent implements OnInit {
   user;
   selectedLanguages: any = [];
   selectedSpecialization: any = [];
+  filterApplied_count: any;
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -252,6 +253,7 @@ export class UserServiceChnageComponent implements OnInit {
     apiFilter['status-eq'] = 'ACTIVE';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.service_dataSource.data = this.setServiceDataSource(data);
+      this.filterApplied_count = this.service_dataSource.data.length;
     });
     setTimeout(() => {
       this.loading = false;
@@ -297,7 +299,9 @@ export class UserServiceChnageComponent implements OnInit {
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
-          'state': serviceObj.state
+          'state': serviceObj.state,
+          'currentWlCount':serviceObj.currentWlCount
+          
         });
     });
     return service_list;
@@ -529,3 +533,4 @@ export class UserServiceChnageComponent implements OnInit {
     this.doSearch();
   }
 }
+

@@ -116,14 +116,16 @@ export class instantQueueComponent implements OnInit {
                 this.createForm(server_date);
                // this.showInstantQFlag = true;
                 // this.selectAllService();
-                if (this.queue_list) {
-                   this.updateForm(this.queue_list);
-                }
+                // if (this.queue_list) {
+                //    this.updateForm(this.queue_list);
+                // }
             });
 }
 
 createForm(server_date) {
     console.log('kio2');
+    this.qId = this.queue_list.id;
+    console.log(this.qId)
     const todaydt = new Date(server_date);
     // tslint:disable-next-line:radix
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
@@ -143,29 +145,19 @@ createForm(server_date) {
     // }
     this.fromDateCaption = 'Now';
     this.toDateCaption = '11:59 PM';
-    if (this.fromDateCaption === 'Now') {
         this.instantQForm = this.fb.group({
             // tslint:disable-next-line:radix
             dstart_time: [{ hour: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH')), minute: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm')) }, Validators.compose([Validators.required])],
             // tslint:disable-next-line:radix
-            dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
-            qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-            qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
+            dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])]
+            // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+            // qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
         });
-    } else {
-        this.instantQForm = this.fb.group({
-            // tslint:disable-next-line:radix
-            dstart_time: [{ hour: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
-            // tslint:disable-next-line:radix
-            dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
-            qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-            qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
-        });
-    }
 }
 
 updateForm(q) {
     this.qId = q.id;
+    console.log(this.qId)
     this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
     this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
     const sttime = {
@@ -180,11 +172,12 @@ updateForm(q) {
         minute: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
             ['h:mm A']).format('mm'), 10)
     };
+    console.log(edtime)
     this.instantQForm.setValue({
         dstart_time: sttime || null,
         dend_time: edtime || null,
-        qcapacity: q.capacity || null,
-        qserveonce: q.parallelServing || null
+        // qcapacity: q.capacity || null,
+        // qserveonce: q.parallelServing || null
     });
     for (let j = 0; j < q.services.length; j++) {
         for (let k = 0; k < this.services_list.length; k++) {
@@ -233,6 +226,7 @@ editEndTime() {
         hour: curtime['hour'],
         minute: curtime['minutes']
     };
+    console.log(sttime)
     this.instantQForm.patchValue({
         dend_time: sttime || null,
     });
@@ -380,38 +374,35 @@ onSubmit(instantQ) {
     instantQInput['name'] = (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
     instantQInput['onlineCheckin'] = true;
     instantQInput['futureWaitlist'] = false;
-    instantQInput['parallelServing'] = instantQ.qserveonce;
-    instantQInput['capacity'] = instantQ.qcapacity;
+    instantQInput['parallelServing'] = 1;
+    instantQInput['capacity'] = 50;
     instantQInput['queueState'] = 'ENABLED';
+    instantQInput['availabilityQueue'] = true;
     instantQInput['instantQueue'] = true;
     instantQInput['provider'] = {'id': this.userId }
-    if (!this.sharedfunctionObj.checkIsInteger(instantQ.qcapacity)) {
-        this.api_error = 'Please enter an integer value for Maximum ' + this.consumer_label + 's served';
-       // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    } else if (!this.sharedfunctionObj.checkIsInteger(instantQ.qserveonce)) {
-        this.api_error = 'Please enter an integer value for ' + this.consumer_label + 's served at a time';
-      //  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    } else if (JSON.parse(instantQ.qserveonce) === 0) {
-        this.api_error = this.consumer_label + 's' + ' ' + 'served  at a time should greter than Zero';
-       // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        return;
-    } else if ((JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
-        this.api_error = this.consumer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.consumer_label + 's served.';
-       // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        return;
-    }else {
-         if (this.action === 'edit') {
-             this.updateInstantQ(instantQInput);
-         } else {
+    // if (!this.sharedfunctionObj.checkIsInteger(instantQ.qcapacity)) {
+    //     this.api_error = 'Please enter an integer value for Maximum ' + this.consumer_label + 's served';
+    // } else if (!this.sharedfunctionObj.checkIsInteger(instantQ.qserveonce)) {
+    //     this.api_error = 'Please enter an integer value for ' + this.consumer_label + 's served at a time';
+    // } else if (JSON.parse(instantQ.qserveonce) === 0) {
+    //     this.api_error = this.consumer_label + 's' + ' ' + 'served  at a time should greter than Zero';
+    //     return;
+    // } else if ((JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+    //     this.api_error = this.consumer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.consumer_label + 's served.';
+    //     return;
+    // }else {
+        //  if (this.action === 'edit') {
+        //      this.updateInstantQ(instantQInput);
+        //  } else {
             this.createInstantQ(instantQInput);
-       }
-    }
+    //    }
+    // }
 }
 createInstantQ(post_data) {
-    this.provider_services.addInstantQ(post_data)
+    this.provider_services.addMyAvailbility(post_data)
         .subscribe(
             () => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MADE_YOURSELF_AVAIL_NOW'), { 'panelClass': 'snackbarnormal' });
                 this.dialogRef.close('reloadlist');
                 // this.showInstantQFlag = false;
                 // this.initializeQs();
@@ -427,7 +418,7 @@ updateInstantQ(post_data) {
         this.provider_services.editProviderQueue(post_data)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MADE_YOURSELF_AVAIL_NOW'), { 'panelClass': 'snackbarnormal' });
                     this.dialogRef.close('reloadlist');
                     //this.showInstantQFlag = false;
                     //this.initializeQs();

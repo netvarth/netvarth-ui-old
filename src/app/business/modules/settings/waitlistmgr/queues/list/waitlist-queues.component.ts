@@ -111,6 +111,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    accountType;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -130,6 +131,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.api_loading = true;
         if (this.groupService.getitemFromGroupStorage('loc_id')) {

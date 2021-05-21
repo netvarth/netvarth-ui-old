@@ -2098,4 +2098,7 @@ editHoliday(data) {
     const url = 'provider/waitlist/queues/instant/terminate/' + id;
     return this.servicemeta.httpPut(url);
   }
+  addMyAvailbility(data) {
+    return this.servicemeta.httpPut('provider/waitlist/queues/available', data);
+  }
 }

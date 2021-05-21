@@ -13846,6 +13846,9 @@ width: 40px !important;
 #hubspot-messages-iframe-container {
   visibility: hidden;
 }
+#fb-root {
+  visibility: hidden;
+}
 .visible_chat {
   visibility: visible !important;
 }

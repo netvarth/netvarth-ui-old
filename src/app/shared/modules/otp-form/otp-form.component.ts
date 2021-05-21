@@ -46,6 +46,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() submitdata;
   @Input() country_code;
   @Input() consumerlogin;
+  @Input() theme;
   @Input() type;
   @Input() resendemailotpsuccess;
   @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();

@@ -1,5 +1,5 @@
 
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">Set your availability
+<h1 class="mat-dialog-title">Set your availability
     
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -14,46 +14,65 @@
                 </div>
         </div>
   </mat-dialog-container> -->
-  <mat-dialog-content  style="padding-top: 0px;display: grid;">
-    <div class="row m0" >
+  <mat-dialog-content>
+    <div class="row m0 instantQueue-component-modal-content">
         <div class="col-md-12 p0">
-                <div class="mgn-up-30">
-                        This enables you to instatly make yourself available today for consultation within the time range you choose.
+                <div class="text-message">
+                        This enables you to instantly make yourself available today for consultation within the time range you choose.
                 </div>
                 <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                 onSubmit(instantQForm.value)" >
-                        <div class="instant-ed">
-                                <span [class.label-margin]="true"><strong>Make me available</strong>&nbsp;from</span>
-                                <span class="learnmore-pointer"
-                                        (click)="editStartTime()"
-                                        [class.label-margin]="true"
-                                        *ngIf="!sTimeEditable">{{fromDateCaption}}</span>
-                                <div class="form-group" *ngIf="sTimeEditable">
-                                        <div class="startendtime">
-                                                <div class="starttimediv">
-                                                        <ngb-timepicker
-                                                                formControlName="dstart_time"
-                                                                meridian="true">
-                                                        </ngb-timepicker>
+                        <div class="timings">
+                                <div class="head">Make me available</div>
+                                <div class="form-timepicker-fields">
+                                        <div class="start">
+                                                <label class="start-time-label" for="start-time-label">
+                                                        From
+                                                        <span style="color: red !important; font-weight: 700 !important;">*</span>
+                                                </label>
+                                                <span class="editable-text"
+                                                        (click)="editStartTime()"
+                                                        *ngIf="!sTimeEditable">
+                                                        {{fromDateCaption}}
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                </span>
+                                                <div class="form-group" *ngIf="sTimeEditable">
+                                                        <div class="startendtime">
+                                                                <div class="starttimediv">
+                                                                        <ngb-timepicker
+                                                                                formControlName="dstart_time"
+                                                                                meridian="true">
+                                                                        </ngb-timepicker>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="end">
+                                                <label class="end-time-label" for="end-time-label">
+                                                        Through
+                                                        <span style="color: red !important; font-weight: 700 !important;">*</span>
+                                                </label>
+                                                <span class="editable-text"
+                                                        (click)="editEndTime()"
+                                                        *ngIf="!eTimeEditable">
+                                                        {{toDateCaption}}
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                </span>
+                                                <div class="form-group" *ngIf="eTimeEditable">
+                                                        <div class="startendtime">
+                                                                <div class="endtimediv">
+                                                                        <ngb-timepicker formControlName="dend_time"
+                                                                                meridian="true">
+                                                                        </ngb-timepicker>
+                                                                </div>
+                                                        </div>
                                                 </div>
                                         </div>
                                 </div>
+                                <!-- <span [class.label-margin]="true"><strong>Make me available</strong>&nbsp;from</span>
                                 <span
-                                        [class.label-margin]="true">&nbsp;through&nbsp;</span>
-                                <span class="learnmore-pointer"
-                                        (click)="editEndTime()"
-                                        [class.label-margin]="true"
-                                        *ngIf="!eTimeEditable">{{toDateCaption}}</span>
-                                <div class="form-group" *ngIf="eTimeEditable">
-                                        <div class="startendtime">
-                                                <div class="endtimediv">
-                                                        <ngb-timepicker
-                                                                formControlName="dend_time"
-                                                                meridian="true">
-                                                        </ngb-timepicker>
-                                                </div>
-                                        </div>
-                                </div>
+                                [class.label-margin]="true">&nbsp;through&nbsp;</span>
+                                 -->
                         </div>
                         <!-- <div class="lgmem"
                                 style="margin-bottom: 10px; margin-top: 15px; display: flex;">
@@ -109,30 +128,28 @@
                                         </div>
                                 </section>
                         </div> -->
-                        <div class="c-ot row col-sm-12 mgn-up-10">
-                                <div class="item">
-                                        <span class="ttle">Maximum
-                                                {{consumer_label}}s
-                                                served</span>
+                        <!-- <div class="form-text-fields">
+                                <div class="item mgn-up-10">
+                                        <label class="ttle">Maximum {{consumer_label}}s served
+                                                <i class="icon-customer-line"></i>
+                                                <span style="color: red !important">&nbsp;*</span>
+                                        </label>
                                         <span *ngIf="!capacityEditable"
-                                                class="icon-customer-line pointer-cursor"
-                                                (click)="capacityClick()">
-                                               &nbsp; <span
-                                                        style="color: #00aef2">10</span>
+                                                class="editable-text pointer-cursor"
+                                                (click)="capacityClick()">         
+                                                10<i class="fa fa-pencil-square-o"></i>
                                         </span>
-                                        <div class="form-group num qerrmsg"
+                                        <div class="form-group"
                                                 *ngIf="capacityEditable">
-                                                <mat-form-field>
-                                                        <input matInput min="0"
-                                                                max="{{capacitylimit}}"
-                                                                maxlength="4"
-                                                                type="text"
-                                                                class="form-control number-ip-sm"
-                                                                formControlName="qcapacity"
-                                                                autocomplete="off"
-                                                                (keypress)="isNumeric($event)"
-                                                                (keyup)="isvalid($event)">
-                                                </mat-form-field>
+                                                <input min="0"
+                                                        max="{{capacitylimit}}"
+                                                        maxlength="4"
+                                                        type="text"
+                                                        class="form-control custom-fc number-ip-sm"
+                                                        formControlName="qcapacity"
+                                                        autocomplete="off"
+                                                        (keypress)="isNumeric($event)"
+                                                        (keyup)="isvalid($event)">
                                                 <app-field-error-display
                                                         [displayError]="fed_service.isFieldValid(instantQForm,'qcapacity')"
                                                         [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qcapacity',
@@ -140,28 +157,26 @@
                                                 </app-field-error-display>
                                         </div>
                                 </div>
-                                <div class="item mgn-up-10 mgn-bt-10">
-                                        <span class="ttle">{{consumer_label | capitalizeFirst}}s
-                                                served at a time</span>
+                                <div class="item mgn-up-10">
+                                        <label class="ttle">{{consumer_label | capitalizeFirst}}s served at a time
+                                                <i class="icon-customer-served "></i>
+                                                <span style="color: red !important">&nbsp;*</span>
+                                        </label>
                                         <span *ngIf="!parallelServeEditable"
-                                                class="icon-customer-served pointer-cursor"
+                                                class="editable-text pointer-cursor"
                                                 (click)="servedClick()">
-                                                &nbsp;<span
-                                                        style="color: #00aef2">1</span>
+                                                1<i class="fa fa-pencil-square-o"></i>
                                         </span>
-                                        <div class="form-group num qerrmsg"
+                                        <div class="form-group"
                                                 *ngIf="parallelServeEditable">
-                                                <mat-form-field
-                                                        class="example-full-width">
-                                                        <input matInput min="0"
-                                                                max="{{parallellimit}}"
-                                                                type="text"
-                                                                class="number-ip-sm"
-                                                                formControlName="qserveonce"
-                                                                autocomplete="off"
-                                                                (keypress)="isNumeric($event)"
-                                                                (keyup)="isvalid($event)">
-                                                </mat-form-field>
+                                                <input min="0"
+                                                        max="{{parallellimit}}"
+                                                        type="text"
+                                                        class="form-control custom-fc number-ip-sm"
+                                                        formControlName="qserveonce"
+                                                        autocomplete="off"
+                                                        (keypress)="isNumeric($event)"
+                                                        (keyup)="isvalid($event)">
                                                 <app-field-error-display
                                                         [displayError]="fed_service.isFieldValid(instantQForm,'qserveonce')"
                                                         [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qserveonce',
@@ -172,12 +187,11 @@
                                                 </app-field-error-display>
                                         </div>
                                 </div>
-                        </div>
+                        </div> -->
                         <div class="clearfix"></div>
-                        <div class="actiondiv mgn-up-10" style="display: flex">
-                                <button type="button" class="cs-btn bt3"
-                                        style="margin-right:10px" (click)="close()">CANCEL</button>
-                                <button class="cs-btn bt3">CONFIRM</button>
+                        <div class="actiondiv mgn-up-10" style="display: flex; margin-bottom: 0 !important;">
+                                <button type="button" class="btn cancel-button" (click)="close()">Cancel</button>
+                                <button class="btn confirm-button">Confirm</button>
                         </div>
                 </form>
         </div>
