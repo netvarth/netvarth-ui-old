@@ -248,3 +248,6 @@ color: #aaa !important;
 .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .address h6 a {
 color: #fff !important;
 }
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
+  background-color: transparent !important;
+}

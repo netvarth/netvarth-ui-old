@@ -432,15 +432,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                         _this.profileSettings = _this.accountProperties['normalDevices'];
                       }                      
                       _this.theme=_this.accountProperties['theme'];  
-                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                      // if (!appPopupDisplayed && this.provider_id !== 128007) {
+                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                     
                       if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
                         _this.popUp.nativeElement.style.display = 'block';
                       }                  
                       _this.gets3curl();
                   }, (error: any) => {
-                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                    // if (!appPopupDisplayed && this.provider_id !== 128007) {
+                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                    
                     if (!appPopupDisplayed) {
                       _this.popUp.nativeElement.style.display = 'block';
                     }
