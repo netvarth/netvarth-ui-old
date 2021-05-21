@@ -256,10 +256,11 @@ textarea {
 
 .body-card .service-status {
     color: #0ba50b !important;
-    margin-top: 30px !important;
+    margin-top: 10px !important;
     margin-bottom: 10px !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
+    margin-left: 20px;
 }
 
 .body-card .custom-red {
@@ -270,12 +271,13 @@ textarea {
 .body-card .call-inst {
     color: #1E4079 !important;
     font-weight: 700 !important;
+    font-size: 1rem;
 }
 
-.body-card .call-inst:hover {
+/* .body-card .call-inst:hover {
     text-decoration: underline !important;
     text-underline-position: under !important;
-}
+} */
 
 .body-card .direct-call-inst {
     color: #888888 !important;
@@ -311,12 +313,14 @@ textarea {
 .body-card .start-button button {
     border-radius: 5px !important;
     background-color: white !important;
-    border: 1px solid #1ea91e !important;
+    border: 2px solid #1ea91e !important;
     color: #1ea91e !important;
     display: inline-flex !important;
     justify-content: center !important;
     align-items: center !important;
     font-weight: 700 !important;
+    padding: 30px;
+    font-size: 1.2rem;
 }
 
 .body-card .start-button button:hover {
@@ -451,4 +455,7 @@ textarea {
     align-items: center !important;
     font-weight: 500 !important;
     margin-right: 10px !important;
+}
+.text-left {
+    text-align: left !important;
 }
