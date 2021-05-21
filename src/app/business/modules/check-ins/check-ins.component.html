@@ -486,9 +486,11 @@
                             {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                            <span *ngIf="checkin.waitlistingFor[0].age">Age: {{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                             </div>
@@ -755,9 +757,11 @@
                             {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                             <div class="location">
                               <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                              <span *ngIf="checkin.waitlistingFor[0].age">Age: {{getAge(checkin.waitlistingFor[0].age)}}</span>
+                              <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                              <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                               <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                               <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                              <span *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                               <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                               <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                               </div>
@@ -1163,9 +1167,11 @@
                        
                         <div class="location">
                           <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                          <span *ngIf="checkin.waitlistingFor[0].age">Age: {{getAge(checkin.waitlistingFor[0].age)}}</span>
+                          <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                          <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                           <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                           <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                          <span *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                           <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                           <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                           </div>
@@ -1632,9 +1638,11 @@
                           {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                            <span *ngIf="checkin.waitlistingFor[0].age">Age: {{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                             </div>
