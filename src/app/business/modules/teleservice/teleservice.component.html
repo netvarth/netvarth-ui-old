@@ -35,12 +35,18 @@
                                                 <i class="fa fa-envelope icon"></i>
                                                 <span class="sub-texts">{{data.waitlistingFor[0].email}}</span>
                                             </div>
-                                            <div class="gender" *ngIf="data.waitlistingFor[0].gender">     
-                                                <i *ngIf="data.waitlistingFor[0].gender == 'Male' || data.waitlistingFor[0].gender == 'male'"
-                                                    class="fa fa-mars icon"></i>      
-                                                <i *ngIf="data.waitlistingFor[0].gender == 'Female' || data.waitlistingFor[0].gender == 'female'"
-                                                    class="fa fa-venus icon"></i>             
-                                                <span class="sub-texts">{{data.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                                            <div class="age-gender disp-flex">
+                                                <div class="gender" *ngIf="data.waitlistingFor[0].gender" style="margin-right: 40px !important;">     
+                                                    <i *ngIf="data.waitlistingFor[0].gender == 'Male' || data.waitlistingFor[0].gender == 'male'"
+                                                        class="fa fa-mars icon"></i>      
+                                                    <i *ngIf="data.waitlistingFor[0].gender == 'Female' || data.waitlistingFor[0].gender == 'female'"
+                                                        class="fa fa-venus icon"></i>             
+                                                    <span class="sub-texts">{{data.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                                                </div>
+                                                <div class="user-age" *ngIf="data.waitlistingFor[0].age">    
+                                                    <i class="fa fa-user icon"></i>
+                                                    <span class="sub-texts">{{getAge(data.waitlistingFor[0].age)}}</span>
+                                                </div>
                                             </div>
                                             <div class="pref-language"
                                                 *ngIf="data.waitlistingFor[0].preferredLanguage && data.waitlistingFor[0].preferredLanguage.length > 0">
@@ -50,10 +56,6 @@
                                             <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation">      
                                                 <i class="fa fa-map-marker icon"></i>
                                                 <span class="sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}}, {{data.waitlistingFor[0].bookingLocation.district}}</span>
-                                            </div>
-                                            <div class="user-age" *ngIf="data.waitlistingFor[0].age">    
-                                                <i class="fa fa-user icon"></i>
-                                                <span class="sub-texts">{{getAge(data.waitlistingFor[0].age)}}</span>
                                             </div>
                                         </div>
                                         <div class="stats-item head-card"
@@ -74,12 +76,18 @@
                                                 <i class="fa fa-envelope icon"></i>
                                                 <span class="sub-texts">{{data.appmtFor[0].email}}</span>
                                             </div>
-                                            <div class="gender" *ngIf="data.appmtFor[0].gender">    
-                                                <i *ngIf="data.appmtFor[0].gender == 'Male' || data.appmtFor[0].gender == 'male'"
-                                                    class="fa fa-mars icon"></i>         
-                                                <i *ngIf="data.appmtFor[0].gender == 'Female' || data.appmtFor[0].gender == 'female'"
-                                                    class="fa fa-venus icon"></i>    
-                                                <span class="sub-texts">{{data.appmtFor[0].gender | capitalizeFirst}}</span>
+                                            <div class="age-gender disp-flex">
+                                                <div class="gender" *ngIf="data.appmtFor[0].gender" style="margin-right: 40px !important;">    
+                                                    <i *ngIf="data.appmtFor[0].gender == 'Male' || data.appmtFor[0].gender == 'male'"
+                                                        class="fa fa-mars icon"></i>         
+                                                    <i *ngIf="data.appmtFor[0].gender == 'Female' || data.appmtFor[0].gender == 'female'"
+                                                        class="fa fa-venus icon"></i>    
+                                                    <span class="sub-texts">{{data.appmtFor[0].gender | capitalizeFirst}}</span>
+                                                </div>
+                                                <div class="user-age" *ngIf="data.appmtFor[0].age">         
+                                                    <i class="fa fa-user icon"></i>
+                                                    <span class="sub-texts">{{getAge(data.appmtFor[0].age)}}</span>
+                                                </div>
                                             </div>
                                             <div class="pref-language"
                                                 *ngIf="data.appmtFor[0].preferredLanguage && data.appmtFor[0].preferredLanguage.length >0">
@@ -90,10 +98,7 @@
                                                 <i class="fa fa-map-marker icon"></i>
                                                 <span class="sub-texts">{{data.appmtFor[0].localArea}}, {{data.appmtFor[0].district}}</span>
                                             </div>
-                                            <div class="user-age" *ngIf="data.appmtFor[0].age">         
-                                                <i class="fa fa-user icon"></i>
-                                                <span class="sub-texts">{{getAge(data.appmtFor[0].age)}}</span>
-                                            </div>
+                                            
                                         </div>
                                     <!-- </div>
                                 </div>
