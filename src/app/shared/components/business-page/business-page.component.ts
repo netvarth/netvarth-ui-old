@@ -437,7 +437,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // )
       });
   }
-
   /**
    * 
    * @param encId encId/customId which represents the Account
