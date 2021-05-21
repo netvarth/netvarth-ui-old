@@ -148,9 +148,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr class="row_data border-bottom pointer-cursor"
+                                                    <tr class="row_data border-bottom pointer-cursor waitlist-box"
                                                         *ngFor="let service of users_list | orderBy: order; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
-                                                        <td class="waitlist-box">
+                                                        <td class="">
                                                             <div class="disp-flex">
                                                                 <div class="user-img img-min-width">
                                                                     <img [src]="getUserImg(service)">
