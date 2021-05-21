@@ -81,18 +81,15 @@ export class VirtualFieldsComponent implements OnInit {
       if(dialogData.theme){
         this.theme=dialogData.theme;
       }
-      console.log(this.theme);
-      this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      this.getActiveUserInfo().then(data => {
-        this.customer_data = data;
-        this.createForm();
-        this.getFamilyMembers();
-      });
-
-
-
-
+     
     }
+    this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.getActiveUserInfo().then(data => {
+      this.customer_data = data;
+      this.createForm();
+      this.getFamilyMembers();
+    });
+
 
 
 
@@ -405,7 +402,8 @@ export class VirtualFieldsComponent implements OnInit {
         if (formdata.serviceFor === 'new_member') {
           this.saveMember(formdata).then(data => {
             if (data !== false) {
-              this.dialogRef.close({ newMemberId: data });
+              formdata['newMemberId']=data;
+              this.dialogRef.close(formdata);
             }
           },
             () => {
