@@ -219,7 +219,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (bdetails) {
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
+      if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
         this.branchName = bdetails.bn || 'User';
         this.bname = this.userData.userName || 'User';
         this.blogo = (this.userDetails.profilePicture) ? this.userDetails.profilePicture.url : '../../../assets/images/img-null.svg';
