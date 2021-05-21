@@ -495,3 +495,4 @@ export class BranchUsersComponent implements OnInit {
         event.stopPropagation();
       }
 }
+
