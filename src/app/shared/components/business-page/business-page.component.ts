@@ -427,7 +427,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.gets3curl();
                   }
                 )
-                
               },()=>{
                 this.gets3curl();
               }
