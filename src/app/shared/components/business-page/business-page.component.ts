@@ -411,6 +411,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: string) => {
                 this.provider_id = id;
+                const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
+                // if (!appPopupDisplayed && this.provider_id !== 128007) {
+                if (!appPopupDisplayed && this.provider_id !== 152877) {
+                  this.popUp.nativeElement.style.display = 'block';
+                } else {
+                  this.popUp.nativeElement.style.display = 'none';
+                }
                 this.domainConfigService.getUIAccountConfig().subscribe(
                   (uiconfig: any)=> {
                     if (uiconfig && uiconfig[this.provider_id]) {
@@ -455,12 +462,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-    if (!appPopupDisplayed && this.provider_id !== 128007) {
-      this.popUp.nativeElement.style.display = 'block';
-    } else {
-      this.popUp.nativeElement.style.display = 'none';
-    }
+    // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
+    // if (!appPopupDisplayed && this.provider_id !== 152877) {
+    //   this.popUp.nativeElement.style.display = 'block';
+    // } else {
+    //   this.popUp.nativeElement.style.display = 'none';
+    // }
   }
   closeModal() {
     this.lStorageService.setitemonLocalStorage('a_dsp', true);
