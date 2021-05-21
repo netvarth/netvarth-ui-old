@@ -245,6 +245,8 @@
                             </ng-container>
                           </a>
                         </li>
+                        <li *ngIf="account_type == 'BRANCH'"><a class="pointer-cursor" style="color: dimgray !important;" (click)="gotoUnassign()">
+                          New requests</a></li>
                       </ul>
                     </li>
                     <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
@@ -257,7 +259,7 @@
           </nav>
         </header>
         <div class="head mgn-up-5 mgn-bt-5"
-          *ngIf="(activeQs && activeQs.length > 0 && !activeUser) && time_type !==3 && !qloading" id="qHeader">
+          *ngIf="(activeQs && activeQs.length > 0 && !activeUser) && time_type !==3 && !qloading && !unassignview" id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
