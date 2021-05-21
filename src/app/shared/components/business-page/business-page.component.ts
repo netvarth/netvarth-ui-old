@@ -1775,7 +1775,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '40%',
-        panelClass: ['loginmainclass', 'popup-class'],
+        panelClass: ['loginmainclass', 'popup-class', this.theme],
         disableClose: true,
         //data: consumerdata
         data: {consumer:consumerdata,theme:this.theme}
@@ -1870,7 +1870,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
+      panelClass: ['loginmainclass', 'popup-class', this.theme],
       disableClose: true,
       data: {
         type: origin,
@@ -2082,7 +2082,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
       disableClose: true,
       data: servData
     });

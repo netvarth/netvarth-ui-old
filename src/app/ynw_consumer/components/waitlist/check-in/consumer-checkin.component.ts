@@ -826,7 +826,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualModal() {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
-            panelClass: ['loginmainclass', 'popup-class'],
+            panelClass: ['loginmainclass', 'popup-class', this.theme],
             disableClose: true,
             data: { 'id': this.virtualInfo.serviceFor,theme:this.theme }
 
