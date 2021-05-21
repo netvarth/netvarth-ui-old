@@ -455,7 +455,7 @@
                   </tbody>
                   <tbody
                     *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
-                    <tr class="pointer-cursor" *ngFor="let checkin of startedCheckins, let i=index"
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of startedCheckins, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
@@ -507,9 +507,12 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                          Not Assigned
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -650,7 +653,7 @@
                   </tbody>
                   <tbody
                     *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
-                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of startedCheckins, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="pull-left" [checked]="startedChkAppointments[i]"
@@ -717,7 +720,7 @@
                   </tbody>
                   <tbody
                     *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
-                    <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="showSelectAll()">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
@@ -775,9 +778,12 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                          Not Assigned
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -937,7 +943,7 @@
                   </tbody>
                   <tbody
                     *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
-                    <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of check_in_filtered_list, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
                         <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
@@ -1122,7 +1128,7 @@
                 </tbody>
                 <tbody
                   *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
-                  <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
@@ -1180,9 +1186,12 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                        Not Assigned
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1330,7 +1339,7 @@
                 </tbody>
                 <tbody
                   *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
-                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                  <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
@@ -1592,7 +1601,7 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0 && !small_device_display">
-                  <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
@@ -1646,9 +1655,12 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                        Not Assigned
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1793,7 +1805,7 @@
                 </tbody>
                 <tbody
                   *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display">
-                  <div class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                  <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"

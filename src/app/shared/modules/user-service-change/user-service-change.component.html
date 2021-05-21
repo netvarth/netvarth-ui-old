@@ -15,9 +15,12 @@
 </section>
 <section class="">
   <div class="card title-gb"> 
-      <h6 class="mgn-up-10 disp-flex">
-          <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Result Found
+      <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count > 1">
+          <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Doctors Found
       </h6>
+      <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count == 1">
+        <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Doctor Found
+    </h6>
   </div>
 </section>
 <aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
