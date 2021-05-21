@@ -179,7 +179,7 @@
                                                                         <div class=" mgn-up-5"
                                                                         *ngIf="service.userType">
                                                                         <span class="b1">
-                                                                            User Type : </span>&nbsp;
+                                                                            </span>&nbsp;
                                                                             <span class="b2" *ngIf="service.userType === 'PROVIDER' ">{{provider_label |
                                                                                 capitalizeFirst}}</span>
                                                                             <span class="b2" *ngIf="service.userType === 'ASSISTANT'">{{assistant_label |
@@ -189,25 +189,25 @@
                                                                        </div>
                                                                         <div class="mgn-up-5" *ngIf="service.mobileNo">
                                                                             <span class="b1">
-                                                                                Phone number : </span><span class="b2">
+                                                                                </span><span class="b2">
                                                                                 +91 {{service.mobileNo}} </span>
                                                                         </div>
                                                                         <div class="mgn-up-5"
                                                                             *ngIf="service.specialization"> <span
                                                                                 class="b1">
-                                                                                Specializations : </span> <span
+                                                                                </span> <span
                                                                                 class="b2">
                                                                                 {{getSpecialization(service.specialization)}}
                                                                             </span></div>
                                                                         <div class="mgn-up-5"
                                                                             *ngIf="service.preferredLanguages">
                                                                             <span class="b1">
-                                                                                Languages : </span><span class="b2">
+                                                                               </span><span class="b2">
                                                                                 {{getLanguages(service.preferredLanguages)}}
                                                                             </span>
                                                                         </div>
                                                                         <div class="mgn-up-5"> <span class="b1" *ngIf="service.userType === 'PROVIDER' ">
-                                                                                Availability : </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'" *ngIf="service.userType === 'PROVIDER' ">
+                                                                                </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'" *ngIf="service.userType === 'PROVIDER' ">
                                                                                 {{(service.isAvailable) ? 'Available' :
                                                                                 'Not
                                                                                 Available'}} </span></div>
