@@ -148,3 +148,12 @@
     background-color: #ce4430 !important;
     border-color: #ce4430 !important;
 }
+.btn-play .wtsapvid-icon {
+    width: 15px !important;
+}
+.btn-play .zoom-icon {
+    width: 20px !important;
+}
+.q-actions {
+    display: flex !important;
+}
