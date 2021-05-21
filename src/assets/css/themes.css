@@ -223,3 +223,28 @@ color:#fff !important;
 .heartfulness_theme1.c-checkin-new .hf-panel-body {
   background-color: white !important;
 }
+
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
+.heartfulness_theme1 .question-value1, .question-valuearr,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 .more,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-valuearr .virtual-field-ul .vfield-row,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content.showmoresec .question-main-outer .question-value1 .badges li
+.heartfulness_theme1 ul.details.badges li
+{
+color: #fff !important;
+}
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .more-less-button a
+{
+color: #aaa !important;
+
+}
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .address h6 a {
+color: #fff !important;
+}

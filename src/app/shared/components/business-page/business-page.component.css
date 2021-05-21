@@ -375,7 +375,7 @@ ul.bus-actions-horiz li {
 ul.details.badges li {
   margin-right: 5px !important;
   font-size: 1rem !important;
-  color: black !important;
+  color: black;
 }
 
 .location-accord ul.badges {
@@ -1409,7 +1409,7 @@ img.ordericon.home {
 
 .content.bus-page .bus-page-header .bus-title-content .business-name,
 .content.bus-page .bus-page-header .bus-title-content .business-user-name {
-  color: darkslategrey !important;
+  color: darkslategrey;
   margin-bottom: 10px !important;
   margin-top: 0 !important;
 }
@@ -1547,7 +1547,7 @@ img.ordericon.home {
   font-weight: 700 !important;
   /* font-style: italic !important; */
   /* font-size: 15px !important; */
-  color: #777 !important;
+  color: #777;
   font-size: 13px !important;
 }
 
@@ -1571,7 +1571,7 @@ img.ordericon.home {
   font-weight: 700 !important;
   /* font-style: italic !important; */
   /* font-size: 15px !important; */
-  color: #777 !important;
+  color: #777;
   font-size: 13px !important;
 }
 
@@ -1856,7 +1856,7 @@ img.ordericon.home {
 
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
   margin: 15px -15px 0 !important;
-  background-color: #eee !important;
+  background-color: #eee;
   padding: 10px 20px !important;
   display: flex !important;
   /* justify-content: space-between !important; */
@@ -1921,7 +1921,7 @@ img.ordericon.home {
   font-weight: 700 !important;
   /* font-style: italic !important; */
   /* font-size: 15px !important; */
-  color: #777 !important;
+  color: #777;
   font-size: 13px !important;
 }
 

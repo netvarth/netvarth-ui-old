@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <div class="panel-heading top-row" *ngIf="pSource && pSource == 'bp'">
+                <div class="panel-heading top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </div>
@@ -11,12 +11,12 @@
                     </div>
                 </div>
                 <!-- Cover Foto -->
-                <div *ngIf="bgCover && (!accountProperties || (accountProperties && accountProperties['showCoverPicture']))" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
+                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="badge-smalldv  visible-xs visible-sm"
-                            *ngIf="accountProperties && accountProperties['showVerified']">
+                            *ngIf="profileSettings && profileSettings['showVerified']">
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                     class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
@@ -42,7 +42,7 @@
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="businessjson">
                         <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
-                            *ngIf="(!accountProperties || (accountProperties && accountProperties['showSpecialization'] || accountProperties['showProfile']))">
+                            *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
                             <div class="no-padding right-padding-md-15"
                                 [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="about question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
-                                    *ngIf="bNameStart!='' || bNameEnd!=''">
+                                    *ngIf="(bNameStart!='' || bNameEnd!='') && (!profileSettings || (profileSettings && profileSettings['showAbout']))">
                                     <div class="question-outer">
                                         <ng-container>
                                             <div class="question-header">About Us
@@ -86,17 +86,17 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1 && (!accountProperties || (accountProperties && accountProperties['showSpecialization']))"
+                                <div *ngIf="specializationslist.length == 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5"
                                     >
                                     Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1 && (!accountProperties || (accountProperties && accountProperties['showSpecialization']))"
+                                <div *ngIf="specializationslist.length > 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5">
                                     Specializations
                                 </div>
                                 <div class="specialization-value question-value1"
-                                    *ngIf="!accountProperties || (accountProperties && accountProperties['showSpecialization'])">
+                                    *ngIf="!profileSettings || (profileSettings && profileSettings['showSpecialization'])">
                                     <ul class="comma-list">
                                         <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
@@ -110,7 +110,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="showmoresec" *ngIf="showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"
+                                <div class="showmoresec" *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"
                                     >
                                     <div class="" *ngIf="showMore">
                                         <div class="">
@@ -366,11 +366,11 @@
                                     </a>
                                 </li>
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="!showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="!showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
                                     </a></li>
                                 <li [matTooltip]="'Less Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="showMore && (!accountProperties || (accountProperties && accountProperties['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- Less Info -->...
                                     </a></li>
                             </ul>
@@ -415,9 +415,9 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore  && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore  && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
 
                             </ul>
@@ -573,20 +573,12 @@
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
-                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
+                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                         [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
+                        <h5 class="mgn-bt-5 primary-color"> {{service_cap}}dd
                         </h5>
-                        <!-- <h6 *ngIf="servicesAndProviders.length !== 0" class="question-header">Book online now and save
-                            your
-                            time
-                        </h6> -->
-                        <!-- <h6 *ngIf="servicesAndProviders.length == 0" class="question-header"> No services or
-                            consultations
-                            in this location.
-                        </h6> -->
-                    </div>
+                    </div> -->
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
                         [class.mgn-bt-10]="!showDepartments">
