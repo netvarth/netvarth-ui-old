@@ -1649,7 +1649,7 @@ body.modal-open {
 }
 .sts-msg.error {
   padding-left: 0 !important;
-  font-weight: 700 !important;
-  font-size: 0.725rem !important;
+  font-weight: 500 !important;
+  font-size: 0.8rem !important;
   color: red !important;
 }
