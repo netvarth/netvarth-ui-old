@@ -147,3 +147,67 @@ td, .d-lg-none .mgn-up-5 {
   background: #1E4079 !important;
   font-weight: 500 !important;
 }
+.mgn-lt-2 {
+  margin-left:2px !important;
+}
+.title-gb {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+/* .user-title div{
+
+} */
+.pad-tp-5 {
+  padding-top: 5px !important;
+}
+.user-img {
+  width: 50px;
+  height: 50px;
+  position: relative;
+} 
+
+/* .user-img img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+} */
+
+/* .user-img .status-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: grey;
+  border: 2px solid white;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+} */
+/* .icon-container {
+  width: 50px;
+  height: 50px;
+  position: relative;
+} */
+
+.user-img img {
+  height: 100%;
+  width: 100%;
+  /* border-radius: 50%; */
+}
+
+.status-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid white;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.status-circle.green {
+  background-color: green;
+}
+
+.status-circle.grey {
+  background-color: grey;
+}

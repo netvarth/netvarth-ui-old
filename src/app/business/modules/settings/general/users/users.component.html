@@ -1,49 +1,50 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10 disp-flex">
+        <h5 class="mgn-up-10">
             <!-- <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToGeneral()"></span>&nbsp;&nbsp; -->
                 <!-- &nbsp; -->
                 <!-- &nbsp; -->
-                &nbsp;
-                Users
-            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-auto">
+                <a class="user-title"><div class="pull-left pad-tp-5">Users<span *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
+                </a>
+                <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-2 pull-right">
                 <i class="icon-filter-one">
                 </i>
                 Filter
             </a>
+            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+                class="navbar-item-color bold pointer-cursor pull-right">
+                
+                <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add">  <i class="fa fa-plus"></i>User </button>
+                <!-- <span>
+                    <i class="fa fa-plus"></i> User
+                </span> -->
+                <!-- <button _ngcontent-jyl-c560="" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-4 ng-star-inserted"> Next </button> -->
+
+            </a>
         </h5>
     </div>
 </section>
-<section class="">
+<!-- <section class="">
     <div class="card title-gb"> 
         <h6 class="mgn-up-10 disp-flex">
             <span ></span>{{user_count_filterApplied}}&nbsp;&nbsp;Result Found
         </h6>
     </div>
-</section>
+</section> -->
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="card p0 w-dta">
-                <div class="col-md-12 no-padding">
+                <!-- <div class="col-md-12 no-padding">
                     <ul class="nav chkn-dash">
                         <li class="pull-right">
-                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
-                                class="navbar-item-color bold pointer-cursor">
-                                
-                                <button type="button" class="btn btn-primary ml-3 px-8 py-1 action-button-add">  <i class="fa fa-plus"></i>User </button>
-                                <!-- <span>
-                                    <i class="fa fa-plus"></i> User
-                                </span> -->
-                                <!-- <button _ngcontent-jyl-c560="" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-4 ng-star-inserted"> Next </button> -->
-
-                            </a>
+                            
 
                         </li><br>
                     
                     </ul>
-                </div>
+                </div> -->
                 <aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
                     <section class="sidebar" style="overflow:auto" [ngStyle]="{'height.vh': 90}">
                         <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
@@ -143,7 +144,7 @@
                                                         <th class="display-min-none" style="width: 30%;">Specializations
                                                         </th>
                                                         <th class="display-min-none">Languages</th>
-                                                        <th class="display-min-none">Availability</th>
+                                                        <!-- <th class="display-min-none">Availability</th> -->
                                                         <th class="display-min-none"></th>
                                                     </tr>
                                                 </thead>
@@ -152,9 +153,15 @@
                                                         *ngFor="let service of users_list | orderBy: order; let i = index;" (click)="selectedRow(i,service)" [class.disabled-group]="service.status=='INACTIVE'">
                                                         <td class="">
                                                             <div class="disp-flex">
-                                                                <div class="user-img img-min-width">
-                                                                    <img [src]="getUserImg(service)">
+                                                                <div class='user-img'>
+                                                                    <img [src]="getUserImg(service)" />
+                                                                    <div class='status-circle' [ngClass]="service.isAvailable ? 'green' : 'grey'" *ngIf="service.userType === 'PROVIDER' ">
+                                                                    </div>
                                                                 </div>
+                                                                <!-- <div class="user-img img-min-width">
+                                                                    <img [src]="getUserImg(service)">
+                                                                    <div class="status-circle"></div>
+                                                                </div>                                                                 -->
                                                                 <div class="mgn-lt-10">
                                                                     <div class="username">
                                                                         {{(service.businessName) ? service.businessName
@@ -206,11 +213,11 @@
                                                                                 {{getLanguages(service.preferredLanguages)}}
                                                                             </span>
                                                                         </div>
-                                                                        <div class="mgn-up-5"> <span class="b1" *ngIf="service.userType === 'PROVIDER' ">
+                                                                        <!-- <div class="mgn-up-5"> <span class="b1" *ngIf="service.userType === 'PROVIDER' ">
                                                                                 </span><span class="b2" [ngClass]="service.isAvailable ? 'greenc' : 'red'" *ngIf="service.userType === 'PROVIDER' ">
                                                                                 {{(service.isAvailable) ? 'Available' :
                                                                                 'Not
-                                                                                Available'}} </span></div>
+                                                                                Available'}} </span></div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -239,13 +246,13 @@
                                                                 {{getLanguages(service.preferredLanguages)}}
                                                             </span>
                                                         </td>
-                                                        <td class="display-min-none"
+                                                        <!-- <td class="display-min-none"
                                                             >
                                                             <span *ngIf="service.userType === 'PROVIDER' " [ngClass]="service.isAvailable ? 'greenc' : 'red'">
                                                                 {{(service.isAvailable) ? 'Available' : 'Not Available'}}
                                                             </span>
                                                             
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <div class="copy">
                                                                 <span class="mbt" style="top: 5px;">

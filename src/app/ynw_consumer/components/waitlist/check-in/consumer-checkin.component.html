@@ -1221,13 +1221,14 @@
                                             <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" value=""
-                                                            onchange="document.getElementById('stepThreeConfirmButton').disabled = !this.checked;">
+                                                        <input type="checkbox" [ngModel]="checkPolicy" [checked]="checkPolicy"
+                                                        (change)="changePolicy($event)">
                                                         <span>I accept the&nbsp;
                                                             <a data-toggle="modal" data-target="#tcModal">Terms and
                                                                 Conditions</a></span>
-                                                    </label>
+                                                    </label>                                                    
                                                 </div>
+                                                <div class="sts-msg error" *ngIf="!checkPolicy">"Agreement to Terms and Conditions is required"</div>
                                             </div>
                                             <div class="modal fade" id="tcModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="tcModalLabel" aria-hidden="true">
@@ -1256,12 +1257,12 @@
                                                                 following to understand how your personal information
                                                                 will be treated as you use this
                                                                 site and its services.</p>
-                                                            <p>Heartfulness Institute or â€œHFIâ€� in short, the creator
+                                                            <p>Heartfulness Institute or "HFI" in short, the creator
                                                                 of this privacy policy shall
                                                                 ensure its commitment to your privacy with regard to the
                                                                 protection of your information.
                                                                 This policy contains information about our app
-                                                                â€œHeartfulness Covid Careâ€�. In order to
+                                                                "Heartfulness Covid Care". In order to
                                                                 provide you with uninterrupted use of our services, free
                                                                 of cost, we may collect and,
                                                                 in some circumstances, disclose information about you.
@@ -1328,7 +1329,7 @@
                                                                 tell us that you wish this to happen. If you believe
                                                                 that any information we are holding on you
                                                                 is incorrect or incomplete, please send us an email, as
-                                                                soon as possible to: __________________.
+                                                                soon as possible to: covidcare@Heartfulness.org.
                                                                 We will be happy to correct any information found to be
                                                                 incorrect.</p>
 
@@ -1393,7 +1394,7 @@
                                                     Cancellation Policy
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="heartfulnessAccount">
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>
