@@ -971,5 +971,8 @@ button.fxmenu1{
     font-size: 1rem;
     display: inline-block;
     color: white;
-    background: #1E4079;
+    background: #3E234B;
+}
+.user-txt-clr {
+    color: #3E234B;
 }

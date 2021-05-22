@@ -149,8 +149,10 @@ export class DrugListComponent implements OnInit {
             this.loading = false;
           } else {
             this.loading = false;
+          } 
+          if(this.drugList && this.drugList.length !== 0){
+            this.deleteFromDb = true;
           }
-          this.deleteFromDb = true;
         },
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -213,11 +215,20 @@ console.log(this.drugList);
         this.drugList.splice(index, 1);
         if (this.deleteFromDb) {
           if (this.mrId) {
-             let passdata = {
-      "prescriptionsList":this.drugList
-    }
+            let passdata;
+            if(this.drugList.length == 0){
+               passdata = {
+                "prescriptionsList":this.drugList,
+              }
+            } else {
+              passdata = {
+                "prescriptionsList":this.drugList,
+                "notes": this.note
+              }
+            }
             this.provider_services.updateMRprescription(passdata, this.mrId).
               subscribe(res => {
+                this.getMrprescription();
               });
           }
         }

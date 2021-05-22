@@ -17,7 +17,7 @@ export class AddNoteComponent implements OnInit {
 
   
   provider_note_cap = Messages.PROVIDER_NOTE_CAP;
-  note_placeholder = 'Note';
+  note_placeholder = 'Instructions';
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   amForm: FormGroup;

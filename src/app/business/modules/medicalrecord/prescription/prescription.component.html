@@ -60,8 +60,10 @@
           </tr>
         </tbody>
       </table>
-      <label  *ngIf="note" style="color: #3c8dbc;">Note</label><br>
-      <span>{{note}}</span><br>
+      <span *ngIf="!note" (click)="addNote()" class="lnk action pointlist"
+        style="color: #3c8dbc; font-size: smaller"><u>Instructions to the patient</u></span>
+      <span  *ngIf="note" style="color: #3c8dbc;">Instructions to the patient</span><br>
+      <span style="font-size: smaller">{{note}}</span><br>
       <span (click)="updatePrescription()" class="lnk action pointlist"
         style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>

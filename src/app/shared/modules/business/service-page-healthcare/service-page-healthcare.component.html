@@ -4,16 +4,31 @@
         <a class="navbar-brand" routerLink="/business/healthcare">
             <img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 3.5rem;">
         </a>
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarContent" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+        <div class="disp-flex">
+          <div class="display-less-than-1275 display-more-than-425">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="btn btn-default navigation-bar-btn" routerLink="../login">Log in</a></li>
+              <li><a class="btn btn-default navigation-bar-btn" routerLink="../signup">Start For Free</a></li>
+            </ul>
+          </div>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarContent" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+        </div>
       </div>
   
+      <div class="display-less-than-425">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="btn btn-default navigation-bar-btn" routerLink="../login">Log in</a></li>
+          <li><a class="btn btn-default navigation-bar-btn" routerLink="../signup">Start For Free</a></li>
+        </ul>
+      </div>
+
       <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="nav navbar-nav navbar-right navigation-bar-border">
+        <ul class="nav navbar-nav navbar-right navigation-bar-border display-more-than-1275">
           <li><a class="btn btn-default navigation-bar-btn" routerLink="../login">Log in</a></li>
           <li><a class="btn btn-default navigation-bar-btn" routerLink="../signup">Start For Free</a></li>
         </ul>

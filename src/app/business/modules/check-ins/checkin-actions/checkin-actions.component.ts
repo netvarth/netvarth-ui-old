@@ -107,6 +107,8 @@ export class CheckinActionsComponent implements OnInit {
     buttonClicked = false;
     accountType: any;
     changeService = true;
+    userid: any;
+    active_user: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -147,6 +149,8 @@ export class CheckinActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.active_user = user.userType; 
+        this.userid = user.id
         this.accountType = user.accountType;
         this.domain = user.sector;
         this.subdomain = user.subSector;
@@ -938,4 +942,40 @@ export class CheckinActionsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'check-ins', 'questionnaire'], navigationExtras);
     }
+
+    assignMyself() {
+        let msg = '';
+        msg = 'Are you sure you want to assign this token to yourself ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'ynwUuid': this.checkin.ynwUuid,
+                    'provider': {
+                      'id': this.userid
+                    },
+                  };
+                  this.provider_services.updateUserWaitlist(post_data)
+                    .subscribe(
+                      data => {
+                        this.dialogRef.close('reload');
+                      },
+                      error => {                        
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.dialogRef.close('reload');
+                     }
+                    );
+                }
+        });
+    }
+
+
 }

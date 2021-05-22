@@ -10,7 +10,7 @@
     padding: 0 35px !important;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 475px) {
     .navbar.navigation-bar .container-fluid {
         padding: 0 15px !important;
     }    
@@ -92,7 +92,8 @@
     border-right: 4px solid #e8e7e7 !important;
 }
 
-@media (max-width: 1250px) {
+/* @media (max-width: 1250px) { */
+@media (max-width: 1460px) {
     /* #navbarContent { */
     .navbar-collapse.collapse {
         display: flex !important;
@@ -118,7 +119,8 @@
     }
 }
 
-@media (max-width: 1070px) {
+/* @media (max-width: 1070px) { */
+@media (max-width: 1275px) {
     .navbar-header {
         float: none;
     }
@@ -169,7 +171,7 @@
     } 
 }
 
-@media (max-width: 450px) {
+@media (max-width: 475px) {
     #navbarContent > ul.nav.navbar-nav:nth-child(1) {
         display: block !important;
     }
@@ -1064,5 +1066,64 @@
     .section.section7 .section-content .image {
         width: 50% !important;
         margin: 15px !important;
+    }
+}
+
+@media (max-width: 1275px) {
+    .display-less-than-1275 {
+        display: block !important;
+    }
+
+    .display-less-than-1275 .nav.navbar-nav {
+        margin: 22px 5px !important;
+    }
+
+    .display-less-than-1275 .navbar-nav > li {
+        float: left !important;
+    }
+
+    #navbarContent > ul.nav.navbar-nav.display-more-than-1275:nth-child(1) {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1276px) {
+    .display-less-than-1275 {
+        display: none !important;
+    }
+
+    #navbarContent > ul.nav.navbar-nav.display-more-than-1275:nth-child(1) {
+        display: block !important;
+    }
+}
+
+@media (max-width: 425px) {
+    .display-less-than-425 {
+        display: block !important;
+    }
+
+    .display-less-than-425 ul.nav.navbar-nav {
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        flex-direction: row !important;
+    }
+
+    .display-less-than-425 ul.nav.navbar-nav .navigation-bar-btn {
+        max-width: fit-content !important;
+    }
+
+    .display-more-than-425 ul.nav.navbar-nav:nth-child(1) {
+        display: none !important;
+    }
+}
+
+@media (min-width: 426px) {
+    .display-less-than-425 {
+        display: none !important;
+    }
+
+    .display-more-than-425 ul.nav.navbar-nav:nth-child(1) {
+        display: block !important;
     }
 }
