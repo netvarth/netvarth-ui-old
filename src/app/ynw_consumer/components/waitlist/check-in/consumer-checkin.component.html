@@ -589,7 +589,7 @@
                                                                     [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                    <div class="number-caption"> Phone#:</div>
+                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Phone#:</div>
                                                                     <!-- <b>{{countryCode}}
                                                                         {{selected_phone}}</b> -->
                                                                     <div class="codenumber">
@@ -670,9 +670,9 @@
                                                                 </div>
                                                                 <div class="mgn-up-5 mgn-lt-10 disp-flex"
                                                                     [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                    <div class="number-caption"> Email: </div>
+                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Email: </div>
                                                                     <!-- <b>{{payEmail}}</b> -->
-                                                                    <div style="margin-left: auto;">
+                                                                    <div class="width-100">
                                                                         <input
                                                                             class="width100 height40 email-border email-field pull-right"
                                                                             id="newEmail"

@@ -53,3 +53,6 @@ app-appt-card, app-wl-card {
     height: 100%;
     overflow: auto;
 }
+.qnr-pad {
+    padding: 0 20px !important;
+}
