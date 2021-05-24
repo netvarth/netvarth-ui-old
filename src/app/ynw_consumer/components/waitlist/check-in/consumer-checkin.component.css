@@ -1752,13 +1752,15 @@ button.next-button {
   margin-right: 10px;
   margin-top: auto;
   margin-bottom: auto;
+  width: 90px;
+}
+.width-input {
+  width: 130px !important;
 }
 .input-field {
-  /* width: 120px !important; */
   padding: 5px;
 }
 .email-field {
-  width: 196px !important;
   padding: 5px;
 }
 .code-field {
@@ -1767,6 +1769,7 @@ button.next-button {
 .codenumber {
   display: flex;
   margin-left: auto;
+  width: 100%;
 }
 .codenumber #countryCode,
 .codenumber #whatsappCountryCode {

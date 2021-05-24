@@ -188,13 +188,13 @@
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms">
                                             <mat-tab label="Instructions">
-                                                <span *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
+                                                <div class="pad-10" *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
                                                     <h6> {{waitlist.service.postInfoTitle}} </h6>
                                                     <span [innerHTML]="waitlist.service.postInfoText">
                                                     </span>
-                                                </span>
-                                                <span *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
-                                                    Instructions</span>
+                                                </div>
+                                                <div *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
+                                                    Instructions</div>
                                             </mat-tab>
                                             <mat-tab label="Messages">
                                                 <app-inbox-list [messages]="communication_history"
@@ -202,10 +202,10 @@
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
                                             <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
-                                                <span
-                                                    *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</span>
-                                                <span
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</span>
+                                                <div class="pad-10"
+                                                    *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
+                                                    <div class="pad-10"
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">
