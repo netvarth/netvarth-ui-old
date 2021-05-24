@@ -736,11 +736,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             // }
             if (this.virtualInfo) {
-                console.log(this.virtualInfo);
-                const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-                const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-                console.log(formattedDate);
-                this.waitlist_for[0]['dob'] = formattedDate;
+                // console.log(this.virtualInfo);
+                // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                // console.log(formattedDate);
+                // this.waitlist_for[0]['dob'] = formattedDate;
+                this.waitlist_for[0]['dob'] = this.virtualInfo.dob;
                 if (this.virtualInfo.islanguage === 'yes') {
                     let langs = [];
                     langs.push('English');

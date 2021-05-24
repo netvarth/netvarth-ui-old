@@ -10,6 +10,10 @@ import { SubSink } from 'subsink';
 import * as moment from 'moment';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { projectConstantsLocal } from '../../../../app/shared/constants/project-constants';
+// import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
+
+
 
 
 
@@ -62,6 +66,15 @@ export class VirtualFieldsComponent implements OnInit {
   activeUser: any;
   memberObject: any;
   theme: any;
+  selectedDate: number;
+  selectedMonth: number;
+  selectedYear: number;
+
+  allDates: any[] = [];
+  dates: any[] = [];
+  years: number[] = [];
+  months: { value: string; name: string; }[];
+  mob_prefix_cap = '+91';
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -69,19 +82,35 @@ export class VirtualFieldsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
+    // private shared_functions:SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService
   ) {
+    this.months = projectConstantsLocal.MONTH;
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        this.allDates.push('0' + i);
+      } else {
+        this.allDates.push(i);
+      }
+    }
+    // for (let i = 1; i <= 12; i++) {
+    //   this.months.push(i);
+    // }
+    for (let i = 1900; i <= 2021; i++) {
+      this.years.push(i);
+    }
+    this.dates = this.allDates;
     if (dialogData) {
-      if(dialogData.consumer){
-      this.dialogData = this.s3Processor.getJson(dialogData.consumer);
-      }else{
-        this.dialogData=this.s3Processor.getJson(dialogData);
+      if (dialogData.consumer) {
+        this.dialogData = this.s3Processor.getJson(dialogData.consumer);
+      } else {
+        this.dialogData = this.s3Processor.getJson(dialogData);
       }
-      if(dialogData.theme){
-        this.theme=dialogData.theme;
+      if (dialogData.theme) {
+        this.theme = dialogData.theme;
       }
-     
+
     }
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getActiveUserInfo().then(data => {
@@ -94,7 +123,9 @@ export class VirtualFieldsComponent implements OnInit {
 
 
   }
-
+  // isNumeric(evt) {
+  //   return this.shared_functions.isNumeric(evt);
+  // }
   ngOnInit(): void {
 
 
@@ -107,7 +138,6 @@ export class VirtualFieldsComponent implements OnInit {
       _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
         .subscribe(
           data => {
-            console.log(data);
             resolve(data);
           },
           () => {
@@ -118,14 +148,12 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   getFamilyMembers() {
-    console.log(this.customer_data);
     this.api_loading1 = true;
     let fn;
     fn = this.sharedServices.getConsumerFamilyMembers();
     this.subs.sink = fn.subscribe(data => {
       this.familymembers = [];
       for (const mem of data) {
-        console.log(mem);
         this.familymembers.push(mem);
       }
       if (this.dialogData.id) {
@@ -139,7 +167,6 @@ export class VirtualFieldsComponent implements OnInit {
       });
   }
   onServiceForChange(event) {
-    console.log(event);
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
@@ -176,6 +203,10 @@ export class VirtualFieldsComponent implements OnInit {
   setMemberDetails(memberObj) {
     this.serviceFormReset();
     if (memberObj.userProfile && memberObj.userProfile.dob) {
+      const dob = memberObj.userProfile.dob.split('-');
+      this.virtualForm.patchValue({ date: dob[2] });
+      this.virtualForm.patchValue({ month: dob[1] });
+      this.virtualForm.patchValue({ year: dob[0] });
       this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
@@ -206,17 +237,35 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
+    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
+      this.virtualForm.patchValue({ whatsppnumber: memberObj.userProfile.whatsAppNum.numer });
+    }
+    if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
+      this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.numer });
+    }
   }
   serviceFormReset() {
+    this.virtualForm.controls['date'].setValue('dd');
+    this.virtualForm.controls['month'].setValue('mm');
+    this.virtualForm.controls['year'].setValue('yyyy');
     this.virtualForm.controls['dob'].setValue('');
     this.virtualForm.controls['gender'].setValue('male');
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
+    this.virtualForm.patchValue({ whatsppnumber: '' });
+    this.virtualForm.patchValue({ telegramnumber: '' });
+    //  this.virtualForm.controls['whatsppnumber'].setValue('');
+    //  this.virtualForm.controls['telegramnumber'].setValue('');
   }
   setparentDetails(customer) {
+
     if (customer.userProfile && customer.userProfile.dob) {
+      const dob = customer.userProfile.dob.split('-');
+      this.virtualForm.patchValue({ date: dob[2] });
+      this.virtualForm.patchValue({ month: dob[1] });
+      this.virtualForm.patchValue({ year: dob[0] });
       this.virtualForm.patchValue({ dob: customer.userProfile.dob });
     }
     if (customer.userProfile && customer.userProfile.gender) {
@@ -228,7 +277,6 @@ export class VirtualFieldsComponent implements OnInit {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
-        console.log(defaultEnglish);
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
         this.lngknown = defaultEnglish;
         this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
@@ -239,6 +287,12 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
+    if (customer.userProfile && customer.userProfile.whatsAppNum) {
+      this.virtualForm.patchValue({ whatsppnumber: customer.userProfile.whatsAppNum.numer });
+    }
+    if (customer.userProfile && customer.userProfile.telegramNum) {
+      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.numer });
+    }
 
   }
   createForm() {
@@ -247,14 +301,22 @@ export class VirtualFieldsComponent implements OnInit {
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
+      date: ['dd'],
+      month: ['mm'],
+      year: ['yyyy'],
       pincode: ['', Validators.compose([Validators.required])],
+      whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])]
     });
     this.virtualForm.patchValue({ gender: 'male' });
-    this.virtualForm.patchValue({ islanguage: 'yes' })
+    this.virtualForm.patchValue({ islanguage: 'yes' });
+    this.virtualForm.controls['date'].setValue('dd');
+    this.virtualForm.controls['month'].setValue('mm');
+    this.virtualForm.controls['year'].setValue('yyyy');
     if (this.dialogData.type !== 'member') {
       this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
     } else {
@@ -279,8 +341,6 @@ export class VirtualFieldsComponent implements OnInit {
     } else {
       this.details = this.customer_data;
     }
-
-    console.log(this.details);
     if (this.details.parent) {
       this.setMemberDetails(this.details);
     } else {
@@ -346,6 +406,16 @@ export class VirtualFieldsComponent implements OnInit {
         isinvalid = true;
       }
     }
+    if (this.virtualForm.get('date').value === 'dd') {
+      isinvalid = true;
+    }
+    if (this.virtualForm.get('month').value === 'mm') {
+      isinvalid = true;
+    }
+    if (this.virtualForm.get('year').value === 'yyyy') {
+      isinvalid = true;
+    }
+
     return isinvalid;
   }
 
@@ -387,7 +457,11 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
     } else {
+      const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
+
+      formdata['dob'] = dob;
       if (this.is_parent) {
+        console.log(formdata);
         this.updateParentInfo(formdata).then(
           (result) => {
             if (result !== false) {
@@ -399,10 +473,11 @@ export class VirtualFieldsComponent implements OnInit {
           }
         );
       } else {
+        console.log(formdata);
         if (formdata.serviceFor === 'new_member') {
           this.saveMember(formdata).then(data => {
             if (data !== false) {
-              formdata['newMemberId']=data;
+              formdata['newMemberId'] = data;
               this.dialogRef.close(formdata);
             }
           },
@@ -438,6 +513,18 @@ export class VirtualFieldsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
+      if (formdata.whatsappumber !== '') {
+        const whatsup = {}
+        whatsup["countryCode"] = '+91',
+          whatsup["number"] = formdata.whatsappumber
+        userObj['whatsAppNum'] = whatsup;
+      }
+      if (formdata.telegramnumber !== '') {
+        const telegram = {}
+        telegram["countryCode"] = '+91',
+          telegram["number"] = formdata.whatsappumber
+        userObj['telegramNum'] = telegram;
+      }
       // const userProfile = {}
       userObj['gender'] = formdata.gender;
       userObj['firstName'] = firstName;
@@ -469,6 +556,19 @@ export class VirtualFieldsComponent implements OnInit {
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
+
+    if (formdata.whatsappumber !== '') {
+      const whatsup = {}
+      whatsup["countryCode"] = '+91',
+        whatsup["number"] = formdata.whatsappumber
+      memberInfo['whatsAppNum'] = whatsup;
+    }
+    if (formdata.telegramnumber !== '') {
+      const telegram = {}
+      telegram["countryCode"] = '+91',
+        telegram["number"] = formdata.whatsappumber
+      memberInfo['telegramNum'] = telegram;
+    }
     memberInfo.userProfile = {}
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
@@ -508,6 +608,18 @@ export class VirtualFieldsComponent implements OnInit {
     console.log(_this.chosen_person);
 
     const memberInfo = {};
+    if (formdata.whatsappumber !== '') {
+      const whatsup = {}
+      whatsup["countryCode"] = '+91',
+        whatsup["number"] = formdata.whatsappumber
+      memberInfo['whatsAppNum'] = whatsup;
+    }
+    if (formdata.telegramnumber !== '') {
+      const telegram = {}
+      telegram["countryCode"] = '+91',
+        telegram["number"] = formdata.whatsappumber
+      memberInfo['telegramNum'] = telegram;
+    }
     memberInfo['userProfile'] = {}
     memberInfo['bookingLocation'] = {}
     memberInfo['userProfile']['gender'] = formdata.gender;

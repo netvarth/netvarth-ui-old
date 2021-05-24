@@ -1,7 +1,8 @@
 <!-- join Section starts -->
 
 
-<form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields" [ngClass]="theme?theme:''" novalidate>
+<form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields"
+    [ngClass]="theme?theme:''" novalidate>
     <div class="mat-dialog-title">
 
         <div class="title" style="font-size: 16px !important;">Your Personal Information</div>
@@ -12,34 +13,38 @@
     <!-- step 1 for mobile number entering  -->
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     <div class="cust-loginpge-color" *ngIf="!api_loading">
-        <div class="mat-dialog-content" style="overflow: auto !important;" >
+        <div class="mat-dialog-content" style="overflow: auto !important;">
             <div *ngIf="hideLanguages">
                 <div class="">
-                    Please provide necessary information (one time setup). This information will be saved in your profile
+                    Please provide necessary information (one time setup). This information will be saved in your
+                    profile
                 </div>
                 <div class="mgn-up-10">
                     <label class="col-form-label" for="name">Consultation is For </label>
                     <br />
                     <!-- <mat-form-field> -->
-                        <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event.value)">
-                            <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
-                            <mat-radio-button [value]="member.user" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
-                            <mat-radio-button value="new_member">Someone else</mat-radio-button>
-                        </mat-radio-group>
-                        <!-- <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
+                    <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup"
+                        (change)="onServiceForChange($event.value)">
+                        <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}}
+                            {{customer_data.userProfile.lastName}}</mat-radio-button>
+                        <mat-radio-button [value]="member.user" *ngFor="let member of familymembers">
+                            {{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                        <mat-radio-button value="new_member">Someone else</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
                             <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
                             <mat-radio-button [value]="member.userProfile.id" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
                             <mat-radio-button value="new_member">Someone else</mat-radio-button>
                         </mat-radio-group> -->
-                        <!-- <mat-label>Service For</mat-label> -->
-                        <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
+                    <!-- <mat-label>Service For</mat-label> -->
+                    <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
                             <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
                           <mat-option *ngFor="let member of familymembers" [value]="member.userProfile.id">
                             {{member.userProfile.firstName}} {{member.userProfile.lastName}}
                           </mat-option>
                           <mat-option  [value]="new_member">Others  </mat-option>
                         </mat-select> -->
-                      <!-- </mat-form-field> -->
+                    <!-- </mat-form-field> -->
                     <!-- {{getFamilyMembers()}} -->
                     <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
                 </div>
@@ -49,24 +54,92 @@
                     {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
                 </div>
                 <div class="form-group col-xs-12" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
-                        <label class="col-form-label" for="firstName">First Name <span class="red">*</span></label>
+                    <label class="col-form-label" for="firstName">First Name <span class="red">*</span></label>
                     <mat-form-field>
-                           
-                        <input  matInput placeholder="Enter your first name"  formControlName="firstName">
-                      </mat-form-field>
+
+                        <input matInput placeholder="Enter your first name" formControlName="firstName">
+                    </mat-form-field>
                 </div>
-                <div class="form-group col-xs-12"  *ngIf="virtualForm.get('serviceFor').value==='new_member'">
-                        <label class="col-form-label" for="lastName">Last Name <span class="red">*</span></label>
+                <div class="form-group col-xs-12" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                    <label class="col-form-label" for="lastName">Last Name <span class="red">*</span></label>
                     <mat-form-field>
-                            
-                        <input matInput placeholder="Enter your last name"  formControlName="lastName">
-                      </mat-form-field>
+
+                        <input matInput placeholder="Enter your last name" formControlName="lastName">
+                    </mat-form-field>
                 </div>
+
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
                     <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                     <br />
-                    <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob" formControlName="dob"
-                        class="vt_dt no-padding mgn-up-5">
+                    <!-- <mat-form-field appearance="fill">
+                        <mat-label>Date</mat-label>
+                        <mat-select [(ngModel)]="selectedDate">
+                            <mat-option *ngFor="let date of dates" [value]="date">
+                                {{date}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp;
+                    
+                    <mat-form-field appearance="fill">
+                        <mat-label>Month</mat-label>
+                        <mat-select [(ngModel)]="selectedMonth">
+                            <mat-option *ngFor="let month of months" [value]="month">
+                                {{month}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp;
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Year</mat-label>
+                        <mat-select [(ngModel)]="selectedYear">
+                            <mat-option *ngFor="let year of years" [value]="year">
+                                {{year}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <!---dateofbirth  -->
+                  <select [(ngModel)]="selectedDate" formControlName="date">
+                        <option value="dd">dd</option>
+                            <option *ngFor="let date of dates" [value]="date">
+                                {{date}}
+                            </option>
+                        </select>
+                    
+                    &nbsp;
+                    <select [(ngModel)]="selectedMonth" formControlName="month">
+                        <option value="mm">mm</option>
+                        <option *ngFor="let month of months" [value]="month.value">
+                            {{month.name}}
+                        </option>
+                    </select>
+                    &nbsp;
+                    <select [(ngModel)]="selectedYear" formControlName="year">
+                            <option value="yyyy">yyyy</option>
+                        <option *ngFor="let year of years" [value]="year">
+                            {{year}}
+                        </option>
+                    </select>
+                    
+                    <!-- <mat-form-field appearance="fill">
+                        <mat-label>Month</mat-label>
+                        <mat-select [(ngModel)]="selectedMonth">
+                            <mat-option *ngFor="let month of months" [value]="month">
+                                {{month}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <!-- &nbsp;
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Year</mat-label>
+                        <mat-select [(ngModel)]="selectedYear">
+                            <mat-option *ngFor="let year of years" [value]="year">
+                                {{year}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <!-- <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob" formControlName="dob"
+                        class="vt_dt no-padding mgn-up-5"> -->
                     <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dob" placeholder="Date of birth"
                         #inputdob formControlName="dob" disabled
@@ -78,6 +151,7 @@
                     [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
                     errorMsg="Please select the date of birth.">
                 </app-field-error-display> -->
+                    <!-- <date-select formControlName="dob"></date-select> -->
                 </div>
 
 
@@ -112,8 +186,7 @@
                 <!-- Signin Password -->
                 <div class="form-group pwd">
                     <!-- <mat-form-field> -->
-                    <label for="pincode" class="col-form-label">Residing Pincode <span
-                            class="red">*</span></label>
+                    <label for="pincode" class="col-form-label">Residing Pincode <span class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
                         formControlName="pincode" (keyup)="showLocations($event)">
                     <!-- </mat-form-field> -->
@@ -131,6 +204,35 @@
                     </div>
                 </div>
 
+
+                <!-- <div class="form-group mobile-field" >
+                        <label>Whatsapp #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="whatsappumber"
+                               formControlName="whatsappumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                  
+                </div>
+    
+    
+                <div class="form-group mobile-field" >
+                        <label>Telegram #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="telegramnumber"
+                               formControlName="telegramnumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                </div> -->
+    
                 <!-- Signin Password -->
                 <div class="form-group" id="plng">
                     <!-- <mat-form-field> -->
@@ -155,17 +257,19 @@
             </div>
             <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
                 <label class="col-form-label" for="preferredLanguage">Your preferred language
-                    </label><br/>
-                <div class="col-form-label"><span style="word-wrap: break-word;" >{{virtualForm.get('preferredLanguage').value}}</span>
-                    
-                <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x" style="font-size: large;"></i></span></div>
+                </label><br />
+                <div class="col-form-label"><span
+                        style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
+
+                    <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x"
+                            style="font-size: large;"></i></span></div>
             </div>
             <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
                 <div class="form-group" *ngIf="lngknown==='no'">
                     <!-- <mat-form-field> -->
                     <label class="col-form-label" for="preferredLanguage">Choose your preferred language
                         <span class="red">*</span></label>
-                    
+
                     <!-- <mat-form-field>
                     <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
                             <mat-option *ngFor="let language of languages"
@@ -187,10 +291,10 @@
                             [disabled]="disableButton">Cancel</button>&nbsp; -->
                             <button (click)="saveLanguages()" type="button" mat-button class="cs-btn bt1"
                                 [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
-                                <button (click)="cancelLanguageSelection()" type="button" mat-button class="cs-btn bt1"
-                                >Cancel</button>
+                            <button (click)="cancelLanguageSelection()" type="button" mat-button
+                                class="cs-btn bt1">Cancel</button>
                         </div>
-   
+
 
                     </div>
 
@@ -203,8 +307,9 @@
                     </div>
                 </div>
             </div>
+           
             <div class="form-group" *ngIf="hideLanguages" class="mgn-bt-50">
-                <button class="cust-logpg-submt mgn-up-20 continue-button" mat-button 
+                <button class="cust-logpg-submt mgn-up-20 continue-button" mat-button
                     (click)="onSubmit(virtualForm.value)" style="margin-bottom:10%">
                     <span>Continue</span>
 
