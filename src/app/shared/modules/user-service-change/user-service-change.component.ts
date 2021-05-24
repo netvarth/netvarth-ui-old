@@ -280,9 +280,9 @@ export class UserServiceChnageComponent implements OnInit {
       if (serviceObj.preferredLanguages) {
         // languages = JSON.parse(serviceObj.preferredLanguages);
         languages = JSON.parse(serviceObj.preferredLanguages);
-        for (var i = 1; i < languages.length; i++) {
-          languages[i] = JSON.parse(languages[i]).charAt(0).toUpperCase();
-        }
+        for (var i = 0; i < languages.length; i++) {
+          languages[i] = languages[i].charAt(0).toUpperCase();
+      }
       }
       if (serviceObj.specialization) {
         specialization = serviceObj.specialization.toString();

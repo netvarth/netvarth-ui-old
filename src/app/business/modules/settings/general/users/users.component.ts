@@ -471,8 +471,7 @@ export class BranchUsersComponent implements OnInit {
     getLanguages(languages) {
         languages = JSON.parse(languages);
         for (var i = 0; i < languages.length; i++) {
-            languages[i] = JSON.parse(languages[i]);
-            languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+            languages[i] = languages[i].charAt(0).toUpperCase();
         }
         languages = languages.toString();
         if (languages.length > 1) {
