@@ -378,9 +378,9 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
       isinvalid = true;
     }
-    if (this.virtualForm.get('dob').value === '') {
-      isinvalid = true;
-    }
+    // if (this.virtualForm.get('dob').value === '') {
+    //   isinvalid = true;
+    // }
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
