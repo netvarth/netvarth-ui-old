@@ -90,6 +90,7 @@ export class SharedFunctions {
   consumerLogin(post_data, moreParams?) {
     // post_data['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.sendMessage({ ttype: 'main_loading', action: true });
+    
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ConsumerLogin(post_data)
         .subscribe(

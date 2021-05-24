@@ -16,6 +16,7 @@ import { SubSink } from 'subsink';
 // import './join.component.ts'
 
 
+
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
