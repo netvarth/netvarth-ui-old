@@ -194,11 +194,11 @@
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10">Enter Donor name
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
-                                            <label>
-                                                <input style="font-size: larger;" type="text" placeholder="donor name" class="phonenum"
+                                            <label class="col-xs-12 no-padding">
+                                                <input style="font-size: larger;" type="text" placeholder="Enter Donor Name" class="donor-name-input phonenum"
                                                     [(ngModel)]="donor" />
                                                 <button (click)="addDonor()"
-                                                    class="btn bt3 btn-default coupon-apply-btn"
+                                                    class="donor-name-btn btn bt3 btn-default coupon-apply-btn"
                                                     type="button">Ok</button>
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="donorerror != null" errorMsg={{donorerror}}>

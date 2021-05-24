@@ -1067,7 +1067,7 @@
                                             </div>
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 px-0 d-flex justify-content-between border-top pt-10 width-100">
                                             <div class="mr-2">
                                                 <button type="button"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1274,7 +1274,7 @@
                                             <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" value=""
+                                                        <input type="checkbox" value="" checked
                                                             onchange="document.getElementById('stepThreeConfirmButton').disabled = !this.checked;">
                                                         <span>I accept the&nbsp;
                                                             <a data-toggle="modal" data-target="#tcModal">Terms and
@@ -1455,8 +1455,7 @@
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')"
                                                     id="stepThreeConfirmButton"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    disabled>
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay by CC/DC/UPI
