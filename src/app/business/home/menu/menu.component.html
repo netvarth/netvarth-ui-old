@@ -89,17 +89,16 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-        (click)="showMenuSection()">
-        <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
-            class="svg-icon menu-icon">
-            <i class="fa fa-envelope"></i>
-          </span><span class="menu-text">Enquiry</span>
-          <small class="label pull-right bg-green"
-            *ngIf="enquiryCount>0 && !minimizeMenu">{{enquiryCount}}</small>
-          <i class="menu-arrow"></i></a>
-        <div class="menu-submenu"><i class="menu-arrow"></i>
-        </div>
-      </li>
+          (click)="showMenuSection()">
+          <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
+              class="svg-icon menu-icon">
+              <i class="fa fa-envelope"></i>
+            </span><span class="menu-text">Enquiry</span>
+            <small class="label pull-right bg-green" *ngIf="enquiryCount>0 && !minimizeMenu">{{enquiryCount}}</small>
+            <i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i class="menu-arrow"></i>
+          </div>
+        </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
           <a routerLink="auditlog" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
@@ -138,8 +137,7 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" 
-        *ngIf="isadminPrivilege">
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege">
           <a routerLink="settings" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-gears"></i>
@@ -168,6 +166,13 @@
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-question-circle"></i>
             </span><span class="menu-text">Faq</span><i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i class="menu-arrow"></i>
+          </div>
+        </li>
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
+          <a class="menu-link menu-toggle" (click)="doLogout()"><span class="svg-icon menu-icon">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </span><span class="menu-text">Sign Out</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
