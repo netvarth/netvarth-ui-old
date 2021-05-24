@@ -203,7 +203,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualFields: any;
     consumerType: string;
     whatsappCountryCode;
-    
+    checkPolicy= true;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2079,5 +2079,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         }
+    }
+     changePolicy (event) {
+        console.log(event.target.checked);
+        this.checkPolicy = event.target.checked;
     }
 }

@@ -1274,13 +1274,14 @@
                                             <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" value="" checked
-                                                            onchange="document.getElementById('stepThreeConfirmButton').disabled = !this.checked;">
+                                                        <input type="checkbox" [ngModel]="checkPolicy" [checked]="checkPolicy"
+                                                        (change)="changePolicy($event)">
                                                         <span>I accept the&nbsp;
                                                             <a data-toggle="modal" data-target="#tcModal">Terms and
                                                                 Conditions</a></span>
-                                                    </label>
+                                                    </label>                                                    
                                                 </div>
+                                                <div class="sts-msg error" *ngIf="!checkPolicy">"Agreement to Terms and Conditions is required"</div>
                                             </div>
 
                                             <div class="modal fade" id="tcModal" tabindex="-1" role="dialog"
@@ -1453,9 +1454,8 @@
                                                 <!-- <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
                                                     Cancellation Policy
                                                 </button> -->
-                                                <button type="button" (click)="saveCheckin('checkin')"
-                                                    id="stepThreeConfirmButton"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay by CC/DC/UPI
