@@ -138,7 +138,8 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" 
+        *ngIf="isadminPrivilege">
           <a routerLink="settings" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-gears"></i>

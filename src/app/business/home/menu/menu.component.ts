@@ -38,6 +38,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   minimizeMenu = false;
   showMenu = false;
   enquiryCount;
+  isadminPrivilege: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -191,6 +192,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
+    this.isadminPrivilege = user.adminPrivilege
     this.domain = user.sector;
     this.getGlobalSettings();
     this.getBusinessdetFromLocalstorage();
