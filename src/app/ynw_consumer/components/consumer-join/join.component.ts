@@ -11,7 +11,6 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
-import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
 // import './join.component.ts'
@@ -77,7 +76,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
-    private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
     public dialog: MatDialog,
     private router: Router,
@@ -144,7 +142,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
 
-
+    
     // const pN = this.mobile_num.trim();
     const pW = data.password.trim();
     if (pN === '') {
@@ -164,14 +162,13 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       loginId = pN.split(dialCode)[1];
     }
     const ob = this;
-    const post_data = {
+    let post_data = {
       'countryCode': dialCode,
       // 'countryCode': '+91',
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
     };
-    this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     // if (this.data.type === 'provider') {
     //   post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
@@ -200,10 +197,13 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        // post_data['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        // console.log(post_data['mUniqueId']);
+
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
-            () => {
+            (loginInfo) => {
+              
               // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
               this.lStorageService.setitemonLocalStorage('jld', data.password);
               // this.lStorageService.setitemonLocalStorage('qrp', data.password);
@@ -213,6 +213,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
               if (error.status === 401 && error.error === 'Session already exists.') {
 
                 const user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                console.log("mani");
                 console.log(user);
                 console.log(data);
                 if (user && (user.loginId === data.loginId && user.countryCode===data.countryCode)) {
@@ -235,6 +236,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
 
                
               } else {
+                console.log("mani111");
                 ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                 this.api_loading = false;
               }
