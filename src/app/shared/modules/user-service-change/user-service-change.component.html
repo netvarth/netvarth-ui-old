@@ -120,17 +120,21 @@
                             </div>
                           </div>
                           <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
-                              class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}</div>
+                              class="fa fa-map-marker mgn-rt-5"
+                              aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
-                            <div class="mgn-up-5" *ngIf="service.mobileNo"> <span class="b1">
-                              </span><span class="b2"> +91 {{service.mobileNo}} </span></div>
-                            <div class="mgn-up-5" *ngIf="service.specialization"> <span class="b1">
-                              </span> <span class="b2"> {{service.specialization}} </span></div>
-                            <div class="mgn-up-5" *ngIf="service.languages"> <span class="b1">
-                              </span><span class="b2"> {{service.languages}} </span></div>
-                            <div class="mgn-up-5"> <span class="b1">
-                              </span><span class="b2"> {{(service.isAvailable) ? 'Available' : 'Not
-                                Available'}} </span></div>
+                            <div class="mgn-up-5" *ngIf="service.mobileNo">
+                              <span class="b2">+91 {{service.mobileNo}} </span>
+                            </div>
+                            <div class="mgn-up-5" *ngIf="service.specialization">
+                              <span class="b2">{{service.specialization}} </span>
+                            </div>
+                            <div class="mgn-up-5" *ngIf="service.languages">
+                              <span class="b2">{{service.languages}} </span>
+                            </div>
+                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Tokens
+                                Count:
+                              </span><span class="b2">{{service.currentWlCount}} </span></div>
                           </div>
                         </div>
                       </div>

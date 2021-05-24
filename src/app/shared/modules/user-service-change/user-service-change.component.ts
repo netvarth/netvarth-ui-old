@@ -278,11 +278,10 @@ export class UserServiceChnageComponent implements OnInit {
       let specialization;
       userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
-        // languages = JSON.parse(serviceObj.preferredLanguages);
         languages = JSON.parse(serviceObj.preferredLanguages);
         for (var i = 0; i < languages.length; i++) {
-          languages[i] = languages[i].charAt(0).toUpperCase();
-      }
+          languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
       }
       if (serviceObj.specialization) {
         specialization = serviceObj.specialization.toString();
