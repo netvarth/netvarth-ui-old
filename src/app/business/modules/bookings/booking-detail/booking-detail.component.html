@@ -9,7 +9,7 @@
       <!--begin::Header-->
       <app-service-actions *ngIf="!api_loading" [waitlist_data]="waitlist_data"></app-service-actions>
       <!-- Patient details -->
-      <div class="card rounded-0 card-custom gutter-b wave-success p-0">
+      <div class="card card-custom gutter-b wave-success p-0 booking-details">
         <app-customer-booking-details *ngIf="!api_loading" [waitlist_data]="waitlist_data">
         </app-customer-booking-details>
       </div>

@@ -9,3 +9,224 @@
     float: right;
     margin-top: 5px;
 }
+
+.padding-20px {
+    padding: 20px !important;
+}
+
+.booking-details .booking-details-head {
+    margin-bottom: 8px !important;
+}
+
+.booking-details .booking-details-head > div:nth-child(1) {
+    height: 20px !important;
+}
+
+.booking-details .booking-details-head h5 {
+    color: #797979 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0 !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    display: inline-block !important;
+    width: calc(100% - 85px) !important;
+    white-space: nowrap !important;
+    text-transform: capitalize !important;
+    height: 20px !important;
+    line-height: 20px !important;
+}
+
+.booking-details .booking-details-head a {
+    color: #305084 !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    width: 85px !important;
+    text-align: right !important;
+    float: right !important;
+    height: 20px !important;
+    line-height: 20px !important;
+}
+
+.booking-details .booking-details-head .value {
+    font-size: 0.85rem !important;
+    color: #797979 !important;
+    font-weight: 500 !important;
+}
+
+.booking-details-body i.icon {
+    font-family: 'FontAwesome' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    color: #28a1ac !important;
+    width: 20px !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-right: 5px !important;
+}
+
+.booking-details-body i.icon.fa.fa-map-marker {
+    font-size: 15px !important;
+}
+
+.booking-details-body i.icon.fa.fa-mobile {
+    font-size: 20px !important;
+}
+
+.booking-details-body .value {
+    font-size: 0.85rem !important;
+    color: #797979 !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+}
+
+.booking-details-body .email .value {
+    text-transform: none !important;
+}
+
+.booking-details-body .gender-and-dob {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    /* justify-content: space-between !important; */
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+}
+
+.booking-details-body .gender-and-dob .gender {
+    margin-right: 30px !important;
+}
+
+/* .booking-details-body .gender-and-dob .gender,
+.booking-details-body .gender-and-dob .dob {
+    width: 50% !important;
+} */
+
+.booking-details-body .gender-and-dob .gender i.icon.fa.fa-mars {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.booking-details-body .gender-and-dob .gender i.icon.fa.fa-venus {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.booking-details-body .available-records {
+    margin-top: 8px !important;
+}
+
+.booking-details-body .available-records .head {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #8e8e8e !important;
+    text-transform: uppercase !important;
+}
+
+.booking-details-body .available-records .value {
+    font-size: 0.775rem !important;
+    color: #8e8e8e !important;    
+}
+
+.right-border {
+    border-right: 1.75px solid #d0d0d0 !important;
+}
+
+.bottom-border {
+    border-bottom: none !important;
+}
+
+@media (max-width: 767px) {
+    .right-border {
+        border-right: none !important;
+    }
+
+    .bottom-border {
+        border-bottom: 1.75px solid #d0d0d0 !important;
+    }
+}
+
+.booking-details-body button.btn.create-prescription-button {
+    border: 1px solid #1E4079 !important;
+    margin: 20px auto !important;
+    display: block !important;
+    padding: 6px 10px !important;
+    color: #1E4079 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    width: 80% !important;
+    min-width: 160px !important;
+    max-width: 300px !important;
+    background-color: white !important;
+}
+
+.booking-details-body button.btn.create-prescription-button:hover {
+    background-color: #1E4079 !important;
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+.records .notes,
+.records .private-notes {
+    margin-bottom: 1rem !important;
+}
+
+.records .notes label,
+.records .private-notes label {
+    font-size: 0.85rem !important;
+    color: #797979 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+
+.records .notes div.consumer-notes {
+    color: #797979 !important;
+    font-style: normal !important;
+    font-size: 0.825rem !important;
+    border: 1px solid #929292 !important;
+    padding: 8px 12px !important;
+    margin-top: 5px !important;
+    border-radius: 4px !important;
+    text-align: justify !important;
+    max-height: 120px !important;
+    min-height: 80px !important;
+    overflow: auto !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+}
+
+.records .private-notes > div:nth-child(1) {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.records .private-notes a.save-btn {
+    color: #1E4079 !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+
+.records .private-notes textarea.private-notes-input {
+    color: #797979 !important;
+    font-style: normal !important;
+    font-size: 0.825rem !important;
+    border: 1px solid #929292 !important;
+    padding: 8px 12px !important;
+    margin-top: 5px !important;
+    border-radius: 4px !important;
+    text-align: justify !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+}
+
+@media (min-width: 768px) {
+    .disp-md-flex {
+        display: flex !important;
+    }
+}

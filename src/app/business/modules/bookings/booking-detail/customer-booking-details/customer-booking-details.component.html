@@ -1,74 +1,113 @@
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-  <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
-    <div class="card-body p-0">
-      <div class="d-flex align-items-end">
-        <div class="d-flex align-items-center">
-          <div class="d-flex flex-column p-2">
-            <div class="mgn-up-10 stats-item"
-              *ngIf="bookingType === 'checkin' && (waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName)">
-              <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
-                *ngFor="let user of waitlist_data.waitlistingFor">
-                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-              </h5>
-              <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].id">
-                <span class="text-muted">Jaldee Id: {{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex">
+  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px right-border bottom-border">
+            <div class="booking-details" *ngIf="bookingType === 'checkin' && (waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName)">
+              <div class="booking-details-head">
+                <div>
+                  <h5 *ngFor="let user of waitlist_data.waitlistingFor">
+                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                  </h5>
+                  <a>Edit Details</a>
+                </div>
+                <div class="age">
+                  <span class="value">22 years old</span>
+                </div>
               </div>
-              <div class="stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
-                <i class="fas fa-mobile-alt text-success"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.countryCode}}
-                  {{waitlist_data.waitlistPhoneNumber}}</span>
-              </div>
-              <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
-                <i class="text-success far fa-envelope"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.waitlistingFor[0].email}}</span>
-              </div>
-              <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].gender">
-                <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fas fa-mars text-success"></i>
-                <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'"
-                  class="fas fa-mars-stroke text-success"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
-              </div>
-            </div>
-            <div class="mgn-up-10 stats-item"
-              *ngIf="bookingType === 'appointment' && (waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName)">
-              <h5 class="text-dark font-weight-bold text-hover-primary font-size-md mb-0"
-                *ngFor="let user of waitlist_data.appmtFor">
-                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-              </h5>
-              <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].id">
-                <span class="text-muted">Jaldee Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
-              </div>
-              <div class="stats-item" *ngIf="waitlist_data.phoneNumber">
-                <i class="fas fa-mobile-alt text-success"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
-              </div>
-              <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].email">
-                <i class="text-success far fa-envelope"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.appmtFor[0].email}}</span>
-              </div>
-              <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].gender">
-                <i *ngIf="waitlist_data.appmtFor[0].gender === 'male'" class="fas fa-mars text-success"></i>
-                <i *ngIf="waitlist_data.appmtFor[0].gender === 'female'" class="fas fa-mars-stroke text-success"></i>
-                <span class="mgn-lt-5 text-muted">{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
+              <div class="booking-details-body">
+                <div class="jaldee-id" *ngIf="waitlist_data.waitlistingFor[0].id">
+                  <i class="fa fa-id-card-o icon"></i>
+                  <span class="value">Jaldee Id: {{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+                </div>
+                <div class="contact-no" *ngIf="waitlist_data.waitlistPhoneNumber">
+                  <i class="fa fa-mobile icon"></i>
+                  <span class="value">{{waitlist_data.countryCode}}-{{waitlist_data.waitlistPhoneNumber}}</span>
+                </div>
+                <div class="email" *ngIf="waitlist_data.waitlistingFor[0].email">
+                  <i class="fa fa-envelope icon"></i>
+                  <span class="value">{{waitlist_data.waitlistingFor[0].email}}</span>
+                </div>
+                <div class="gender-and-dob">               
+                  <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender">                     
+                    <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fa fa-mars icon"></i>
+                    <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fa fa-venus icon"></i>
+                    <span class="value">{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                  </div>
+                  <div class="dob">
+                    <i class="fa fa-calendar-o icon"></i>
+                    <span class="value">25/07/1996</span>
+                  </div>
+                </div>
+                <div class="location">
+                  <i class="fa fa-map-marker icon"></i>
+                  <span class="value">HSR Layout, Bangalore</span>
+                </div>
+                <div class="available-records">
+                  <div class="head">Available Records</div>
+                  <div class="value">2 case entries, 2 medical records, 4 documents</div>
+                </div>
+                <button class="btn create-prescription-button">Create Prescription</button>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div class="booking-details" *ngIf="bookingType === 'appointment' && (waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName)">
+              <div class="booking-details-head">
+                <div>
+                  <h5 *ngFor="let user of waitlist_data.appmtFor">
+                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                  </h5>
+                  <a>Edit Details</a>
+                </div>
+                <div class="age">
+                  <span class="value">22 years old</span>
+                </div>
+              </div>
+              <div class="booking-details-body">
+                <div class="jaldee-id" *ngIf="waitlist_data.appmtFor[0].id">
+                  <i class="fa fa-id-card-o icon"></i>
+                  <span class="value">Jaldee Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+                </div>
+                <div class="contact-no" *ngIf="waitlist_data.phoneNumber">
+                  <i class="fa fa-mobile icon"></i>
+                  <span class="value">{{waitlist_data.countryCode}}-{{waitlist_data.phoneNumber}}</span>
+                </div>
+                <div class="email" *ngIf="waitlist_data.appmtFor[0].email">
+                  <i class="fa fa-envelope icon"></i>
+                  <span class="value">{{waitlist_data.appmtFor[0].email}}</span>
+                </div>
+                <div class="gender-and-dob">               
+                  <div *ngIf="waitlist_data.appmtFor[0].gender" class="gender">                     
+                    <i *ngIf="waitlist_data.appmtFor[0].gender === 'male'" class="fa fa-mars icon"></i>
+                    <i *ngIf="waitlist_data.appmtFor[0].gender === 'female'" class="fa fa-venus icon"></i>
+                    <span class="value">{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
+                  </div>
+                  <div class="dob">
+                    <i class="fa fa-calendar-o icon"></i>
+                    <span class="value">25/07/1996</span>
+                  </div>
+                </div>
+                <div class="location">
+                  <i class="fa fa-map-marker icon"></i>
+                  <span class="value">HSR Layout, Bangalore</span>
+                </div>
+                <div class="available-records">
+                  <div class="head">Available Records</div>
+                  <div class="value">2 case entries, 2 medical records, 4 documents</div>
+                </div>
+                <button class="btn create-prescription-button">Create Prescription</button>
+              </div>
+            </div>
   </div>
-  <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-    <div class="card-body p-3">
-      <div class="form-group" *ngIf="waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
-        <label class="text-muted font-p8 no-margin">{{waitlist_data.service.consumerNoteTitle}}</label>
-        <div class="consumer-note text-muted">{{waitlist_data.consumerNote}}</div>
+  <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 padding-20px">
+    <div class="card-body records p-0">
+      <div class="notes" *ngIf="waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
+        <label class="no-margin">{{waitlist_data.service.consumerNoteTitle}}</label>
+        <div class="consumer-notes">{{waitlist_data.consumerNote}}</div>
       </div>
-      <div class="form-group mb-0"
+      <div class="private-notes"
         *ngIf="(waitlist_data.waitlistStatus && waitlist_data.waitlistStatus !== 'blocked') || (waitlist_data.apptStatus && waitlist_data.apptStatus !== 'blocked')">
-        <label for="exampleTextarea" class="text-muted font-p8 no-margin">Private Notes</label>
-        <textarea class="form-control round-10" rows="3" [(ngModel)]="privateNote"></textarea>
-        <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" (click)="savePrivateNote()"
-          *ngIf="privateNote != ''">Save</button>
+        <div>
+          <label for="exampleTextarea" class="no-margin">Private Notes</label>
+          <a class="save-btn" (click)="savePrivateNote()" *ngIf="privateNote != ''">Save</a>
+        </div>
+        <textarea class="form-control private-notes-input" rows="6" [(ngModel)]="privateNote"></textarea>
       </div>
     </div>
   </div>
