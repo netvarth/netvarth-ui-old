@@ -431,11 +431,11 @@ td, .d-lg-none .mgn-up-5 {
   text-transform: capitalize !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .collapse.show {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .collapse {
   overflow: hidden !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .collapse.show.in .card-body {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .collapse.in .card-body {
   padding: 0 !important;
 }
 
@@ -458,6 +458,10 @@ td, .d-lg-none .mgn-up-5 {
 
 .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input:nth-child(1) {
   padding-top: 15px !important;
+}
+
+.collapse.in:not(.show) {
+  display: block !important;
 }
 
 /* Filter Code Ends Here */
