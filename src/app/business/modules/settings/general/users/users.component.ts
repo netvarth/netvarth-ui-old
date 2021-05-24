@@ -469,7 +469,12 @@ export class BranchUsersComponent implements OnInit {
         this.doSearch();
     }
     getLanguages(languages) {
-        languages = JSON.parse(languages).toString();
+        languages = JSON.parse(languages);
+        for (var i = 0; i < languages.length; i++) {
+            languages[i] = JSON.parse(languages[i]);
+            languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
+        languages = languages.toString();
         if (languages.length > 1) {
             languages = languages.replace(/,/g, ", ");
         }
@@ -487,12 +492,11 @@ export class BranchUsersComponent implements OnInit {
         this.selectedUser = user;
         if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
             this.manageSettings(user.id)
-        }else{
+        } else {
             this.personalProfile(user.id)
         }
-      }
-      stopprop(event) {
+    }
+    stopprop(event) {
         event.stopPropagation();
-      }
+    }
 }
-

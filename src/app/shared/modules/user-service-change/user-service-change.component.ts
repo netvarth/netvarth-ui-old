@@ -274,11 +274,15 @@ export class UserServiceChnageComponent implements OnInit {
     const service_list: any = [];
     result.forEach(serviceObj => {
       let userName = '';
-      let languages = '';
+      let languages;
       let specialization;
       userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
+        // languages = JSON.parse(serviceObj.preferredLanguages);
         languages = JSON.parse(serviceObj.preferredLanguages);
+        for (var i = 1; i < languages.length; i++) {
+          languages[i] = JSON.parse(languages[i]).charAt(0).toUpperCase();
+        }
       }
       if (serviceObj.specialization) {
         specialization = serviceObj.specialization.toString();
@@ -300,8 +304,8 @@ export class UserServiceChnageComponent implements OnInit {
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
           'state': serviceObj.state,
-          'currentWlCount':serviceObj.currentWlCount
-          
+          'currentWlCount': serviceObj.currentWlCount
+
         });
     });
     return service_list;
@@ -533,4 +537,3 @@ export class UserServiceChnageComponent implements OnInit {
     this.doSearch();
   }
 }
-

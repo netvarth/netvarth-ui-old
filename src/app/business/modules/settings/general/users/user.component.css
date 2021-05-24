@@ -76,6 +76,7 @@
 }
 .username {
   font-size: 0.9rem;
+  display: flex;
 }
 .mgn-lt-45 {
   margin-left: 45px
@@ -201,7 +202,8 @@ td, .d-lg-none .mgn-up-5 {
   border: 2px solid white;
   bottom: 0;
   right: 0;
-  position: absolute;
+  margin: auto 0;
+  /* position: absolute; */
 }
 
 .status-circle.green {

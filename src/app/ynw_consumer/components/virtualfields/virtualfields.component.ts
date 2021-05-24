@@ -31,22 +31,11 @@ export class VirtualFieldsComponent implements OnInit {
   disableButton;
   loading = false;
   languages = [
-    "Assamese",
-    "Bengali",
-    "Gujarati",
     "Hindi",
     "Kannada",
-    "Konkani",
     "Malayalam",
-    "Marathi",
-    "Manipuri",
-    "Oriya",
-    "Punjabi",
-    "Rajasthani",
-    "Sanskrit",
     "Tamil",
-    "Telugu",
-    "Urdu"
+    "Telugu"
   ];
   hideLanguages = true;
   api_loading = true;
