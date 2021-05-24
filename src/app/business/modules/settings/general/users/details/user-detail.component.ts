@@ -220,6 +220,9 @@ export class BranchUserDetailComponent implements OnInit {
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+            // whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            // telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
             // location : ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -285,7 +288,9 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
-            'postalCode': this.user_data.pincode || null
+            'postalCode': this.user_data.pincode || null,
+            // 'whatsappumber':    this.user_data.whatsAppNum || null,         
+            // 'telegramnumber': this.user_data.telegramNum || null
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -345,8 +350,20 @@ export class BranchUserDetailComponent implements OnInit {
             // 'deptId': input.selectedDepartment,
             // 'isAdmin' :
             'userType': input.selectedUserType,
-            'pincode': input.postalCode
+            'pincode': input.postalCode,           
         };
+        // if(input.whatsappumber !== ''){
+        //     const whatsup = {}
+        //     whatsup["countryCode"] = '+91'
+        //     whatsup["number"] = input.whatsappumber
+        //     post_data1['whatsAppNum']= whatsup;
+        // }
+        // if(input.telegramnumber !== ''){
+        //     const telegram = {}
+        //     telegram["countryCode"] = '+91'
+        //     telegram["number"] = input.whatsappumber
+        //     post_data1['telegramNum']= telegram;          
+        // }
         if(input.phonenumber !==''){
             post_data1['countryCode'] = '+91',
             post_data1['mobileNo'] = input.phonenumber;
