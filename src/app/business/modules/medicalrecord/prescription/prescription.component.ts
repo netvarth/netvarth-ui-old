@@ -237,26 +237,30 @@ export class PrescriptionComponent implements OnInit {
 
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const addnotedialogRef = this.dialog.open(AddNoteComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            message:''
-          }
-      });
-      addnotedialogRef.afterClosed().subscribe(result1 => {
-          if(result1){
-            console.log(result1);
-            this.note = result1.message;
-          }
-          this.saveRx(result);
-      });
+        this.saveRx(result);
+    //     setTimeout(() => {       
+    //     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         message:''
+    //       }
+    //   });
+    //   addnotedialogRef.afterClosed().subscribe(result1 => {
+    //       if(result1){
+    //         console.log(result1);
+    //         this.note = result1.message;
+    //       }
+    //       
+    //   });
+    // }, 500);
       }
     });
   }
 
   saveRx(result) {
+    this.loading = true;
     let passdata = {
       "prescriptionsList":result,
       "notes": this.note
@@ -270,6 +274,7 @@ export class PrescriptionComponent implements OnInit {
 
         },
           error => {
+            this.loading = false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
@@ -282,11 +287,44 @@ export class PrescriptionComponent implements OnInit {
 
         },
           error => {
+            this.loading = false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
-
+  addNote(){
+    const addnotedialogRef = this.dialog.open(AddNoteComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+              message:''
+            }
+        });
+        addnotedialogRef.afterClosed().subscribe(result1 => {
+            if(result1){
+              console.log(result1);
+             // this.note = result1.message;
+              this.loading = true;
+              let passdata = {
+                "prescriptionsList":this.drugList,
+                "notes": result1.message
+              }
+              this.provider_services.updateMRprescription(passdata, this.mrId).
+              subscribe(res => {
+                this.snackbarService.openSnackBar('Prescription updated Successfully');
+                this.getMrprescription(this.mrId);
+                this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      
+              },
+                error => {
+                  this.loading = false;
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+            }
+            
+        });
+  }
   updatePrescription() {
     this.disable = true;
     const navigationExtras: NavigationExtras = {

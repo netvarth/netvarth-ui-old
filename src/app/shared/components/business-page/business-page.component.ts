@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -293,6 +293,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   consumerVirtualinfo: any;
   accountProperties: any;
   theme: any;
+  profileSettings: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -317,11 +318,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-
-
-
+    this.onResize();
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   ngOnInit() {
     this.api_loading = true;
     this.userId = null;
@@ -394,6 +405,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
+    const _this = this;
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
@@ -409,27 +421,32 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           (domainConfig) => {
             this.domainList = domainConfig;
             this.getAccountIdFromEncId(this.accountEncId).then(
-              (id: string) => {
-                this.provider_id = id;
-                const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-                // if (!appPopupDisplayed && this.provider_id !== 128007) {
-                if (!appPopupDisplayed && this.provider_id !== 152877) {
-                  this.popUp.nativeElement.style.display = 'block';
-                } else {
-                  this.popUp.nativeElement.style.display = 'none';
-                }
-                this.domainConfigService.getUIAccountConfig().subscribe(
+              (id: any) => {               
+                _this.provider_id = id;               
+                _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any)=> {
-                    if (uiconfig && uiconfig[this.provider_id]) {
-                      this.accountProperties = uiconfig[this.provider_id]; 
-                      this.theme=this.accountProperties['theme'];                     
+                    _this.accountProperties = uiconfig;                       
+                      if (_this.small_device_display) {
+                        _this.profileSettings = _this.accountProperties['smallDevices'];
+                      } else {
+                        _this.profileSettings = _this.accountProperties['normalDevices'];
+                      }                      
+                      _this.theme=_this.accountProperties['theme'];  
+                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                     
+                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                        _this.popUp.nativeElement.style.display = 'block';
+                      }                  
+                      _this.gets3curl();
+                  }, (error: any) => {
+                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                    
+                    if (!appPopupDisplayed) {
+                      _this.popUp.nativeElement.style.display = 'block';
                     }
-                    this.gets3curl();
+                    _this.gets3curl();
                   }
-                )
-                
+                )                
               },()=>{
-                this.gets3curl();
+                _this.gets3curl();
               }
             );
           }
@@ -711,9 +728,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageFound = true;
       this.socialMedialist = [];
       this.businessjson = res;
-      if (this.businessjson.serviceSector.name !== 'healthCare') {
-        this.service_cap = 'Services';
-      }
+      // if (this.businessjson.serviceSector.name !== 'healthCare') {
+      //   this.service_cap = 'Services';
+      // }
       if (this.businessjson.cover) {
         this.bgCover = this.businessjson.cover.url;
       }

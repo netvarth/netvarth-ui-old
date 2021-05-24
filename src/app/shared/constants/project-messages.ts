@@ -1484,6 +1484,7 @@ export const Messages = {
   'TOKEN': 'Token',
   'COUPON_UPGRADE_LICENSE': 'You are not allowed to do this operation. Please upgrade license package',
   'WAITLIST_CAP': 'You can create multiple queues here.',
+  'USERSCHEDULE_CAP':'You can create multiple Schedules here.',
   'WORK_ON_CAP': 'Enabled',
   'WORK_OFF_CAP': 'Disabled',
   'ENABLE_MSG_CAP': 'If the status is disabled, online check ins cannot be done for this schedule.',

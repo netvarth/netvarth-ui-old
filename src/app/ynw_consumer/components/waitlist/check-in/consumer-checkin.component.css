@@ -1647,3 +1647,9 @@ body.modal-open {
   color: #A986AC !important;
   font-weight: 700 !important;
 }
+.sts-msg.error {
+  padding-left: 0 !important;
+  font-weight: 500 !important;
+  font-size: 0.8rem !important;
+  color: red !important;
+}

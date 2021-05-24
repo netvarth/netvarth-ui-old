@@ -118,6 +118,7 @@
 }
 .username {
   font-size: 0.9rem;
+  display: flex;
 }
 .mgn-lt-45 {
   margin-left: 45px
@@ -179,4 +180,22 @@ td, .d-lg-none .mgn-up-5 {
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   white-space: nowrap !important;
+}
+.status-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid white;
+  bottom: 0;
+  right: 0;
+  margin: auto 0;
+  /* position: absolute; */
+}
+
+.status-circle.green {
+  background-color: green;
+}
+
+.status-circle.grey {
+  background-color: darkgrey;
 }

@@ -328,13 +328,13 @@ export class BranchUsersComponent implements OnInit {
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.firstName !== '') {
-            api_filter['firstName-eq'] = this.filter.firstName;
+            api_filter['firstName-like'] = this.filter.firstName;
         }
         if (this.filter.lastName !== '') {
-            api_filter['lastName-eq'] = this.filter.lastName;
+            api_filter['lastName-like'] = this.filter.lastName;
         }
         if (this.filter.location !== '') {
-            api_filter['locationName-eq'] = this.filter.location;
+            api_filter['locationName-like'] = this.filter.location;
         }
         if (this.filter.pincode !== '') {
             api_filter['pinCode-eq'] = this.filter.pincode;
@@ -469,7 +469,11 @@ export class BranchUsersComponent implements OnInit {
         this.doSearch();
     }
     getLanguages(languages) {
-        languages = JSON.parse(languages).toString();
+        languages = JSON.parse(languages);
+        for (var i = 0; i < languages.length; i++) {
+            languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
+        languages = languages.toString();
         if (languages.length > 1) {
             languages = languages.replace(/,/g, ", ");
         }
@@ -487,12 +491,11 @@ export class BranchUsersComponent implements OnInit {
         this.selectedUser = user;
         if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
             this.manageSettings(user.id)
-        }else{
+        } else {
             this.personalProfile(user.id)
         }
-      }
-      stopprop(event) {
+    }
+    stopprop(event) {
         event.stopPropagation();
-      }
+    }
 }
-

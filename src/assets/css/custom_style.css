@@ -13848,9 +13848,11 @@ width: 40px !important;
 }
 #fb-root {
   visibility: hidden;
+  display: none !important;
 }
 .visible_chat {
   visibility: visible !important;
+  display: block !important;
 }
 @media only screen and (max-width: 767px) {
   .bt2 {

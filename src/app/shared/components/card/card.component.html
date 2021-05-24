@@ -264,8 +264,22 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
                     {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="waitlist.provider">
-                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="time_type == 3 && waitlist.waitlistStatus">
+                    <span class="started_status_clr" *ngIf="waitlist.waitlistStatus == 'started' || waitlist.waitlistStatus == 'arrived'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>
+                    <span class="cancelled_status_clr" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>
+                    <span class="" *ngIf="waitlist.waitlistStatus !== 'started' && waitlist.waitlistStatus !== 'arrived' && waitlist.waitlistStatus !== 'cancelled'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>   
+                    </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="waitlist.provider">
+                    Assigned: {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
+                    Not assigned
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
                     <!-- <span class="b1">Location : </span> -->
@@ -274,12 +288,14 @@
                         {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details">
-                    <span *ngIf="waitlist.waitlistingFor[0].age">Age: {{getAge(waitlist.waitlistingFor[0].age)}}</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}}</span>
                     <span *ngIf="waitlist.waitlistingFor[0].age">&nbsp;</span>
-                    <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender | capitalizeFirst}}</span>&nbsp;
+                    <span *ngIf="waitlist.waitlistingFor[0].age">,</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].preferredLanguage && (waitlist.waitlistingFor[0].gender || waitlist.waitlistingFor[0].age)">&nbsp;,</span>
                     <span *ngIf="waitlist.waitlistingFor[0].preferredLanguage">{{waitlist.waitlistingFor[0].preferredLanguage}}</span>
                     </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item"> 
                     <i class="fa meet-icon"
                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                     <i class="fa zoom-icon"

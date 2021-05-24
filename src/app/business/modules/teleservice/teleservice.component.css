@@ -256,11 +256,10 @@ textarea {
 
 .body-card .service-status {
     color: #0ba50b !important;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
+    margin-top: 2px !important;
+    margin-bottom: 0px !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
-    margin-left: 20px;
 }
 
 .body-card .custom-red {

@@ -274,11 +274,14 @@ export class UserServiceChnageComponent implements OnInit {
     const service_list: any = [];
     result.forEach(serviceObj => {
       let userName = '';
-      let languages = '';
+      let languages;
       let specialization;
       userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
         languages = JSON.parse(serviceObj.preferredLanguages);
+        for (var i = 0; i < languages.length; i++) {
+          languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
       }
       if (serviceObj.specialization) {
         specialization = serviceObj.specialization.toString();
@@ -300,8 +303,8 @@ export class UserServiceChnageComponent implements OnInit {
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
           'state': serviceObj.state,
-          'currentWlCount':serviceObj.currentWlCount
-          
+          'currentWlCount': serviceObj.currentWlCount
+
         });
     });
     return service_list;
@@ -446,13 +449,13 @@ export class UserServiceChnageComponent implements OnInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.filter.firstName !== '') {
-      api_filter['firstName-eq'] = this.filter.firstName;
+      api_filter['firstName-like'] = this.filter.firstName;
     }
     if (this.filter.lastName !== '') {
-      api_filter['lastName-eq'] = this.filter.lastName;
+      api_filter['lastName-like'] = this.filter.lastName;
     }
     if (this.filter.location !== '') {
-      api_filter['locationName-eq'] = this.filter.location;
+      api_filter['locationName-like'] = this.filter.location;
     }
     if (this.filter.pincode !== '') {
       api_filter['pinCode-eq'] = this.filter.pincode;
@@ -533,4 +536,3 @@ export class UserServiceChnageComponent implements OnInit {
     this.doSearch();
   }
 }
-

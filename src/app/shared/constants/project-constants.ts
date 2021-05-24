@@ -1012,5 +1012,8 @@ export const projectConstantsLocal = {
     ENQUIRY: 'Enquiry',
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
-  }
+  },
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };
+
