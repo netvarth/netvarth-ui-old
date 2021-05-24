@@ -25,13 +25,17 @@
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
                   | capitalizeFirst}}</span><br>
-                <span *ngIf="waitlist_data.provider" class="mgn-up-10 sub-user-name">
+                <div *ngIf="waitlist_data.provider" class="mgn-up-5 sub-user-name">
                     <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
                       </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
                   <span>
                   {{waitlist_data.provider.firstName | capitalizeFirst}}&nbsp;{{waitlist_data.provider.lastName}}</span>
-                </span>
+                </div>
+                <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
+                  <i class="fa fa-mobile icon"></i>
+                  <span>+91 {{waitlist_data.provider.mobileNo}}</span>
+                </div>
               </h2>
               <!-- Content -->
               <div class="mgn-up-10 stats-item">
