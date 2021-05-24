@@ -1,12 +1,24 @@
 {
     "152877": {
-        "theme": "heartfulness_theme1",
-        "showProfile":false,
-        "showVerified": false,
-        "showSpecialization": false,
-        "showQualification": false,
-        "showVirtualFields": false,
-        "showCoverPicture": false,
+        "theme": "heartfulness_theme1",        
+        "smallDevices": {
+          "showProfile":false,
+          "showVerified": true,
+          "showSpecialization": false,
+          "showQualification": false,
+          "showAbout": true,
+          "showVirtualFields": false,
+          "showCoverPicture": true
+        },
+        "normalDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showSpecialization": false,
+          "showAbout": true,
+          "showQualification": true,
+          "showVirtualFields": false,
+          "showCoverPicture": true
+        },
         "manifest": {
             "name": "Heartfulness Care",
             "short_name": "Heartfulness Care",
@@ -69,12 +81,24 @@
     },
     "46805": {
         "theme": "",
-        "showProfile":true,
-        "showVerified": true,
-        "showSpecialization": true,
-        "showQualification": true,
-        "showVirtualFields": true,
-        "showCoverPicture": true,
+        "smallDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showSpecialization": true,
+          "showAbout": false,
+          "showQualification": true,
+          "showVirtualFields": true,
+          "showCoverPicture": true
+        },
+        "normalDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showAbout": false,
+          "showSpecialization": true,
+          "showQualification": true,
+          "showVirtualFields": true,
+          "showCoverPicture": true
+        },
         "manifest": {
             "name": "Dhyan Clinic",
             "short_name": "Dhyan Clinic",

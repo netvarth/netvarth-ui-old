@@ -15,9 +15,12 @@
 </section>
 <section class="">
   <div class="card title-gb"> 
-      <h6 class="mgn-up-10 disp-flex">
-          <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Result Found
+      <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count > 1">
+          <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Doctors Found
       </h6>
+      <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count == 1">
+        <span ></span>{{filterApplied_count}}&nbsp;&nbsp;Doctor Found
+    </h6>
   </div>
 </section>
 <aside class="filterSidebar user-filter" *ngIf="filter_sidebar">
@@ -119,13 +122,13 @@
                               {{service.locationName}},<br>{{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
                             <div class="mgn-up-5" *ngIf="service.mobileNo"> <span class="b1">
-                                Phone number : </span><span class="b2"> +91 {{service.mobileNo}} </span></div>
+                                 </span><span class="b2"> +91 {{service.mobileNo}} </span></div>
                             <div class="mgn-up-5" *ngIf="service.specialization"> <span class="b1">
-                                Specializations : </span> <span class="b2"> {{service.specialization}} </span></div>
+                                 </span> <span class="b2"> {{service.specialization}} </span></div>
                             <div class="mgn-up-5" *ngIf="service.languages"> <span class="b1">
-                                Languages : </span><span class="b2"> {{service.languages}} </span></div>
+                                </span><span class="b2"> {{service.languages}} </span></div>
                             <div class="mgn-up-5"> <span class="b1">
-                                Availability : </span><span class="b2"> {{(service.isAvailable) ? 'Available' : 'Not
+                                </span><span class="b2"> {{(service.isAvailable) ? 'Available' : 'Not
                                 Available'}} </span></div>
                           </div>
                         </div>

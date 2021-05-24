@@ -274,7 +274,7 @@ export class BranchUsersComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.filter_sidebar = false;
-        this.clearFilter();
+        // this.clearFilter();
     }
     clearFilter() {
         this.resetFilter();
@@ -328,13 +328,13 @@ export class BranchUsersComponent implements OnInit {
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.firstName !== '') {
-            api_filter['firstName-eq'] = this.filter.firstName;
+            api_filter['firstName-like'] = this.filter.firstName;
         }
         if (this.filter.lastName !== '') {
-            api_filter['lastName-eq'] = this.filter.lastName;
+            api_filter['lastName-like'] = this.filter.lastName;
         }
         if (this.filter.location !== '') {
-            api_filter['locationName-eq'] = this.filter.location;
+            api_filter['locationName-like'] = this.filter.location;
         }
         if (this.filter.pincode !== '') {
             api_filter['pinCode-eq'] = this.filter.pincode;
@@ -495,3 +495,4 @@ export class BranchUsersComponent implements OnInit {
         event.stopPropagation();
       }
 }
+

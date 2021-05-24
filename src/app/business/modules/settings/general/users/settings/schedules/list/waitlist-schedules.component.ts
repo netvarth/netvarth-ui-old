@@ -28,7 +28,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     loc_name;
     new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
-    waitlist_cap = Messages.WAITLIST_CAP;
+    userschedule_cap = Messages.USERSCHEDULE_CAP;
     customer_label = '';
     locations;
     api_loading = true;

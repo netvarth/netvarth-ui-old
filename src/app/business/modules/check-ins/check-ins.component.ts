@@ -346,6 +346,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   qAvailability;
   instantdialogRef: any;
   instaQid: any;
+  unassignview = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -473,7 +474,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.active_user);
     if (this.active_user.adminPrivilege) {
       this.admin = true;
     }
@@ -1057,7 +1057,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view, source, type?) {
 
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege) {
+    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
 
@@ -1268,6 +1268,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.unassignview = false;
     this.activeUser = null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
@@ -1413,9 +1414,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if(this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['queue-eq'] = this.selQIds;
+        if(this.activeUser && this.unassignview){
+          Mfilter['provider-eq'] =  null;
+        }
+        else{
+          Mfilter['provider-eq'] = this.activeUser;
+        }
+      } 
+      else {
+        // Mfilter['queue-eq'] = this.selQIds;
+        // this.unassignview = false;
+        if(this.unassignview){
+          Mfilter['provider-eq'] =  null;
+        }
+        else{
+          Mfilter['queue-eq'] = this.selQIds;
+        }
       }
       this.groupService.setitemToGroupStorage('selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
@@ -1478,9 +1492,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const Mfilter = this.setFilterForApi();
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
+        // Mfilter['provider-eq'] = this.activeUser;
+        if(this.activeUser && this.unassignview){
+          Mfilter['provider-eq'] =  null;
+        }
+        else{
+          Mfilter['provider-eq'] = this.activeUser;
+        }
       } else {
-        Mfilter['queue-eq'] = this.selQIds;
+        if(this.unassignview){
+          Mfilter['provider-eq'] =  null;
+        }
+        else{
+          Mfilter['queue-eq'] = this.selQIds;
+        }
       }
       // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
@@ -2996,7 +3021,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loadApiSwitch('reloadAPIs');
   }
-
+  gotoUnassign(){
+    this.unassignview = true;
+    this.loadApiSwitch('reloadAPIs');
+  }
   openAttachmentGallery(checkin) {
     this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
@@ -3328,7 +3356,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
-      const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime;
+      const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime + ' ?';
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

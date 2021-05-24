@@ -373,13 +373,13 @@ export class BranchUserDetailComponent implements OnInit {
             console.log(post_data1);
             this.provider_services.createUser(post_data1).subscribe(() => {
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
-               
+                this.userAddConfirm()
               
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-                this.userAddConfirm()
+                
         }
     }
     onCancel() {

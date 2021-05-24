@@ -134,7 +134,8 @@ color:#fff !important;
   box-shadow: 15px 15px 40px #dba8c4 !important;
 }
 
-.heartfulness_theme1.c-checkin-new button.hf-btn {
+.heartfulness_theme1.c-checkin-new button.hf-btn,
+.heartfulness_theme1.confirm-aptckn .ok-btn span.hf-btn {
   background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
   box-shadow: 15px 15px 40px #DBA8C4 !important;
   opacity: 1 !important;
@@ -151,4 +152,115 @@ color:#fff !important;
   box-shadow: 15px 15px 40px #dba8c4 !important;
   border: none !important;
   color: white !important;
+}
+
+.heartfulness_theme1.loginmainclass.popup-class,
+.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: white !important;
+}
+
+.heartfulness_theme1.loginmainclass.popup-class mat-dialog-container.mat-dialog-container,
+.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  margin: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  min-height: 300px !important;
+}
+
+.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  max-width: 600px !important;
+}
+
+@media (max-width: 450px) {
+  .heartfulness_theme1.loginmainclass.popup-class {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .heartfulness_theme1.loginmainclass.popup-class mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .heartfulness_theme1.commonpopupmainclass.popup-class.specialclass {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.heartfulness_theme1.c-checkin-new .hf-double-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: space-between !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.heartfulness_theme1.c-checkin-new .hf-single-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: center !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.heartfulness_theme1.c-checkin-new .panel-heading i.fa.fa-arrow-left {
+  color: white !important;
+}
+
+.heartfulness_theme1.c-checkin-new .hf-panel-body {
+  background-color: white !important;
+}
+
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
+.heartfulness_theme1 .question-value1, .question-valuearr,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 .more,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-valuearr .virtual-field-ul .vfield-row,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content.showmoresec .question-main-outer .question-value1 .badges li
+.heartfulness_theme1 ul.details.badges li
+{
+color: #fff !important;
+}
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .more-less-button a
+{
+color: #aaa !important;
+
+}
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .address h6 a {
+color: #fff !important;
+}
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
+  background-color: transparent !important;
+}
+
+.heartfulness_theme1 .hf-bg-white {
+  background-color: white !important;
+}
+
+.heartfulness_theme1.confirm-aptckn .content.hf-no-padding {
+  padding: 0 !important;
+}
+
+.heartfulness_theme1.hf-no-bg {
+  background-image: none !important;
 }

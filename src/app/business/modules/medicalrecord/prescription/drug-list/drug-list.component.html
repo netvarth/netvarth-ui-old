@@ -34,7 +34,7 @@
     <div class="row">
         <div class="copy">
             <div class="table-outer q-itm">
- <div class="drugdetailslist pad-20 " *ngIf="drugList.length>0">
+ <div class="drugdetailslist pad-20 " *ngIf="drugList && drugList.length>0">
   <h5> Medicines added to the prescription</h5>
 <table class="table" >
     <thead>
@@ -117,7 +117,7 @@
   <div>
       <div class="form-group notesize">
           
-              <label>Note</label>
+              <label>Instructions to the patient</label>
             <textarea  class="form-control" id="message"
             [(ngModel)]="note" 
               maxlength="500"> </textarea>
@@ -133,7 +133,7 @@
 
  
 
-  <div  *ngIf="drugList.length > 0 && showSave" class="mgn-up-10">
+  <div  *ngIf="drugList && drugList.length > 0 && showSave" class="mgn-up-10">
       <button type="button" mat-button  class="cs-btn bt1" [disabled]="disable" (click)="saveRx()">Save Prescription </button>
   </div>
   <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">

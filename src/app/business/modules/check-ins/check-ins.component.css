@@ -81,7 +81,7 @@
 }
 .user-token-circle {
     color: white;
-    background: #1E4079;
+    background: #3E234B;
     width: 60px;
     height: 40px;
     text-align: center;
@@ -147,4 +147,19 @@
     color: white !important;
     background-color: #ce4430 !important;
     border-color: #ce4430 !important;
+}
+.btn-play .wtsapvid-icon {
+    width: 15px !important;
+}
+.btn-play .zoom-icon {
+    width: 20px !important;
+}
+.q-actions {
+    display: flex !important;
+}
+.user-txt-clr {
+    color: #3E234B;
+}
+.user-tr-backclr {
+    background: #f0ecf6;
 }
