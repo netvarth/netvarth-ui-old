@@ -544,20 +544,20 @@ export class VirtualFieldsComponent implements OnInit {
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
-
+    memberInfo.userProfile = {}
     if (formdata.whatsappnumber !== '') {
       const whatsup = {}
       whatsup["countryCode"] = '+91',
         whatsup["number"] = formdata.whatsappnumber
-      memberInfo['whatsAppNum'] = whatsup;
+      memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
       telegram["countryCode"] = '+91',
         telegram["number"] = formdata.whatsappnumber
-      memberInfo['telegramNum'] = telegram;
+      memberInfo.userProfile['telegramNum'] = telegram;
     }
-    memberInfo.userProfile = {}
+   
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
     memberInfo.userProfile['gender'] = formdata.gender;
