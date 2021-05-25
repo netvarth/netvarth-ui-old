@@ -70,6 +70,7 @@ export class DrugListComponent implements OnInit {
       this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.details) {
         const data = JSON.parse(queryParams.details);
+        console.log(data);
         this.drugList = data;
       }
       if (queryParams.mode) {
@@ -141,10 +142,13 @@ export class DrugListComponent implements OnInit {
 
   getMrprescription() {
     if (this.mrId) {
+      this.drugList = [];
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
-          if (data) {
+          console.log(data)
+          if (Object.keys(data).length !== 0 && data.constructor === Object) {
             this.drugList = data['prescriptionsList'];
+            console.log(data)
             this.note = data['notes'];
             this.loading = false;
           } else {

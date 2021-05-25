@@ -30,11 +30,11 @@
                           </div>
                           
 <ng-container *ngIf="!loading">
-  <div class="w-dta" >
+  <div class="w-dta" *ngIf="drugList && drugList.length>0">
     <div class="row">
         <div class="copy">
             <div class="table-outer q-itm">
- <div class="drugdetailslist pad-20 " *ngIf="drugList && drugList.length>0">
+ <div class="drugdetailslist pad-20 " >
   <h5> Medicines added to the prescription</h5>
 <table class="table" >
     <thead>
@@ -150,7 +150,7 @@
       </div> -->
 </div></div></div></div>
 </div>
-<div class="btm-pad-20" *ngIf="drugList.length === 0">
+<div class="btm-pad-20" *ngIf="drugList && drugList.length == 0">
      <div>
       Medicines are not added
      </div>
