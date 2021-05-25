@@ -207,7 +207,8 @@
     color: #374957 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card {
     box-shadow: none !important;
     padding: 10px 15px !important;
     border-radius: 0 !important;
@@ -215,7 +216,8 @@
     border-bottom: 1px solid #e3e9ed !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button {
     /* color: #1E4079 !important; */
     color: #374957 !important;
     font-weight: 700 !important;
@@ -235,41 +237,49 @@
     /* text-transform: uppercase !important; */
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button.collapsed {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button.collapsed,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button.collapsed {
     width: 100% !important;
     padding: 0 !important;
     background-color: transparent !important;
     margin: 0 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:hover {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:hover,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button:hover {
     /* color: #1E4079 !important; */
     color: #374957 !important;
     text-decoration: none !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:active {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:active,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button:active {
     box-shadow: none !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:focus {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:focus,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button:focus {
     text-decoration: none !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:active:focus {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button:active:focus,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button:active:focus {
     box-shadow: none !important;
     outline: none !important;
     text-decoration: none !important;
 }
 
 .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fa,
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fas {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fas,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button i.fa,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button i.fas {
   font-size: 16px !important;
   color: #374957 !important;
   font-weight: 700 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fa.fa-angle-down {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fa.fa-angle-down,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button i.fa.fa-angle-down {
     /* font-size: 22px !important; */
     /* color: #1E4079 !important; */
     font-size: 16px !important;
@@ -277,31 +287,37 @@
     font-weight: 700 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fa.fa-angle-down {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button i.fa.fa-angle-down,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button i.fa.fa-angle-down {
     transition: 0.70s !important;
     transform: rotate(180deg) !important;
 } 
   
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button.collapsed i.fa.fa-angle-down {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header h2 button.collapsed i.fa.fa-angle-down,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header h2 button.collapsed i.fa.fa-angle-down {
     transition: 0.70s !important;
     transform: rotate(0deg) !important;
 }
 
-/* .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body {
+/* .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body {
     margin-top: 10px !important;
 } */
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-text-input {
     border-bottom: 0 !important;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-text-input li.filter-li {
     margin: 0 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-text-input li.filter-li .filter-textbox {
     /* height: 40px !important; */
     height: 34px !important;
     width: 100% !important;
@@ -320,7 +336,8 @@
     color: #5f7d95 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox::placeholder {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox::placeholder,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-text-input li.filter-li .filter-textbox::placeholder {
     /* font-weight: 700 !important; */
     /* font-size: 15px !important; */
     font-size: 14px !important;
@@ -328,25 +345,30 @@
     color: #888 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input {
     /* padding: 15px 0 !important; */
     padding: 5px 0 10px !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input li.filterli {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input li.filterli,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input li.filterli {
     /* margin: 0 15px !important; */
     margin: 0 !important;
 }
 
-.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox {
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox {
     margin-top: 5px !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout {
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout {
     margin: 0 !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container {
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container {
     /* height: 20px !important;
     width: 20px !important; */
     height: 18px !important;
@@ -357,19 +379,22 @@
     margin-right: 10px !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame {
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame {
     /* border-radius: 50% !important;
     border-color: #888 !important; */
     border: 0 !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background {
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background,
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background {
     /* border-radius: 50% !important; */
     /* background-color: #1E4079 !important; */
     background-color: #0f73ee !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label {
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label,
+::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label {
     /* font-size: 15px !important;
     font-weight: 700 !important;
     color: darkslategrey !important; */
