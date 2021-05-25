@@ -37,6 +37,7 @@ export class NotificationComponent implements OnInit {
   telegramdialogRef: any;
   telegramstat = true ;
   status = false ;
+  boturl: any;
   // breadcrumbs_init = [
   //   {
   //     title: this.changemob_cap,
@@ -77,7 +78,7 @@ export class NotificationComponent implements OnInit {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
-            data: ''
+            data: this.boturl
           });
             this.telegramdialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -107,7 +108,11 @@ export class NotificationComponent implements OnInit {
     .subscribe(
       (data:any) => {
        console.log(data);
-       this.status = data;
+       this.status = data.status;
+       if(data.botUrl){
+        this.boturl = data.botUrl;
+       }
+       
       },
       error => {
         console.log(error);

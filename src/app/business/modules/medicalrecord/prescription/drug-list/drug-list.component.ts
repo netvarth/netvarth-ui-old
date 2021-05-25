@@ -56,6 +56,7 @@ export class DrugListComponent implements OnInit {
   removedrugdialogRef;
   customer_label = '';
   note = '';
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,

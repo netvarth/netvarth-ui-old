@@ -55,6 +55,7 @@ export class UploadPrescriptionComponent implements OnInit {
   removeprescriptiondialogRef;
   imagesviewdialogRef;
   image_list_popup: Image[];
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)

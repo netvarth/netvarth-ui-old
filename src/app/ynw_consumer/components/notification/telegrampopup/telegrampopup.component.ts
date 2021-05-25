@@ -32,6 +32,7 @@ export class telegramPopupComponent implements OnInit {
   };
   showCaptionBox: any = {};
   activeImageCaption: any = [];
+    url: any;
   constructor(
     public dialogRef: MatDialogRef<telegramPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,8 +43,8 @@ export class telegramPopupComponent implements OnInit {
      private wordProcessor: WordProcessor
     
   ) {
-      if(this.data.message){
-        this.message = this.data.message;
+      if(this.data){
+        this.url = this.data;
       }
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
@@ -60,10 +61,10 @@ export class telegramPopupComponent implements OnInit {
     this.disableButton = true;
     console.log(form_data);
     
-    this.dialogRef.close(form_data);
-
-
-    
+    this.dialogRef.close(form_data);    
+  }
+  close(){
+    this.dialogRef.close(); 
   }
   resetApiErrors() {
     this.api_error = null;
