@@ -228,8 +228,8 @@ export class BranchUserDetailComponent implements OnInit {
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-            // whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
-            // telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
 
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
@@ -297,8 +297,8 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            // 'whatsappumber':    this.user_data.whatsAppNum || null,         
-            // 'telegramnumber': this.user_data.telegramNum || null
+            'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : null, 
+            'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : null, 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -362,18 +362,18 @@ export class BranchUserDetailComponent implements OnInit {
             'userType': input.selectedUserType,
             'pincode': input.postalCode,           
         };
-        // if(input.whatsappumber !== ''){
-        //     const whatsup = {}
-        //     whatsup["countryCode"] = '+91'
-        //     whatsup["number"] = input.whatsappumber
-        //     post_data1['whatsAppNum']= whatsup;
-        // }
-        // if(input.telegramnumber !== ''){
-        //     const telegram = {}
-        //     telegram["countryCode"] = '+91'
-        //     telegram["number"] = input.whatsappumber
-        //     post_data1['telegramNum']= telegram;          
-        // }
+        if(input.whatsappumber !== ''){
+            const whatsup = {}
+            whatsup["countryCode"] = '+91'
+            whatsup["number"] = input.whatsappumber
+            post_data1['whatsAppNum']= whatsup;
+        }
+        if(input.telegramnumber !== ''){
+            const telegram = {}
+            telegram["countryCode"] = '+91'
+            telegram["number"] = input.whatsappumber
+            post_data1['telegramNum']= telegram;          
+        }
         // let phone = pN;
         // if(pN.startsWith(dialCode)) {
         //     phone = pN.split(dialCode)[1];
