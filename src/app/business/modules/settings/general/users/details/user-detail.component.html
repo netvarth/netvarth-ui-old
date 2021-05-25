@@ -132,7 +132,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                                         </div>
                                     </div> -->
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group mobile-field" style="width: 100%">
                                             <mat-form-field>
                                                 <div class="input-group">
@@ -155,6 +155,38 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
             })">
                                             </app-field-error-display>
                                         </div>
+                                    </div> -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="col-md-3 col-sm-3 col-xs-3 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="input-group-text" id="countryCode"
+                                                        placeholder="Country code " formControlName="countryCode"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
+                                            <div class="form-group">
+
+                                            <mat-form-field>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="form-control text-width" id="phonenumber"
+                                                        placeholder="Enter Mobile # " formControlName="phonenumber"
+                                                        autocomplete="off" maxlength="10">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
+                                                [errorMsgs]="fed_service.getErrorMessage(userForm,'phonenumber',
+                                                    {
+                                                    'minlength' : 'Enter a 10 digit mobile number',
+                                                    'maxlength' : 'Enter a 10 digit mobile number',
+                                                    'pattern' : 'Enter a 10 digit mobile number'
+                                                    })">
+                                            </app-field-error-display>
+                                            </div>
+                                        </div>  
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">

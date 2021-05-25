@@ -225,6 +225,7 @@ export class BranchUserDetailComponent implements OnInit {
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: ['male'],
             // phonenumber: new FormControl(undefined),
+            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
@@ -379,7 +380,7 @@ export class BranchUserDetailComponent implements OnInit {
         //     phone = pN.split(dialCode)[1];
         //   }
         if(input.phonenumber !==''){
-            post_data1['countryCode'] = '+91',
+            post_data1['countryCode'] = '+'+input.countryCode,
             post_data1['mobileNo'] = input.phonenumber;
         }
         if (input.selectedUserType === 'PROVIDER') {
