@@ -1,202 +1,79 @@
-
 <h1 class="mat-dialog-title">Set your availability
-    
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-      <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-  </h1>
-  <!-- <mat-dialog-container class="mat-dialog-container">
-        <div class="addContainer">
-                <div class="modalHeader">
-                </div>
-                <div class="mat-dialog-content">
-                        
-                </div>
-        </div>
-  </mat-dialog-container> -->
-  <mat-dialog-content>
-    <div class="row m0 instantQueue-component-modal-content">
-        <div class="col-md-12 p0">
-                <div class="text-message">
-                        This enables you to instantly make yourself available today for consultation within the time range you choose.
-                </div>
-                <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
-                                onSubmit(instantQForm.value)" >
-                        <div class="timings">
-                                <div class="head">Make me available</div>
-                                <div class="form-timepicker-fields">
-                                        <div class="start">
-                                                <label class="start-time-label" for="start-time-label">
-                                                        From
-                                                        <span style="color: red !important; font-weight: 700 !important;">*</span>
-                                                </label>
-                                                <span class="editable-text"
-                                                        (click)="editStartTime()"
-                                                        *ngIf="!sTimeEditable">
-                                                        {{fromDateCaption}}
-                                                        <i class="fa fa-pencil-square-o"></i>
-                                                </span>
-                                                <div class="form-group" *ngIf="sTimeEditable">
-                                                        <div class="startendtime">
-                                                                <div class="starttimediv">
-                                                                        <ngb-timepicker
-                                                                                formControlName="dstart_time"
-                                                                                meridian="true">
-                                                                        </ngb-timepicker>
+        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+</h1>
+<mat-dialog-content>
+        <div class="row m0 instantQueue-component-modal-content">
+                <div class="col-md-12 p0">
+                        <div class="text-message">
+                                This enables you to instantly make yourself available today for consultation within the
+                                time range you choose.
+                        </div>
+                        <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
+                                onSubmit(instantQForm.value)">
+                                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                                <div class="timings" *ngIf="!loading">
+                                        <div class="head">Make me available</div>
+                                        <div class="form-timepicker-fields">
+                                                <div class="start">
+                                                        <label class="start-time-label" for="start-time-label">
+                                                                From
+                                                                <span
+                                                                        style="color: red !important; font-weight: 700 !important;">*</span>
+                                                        </label>
+                                                        <span class="editable-text" (click)="editStartTime()"
+                                                                *ngIf="!sTimeEditable">
+                                                                {{fromDateCaption}}
+                                                                <i class="fa fa-pencil-square-o"></i>
+                                                        </span>
+                                                        <div class="form-group" *ngIf="sTimeEditable">
+                                                                <div class="startendtime">
+                                                                        <div class="starttimediv">
+                                                                                <ngb-timepicker
+                                                                                        formControlName="dstart_time"
+                                                                                        meridian="true">
+                                                                                </ngb-timepicker>
+                                                                        </div>
                                                                 </div>
                                                         </div>
                                                 </div>
-                                        </div>
-                                        <div class="end">
-                                                <label class="end-time-label" for="end-time-label">
-                                                        Through
-                                                        <span style="color: red !important; font-weight: 700 !important;">*</span>
-                                                </label>
-                                                <span class="editable-text"
-                                                        (click)="editEndTime()"
-                                                        *ngIf="!eTimeEditable">
-                                                        {{toDateCaption}}
-                                                        <i class="fa fa-pencil-square-o"></i>
-                                                </span>
-                                                <div class="form-group" *ngIf="eTimeEditable">
-                                                        <div class="startendtime">
-                                                                <div class="endtimediv">
-                                                                        <ngb-timepicker formControlName="dend_time"
-                                                                                meridian="true">
-                                                                        </ngb-timepicker>
+                                                <div class="end">
+                                                        <label class="end-time-label" for="end-time-label">
+                                                                Through
+                                                                <span
+                                                                        style="color: red !important; font-weight: 700 !important;">*</span>
+                                                        </label>
+                                                        <span class="editable-text" (click)="editEndTime()"
+                                                                *ngIf="!eTimeEditable">
+                                                                {{toDateCaption}}
+                                                                <i class="fa fa-pencil-square-o"></i>
+                                                        </span>
+                                                        <div class="form-group" *ngIf="eTimeEditable">
+                                                                <div class="startendtime">
+                                                                        <div class="endtimediv">
+                                                                                <ngb-timepicker
+                                                                                        formControlName="dend_time"
+                                                                                        meridian="true">
+                                                                                </ngb-timepicker>
+                                                                        </div>
                                                                 </div>
                                                         </div>
                                                 </div>
                                         </div>
                                 </div>
-                                <!-- <span [class.label-margin]="true"><strong>Make me available</strong>&nbsp;from</span>
-                                <span
-                                [class.label-margin]="true">&nbsp;through&nbsp;</span>
-                                 -->
-                        </div>
-                        <!-- <div class="lgmem"
-                                style="margin-bottom: 10px; margin-top: 15px; display: flex;">
-                                <label class="new_locStyle"
-                                        style="font-weight: 500">Location
-                                        &nbsp;</label>
-                                <div >
-                                        <span class="loc-name">
-                                                <span>{{location.place}}</span>
-                                                <span class="icon-location dash"></span>
-                                        </span>
-                                       
+                                <div class="clearfix"></div>
+                                <div class="actiondiv mgn-up-10" style="display: flex; margin-bottom: 0 !important;">
+                                        <button type="button" class="btn cancel-button"
+                                                (click)="close()">Cancel</button>
+                                        <button class="btn confirm-button"
+                                                [disabled]="!instantQForm.valid || loading">Confirm</button>
                                 </div>
-                              
-                        </div> -->
-                        <!-- <div class="form-group">
-                                <div class="schselectall">
-                                        <label>All Services</label>
-                                        &nbsp;&nbsp;
-                                        <i class="fa fa-square-o"
-                                                *ngIf="!isAllServicesSelected"
-                                                (click)="selectAllService()"></i>
-                                        <i class="fa fa-check-square-o"
-                                                *ngIf="isAllServicesSelected"
-                                                (click)="deselectAllService()"></i>
-                                </div>
-                                <section class="service-section check-horiz leftselectAll"
-                                        *ngIf="!isAllServicesSelected">
-                                        <div
-                                                *ngFor="let service of services_list; index as i ">
-                                                <mat-checkbox
-                                                        class="example-margin"
-                                                        [value]="service.id"
-                                                        [checked]="services_list[i].checked === true"
-                                                        (change)="handleServicechecbox(i)">
-                                                        <span class="itm">
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                                                    class="fa meet-icon"></i>
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                                                    class="fa zoom-icon"></i>
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                                                    class="fa phon-icon"></i>
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                                                    class="fa wtsapaud-icon"></i>
-                                                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                                                    class="fa wtsapvid-icon"></i>
-        
-                                                                {{service.name | capitalizeFirst}}
-                                                            </span>
-                                                        
-                                                </mat-checkbox>
-                                        </div>
-                                </section>
-                        </div> -->
-                        <!-- <div class="form-text-fields">
-                                <div class="item mgn-up-10">
-                                        <label class="ttle">Maximum {{consumer_label}}s served
-                                                <i class="icon-customer-line"></i>
-                                                <span style="color: red !important">&nbsp;*</span>
-                                        </label>
-                                        <span *ngIf="!capacityEditable"
-                                                class="editable-text pointer-cursor"
-                                                (click)="capacityClick()">         
-                                                10<i class="fa fa-pencil-square-o"></i>
-                                        </span>
-                                        <div class="form-group"
-                                                *ngIf="capacityEditable">
-                                                <input min="0"
-                                                        max="{{capacitylimit}}"
-                                                        maxlength="4"
-                                                        type="text"
-                                                        class="form-control custom-fc number-ip-sm"
-                                                        formControlName="qcapacity"
-                                                        autocomplete="off"
-                                                        (keypress)="isNumeric($event)"
-                                                        (keyup)="isvalid($event)">
-                                                <app-field-error-display
-                                                        [displayError]="fed_service.isFieldValid(instantQForm,'qcapacity')"
-                                                        [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qcapacity',
-                                                                { 'required' : 'Please enter the capacity', 'maxlength' : 'Only 4 digits are allowed'})">
-                                                </app-field-error-display>
-                                        </div>
-                                </div>
-                                <div class="item mgn-up-10">
-                                        <label class="ttle">{{consumer_label | capitalizeFirst}}s served at a time
-                                                <i class="icon-customer-served "></i>
-                                                <span style="color: red !important">&nbsp;*</span>
-                                        </label>
-                                        <span *ngIf="!parallelServeEditable"
-                                                class="editable-text pointer-cursor"
-                                                (click)="servedClick()">
-                                                1<i class="fa fa-pencil-square-o"></i>
-                                        </span>
-                                        <div class="form-group"
-                                                *ngIf="parallelServeEditable">
-                                                <input min="0"
-                                                        max="{{parallellimit}}"
-                                                        type="text"
-                                                        class="form-control custom-fc number-ip-sm"
-                                                        formControlName="qserveonce"
-                                                        autocomplete="off"
-                                                        (keypress)="isNumeric($event)"
-                                                        (keyup)="isvalid($event)">
-                                                <app-field-error-display
-                                                        [displayError]="fed_service.isFieldValid(instantQForm,'qserveonce')"
-                                                        [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qserveonce',
-                                                        {
-                                                        'required' : 'Please enter the ' + consumer_label + 's served at a time' ,
-                                                        'maxlength' : 'Only 4 digits are allowed'
-                                                        })">
-                                                </app-field-error-display>
-                                        </div>
-                                </div>
-                        </div> -->
-                        <div class="clearfix"></div>
-                        <div class="actiondiv mgn-up-10" style="display: flex; margin-bottom: 0 !important;">
-                                <button type="button" class="btn cancel-button" (click)="close()">Cancel</button>
-                                <button class="btn confirm-button">Confirm</button>
-                        </div>
-                </form>
+                        </form>
+                </div>
         </div>
-</div>
-<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
-  </mat-dialog-content>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+        </app-form-success-display>
+</mat-dialog-content>

@@ -150,7 +150,11 @@ export class WlCardComponent implements OnInit, OnChanges {
     }
   }
   getTimeToDisplay(min) {
-    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    if (this.dateTimeProcessor.convertMinutesToHourMinute(min) === '0 minutes') {
+      return 'Now';
+    } else {
+      return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
