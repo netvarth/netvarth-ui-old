@@ -2,11 +2,11 @@
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
-  <div class="pull-right" *ngIf="time_type !==3">
+  <div class="pull-right">
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
       <div class="navbar-custom-menu width100pc">
         <ul class="nav navbar-nav width100pc">
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type !== 'BRANCH'">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type !== 'BRANCH' && time_type !==3">
             <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
             <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
               *ngIf="selected_location" style="padding-top: 12px !important;">
