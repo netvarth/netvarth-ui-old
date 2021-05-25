@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -202,6 +202,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     heartfulnessAccount = false;
     theme: any;
     checkPolicy= true;
+    customId: any; // To know the source whether the router came from Landing page or not
+    businessId: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -262,9 +264,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.theme=params.theme;
                     console.log(this.theme);
                 }
+                if (params.customId) {
+                    this.customId = params.customId;
+                    this.businessId = this.account_id;
+                }
             });
     }
     ngOnInit() {
+        const _this = this;
         this.bookingForm = this.fb.group({
             newEmail: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
             newWhatsapp: new FormControl(undefined),
@@ -337,16 +344,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getProfile().then(
             () => {
-                this.getFamilyMembers();
-                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                _this.getFamilyMembers();
+                _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
+                const dt1 = new Date(_this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date1 = new Date(dt1);
-                const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                const dt2 = new Date(_this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date2 = new Date(dt2);
                 if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-                    this.isFuturedate = true;
+                    _this.isFuturedate = true;
                 }
-                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+                _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedService, _this.account_id);
 
             }
         );
@@ -392,7 +399,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.consumerNoteAndFileSave(uid);
                     }
                     setTimeout(() => {
-                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule',theme:this.theme } });
+                        let queryParams= {
+                            account_id: this.account_id,
+                            uuid: this.rescheduleUserId, 
+                            type: 'waitlistreschedule',
+                            theme:this.theme 
+                        }
+                        if (this.businessId) {
+                            queryParams['customId'] = this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                     }, 500);
                 },
                 error => {
@@ -876,7 +895,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             multiple = false;
                         }
                         setTimeout(() => {
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple,theme:this.theme } });
+                            let queryParams= {
+                                account_id: this.account_id,
+                                uuid: this.uuidList, 
+                                multiple: multiple,
+                                theme:this.theme 
+                            }
+                            if (this.businessId) {
+                                queryParams['customId'] = this.customId;
+                            }
+                            let navigationExtras: NavigationExtras = {
+                                queryParams: queryParams
+                            };
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                         }, 2000);
                     }
                 }
@@ -909,7 +940,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else {
                     multiple = false;
                 }
-                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple,theme:this.theme } });
+                let queryParams= {
+                    account_id: this.account_id,
+                    uuid: this.uuidList, 
+                    multiple: multiple,
+                    theme:this.theme 
+                }
+                if (this.businessId) {
+                    queryParams['customId'] = this.customId;
+                }
+                let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                };
+                this.router.navigate(['consumer', 'checkin', 'confirm'],navigationExtras);
             }
         },
             error => {
@@ -1183,37 +1226,38 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
     }
     getServicebyLocationId(locid, pdate) {
-        this.api_loading1 = true;
-        this.subs.sink = this.shared_services.getServicesByLocationId(locid)
+        const _this = this;
+        _this.api_loading1 = true;
+        _this.subs.sink = _this.shared_services.getServicesByLocationId(locid)
             .subscribe(data => {
-                this.servicesjson = data;
-                this.serviceslist = this.servicesjson;
-                this.sel_ser_det = [];
-                if (this.selectedService) {
-                    this.sel_ser = this.selectedService;
+                _this.servicesjson = data;
+                _this.serviceslist = _this.servicesjson;
+                _this.sel_ser_det = [];
+                if (_this.selectedService) {
+                    _this.sel_ser = _this.selectedService;
                 } else {
-                    if (this.servicesjson.length > 0) {
-                        this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                    if (_this.servicesjson.length > 0) {
+                        _this.sel_ser = _this.servicesjson[0].id; // set the first service id to the holding variable
                     }
                 }
-                if (this.sel_ser) {
-                    this.setServiceDetails(this.sel_ser);
-                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id, 'init');
-                    if (this.type != 'waitlistreschedule') {
-                        this.getConsumerQuestionnaire();
+                if (_this.sel_ser) {
+                    _this.setServiceDetails(_this.sel_ser);
+                    _this.getQueuesbyLocationandServiceId(locid, _this.sel_ser, pdate, _this.account_id, 'init');
+                    if (_this.type != 'waitlistreschedule') {
+                        _this.getConsumerQuestionnaire();
                     } else {
-                        this.questionnaireLoaded = true;
-                        if (this.sel_ser_det.serviceType === 'virtualService') {
-                            this.setVirtualTeleserviceCustomer();
+                        _this.questionnaireLoaded = true;
+                        if (_this.sel_ser_det.serviceType === 'virtualService') {
+                            _this.setVirtualTeleserviceCustomer();
                         }
 
                     }
                 }
-                this.api_loading1 = false;
+                _this.api_loading1 = false;
             },
                 () => {
-                    this.api_loading1 = false;
-                    this.sel_ser = '';
+                    _this.api_loading1 = false;
+                    _this.sel_ser = '';
                 });
     }
     filesSelected(event, type?) {
@@ -2061,7 +2105,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList);
+        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {

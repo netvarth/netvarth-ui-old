@@ -67,6 +67,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
   accountId;
   showOrderHist = false;
   private subs=new SubSink();
+  customId: any;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -77,15 +78,19 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.subs.sink= this.activateroute.queryParams.subscribe(params => {
+        if (params.accountId) {
+          this.accountId = params.accountId;
+        }
+        if (params.customId) {
+          this.customId = params.customId;
+        }
       if (params.is_orderShow === 'false') {
         this.getHistroy();
         } else {
           this.getOrderHistory();
           this.showOrderHist = true;
         }
-      if (params.accountId) {
-        this.accountId = params.accountId;
-      }
+      
     });
   }
   @HostListener('window:resize', ['$event'])
@@ -108,7 +113,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
   // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
-    const api_filter = {};
+    let api_filter = {};
     if (this.accountId) {
       api_filter['account-eq'] = this.accountId;
     }
@@ -434,11 +439,11 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
 
   getOrderHistory() {
     this.loadcomplete.history = false;
-   // const api_filter = {};
-    // if (this.accountId) {
-    //   api_filter['account-eq'] = this.accountId;
-    // }
-    this.subs.sink=  this.consumer_services.getOrderHistory()
+   const api_filter = {};
+    if (this.accountId) {
+      api_filter['account-eq'] = this.accountId;
+    }
+    this.subs.sink=  this.consumer_services.getOrderHistory(api_filter)
       .subscribe(
         data => {
           console.log(data);

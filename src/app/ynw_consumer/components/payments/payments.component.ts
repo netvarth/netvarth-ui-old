@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Subscription } from 'rxjs';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { SubSink } from 'subsink';
 
 
 
@@ -27,12 +28,24 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
     refunds_cap = Messages.REFUNDS_CAP;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     subsription:Subscription
+    accountId: any;
+    private subs = new SubSink();
+    loading = false;
+    customId: any;
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         public dateformat: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
+        private activated_route: ActivatedRoute,
         private shared_services: SharedServices) {
-
+            this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+                if(qparams && qparams.accountId) {
+                    this.accountId = qparams.accountId;
+                }
+                if(qparams && qparams.customId) {
+                    this.customId = qparams.customId;
+                }
+            });
     }
     ngOnInit() {
         this.breadcrumbs = [
@@ -72,9 +85,40 @@ export class ConsumerPaymentsComponent implements OnInit,OnDestroy {
         }
     }
     getPayments() {
-       this.subsription= this.shared_services.getConsumerPayments().subscribe(
-            (payments) => {
-                this.payments = payments;
+        // const _this = this;
+        this.loading = true;
+        let params = {};
+        if (this.accountId) {
+            params['account-eq']= this.accountId;
+        }
+        // this.subsription= this.shared_services.getConsumerPayments(params).subscribe(
+        //     (paymentsRes) => {
+        //         _this.payments = paymentsRes;
+        //         console.log(_this.payments);
+        //         // if (this.accountId) {
+        //         //     this.payments = this.payments.filter(payment => payment.accountId === this.accountId);
+        //         // }
+        //         _this.loading = false;
+        //     }, (error: any) => {
+        //         console.log(error);
+        //         _this.loading = false;
+        //     }
+        // );
+        this.subsription= this.shared_services.getConsumerPayments(params).subscribe(
+            (paymentsInfo: any) => {
+                console.log(paymentsInfo);     
+                console.log(this.accountId);       
+                // console.log(projectConstantsLocal.PROVIDER_ACCOUNT_ID);    
+                if (this.accountId) {
+                    this.payments = paymentsInfo.filter(payment => payment.accountId == this.accountId);
+                    console.log(this.payments);
+                } else {
+                    this.payments = paymentsInfo;    
+                }
+                this.loading = false;
+            }, error => {
+                this.loading = false;
+                console.error(error);   
             }
         );
     }

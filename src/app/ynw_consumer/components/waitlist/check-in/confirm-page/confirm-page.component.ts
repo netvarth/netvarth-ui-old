@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -37,6 +37,8 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   type;
   uuids: any = [];
   theme: any;
+  accountId: any; // Business Landing Page
+  customId: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
@@ -47,6 +49,10 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     this.subs.sink=this.route.queryParams.subscribe(
       params => {
         // this.lStorageService.setitemonLocalStorage('inPostInfo', true);
+        if (params.customId) {
+          this.customId = params.customId;
+          this.accountId = params.account_id;
+        }
         this.infoParams = params;
         if (this.infoParams.type === 'waitlistreschedule') {
           this.type = this.infoParams.type;
@@ -82,9 +88,29 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
    }
   okClick(waitlist) {
     if (waitlist.service.livetrack) {
-      this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id ,theme:this.theme} });
+      let queryParams= {
+        account_id: this.infoParams.account_id,
+        theme:this.theme 
+    }
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], navigationExtras);
     } else {
-      this.router.navigate(['consumer']);
+      let queryParams= {
+        theme:this.theme,
+        accountId: this.accountId
+      }
+      if (this.customId) {
+          queryParams['customId'] = this.customId;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
+      this.router.navigate(['consumer'], navigationExtras);
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
     // this.lStorageService.removeitemfromLocalStorage('inPostInfo');

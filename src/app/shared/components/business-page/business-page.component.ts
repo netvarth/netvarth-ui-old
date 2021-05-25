@@ -30,6 +30,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+// import { CustomAppService } from '../../services/custom-app.service';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -267,6 +268,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   service_cap = 'Services and Consultations';
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
+  @ViewChild('popupforCustomApp') popupforCustomApp: ElementRef;
   orderstatus: any;
   orderType = '';
   advance_amount: any;
@@ -294,6 +296,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountProperties: any;
   theme: any;
   profileSettings: any;
+  deferredPrompt: any;
+  btnInstallApp: any;
+
+  businessName;
+  businessId;
+  accountId: any;
+
+
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -312,7 +322,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private domainConfigService: DomainConfigGenerator,
     // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    // private customAppSerice: CustomAppService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -333,6 +344,37 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.small_device_display = false;
     }
   }
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
+
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    if (this.accountProperties) {
+      this.deferredPrompt = e;
+      // Update UI to notify the user they can add to home screen
+
+      this.popupforCustomApp.nativeElement.style.display = 'block';
+
+      this.btnInstallApp.addEventListener('click', (e: any) => {
+        console.log('binding');
+        // hide our user interface that shows our A2HS button
+        this.popupforCustomApp.nativeElement.style.display = 'none';
+        // Show the prompt
+        this.deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        this.deferredPrompt.userChoice.then((choiceResult: any) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User clicked Install');
+          } else {
+            console.log('User dismissed prompt');
+          }
+          this.deferredPrompt = null;
+        });
+      });
+    }
+  }
+
   ngOnInit() {
     this.api_loading = true;
     this.userId = null;
@@ -421,31 +463,31 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           (domainConfig) => {
             this.domainList = domainConfig;
             this.getAccountIdFromEncId(this.accountEncId).then(
-              (id: any) => {               
-                _this.provider_id = id;               
+              (id: any) => {
+                _this.provider_id = id;
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
-                  (uiconfig: any)=> {
-                    _this.accountProperties = uiconfig;                       
-                      if (_this.small_device_display) {
-                        _this.profileSettings = _this.accountProperties['smallDevices'];
-                      } else {
-                        _this.profileSettings = _this.accountProperties['normalDevices'];
-                      }                      
-                      _this.theme=_this.accountProperties['theme'];  
-                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                     
-                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
-                        _this.popUp.nativeElement.style.display = 'block';
-                      }                  
-                      _this.gets3curl();
+                  (uiconfig: any) => {
+                    _this.accountProperties = uiconfig;
+                    if (_this.small_device_display) {
+                      _this.profileSettings = _this.accountProperties['smallDevices'];
+                    } else {
+                      _this.profileSettings = _this.accountProperties['normalDevices'];
+                    }
+                    _this.theme = _this.accountProperties['theme'];
+                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                    if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                      _this.popUp.nativeElement.style.display = 'block';
+                    }
+                    _this.gets3curl();
                   }, (error: any) => {
-                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');                    
+                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
                     if (!appPopupDisplayed) {
                       _this.popUp.nativeElement.style.display = 'block';
                     }
                     _this.gets3curl();
                   }
-                )                
-              },()=>{
+                )
+              }, () => {
                 _this.gets3curl();
               }
             );
@@ -489,6 +531,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   closeModal() {
     this.lStorageService.setitemonLocalStorage('a_dsp', true);
     this.popUp.nativeElement.style.display = 'none';
+  }
+  closeCustomAppModal() {
+    this.popupforCustomApp.nativeElement.style.display = 'none';
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -728,6 +773,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageFound = true;
       this.socialMedialist = [];
       this.businessjson = res;
+      this.businessId = this.accEncUid;
+      this.accountId = this.businessjson.id;
+      this.businessName = this.businessjson.businessName;
+      this.popupforCustomApp.nativeElement.style.display = 'none';
+      const path = projectConstantsLocal.UIS3PATH  + this.provider_id +'/manifest.json';
+      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
+      if (this.accountProperties) {
+        document.getElementById('dynamic_manifest_url').setAttribute('href', path);
+        this.btnInstallApp = document.getElementById("btnInstallCustomApp");
+      }
+
+
+
+
       // if (this.businessjson.serviceSector.name !== 'healthCare') {
       //   this.service_cap = 'Services';
       // }
@@ -1795,7 +1854,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['loginmainclass', 'popup-class', this.theme],
         disableClose: true,
         //data: consumerdata
-        data: {consumer:consumerdata,theme:this.theme}
+        data: { consumer: consumerdata, theme: this.theme }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {
@@ -2006,7 +2065,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
-    const queryParam = {
+    let queryParam = {
       loc_id: locid,
       locname: locname,
       googleMapUrl: gMapUrl,
@@ -2021,10 +2080,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
-      queryParam['theme']=this.theme;
+      queryParam['theme'] = this.theme;
     }
+    queryParam['customId']= this.accountEncId;
     const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
+      queryParams: queryParam,
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
@@ -2035,7 +2095,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
-    const queryParam = {
+    let queryParam = {
       loc_id: locid,
       locname: locname,
       googleMapUrl: gMapUrl,
@@ -2051,8 +2111,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
-      queryParam['theme']=this.theme;
+      queryParam['theme'] = this.theme;
     }
+    queryParam['customId']= this.accountEncId;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
@@ -2212,7 +2273,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.showDonation(locid, cdate, service);
           }
         } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
+          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service:service, consumer: 'consumer' };
           this.doLogin('consumer', passParam);
         }
       });
@@ -2226,7 +2287,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         service_id: service.id,
-        theme:this.theme
+        theme: this.theme,
+        customId: this.accountEncId
       }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);

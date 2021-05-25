@@ -5,14 +5,14 @@
                 <div class="panel panel-default">
                     <div class="panel-heading top-row ">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                            <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accountId" [customId]="customId"></app-header>
                         </div>
                     </div>
                     <div class="panel-body no-padding">
                         <div class="c-outer">
                             <div class="c-body">
                                 <div class="card title-gb">
-                                    <h5 class="mgn-up-10"> &nbsp;Donations <a class="pull-left back-btn" routerLink="/consumer"><i class="fa fa-arrow-left"></i></a></h5>
+                                    <h5 class="mgn-up-10"> &nbsp;Donations <a class="pull-left back-btn" (click)="gotoDashboard()"><i class="fa fa-arrow-left"></i></a></h5>
                                 </div>
                                 <div class="card history one section-four no-padding">
                                     <div class="list-outer">

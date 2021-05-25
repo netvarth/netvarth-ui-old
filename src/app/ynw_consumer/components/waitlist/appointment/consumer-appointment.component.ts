@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -226,6 +226,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     imgCaptions: any = [];
     virtualInfo: any;
     theme: any;
+    customId: any; // To know the source whether the router came from Landing page or not
+    businessId: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -279,6 +281,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if(params.theme){
                     this.theme=params.theme;
                     console.log(this.theme);
+                }
+                if (params.customId) {
+                    this.customId = params.customId;
+                    this.businessId = this.account_id;
                 }
                 // if(params.virtual_info){
                 //     this.virtualInfo=JSON.parse(params.virtual_info);
@@ -789,7 +795,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
                     setTimeout(() => {
-                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule',theme:this.theme } });
+                        let queryParams= {
+                            account_id: this.account_id,
+                            uuid: this.appointment.uid, 
+                            type: 'reschedule',
+                            theme:this.theme 
+                        }
+                        if (this.businessId) {
+                            queryParams['customId'] = this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                     }, 500);
                 },
                 error => {
@@ -827,7 +845,18 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.payuPayment();
                     } else {
                         setTimeout(() => {
-                            this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid,theme:this.theme } });
+                            let queryParams= {
+                                account_id: this.account_id,
+                                uuid: this.trackUuid,                              
+                                theme:this.theme 
+                            }
+                            if (this.businessId) {
+                                queryParams['customId'] = this.customId;
+                            }
+                            let navigationExtras: NavigationExtras = {
+                                queryParams: queryParams
+                            };
+                            this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                         }, 2000);
                     }
                 }
@@ -1795,7 +1824,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList);
+        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {
@@ -1864,7 +1893,18 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                 this.payuPayment();
             } else {
-                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid ,theme:this.theme} });
+                let queryParams= {
+                    account_id: this.account_id,
+                    uuid: this.trackUuid,
+                    theme:this.theme 
+                }
+                if (this.businessId) {
+                    queryParams['customId'] = this.customId;
+                }
+                let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                };
+                this.router.navigate(['consumer', 'appointment', 'confirm'],navigationExtras);
             }
         },
             error => {

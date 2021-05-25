@@ -64,7 +64,7 @@
                     </div>
                     <div class="inbx" (click)="inboxiconClick()" *ngIf="headercls=='dashb' && source !== 'business'">
                         <div class="ot-bx" [matTooltipClass]="tooltipcls" [matTooltip]="inboxiconTooltip">
-                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}
+                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0 && !accountId">{{inboxUnreadCnt}}
                             </div>
                             <i data-icon="H"></i>
                         </div>
@@ -215,15 +215,15 @@
                         [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
                         <div class="topsignouter">
                             <button class="join_nw_btn mgn-rt-10" (click)="doLogin('consumer')"
-                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business' && !accountId">{{sign_in_cap}}</button>
                             <button class="join_nw_btn " (click)="doSignup('consumer')"
-                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business' && !accountId">{{join_cap}}</button>
                             <ng-container *ngIf="ctype=='consumer'">
                                 <div class="bnps">
                                     <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="inboxiconTooltip">
                                         <div class="ot-bx">
-                                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">
+                                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0 && !accountId">
                                                 {{inboxUnreadCnt}}</div>
                                             <i data-icon="H"></i>
                                         </div>
@@ -241,15 +241,15 @@
                                             <i class="icon-dashboard"></i>
                                             <span>{{dashboard_cap}}</span>
                                         </button>
-                                        <button mat-menu-item (click)="redirectto('profile')">
+                                        <button mat-menu-item (click)="redirectto('profile')" *ngIf="!accountId">
                                             <i class="icon-profile"></i>
                                             <span>{{user_profile}}</span>
                                         </button>
-                                        <button mat-menu-item (click)="redirectto('change-password')">
+                                        <button mat-menu-item (click)="redirectto('change-password')" *ngIf="!accountId">
                                             <i class="icon-password"></i>
                                             <span>{{change_password}}</span>
                                         </button>
-                                        <button mat-menu-item (click)="redirectto('change-mobile')">
+                                        <button mat-menu-item (click)="redirectto('change-mobile')" *ngIf="!accountId">
                                             <i class="icon-mobile"></i>
                                             <span>{{change_mobile}}</span>
                                         </button>
@@ -257,11 +257,11 @@
                                             <i class="icon-mobile"></i>
                                             <span>Notifications</span>
                                         </button>
-                                        <button mat-menu-item (click)="redirectto('members')">
+                                        <button mat-menu-item (click)="redirectto('members')" *ngIf="!accountId">
                                             <i class="icon-members"></i>
                                             <span>{{family_members}}</span>
                                         </button>
-                                        <button mat-menu-item (click)="help()">
+                                        <button mat-menu-item (click)="help()" *ngIf="!accountId">
                                             <i data-icon="B"></i>
                                             <span>{{help_cap}}</span>
                                         </button>

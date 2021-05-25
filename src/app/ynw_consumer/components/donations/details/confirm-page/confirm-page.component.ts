@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -19,12 +19,20 @@ export class ConfirmPageComponent implements OnDestroy{
   apiloading = true;
   donation: any = [];
   private subs = new SubSink();
+  customId: any;
+  accountId: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions
   ) {
     this.subs.sink=this.route.queryParams.subscribe(
       params => {
+        if (params.account_id) {
+          this.accountId=params.account_id;
+        }
+        if(params.customId)  {
+          this.customId = params.customId;
+        } 
         if (params.uuid) {
           this.getDonations(params.uuid);
         }
@@ -39,7 +47,16 @@ export class ConfirmPageComponent implements OnDestroy{
     );
   }
   okClick() {
-    this.router.navigate(['consumer', 'donations'])
+    let queryParams = {};
+    if(this.customId) {
+      queryParams['customId']= this.customId;
+      queryParams['account_id'] = this.accountId;
+    }
+    
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams,
+    };
+    this.router.navigate(['consumer', 'donations'], navigationExtras)
   }
   ngOnDestroy(): void {
    this.subs.unsubscribe();
