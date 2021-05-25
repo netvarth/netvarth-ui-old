@@ -64,7 +64,10 @@
                                                                             <span class="dynamic">{{provider_label |
                                                                                 capitalizeFirst}}: </span>
                                                                             <span
-                                                                                class="dynamic">{{checkin.provider.businessName}}</span>
+                                                                                class="dynamic">
+                                                                                <!-- {{checkin.provider.businessName}} -->
+                                                                                {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                                                                                    + ' ' + checkin.provider.lastName}}</span>
                                                                         </span>
                                                                         <div class="col-md-12 col-sm-12 col-lg-12 no-padding red" *ngIf="bill_data.billStatus == 'Cancel'">
                                                                             Cancelled</div>
