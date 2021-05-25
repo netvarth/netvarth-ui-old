@@ -63,6 +63,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { telegramPopupComponent } from './components/notification/telegrampopup/telegrampopup.component';
 
 
 @NgModule({
@@ -116,7 +118,9 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     OrderComponent,
     OrderDetailComponent,
     ApptCardComponent,
-    WlCardComponent
+    WlCardComponent,
+    NotificationComponent,
+    telegramPopupComponent
   ],
   exports: [ConfirmBoxComponent, MatBadgeModule],
   schemas: [
@@ -130,7 +134,8 @@ import { WlCardComponent } from './components/home/wl-card/wl-card.component';
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
     ActionPopupComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    telegramPopupComponent
   ],
   providers: [
     SharedServices,

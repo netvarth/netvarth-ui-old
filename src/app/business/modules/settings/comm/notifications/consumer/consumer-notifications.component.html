@@ -84,6 +84,9 @@
                 <mat-checkbox [checked]="earlyWLNotificatonSettings.email"
                   (change)="showSubmit('EARLY_WL', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.telegram"
+                  (change)="showSubmit('EARLY_WL', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
                   (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -108,6 +111,9 @@
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.email"
                   (change)="showSubmit('PREFINAL_WL', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="prefinalWLNotificationSettings.telegram"
+                  (change)="showSubmit('PREFINAL_WL', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('PREFINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -131,6 +137,9 @@
                 <mat-checkbox [checked]="finalWLNotificationSettings.email"
                   (change)="showSubmit('FINAL_WL', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="finalWLNotificationSettings.telegram"
+                  (change)="showSubmit('FINAL_WL', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="finalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('FINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -155,6 +164,9 @@
                 <mat-checkbox [checked]="wlAddNotificationSettings.email"
                   (change)="showSubmit('WAITLISTADD', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="wlAddNotificationSettings.telegram"
+                  (change)="showSubmit('WAITLISTADD', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="wlAddNotificationSettings.pushNotification"
                   (change)="showSubmit('WAITLISTADD', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -195,6 +207,9 @@
                 <mat-checkbox [checked]="apptAddNotificationSettings.email"
                   (change)="showSubmit('APPOINTMENTADD', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="apptAddNotificationSettings.telegram"
+                  (change)="showSubmit('APPOINTMENTADD', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="apptAddNotificationSettings.pushNotification"
                   (change)="showSubmit('APPOINTMENTADD', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -266,6 +281,9 @@
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.email"
                         (change)="showSubmit('FIRST_APPT', 'email', $event)" class="mgn-rt-20">
                         Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="firstAPPTNotificationSettings.telegram"
+                  (change)="showSubmit('FIRST_APPT', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                       <!-- <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox> -->
@@ -313,6 +331,9 @@
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.email"
                         (change)="showSubmit('SECOND_APPT', 'email', $event)" class="mgn-rt-20">
                         Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="secondAPPTNotificationSettings.telegram"
+                  (change)="showSubmit('SECOND_APPT', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                       <!-- <mat-checkbox [checked]="secondAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('SECOND_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox> -->
@@ -360,6 +381,9 @@
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.email"
                         (change)="showSubmit('THIRD_APPT', 'email', $event)" class="mgn-rt-20">
                         Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="thirdAPPTNotificationSettings.telegram"
+                  (change)="showSubmit('THIRD_APPT', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                       <!-- <mat-checkbox [checked]="thirdAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('THIRD_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox> -->
@@ -407,6 +431,9 @@
                       <mat-checkbox [checked]="fourthAPPTNotificationSettings.email"
                         (change)="showSubmit('FOURTH_APPT', 'email', $event)" class="mgn-rt-20">
                         Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="fourthAPPTNotificationSettings.telegram"
+                  (change)="showSubmit('FOURTH_APPT', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                       <!-- <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox> -->
@@ -450,6 +477,9 @@
                 <mat-checkbox [checked]="orderAddNotificationSettings.email"
                   (change)="showSubmit('ORDERCONFIRM', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="orderAddNotificationSettings.telegram"
+                  (change)="showSubmit('ORDERCONFIRM', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="orderAddNotificationSettings.pushNotification"
                   (change)="showSubmit('ORDERCONFIRM', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -474,6 +504,9 @@
                   <mat-checkbox [checked]="orderCancelNotificationSettings.email"
                     (change)="showSubmit('ORDERCANCEL', 'email', $event)" class="mgn-rt-20">
                     Via Email</mat-checkbox>
+                    <mat-checkbox [checked]="orderCancelNotificationSettings.telegram"
+                    (change)="showSubmit('ORDERCANCEL', 'telegram', $event)" class="mgn-rt-20">
+                    Via Telegram</mat-checkbox>
                   <mat-checkbox [checked]="orderCancelNotificationSettings.pushNotification"
                     (change)="showSubmit('ORDERCANCEL', 'pushNotification', $event)" class="mgn-rt-20">
                     Via App</mat-checkbox>
@@ -499,6 +532,9 @@
                   <mat-checkbox [checked]="orderUpdateNotificationSettings.email"
                     (change)="showSubmit('ORDERUPDATE', 'email', $event)" class="mgn-rt-20">
                     Via Email</mat-checkbox>
+                    <mat-checkbox [checked]="orderUpdateNotificationSettings.telegram"
+                    (change)="showSubmit('ORDERUPDATE', 'telegram', $event)" class="mgn-rt-20">
+                    Via Telegram</mat-checkbox>
                   <mat-checkbox [checked]="orderUpdateNotificationSettings.pushNotification"
                     (change)="showSubmit('ORDERUPDATE', 'pushNotification', $event)" class="mgn-rt-20">
                     Via App</mat-checkbox>
@@ -523,6 +559,9 @@
                 <mat-checkbox [checked]="orderStatusChangelNotificationSettings.email"
                   (change)="showSubmit('ORDERSTATUSCHANGE', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="orderStatusChangelNotificationSettings.telegram"
+                    (change)="showSubmit('ORDERSTATUSCHANGE', 'telegram', $event)" class="mgn-rt-20">
+                    Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="orderStatusChangelNotificationSettings.pushNotification"
                   (change)="showSubmit('ORDERSTATUSCHANGE', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
@@ -562,6 +601,9 @@
                 <mat-checkbox [checked]="donatAddNotificationSettings.email"
                   (change)="showSubmit('DONATIONSERVICE', 'email', $event)" class="mgn-rt-20">
                   Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="donatAddNotificationSettings.telegram"
+                    (change)="showSubmit('DONATIONSERVICE', 'telegram', $event)" class="mgn-rt-20">
+                    Via Telegram</mat-checkbox>
                 <mat-checkbox [checked]="donatAddNotificationSettings.pushNotification"
                   (change)="showSubmit('DONATIONSERVICE', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>

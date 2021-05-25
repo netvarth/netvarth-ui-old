@@ -1039,4 +1039,12 @@ export class SharedServices {
     const url = 'provider/account/settings/locations/' + pinCode;
     return this.servicemeta.httpGet(url);
   }
+  enableTelegramNoti(status) {
+    const url = 'consumer/telegram/settings/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getTelegramstat() {
+    const url = 'consumer/telegram/settings';
+    return this.servicemeta.httpGet(url);
+  }
 }

@@ -12,6 +12,7 @@ import { CheckinDetailComponent } from './components/home/checkindetail.componen
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
+import { NotificationComponent } from './components/notification/notification.component';
 const routes: Routes = [
   {
     path: '', component: ConsumerComponent, children: [
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
+      { path: 'notification', component: NotificationComponent, canActivate: [AuthGuardLogin] },
       { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin] },
       { path: 'learn_more', loadChildren: () => import('./components/help/consumer-learnmore.module').then(m => m.ConsumerLearnmoreModule), canActivate: [AuthGuardLogin] },
       { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin] },
