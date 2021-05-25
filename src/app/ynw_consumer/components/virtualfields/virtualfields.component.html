@@ -31,22 +31,7 @@
                             {{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
                         <mat-radio-button value="new_member">Someone else</mat-radio-button>
                     </mat-radio-group>
-                    <!-- <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup" (change)="onServiceForChange($event)">
-                            <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}} {{customer_data.userProfile.lastName}}</mat-radio-button>
-                            <mat-radio-button [value]="member.userProfile.id" *ngFor="let member of familymembers">{{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
-                            <mat-radio-button value="new_member">Someone else</mat-radio-button>
-                        </mat-radio-group> -->
-                    <!-- <mat-label>Service For</mat-label> -->
-                    <!-- <mat-select formControlName="serviceFor"  (selectionChange)="onServiceForChange($event)" >
-                            <mat-option [value]="customer_data.id">{{customer_data.firstName}} {{customer_data.lastName}}  </mat-option>
-                          <mat-option *ngFor="let member of familymembers" [value]="member.userProfile.id">
-                            {{member.userProfile.firstName}} {{member.userProfile.lastName}}
-                          </mat-option>
-                          <mat-option  [value]="new_member">Others  </mat-option>
-                        </mat-select> -->
-                    <!-- </mat-form-field> -->
-                    <!-- {{getFamilyMembers()}} -->
-                    <!-- {{this.details.userProfile.firstName}} {{this.details.userProfile.lastName}} -->
+              
                 </div>
                 <div class="mgn-up-10 mgn-bt-10">
                     <label class="col-form-label" for="phone">Phone # </label>
@@ -71,34 +56,7 @@
                 <div class="form-group col-xs-12 dob no-padding mgn-up-20">
                     <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                     <br />
-                    <!-- <mat-form-field appearance="fill">
-                        <mat-label>Date</mat-label>
-                        <mat-select [(ngModel)]="selectedDate">
-                            <mat-option *ngFor="let date of dates" [value]="date">
-                                {{date}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    &nbsp;
-                    
-                    <mat-form-field appearance="fill">
-                        <mat-label>Month</mat-label>
-                        <mat-select [(ngModel)]="selectedMonth">
-                            <mat-option *ngFor="let month of months" [value]="month">
-                                {{month}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    &nbsp;
-                    <mat-form-field class="col-md-4">
-                        <mat-label>Year</mat-label>
-                        <mat-select [(ngModel)]="selectedYear">
-                            <mat-option *ngFor="let year of years" [value]="year">
-                                {{year}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <!---dateofbirth  -->
+
                   <select [(ngModel)]="selectedDate" formControlName="date">
                         <option value="dd">dd</option>
                             <option *ngFor="let date of dates" [value]="date">
@@ -120,55 +78,10 @@
                             {{year}}
                         </option>
                     </select>
-                    
-                    <!-- <mat-form-field appearance="fill">
-                        <mat-label>Month</mat-label>
-                        <mat-select [(ngModel)]="selectedMonth">
-                            <mat-option *ngFor="let month of months" [value]="month">
-                                {{month}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <!-- &nbsp;
-                    <mat-form-field class="col-md-4">
-                        <mat-label>Year</mat-label>
-                        <mat-select [(ngModel)]="selectedYear">
-                            <mat-option *ngFor="let year of years" [value]="year">
-                                {{year}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <!-- <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob" formControlName="dob"
-                        class="vt_dt no-padding mgn-up-5"> -->
-                    <!-- <mat-form-field>
-                    <input matInput [matDatepicker]="dob" placeholder="Date of birth"
-                        #inputdob formControlName="dob" disabled
-                        class="nofocus" tabindex="-1" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-                    <mat-datepicker #dob [disabled]="false"></mat-datepicker>
-                </mat-form-field> -->
-                    <!-- <app-field-error-display
-                    [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
-                    errorMsg="Please select the date of birth.">
-                </app-field-error-display> -->
-                    <!-- <date-select formControlName="dob"></date-select> -->
+                
                 </div>
 
 
-                <!-- 
-            <div class="form-group dob"> -->
-                <!-- <mat-label for="dob"></mat-label> -->
-
-                <!-- <mat-form-field class="mgn-up-10 vt_dt no-padding">  -->
-                <!-- <mat-label>Choose a date</mat-label>
-                   <input matInput  formControlName="dob" [matDatepicker]="dob"> 
-                    <mat-datepicker-toggle matSuffix [for]="dob">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #dob></mat-datepicker>  -->
-                <!-- </mat-form-field> -->
-                <!--                
-                <br />
-            </div> -->
                 <div class="form-group">
                     <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
 
@@ -203,6 +116,40 @@
                         </mat-radio-group>
                     </div>
                 </div>
+               
+                <!-- Signin Password -->
+                <div class="form-group" id="plng">
+                    <!-- <mat-form-field> -->
+                    <label class="col-form-label" for="v">Select your preferred language <span
+                            class="red">*</span></label>
+                    <br />
+                    <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
+                        formControlName="islanguage">
+                        <mat-radio-button value="yes">English</mat-radio-button>
+                        <mat-radio-button value="no">Other Languages</mat-radio-button>
+                    </mat-radio-group>
+
+
+                    <!-- </mat-form-field> -->
+                    <div style="display: flex; justify-content: space-between;">
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                            errorMsg="please choose one">
+                        </app-field-error-display>
+
+                    </div>
+                </div>
+                
+            </div>
+            <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                <label class="col-form-label" for="preferredLanguage">Your preferred language
+                </label><br />
+                <div class="col-form-label"><span
+                        style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
+
+                    <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x"
+                            style="font-size: large;"></i></span></div>
+            </div>
+            <ng-container *ngIf="hideLanguages">
                 <div class="form-group">
                     <label for="email" class="col-form-label">Email</label>
                     <input type="email" class="form-control" formControlName="email" />
@@ -216,7 +163,7 @@
                                           })">
                   </app-field-error-display>
                 </div>
-
+             
                 <div class="form-group mobile-field" >
                         <label>Whatsapp #</label>
                         <div class="input-group">
@@ -244,38 +191,7 @@
                         </div>
                 
                 </div>
-    
-                <!-- Signin Password -->
-                <div class="form-group" id="plng">
-                    <!-- <mat-form-field> -->
-                    <label class="col-form-label" for="v">Select your preferred language <span
-                            class="red">*</span></label>
-                    <br />
-                    <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
-                        formControlName="islanguage">
-                        <mat-radio-button value="yes">English</mat-radio-button>
-                        <mat-radio-button value="no">Other Languages</mat-radio-button>
-                    </mat-radio-group>
-
-
-                    <!-- </mat-form-field> -->
-                    <div style="display: flex; justify-content: space-between;">
-                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
-                            errorMsg="please choose one">
-                        </app-field-error-display>
-
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
-                <label class="col-form-label" for="preferredLanguage">Your preferred language
-                </label><br />
-                <div class="col-form-label"><span
-                        style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
-
-                    <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x"
-                            style="font-size: large;"></i></span></div>
-            </div>
+            </ng-container>
             <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
                 <div class="form-group" *ngIf="lngknown==='no'">
                     <!-- <mat-form-field> -->
@@ -328,19 +244,7 @@
                 </button>
             </div>
         </div>
-        <!-- <div class="mat-dialog-actions " style="background: white !important;"> -->
-        <!-- <button class="cust-logpg-submt mgn-up-20 continue-button" type="submit" mat-button
-                [disabled]="validateFields()" (click)="onSubmit(virtualForm.value)">
-                <span>Save</span>
-
-            </button> -->
-        <!-- <button class="cust-logpg-submt login-button"  type="button" mat-button>
-                <span >Cancel</span>
-               
-            </button> -->
-        <!-- </div> -->
-        <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-        </app-field-error-display> -->
+     
     </div>
 
 
