@@ -242,7 +242,6 @@ export class UserServiceChnageComponent implements OnInit {
     this.service_dataSource.filter = filterValue;
   }
   ngOnInit() {
-    this.getProviders();
     this.getSpokenLanguages();
     this.getSpecializations();
   }
@@ -284,6 +283,12 @@ export class UserServiceChnageComponent implements OnInit {
         }
       }
       if (serviceObj.specialization) {
+        for (let i = 0; i < serviceObj.specialization.length; i++) {
+          const special = this.specialization_arr.filter(speciall => speciall.name === serviceObj.specialization[i]);
+          if (special[0]) {
+            serviceObj.specialization[i] = special[0].displayName;
+          }
+        }
         specialization = serviceObj.specialization.toString();
         if (serviceObj.specialization.length > 1) {
           specialization = specialization.replace(/,/g, ", ");
@@ -514,6 +519,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {
         this.specialization_arr = data;
+        this.getProviders();
       });
   }
   setFilterDataCheckbox(type, value) {

@@ -470,7 +470,7 @@ export class BranchUsersComponent implements OnInit {
     }
     getLanguages(languages) {
         languages = JSON.parse(languages);
-        for (var i = 0; i < languages.length; i++) {
+        for (let i = 0; i < languages.length; i++) {
             languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
         }
         languages = languages.toString();
@@ -480,6 +480,12 @@ export class BranchUsersComponent implements OnInit {
         return languages;
     }
     getSpecialization(specialization) {
+        for (let i = 0; i < specialization.length; i++) {
+            const special = this.specialization_arr.filter(speciall => speciall.name === specialization[i]);
+            if (special[0]) {
+                specialization[i] = special[0].displayName;
+            }
+        }
         if (specialization.length > 1) {
             specialization = specialization.toString();
             return specialization.replace(/,/g, ", ");
