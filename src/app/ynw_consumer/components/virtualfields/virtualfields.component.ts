@@ -227,26 +227,25 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
-      this.virtualForm.patchValue({ whatsppnumber: memberObj.userProfile.whatsAppNum.numer });
+      this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
     }
     if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
-      this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.numer });
+      this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
     }
   }
   serviceFormReset() {
-    this.virtualForm.controls['date'].setValue('dd');
-    this.virtualForm.controls['month'].setValue('mm');
-    this.virtualForm.controls['year'].setValue('yyyy');
+
+    this.virtualForm.patchValue({ date: 'dd' });
+      this.virtualForm.patchValue({ month:'mm' });
+      this.virtualForm.patchValue({ year: 'yyyy' });
     this.virtualForm.controls['dob'].setValue('');
     this.virtualForm.controls['gender'].setValue('male');
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
-    this.virtualForm.patchValue({ whatsppnumber: '' });
+    this.virtualForm.patchValue({ whatsappnumber: '' });
     this.virtualForm.patchValue({ telegramnumber: '' });
-    //  this.virtualForm.controls['whatsppnumber'].setValue('');
-    //  this.virtualForm.controls['telegramnumber'].setValue('');
   }
   setparentDetails(customer) {
 
@@ -277,10 +276,10 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
-      this.virtualForm.patchValue({ whatsppnumber: customer.userProfile.whatsAppNum.numer });
+      this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
     }
     if (customer.userProfile && customer.userProfile.telegramNum) {
-      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.numer });
+      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
     }
 
   }
@@ -294,7 +293,7 @@ export class VirtualFieldsComponent implements OnInit {
       month: ['mm'],
       year: ['yyyy'],
       pincode: ['', Validators.compose([Validators.required])],
-      whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
@@ -303,9 +302,9 @@ export class VirtualFieldsComponent implements OnInit {
     });
     this.virtualForm.patchValue({ gender: 'male' });
     this.virtualForm.patchValue({ islanguage: 'yes' });
-    this.virtualForm.controls['date'].setValue('dd');
-    this.virtualForm.controls['month'].setValue('mm');
-    this.virtualForm.controls['year'].setValue('yyyy');
+    this.virtualForm.patchValue({ date: 'dd' });
+    this.virtualForm.patchValue({ month:'mm' });
+    this.virtualForm.patchValue({ year: 'yyyy' });
     if (this.dialogData.type !== 'member') {
       this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
     } else {
@@ -502,16 +501,16 @@ export class VirtualFieldsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      if (formdata.whatsappumber !== '') {
+      if (formdata.whatsappnumber !== '') {
         const whatsup = {}
         whatsup["countryCode"] = '+91',
-          whatsup["number"] = formdata.whatsappumber
+          whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
       if (formdata.telegramnumber !== '') {
         const telegram = {}
         telegram["countryCode"] = '+91',
-          telegram["number"] = formdata.whatsappumber
+          telegram["number"] = formdata.whatsappnumber
         userObj['telegramNum'] = telegram;
       }
       // const userProfile = {}
@@ -546,16 +545,16 @@ export class VirtualFieldsComponent implements OnInit {
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
 
-    if (formdata.whatsappumber !== '') {
+    if (formdata.whatsappnumber !== '') {
       const whatsup = {}
       whatsup["countryCode"] = '+91',
-        whatsup["number"] = formdata.whatsappumber
+        whatsup["number"] = formdata.whatsappnumber
       memberInfo['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
       telegram["countryCode"] = '+91',
-        telegram["number"] = formdata.whatsappumber
+        telegram["number"] = formdata.whatsappnumber
       memberInfo['telegramNum'] = telegram;
     }
     memberInfo.userProfile = {}
