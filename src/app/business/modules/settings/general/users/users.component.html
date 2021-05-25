@@ -348,7 +348,7 @@
                                                                         </div>
                                                                         <div class="mgn-up-5" *ngIf="service.mobileNo">
                                                                             <span class="b2">
-                                                                                +91 {{service.mobileNo}} </span>
+                                                                               {{service.countryCode}} {{service.mobileNo}} </span>
                                                                         </div>
                                                                         <div class="mgn-up-5"
                                                                             *ngIf="service.specialization"> <span
@@ -386,7 +386,7 @@
                                                         </td>
                                                         <td class="display-min-none">
                                                             <span *ngIf="service.mobileNo">
-                                                                +91 {{service.mobileNo}}</span>
+                                                                {{service.countryCode}} {{service.mobileNo}}</span>
                                                         </td>
                                                         <td class="display-min-none">
                                                             <span *ngIf="service.specialization">

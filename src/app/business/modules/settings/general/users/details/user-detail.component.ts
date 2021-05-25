@@ -229,8 +229,10 @@ export class BranchUserDetailComponent implements OnInit {
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-            whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
-            telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
 
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
@@ -289,6 +291,7 @@ export class BranchUserDetailComponent implements OnInit {
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
+            'countryCode':  this.user_data.countryCode || null,
             'phonenumber': this.user_data.mobileNo || null,
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
@@ -298,7 +301,9 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.countryCode  : null, 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : null, 
+            'countryCode_telegram': (this.user_data.telegramNum) ? this.user_data.telegramNum.countryCode  : null, 
             'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : null, 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
@@ -365,15 +370,15 @@ export class BranchUserDetailComponent implements OnInit {
         };
         if(input.whatsappumber !== ''){
             const whatsup = {}
-            whatsup["countryCode"] = '+91'
+            whatsup["countryCode"] = '+'+input.countryCode_whatsapp
             whatsup["number"] = input.whatsappumber
             post_data1['whatsAppNum']= whatsup;
         }
         if(input.telegramnumber !== ''){
             const telegram = {}
-            telegram["countryCode"] = '+91'
+            telegram["countryCode"] = '+'+input.countryCode_telegram
             telegram["number"] = input.whatsappumber
-            post_data1['telegramNum']= telegram;          
+            post_data1['telegramNum']= telegram;     
         }
         // let phone = pN;
         // if(pN.startsWith(dialCode)) {
