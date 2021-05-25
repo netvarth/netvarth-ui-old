@@ -32,10 +32,12 @@ export class BranchUsersComponent implements OnInit {
     filter = {
         firstName: '',
         lastName: '',
-        location: '',
+        city: '',
+        state: '',
         pincode: '',
         primaryMobileNo: '',
         userType: '',
+        available: '',
         page_count: projectConstants.PERPAGING_LIMIT,
         page: 1
 
@@ -44,10 +46,13 @@ export class BranchUsersComponent implements OnInit {
     filters: any = {
         'firstName': false,
         'lastName': '',
-        'location': false,
+        'city': false,
+        'state': false,
         'pincode': false,
         'primaryMobileNo': false,
-        'userType': false
+        'userType': false,
+        'available': false,
+        
 
     };
 
@@ -112,6 +117,9 @@ export class BranchUsersComponent implements OnInit {
     selectedUser;
     selectrow = false;
     user_count_filterApplied: any;
+    allSelected: boolean;
+    availabileSelected: boolean;
+    notAvailabileSelected: boolean;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -274,9 +282,12 @@ export class BranchUsersComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.filter_sidebar = false;
-        // this.clearFilter();
+        this.clearFilter();
     }
     clearFilter() {
+        this.allSelected = false;
+        this.availabileSelected = false;
+        this.notAvailabileSelected = false;
         this.resetFilter();
         this.filterapplied = false;
         this.getUsers();
@@ -285,18 +296,22 @@ export class BranchUsersComponent implements OnInit {
         this.filters = {
             'firstName': false,
             'lastName': false,
-            'location': false,
+            'city': false,
+            'state': false,
             'pincode': false,
             'primaryMobileNo': false,
-            'userType': false
+            'userType': false,
+            'available': false,
         };
         this.filter = {
             firstName: '',
             lastName: '',
-            location: '',
+            city: '',
+            state: '',
             pincode: '',
             primaryMobileNo: '',
             userType: '',
+            available: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
@@ -305,7 +320,7 @@ export class BranchUsersComponent implements OnInit {
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -333,14 +348,20 @@ export class BranchUsersComponent implements OnInit {
         if (this.filter.lastName !== '') {
             api_filter['lastName-like'] = this.filter.lastName;
         }
-        if (this.filter.location !== '') {
-            api_filter['locationName-like'] = this.filter.location;
+        if (this.filter.city !== '') {
+            api_filter['city-like'] = this.filter.city;
+        }
+        if (this.filter.state !== '') {
+            api_filter['state-like'] = this.filter.state;
         }
         if (this.filter.pincode !== '') {
             api_filter['pinCode-eq'] = this.filter.pincode;
         }
         if (this.filter.userType !== '') {
             api_filter['userType-eq'] = this.filter.userType;
+        }
+        if (this.filter.available !== '') {
+            api_filter['available-eq'] = this.filter.available;
         }
         if (this.filter.primaryMobileNo !== '') {
             const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -466,6 +487,26 @@ export class BranchUsersComponent implements OnInit {
                 this.selectedSpecialization.splice(indx, 1);
             }
         }
+        if (type === 'available') {
+            if(value === 'ALL'){
+              this.allSelected = true;
+              this.availabileSelected = false;
+              this.notAvailabileSelected = false;
+              this.filter.available = 'ALL';
+            }
+            else if(value === 'true'){
+              this.allSelected = false;
+              this.availabileSelected = true;
+              this.notAvailabileSelected = false;
+              this.filter.available = 'true';
+            }
+           else{
+            this.allSelected = false;
+            this.availabileSelected = false;
+            this.notAvailabileSelected = true;
+            this.filter.available = 'false';
+           }
+          }
         this.doSearch();
     }
     getLanguages(languages) {

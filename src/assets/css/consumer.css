@@ -6664,6 +6664,17 @@ margin-top: 7px;
   padding-right: 5px;
   z-index: 5;
 }
+@media (max-width: 320px) {
+  .consumer-dash .grid-card .resche_ico_wtlist {
+    content: url(../images/Reschedule-01-01.svg);
+    width: 20px;
+    position: absolute;
+    right: 0;
+    padding-right: 5px;
+    z-index: 5;
+  }
+}
+
 .resch-box .consumer-reschedule-icon {
   margin-top: 7px;
   margin-left: 10px;

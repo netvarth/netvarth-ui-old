@@ -54,14 +54,14 @@
                                     <div class="filterTextinput filter-text-input">
                                         <li class="filterli filter-li">
                                             <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                                (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="20"
+                                                (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
                                                 class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                         </li>
                                     </div>
                                     <div class="filterTextinput filter-text-input">
                                         <li class="filterli filter-li">
                                             <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                                (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                                (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
                                                 class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                         </li>
                                     </div>
@@ -87,7 +87,7 @@
                                     <div class="filterTextinput filter-text-input">
                                         <li class="filterli filter-li">
                                             <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                                (blur)="doSearch()" (keyup)="focusInput($event, location)" maxlength="10"
+                                                (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
                                                 class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                         </li>
                                     </div>
@@ -112,14 +112,59 @@
                                   <div class="card-body">
                                     <div class="filterTextinput filter-text-input">
                                         <li class="filterli filter-li">
-                                            <input type="text" id="location" [(ngModel)]="filter.location" #location
-                                                (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)" maxlength="20"
-                                                class="filterTextbox filter-textbox" placeholder="Enter Location">
+                                            <input type="text" id="city" [(ngModel)]="filter.city" #city
+                                                (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                                class="filterTextbox filter-textbox" placeholder="Enter city">
                                         </li>
                                     </div>
+                                    <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="state" [(ngModel)]="filter.state" #state
+                                              (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                              class="filterTextbox filter-textbox" placeholder="Enter state">
+                                      </li>
+                                  </div>
                                   </div>
                                 </div>
                             </div>
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-users"></i>
+                                      </div>
+                                      Availability
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-text-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox class="filter-checkbox" [checked]="allSelected"
+                                        (change)="setFilterDataCheckbox('available', 'ALL')">
+                                        All</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                                        (change)="setFilterDataCheckbox('available', 'true')">
+                                        Available</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                                        (change)="setFilterDataCheckbox('available', 'false')">
+                                        Not Available</mat-checkbox>
+                                    </li>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
                             <div class="card">
                                 <div class="card-header">
                                   <h2 class="mb-0">
@@ -139,7 +184,7 @@
                                     <div class="filterTextinput filter-text-input">
                                         <li class="filterli filter-li">
                                             <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                                #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
+                                                #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
                                                 maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                         </li>
                                     </div>

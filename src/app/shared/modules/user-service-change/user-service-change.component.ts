@@ -196,17 +196,21 @@ export class UserServiceChnageComponent implements OnInit {
   filter = {
     firstName: '',
     lastName: '',
-    location: '',
+    city: '',
+    state: '',
     pincode: '',
-    primaryMobileNo: ''
+    primaryMobileNo: '',
+    available: ''
   };
 
   filters: any = {
     'firstName': false,
     'lastName': '',
-    'location': false,
+    'city': false,
+    'state': false,
     'pincode': false,
-    'primaryMobileNo': false
+    'primaryMobileNo': false,
+    'available': false
   };
   languages_arr: any = [];
   specialization_arr: any = [];
@@ -214,6 +218,9 @@ export class UserServiceChnageComponent implements OnInit {
   selectedLanguages: any = [];
   selectedSpecialization: any = [];
   filterApplied_count: any;
+  allSelected: boolean;
+  availabileSelected: boolean;
+  notAvailabileSelected: boolean;
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -421,6 +428,9 @@ export class UserServiceChnageComponent implements OnInit {
     this.clearFilter();
   }
   clearFilter() {
+    this.allSelected = false;
+    this.availabileSelected = false;
+    this.notAvailabileSelected = false;
     this.resetFilter();
     this.filterapplied = false;
     this.getProviders();
@@ -429,23 +439,28 @@ export class UserServiceChnageComponent implements OnInit {
     this.filters = {
       'firstName': false,
       'lastName': false,
-      'location': false,
+      'city': false,
+      'state': false,
       'pincode': false,
-      'primaryMobileNo': false
+      'primaryMobileNo': false,
+      'available': false
     };
     this.filter = {
       firstName: '',
       lastName: '',
-      location: '',
+      city: '',
+      state: '',
       pincode: '',
-      primaryMobileNo: ''
+      primaryMobileNo: '',
+      available: ''
+      
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
   }
   doSearch() {
     this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.location || this.filter.pincode || this.filter.primaryMobileNo || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -459,11 +474,17 @@ export class UserServiceChnageComponent implements OnInit {
     if (this.filter.lastName !== '') {
       api_filter['lastName-like'] = this.filter.lastName;
     }
-    if (this.filter.location !== '') {
-      api_filter['locationName-like'] = this.filter.location;
+    if (this.filter.city !== '') {
+      api_filter['city-like'] = this.filter.city;
+    }
+    if (this.filter.state !== '') {
+      api_filter['state-like'] = this.filter.state;
     }
     if (this.filter.pincode !== '') {
       api_filter['pinCode-eq'] = this.filter.pincode;
+    }
+    if (this.filter.available !== '') {
+      api_filter['available-eq'] = this.filter.available;
     }
     if (this.filter.primaryMobileNo !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -538,6 +559,34 @@ export class UserServiceChnageComponent implements OnInit {
       } else {
         this.selectedSpecialization.splice(indx, 1);
       }
+    }
+    if (type === 'specializations') {
+      const indx = this.selectedSpecialization.indexOf(value);
+      if (indx === -1) {
+        this.selectedSpecialization.push(value);
+      } else {
+        this.selectedSpecialization.splice(indx, 1);
+      }
+    }
+    if (type === 'available') {
+      if(value === 'ALL'){
+        this.allSelected = true;
+        this.availabileSelected = false;
+        this.notAvailabileSelected = false;
+        this.filter.available = 'ALL';
+      }
+      else if(value === 'true'){
+        this.allSelected = false;
+        this.availabileSelected = true;
+        this.notAvailabileSelected = false;
+        this.filter.available = 'true';
+      }
+     else{
+      this.allSelected = false;
+      this.availabileSelected = false;
+      this.notAvailabileSelected = true;
+      this.filter.available = 'false';
+     }
     }
     this.doSearch();
   }

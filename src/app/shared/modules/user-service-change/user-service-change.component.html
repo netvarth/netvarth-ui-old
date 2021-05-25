@@ -108,10 +108,58 @@
           <div class="card-body">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
-                <input type="text" id="location" [(ngModel)]="filter.location" #location (blur)="doSearch()"
-                  (keyup)="focusInput($event)" maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter Location">
+                <input type="text" id="city" [(ngModel)]="filter.city" #city (blur)="doSearch()"
+                  (keyup)="focusInput($event)" maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter City">
+                  
+              </li>
+              </div>
+              <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="state" [(ngModel)]="filter.state" #state (blur)="doSearch()"
+                  (keyup)="focusInput($event)" maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter State">
+                  
               </li>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-users"></i>
+                  
+                </div>
+                Availability
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="allSelected"
+                  (change)="setFilterDataCheckbox('available', 'ALL')">
+                  All</mat-checkbox>
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                  (change)="setFilterDataCheckbox('available', 'true')">
+                  Available</mat-checkbox>
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                  (change)="setFilterDataCheckbox('available', 'false')">
+                  Not Available</mat-checkbox>
+              </li>
+              </div>
+              
           </div>
         </div>
       </div>
