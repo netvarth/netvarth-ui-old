@@ -203,7 +203,19 @@
                         </mat-radio-group>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label for="email" class="col-form-label">Email</label>
+                    <input type="email" class="form-control" formControlName="email" />
+                    <!-- <mat-form-field>
+                  <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
+           </mat-form-field> -->
+                  <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'email')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                          {
+                                            'required' : 'Email is required',
+                                            'pattern' : 'Please enter valid email'
+                                          })">
+                  </app-field-error-display>
+                </div>
 
                 <div class="form-group mobile-field" >
                         <label>Whatsapp #</label>

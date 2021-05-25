@@ -203,6 +203,9 @@ export class VirtualFieldsComponent implements OnInit {
     } else {
       this.virtualForm.patchValue({ gender: 'male' });
     }
+    if (memberObj.userProfile && memberObj.userProfile.email) {
+      this.virtualForm.patchValue({ email: memberObj.userProfile.email });
+    }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
@@ -244,6 +247,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
+    this.virtualForm.patchValue({ email: '' });
     this.virtualForm.patchValue({ whatsappnumber: '' });
     this.virtualForm.patchValue({ telegramnumber: '' });
   }
@@ -260,6 +264,9 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
     } else {
       this.virtualForm.patchValue({ gender: 'male' });
+    }
+    if (customer.userProfile && customer.userProfile.email) {
+      this.virtualForm.patchValue({ email: customer.userProfile.email });
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
@@ -293,6 +300,7 @@ export class VirtualFieldsComponent implements OnInit {
       month: ['mm'],
       year: ['yyyy'],
       pincode: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
@@ -514,6 +522,9 @@ export class VirtualFieldsComponent implements OnInit {
         userObj['telegramNum'] = telegram;
       }
       // const userProfile = {}
+      if(formdata.email!==''){
+        userObj['email']=formdata.email
+      }
       userObj['gender'] = formdata.gender;
       userObj['firstName'] = firstName;
       userObj['lastName'] = lastName;
@@ -557,6 +568,9 @@ export class VirtualFieldsComponent implements OnInit {
         telegram["number"] = formdata.whatsappnumber
       memberInfo.userProfile['telegramNum'] = telegram;
     }
+    if(formdata.email!==''){
+      memberInfo['userProfile']['email']=formdata.email
+    }
    
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
@@ -593,22 +607,27 @@ export class VirtualFieldsComponent implements OnInit {
   }
   saveMember(formdata) {
     const _this = this;
-    console.log(_this.chosen_person);
-
+  
+   
     const memberInfo = {};
+    memberInfo['userProfile'] = {}
     if (formdata.whatsappumber !== '') {
       const whatsup = {}
       whatsup["countryCode"] = '+91',
         whatsup["number"] = formdata.whatsappumber
-      memberInfo['whatsAppNum'] = whatsup;
+      memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
       telegram["countryCode"] = '+91',
         telegram["number"] = formdata.whatsappumber
-      memberInfo['telegramNum'] = telegram;
+        memberInfo['userProfile']['telegramNum'] = telegram;
     }
-    memberInfo['userProfile'] = {}
+    if(formdata.email!==''){
+      memberInfo['userProfile']['email']=formdata.email
+    }
+
+
     memberInfo['bookingLocation'] = {}
     memberInfo['userProfile']['gender'] = formdata.gender;
     memberInfo['userProfile']['firstName'] = formdata.firstName;
