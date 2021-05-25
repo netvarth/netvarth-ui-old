@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -16,6 +16,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { UserConfirmBoxComponent } from '../confirm-box/user-confirm-box.component';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html',
@@ -94,6 +95,12 @@ export class BranchUserDetailComponent implements OnInit {
     locationDetails: any;
     locations: any = [];
     editloc = true;
+
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -217,6 +224,7 @@ export class BranchUserDetailComponent implements OnInit {
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: ['male'],
+            // phonenumber: new FormControl(undefined),
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
@@ -310,6 +318,8 @@ export class BranchUserDetailComponent implements OnInit {
 
     }
     onSubmit(input) {
+        // const dialCode = input.phonenumber.dialCode;
+        // const pN = input.phonenumber.e164Number.trim();
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -364,6 +374,10 @@ export class BranchUserDetailComponent implements OnInit {
         //     telegram["number"] = input.whatsappumber
         //     post_data1['telegramNum']= telegram;          
         // }
+        // let phone = pN;
+        // if(pN.startsWith(dialCode)) {
+        //     phone = pN.split(dialCode)[1];
+        //   }
         if(input.phonenumber !==''){
             post_data1['countryCode'] = '+91',
             post_data1['mobileNo'] = input.phonenumber;
