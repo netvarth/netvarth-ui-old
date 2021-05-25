@@ -64,6 +64,7 @@ export class VirtualFieldsComponent implements OnInit {
   years: number[] = [];
   months: { value: string; name: string; }[];
   mob_prefix_cap = '+91';
+  mandatoryEmail: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -104,6 +105,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
+      this.mandatoryEmail=this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
     });
@@ -156,6 +158,7 @@ export class VirtualFieldsComponent implements OnInit {
       });
   }
   onServiceForChange(event) {
+    this.serviceFormReset();
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
@@ -167,36 +170,44 @@ export class VirtualFieldsComponent implements OnInit {
         this.chosen_person = this.customer_data
         this.setparentDetails(this.customer_data);
       }
-      // this.is_parent = true;
-      // this.chosen_person = event.value;
-      // if (this.chosen_person !== 'new_member') {
-      //   if (this.chosen_person.parent) {
-      //     this.is_parent = false;
-      //     this.setMemberDetails(this.chosen_person);
-      //   } else {
-      //     this.setparentDetails(this.chosen_person);
-      //   }
-      // } else {
-      //   this.is_parent = false;
-      //   this.serviceFormReset();
-      // }
     } else {
       this.is_parent = false;
       this.chosen_person = 'new_member'
-      this.serviceFormReset();
+  
     }
 
-
+  }
+  checkMainMemberEmailId() {
+    let isemail=false;
+    console.log(this.mandatoryEmail);
+    if(this.mandatoryEmail==='' && this.virtualForm.get('email').value===''){
+      isemail=false;
+    }else if(this.mandatoryEmail==='' &&this.virtualForm.get('email').value!==''){
+      this.updateParentInfo(this.virtualForm.value).then(
+        (result) => {
+          console.log('updatedSucessfully');
+          isemail=true;
+          this.getActiveUserInfo();
+        });
+    }else{
+      isemail=true;
+    }
+    console.log(isemail);
+    return isemail;
   }
 
   setMemberDetails(memberObj) {
     this.serviceFormReset();
-    if (memberObj.userProfile && memberObj.userProfile.dob) {
+    if (memberObj.userProfile && memberObj.userProfile.dob!==undefined) {
       const dob = memberObj.userProfile.dob.split('-');
       this.virtualForm.patchValue({ date: dob[2] });
       this.virtualForm.patchValue({ month: dob[1] });
       this.virtualForm.patchValue({ year: dob[0] });
       this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
+    }else{
+      this.virtualForm.patchValue({ date: 'dd' });
+      this.virtualForm.patchValue({ month:'mm' });
+      this.virtualForm.patchValue({ year: 'yyyy' });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
@@ -252,13 +263,20 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.patchValue({ telegramnumber: '' });
   }
   setparentDetails(customer) {
+  
 
-    if (customer.userProfile && customer.userProfile.dob) {
+    
+    if (customer.userProfile && customer.userProfile.dob!==undefined) {
+
       const dob = customer.userProfile.dob.split('-');
       this.virtualForm.patchValue({ date: dob[2] });
       this.virtualForm.patchValue({ month: dob[1] });
       this.virtualForm.patchValue({ year: dob[0] });
       this.virtualForm.patchValue({ dob: customer.userProfile.dob });
+    }else{
+      this.virtualForm.patchValue({ date:'dd' });
+      this.virtualForm.patchValue({ month: 'mm' });
+      this.virtualForm.patchValue({ year: 'yyyy' });
     }
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
@@ -296,9 +314,9 @@ export class VirtualFieldsComponent implements OnInit {
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
       dob: ['', Validators.compose([Validators.required])],
-      date: ['dd'],
-      month: ['mm'],
-      year: ['yyyy'],
+      date: [''],
+      month: [''],
+      year: [''],
       pincode: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
@@ -321,6 +339,7 @@ export class VirtualFieldsComponent implements OnInit {
     }
 
     if (this.dialogData) {
+      console.log('dialogData');
       this.updateForm();
     }
     this.api_loading = false;
@@ -518,7 +537,7 @@ export class VirtualFieldsComponent implements OnInit {
       if (formdata.telegramnumber !== '') {
         const telegram = {}
         telegram["countryCode"] = '+91',
-          telegram["number"] = formdata.whatsappnumber
+          telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
       // const userProfile = {}
@@ -565,7 +584,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (formdata.telegramnumber !== '') {
       const telegram = {}
       telegram["countryCode"] = '+91',
-        telegram["number"] = formdata.whatsappnumber
+        telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
     }
     if(formdata.email!==''){
@@ -607,8 +626,6 @@ export class VirtualFieldsComponent implements OnInit {
   }
   saveMember(formdata) {
     const _this = this;
-  
-   
     const memberInfo = {};
     memberInfo['userProfile'] = {}
     if (formdata.whatsappumber !== '') {
@@ -620,7 +637,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (formdata.telegramnumber !== '') {
       const telegram = {}
       telegram["countryCode"] = '+91',
-        telegram["number"] = formdata.whatsappumber
+        telegram["number"] = formdata.telegramnumber
         memberInfo['userProfile']['telegramNum'] = telegram;
     }
     if(formdata.email!==''){
