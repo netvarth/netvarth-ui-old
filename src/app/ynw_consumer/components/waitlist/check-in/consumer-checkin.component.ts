@@ -761,7 +761,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 // console.log(formattedDate);
                 // this.waitlist_for[0]['dob'] = formattedDate;
-                this.waitlist_for[0]['dob'] = this.virtualInfo.dob;
+                this.waitlist_for[0]['age'] = this.virtualInfo.age;
                 if (this.virtualInfo.islanguage === 'yes') {
                     let langs = [];
                     langs.push('English');
@@ -776,6 +776,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
+                    
                 }
             }
         }

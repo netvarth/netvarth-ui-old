@@ -198,16 +198,19 @@ export class VirtualFieldsComponent implements OnInit {
 
   setMemberDetails(memberObj) {
     this.serviceFormReset();
-    if (memberObj.userProfile && memberObj.userProfile.dob!==undefined) {
-      const dob = memberObj.userProfile.dob.split('-');
-      this.virtualForm.patchValue({ date: dob[2] });
-      this.virtualForm.patchValue({ month: dob[1] });
-      this.virtualForm.patchValue({ year: dob[0] });
-      this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
-    }else{
-      this.virtualForm.patchValue({ date: 'dd' });
-      this.virtualForm.patchValue({ month:'mm' });
-      this.virtualForm.patchValue({ year: 'yyyy' });
+    // if (memberObj.userProfile && memberObj.userProfile.dob!==undefined) {
+    //   const dob = memberObj.userProfile.dob.split('-');
+    //   this.virtualForm.patchValue({ date: dob[2] });
+    //   this.virtualForm.patchValue({ month: dob[1] });
+    //   this.virtualForm.patchValue({ year: dob[0] });
+    //   this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
+    // }else{
+    //   this.virtualForm.patchValue({ date: 'dd' });
+    //   this.virtualForm.patchValue({ month:'mm' });
+    //   this.virtualForm.patchValue({ year: 'yyyy' });
+    // }
+    if(memberObj.userProfile.age){
+      this.virtualForm.patchValue({ age: memberObj.userProfile.age });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
@@ -249,10 +252,11 @@ export class VirtualFieldsComponent implements OnInit {
   }
   serviceFormReset() {
 
-    this.virtualForm.patchValue({ date: 'dd' });
-      this.virtualForm.patchValue({ month:'mm' });
-      this.virtualForm.patchValue({ year: 'yyyy' });
-    this.virtualForm.controls['dob'].setValue('');
+    // this.virtualForm.patchValue({ date: 'dd' });
+    //   this.virtualForm.patchValue({ month:'mm' });
+    //   this.virtualForm.patchValue({ year: 'yyyy' });
+    // this.virtualForm.controls['dob'].setValue('');
+    this.virtualForm.controls['age'].setValue('');
     this.virtualForm.controls['gender'].setValue('male');
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
@@ -266,17 +270,20 @@ export class VirtualFieldsComponent implements OnInit {
   
 
     
-    if (customer.userProfile && customer.userProfile.dob!==undefined) {
+    // if (customer.userProfile && customer.userProfile.dob!==undefined) {
 
-      const dob = customer.userProfile.dob.split('-');
-      this.virtualForm.patchValue({ date: dob[2] });
-      this.virtualForm.patchValue({ month: dob[1] });
-      this.virtualForm.patchValue({ year: dob[0] });
-      this.virtualForm.patchValue({ dob: customer.userProfile.dob });
-    }else{
-      this.virtualForm.patchValue({ date:'dd' });
-      this.virtualForm.patchValue({ month: 'mm' });
-      this.virtualForm.patchValue({ year: 'yyyy' });
+    //   const dob = customer.userProfile.dob.split('-');
+    //   this.virtualForm.patchValue({ date: dob[2] });
+    //   this.virtualForm.patchValue({ month: dob[1] });
+    //   this.virtualForm.patchValue({ year: dob[0] });
+    //   this.virtualForm.patchValue({ dob: customer.userProfile.dob });
+    // }else{
+    //   this.virtualForm.patchValue({ date:'dd' });
+    //   this.virtualForm.patchValue({ month: 'mm' });
+    //   this.virtualForm.patchValue({ year: 'yyyy' });
+    // }
+    if(customer.userProfile.age){
+      this.virtualForm.patchValue({ age: customer.userProfile.age });
     }
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
@@ -313,10 +320,11 @@ export class VirtualFieldsComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
-      dob: ['', Validators.compose([Validators.required])],
-      date: [''],
-      month: [''],
-      year: [''],
+      // dob: ['', Validators.compose([Validators.required])],
+      // date: [''],
+      // month: [''],
+      // year: [''],
+      age:['', Validators.compose([Validators.required,Validators.min(0),Validators.max(150)])],
       pincode: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
@@ -328,9 +336,9 @@ export class VirtualFieldsComponent implements OnInit {
     });
     this.virtualForm.patchValue({ gender: 'male' });
     this.virtualForm.patchValue({ islanguage: 'yes' });
-    this.virtualForm.patchValue({ date: 'dd' });
-    this.virtualForm.patchValue({ month:'mm' });
-    this.virtualForm.patchValue({ year: 'yyyy' });
+    // this.virtualForm.patchValue({ date: 'dd' });
+    // this.virtualForm.patchValue({ month:'mm' });
+    // this.virtualForm.patchValue({ year: 'yyyy' });
     if (this.dialogData.type !== 'member') {
       this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
     } else {
@@ -404,6 +412,9 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
       isinvalid = true;
     }
+    if (this.virtualForm.get('age').value === '') {
+      isinvalid = true;
+    }
     // if (this.virtualForm.get('dob').value === '') {
     //   isinvalid = true;
     // }
@@ -421,15 +432,15 @@ export class VirtualFieldsComponent implements OnInit {
         isinvalid = true;
       }
     }
-    if (this.virtualForm.get('date').value === 'dd') {
-      isinvalid = true;
-    }
-    if (this.virtualForm.get('month').value === 'mm') {
-      isinvalid = true;
-    }
-    if (this.virtualForm.get('year').value === 'yyyy') {
-      isinvalid = true;
-    }
+    // if (this.virtualForm.get('date').value === 'dd') {
+    //   isinvalid = true;
+    // }
+    // if (this.virtualForm.get('month').value === 'mm') {
+    //   isinvalid = true;
+    // }
+    // if (this.virtualForm.get('year').value === 'yyyy') {
+    //   isinvalid = true;
+    // }
 
     return isinvalid;
   }
@@ -472,9 +483,9 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
     } else {
-      const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
+      // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
 
-      formdata['dob'] = dob;
+      // formdata['dob'] = dob;
       if (this.is_parent) {
         console.log(formdata);
         this.updateParentInfo(formdata).then(
@@ -547,7 +558,7 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['gender'] = formdata.gender;
       userObj['firstName'] = firstName;
       userObj['lastName'] = lastName;
-      userObj['dob'] = formdata.dob;
+      // userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
       console.log(formdata.islanguage);
       if (formdata.islanguage === 'yes') {
@@ -591,12 +602,13 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo['userProfile']['email']=formdata.email
     }
    
+    
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
     memberInfo.userProfile['gender'] = formdata.gender;
     memberInfo.userProfile['firstName'] = firstName;
     memberInfo.userProfile['lastName'] = lastName;
-    memberInfo.userProfile['dob'] = formdata.dob;
+    // memberInfo.userProfile['dob'] = formdata.dob;
     memberInfo.bookingLocation['pincode'] = formdata.pincode;
     if (formdata.islanguage === 'yes') {
       memberInfo['preferredLanguages'] = ['English'];
@@ -649,7 +661,7 @@ export class VirtualFieldsComponent implements OnInit {
     memberInfo['userProfile']['gender'] = formdata.gender;
     memberInfo['userProfile']['firstName'] = formdata.firstName;
     memberInfo['userProfile']['lastName'] = formdata.lastName;
-    memberInfo['userProfile']['dob'] = formdata.dob;
+    // memberInfo['userProfile']['dob'] = formdata.dob;
     memberInfo['bookingLocation']['pincode'] = formdata.pincode;
     if (formdata.islanguage === 'yes') {
       memberInfo['preferredLanguages'] = ['English'];

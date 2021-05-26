@@ -95,3 +95,12 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
     width:80%!important;
     height:38px!important;
 }
+.virtualage{
+    padding-left:none;
+}
+
+.genderradio{
+  padding-right:0px!important;
+  padding-left:14px!important;
+  margin-top:4px;
+}
