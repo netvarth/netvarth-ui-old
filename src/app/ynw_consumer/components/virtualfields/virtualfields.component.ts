@@ -695,7 +695,7 @@ export class VirtualFieldsComponent implements OnInit {
       console.log(memberInfo);
       _this.sharedServices.addMembers(memberInfo).subscribe(
         (data) => {
-          this.lStorageService.setitemonLocalStorage('userId', data);
+          _this.lStorageService.setitemonLocalStorage('userId', data);
           resolve(data);
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
