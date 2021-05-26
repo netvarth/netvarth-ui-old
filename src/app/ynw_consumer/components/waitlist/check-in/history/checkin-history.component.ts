@@ -204,6 +204,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
@@ -355,6 +356,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['appt'] = 'appt';
@@ -462,6 +464,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['orders'] = 'orders';
