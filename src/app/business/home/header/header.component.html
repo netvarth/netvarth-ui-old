@@ -176,7 +176,7 @@
           </div>
         </div>
       </a>
-      <a (click)="userPopup();gotoSettings()" class="navi-item">
+      <a (click)="userPopup();gotoSettings()" class="navi-item" *ngIf="userData.adminPrivilege">
         <div class="navi-link">
           <div class="symbol symbol-40 bg-light mr-3">
             <div class="symbol-label">

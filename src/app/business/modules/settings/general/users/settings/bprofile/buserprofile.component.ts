@@ -406,7 +406,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       });
   }
   gotoAccountSettings() {
-    this.routerobj.navigate(['provider', 'profile']);
+    this.routerobj.navigate(['provider', 'profile'], {queryParams: {userId: this.userId}});
   }
   getBusinessProfile() {
     this.bProfile = [];
