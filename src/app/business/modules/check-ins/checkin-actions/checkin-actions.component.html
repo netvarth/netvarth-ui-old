@@ -1,14 +1,14 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
-    Select an action to perform
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === '' || action === 'status'">
+    <ng-container *ngIf="action === ''">Select an action to perform</ng-container>
+    <ng-container *ngIf="action === 'status'">Change status to</ng-container>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
 <div *ngIf="apiloading">
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
-<div class="action-section col-md-12 no-padding" *ngIf="action === '' && !apiloading">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!data.multiSelection">
-        
+<div class="action-section col-md-12 no-padding" *ngIf="(action === '' || action === 'status') &&!apiloading">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-lt-20 no-padding" *ngIf="!data.multiSelection">
         <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">
             {{customer_label | capitalizeFirst}} Name : {{checkin.waitlistingFor[0].firstName}}
             {{checkin.waitlistingFor[0].lastName}}</p>
@@ -18,8 +18,9 @@
         <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
             {{customer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
+        <p *ngIf="action === 'status'">Current Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <!-- <div class="action-box pointer-cursor"
             *ngIf="(checkin.waitlistStatus=='checkedIn' || checkin.waitlistStatus == 'arrived') && checkin.questionnaire && checkin.questionnaire.questionAnswers && checkin.questionnaire.questionAnswers.length > 0"
             (click)="gotoQuestionnaire(checkin)">
@@ -35,43 +36,46 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo"
-        (click)="!buttonClicked && changeWaitlistStatus('CHECK_IN')">
-        <div class="action-box-sub">
-            <span class="changestatus-icon"></span>
-            <div class="icon-text">Change Status</div>
+        <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
+            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'">
+            <div class="action-box-sub">
+                <span class="changestatus-icon"></span>
+                <div class="icon-text">Change status to</div>
+            </div>
         </div>
-        </div>
-
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && changeService && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')" (click)="assignMyself()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && changeService && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+            (click)="assignMyself()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Assign Myself</div>
             </div>
         </div>
-
-
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+            (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <!-- <div class="icon-text">Assign {{provider_label | capitalizeFirst}}</div> -->
                 <div *ngIf="checkin.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
-                <div *ngIf="!checkin.provider"  class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+                <div *ngIf="!checkin.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
             </div>
+        </div>
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && changeService && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
+            (click)="removeProvider()">
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
             </div>
-            <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && changeService && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider" (click)="removeProvider()">
-                <div class="action-box-sub">
-                    <span class="doctor-change-icon"></span>
-                    <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
-                </div>
-            </div>
-            <div class="action-box pointer-cursor" *ngIf="showArrived"
+        </div>
+        <!-- <div class="action-box pointer-cursor" *ngIf="showArrived"
             (click)="!buttonClicked && changeWaitlistStatus('REPORT')">
             <div class="action-box-sub">
                 <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>
@@ -83,7 +87,6 @@
                 <div class="icon-text">Alert</div>
             </div>
         </div>
-        
         <div class="action-box pointer-cursor" *ngIf="showStart"
             (click)="!buttonClicked && changeWaitlistStatus('STARTED')">
             <div class="action-box-sub">
@@ -106,21 +109,24 @@
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></span>
                 <span class="wtsapvid-icon"
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></span>
-                <div class="icon-text" *ngIf="checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                <div class="icon-text"
+                    *ngIf="checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                     {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call'}} Service
                 </div>
-                <div class="icon-text" *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call +' + checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+                <div class="icon-text"
+                    *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call +' +
+                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                 </div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
+        <!-- <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
             (click)="!buttonClicked && changeWaitlistStatus('DONE')">
             <div class="action-box-sub">
                 <span class="complete-icon"></span>
                 <div class="icon-text">Complete</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
             (click)="rescheduleActionClicked()">
@@ -129,13 +135,13 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel"
+        <!-- <div class="action-box pointer-cursor" *ngIf="showCancel"
             (click)="!buttonClicked && changeWaitlistStatus('CANCEL')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel {{(checkin.showToken) ? 'token' : 'check-in'}}</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
@@ -143,13 +149,13 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
-        (click)="printCheckin()">
-        <div class="action-box-sub">
-            <span class="printer-icon"></span>
-            <div class="icon-text">Print</div>
+            (click)="printCheckin()">
+            <div class="action-box-sub">
+                <span class="printer-icon"></span>
+                <div class="icon-text">Print</div>
+            </div>
         </div>
-    </div>
-         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
             (click)="gotoCustomerDetails()">
             <div class="action-box-sub">
                 <span class="customerdetails-icon"></span>
@@ -192,25 +198,19 @@
                 <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
-        
-        
-        
         <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'"
-        (click)="addCustomerDetails()">
-        <div class="action-box-sub">
-            <span class="add-appt-icon"></span>
-            <div class="icon-text">Add {{customer_label}}</div>
+            (click)="addCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Add {{customer_label}}</div>
+            </div>
         </div>
-    </div>
-    <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
-        <div class="action-box-sub">
-            <span class="unblock-appt-icon"></span>
-            <div class="icon-text">Unblock</div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
+            <div class="action-box-sub">
+                <span class="unblock-appt-icon"></span>
+                <div class="icon-text">Unblock</div>
+            </div>
         </div>
-    </div>
-       
-       
-        
         <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
             <div class="action-box-sub">
                 <span class="locate-icon"></span>
@@ -224,19 +224,14 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        
-        
         <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-       
-        
-        
         <!--Added By Mani for Video Play-->
-         <div *ngIf="!data.multiSelection && checkin.service.serviceType === 'virtualService' && checkin.s3VideoUrls"
+        <div *ngIf="!data.multiSelection && checkin.service.serviceType === 'virtualService' && checkin.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">
             <div class="action-box-sub">
                 <!-- <span class="mr-rx-icon"></span> -->
@@ -303,8 +298,8 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"
                     class="fa zoom-icon"></i>
                 <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
-                    *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
-                    <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"
+                    *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"
                     class="fa phon-icon"></i>
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"
                     class="fa wtsapaud-icon"></i>
@@ -369,7 +364,8 @@
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
-                <button class="cs-btn bt1" (click)="rescheduleWaitlist()" [disabled]="queuejson.length === 0">Reschedule</button>
+                <button class="cs-btn bt1" (click)="rescheduleWaitlist()"
+                    [disabled]="queuejson.length === 0">Reschedule</button>
             </div>
         </div>
     </div>
@@ -382,4 +378,26 @@
 <div class="bill-section" *ngIf="action === 'bill'">
     A consolidated bill has been generated for this 'group booking'. To view the consolidated bill, click the bill of <a
         (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>.
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
+    <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
+        <div class="status"> Mark as Arrived</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('STARTED')">
+        <div class="status"> In Progress</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="checkin.waitlistStatus == 'started'" (click)="changeWaitlistStatus('DONE')">
+        <div class="status"> Complete</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
+        <div class="status"> Cancel</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
+        <div class="status"> Check-in</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
 </div>

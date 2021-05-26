@@ -108,6 +108,7 @@ export class CheckinActionsComponent implements OnInit {
     changeService = true;
     userid: any;
     active_user: any;
+    check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -148,7 +149,7 @@ export class CheckinActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.active_user = user.userType; 
+        this.active_user = user.userType;
         this.userid = user.id
         this.accountType = user.accountType;
         this.domain = user.sector;
@@ -486,7 +487,7 @@ export class CheckinActionsComponent implements OnInit {
             data: {
                 checkin_id: this.checkin.ynwUuid
             }
-            
+
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
@@ -506,7 +507,7 @@ export class CheckinActionsComponent implements OnInit {
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
-        msg = 'Do you want to remove this ' + this.provider_label +'?';
+        msg = 'Do you want to remove this ' + this.provider_label + '?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -957,22 +958,27 @@ export class CheckinActionsComponent implements OnInit {
                 const post_data = {
                     'ynwUuid': this.checkin.ynwUuid,
                     'provider': {
-                      'id': this.userid
+                        'id': this.userid
                     },
-                  };
-                  this.provider_services.updateUserWaitlist(post_data)
+                };
+                this.provider_services.updateUserWaitlist(post_data)
                     .subscribe(
-                      data => {
-                        this.dialogRef.close('reload');
-                      },
-                      error => {                        
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.dialogRef.close('reload');
-                     }
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
                     );
-                }
+            }
         });
     }
-
-
+    changeWaitlistStatusAction() {
+        this.action = 'status';
+    }
+    getStatusLabel(status) {
+        const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
+        return label_status;
+    }
 }
