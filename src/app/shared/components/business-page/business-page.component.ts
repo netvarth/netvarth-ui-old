@@ -302,6 +302,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   businessName;
   businessId;
   accountId: any;
+  terms = false;
+  privacy = false;
 
 
   constructor(
@@ -467,6 +469,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 _this.provider_id = id;
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
+                    if (uiconfig.terms) {
+                      this.terms = true;
+                    }
+                    if (uiconfig.privacy) {
+                      this.privacy = true;
+                    }
                     _this.accountProperties = uiconfig;
                     if (_this.small_device_display) {
                       _this.profileSettings = _this.accountProperties['smallDevices'];
@@ -2942,5 +2950,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     });
+  }
+  termsClicked() {
+    let queryParams = {
+      'target': 'terms'
+    };
+    let navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    }
+    this.router.navigate([this.accEncUid, 'home'], navigationExtras);
+  }
+  privacyClicked(){
+    this.router.navigate([this.accEncUid, 'home']);
   }
 }

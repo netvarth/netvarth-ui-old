@@ -2222,3 +2222,12 @@ img.ordericon.home {
     display: flex !important;
   }
 }
+.footer {
+  position: fixed !important;
+  height: 60px!important;
+  -webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13)!important;
+  box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13)!important;
+  bottom: 0!important;
+  right: 0!important;
+  left: 265px!important;
+}

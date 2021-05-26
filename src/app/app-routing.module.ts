@@ -15,6 +15,7 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -50,6 +51,7 @@ const routes: Routes = [
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: ':id', component: BusinessPageComponent },
+    { path: ':id/home', component: BusinessPageHomeComponent },
     { path: ':id/:userEncId', component: BusinessPageComponent }
 ];
 
