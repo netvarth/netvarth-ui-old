@@ -866,6 +866,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     addCheckInConsumer(postData) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
+                this.lStorageService.removeitemfromLocalStorage('age');
+                this.lStorageService.removeitemfromLocalStorage('userId');
                 const retData = data;
                 this.uuidList = [];
                 let parentUid;

@@ -11,10 +11,8 @@ import * as moment from 'moment';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { projectConstantsLocal } from '../../../../app/shared/constants/project-constants';
-// import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
-
-
-
+ import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
+import { LocalStorageService } from '../../../../app/shared/services/local-storage.service';
 
 
 
@@ -65,6 +63,8 @@ export class VirtualFieldsComponent implements OnInit {
   months: { value: string; name: string; }[];
   mob_prefix_cap = '+91';
   mandatoryEmail: any;
+  age: any;
+  userId: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -72,9 +72,10 @@ export class VirtualFieldsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
-    // private shared_functions:SharedFunctions,
+     private shared_functions:SharedFunctions,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
   ) {
     this.months = projectConstantsLocal.MONTH;
     for (let i = 1; i <= 31; i++) {
@@ -102,6 +103,8 @@ export class VirtualFieldsComponent implements OnInit {
       }
 
     }
+    this.age = this.lStorageService.getitemfromLocalStorage('age');
+    this.userId=this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
@@ -114,9 +117,9 @@ export class VirtualFieldsComponent implements OnInit {
 
 
   }
-  // isNumeric(evt) {
-  //   return this.shared_functions.isNumeric(evt);
-  // }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+}
   ngOnInit(): void {
 
 
@@ -211,6 +214,8 @@ export class VirtualFieldsComponent implements OnInit {
     // }
     if(memberObj.userProfile.age){
       this.virtualForm.patchValue({ age: memberObj.userProfile.age });
+    }if(memberObj.userProfile.id===this.userId&&this.age){
+      this.virtualForm.patchValue({ age: this.age });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
@@ -285,6 +290,11 @@ export class VirtualFieldsComponent implements OnInit {
     if(customer.userProfile.age){
       this.virtualForm.patchValue({ age: customer.userProfile.age });
     }
+     if(customer.userProfile.id===this.userId&&this.age){
+        this.virtualForm.patchValue({ age: this.age });
+      }
+    
+   
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
     } else {
@@ -491,6 +501,8 @@ export class VirtualFieldsComponent implements OnInit {
         this.updateParentInfo(formdata).then(
           (result) => {
             if (result !== false) {
+              this.lStorageService.setitemonLocalStorage('age', formdata.age);
+             
               this.dialogRef.close(formdata);
             }
           },
@@ -503,6 +515,7 @@ export class VirtualFieldsComponent implements OnInit {
         if (formdata.serviceFor === 'new_member') {
           this.saveMember(formdata).then(data => {
             if (data !== false) {
+              this.lStorageService.setitemonLocalStorage('age', formdata.age);
               formdata['newMemberId'] = data;
               this.dialogRef.close(formdata);
             }
@@ -514,6 +527,7 @@ export class VirtualFieldsComponent implements OnInit {
           this.updateMemberInfo(formdata).then(
             (data) => {
               if (data !== false) {
+                this.lStorageService.setitemonLocalStorage('age', formdata.age);
                 this.dialogRef.close(formdata);
               }
             },
@@ -567,9 +581,11 @@ export class VirtualFieldsComponent implements OnInit {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
       // userObj['userProfile'] = userProfile;
-      console.log(userObj);
+      console.log(userObj +_this.customer_data.id);
+      _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
+          
           resolve(true);
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -620,6 +636,7 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo.bookingLocation['state'] = formdata.location.State;
       memberInfo.bookingLocation['city'] = formdata.location.Name
     }
+    this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
     return new Promise(function (resolve, reject) {
 
       console.log(memberInfo);
@@ -678,6 +695,7 @@ export class VirtualFieldsComponent implements OnInit {
       console.log(memberInfo);
       _this.sharedServices.addMembers(memberInfo).subscribe(
         (data) => {
+          this.lStorageService.setitemonLocalStorage('userId', data);
           resolve(data);
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
