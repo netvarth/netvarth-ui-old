@@ -101,6 +101,8 @@ export class BranchUserDetailComponent implements OnInit {
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    telegramCountry;
+    whatsappCountry;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -287,6 +289,15 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
+        if(this.user_data.telegramNum){
+         this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
+         console.log(this.telegramCountry[1]);
+        }
+        if(this.user_data.whatsAppNum){
+            this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
+            console.log(this.whatsappCountry[1]); 
+        }
+       
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
@@ -301,9 +312,9 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.countryCode  : null, 
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.whatsappCountry[1]  : null, 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : null, 
-            'countryCode_telegram': (this.user_data.telegramNum) ? this.user_data.telegramNum.countryCode  : null, 
+            'countryCode_telegram': (this.user_data.telegramNum) ? this.telegramCountry[1] : null, 
             'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : null, 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
@@ -368,16 +379,22 @@ export class BranchUserDetailComponent implements OnInit {
             'userType': input.selectedUserType,
             'pincode': input.postalCode,           
         };
-        if(input.whatsappumber !== ''){
+        console.log(input.whatsappumber);
+        console.log(input.countryCode_whatsapp);
+        if(input.whatsappumber !==''){
+            console.log("hi");
             const whatsup = {}
             whatsup["countryCode"] = '+'+input.countryCode_whatsapp
             whatsup["number"] = input.whatsappumber
             post_data1['whatsAppNum']= whatsup;
         }
-        if(input.telegramnumber !== ''){
+        console.log(input.telegramnumber);
+        console.log(input.countryCode_telegram);
+        if(input.telegramnumber !==''){
+            console.log("hi");
             const telegram = {}
             telegram["countryCode"] = '+'+input.countryCode_telegram
-            telegram["number"] = input.whatsappumber
+            telegram["number"] = input.telegramnumber
             post_data1['telegramNum']= telegram;     
         }
         // let phone = pN;
@@ -399,6 +416,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
+            console.log(post_data1);
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'general', 'users']);
