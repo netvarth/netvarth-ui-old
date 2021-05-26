@@ -539,7 +539,7 @@
                                                                 </h5>
                                                             </div>
                                                             <div class="consumer_appt mgn-bt-10 brd-bt">
-                                                                <p class="m0 mgn-lt-10 mgn-up-10 mgn-bt-5">
+                                                                <!-- <p class="m0 mgn-lt-10 mgn-up-10 mgn-bt-5">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     Phone#:
@@ -559,7 +559,28 @@
                                                                 <p class="mgn-up-5 mgn-lt-10" *ngIf="payEmail">
                                                                     Email :
                                                                     <b>{{payEmail}}</b>
-                                                                </p>
+                                                                </p> -->
+                                                                <div class="disp-flex">
+                                                                    <span class="billing-head">Phone #</span>
+                                                                    <span style="line-height: normal !important;">:&nbsp;</span>
+                                                                    <span class="billing-value">{{countryCode}}
+                                                                        {{selected_phone}}</span>
+                                                                    </div>
+                                                                    <div class="disp-flex"  *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                        
+                                                                       <span class="billing-head">WhatsApp#</span> <span><i class="fa wtsapaud-icon wtsap-cal"
+                                                                        *ngIf="sel_ser_det.virtualServiceType === 'audioService'"> </i>
+                                                                    <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10"
+                                                                        style="width: 20px;"
+                                                                        *ngIf="sel_ser_det.virtualServiceType === 'videoService'"> </i></span> 
+                                                                        <span style="line-height: normal !important;">:&nbsp;</span>
+                                                                        <span class="billing-value">+{{callingModes}}</span>
+                                                                        </div>
+                                                                        <div class="disp-flex">
+                                                                            <span class="billing-head">Email</span>
+                                                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                                                            <span class="billing-value">{{payEmail}}</span>
+                                                                            </div>
                                                                 <p class="mgn-up-5 mgn-lt-10"
                                                                     *ngIf="!editBookingFields">To Change the
                                                                     Number/Email <a class="bold"
