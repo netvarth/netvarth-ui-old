@@ -64,7 +64,7 @@
                   <div class="font1"> Early Notifications</div>
                   <div class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
                     him/her
-                    in line via SMS/Email/Notifications</div>
+                    in line via SMS/Email/Telegram/Notifications</div>
                 </div>
                 <div class="notify-phead col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                   <mat-form-field class="example-full-width mgn-rt-10">
@@ -102,7 +102,7 @@
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1"> Pre final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
-                  SMS/Email/Notifications.</div>
+                  SMS/Email/Telegram/Notifications.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.sms"
@@ -128,7 +128,7 @@
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1"> Final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is next in line via
-                  SMS/Email/Notifications.</div>
+                  SMS/Email/Telegram/Notifications.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="finalWLNotificationSettings.sms"
@@ -155,7 +155,7 @@
                 <div class="font1" *ngIf="showToken">Add token Notifications</div>
                 <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} via
-                  SMS/Email/Notifications when a Check-in happens.</div>
+                  SMS/Email/Telegram/Notifications when a Check-in happens.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="wlAddNotificationSettings.sms"
@@ -174,6 +174,35 @@
                   (click)="changeNotificationSettings('WAITLISTADD')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10" *ngIf="showButton['WAITLISTADD'] && small_device_display">
                   <span (click)="changeNotificationSettings('WAITLISTADD')" class="notify-ok-btn">OK</span>
+                </div>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="font1" *ngIf="showToken">Cancel token Notifications</div>
+                <div class="font1" *ngIf="!showToken"> Cancel checkin Notifications</div>
+                <div class="form-level-settings" *ngIf="!showToken">Notify a {{customer_label}} via
+                  SMS/Email/Telegram/Notifications when a Check-in cancelled.</div>
+                  <div class="form-level-settings" *ngIf="showToken">Notify a {{customer_label}} via
+                    SMS/Email/Telegram/Notifications when a Token cancelled.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <mat-checkbox [checked]="wlCancelNotificationSettings.sms"
+                  (change)="showSubmit('WAITLISTCANCEL', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="wlCancelNotificationSettings.email"
+                  (change)="showSubmit('WAITLISTCANCEL', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="wlCancelNotificationSettings.telegram"
+                  (change)="showSubmit('WAITLISTCANCEL', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
+                <mat-checkbox [checked]="wlCancelNotificationSettings.pushNotification"
+                  (change)="showSubmit('WAITLISTCANCEL', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['WAITLISTCANCEL'] && !small_device_display"
+                  (click)="changeNotificationSettings('WAITLISTCANCEL')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['WAITLISTCANCEL'] && small_device_display">
+                  <span (click)="changeNotificationSettings('WAITLISTCANCEL')" class="notify-ok-btn">OK</span>
                 </div>
               </div>
             </div>
@@ -217,6 +246,30 @@
                   (click)="changeNotificationSettings('APPOINTMENTADD')" class="notify-ok-btn">OK</span>
                 <div class="mgn-up-10" *ngIf="showButton['APPOINTMENTADD'] && small_device_display">
                   <span (click)="changeNotificationSettings('APPOINTMENTADD')" class="notify-ok-btn">OK</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                Appointment Cancel Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when appointment is
+                  cancelled.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <mat-checkbox [checked]="apptCancelNotificationSettings.sms"
+                  (change)="showSubmit('APPOINTMENTCANCEL', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="apptCancelNotificationSettings.email"
+                  (change)="showSubmit('APPOINTMENTCANCEL', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="apptCancelNotificationSettings.telegram"
+                  (change)="showSubmit('APPOINTMENTCANCEL', 'telegram', $event)" class="mgn-rt-20">
+                  Via Telegram</mat-checkbox>
+                <mat-checkbox [checked]="apptCancelNotificationSettings.pushNotification"
+                  (change)="showSubmit('APPOINTMENTCANCEL', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['APPOINTMENTCANCEL'] && !small_device_display"
+                  (click)="changeNotificationSettings('APPOINTMENTCANCEL')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['APPOINTMENTCANCEL'] && small_device_display">
+                  <span (click)="changeNotificationSettings('APPOINTMENTCANCEL')" class="notify-ok-btn">OK</span>
                 </div>
               </div>
             </div>

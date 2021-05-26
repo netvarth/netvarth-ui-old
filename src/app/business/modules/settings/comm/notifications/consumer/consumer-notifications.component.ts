@@ -70,7 +70,9 @@ export class ConsumerNotificationsComponent implements OnInit {
   finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
   finalDONATNotificationSettings = { eventType: 'FINAL', resourceType: 'DONATION', sms: false, email: false,telegram: true, pushNotification: false };
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
+  wlCancelNotificationSettings = { eventType: 'WAITLISTCANCEL', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
+  apptCancelNotificationSettings = { eventType: 'APPOINTMENTCANCEL', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
   donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false,telegram: true, pushNotification: false };
   orderAddNotificationSettings = { eventType: 'ORDERCONFIRM', resourceType: 'ORDER', sms: false, email: false, telegram: true,pushNotification: false };
   orderCancelNotificationSettings = { eventType: 'ORDERCANCEL', resourceType: 'ORDER', sms: false, email: false, telegram: true, pushNotification: false };
@@ -256,10 +258,16 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'WAITLISTADD' && notificationObj['resourceType'] === 'CHECKIN') {
         this.cSettings['WAITLISTADD'] = true;
         this.wlAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'WAITLISTCANCEL' && notificationObj['resourceType'] === 'CHECKIN') {
+        this.cSettings['WAITLISTCANCEL'] = true;
+        this.wlCancelNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'APPOINTMENTADD' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['APPOINTMENTADD'] = true;
         this.apptAddNotificationSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } else if (notificationObj['eventType'] === 'APPOINTMENTCANCEL' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['APPOINTMENTCANCEL'] = true;
+        this.apptCancelNotificationSettings = notificationObj; 
+       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['EARLY_APPT'] = true;
         this.earlyAPPTNotificatonSettings = notificationObj;
         this.apptPersonsahead = (notificationObj['personsAhead']) ? true : false;
@@ -338,12 +346,16 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.earlyWLNotificatonSettings[value] = event.checked;
       } else if (type === 'WAITLISTADD') {
         this.wlAddNotificationSettings[value] = event.checked;
+      } else if (type === 'WAITLISTCANCEL') {
+        this.wlCancelNotificationSettings[value] = event.checked;
       } else if (type === 'PREFINAL_WL') {
         this.prefinalWLNotificationSettings[value] = event.checked;
       } else if (type === 'FINAL_WL') {
         this.finalWLNotificationSettings[value] = event.checked;
       } else if (type === 'APPOINTMENTADD') {
         this.apptAddNotificationSettings[value] = event.checked;
+      } else if (type === 'APPOINTMENTCANCEL') {
+        this.apptCancelNotificationSettings[value] = event.checked;
       } else if (type === 'SECOND_APPT') {
         this.secondAPPTNotificationSettings[value] = event.checked;
       } else if (type === 'FIRST_APPT') {
@@ -375,8 +387,12 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.finalWLNotificationSettings;
     } else if (type === 'WAITLISTADD') {
       activeInput = this.wlAddNotificationSettings;
+    } else if (type === 'WAITLISTCANCEL') {
+      activeInput = this.wlCancelNotificationSettings;
     } else if (type === 'APPOINTMENTADD') {
       activeInput = this.apptAddNotificationSettings;
+    } else if (type === 'APPOINTMENTCANCEL') {
+      activeInput = this.apptCancelNotificationSettings;
     } else if (type === 'EARLY_APPT') {
       activeInput = this.earlyAPPTNotificatonSettings;
     } else if (type === 'PREFINAL_APPT') {
