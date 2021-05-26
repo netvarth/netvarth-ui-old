@@ -527,4 +527,36 @@
     height: 18px !important;
 }
 
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header,
+.filter-sidebar .filter-container .sidebar-menu#accordion3 .card-header {
+    padding: 10px 15px !important;
+    margin: -10px -15px !important;
+    background-color: #F3F6F9 !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header .btn.btn-link.collapsed,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header .btn.btn-link.collapsed,
+.filter-sidebar .filter-container .sidebar-menu#accordion3 .card-header .btn.btn-link.collapsed {
+    margin-bottom: 0 !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-header .btn.btn-link,
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-header .btn.btn-link,
+.filter-sidebar .filter-container .sidebar-menu#accordion3 .card-header .btn.btn-link {
+    margin-bottom: -10px !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input:nth-child(1),
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-text-input:nth-child(1),
+.filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-text-input:nth-child(1) {
+    padding-top: 15px !important;
+}
+
+.filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input:nth-child(1),
+.filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input:nth-child(1),
+.filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input:nth-child(1) {
+    padding-top: 15px !important;
+}
+
 /* Filter Code Ends */
