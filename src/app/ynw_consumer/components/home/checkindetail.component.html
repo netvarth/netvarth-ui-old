@@ -63,7 +63,7 @@
                                                     <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
                                                     </span>
-                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                    <a *ngIf="  waitlist.waitlistStatus !== 'done' && waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
