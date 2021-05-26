@@ -138,7 +138,15 @@
                                             <div class="question-main-outer"
                                                 *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
                                                 <div class="question-header">Languages Known</div>
-                                                <div
+                                                <div class="specialization-value question-value1">
+                                                    <ul class="comma-list">
+                                                        <li class="item" *ngFor="let languages of businessjson.languagesSpoken;let i=index">{{languages | capitalizeFirst}}</li>
+                                                     
+                                                       
+                                                    </ul>
+                                                </div>
+
+                                                <!-- <div
                                                     class="col-md-12 col-xs-12 col-lg-12 col-sm-12 no-padding mgn-bt-10">
                                                     <div class="question-value1 pull-left mgn-rt-5"
                                                         *ngFor="let languages of businessjson.languagesSpoken;let i=index">
@@ -146,7 +154,7 @@
                                                             *ngIf="i<(businessjson.languagesSpoken.length-1)">,
                                                         </ng-container>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="question-main-outer" *ngIf="socialMedialist.length>0">
                                                 <div class="question-header">Social Media Links and Listing Sites</div>
