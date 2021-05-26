@@ -381,7 +381,7 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
     <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
-        <div class="status"> Mark as Arrived</div>
+        <div class="status"> Arrived</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
     <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('STARTED')">
@@ -397,7 +397,7 @@
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
     <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
-        <div class="status"> Check-in</div>
+        <div class="status"> Checked In</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
 </div>
