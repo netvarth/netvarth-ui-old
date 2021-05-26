@@ -35,7 +35,9 @@
       <ng-container matColumnDef="userName">
         <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Doctor</b></mat-header-cell>
         <mat-cell *matCellDef="let visit">
-          {{visit.providerName}}</mat-cell>
+          <!-- {{visit.providerName}} -->
+          {{  getProviderName(visit) }}
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="mr">
         <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b>Medical Record</b></mat-header-cell>

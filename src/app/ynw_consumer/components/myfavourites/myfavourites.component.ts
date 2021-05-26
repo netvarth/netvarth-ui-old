@@ -387,6 +387,8 @@ private subs=new SubSink();
     pass_ob['user_id'] = provider.id;
     pass_ob['name'] = provider.businessName;
     pass_ob['caption'] = 'Enquiry';
+    pass_ob['type'] = 'send';
+    pass_ob['typeOfMsg'] = 'single';
     this.addNote(pass_ob);
   }
 
