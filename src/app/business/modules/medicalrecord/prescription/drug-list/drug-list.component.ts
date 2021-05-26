@@ -222,6 +222,7 @@ console.log(this.drugList);
           if (this.mrId) {
             let passdata;
             if(this.drugList.length == 0){
+              this.note = '';
                passdata = {
                 "prescriptionsList":this.drugList,
               }
