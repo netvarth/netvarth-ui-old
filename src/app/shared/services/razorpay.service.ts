@@ -125,7 +125,9 @@ export class RazorpayService {
           let navigationExtras: NavigationExtras = {
             queryParams: queryParams
           }
+          setTimeout(() => {
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
+          },700);
         } else if (checkin_type === 'appt_prepayment') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           let queryParams = {
@@ -139,7 +141,10 @@ export class RazorpayService {
           let navigationExtras: NavigationExtras = {
             queryParams: queryParams
           }
-          this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
+          setTimeout(() => {
+            this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
+          },700);
+         
         } else if (checkin_type === 'order_prepayment') {
           this.lStorageService.removeitemfromLocalStorage('order_sp');
           this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
