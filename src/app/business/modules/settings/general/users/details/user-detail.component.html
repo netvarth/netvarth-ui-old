@@ -157,17 +157,17 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;">
-                                        <div class="col-md-3 col-sm-3 col-xs-3 mgn-rt-10 no-padding">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
                                             <div class="form-group">
                                                 <mat-form-field>
-                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        <input type="text"  (keypress)="isNumericSign($event)" matInput
                                                         class="input-group-text" id="countryCode"
                                                         placeholder="Country code " formControlName="countryCode"
                                                         autocomplete="off" maxlength="5">
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
                                             <div class="form-group">
 
                                             <mat-form-field>
@@ -205,17 +205,17 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
 <!-- *******User Telegram and what's up number ************ -->
                                     <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
-                                        <div class="col-md-3 col-sm-3 col-xs-3 mgn-rt-10 no-padding">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
                                             <div class="form-group">
                                                 <mat-form-field>
-                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        <input type="text" (keypress)="isNumericSign($event)" matInput
                                                         class="input-group-text" id="countryCode_whatsapp"
                                                         placeholder="Country code " formControlName="countryCode_whatsapp"
                                                         autocomplete="off" maxlength="5">
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
                                             <div class="form-group">
                                                 <mat-form-field>
                                                         <input type="text" (keypress)="isNumeric($event)" matInput
@@ -236,17 +236,17 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
                                   </div>
                                   <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;" *ngIf="showPrvdrFields">
-                                        <div class="col-md-3 col-sm-3 col-xs-3 mgn-rt-10 no-padding">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
                                             <div class="form-group">
                                                 <mat-form-field>
-                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        <input type="text"  (keypress)="isNumericSign($event)"  matInput
                                                         class="input-group-text" id="countryCode_telegram"
                                                         placeholder="Country code " formControlName="countryCode_telegram"
                                                         autocomplete="off" maxlength="5">
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
                                         <div class="form-group">
                                             <mat-form-field>
                                                     <input type="text" (keypress)="isNumeric($event)" matInput

@@ -1645,7 +1645,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
             const filter = {
-                'departmentId-eq': obj,
+                'deptId-eq': obj,
                 'status-eq': 'ACTIVE'
             };
             this.provider_services.getUsers(filter).subscribe(

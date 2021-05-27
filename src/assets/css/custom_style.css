@@ -14215,3 +14215,52 @@ padding-left: 15px !important;
     line-height: 1.75 !important;
   }
 }
+
+.loginmainclass.popup-class,
+.commonpopupmainclass.popup-class.specialclass {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: white !important;
+}
+
+.loginmainclass.popup-class mat-dialog-container.mat-dialog-container,
+.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  margin: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  min-height: 300px !important;
+}
+
+.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  max-width: 600px !important;
+}
+
+@media (max-width: 450px) {
+  .loginmainclass.popup-class {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .loginmainclass.popup-class mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .commonpopupmainclass.popup-class.specialclass {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

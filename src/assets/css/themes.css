@@ -49,7 +49,7 @@ color:#fff !important;
     color: #fff !important;
     font-weight: 500 !important;
   }
-  .heartfulness_theme1.c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
+  .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
@@ -154,7 +154,7 @@ color:#fff !important;
   color: white !important;
 }
 
-.heartfulness_theme1.loginmainclass.popup-class,
+/* .heartfulness_theme1.loginmainclass.popup-class,
 .heartfulness_theme1.commonpopupmainclass.popup-class.specialclass {
   max-width: 100% !important;
   width: 100% !important;
@@ -202,7 +202,7 @@ color:#fff !important;
     max-width: 100% !important;
   }
 }
-
+ */
 .heartfulness_theme1.c-checkin-new .hf-double-btn-container {
   padding-bottom: 35px !important;
   justify-content: space-between !important;
@@ -263,4 +263,29 @@ color: #fff !important;
 
 .heartfulness_theme1.hf-no-bg {
   background-image: none !important;
+}
+
+.heartfulness_theme1.c-checkin-new .slotdiv mat-chip.mat-chip-selected {
+  color: #59345D !important;
+  border-color: #59345D !important;
+}
+
+.heartfulness_theme1.c-checkin-new .lnk a {
+  color: #522e5a !important;
+}
+
+.heartfulness_theme1.c-checkin-new .primary-color {
+  color: #522e5a !important;
+}
+
+.heartfulness_theme1 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #59345D !important;
+}
+
+.heartfulness_theme1 .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #59345D !important;
+}
+
+.heartfulness_theme1 .c-checkin-new .lnk a {
+  color: #59345D !important;
 }

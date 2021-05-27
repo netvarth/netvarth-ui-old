@@ -357,7 +357,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.doLogout()
       .then(
         () => {
-          this.router.navigate(['/home']);
+          if (this.customId) {
+            this.router.navigate([this.customId]);
+          } else {
+            this.router.navigate(['/home']);
+          }
         },
         () => {
         }
@@ -383,9 +387,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case 'change-mobile':
         this.router.navigate([usertype, 'change-mobile']);
         break;
-        case 'notification':
-          this.router.navigate([usertype, 'notification']);
-          break;  
+      case 'notification':
+        this.router.navigate([usertype, 'notification']);
+        break;
       case 'change-email':
         this.router.navigate([usertype, 'change-email']);
         break;
@@ -479,8 +483,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['business'], navigationExtras);
   }
   gotoActiveHome() {
-    if (this.accountId) {
-      this.router.navigate([this.accountId]);
+    if (this.customId) {
+      let qParams = {};
+      qParams['accountId'] = this.accountId;
+      qParams['customId'] = this.customId;
+      const navigationExtras1: NavigationExtras = {
+        queryParams: qParams
+      };
+      this.router.navigate([this.customId], navigationExtras1);
     } else {
       if (this.consumer_loggedin) {
         this.router.navigate(['/consumer']);

@@ -249,7 +249,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.servicesjson = this.serviceslist;
     if (this.filterDepart) {
       const filter = {
-        'departmentId-eq': obj
+        'deptId-eq': obj
       };
       this.provider_services.getUsers(filter).subscribe(
         (users: any) => {
