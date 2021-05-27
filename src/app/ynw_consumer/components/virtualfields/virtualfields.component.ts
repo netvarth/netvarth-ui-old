@@ -585,13 +585,21 @@ isNumericSign(evt) {
       userObj['id'] = _this.customer_data.id;
       if (formdata.whatsappnumber !== '') {
         const whatsup = {}
+        if(formdata.countryCode_whtsap.startsWith('+')){
         whatsup["countryCode"] = formdata.countryCode_whtsap
+        }else{
+          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
+        }
           whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
       if (formdata.telegramnumber !== '') {
         const telegram = {}
-        telegram["countryCode"] = formdata.countryCode_telegram
+        if(formdata.countryCode_telegram.startsWith('+')){
+          telegram["countryCode"] = formdata.countryCode_telegram
+          }else{
+            telegram["countryCode"] = '+'+formdata.countryCode_telegram
+          }
           telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
@@ -629,13 +637,21 @@ isNumericSign(evt) {
     memberInfo.userProfile = {}
     if (formdata.whatsappnumber !== '') {
       const whatsup = {}
-      whatsup["countryCode"] = formdata.countryCode_whtsap
+      if(formdata.countryCode_whtsap.startsWith('+')){
+        whatsup["countryCode"] = formdata.countryCode_whtsap
+        }else{
+          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
+        }
         whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
-      telegram["countryCode"] = formdata.countryCode_telegram
+      if(formdata.countryCode_telegram.startsWith('+')){
+        telegram["countryCode"] = formdata.countryCode_telegram
+        }else{
+          telegram["countryCode"] = '+'+formdata.countryCode_telegram
+        }
         telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
     }
@@ -682,12 +698,21 @@ isNumericSign(evt) {
     memberInfo['userProfile'] = {}
     if (formdata.whatsappumber !== '') {
       const whatsup = {}
-      whatsup["countryCode"] = formdata.countryCode_whtsap
+      if(formdata.countryCode_whtsap.startsWith('+')){
+        whatsup["countryCode"] = formdata.countryCode_whtsap
+        }else{
+          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
+        }
         whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
+      if(formdata.countryCode_telegram.startsWith('+')){
+        telegram["countryCode"] = formdata.countryCode_telegram
+        }else{
+          telegram["countryCode"] = '+'+formdata.countryCode_telegram
+        }
       telegram["countryCode"] = formdata.countryCode_telegram
         telegram["number"] = formdata.telegramnumber
         memberInfo['userProfile']['telegramNum'] = telegram;
