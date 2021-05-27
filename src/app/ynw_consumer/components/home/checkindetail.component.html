@@ -20,7 +20,7 @@
 
                             <!-- Title with back option -->
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10 index-head">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
+                                <h5 class="mgn-up-10 index-head" *ngIf="api_loading">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
                                         (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
