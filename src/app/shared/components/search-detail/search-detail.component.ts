@@ -2037,7 +2037,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         userId: userId,
         source: 'consumer-common',
         type: 'send',
-        name: provider_name
+        name: provider_name,
+        typeOfMsg: 'single'
       }
     });
 
