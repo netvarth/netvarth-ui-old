@@ -147,10 +147,10 @@ export class OrderDetailsComponent implements OnInit {
       if (image[0]) {
         return image[0].url;
       } else {
-        return '../../../../assets/images/order/Items.svg';
+        return './assets/images/order/Items.svg';
       }
     } else {
-      return '../../../../assets/images/order/Items.svg';
+      return './assets/images/order/Items.svg';
     }
   }
   showConsumerNote(item) {

@@ -269,7 +269,7 @@ export class BranchUsersComponent implements OnInit {
             const proImage = user.profilePicture;
             return proImage.url;
         } else {
-            return '../../.././assets/images/avatar5.png';
+            return './assets/images/avatar5.png';
         }
     }
     performActions(action) {

@@ -286,7 +286,7 @@ export class InboxOuterComponent implements OnInit {
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
-      return '../../../../assets/images/pdf.png';
+      return './assets/images/pdf.png';
     } else {
       return url;
     }

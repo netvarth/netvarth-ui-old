@@ -410,7 +410,7 @@ export class UserServiceChnageComponent implements OnInit {
       const proImage = user.profilePicture;
       return proImage.url;
     } else {
-      return '../../.././assets/images/avatar5.png';
+      return './assets/images/avatar5.png';
     }
   }
   showMoreorLess(event, index, type) {
