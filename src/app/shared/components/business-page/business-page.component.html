@@ -769,14 +769,14 @@
         </div>
     </div>
 </div>
-<footer class="site-footer" *ngIf="(privacy || terms) && !userId">
+<footer class="site-footer bus-page-footer" *ngIf="(privacy || terms) && !userId"  [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
                 <div class="footer-bottom--links col-md-auto mgn-bt-20">
                     <!-- <span>Follow Us: </span> -->
-                    <a *ngIf="privacy" class="" (click)="privacyClicked()">Privacy</a>
-                    <a *ngIf="terms" class="mgn-lt-20" (click)="termsClicked()">Terms & Conditions</a>
+                    <a *ngIf="privacy" class="footer-links bd-pd-right" (click)="privacyClicked()">Privacy</a>
+                    <a *ngIf="terms" class="footer-links bd-pd-left" (click)="termsClicked()">Terms & Conditions</a>
                 </div>
             </div>
         </div>
