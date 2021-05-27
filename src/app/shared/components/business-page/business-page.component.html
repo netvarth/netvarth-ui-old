@@ -9,6 +9,9 @@
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"></app-header>
+                        <div class="view-booking" *ngIf="!sharedFunctionobj.checkLogin()" >
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">Dashboard</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Cover Foto -->
@@ -733,18 +736,40 @@
     </div>
 
 </div>
-<div id="customAppPopup" #popupforCustomApp class="modal">
+<div id="customAppIOSPopup"  class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="text-center">
-                <button id="btnInstallCustomApp" class=" btn btn-primary">Install {{this.businessName}} App</button>
-                <span class="close" (click)="closeCustomAppModal()">&times;</span>
+                &nbsp;
+                <span class="close" (click)="closeIOSAppModal()">&times;</span>
+            </h5>
+        </div>
+        <div class="modal-body">
+            <h5 style="line-height: 20px;">
+                <span>"{{this.businessName}}" App can do so much more.</span>
+                 <p>Install this app on your Iphone/Ipad. Tap <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
             </h5>
         </div>
     </div>
 
 </div>
-<footer class="site-footer">
+<div id="customAppPopup" #popupforCustomApp class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="text-center">&nbsp;
+                <span class="close" (click)="closeCustomAppModal()">&times;</span>
+            </h5>
+        </div>
+        <div class="modal-body" *ngIf="!pwaIOShint">
+            <h5 class="text-center">
+                <span>"{{this.businessName}}" App can do so much more.</span><br/>
+                <button id="btnInstallCustomApp" class=" btn btn-primary">Install App</button>
+                <!-- <span class="close" (click)="closeCustomAppModal()">&times;</span> -->
+            </h5>
+        </div>
+    </div>
+</div>
+<footer class="site-footer" *ngIf="privacy || terms">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">

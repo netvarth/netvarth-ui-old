@@ -269,6 +269,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
   @ViewChild('popupforCustomApp') popupforCustomApp: ElementRef;
+  @ViewChild('customAppIOSPopup') customAppIOSPopup: ElementRef;
   orderstatus: any;
   orderType = '';
   advance_amount: any;
@@ -304,6 +305,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountId: any;
   terms = false;
   privacy = false;
+  pwaIOShint: boolean;
 
 
   constructor(
@@ -345,6 +347,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.small_device_display = false;
     }
+  }
+  @HostListener('window:appinstalled', ['$event'])
+  onAppInstalled(e) {
+    console.log("App Successfully Installed");
   }
   @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
@@ -414,6 +420,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (isMobile.iOS()) {
       this.playstore = false;
       this.appstore = true;
+      // Detects if device is in standalone mode
+      
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      // Checks if should display install popup notification:
+      if (!isInStandaloneMode()) {
+        this.customAppIOSPopup.nativeElement.style.display = 'block';
+      }
+
+
+
     } else {
       this.playstore = true;
       this.appstore = true;
@@ -469,6 +485,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 _this.provider_id = id;
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
+                    if(uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
+                      document.getElementById('apple_touch_icon').setAttribute('href', uiconfig['iosApp']['icon-180']['src']);
+                    }                  
                     if (uiconfig.terms) {
                       this.terms = true;
                     }
@@ -543,6 +562,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   closeCustomAppModal() {
     this.popupforCustomApp.nativeElement.style.display = 'none';
+  }
+  closeIOSAppModal() {
+    this.customAppIOSPopup.nativeElement.style.display = 'none';
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -1979,6 +2001,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.redirectToHistory();
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
+        } else if (passParam['callback'] === 'dashboard') {
+          this.viewDashboard();
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
@@ -2962,5 +2986,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   privacyClicked(){
     this.router.navigate([this.accEncUid, 'home']);
+  }
+  dashboardClicked() {
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          this.viewDashboard();
+        } else {
+          const passParam = { callback: 'dashboard'};
+          this.doLogin('consumer', passParam);
+        }
+      });
+  }
+  viewDashboard() {
+    let queryParam = {
+      'customId': this.accountEncId,
+      'accountId': this.provider_bussiness_id
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParam
+    };
+    this.routerobj.navigate(['consumer'], navigationExtras );
   }
 }

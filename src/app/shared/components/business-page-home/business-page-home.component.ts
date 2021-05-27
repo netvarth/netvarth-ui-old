@@ -65,7 +65,6 @@ export class BusinessPageHomeComponent implements OnInit {
                         }    
                         
                         if (this.target) {
-                            alert(this.target);
                             this._scrollToService.scrollTo(this.target);
                         }
 
