@@ -103,6 +103,7 @@ export class BranchUserDetailComponent implements OnInit {
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     telegramCountry;
     whatsappCountry;
+    countrycode;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -383,17 +384,29 @@ export class BranchUserDetailComponent implements OnInit {
             'pincode': input.postalCode,           
         };
         if(input.whatsappumber !==''){
+            if(input.countryCode_whatsapp.startsWith('+')){
+                console.log("hi")
+                this.whatsappCountry = input.countryCode_whatsapp
+            }
+            else{
+                this.whatsappCountry = '+'+input.countryCode_whatsapp
+                console.log("no hi")
+            }
             const whatsup = {}
-            whatsup["countryCode"] = input.countryCode_whatsapp
-            whatsup["number"] = input.whatsappumber
+            whatsup["countryCode"] =  this.whatsappCountry
+            whatsup["number"] =   input.whatsappumber
             post_data1['whatsAppNum']= whatsup;
         }
         if(input.telegramnumber !==''){
-            // console.log(input.countryCode_telegram)
-            // this.telegramCountry  = input.telegramNum.countryCode.split('+');
-            // console.log(this.telegramCountry[1]);
+            if(input.countryCode_whatsapp.startsWith('+')){
+                console.log(" whats hi")
+                this.telegramCountry = input. input.countryCode_telegram
+            } else{
+                this.telegramCountry = '+'+input. input.countryCode_telegram
+                console.log("tele no hi")
+            }
             const telegram = {}
-            telegram["countryCode"] = input.countryCode_telegram
+            telegram["countryCode"] =  this.telegramCountry
             telegram["number"] = input.telegramnumber
             post_data1['telegramNum']= telegram;     
         }
@@ -402,9 +415,15 @@ export class BranchUserDetailComponent implements OnInit {
         //     phone = pN.split(dialCode)[1];
         //   }
         if(input.phonenumber !==''){
-            post_data1['countryCode'] = input.countryCode,
-            post_data1['mobileNo'] = input.phonenumber;
-        }
+            if(input.countryCode.startsWith('+')){
+                this.countrycode = input.countryCode
+            }  else{
+                this.countrycode = '+'+input.countryCode
+            }
+                post_data1['countryCode'] =  this.countrycode,
+                post_data1['mobileNo'] = input.phonenumber;
+            }
+
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             // post_data1['subdomain'] = input.selectedSubDomain;
