@@ -54,6 +54,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     terminologiesjson: any = [];
     queuejson: any = [];
     businessjson: any = [];
+    checkPolicy= true;
+
     familymembers: any = [];
     partysizejson: any = [];
     sel_loc;
@@ -74,6 +76,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     partySize = false;
     partySizeRequired = null;
     today;
+    heartfulnessAccount = false;
     minDate;
     maxDate;
     consumerNote = '';
@@ -1261,6 +1264,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
+                if (this.businessjson.uniqueId === 128007) {
+                    this.heartfulnessAccount = true;
+                }
                 this.accountType = this.businessjson.accountType;
                 if (this.accountType === 'BRANCH') {
                     this.getProviderDepart(this.businessjson.id);
@@ -2049,5 +2055,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         }
+    }
+    changePolicy (event) {
+        console.log(event.target.checked);
+        this.checkPolicy = event.target.checked;
     }
 }
