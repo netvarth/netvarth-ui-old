@@ -32,6 +32,7 @@ export class VirtualFieldsComponent implements OnInit {
   consumer_label: any;
   disableButton;
   loading = false;
+  submitbtndisabled=false;
   languages = [
     "Hindi",
     "Kannada",
@@ -512,6 +513,7 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   onSubmit(formdata) {
+    this.submitbtndisabled=true;
     formdata['phoneno']=this.customer_data.userProfile.primaryMobileNo;
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
@@ -524,11 +526,12 @@ export class VirtualFieldsComponent implements OnInit {
           (result) => {
             if (result !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
-             
+              this.submitbtndisabled=false;
               this.dialogRef.close(formdata);
             }
           },
           (error) => {
+            this.submitbtndisabled=false;
             return false;
           }
         );
@@ -538,21 +541,25 @@ export class VirtualFieldsComponent implements OnInit {
             if (data !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
               formdata['newMemberId'] = data;
+              this.submitbtndisabled=false;
               this.dialogRef.close(formdata);
             }
           },
             () => {
+              this.submitbtndisabled=false;
               return false;
             })
         } else {
           this.updateMemberInfo(formdata).then(
             (data) => {
               if (data !== false) {
+                this.submitbtndisabled=false;
                 this.lStorageService.setitemonLocalStorage('age', formdata.age);
                 this.dialogRef.close(formdata);
               }
             },
             () => {
+              this.submitbtndisabled=false;
               return false;
             }
           );

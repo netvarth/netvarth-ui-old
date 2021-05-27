@@ -501,7 +501,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             if(serv.serviceType==='virtualService'&& this.virtualInfo){
                                if(this.virtualInfo.whatsappnumber){
                                    const whtsappcountryCode=this.virtualInfo.countryCode_whtsap.split('+')[1];
-                                this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
+                                this.callingModes = whtsappcountryCode + ' ' + this.virtualInfo.whatsappnumber;
                                 console.log(this.callingModes);
                                }
                             }
@@ -1128,9 +1128,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
-            this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +''+this.virtualInfo.whatsappnumber;
+            this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +' '+this.virtualInfo.whatsappnumber;
             }else{
-                this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+                this.callingModes=this.virtualInfo.countryCode_whtsap +' '+this.virtualInfo.whatsappnumber;
             }
             
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
@@ -1140,9 +1140,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
-                this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +''+this.virtualInfo.whatsappnumber;
+                this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] + ' ' +this.virtualInfo.whatsappnumber;
                 }else{
-                    this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+                    this.callingModes=this.virtualInfo.countryCode_whtsap + ' ' +this.virtualInfo.whatsappnumber;
                 }
         }
          this.currentPhone = this.virtualInfo.phoneno;
