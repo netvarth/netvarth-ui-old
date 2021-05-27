@@ -65,6 +65,7 @@ export class VirtualFieldsComponent implements OnInit {
   mandatoryEmail: any;
   age: any;
   userId: any;
+  countryCode: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -108,6 +109,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
+     this.countryCode=this.customer_data.userProfile.countryCode;
       this.mandatoryEmail=this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
@@ -182,13 +184,11 @@ export class VirtualFieldsComponent implements OnInit {
   }
   checkMainMemberEmailId() {
     let isemail=false;
-    console.log(this.mandatoryEmail);
     if(this.mandatoryEmail==='' && this.virtualForm.get('email').value===''){
       isemail=false;
     }else if(this.mandatoryEmail==='' &&this.virtualForm.get('email').value!==''){
       this.updateParentInfo(this.virtualForm.value).then(
         (result) => {
-          console.log('updatedSucessfully');
           isemail=true;
           this.getActiveUserInfo();
         });
@@ -250,9 +250,17 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
+      this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
+    }else{
+      this.virtualForm.patchValue({ whatsappnumber:this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
     if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
+      this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
+    }else{
+      this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode })
     }
   }
   serviceFormReset() {
@@ -261,6 +269,8 @@ export class VirtualFieldsComponent implements OnInit {
     //   this.virtualForm.patchValue({ month:'mm' });
     //   this.virtualForm.patchValue({ year: 'yyyy' });
     // this.virtualForm.controls['dob'].setValue('');
+    this.virtualForm.controls['countryCode_whtsap'].setValue(this.countryCode);
+    this.virtualForm.controls['countryCode_telegram'].setValue(this.countryCode);
     this.virtualForm.controls['age'].setValue('');
     this.virtualForm.controls['gender'].setValue('male');
     this.virtualForm.controls['islanguage'].setValue('yes');
@@ -268,8 +278,8 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
     this.virtualForm.patchValue({ email: '' });
-    this.virtualForm.patchValue({ whatsappnumber: '' });
-    this.virtualForm.patchValue({ telegramnumber: '' });
+    this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+    this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo  });
   }
   setparentDetails(customer) {
   
@@ -319,9 +329,19 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
+      this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
+      
+    }else{
+      this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
     }
     if (customer.userProfile && customer.userProfile.telegramNum) {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
+      this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
+    }
+    else{
+      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
     }
 
   }
@@ -330,6 +350,8 @@ export class VirtualFieldsComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
+      countryCode_whtsap:[this.countryCode],
+      countryCode_telegram:[this.countryCode],
       // dob: ['', Validators.compose([Validators.required])],
       // date: [''],
       // month: [''],
@@ -357,7 +379,7 @@ export class VirtualFieldsComponent implements OnInit {
     }
 
     if (this.dialogData) {
-      console.log('dialogData');
+
       this.updateForm();
     }
     this.api_loading = false;
@@ -497,7 +519,6 @@ export class VirtualFieldsComponent implements OnInit {
 
       // formdata['dob'] = dob;
       if (this.is_parent) {
-        console.log(formdata);
         this.updateParentInfo(formdata).then(
           (result) => {
             if (result !== false) {
@@ -511,7 +532,6 @@ export class VirtualFieldsComponent implements OnInit {
           }
         );
       } else {
-        console.log(formdata);
         if (formdata.serviceFor === 'new_member') {
           this.saveMember(formdata).then(data => {
             if (data !== false) {
@@ -546,7 +566,6 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   updateParentInfo(formdata) {
-    console.log(formdata);
     const _this = this;
     const firstName = _this.customer_data.userProfile.firstName
     const lastName = _this.customer_data.userProfile.lastName;
@@ -555,17 +574,16 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['id'] = _this.customer_data.id;
       if (formdata.whatsappnumber !== '') {
         const whatsup = {}
-        whatsup["countryCode"] = '+91',
+        whatsup["countryCode"] = formdata.countryCode_whtsap
           whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
       if (formdata.telegramnumber !== '') {
         const telegram = {}
-        telegram["countryCode"] = '+91',
+        telegram["countryCode"] = formdata.countryCode_telegram
           telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      // const userProfile = {}
       if(formdata.email!==''){
         userObj['email']=formdata.email
       }
@@ -574,14 +592,11 @@ export class VirtualFieldsComponent implements OnInit {
       userObj['lastName'] = lastName;
       // userObj['dob'] = formdata.dob;
       userObj['pinCode'] = formdata.pincode;
-      console.log(formdata.islanguage);
       if (formdata.islanguage === 'yes') {
         userObj['preferredLanguages'] = ['English'];
       } else {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
-      // userObj['userProfile'] = userProfile;
-      console.log(userObj +_this.customer_data.id);
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
@@ -596,21 +611,20 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   updateMemberInfo(formdata) {
-    const _this = this;
-    console.log(_this.chosen_person);
+    const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
     if (formdata.whatsappnumber !== '') {
       const whatsup = {}
-      whatsup["countryCode"] = '+91',
+      whatsup["countryCode"] = formdata.countryCode_whtsap
         whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
-      telegram["countryCode"] = '+91',
+      telegram["countryCode"] = formdata.countryCode_telegram
         telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
     }
@@ -638,8 +652,6 @@ export class VirtualFieldsComponent implements OnInit {
     }
     this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
     return new Promise(function (resolve, reject) {
-
-      console.log(memberInfo);
       _this.sharedServices.editMember(memberInfo).subscribe(
         () => {
           resolve(true);
@@ -659,13 +671,13 @@ export class VirtualFieldsComponent implements OnInit {
     memberInfo['userProfile'] = {}
     if (formdata.whatsappumber !== '') {
       const whatsup = {}
-      whatsup["countryCode"] = '+91',
+      whatsup["countryCode"] = formdata.countryCode_whtsap
         whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
-      telegram["countryCode"] = '+91',
+      telegram["countryCode"] = formdata.countryCode_telegram
         telegram["number"] = formdata.telegramnumber
         memberInfo['userProfile']['telegramNum'] = telegram;
     }
@@ -691,8 +703,6 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo['bookingLocation']['city'] = formdata.location.Name
     }
     return new Promise(function (resolve, reject) {
-
-      console.log(memberInfo);
       _this.sharedServices.addMembers(memberInfo).subscribe(
         (data) => {
           _this.lStorageService.setitemonLocalStorage('userId', data);

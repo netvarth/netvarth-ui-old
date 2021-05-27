@@ -496,8 +496,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 this.currentPhone = this.waitlist.waitlistPhoneNumber;
                             }
                         } else {
-                            const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                            this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
+                            //const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                            this.callingModes = this.countryCode + '' + this.customer_data.primaryPhoneNumber;
+                            if(serv.serviceType==='virtualService'&& this.virtualInfo){
+                               if(this.virtualInfo.whatsappnumber){
+                                this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+                                console.log(this.callingModes);
+                               }
+                            }
                         }
                     }
                 }
@@ -1120,13 +1126,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+            
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-        }
+            this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+        }    
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1929,6 +1938,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.bookingForm.get('newWhatsapp').value.e164Number.startsWith('+')) {
                         whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
                         this.callingModes = whatsAppNum;
+                        console.log(this.callingModes);
+                        
                     }
                 }
             }
