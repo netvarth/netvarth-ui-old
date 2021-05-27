@@ -316,8 +316,8 @@ export class BranchUserDetailComponent implements OnInit {
             'postalCode': this.user_data.pincode || null,
             'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  '+'+this.user_data.whatsAppNum.countryCode   : '', 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
-            'countryCode_telegram': (this.user_data.telegramNum) ? this.user_data.telegramNum.countryCode : '', 
-            'telegramnumber': (this.user_data.telegramNum) ?  '+'+this.user_data.telegramNum.number : '', 
+            'countryCode_telegram': (this.user_data.telegramNum) ? '+'+this.user_data.telegramNum.countryCode : '', 
+            'telegramnumber': (this.user_data.telegramNum) ?  this.user_data.telegramNum.number : '', 
 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
