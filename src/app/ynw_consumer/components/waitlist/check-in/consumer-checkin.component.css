@@ -748,7 +748,7 @@ ul.bus-actions li a.lnk {
 }
 
 .c-checkin-new .lnk a {
-  color: #1572a8 !important;
+  color: #1572a8 ;
 }
 
 .c-checkin-new .lnk {

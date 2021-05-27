@@ -475,6 +475,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         } else {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
+                            if(serv.serviceType==='virtualService'&& this.virtualInfo){
+                               if(this.virtualInfo.whatsappnumber){
+                                   const whtsappcountryCode=this.virtualInfo.countryCode_whtsap.split('+')[1];
+                                this.callingModes = whtsappcountryCode + ' ' + this.virtualInfo.whatsappnumber;
+                                console.log(this.callingModes);
+                               }
+                            }
                         }
                     }
                 }
@@ -733,11 +740,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             // }
             if (this.virtualInfo) {
-                console.log(this.virtualInfo);
-                const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-                const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-                console.log(formattedDate);
-                this.waitlist_for[0]['dob'] = formattedDate;
+                // console.log(this.virtualInfo);
+                // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                // console.log(formattedDate);
+                // this.waitlist_for[0]['dob'] = formattedDate;
+                this.waitlist_for[0]['age'] = this.virtualInfo.age;
                 if (this.virtualInfo.islanguage === 'yes') {
                     let langs = [];
                     langs.push('English');
@@ -752,6 +760,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
+                    
                 }
             }
         }
@@ -1073,13 +1082,28 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
+            this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +' '+this.virtualInfo.whatsappnumber;
+            }else{
+                this.callingModes=this.virtualInfo.countryCode_whtsap +' '+this.virtualInfo.whatsappnumber;
+            }
+            
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
+                this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] + ' ' +this.virtualInfo.whatsappnumber;
+                }else{
+                    this.callingModes=this.virtualInfo.countryCode_whtsap + ' ' +this.virtualInfo.whatsappnumber;
+                }
         }
+         this.currentPhone = this.virtualInfo.phoneno;
+        this.userPhone = this.virtualInfo.phoneno;
+        this.changePhno = true;
+     
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });

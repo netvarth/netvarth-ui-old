@@ -44,6 +44,70 @@
                                     {{this.details.userProfile.countryCode}}
                                     {{this.details.userProfile.primaryMobileNo}}
                                 </div>
+                                <ng-container *ngIf="hideLanguages">
+          
+                                    <div class="col-xs-12 no-padding">
+                                        <label>Whatsapp #</label>
+                                        <div class="disp-flex">
+                                            <div class="form-group">
+                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                    class="form-control input-group-text" id="countryCode_whtsap"
+                                                    placeholder="Country code " formControlName="countryCode_whtsap" autocomplete="off"
+                                                    maxlength="5" style="width:110px">
+                                            </div>
+                                            <div class="form-group width-100">
+                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                    class="form-control text-width" id="whatsappnumber" formControlName="whatsappnumber"
+                                                    autocomplete="off" maxlength="10">
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
+                                                {
+                                                'minlength' : 'Enter a 10 digit whatsapp number',
+                                                'maxlength' : 'Enter a 10 digit whatsapp number',
+                                                'pattern' : 'Enter a 10 digit whatsapp number'
+                                                })">
+                                                </app-field-error-display>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class=" col-xs-12 no-padding">
+                                        <label>Telegram #</label>
+                                        <div class="disp-flex">
+                                            <div class="form-group">
+                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                    class="form-control input-group-text" id="countryCode_telegram"
+                                                    placeholder="Country code " formControlName="countryCode_telegram"
+                                                    autocomplete="off" maxlength="5">
+                                            </div>
+                                            <div class="form-group width-100">
+                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                    class="form-control text-width" id="telegramnumber" formControlName="telegramnumber"
+                                                    autocomplete="off" maxlength="10">
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
+                                                {
+                                                'minlength' : 'Enter a 10 digit telegram number',
+                                                'maxlength' : 'Enter a 10 digit telegram number',
+                                                'pattern' : 'Enter a 10 digit telegram number'
+                                                })">
+                                                </app-field-error-display>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input type="email" class="form-control" formControlName="email" />
+                
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'email')"
+                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                                              {
+                                                                'required' : 'Email is required',
+                                                                'pattern' : 'Please enter valid email'
+                                                              })">
+                                        </app-field-error-display>
+                                    </div>
+                                </ng-container>
                                 <div class="form-group"
                                     *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                                     <label class="col-form-label" for="firstName">First Name <span
@@ -56,26 +120,36 @@
                                             class="red">*</span></label><br/>
                                         <input class="form-control" placeholder="Enter your last name" formControlName="lastName">
                                 </div>
-                                <div class="form-group col-xs-12 dob no-padding mgn-up-20">
-                                    <label class="col-form-label" for="dob">Date of Birth <span
-                                            class="red">*</span></label>
-                                    <br />
-                                    <input type="date" placeholder="dd-mm-yyyy" [max]="maxDate" matInput id="dob"
-                                        formControlName="dob" class="vt_dt no-padding mgn-up-5">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label" for="gender">{{gender_cap}} <span
-                                            class="red">*</span></label>
-                                    <br />
-                                    <mat-radio-group formControlName="gender" class="mgn-up-5">
-                                        <mat-radio-button value="male">Male</mat-radio-button>
-                                        <mat-radio-button value="female">Female</mat-radio-button>
-                                        <mat-radio-button value="other">Other</mat-radio-button>
-                                    </mat-radio-group>
-                                    <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
-                                        errorMsg="Please select the gender.">
-                                    </app-field-error-display>
+                                <div class="col-xs-12  no-padding ">
+                                    <div class="col-xs-2 no-padding">
+                                        <label class="col-form-label" for="lastName">Age<span class="red">*</span></label><br>
+                                        <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
+                                            formControlName="age">
+                                    </div>
+                                    <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
+                                    <div class="col-xs-10 genderradio">
+                                        <label class="col-form-label" for="gender">{{gender_cap}} <span class="red">*</span></label>
+                                        <br />
+                                        <mat-radio-group formControlName="gender">
+                                            <mat-radio-button value="male">Male</mat-radio-button>
+                                            <mat-radio-button value="female">Female</mat-radio-button>
+                                            <mat-radio-button value="other">Other</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                    <div class="col-xs-12 mgn-up-5">
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                                  {
+                                    'required' : 'Age is required',
+                                    'min' : 'Minimum age required is 0',
+                                    'max' : 'Maximum age is 150'
+                                   
+                                  })">
+                                        </app-field-error-display>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                                            errorMsg="Please select the gender.">
+                                        </app-field-error-display>
+                                    </div>
                                 </div>
                                 <div class="form-group pwd">
                                     <label for="pincode" class="col-form-label">Residing Pincode <span
