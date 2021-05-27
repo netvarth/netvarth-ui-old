@@ -62,11 +62,11 @@
           <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
               [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
         </div>
-        <div class="resendouter" style="text-align: center !important;" *ngIf="resetCounterVal==0">
-          <span class="resend-main" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+        <div class="resendouter" style="text-align: center !important;">
+          <span class="resend-main" (click)="resendOTPMobile()" mat-button *ngIf="resetCounterVal==0"> {{resend_otp_to_cap}} <ng-container
               *ngIf="type=='change_email'">
               Email</ng-container></span>
-          <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>{{resend_otp_email}}</span>
+          <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>OTP via email</span>
         </div>
         <div class="counter-outer resend-counter" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
           {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}} {{seconds_cap}}</span>

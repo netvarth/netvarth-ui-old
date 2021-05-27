@@ -129,9 +129,9 @@
         <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary" (click)="userPopup();gotoProfile()">
           {{bname}}
         </a>
-        <a class="font-weight-bold text-dark-75 text-hover-primary" *ngIf="branchName !== ''">
+        <div class="font-weight-bold text-dark-75" *ngIf="branchName !== ''">
           {{branchName}}
-        </a>
+        </div>
         <div class="text-muted mt-1 sub-sec" *ngIf="locName">
           <i class="icon-location"></i>{{locName}}
         </div>
@@ -176,7 +176,7 @@
           </div>
         </div>
       </a>
-      <a (click)="userPopup();gotoSettings()" class="navi-item">
+      <a (click)="userPopup();gotoSettings()" class="navi-item" *ngIf="userData.adminPrivilege">
         <div class="navi-link">
           <div class="symbol symbol-40 bg-light mr-3">
             <div class="symbol-label">

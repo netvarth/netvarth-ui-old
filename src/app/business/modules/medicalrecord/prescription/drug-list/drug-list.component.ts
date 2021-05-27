@@ -56,6 +56,7 @@ export class DrugListComponent implements OnInit {
   removedrugdialogRef;
   customer_label = '';
   note = '';
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -70,6 +71,7 @@ export class DrugListComponent implements OnInit {
       this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.details) {
         const data = JSON.parse(queryParams.details);
+        console.log(data);
         this.drugList = data;
       }
       if (queryParams.mode) {
@@ -141,10 +143,13 @@ export class DrugListComponent implements OnInit {
 
   getMrprescription() {
     if (this.mrId) {
+      this.drugList = [];
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
-          if (data) {
+          console.log(data)
+          if (Object.keys(data).length !== 0 && data.constructor === Object) {
             this.drugList = data['prescriptionsList'];
+            console.log(data)
             this.note = data['notes'];
             this.loading = false;
           } else {
@@ -217,6 +222,7 @@ console.log(this.drugList);
           if (this.mrId) {
             let passdata;
             if(this.drugList.length == 0){
+              this.note = '';
                passdata = {
                 "prescriptionsList":this.drugList,
               }

@@ -11,6 +11,7 @@ import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Plai
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -64,12 +65,22 @@ export class InboxOuterComponent implements OnInit {
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+  customId: any;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
     private location: Location, private snackbarService: SnackbarService,
     public shared_services: SharedServices,
-    private dateTimeProcessor: DateTimeProcessor) { }
+    private dateTimeProcessor: DateTimeProcessor,
+    private activaterouterobj: ActivatedRoute) {
+      this.activaterouterobj.queryParams.subscribe(qparams => {
+        if (qparams.accountId) {
+          this.selectedProvider = qparams.accountId;
+          this.customId = qparams.customId;
+          this.showChat =true;
+        }
+      });
+     }
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -95,6 +106,7 @@ export class InboxOuterComponent implements OnInit {
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    // alert(this.accountId);
     this.inbox_services.getInbox(usertype)
       .subscribe(
         data => {
@@ -105,6 +117,7 @@ export class InboxOuterComponent implements OnInit {
           console.log(this.groupedMsgs);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            console.log(this.selectedUserMessages);
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);

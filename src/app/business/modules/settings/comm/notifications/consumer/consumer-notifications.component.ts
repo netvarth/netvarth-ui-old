@@ -56,26 +56,28 @@ export class ConsumerNotificationsComponent implements OnInit {
   notificationList: any = [];
   okCheckinStatus = false;
   okCancelStatus = false;
-  earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: 0 };
-  earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: 0 };
-  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: 0 };
-  prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
-  prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
-  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '1440' };
-  secondAPPTNotificationSettings = { eventType: 'SECONDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '480' };
-  thirdAPPTNotificationSettings = { eventType: 'THIRDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '240' };
-  fourthAPPTNotificationSettings = { eventType: 'FORTHNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '60' };
-  prefinalDONATNotificationSettings = { eventType: 'PREFINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
-  finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
-  finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
-  finalDONATNotificationSettings = { eventType: 'FINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
-  wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
-  apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
-  donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
-  orderAddNotificationSettings = { eventType: 'ORDERCONFIRM', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
-  orderCancelNotificationSettings = { eventType: 'ORDERCANCEL', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
-  orderStatusChangelNotificationSettings = { eventType: 'ORDERSTATUSCHANGE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
-  orderUpdateNotificationSettings={ eventType: 'ORDERUPDATE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
+  earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, telegram: true, pushNotification: false, personsAhead: 0 };
+  earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, telegram: true, pushNotification: false, personsAhead: 0 };
+  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, telegram: true, pushNotification: false, personsAhead: 0 };
+  prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
+  prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, telegram: true, pushNotification: false };
+  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false, time: '1440' };
+  secondAPPTNotificationSettings = { eventType: 'SECONDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false, time: '480' };
+  thirdAPPTNotificationSettings = { eventType: 'THIRDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, telegram: true, pushNotification: false, time: '240' };
+  fourthAPPTNotificationSettings = { eventType: 'FORTHNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, telegram: true, pushNotification: false, time: '60' };
+  prefinalDONATNotificationSettings = { eventType: 'PREFINAL', resourceType: 'DONATION', sms: false, email: false, telegram: true, pushNotification: false };
+  finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
+  finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
+  finalDONATNotificationSettings = { eventType: 'FINAL', resourceType: 'DONATION', sms: false, email: false,telegram: true, pushNotification: false };
+  wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
+  wlCancelNotificationSettings = { eventType: 'WAITLISTCANCEL', resourceType: 'CHECKIN', sms: false, email: false,telegram: true, pushNotification: false };
+  apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
+  apptCancelNotificationSettings = { eventType: 'APPOINTMENTCANCEL', resourceType: 'APPOINTMENT', sms: false, email: false,telegram: true, pushNotification: false };
+  donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false,telegram: true, pushNotification: false };
+  orderAddNotificationSettings = { eventType: 'ORDERCONFIRM', resourceType: 'ORDER', sms: false, email: false, telegram: true,pushNotification: false };
+  orderCancelNotificationSettings = { eventType: 'ORDERCANCEL', resourceType: 'ORDER', sms: false, email: false, telegram: true, pushNotification: false };
+  orderStatusChangelNotificationSettings = { eventType: 'ORDERSTATUSCHANGE', resourceType: 'ORDER', sms: false, email: false,telegram: true, pushNotification: false };
+  orderUpdateNotificationSettings={ eventType: 'ORDERUPDATE', resourceType: 'ORDER', sms: false, email: false,telegram: true, pushNotification: false };
   showButton: any = {};
   customer_label = '';
   cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false, 'ORDERCONFIRM': false, 'ORDERCANCEL': false, 'ORDERSTATUSCHANGE': false,'ORDERUPDATE':false };
@@ -256,10 +258,16 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'WAITLISTADD' && notificationObj['resourceType'] === 'CHECKIN') {
         this.cSettings['WAITLISTADD'] = true;
         this.wlAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'WAITLISTCANCEL' && notificationObj['resourceType'] === 'CHECKIN') {
+        this.cSettings['WAITLISTCANCEL'] = true;
+        this.wlCancelNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'APPOINTMENTADD' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['APPOINTMENTADD'] = true;
         this.apptAddNotificationSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } else if (notificationObj['eventType'] === 'APPOINTMENTCANCEL' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['APPOINTMENTCANCEL'] = true;
+        this.apptCancelNotificationSettings = notificationObj; 
+       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['EARLY_APPT'] = true;
         this.earlyAPPTNotificatonSettings = notificationObj;
         this.apptPersonsahead = (notificationObj['personsAhead']) ? true : false;
@@ -338,12 +346,16 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.earlyWLNotificatonSettings[value] = event.checked;
       } else if (type === 'WAITLISTADD') {
         this.wlAddNotificationSettings[value] = event.checked;
+      } else if (type === 'WAITLISTCANCEL') {
+        this.wlCancelNotificationSettings[value] = event.checked;
       } else if (type === 'PREFINAL_WL') {
         this.prefinalWLNotificationSettings[value] = event.checked;
       } else if (type === 'FINAL_WL') {
         this.finalWLNotificationSettings[value] = event.checked;
       } else if (type === 'APPOINTMENTADD') {
         this.apptAddNotificationSettings[value] = event.checked;
+      } else if (type === 'APPOINTMENTCANCEL') {
+        this.apptCancelNotificationSettings[value] = event.checked;
       } else if (type === 'SECOND_APPT') {
         this.secondAPPTNotificationSettings[value] = event.checked;
       } else if (type === 'FIRST_APPT') {
@@ -375,8 +387,12 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.finalWLNotificationSettings;
     } else if (type === 'WAITLISTADD') {
       activeInput = this.wlAddNotificationSettings;
+    } else if (type === 'WAITLISTCANCEL') {
+      activeInput = this.wlCancelNotificationSettings;
     } else if (type === 'APPOINTMENTADD') {
       activeInput = this.apptAddNotificationSettings;
+    } else if (type === 'APPOINTMENTCANCEL') {
+      activeInput = this.apptCancelNotificationSettings;
     } else if (type === 'EARLY_APPT') {
       activeInput = this.earlyAPPTNotificatonSettings;
     } else if (type === 'PREFINAL_APPT') {

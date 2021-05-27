@@ -178,5 +178,13 @@ export class LastVisitComponent implements OnInit {
     }
 
   }
-
+  getProviderName(visit) {
+    let providerName;
+    if (visit.providerName) {
+      providerName = visit.providerName;
+    } else{
+      providerName = 'Nil';
+    }
+    return providerName;
+  }
 }

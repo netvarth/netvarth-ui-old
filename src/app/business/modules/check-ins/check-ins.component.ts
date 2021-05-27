@@ -1795,7 +1795,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // const queueid = this.groupService.getitemFromGroupStorage('history_selQ');
     // let no_filter = false;
     if (!Mfilter) {
-      Mfilter = {};
+      Mfilter = this.setFilterForApi();
       // if (this.selected_location && this.selected_location.id) {
       //   Mfilter['location-eq'] = this.selected_location.id;
       // }

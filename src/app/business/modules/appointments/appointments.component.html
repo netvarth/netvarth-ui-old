@@ -424,9 +424,9 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="!loading && (startedAppts.length == 0 || activeSchedules.length == 0)">
+                  <tbody *ngIf="!loading && startedAppts.length == 0">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0 || activeUser">
+                      <td colspan="5" class="no-appt">
                         No Appointments Found
                       </td>
                       <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">

@@ -459,9 +459,13 @@ export class SharedServices {
     const url = 'consumer/payment/status';
     return this.servicemeta.httpPost(url, data);
   }
-  getConsumerPayments() {
+  // getConsumerPayments() {
+  //   const url = 'consumer/payment';
+  //   return this.servicemeta.httpGet(url);
+  // }
+  getConsumerPayments(filter?) {
     const url = 'consumer/payment';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null, filter);
   }
   getConsumerPaymentById(id) {
     const url = 'consumer/payment/' + id;
@@ -1037,6 +1041,14 @@ export class SharedServices {
   }
   getLocationsByPincode(pinCode) {
     const url = 'provider/account/settings/locations/' + pinCode;
+    return this.servicemeta.httpGet(url);
+  }
+  enableTelegramNoti(status) {
+    const url = 'consumer/telegram/settings/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getTelegramstat() {
+    const url = 'consumer/telegram/settings';
     return this.servicemeta.httpGet(url);
   }
 }

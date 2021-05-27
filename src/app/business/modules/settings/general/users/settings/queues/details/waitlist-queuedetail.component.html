@@ -80,7 +80,7 @@
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                                            class="fa wtsapvid-icon"></i>
+                                                            style="width: 20px !important;"  class="fa wtsapvid-icon"></i>
 
                                                         {{service.name | capitalizeFirst}}
                                                     </span>
@@ -315,7 +315,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                                class="fa wtsapvid-icon"></i>
+                                                style="width: 20px !important;"  class="fa wtsapvid-icon"></i>
 
                                             {{service.name | capitalizeFirst}}
                                         </mat-checkbox>
