@@ -496,11 +496,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 this.currentPhone = this.waitlist.waitlistPhoneNumber;
                             }
                         } else {
-                            //const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                            this.callingModes = this.countryCode + '' + this.customer_data.primaryPhoneNumber;
+                            const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                            this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             if(serv.serviceType==='virtualService'&& this.virtualInfo){
                                if(this.virtualInfo.whatsappnumber){
-                                this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+                                   const whtsappcountryCode=this.virtualInfo.countryCode_whtsap.split('+')[1];
+                                this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
                                 console.log(this.callingModes);
                                }
                             }
@@ -1126,7 +1127,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+            if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
+            this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +''+this.virtualInfo.whatsappnumber;
+            }else{
+                this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+            }
             
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
@@ -1134,8 +1139,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
-        }    
+            if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.countryCode_whtsap.includes('+')){
+                this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +''+this.virtualInfo.whatsappnumber;
+                }else{
+                    this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+                }
+        }
+         this.currentPhone = this.virtualInfo.phoneno;
+        this.userPhone = this.virtualInfo.phoneno;
+        this.changePhno = true;
+     
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -2145,6 +2158,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
+        console.log(this.action);
         if (this.action === 'timeChange') {
             this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             this.selectedDate = this.sel_checkindate;
