@@ -291,7 +291,7 @@
                                     </a>
                                 </li>
                                 <li class="share">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             Share
@@ -347,13 +347,13 @@
                                     </a>
                                 </li>
                                 <li class="share" [matTooltip]="'Share'">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <!-- Share -->
                                         </span>
                                     </a>
-                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                    <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <!-- Share -->
@@ -397,13 +397,13 @@
                                     </a>
                                 </li>
                                 <li class="small-devices-share centeralign">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
                                         </span>
                                     </a>
-                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                    <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
@@ -729,8 +729,8 @@
                         src="assets/images/img-glplay.png"></a>
                 <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
                         src="assets/images/img-aplstore.png"></a>
-                <h6 class="mgn-up-20">After installing app, search for <span *ngIf="customId">"{{customId}}"</span><span
-                        *ngIf="!customId">"{{accEncUid}}"</span></h6>
+                <h6 class="mgn-up-20">After installing app, search for <span *ngIf="businessjson.customId">"{{businessjson.customId}}"</span><span
+                        *ngIf="!businessjson.customId">"{{businessjson.accEncUid}}"</span></h6>
             </div>
         </div>
     </div>
