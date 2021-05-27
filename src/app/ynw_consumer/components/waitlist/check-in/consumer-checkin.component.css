@@ -1215,14 +1215,15 @@ height: 150px !important;
   width: 100%;
 }
 .height40 {
-  height: 40px;
+  height: 32px;
+  font-size: 12px !important;
 }
 .mgn-up-10-m {
   margin-top: -10px !important;
 }
-.consumer_appt i.wtsapaud-icon {
+/* .consumer_appt i.wtsapaud-icon {
   top: 8px !important;
-}
+} */
 .serv-head {
   background: rgba(0, 0, 0, 0.04) !important;
   padding: 10px 0 3px 10px !important;
@@ -1592,6 +1593,70 @@ body.modal-open {
     width: 90% !important;
     margin: 0 auto 20px !important;
   }  
+}
+
+.contact-section.contact {
+  text-align: left !important;
+  font: normal normal normal 14px/27px Roboto !important;
+  letter-spacing: 0.21px !important;
+  color: #747474 !important;
+  opacity: 1 !important;
+}
+
+.email-section {
+  text-align: left !important;
+  font: normal normal normal 14px/27px Roboto !important;
+  letter-spacing: 0.21px !important;
+  color: #747474 !important;
+  opacity: 1 !important;
+}
+ .mgn-lt-36 {
+  margin-left: 38px !important;
+}
+
+.number-caption {
+  margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100px;
+}
+.width-input {
+  width: 130px !important;
+}
+.input-field {
+  padding: 5px;
+}
+.email-field {
+  padding: 5px;
+}
+.code-field {
+  width: 40px !important;
+}
+.codenumber {
+  display: flex;
+  margin-left: auto;
+  width: 100%;
+}
+.codenumber #countryCode,
+.codenumber #whatsappCountryCode {
+  border-right: none;
+}
+.number-section {
+  border-top: 1px solid #eee;
+}
+.mat-dialog-content{
+  height: 100vh !important;
+}
+
+#tcModal .modal-dialog {
+  margin: 0 !important;
+  transform: translate(0, 0) !important;
+  height: -webkit-fill-available !important;
+}
+
+#tcModal .modal-dialog .modal-content {
+  border-radius: 0 !important;
+  height: -webkit-fill-available !important;
 }
 
 #tcModal .modal-dialog .modal-content .modal-header {
