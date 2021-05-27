@@ -49,7 +49,7 @@ color:#fff !important;
     color: #fff !important;
     font-weight: 500 !important;
   }
-  .heartfulness_theme1.c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
+  .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
@@ -284,4 +284,8 @@ color: #fff !important;
 
 .heartfulness_theme1 .mat-radio-button.mat-accent .mat-radio-inner-circle {
   background-color: #59345D !important;
+}
+
+.heartfulness_theme1 .c-checkin-new .lnk a {
+  color: #59345D !important;
 }
