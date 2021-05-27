@@ -14208,3 +14208,10 @@ padding-left: 15px !important;
 .user-create-window mat-radio-button label{
   font-weight: normal !important;
 }
+@media (max-width: 468px) {
+  
+  .appt-details{
+    font-size: .815rem !important;
+    line-height: 1.75 !important;
+  }
+}

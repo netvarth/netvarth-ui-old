@@ -194,4 +194,3 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

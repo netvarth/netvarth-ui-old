@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -16,6 +16,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { UserConfirmBoxComponent } from '../confirm-box/user-confirm-box.component';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html',
@@ -94,6 +95,14 @@ export class BranchUserDetailComponent implements OnInit {
     locationDetails: any;
     locations: any = [];
     editloc = true;
+
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    telegramCountry;
+    whatsappCountry;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -217,9 +226,16 @@ export class BranchUserDetailComponent implements OnInit {
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: ['male'],
-            phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            // phonenumber: new FormControl(undefined),
+            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
             // location : ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -273,11 +289,19 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
+        if(this.user_data.telegramNum){
+         this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
+        }
+        if(this.user_data.whatsAppNum){
+            this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
+        }
+       
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
-            'phonenumber': this.user_data.mobileNo || null,
+            'countryCode':  this.user_data.countryCode || '',
+            'phonenumber': this.user_data.mobileNo || '',
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
             // 'password': this.user_data.commonPassword || this.userForm.get('password').value,
@@ -285,7 +309,11 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
-            'postalCode': this.user_data.pincode || null
+            'postalCode': this.user_data.pincode || null,
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.whatsappCountry[1]  : '', 
+            'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
+            'countryCode_telegram': (this.user_data.telegramNum) ? this.telegramCountry[1] : '', 
+            'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : '', 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -305,6 +333,8 @@ export class BranchUserDetailComponent implements OnInit {
 
     }
     onSubmit(input) {
+        // const dialCode = input.phonenumber.dialCode;
+        // const pN = input.phonenumber.e164Number.trim();
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -345,10 +375,26 @@ export class BranchUserDetailComponent implements OnInit {
             // 'deptId': input.selectedDepartment,
             // 'isAdmin' :
             'userType': input.selectedUserType,
-            'pincode': input.postalCode
+            'pincode': input.postalCode,           
         };
+        if(input.whatsappumber !==''){
+            const whatsup = {}
+            whatsup["countryCode"] = '+'+input.countryCode_whatsapp
+            whatsup["number"] = input.whatsappumber
+            post_data1['whatsAppNum']= whatsup;
+        }
+        if(input.telegramnumber !==''){
+            const telegram = {}
+            telegram["countryCode"] = '+'+input.countryCode_telegram
+            telegram["number"] = input.telegramnumber
+            post_data1['telegramNum']= telegram;     
+        }
+        // let phone = pN;
+        // if(pN.startsWith(dialCode)) {
+        //     phone = pN.split(dialCode)[1];
+        //   }
         if(input.phonenumber !==''){
-            post_data1['countryCode'] = '+91',
+            post_data1['countryCode'] = '+'+input.countryCode,
             post_data1['mobileNo'] = input.phonenumber;
         }
         if (input.selectedUserType === 'PROVIDER') {
@@ -362,6 +408,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
+            console.log(post_data1);
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'general', 'users']);

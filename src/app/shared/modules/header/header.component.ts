@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() includedfrom;
   @Output() scrollhideclass = new EventEmitter<any>();
   @Input() source;
+  @Input() accountId;
+  @Input() customId;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
@@ -381,17 +383,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case 'change-mobile':
         this.router.navigate([usertype, 'change-mobile']);
         break;
+        case 'notification':
+          this.router.navigate([usertype, 'notification']);
+          break;  
       case 'change-email':
         this.router.navigate([usertype, 'change-email']);
         break;
       case 'inbox':
-        this.router.navigate([usertype, 'inbox']);
+        let qParams = {};
+        if (this.customId) {
+          qParams['accountId'] = this.accountId;
+          qParams['customId'] = this.customId;
+        }
+        const navigationExtras1: NavigationExtras = {
+          queryParams: qParams
+        };
+        this.router.navigate([usertype, 'inbox'], navigationExtras1);
         break;
       case 'members':
         this.router.navigate([usertype, 'members']);
         break;
       case 'dashboard':
-        this.router.navigate([usertype]);
+        let queryParams = {};
+        if (this.customId) {
+          queryParams['accountId'] = this.accountId;
+          queryParams['customId'] = this.customId;
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        };
+        this.router.navigate([usertype], navigationExtras);
         break;
     }
   }
@@ -458,10 +479,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['business'], navigationExtras);
   }
   gotoActiveHome() {
-    if (this.consumer_loggedin) {
-      this.router.navigate(['/consumer']);
+    if (this.accountId) {
+      this.router.navigate([this.accountId]);
     } else {
-      this.router.navigate(['/']);
+      if (this.consumer_loggedin) {
+        this.router.navigate(['/consumer']);
+      } else {
+        this.router.navigate(['/']);
+      }
     }
   }
 }

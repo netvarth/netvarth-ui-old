@@ -1,0 +1,80 @@
+<!-- <section class="container no-padding">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
+<section class="container no-padding cons-payments no-padding-small">
+    <div class="row bill-section">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
+                </div> -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accountId" [customId]="customId"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="c-outer">
+                    <div class="c-body">
+                        <div class="card title-gb">
+                            <h5 class="mgn-up-10">Payments Log
+                                <a class="pull-left mgn-rt-20 back-btn" routerLink="/consumer"><i
+                                        class="fa fa-arrow-left"></i></a>
+                            </h5>
+                        </div>
+
+                        <app-innerloading-spinner *ngIf="loading"></app-innerloading-spinner>
+
+                        <div class="c-outer bill-section-content" *ngIf="!loading">
+                            <div class="c-body bill-wrapper">
+                                <div class="card history one section-four no-padding">
+                                    <div class="list-outer consumer-pay">
+                                        <div *ngIf="payments && payments.length === 0" class="no-payment">
+                                            No payments
+                                        </div>
+                                        <div class="listing" *ngFor="let payment of payments; let i = index">
+                                            <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
+                                                <div class="td one consumer-appthistory" style="flex-basis: 10% !important">
+                                                    <span *ngIf="payment.txnType==='Appointment'"
+                                                        [matTooltip]="'Appointment'" class="fa appt-icon"></span>
+                                                    <span *ngIf="payment.txnType==='Waitlist' && !payment.showTokenId" [matTooltip]="'Waitlist'"
+                                                        class="fa chckn-icon"></span>
+                                                        <span *ngIf="payment.txnType==='Waitlist' && payment.showTokenId" [matTooltip]="'Token'"
+                                                        class="fa token-icon"></span>
+                                                    <span *ngIf="payment.txnType==='Donation'" [matTooltip]="'Donation'"
+                                                        class="fa donate-icon"></span>
+                                                    <span *ngIf="payment.txnType==='Order'" [matTooltip]="'Order'"
+                                                        class="fa fa-shopping-cart shop_cart_icon"></span>
+                                                </div>
+                                                <div class="td one proname" style="flex-basis: 70% !important">
+                                                    <div class="accname"
+                                                        (click)="providerDetail(payment.accountEncodedId,$event)">
+                                                        {{payment.accountName}}</div>
+                                                    <div class="mode"> {{payment.acceptPaymentBy}} </div>
+                                                    <div class="mode">{{stringtoDate(payment.paymentOn,
+                                                        'date')}} {{stringtoDate(payment.paymentOn,
+                                                        'time')}}</div>
+                                                </div>
+                                                <div class="td three"
+                                                    style="flex-basis: 30% !important;padding: 10px !important;">
+                                                    <div class="th three amount rupee-font">{{payment.amount |
+                                                        currency:'&#8377; ' }}</div>
+                                                    <div class="th one">{{payment.status
+                                                        | capitalizeFirst}}</div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="wrap">
+                                                <div class="two col-xs-12 col-md-3"><span class="date">{{stringtoDate(payment.paymentOn,
+                                        'date')}} </span><span class="time">{{stringtoDate(payment.paymentOn,
+											'time')}}</span></div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

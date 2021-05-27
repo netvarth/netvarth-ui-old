@@ -1,0 +1,30 @@
+<section class="container no-padding no-padding-small" *ngIf="curtype=='consumer'">
+    <div class="content p0 see-pages cons-members">
+      <div class="panel panel-default">
+        <div class="panel-heading top-row ">        
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+          </div>
+        </div>
+        <div class="panel-body no-padding">
+          <div class="card title-gb">
+            <h5 class="mgn-up-10">Notifications<a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
+          </div>
+          <div class="related-links">
+              
+            <div class="outer-card">
+                <div class="card component-card_1 mgn-up-10 mgn-lt-10">
+                    <div class="card-body">
+                            <span class="notistyle">Telegram Notifications</span>
+                                    <span class="badge badge-info pull-right notistyle" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                                    <span class="badge badge-info pull-right notistyle"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
+                    </div>
+                </div>
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -353,7 +353,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
         <div>
           <mat-form-field class="rupee-font">
-            <input min="1" matInput type="text" class="form-control number-ip-sm" id="minprice" maxlength="10"
+            <input min="1" matInput type="number" class="form-control number-ip-sm" id="minprice" maxlength="10"
               (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
               placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount" autocomplete="off">
           </mat-form-field>
@@ -366,7 +366,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
         <div>
           <mat-form-field class="rupee-font">
-            <input min="1" matInput type="text" class="form-control number-ip-sm" id="maxprice" maxlength="10"
+            <input min="1" matInput type="number" class="form-control number-ip-sm" id="maxprice" maxlength="10"
               (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
               placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount" autocomplete="off">
           </mat-form-field>
