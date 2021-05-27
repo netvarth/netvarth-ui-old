@@ -103,6 +103,7 @@ export class BranchUserDetailComponent implements OnInit {
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     telegramCountry;
     whatsappCountry;
+    countrycode;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -227,13 +228,13 @@ export class BranchUserDetailComponent implements OnInit {
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: ['male'],
             // phonenumber: new FormControl(undefined),
-            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
 
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
@@ -249,7 +250,11 @@ export class BranchUserDetailComponent implements OnInit {
             // state: [],
             // city: []
         });
-
+        this.userForm.patchValue({
+            countryCode: '+91'|| null,
+            countryCode_whatsapp: '+91'|| null,
+            countryCode_telegram: '+91'|| null
+          });
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].value);
         this.getWaitlistMgr();
     }
@@ -289,18 +294,18 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
-        if(this.user_data.telegramNum){
-         this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
-        }
-        if(this.user_data.whatsAppNum){
-            this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
-        }
+        // if(this.user_data.telegramNum){
+        //  this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
+        // }
+        // if(this.user_data.whatsAppNum){
+        //     this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
+        // }
        
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
-            'countryCode':  this.user_data.countryCode || '',
+            'countryCode':  this.user_data.countryCode || '+91',
             'phonenumber': this.user_data.mobileNo || '',
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
@@ -310,10 +315,11 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.whatsappCountry[1]  : '', 
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  this.user_data.whatsAppNum.countryCode   : '+91', 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
-            'countryCode_telegram': (this.user_data.telegramNum) ? this.telegramCountry[1] : '', 
-            'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : '', 
+            'countryCode_telegram': (this.user_data.telegramNum) ?  this.user_data.telegramNum.countryCode : '+91', 
+            'telegramnumber': (this.user_data.telegramNum) ?  this.user_data.telegramNum.number : '', 
+
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -378,14 +384,29 @@ export class BranchUserDetailComponent implements OnInit {
             'pincode': input.postalCode,           
         };
         if(input.whatsappumber !==''){
+            if(input.countryCode_whatsapp.startsWith('+')){
+                console.log("hi")
+                this.whatsappCountry = input.countryCode_whatsapp
+            }
+            else{
+                this.whatsappCountry = '+'+input.countryCode_whatsapp
+                console.log("no hi")
+            }
             const whatsup = {}
-            whatsup["countryCode"] = '+'+input.countryCode_whatsapp
-            whatsup["number"] = input.whatsappumber
+            whatsup["countryCode"] =  this.whatsappCountry
+            whatsup["number"] =   input.whatsappumber
             post_data1['whatsAppNum']= whatsup;
         }
         if(input.telegramnumber !==''){
+            if(input.countryCode_telegram.startsWith('+')){
+                console.log(" whats hi")
+                this.telegramCountry = input.countryCode_telegram
+            } else{
+                this.telegramCountry = '+'+input.countryCode_telegram
+                console.log("tele no hi")
+            }
             const telegram = {}
-            telegram["countryCode"] = '+'+input.countryCode_telegram
+            telegram["countryCode"] =  this.telegramCountry
             telegram["number"] = input.telegramnumber
             post_data1['telegramNum']= telegram;     
         }
@@ -394,9 +415,15 @@ export class BranchUserDetailComponent implements OnInit {
         //     phone = pN.split(dialCode)[1];
         //   }
         if(input.phonenumber !==''){
-            post_data1['countryCode'] = '+'+input.countryCode,
-            post_data1['mobileNo'] = input.phonenumber;
-        }
+            if(input.countryCode.startsWith('+')){
+                this.countrycode = input.countryCode
+            }  else{
+                this.countrycode = '+'+input.countryCode
+            }
+                post_data1['countryCode'] =  this.countrycode,
+                post_data1['mobileNo'] = input.phonenumber;
+            }
+
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             // post_data1['subdomain'] = input.selectedSubDomain;
@@ -443,6 +470,9 @@ export class BranchUserDetailComponent implements OnInit {
     }
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
+    }
+    isNumericSign(evt) {
+        return this.shared_functions.isNumericSign(evt);
     }
     validateEmail(mail) {
         const emailField = mail;

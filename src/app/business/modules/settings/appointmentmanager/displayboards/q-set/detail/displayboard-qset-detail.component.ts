@@ -529,7 +529,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     getUsers() {
         const filter = { 'userType-eq': 'PROVIDER' };
         if (this.deptIds && this.deptIds.length > 0) {
-            filter['departmentId-eq'] = this.deptIds.toString();
+            filter['deptId-eq'] = this.deptIds.toString();
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users = this.userList = data;

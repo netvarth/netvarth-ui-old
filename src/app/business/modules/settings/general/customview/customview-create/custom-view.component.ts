@@ -648,7 +648,7 @@ export class CustomViewComponent implements OnInit {
         apiFilter['userType-eq'] = 'PROVIDER';
         apiFilter['status-eq'] = 'ACTIVE';
         if (this.selectedDeptIds.length > 0) {
-            apiFilter['departmentId-eq'] = this.selectedDeptIds.toString();
+            apiFilter['deptId-eq'] = this.selectedDeptIds.toString();
         }
         this.provider_services.getUsers(apiFilter).subscribe(
             (data: any) => {
