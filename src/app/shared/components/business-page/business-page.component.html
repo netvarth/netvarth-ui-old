@@ -612,7 +612,7 @@
                             </div>
                         </div> -->
                     <!-- Departments True-->
-                    <ng-container *ngIf="showDepartments && !this.userId">
+                    <ng-container *ngIf="showDepartments && !userId">
                         <ng-container *ngFor="let sps of servicesAndProviders">
                             <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
                                 *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
@@ -627,7 +627,7 @@
                             <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
+                    <ng-container *ngIf="!showDepartments || (showDepartments && userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                             <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
@@ -769,7 +769,7 @@
         </div>
     </div>
 </div>
-<footer class="site-footer" *ngIf="privacy || terms">
+<footer class="site-footer" *ngIf="(privacy || terms) && !userId">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
