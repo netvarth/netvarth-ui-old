@@ -289,12 +289,12 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
-        if(this.user_data.telegramNum){
-         this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
-        }
-        if(this.user_data.whatsAppNum){
-            this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
-        }
+        // if(this.user_data.telegramNum){
+        //  this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
+        // }
+        // if(this.user_data.whatsAppNum){
+        //     this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
+        // }
        
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
@@ -310,10 +310,10 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum) ? this.whatsappCountry[1]  : '', 
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  this.user_data.whatsAppNum.countryCode   : '', 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
             'countryCode_telegram': (this.user_data.telegramNum) ? this.telegramCountry[1] : '', 
-            'telegramnumber': (this.user_data.telegramNum) ? this.user_data.telegramNum.number  : '', 
+            'telegramnumber': (this.user_data.telegramNum) ?  this.user_data.telegramNum.countryCode : '', 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -379,7 +379,7 @@ export class BranchUserDetailComponent implements OnInit {
         };
         if(input.whatsappumber !==''){
             const whatsup = {}
-            whatsup["countryCode"] = '+'+input.countryCode_whatsapp
+            whatsup["countryCode"] = input.countryCode_whatsapp
             whatsup["number"] = input.whatsappumber
             post_data1['whatsAppNum']= whatsup;
         }
@@ -388,7 +388,7 @@ export class BranchUserDetailComponent implements OnInit {
             // this.telegramCountry  = input.telegramNum.countryCode.split('+');
             // console.log(this.telegramCountry[1]);
             const telegram = {}
-            telegram["countryCode"] = '+'+input.countryCode_telegram
+            telegram["countryCode"] = input.countryCode_telegram
             telegram["number"] = input.telegramnumber
             post_data1['telegramNum']= telegram;     
         }
@@ -397,7 +397,7 @@ export class BranchUserDetailComponent implements OnInit {
         //     phone = pN.split(dialCode)[1];
         //   }
         if(input.phonenumber !==''){
-            post_data1['countryCode'] = '+'+input.countryCode,
+            post_data1['countryCode'] = input.countryCode,
             post_data1['mobileNo'] = input.phonenumber;
         }
         if (input.selectedUserType === 'PROVIDER') {
