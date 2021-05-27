@@ -398,11 +398,11 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['whatsAppNum']= whatsup;
         }
         if(input.telegramnumber !==''){
-            if(input.countryCode_whatsapp.startsWith('+')){
+            if(input.countryCode_telegram.startsWith('+')){
                 console.log(" whats hi")
-                this.telegramCountry = input. input.countryCode_telegram
+                this.telegramCountry = input.countryCode_telegram
             } else{
-                this.telegramCountry = '+'+input. input.countryCode_telegram
+                this.telegramCountry = '+'+input.countryCode_telegram
                 console.log("tele no hi")
             }
             const telegram = {}
