@@ -54,37 +54,31 @@
                     
                       
                     </div> -->
-                    <div class=" col-xs-12" style="display: flex;">
-                            <label class="col-xs-12">Whatsapp #</label> 
-                        <div class=" col-xs-3 mgn-rt-10 no-padding">
+                    <div class="col-xs-12 no-padding">
+                            <label>Whatsapp #</label> 
+                        <div class="disp-flex">
                             <div class="form-group">
-                                   
-                             
                                         <input type="text" (keypress)="isNumeric($event)" matInput
-                                        class="input-group-text" id="countryCode_whtsap"
+                                        class="form-control input-group-text" id="countryCode_whtsap"
                                         placeholder="Country code " formControlName="countryCode_whtsap"
-                                        autocomplete="off" maxlength="5">
-                                
+                                        autocomplete="off" maxlength="5" style="width:110px">
                             </div>
-                        </div>
-                        <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
                             <div class="form-group">
-                                    <input type="text" (keypress)="isNumeric($event)" matInput
-                                        class="form-control text-width" id="whatsappnumber"
-                                         formControlName="whatsappnumber"
-                                        autocomplete="off" maxlength="10">
-                          
-                            <app-field-error-display
-                                [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')"
-                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
-                                    {
-                                    'minlength' : 'Enter a 10 digit whatsapp number',
-                                    'maxlength' : 'Enter a 10 digit whatsapp number',
-                                    'pattern' : 'Enter a 10 digit whatsapp number'
-                                    })">
-                            </app-field-error-display>
-                            </div>
-                        </div>  
+                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                    class="form-control text-width" id="whatsappnumber"
+                                     formControlName="whatsappnumber"
+                                    autocomplete="off" maxlength="10">
+                        <app-field-error-display
+                            [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')"
+                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
+                                {
+                                'minlength' : 'Enter a 10 digit whatsapp number',
+                                'maxlength' : 'Enter a 10 digit whatsapp number',
+                                'pattern' : 'Enter a 10 digit whatsapp number'
+                                })">
+                        </app-field-error-display>
+                        </div>
+                        </div>
                     </div>
         
         
@@ -101,9 +95,9 @@
                     
                     </div> -->
                    
-                    <div class=" col-xs-12" style="display: flex;">
-                        <label class="col-xs-12">Telegram #</label> 
-                    <div class=" col-xs-3 mgn-rt-10 no-padding">
+                    <div class=" col-xs-12 no-padding">
+                        <label>Telegram #</label> 
+                        <div class="disp-flex">
                         <div class="form-group">
                                
                          
@@ -113,8 +107,6 @@
                                     autocomplete="off" maxlength="5">
                             
                         </div>
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-xs-9 no-padding">
                         <div class="form-group">
                                 <input type="text" (keypress)="isNumeric($event)" matInput
                                     class="form-control text-width" id="telegramnumber"
