@@ -296,6 +296,7 @@ export const projectConstantsLocal = {
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   VALIDATOR_NUMBERONLY: /^\d+$/, 
   VALIDATOR_ONLYNUMBER:/^[0-9]+$/, 
+  VALIDATOR_COUNTRYCODE:/^[+]?[0-9]+$/, 
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
   VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,

@@ -227,13 +227,13 @@ export class BranchUserDetailComponent implements OnInit {
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: ['male'],
             // phonenumber: new FormControl(undefined),
-            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
 
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
@@ -384,6 +384,9 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['whatsAppNum']= whatsup;
         }
         if(input.telegramnumber !==''){
+            // console.log(input.countryCode_telegram)
+            // this.telegramCountry  = input.telegramNum.countryCode.split('+');
+            // console.log(this.telegramCountry[1]);
             const telegram = {}
             telegram["countryCode"] = '+'+input.countryCode_telegram
             telegram["number"] = input.telegramnumber
@@ -443,6 +446,9 @@ export class BranchUserDetailComponent implements OnInit {
     }
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
+    }
+    isNumericSign(evt) {
+        return this.shared_functions.isNumericSign(evt);
     }
     validateEmail(mail) {
         const emailField = mail;

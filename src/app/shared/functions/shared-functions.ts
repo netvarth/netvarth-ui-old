@@ -1146,6 +1146,15 @@ export class SharedFunctions {
       return false;
     }
   }
+  isNumericSign(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    if ((inputKeyCode >= 48 && inputKeyCode <= 57) || inputKeyCode === 8 || inputKeyCode === 46 || inputKeyCode === 43) {
+      return true;
+    } else {
+      evt.preventDefault();
+      return false;
+    }
+  }
   isNumber(evt) {
     evt = (evt) ? evt : window.event;
     const charCode = (evt.which) ? evt.which : evt.keyCode;
