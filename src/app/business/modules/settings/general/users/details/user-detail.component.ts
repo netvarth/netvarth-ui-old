@@ -249,7 +249,11 @@ export class BranchUserDetailComponent implements OnInit {
             // state: [],
             // city: []
         });
-
+        this.userForm.patchValue({
+            countryCode: '+91'|| null,
+            countryCode_whatsapp: '+91'|| null,
+            countryCode_telegram: '+91'|| null
+          });
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].value);
         this.getWaitlistMgr();
     }
@@ -300,7 +304,7 @@ export class BranchUserDetailComponent implements OnInit {
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
-            'countryCode':  this.user_data.countryCode || '',
+            'countryCode':  '+'+this.user_data.countryCode || '',
             'phonenumber': this.user_data.mobileNo || '',
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
@@ -310,10 +314,10 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  this.user_data.whatsAppNum.countryCode   : '', 
+            'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  '+'+this.user_data.whatsAppNum.countryCode   : '', 
             'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
             'countryCode_telegram': (this.user_data.telegramNum) ? this.telegramCountry[1] : '', 
-            'telegramnumber': (this.user_data.telegramNum) ?  this.user_data.telegramNum.countryCode : '', 
+            'telegramnumber': (this.user_data.telegramNum) ?  '+'+this.user_data.telegramNum.countryCode : '', 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
