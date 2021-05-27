@@ -1247,7 +1247,7 @@ export class SharedFunctions {
         const dataURL = canvas.toDataURL('image/png');
         resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ''));
       };
-      img.src = '../../../../assets/images/jaldee-logo.png';
+      img.src = './assets/images/jaldee-logo.png';
     });
 
     return promise;

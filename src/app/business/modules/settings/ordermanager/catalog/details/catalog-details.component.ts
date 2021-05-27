@@ -1548,10 +1548,10 @@ console.log('hi submit');
             if (img[0]) {
                 return img[0].url;
             } else {
-                return '../../../../assets/images/order/Items.svg';
+                return './assets/images/order/Items.svg';
             }
         } else {
-            return '../../../../assets/images/order/Items.svg';
+            return './assets/images/order/Items.svg';
         }
     }
     selectedItems() {

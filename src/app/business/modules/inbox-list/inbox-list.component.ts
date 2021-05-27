@@ -276,7 +276,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
-      return '../../../assets/images/pdf.png';
+      return './assets/images/pdf.png';
     } else {
       return url;
     }
@@ -566,7 +566,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const proImage = user.profilePicture;
       return proImage.url;
     } else {
-      return '../../../assets/images/avatar5.png';
+      return './assets/images/avatar5.png';
     }
   }
   getMsgType(msg) {
