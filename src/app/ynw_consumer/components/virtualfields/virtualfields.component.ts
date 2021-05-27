@@ -123,6 +123,9 @@ export class VirtualFieldsComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
 }
+isNumericSign(evt) {
+  return this.shared_functions.isNumericSign(evt);
+}
   ngOnInit(): void {
 
 
