@@ -282,7 +282,7 @@ export class BranchUsersComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.filter_sidebar = false;
-        this.clearFilter();
+        /* this.clearFilter(); */
     }
     clearFilter() {
         this.allSelected = false;

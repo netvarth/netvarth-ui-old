@@ -856,12 +856,12 @@ ul.bus-actions li a.lnk {
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
-  border-color: #334b99 !important;
-  color:#334b99 !important;
+  border-color: #334b99;
+  color:#334b99;
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
-  border-color: #ccc !important;
+  border-color: #ccc;
   /* color:#ddd !important; */
 }
 .c-checkin-new mat-chip a {
