@@ -50,7 +50,9 @@
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>Provider : </span>
                                                 <span>
-                                                    {{waitlist.provider.businessName | capitalizeFirst}}
+                                                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName +
+                                                        ' ' + waitlist.provider.lastName}}
+                                                    <!-- {{waitlist.provider.businessName | capitalizeFirst}} -->
                                                     <!-- {{waitlist.provider.firstName | capitalizeFirst}}
                                                     {{waitlist.provider.lastName | capitalizeFirst}} -->
                                                 </span>
