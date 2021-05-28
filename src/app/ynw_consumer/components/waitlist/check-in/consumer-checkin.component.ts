@@ -1424,7 +1424,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (_this.userData.userProfile !== undefined) {
                             _this.userEmail = _this.userData.userProfile.email || '';
                             if (_this.type !== 'waitlistreschedule') {
-                                _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
+                                _this.userPhone = _this.newPhone = _this.newWhatsapp = _this.userData.userProfile.primaryMobileNo || '';
+                                _this.countryCode = _this.whatsappCountryCode = _this.userData.userProfile.countryCode || '';
                             }
                         }
                         if (_this.userData.userProfile.email) {
@@ -1658,7 +1659,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.action = action;
         this.selected_phone = this.userPhone;
         this.newEmail = this.payEmail;
-        this.newPhone = this.selected_phone;
+        // this.newPhone = this.newWhatsapp = this.selected_phone;
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -1943,25 +1944,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.emailerror = '';
         this.phoneError = '';
         this.whatsapperror = '';
-        this.currentPhone = this.selected_phone;
-        this.userPhone = this.selected_phone;
+        // this.currentPhone = this.selected_phone;
+        // this.userPhone = this.selected_phone;
         this.changePhno = true;
-        let phoneNum;
-        let emailId;
         // if (this.editBookingFields) {
         // if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
         //     this.phoneError = 'Phone number is invalid';
         //     return false;
         // } else {
-        if (this.countryCode.trim() === '') {
+        if (!this.countryCode || (this.countryCode && this.countryCode.trim() === '')) {
             this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
             return false;
         }
         if (this.newPhone && this.newPhone.trim() !== '') {
-            phoneNum = this.newPhone;
-            this.userPhone = phoneNum;
-            this.currentPhone = phoneNum;
-            this.selected_phone = phoneNum;
+            this.userPhone = this.currentPhone = this.selected_phone = this.newPhone;
+        } else {
+            this.snackbarService.openSnackBar('Please enter phone number', { 'panelClass': 'snackbarerror' });
+            return false;
         }
         // }
         // if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
@@ -1969,13 +1968,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         //     return false;
         // } else {
         if (this.sel_ser_det && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
-            if (this.whatsappCountryCode && this.whatsappCountryCode.trim() === '') {
+            if (!this.whatsappCountryCode || (this.whatsappCountryCode && this.whatsappCountryCode.trim() === '')) {
                 this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
                 return false;
             }
             if (this.newWhatsapp && this.newWhatsapp.trim() !== '') {
                 const countryCode = this.whatsappCountryCode.replace('+', '');
                 this.callingModes = countryCode + this.newWhatsapp;
+            } else {
+                this.snackbarService.openSnackBar('Please enter whatsapp number', { 'panelClass': 'snackbarerror' });
+                return false;
             }
         }
         // }
@@ -1986,11 +1988,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.emailerror = "Email is invalid";
                 return false;
             } else {
-                emailId = this.newEmail;
-                if (emailId && emailId != "") {
-                    this.payEmail = emailId;
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
+                this.payEmail = this.newEmail;
+                this.waitlist_for[0]['email'] = this.payEmail;
             }
         }
         // if (this.bookingForm.get('newEmail').errors) {
