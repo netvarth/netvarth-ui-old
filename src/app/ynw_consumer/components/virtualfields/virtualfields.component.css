@@ -104,6 +104,6 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
   padding-left:18px!important;
  
 }
-div.optional {
+.mat-dialog-content div.optional {
 margin-bottom:none!important;
 }
