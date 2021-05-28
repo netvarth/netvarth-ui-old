@@ -70,6 +70,11 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                <span class="itemHead">WhatsApp</span>
+                <span class="itemVal">+
+                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
                 <span class="itemVal">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
