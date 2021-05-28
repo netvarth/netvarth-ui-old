@@ -45,14 +45,16 @@
                
             
             </li> -->
-            <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
+            <ng-container *ngIf="!apiloading && accountSettings.availability && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
+            <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="qAvailability.availableNow">
               <span class="status-val">I'm available till {{qAvailability.timeRange.eTime}}</span>
               <span class="btn btn-danger" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
             </li>
-            <li class="status-buttons-li make-available pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
+            <li class="status-buttons-li make-available pull-right mgn-rt-15" *ngIf="!qAvailability.availableNow">
               <span class="status-val">I'm not Available</span>
               <span class="btn btn-success" (click)="createInstantQ()">Make me available</span>
             </li>
+          </ng-container>
         </ul>
       </div>
     </nav>

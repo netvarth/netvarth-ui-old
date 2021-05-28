@@ -221,6 +221,7 @@ export class UserServiceChnageComponent implements OnInit {
   allSelected: boolean;
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
+  accountSettings;
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -249,6 +250,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.service_dataSource.filter = filterValue;
   }
   ngOnInit() {
+    this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
     this.getSpecializations();
   }

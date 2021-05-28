@@ -346,6 +346,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   instantdialogRef: any;
   instaQid: any;
   unassignview = false;
+  accountSettings;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -456,6 +457,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;

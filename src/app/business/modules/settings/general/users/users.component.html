@@ -1,464 +1,464 @@
 <section class="">
-    <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <a class="user-title">
-                <div class="pull-left pad-tp-5">Users<span
-                        *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
-            </a>
-            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-                <i class="icon-filter-one">
-                </i>
-                Filter
-            </a>
-            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
-                class="navbar-item-color bold pointer-cursor pull-right">
-                <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
-                        class="fa fa-plus"></i>User </button>
-            </a>
-        </h5>
-    </div>
+  <div class="card title-gb">
+      <h5 class="mgn-up-10">
+          <a class="user-title">
+              <div class="pull-left pad-tp-5">Users<span
+                      *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
+          </a>
+          <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+              <i class="icon-filter-one">
+              </i>
+              Filter
+          </a>
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+              class="navbar-item-color bold pointer-cursor pull-right">
+              <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
+                      class="fa fa-plus"></i>User </button>
+          </a>
+      </h5>
+  </div>
 </section>
 <section class="app-branchusers-component">
-    <div class="content loc-list">
-        <div class="col-md-12 no-padding-small">
-            <div class="card p0 w-dta">
-                <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
-                    <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
-                        [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
-                        <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                            <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                                Reset
-                            </span> -->
-                            <span class="filter-head-title">Filters</span>
-                            <i class="icon-filter-one-op ng-star-inserted closeFilter"
-                                (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'Close filter sidebar'"></i>
-                        </div>
-                        <ul class="sidebar-menu accordion" id="accordion1">
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-user"></i>
-                                        </div>
-                                        Name
-                                      </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapseName1" class="collapse in" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filter-li">
-                                            <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                                (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
-                                                class="filterTextbox filter-textbox" placeholder="Enter First Name">
-                                        </li>
-                                    </div>
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filter-li">
-                                            <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                                (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
-                                                class="filterTextbox filter-textbox" placeholder="Enter Last Name">
-                                        </li>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-location-arrow"></i>
-                                        </div>
-                                        Pincode
-                                      </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filter-li">
-                                            <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                                (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
-                                                class="filterTextbox filter-textbox" placeholder="Enter Pincode">
-                                        </li>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-map-marker"></i>
-                                        </div>
-                                        Location
-                                      </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filter-li">
-                                            <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                                (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
-                                                class="filterTextbox filter-textbox" placeholder="Enter city">
-                                        </li>
-                                    </div>
-                                    <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                              (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
-                                              class="filterTextbox filter-textbox" placeholder="Enter state">
-                                      </li>
-                                  </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="card">
+  <div class="content loc-list">
+      <div class="col-md-12 no-padding-small">
+          <div class="card p0 w-dta">
+              <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
+                  <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
+                      [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
+                      <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                          <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
+                              Reset
+                          </span> -->
+                          <span class="filter-head-title">Filters</span>
+                          <i class="icon-filter-one-op ng-star-inserted closeFilter"
+                              (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Close filter sidebar'"></i>
+                      </div>
+                      <ul class="sidebar-menu accordion" id="accordion1">
+                          <div class="card">
                               <div class="card-header">
                                 <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
                                     <div>
                                       <div style="display: inline-block !important;">
-                                        <i class="fa fa-clock-o"></i>
+                                        <i class="fa fa-user"></i>
                                       </div>
-                                      Availability
+                                      Name
                                     </div>
                                     <i class="fa fa-angle-down"></i>
                                   </button>
                                 </h2>
                               </div>
-                              <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+                              <div id="collapseName1" class="collapse in" data-parent="#accordion1">
                                 <div class="card-body">
-                                  <div class="filterTextinput filter-checkbox-input">
-                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                    </li>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                      <mat-checkbox class="filter-checkbox" [checked]="allSelected"
-                                        (change)="setFilterDataCheckbox('available', 'ALL')">
-                                        All</mat-checkbox>
-                                    </li>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                      <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
-                                        (change)="setFilterDataCheckbox('available', 'true')">
-                                        Available</mat-checkbox>
-                                    </li>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                      <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
-                                        (change)="setFilterDataCheckbox('available', 'false')">
-                                        Not Available</mat-checkbox>
-                                    </li>
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
+                                              (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                              class="filterTextbox filter-textbox" placeholder="Enter First Name">
+                                      </li>
+                                  </div>
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
+                                              (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                              class="filterTextbox filter-textbox" placeholder="Enter Last Name">
+                                      </li>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-phone"></i>
-                                        </div>
-                                        Phone Number
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-location-arrow"></i>
                                       </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filter-li">
-                                            <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                                #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
-                                                maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
-                                        </li>
+                                      Pincode
                                     </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
+                                              (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                              class="filterTextbox filter-textbox" placeholder="Enter Pincode">
+                                      </li>
                                   </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUType1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-users"></i>
-                                        </div>
-                                        User Type
+                              </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-map-marker"></i>
                                       </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapseUType1" class="collapse in" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-text-input">
-                                        <li class="filterli filterDatepicker filter-li">
-                                            <mat-form-field class="userfilter">
-                                                <mat-select id="userType" #userType [(ngModel)]="filter.userType"
-                                                    placeholder="Select user type" (selectionChange)="doSearch()"
-                                                    style="height: 0px;padding: 2px;">
-                                                    <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
-                                                        {{user.displayName}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </li>
+                                      Location
                                     </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="city" [(ngModel)]="filter.city" #city
+                                              (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                              class="filterTextbox filter-textbox" placeholder="Enter city">
+                                      </li>
+                                  </div>
+                                  <div class="filterTextinput filter-text-input">
+                                    <li class="filterli filter-li">
+                                        <input type="text" id="state" [(ngModel)]="filter.state" #state
+                                            (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                            class="filterTextbox filter-textbox" placeholder="Enter state">
+                                    </li>
+                                </div>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="card" *ngIf="accountSettings.availability">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-clock-o"></i>
+                                    </div>
+                                    Availability
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-checkbox-input">
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox class="filter-checkbox" [checked]="allSelected"
+                                      (change)="setFilterDataCheckbox('available', 'ALL')">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                                      (change)="setFilterDataCheckbox('available', 'true')">
+                                      Available</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                                      (change)="setFilterDataCheckbox('available', 'false')">
+                                      Not Available</mat-checkbox>
+                                  </li>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-phone"></i>
+                                      </div>
+                                      Phone Number
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filter-li">
+                                          <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
+                                              #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                              maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                                      </li>
                                   </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLanguages1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fa fa-language"></i>
-                                        </div>
-                                        Languages
+                              </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUType1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-users"></i>
                                       </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapseLanguages1" class="collapse" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filterTextinput filter-checkbox-input">
-                                        <!-- <label class="filterHeaders">Languages</label> -->
-                                        <li class="filterli">
-                                            <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
-                                                [checked]="selectedLanguages.indexOf(language.name) !== -1"
-                                                (change)="setFilterDataCheckbox('languages', language.name)">
-                                                {{language.displayName}}
-                                            </mat-checkbox>
-                                        </li>
+                                      User Type
                                     </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseUType1" class="collapse in" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-text-input">
+                                      <li class="filterli filterDatepicker filter-li">
+                                          <mat-form-field class="userfilter">
+                                              <mat-select id="userType" #userType [(ngModel)]="filter.userType"
+                                                  placeholder="Select user type" (selectionChange)="doSearch()"
+                                                  style="height: 0px;padding: 2px;">
+                                                  <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
+                                                      {{user.displayName}}
+                                                  </mat-option>
+                                              </mat-select>
+                                          </mat-form-field>
+                                      </li>
                                   </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                  <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSpecializations1" aria-expanded="false">
-                                      <div>
-                                        <div style="display: inline-block !important;">
-                                          <i class="fas fa-user-tag"></i>
-                                        </div>
-                                        Specializations
+                              </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLanguages1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-language"></i>
                                       </div>
-                                      <i class="fa fa-angle-down"></i>
-                                    </button>
-                                  </h2>
-                                </div>
-                                <div id="collapseSpecializations1" class="collapse" data-parent="#accordion1">
-                                  <div class="card-body">
-                                    <div class="filter-checkbox-input">
-                                        <!-- <label class="filterHeaders">Specializations</label> -->
-                                        <li class="filterli">
-                                            <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
-                                                [checked]="selectedSpecialization.indexOf(special.name) !== -1"
-                                                (change)="setFilterDataCheckbox('specializations', special.name)">
-                                                {{special.displayName}}
-                                            </mat-checkbox>
-                                        </li>
+                                      Languages
                                     </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseLanguages1" class="collapse" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filterTextinput filter-checkbox-input">
+                                      <!-- <label class="filterHeaders">Languages</label> -->
+                                      <li class="filterli">
+                                          <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
+                                              [checked]="selectedLanguages.indexOf(language.name) !== -1"
+                                              (change)="setFilterDataCheckbox('languages', language.name)">
+                                              {{language.displayName}}
+                                          </mat-checkbox>
+                                      </li>
                                   </div>
                                 </div>
-                            </div>
-                        </ul>
-                    </section>
-                    <div class="filter-footer" *ngIf="filterapplied === true">
-                        <button class="btn reset-btn" (click)="clearFilter()">
-                          <i class="fa fa-undo"></i>Reset
-                        </button>
-                        <button class="btn apply-btn" (click)="hideFilterSidebar()">
-                          <i class="fa fa-check"></i>Apply
-                        </button>
-                    </div>
-                </aside>
-                <section class="customersList">
-                    <div class="row p-3">
-                        <div class="col-lg-12">
-                            <div class="card card-custom card-stretch gutter-b no-padding">
-                                <div class="card-body pt-0 pb-3 no-padding">
-                                    <div class="tab-content">
-                                        <div class="table-responsive1">
-                                            <table
-                                                class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                                                <thead>
-                                                    <tr class="text-left text-uppercase">
-                                                        <th class="display-min-none" style="min-width: 250px;">
-                                                            {{provider_label}} name</th>
-                                                        <th class="display-min-none" style="min-width: 125px;">User Type
-                                                        </th>
-                                                        <th class="display-min-none" style="min-width: 125px;">Phone
-                                                            number</th>
-                                                        <th class="display-min-none" style="width: 30%;">Specializations
-                                                        </th>
-                                                        <th class="display-min-none">Languages</th>
-                                                        <th class="display-min-none">Tokens count</th>
-                                                        <th class="display-min-none"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="row_data border-bottom pointer-cursor waitlist-box"
-                                                        *ngFor="let service of users_list | orderBy: order; let i = index;"
-                                                        (click)="selectedRow(i,service)"
-                                                        [class.disabled-group]="service.status=='INACTIVE'">
-                                                        <td class="">
-                                                            <div class="disp-flex">
-                                                                <div class='user-img'>
-                                                                    <img [src]="getUserImg(service)" />
-                                                                </div>
-                                                                <div class="mgn-lt-10">
-                                                                    <div class="username">
-                                                                        {{(service.businessName) ? service.businessName
-                                                                        : service.firstName + ' ' +
-                                                                        service.lastName}}&nbsp;
-                                                                        <div class='status-circle'
-                                                                            [ngClass]="service.isAvailable ? 'green' : 'grey'"
-                                                                            *ngIf="service.userType === 'PROVIDER' ">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="disp-flex mgn-up-5"
-                                                                        *ngIf="service.city && service.state"><i
-                                                                            class="fa fa-map-marker mgn-rt-5"
-                                                                            aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
-                                                                    </div>
-                                                                    <div class="d-lg-none">
-                                                                        <div class=" mgn-up-5" *ngIf="service.userType">
-                                                                            <span class="b2"
-                                                                                *ngIf="service.userType === 'PROVIDER' ">{{provider_label
-                                                                                |
-                                                                                capitalizeFirst}}</span>
-                                                                            <span class="b2"
-                                                                                *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
-                                                                                |
-                                                                                capitalizeFirst}}</span>
-                                                                            <span class="b2"
-                                                                                *ngIf="service.userType === 'ADMIN'">Admin</span>
-                                                                        </div>
-                                                                        <div class="mgn-up-5" *ngIf="service.mobileNo">
-                                                                            <span class="b2">
-                                                                               {{service.countryCode}} {{service.mobileNo}} </span>
-                                                                        </div>
-                                                                        <div class="mgn-up-5"
-                                                                            *ngIf="service.specialization"> <span
-                                                                                class="b2">
-                                                                                {{getSpecialization(service.specialization)}}
-                                                                            </span></div>
-                                                                        <div class="mgn-up-5"
-                                                                            *ngIf="service.preferredLanguages"><span
-                                                                                class="b2">
-                                                                                {{getLanguages(service.preferredLanguages)}}
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="mgn-up-5"
-                                                                            *ngIf="service.userType === 'PROVIDER'">
-                                                                            <span class="b1">Tokens Count:
-                                                                            </span><span class="b2">
-                                                                                {{service.currentWlCount}}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="display-min-none">
-                                                            <span class="ttle"
-                                                                *ngIf="service.userType === 'PROVIDER' ">{{provider_label
-                                                                |
-                                                                capitalizeFirst}}</span>
-                                                            <span class="ttle"
-                                                                *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
-                                                                |
-                                                                capitalizeFirst}}</span>
-                                                            <span class="ttle"
-                                                                *ngIf="service.userType === 'ADMIN'">Admin</span>
-                                                        </td>
-                                                        <td class="display-min-none">
-                                                            <span *ngIf="service.mobileNo">
-                                                                {{service.countryCode}} {{service.mobileNo}}</span>
-                                                        </td>
-                                                        <td class="display-min-none">
-                                                            <span *ngIf="service.specialization">
-                                                                {{getSpecialization(service.specialization)}}</span>
-                                                        </td>
-                                                        <td class="display-min-none">
-                                                            <span *ngIf="service.preferredLanguages">
-                                                                {{getLanguages(service.preferredLanguages)}}
-                                                            </span>
-                                                        </td>
-                                                        <td class="display-min-none">
-                                                            <span *ngIf="service.userType === 'PROVIDER'">
-                                                                {{service.currentWlCount}}
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="copy">
-                                                                <span class="mbt" style="top: 5px;">
-                                                                    <button type="button" mat-icon-button
-                                                                        [matMenuTriggerFor]="appMenu"
-                                                                        (click)="stopprop($event);">
-                                                                        <mat-icon>more_vert</mat-icon>
-                                                                    </button>
-                                                                </span>
-                                                                <mat-menu #appMenu="matMenu">
-                                                                    <button mat-menu-item
-                                                                        (click)="personalProfile(service.id)">
-                                                                        Personal Details
-                                                                    </button>
-                                                                    <button *ngIf="service.userType === 'PROVIDER'"
-                                                                        mat-menu-item
-                                                                        (click)="manageSettings(service.id)">
-                                                                        Settings
-                                                                    </button>
-                                                                    <button mat-menu-item
-                                                                        (click)="changeUserStatus(service)">
-                                                                        <i *ngIf="service.status=='INACTIVE' || !service.status"
-                                                                            class="icon-enable disabled "></i>
-                                                                        <i *ngIf="service.status=='ACTIVE'"
-                                                                            class="icon-disable"></i>
-                                                                        {{(service.status=='ACTIVE') ? 'Disable'
-                                                                        :'Enable'}}
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr *ngIf="users_list.length == 0 && !api_loading">
-                                                        No {{provider_label}} found
-                                                    </tr>
-                                                </tbody>
-                                                <app-common-innerloading-spinner *ngIf="api_loading">
-                                                </app-common-innerloading-spinner>
-                                            </table>
-                                        </div>
+                              </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSpecializations1" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fas fa-user-tag"></i>
+                                      </div>
+                                      Specializations
                                     </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseSpecializations1" class="collapse" data-parent="#accordion1">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                      <!-- <label class="filterHeaders">Specializations</label> -->
+                                      <li class="filterli">
+                                          <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
+                                              [checked]="selectedSpecialization.indexOf(special.name) !== -1"
+                                              (change)="setFilterDataCheckbox('specializations', special.name)">
+                                              {{special.displayName}}
+                                          </mat-checkbox>
+                                      </li>
+                                  </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
+                              </div>
+                          </div>
+                      </ul>
+                  </section>
+                  <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>Apply
+                      </button>
+                  </div>
+              </aside>
+              <section class="customersList">
+                  <div class="row p-3">
+                      <div class="col-lg-12">
+                          <div class="card card-custom card-stretch gutter-b no-padding">
+                              <div class="card-body pt-0 pb-3 no-padding">
+                                  <div class="tab-content">
+                                      <div class="table-responsive1">
+                                          <table
+                                              class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                              <thead>
+                                                  <tr class="text-left text-uppercase">
+                                                      <th class="display-min-none" style="min-width: 250px;">
+                                                          {{provider_label}} name</th>
+                                                      <th class="display-min-none" style="min-width: 125px;">User Type
+                                                      </th>
+                                                      <th class="display-min-none" style="min-width: 125px;">Phone
+                                                          number</th>
+                                                      <th class="display-min-none" style="width: 30%;">Specializations
+                                                      </th>
+                                                      <th class="display-min-none">Languages</th>
+                                                      <th class="display-min-none">Tokens count</th>
+                                                      <th class="display-min-none"></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr class="row_data border-bottom pointer-cursor waitlist-box"
+                                                      *ngFor="let service of users_list | orderBy: order; let i = index;"
+                                                      (click)="selectedRow(i,service)"
+                                                      [class.disabled-group]="service.status=='INACTIVE'">
+                                                      <td class="">
+                                                          <div class="disp-flex">
+                                                              <div class='user-img'>
+                                                                  <img [src]="getUserImg(service)" />
+                                                              </div>
+                                                              <div class="mgn-lt-10">
+                                                                  <div class="username">
+                                                                      {{(service.businessName) ? service.businessName
+                                                                      : service.firstName + ' ' +
+                                                                      service.lastName}}&nbsp;
+                                                                      <div class='status-circle'
+                                                                          [ngClass]="service.isAvailable ? 'green' : 'grey'"
+                                                                          *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="disp-flex mgn-up-5"
+                                                                      *ngIf="service.city && service.state"><i
+                                                                          class="fa fa-map-marker mgn-rt-5"
+                                                                          aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
+                                                                  </div>
+                                                                  <div class="d-lg-none">
+                                                                      <div class=" mgn-up-5" *ngIf="service.userType">
+                                                                          <span class="b2"
+                                                                              *ngIf="service.userType === 'PROVIDER' ">{{provider_label
+                                                                              |
+                                                                              capitalizeFirst}}</span>
+                                                                          <span class="b2"
+                                                                              *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                                              |
+                                                                              capitalizeFirst}}</span>
+                                                                          <span class="b2"
+                                                                              *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                                      </div>
+                                                                      <div class="mgn-up-5" *ngIf="service.mobileNo">
+                                                                          <span class="b2">
+                                                                             {{service.countryCode}} {{service.mobileNo}} </span>
+                                                                      </div>
+                                                                      <div class="mgn-up-5"
+                                                                          *ngIf="service.specialization"> <span
+                                                                              class="b2">
+                                                                              {{getSpecialization(service.specialization)}}
+                                                                          </span></div>
+                                                                      <div class="mgn-up-5"
+                                                                          *ngIf="service.preferredLanguages"><span
+                                                                              class="b2">
+                                                                              {{getLanguages(service.preferredLanguages)}}
+                                                                          </span>
+                                                                      </div>
+                                                                      <div class="mgn-up-5"
+                                                                          *ngIf="service.userType === 'PROVIDER'">
+                                                                          <span class="b1">Tokens Count:
+                                                                          </span><span class="b2">
+                                                                              {{service.currentWlCount}}
+                                                                          </span>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </td>
+                                                      <td class="display-min-none">
+                                                          <span class="ttle"
+                                                              *ngIf="service.userType === 'PROVIDER' ">{{provider_label
+                                                              |
+                                                              capitalizeFirst}}</span>
+                                                          <span class="ttle"
+                                                              *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                              |
+                                                              capitalizeFirst}}</span>
+                                                          <span class="ttle"
+                                                              *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                      </td>
+                                                      <td class="display-min-none">
+                                                          <span *ngIf="service.mobileNo">
+                                                              {{service.countryCode}} {{service.mobileNo}}</span>
+                                                      </td>
+                                                      <td class="display-min-none">
+                                                          <span *ngIf="service.specialization">
+                                                              {{getSpecialization(service.specialization)}}</span>
+                                                      </td>
+                                                      <td class="display-min-none">
+                                                          <span *ngIf="service.preferredLanguages">
+                                                              {{getLanguages(service.preferredLanguages)}}
+                                                          </span>
+                                                      </td>
+                                                      <td class="display-min-none">
+                                                          <span *ngIf="service.userType === 'PROVIDER'">
+                                                              {{service.currentWlCount}}
+                                                          </span>
+                                                      </td>
+                                                      <td>
+                                                          <div class="copy">
+                                                              <span class="mbt" style="top: 5px;">
+                                                                  <button type="button" mat-icon-button
+                                                                      [matMenuTriggerFor]="appMenu"
+                                                                      (click)="stopprop($event);">
+                                                                      <mat-icon>more_vert</mat-icon>
+                                                                  </button>
+                                                              </span>
+                                                              <mat-menu #appMenu="matMenu">
+                                                                  <button mat-menu-item
+                                                                      (click)="personalProfile(service.id)">
+                                                                      Personal Details
+                                                                  </button>
+                                                                  <button *ngIf="service.userType === 'PROVIDER'"
+                                                                      mat-menu-item
+                                                                      (click)="manageSettings(service.id)">
+                                                                      Settings
+                                                                  </button>
+                                                                  <button mat-menu-item
+                                                                      (click)="changeUserStatus(service)">
+                                                                      <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                                          class="icon-enable disabled "></i>
+                                                                      <i *ngIf="service.status=='ACTIVE'"
+                                                                          class="icon-disable"></i>
+                                                                      {{(service.status=='ACTIVE') ? 'Disable'
+                                                                      :'Enable'}}
+                                                                  </button>
+                                                              </mat-menu>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                                  <tr *ngIf="users_list.length == 0 && !api_loading">
+                                                      No {{provider_label}} found
+                                                  </tr>
+                                              </tbody>
+                                              <app-common-innerloading-spinner *ngIf="api_loading">
+                                              </app-common-innerloading-spinner>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+      </div>
+      <div class="clearfix"></div>
+  </div>
 </section>

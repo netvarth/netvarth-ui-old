@@ -120,6 +120,7 @@ export class BranchUsersComponent implements OnInit {
     allSelected: boolean;
     availabileSelected: boolean;
     notAvailabileSelected: boolean;
+    accountSettings;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -131,6 +132,7 @@ export class BranchUsersComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = this.user.sector;
         this.api_loading = true;

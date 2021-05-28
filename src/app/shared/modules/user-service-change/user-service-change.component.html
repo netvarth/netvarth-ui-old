@@ -124,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="card">
+      <div class="card" *ngIf="accountSettings.availability">
         <div class="card-header">
           <h2 class="mb-0">
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
@@ -286,7 +286,7 @@
                         <div class="mgn-lt-10">
                           <div class="username">{{service.Username?service.Username : ''}}&nbsp;
                             <div class='status-circle' [ngClass]="service.isAvailable ? 'green' : 'grey'"
-                              *ngIf="service.userType === 'PROVIDER' ">
+                              *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
                             </div>
                           </div>
                           <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
