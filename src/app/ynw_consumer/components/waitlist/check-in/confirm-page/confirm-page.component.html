@@ -38,7 +38,10 @@
                                                 <!-- Name of the -->
                                                 Provider</span>
                                             <span style="line-height: normal !important;">:&nbsp;</span>
-                                            <span class="billing-value">{{wtlst.provider.businessName}},
+                                            <span class="billing-value">
+                                                <!-- {{wtlst.provider.businessName}} -->
+                                                    {{(wtlst.provider.businessName) ? wtlst.provider.businessName : wtlst.provider.firstName +
+                                                        ' ' + wtlst.provider.lastName}},
                                                 {{wtlst.providerAccount?.businessName}}</span>
                                         </div>
                                         <div class="disp-flex" style="margin-bottom: 5px !important;">

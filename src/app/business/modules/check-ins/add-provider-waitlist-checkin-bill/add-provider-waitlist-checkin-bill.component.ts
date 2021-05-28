@@ -1294,15 +1294,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // discount['id'] = this.selOrderDiscount.id;
     // applyOrderDiscount
     if (this.discount_type.discType === 'OnDemand') {
+      console.log(this.discAmount);
+     
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
       //   this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
       // } else {
       //   discount['discValue'] = this.discAmount;
       // }
+      
       if (this.discAmount) {
         discount['discValue'] = this.discAmount;
       }
+      if(!this.discAmount){
+        this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
+      }
+
     }
     if (this.discProvNote) {
       discount['privateNote'] = this.discProvNote;
@@ -1784,7 +1791,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': 'Proceed with payment ?',
+          'message': 'Proceed with refund ?',
           'heading': 'Confirm',
           'type': 'yes/no'
         }

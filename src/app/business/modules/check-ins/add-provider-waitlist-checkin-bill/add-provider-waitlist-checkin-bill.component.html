@@ -576,7 +576,7 @@
 											<br>
 											<div *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">
 												<input class="form-control1" type="number" matInput #billdiscvalue
-													aria-label="Number" max="{{price_limit}}" min="0" matInput value="1"
+													aria-label="Number" max="{{price_limit}}" min="1" matInput value="1"
 													autocomplete="off" size="3" (keypress)="isNumeric($event)"
 													(keyup)="isvalid($event)" [(ngModel)]="discAmount"
 													[ngModelOptions]="{standalone: true}" placeholder="Enter Amount">
