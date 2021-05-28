@@ -88,9 +88,13 @@
                                                 <span class="item-label-val">{{waitlist.checkinEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
-                                                <span class="item-head">Phone No</span>
+                                                <span class="item-head">Phone #</span>
                                                 <span class="item-label-val">{{waitlist.countryCode}}
                                                     {{waitlist.waitlistPhoneNumber}}</span>
+                                            </div>
+                                            <div class="each-item" *ngIf="waitlist.service.serviceType === 'virtualService'&& waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <span class="item-head">WhatsApp #</span>
+                                                <span class="item-label-val">{{ waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
