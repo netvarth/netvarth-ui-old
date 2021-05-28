@@ -990,8 +990,11 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
+  /** Scale */
   PROVIDER_ACCOUNT_ID: 126643,
   ACCOUNTENC_ID: '5397yl0'
+  
+  /** Production */
   // PROVIDER_ACCOUNT_ID: 103359,
   // ACCOUNTENC_ID: '72q2rr9'
 };

@@ -61,13 +61,13 @@
                     </div>
                     <div class="flex-row-fluid" id="kt_chat_content"
                       *ngIf="(selectedProvider != '' && !small_device_display) || (small_device_display && showChat)">
-                      <div class="card card-custom" style="height: 100%;">
-                        <div class="card-header align-items-center px-4 py-3">
+                      <div class="card card-custom" style="height: 85vh;">
+                        <!-- <div class="card-header align-items-center px-4 py-3">
                           <div class="text-center flex-grow-1">
                             <div class="text-dark-75 font-weight-bold font-size-h5">
                               {{selectedProviderName}}</div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="card-body no-padding-small" style="position: relative; overflow: auto;">
                           <div class="scroll scroll-pull over-scroll" #scrollMe style="position: absolute; margin-right: 0;">      <!-- [ngStyle]="{'height.vh': 55}" -->
                             <div class="messages" *ngFor="let msg of selectedUserMessages">
@@ -179,9 +179,9 @@
                                 class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
                             </div>
                           </div>
-                          <div class="img-section mgn-up-20"
+                          <div class="img-section"
                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                            <ul class="galul">
+                            <ul class="col-md-12 col-xs-12 col-sm-12 no-padding galul">
                               <li *ngFor="let file of selectedMessage.files;let i = index ">
                                 <div class="galimg_outer">
                                   <div class="gal_img">
