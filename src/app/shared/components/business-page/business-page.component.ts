@@ -414,22 +414,23 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
       }
     };
+    console.log("Mobile:");
+    console.log(isMobile);
     if (isMobile.Android()) {
       this.playstore = true;
       this.appstore = false;
     } else if (isMobile.iOS()) {
+      console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
       // Detects if device is in standalone mode
-      
+
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
       // Checks if should display install popup notification:
+      console.log(isInStandaloneMode);
       if (!isInStandaloneMode()) {
         this.customAppIOSPopup.nativeElement.style.display = 'block';
       }
-
-
-
     } else {
       this.playstore = true;
       this.appstore = true;
@@ -485,13 +486,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 _this.provider_id = id;
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
-                    if(uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
+                    if (uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
                       document.getElementById('apple_touch_icon').setAttribute('href', uiconfig['iosApp']['icon-180']['src']);
-                    }                  
-                    if (uiconfig.terms) {
+                    }
+                    if (uiconfig['terms']) {
                       this.terms = true;
                     }
-                    if (uiconfig.privacy) {
+                    if (uiconfig['privacy']) {
                       this.privacy = true;
                     }
                     _this.accountProperties = uiconfig;
@@ -500,7 +501,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     } else {
                       _this.profileSettings = _this.accountProperties['normalDevices'];
                     }
-                    _this.theme = _this.accountProperties['theme'];
+                    if (_this.accountProperties['theme']) {
+                      _this.theme = _this.accountProperties['theme'];
+                    }
                     const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
                     if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
                       _this.popUp.nativeElement.style.display = 'block';
@@ -514,10 +517,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     _this.gets3curl();
                   }
                 )
-              }
-              //, () => {
-             //   _this.gets3curl();
-            //  }
+              }, (error) => {
+                console.log(error);
+                // _this.gets3curl();
+               }
             );
           }
         )

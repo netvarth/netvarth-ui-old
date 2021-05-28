@@ -10,7 +10,7 @@
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"></app-header>
                         <div class="view-booking" *ngIf="!sharedFunctionobj.checkLogin()" >
-                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">Dashboard</button>
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
                         </div>
                     </div>
                 </div>
