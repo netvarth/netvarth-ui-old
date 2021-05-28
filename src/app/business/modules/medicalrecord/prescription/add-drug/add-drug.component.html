@@ -21,7 +21,7 @@
      
     <div class="form-group">
       <label>Medicine name & size</label>
-          <input type="text"  class="form-control" placeholder="Medicine name & size" formControlName="medicine_name"/>
+          <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size" formControlName="medicine_name"/>
      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
 {
 
@@ -41,7 +41,7 @@
 
     <div class="form-group">
     <label>Duration in days</label>
-          <input type="text"  class="form-control" formControlName="duration" placeholder="Duration in days"/>
+          <input type="text"  class="form-control" (keypress)="clearError($event)"  formControlName="duration" placeholder="Duration in days"/>
       <!-- <mat-form-field>
         <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days">
       </mat-form-field> -->
@@ -56,7 +56,7 @@
 
     <div class="form-group">
     <label>Frequency per day</label>
-          <input type="text"  class="form-control" placeholder="Frequency per day" formControlName="frequency"/>
+          <input type="text"  class="form-control"(keypress)="clearError($event)"  placeholder="Frequency per day" formControlName="frequency"/>
       <!-- <mat-form-field>
         <input matInput type="text" class="form-control" placeholder="Frequency per day" formControlName="frequency">
       </mat-form-field> -->
@@ -69,7 +69,7 @@
     </div>
     <div class="form-group">
     <label>Dosage per consumption</label>
-          <input type="text"  class="form-control" placeholder="Dosage per consumption" formControlName="dosage"/>
+          <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption" formControlName="dosage"/>
       <!-- <mat-form-field>
         <input matInput type="text" class="form-control" placeholder="Dosage per consumption" formControlName="dosage">
       </mat-form-field> -->
@@ -88,7 +88,7 @@
     <label>Additional instructions</label>
       <div class="input-group">
         <div class="input-group-prepend"></div>
-          <textarea type="text" class="form-control" id="instructions" placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
+          <textarea type="text" class="form-control" (keypress)="clearError($event)" id="instructions" placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
           </div>
       <!-- <mat-form-field>
         <textarea matInput class="form-control" id="instructions" placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
@@ -113,4 +113,5 @@
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+
