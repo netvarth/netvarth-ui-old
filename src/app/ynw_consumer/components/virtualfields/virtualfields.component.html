@@ -131,7 +131,7 @@
                             </div>
                             <div class="clearfix"></div>
                             <div
-                                *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                                *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'" class="mgn-bt-10">
                                 <label class="col-form-label" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length >1?'Your preferred languages': 'Your preferred language'}}
                                 </label><br />
                                 <div class="col-form-label"><span
