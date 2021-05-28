@@ -140,8 +140,9 @@
                 </div>
             </div>
             <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
-                <label class="col-form-label" for="preferredLanguage">Your preferred language
+                <label class="col-form-label" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length >1?'Your preferred languages': 'Your preferred language'}}
                 </label><br />
+                
                 <div class="col-form-label"><span
                         style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
 
