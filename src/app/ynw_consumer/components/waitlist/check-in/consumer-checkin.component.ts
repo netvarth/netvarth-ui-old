@@ -203,7 +203,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualFields: any;
     consumerType: string;
     whatsappCountryCode;
-    checkPolicy= true;
+    checkPolicy = true;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -475,12 +475,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         } else {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
-                            if(serv.serviceType==='virtualService'&& this.virtualInfo){
-                               if(this.virtualInfo.whatsappnumber){
-                                   const whtsappcountryCode=this.virtualInfo.countryCode_whtsap.split('+')[1];
-                                this.callingModes = whtsappcountryCode + ' ' + this.virtualInfo.whatsappnumber;
-                                console.log(this.callingModes);
-                               }
+                            if (serv.serviceType === 'virtualService' && this.virtualInfo) {
+                                if (this.virtualInfo.whatsappnumber) {
+                                    const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
+                                    this.callingModes = whtsappcountryCode + ' ' + this.virtualInfo.whatsappnumber;
+                                    console.log(this.callingModes);
+                                }
                             }
                         }
                     }
@@ -760,7 +760,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
-                    
+
                 }
             }
         }
@@ -1361,11 +1361,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     data => {
                         _this.userData = data;
                         if (_this.type !== 'waitlistreschedule') {
-                            _this.countryCode =  _this.whatsappCountryCode = _this.userData.userProfile.countryCode;
+                            _this.countryCode = _this.whatsappCountryCode = _this.userData.userProfile.countryCode;
                         }
                         if (_this.selectedCountryCode) {
                             if (_this.countryCode != _this.selectedCountryCode) {
-                                _this.countryCode =  _this.whatsappCountryCode = _this.selectedCountryCode;
+                                _this.countryCode = _this.whatsappCountryCode = _this.selectedCountryCode;
                             }
                         } else {
                             _this.selectedCountryCode = _this.countryCode;
@@ -1794,10 +1794,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         //     this.phoneError = 'Phone number is invalid';
         //     return false;
         // } else {
-            console.log(this.countryCode);
-            console.log(this.newPhone);
-            console.log(this.whatsappCountryCode);
-            console.log(this.newWhatsapp);
         if (!this.countryCode || (this.countryCode && this.countryCode.trim() === '')) {
             this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
             return false;
@@ -1813,7 +1809,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         //     this.whatsapperror = 'WhatsApp number is invalid';
         //     return false;
         // } else {
-            console.log(this.sel_ser_det);
         if (this.sel_ser_det && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
             if (!this.whatsappCountryCode || (this.whatsappCountryCode && this.whatsappCountryCode.trim() === '')) {
                 this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
@@ -1835,10 +1830,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.emailerror = "Email is invalid";
                 return false;
             } else {
-                if (this.newEmail && this.newEmail != "") {
-                    this.payEmail = this.newEmail;
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
+                this.payEmail = this.newEmail;
+                this.waitlist_for[0]['email'] = this.payEmail;
             }
         }
         // if (this.bookingForm.get('newEmail').errors) {
@@ -2125,7 +2118,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
         }
     }
-     changePolicy (event) {
+    changePolicy(event) {
         console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
