@@ -296,10 +296,11 @@
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
               <div>
                 <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container"
+                    [ngStyle]="{'margin-top.px': filterapplied === true ? 95 : 44}">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                      <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                      <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                       <span class="filter-head-title">Filters</span>
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -546,6 +547,14 @@
                       </div>
                     </ul>
                   </section>
+                  <div class="filter-footer" *ngIf="filterapplied === true">
+                    <button class="btn reset-btn" (click)="clearFilter()">
+                      <i class="fa fa-undo"></i>Reset
+                    </button>
+                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <i class="fa fa-check"></i>Apply
+                    </button>
+                  </div>
                 </aside>
               </div>
               <div class="inpro-box mgn-up-10" *ngIf="startedCheckins.length > 0">
@@ -1126,10 +1135,11 @@
                 </a>
                 <div>
                   <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container"
+                      [ngStyle]="{'margin-top.px': filterapplied === true ? 95 : 44}">
                       <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                        <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                        <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                         <span class="filter-head-title">Filters</span>
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -1378,6 +1388,14 @@
                         </div>
                       </ul>
                     </section>
+                    <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>Apply
+                      </button>
+                    </div>
                   </aside>
                 </div>
               </div>
@@ -1658,10 +1676,11 @@
                 </a>
                 <div>
                   <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container"
+                      [ngStyle]="{'margin-top.px': filterapplied === true ? 95 : 44}">
                       <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                        <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                        <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                         <span class="filter-head-title">Filters</span>  
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -2089,6 +2108,14 @@
                         </div>
                       </ul>
                     </section>
+                    <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>Apply
+                      </button>
+                    </div>
                   </aside>
                 </div>
               </div>
