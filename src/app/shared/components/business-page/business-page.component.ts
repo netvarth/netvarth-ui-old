@@ -2145,7 +2145,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.showDonation(locid, cdate, service);
           }
         } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
+          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service:service, consumer: 'consumer' };
           this.doLogin('consumer', passParam);
         }
       });
