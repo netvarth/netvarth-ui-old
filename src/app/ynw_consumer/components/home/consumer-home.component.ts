@@ -2046,7 +2046,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   // Order Functions
 
   getTdyOrder() {
