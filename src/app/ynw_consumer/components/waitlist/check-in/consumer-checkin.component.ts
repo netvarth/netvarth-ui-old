@@ -201,7 +201,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     consumerType: string;
     heartfulnessAccount = false;
     theme: any;
-    checkPolicy= true;
+    checkPolicy = true;
     customId: any; // To know the source whether the router came from Landing page or not
     businessId: any;
     newPhone;
@@ -265,8 +265,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.virtualInfo = JSON.parse(params.virtual_info);
 
                 }
-                if(params.theme){
-                    this.theme=params.theme;
+                if (params.theme) {
+                    this.theme = params.theme;
                     console.log(this.theme);
                 }
                 if (params.customId) {
@@ -404,11 +404,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.consumerNoteAndFileSave(uid);
                     }
                     setTimeout(() => {
-                        let queryParams= {
+                        let queryParams = {
                             account_id: this.account_id,
-                            uuid: this.rescheduleUserId, 
+                            uuid: this.rescheduleUserId,
                             type: 'waitlistreschedule',
-                            theme:this.theme 
+                            theme: this.theme
                         }
                         if (this.businessId) {
                             queryParams['customId'] = this.customId;
@@ -503,12 +503,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         } else {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
-                            if(serv.serviceType==='virtualService'&& this.virtualInfo){
-                               if(this.virtualInfo.whatsappnumber){
-                                   const whtsappcountryCode=this.virtualInfo.countryCode_whtsap.split('+')[1];
-                                this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
-                                console.log(this.callingModes);
-                               }
+                            if (serv.serviceType === 'virtualService' && this.virtualInfo) {
+                                if (this.virtualInfo.whatsappnumber) {
+                                    const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
+                                    this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
+                                    console.log(this.callingModes);
+                                }
                             }
                         }
                     }
@@ -788,7 +788,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
-                    
+
                 }
             }
         }
@@ -862,7 +862,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class', this.theme],
             disableClose: true,
-            data: { 'id': this.virtualInfo.serviceFor,theme:this.theme }
+            data: { 'id': this.virtualInfo.serviceFor, theme: this.theme }
 
         });
         virtualdialogRef.afterClosed().subscribe(result => {
@@ -910,11 +910,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             multiple = false;
                         }
                         setTimeout(() => {
-                            let queryParams= {
+                            let queryParams = {
                                 account_id: this.account_id,
-                                uuid: this.uuidList, 
+                                uuid: this.uuidList,
                                 multiple: multiple,
-                                theme:this.theme 
+                                theme: this.theme
                             }
                             if (this.businessId) {
                                 queryParams['customId'] = this.customId;
@@ -955,11 +955,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else {
                     multiple = false;
                 }
-                let queryParams= {
+                let queryParams = {
                     account_id: this.account_id,
-                    uuid: this.uuidList, 
+                    uuid: this.uuidList,
                     multiple: multiple,
-                    theme:this.theme 
+                    theme: this.theme
                 }
                 if (this.businessId) {
                     queryParams['customId'] = this.customId;
@@ -967,7 +967,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 let navigationExtras: NavigationExtras = {
                     queryParams: queryParams
                 };
-                this.router.navigate(['consumer', 'checkin', 'confirm'],navigationExtras);
+                this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
             }
         },
             error => {
@@ -1132,39 +1132,44 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if(this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber!==''){
-                if(this.virtualInfo.countryCode_whtsap.includes('+')){
-            this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] +''+this.virtualInfo.whatsappnumber;
-            }else{
-                this.callingModes=this.virtualInfo.countryCode_whtsap +''+this.virtualInfo.whatsappnumber;
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+
+                }
+                this.currentPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.phoneno;
+                this.changePhno = true;
             }
-            this.currentPhone = this.virtualInfo.phoneno;
-            this.userPhone = this.virtualInfo.phoneno;
-            this.changePhno = true;
-        }
-            
+
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if(this.virtualInfo.countryCode_whtsap &&this.virtualInfo.whatsappnumber!=='' ){
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
 
-                if(this.virtualInfo.countryCode_whtsap.includes('+')){
-            
-                this.callingModes=this.virtualInfo.countryCode_whtsap.split('+')[1] + '' +this.virtualInfo.whatsappnumber;
-                }else{
-                    this.callingModes=this.virtualInfo.countryCode_whtsap + ' ' +this.virtualInfo.whatsappnumber;
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
                 this.userPhone = this.virtualInfo.phoneno;
                 this.changePhno = true;
             }
-           
+
         }
-       
-     
+
+
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1653,7 +1658,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.action = action;
         this.selected_phone = this.userPhone;
         this.newEmail = this.payEmail;
-        this.newPhone = this.newWhatsapp = this.selected_phone;
+        this.newPhone = this.selected_phone;
     }
     clearCouponErrors() {
         this.couponvalid = true;
@@ -2271,7 +2276,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
         }
     }
-    changePolicy (event) {
+    changePolicy(event) {
         console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
