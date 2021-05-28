@@ -236,6 +236,11 @@ td, .d-lg-none .mgn-up-5 {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 5 !important;
 }
 
 .filter-sidebar .filter-container .filter-head .filter-head-title {
@@ -474,6 +479,64 @@ td, .d-lg-none .mgn-up-5 {
 
 .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input mat-form-field {
   width: 100% !important;
+  font-size: 14px !important;
+}
+
+.filter-sidebar .filter-footer {
+  position: absolute !important;
+  top: 44px !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-evenly !important;
+  background-color: white !important;
+  border-bottom: 1px solid #e3e9ed !important;
+  box-shadow: 0px 2px 20px -10px #bbb !important;
+}
+
+.filter-sidebar .filter-footer .btn {
+  width: 45% !important;
+}
+
+.filter-sidebar .filter-footer .btn.reset-btn {
+  background: #f3f6f9 !important;
+  height: 40px !important;
+  color: #374957 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  border: 0 !important;
+}
+
+.filter-sidebar .filter-footer .btn.reset-btn:hover {
+  background: #e1e5e8 !important;
+}
+
+.filter-sidebar .filter-footer .btn.reset-btn i.fa.fa-undo {
+  color: #374957 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+.filter-sidebar .filter-footer .btn.apply-btn {
+  background: #476073 !important;
+  height: 40px !important;
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  border: 0 !important;
+}
+
+.filter-sidebar .filter-footer .btn.apply-btn:hover {
+  background: #3b4e5d !important;
+}
+
+.filter-sidebar .filter-footer .btn.apply-btn i.fa.fa-check {
+  font-weight: 500 !important;
+  color: white !important;
   font-size: 14px !important;
 }
 
