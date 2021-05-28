@@ -58,6 +58,8 @@
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No Active Bookings</p>
                     </div>
+                    <app-common-innerloading-spinner *ngIf="loading">
+                    </app-common-innerloading-spinner>
                     <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder">
 
                         <!-- begin revamp bookings -->
