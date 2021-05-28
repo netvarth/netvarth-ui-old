@@ -67,11 +67,11 @@
                 <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
-                <span class="itemHead">Phone No</span>
+                <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                <span class="itemHead">WhatsApp</span>
+                <span class="itemHead">WhatsApp #</span>
                 <span class="itemVal">+
                   {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
