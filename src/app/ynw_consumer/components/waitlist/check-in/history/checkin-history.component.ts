@@ -122,8 +122,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
       .subscribe(
         data => {
           this.history = data;
-          this.loadcomplete.history = true;
-          this.loading = false;
+          // this.loadcomplete.history = true;
+          // this.loading = false;
           this.getAppointmentHistory(api_filter);
         },
         error => {
@@ -148,6 +148,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
           this.entire_history = this.apmt_history.concat(this.history);
           this.sortCheckins(this.entire_history);
           this.loading = false;
+          this.loadcomplete.history = true;
         },
         error => {
           this.loading = false;
