@@ -762,6 +762,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
+                if(this.payEmail!==''){
+                    this.waitlist_for[0]['email']=this.payEmail;
+                }
             }
         }
 
@@ -1076,6 +1079,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     setVirtualTeleserviceCustomer() {
         console.log(this.virtualInfo);
+        if(this.virtualInfo &&this.virtualInfo.email&&this.virtualInfo.email!==''){
+            this.payEmail=this.virtualInfo.email;
+        }
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
             this.newMember = this.virtualInfo.newMemberId;

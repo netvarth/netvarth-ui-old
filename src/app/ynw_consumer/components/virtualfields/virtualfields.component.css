@@ -58,7 +58,9 @@ label {
 .virtual-fields div, .virtual-fields .mat-radio-label-content, .virtual-fields .mat-radio-label{
     font-size: 1rem !important;
 }
-
+.virtual-fields div .smallfont{
+    font-size: .75rem !important;
+}
 .virtual-fields .mat-select {
     padding: 10px !important;
     border:1px solid #ccc !important;
