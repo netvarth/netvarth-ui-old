@@ -362,7 +362,7 @@ isNumericSign(evt) {
       // year: [''],
       age:['', Validators.compose([Validators.required,Validators.min(0),Validators.max(150)])],
       pincode: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+      email: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
