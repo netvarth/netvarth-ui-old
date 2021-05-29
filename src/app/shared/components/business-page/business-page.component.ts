@@ -470,60 +470,65 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
+
+        if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
+          this.router.navigate(['heartfulnesshealthcare']);
+        } else {
+          if (params.get('userEncId')) {
+            this.userEncId = params.get('userEncId');
+            this.userId = this.userEncId;
+          } else {
+            this.userId = null;
+          }
+          this.domainConfigService.getDomainList().then(
+            (domainConfig) => {
+              this.domainList = domainConfig;
+              this.getAccountIdFromEncId(this.accountEncId).then(
+                (id: any) => {
+                  _this.provider_id = id;
+                  _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
+                    (uiconfig: any) => {
+                      if (uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
+                        document.getElementById('apple_touch_icon').setAttribute('href', uiconfig['iosApp']['icon-180']['src']);
+                      }
+                      if (uiconfig['terms']) {
+                        this.terms = true;
+                      }
+                      if (uiconfig['privacy']) {
+                        this.privacy = true;
+                      }
+                      _this.accountProperties = uiconfig;
+                      if (_this.small_device_display) {
+                        _this.profileSettings = _this.accountProperties['smallDevices'];
+                      } else {
+                        _this.profileSettings = _this.accountProperties['normalDevices'];
+                      }
+                      if (_this.accountProperties['theme']) {
+                        _this.theme = _this.accountProperties['theme'];
+                      }
+                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                        _this.popUp.nativeElement.style.display = 'block';
+                      }
+                      _this.gets3curl();
+                    }, (error: any) => {
+                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                      if (!appPopupDisplayed) {
+                        _this.popUp.nativeElement.style.display = 'block';
+                      }
+                      _this.gets3curl();
+                    }
+                  )
+                }, (error) => {
+                  console.log(error);
+                  // _this.gets3curl();
+                 }
+              );
+            }
+          )
+        }
         // alert(this.accountEncId);
 
-        if (params.get('userEncId')) {
-          this.userEncId = params.get('userEncId');
-          this.userId = this.userEncId;
-        } else {
-          this.userId = null;
-        }
-        this.domainConfigService.getDomainList().then(
-          (domainConfig) => {
-            this.domainList = domainConfig;
-            this.getAccountIdFromEncId(this.accountEncId).then(
-              (id: any) => {
-                _this.provider_id = id;
-                _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
-                  (uiconfig: any) => {
-                    if (uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
-                      document.getElementById('apple_touch_icon').setAttribute('href', uiconfig['iosApp']['icon-180']['src']);
-                    }
-                    if (uiconfig['terms']) {
-                      this.terms = true;
-                    }
-                    if (uiconfig['privacy']) {
-                      this.privacy = true;
-                    }
-                    _this.accountProperties = uiconfig;
-                    if (_this.small_device_display) {
-                      _this.profileSettings = _this.accountProperties['smallDevices'];
-                    } else {
-                      _this.profileSettings = _this.accountProperties['normalDevices'];
-                    }
-                    if (_this.accountProperties['theme']) {
-                      _this.theme = _this.accountProperties['theme'];
-                    }
-                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                    if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
-                      _this.popUp.nativeElement.style.display = 'block';
-                    }
-                    _this.gets3curl();
-                  }, (error: any) => {
-                    const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                    if (!appPopupDisplayed) {
-                      _this.popUp.nativeElement.style.display = 'block';
-                    }
-                    _this.gets3curl();
-                  }
-                )
-              }, (error) => {
-                console.log(error);
-                // _this.gets3curl();
-               }
-            );
-          }
-        )
         //   }
         // )
       });
@@ -811,7 +816,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
       this.popupforCustomApp.nativeElement.style.display = 'none';
-      const path = projectConstantsLocal.UIS3PATH  + this.provider_id +'/manifest.json';
+      const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
       if (this.accountProperties) {
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
