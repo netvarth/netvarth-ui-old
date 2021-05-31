@@ -219,6 +219,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     donorFirstName = '';
     donorLastName = '';
+    customId: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -245,6 +246,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
                 this.sel_ser = JSON.parse(params.service_id);
+                if (params.customId) {
+                    this.customId = params.customId;
+                }
+                
                 // this.action = params.action;
             });
     }
@@ -585,7 +590,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
     addEmail() {
         this.resetApiErrors();

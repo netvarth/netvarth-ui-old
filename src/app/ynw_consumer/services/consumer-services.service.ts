@@ -187,8 +187,8 @@ export class ConsumerServices {
   }
    getOrderHistory(params?) {
     const url = 'consumer/orders/history';
-    return this.servicemeta.httpGet(url);
-    // return this.servicemeta.httpGet('consumer/orders/history', null, params);
+    // return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null, params);
   }
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);

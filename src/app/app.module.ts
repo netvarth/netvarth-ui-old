@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {  MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { SearchModule } from './shared/modules/search/search.module';
@@ -108,6 +108,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
+import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -144,7 +146,8 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ServicePageHealthcareComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    BusinessPageHomeComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -202,6 +205,7 @@ export function init_app(globalService: GlobalService) {
     NgxIntlTelInputModule,
     ModalModule.forRoot(),
     ShareIconsModule,
+    VirtualFieldsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

@@ -67,6 +67,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
   accountId;
   showOrderHist = false;
   private subs=new SubSink();
+  customId: any;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -77,15 +78,19 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.subs.sink= this.activateroute.queryParams.subscribe(params => {
+        if (params.accountId) {
+          this.accountId = params.accountId;
+        }
+        if (params.customId) {
+          this.customId = params.customId;
+        }
       if (params.is_orderShow === 'false') {
         this.getHistroy();
         } else {
           this.getOrderHistory();
           this.showOrderHist = true;
         }
-      if (params.accountId) {
-        this.accountId = params.accountId;
-      }
+      
     });
   }
   @HostListener('window:resize', ['$event'])
@@ -108,7 +113,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
   // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
-    const api_filter = {};
+    let api_filter = {};
     if (this.accountId) {
       api_filter['account-eq'] = this.accountId;
     }
@@ -117,8 +122,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
       .subscribe(
         data => {
           this.history = data;
-          this.loadcomplete.history = true;
-          this.loading = false;
+          // this.loadcomplete.history = true;
+          // this.loading = false;
           this.getAppointmentHistory(api_filter);
         },
         error => {
@@ -143,6 +148,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
           this.entire_history = this.apmt_history.concat(this.history);
           this.sortCheckins(this.entire_history);
           this.loading = false;
+          this.loadcomplete.history = true;
         },
         error => {
           this.loading = false;
@@ -199,6 +205,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
@@ -350,6 +357,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['appt'] = 'appt';
@@ -434,11 +442,11 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
 
   getOrderHistory() {
     this.loadcomplete.history = false;
-   // const api_filter = {};
-    // if (this.accountId) {
-    //   api_filter['account-eq'] = this.accountId;
-    // }
-    this.subs.sink=  this.consumer_services.getOrderHistory()
+   const api_filter = {};
+    if (this.accountId) {
+      api_filter['account-eq'] = this.accountId;
+    }
+    this.subs.sink=  this.consumer_services.getOrderHistory(api_filter)
       .subscribe(
         data => {
           console.log(data);
@@ -457,6 +465,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['orders'] = 'orders';

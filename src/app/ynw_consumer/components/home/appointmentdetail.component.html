@@ -28,7 +28,6 @@
                                     <app-common-innerloading-spinner> </app-common-innerloading-spinner>
                                 </div>
                                 <div class="card" *ngIf="appt && api_loading">
-
                                     <!-- Header -->
                                     <div class="mgn-bt-20 temp-style index-head">
                                         <div class="pad-10">
@@ -46,11 +45,13 @@
                                                 {{appt.location.place | capitalizeFirst}}
                                             </a>
                                             <div *ngIf="appt.provider" class="mgn-up-10 usr-name">
-                                                <span>Provider : </span>
+                                                <!-- <span>Provider : </span>
                                                 <span>
                                                     {{appt.provider.businessName | capitalizeFirst}}
-                                                    <!-- {{appt.provider.lastName | capitalizeFirst}} -->
-                                                </span>
+                                                </span> -->
+                                                <span>{{provider_label | capitalizeFirst}} : </span>
+                  <span>
+                  {{appt.provider.firstName | capitalizeFirst}}&nbsp;{{appt.provider.lastName}}</span>
                                             </div>
                                             <div class="mgn-up-10">
                                                 <i *ngIf="appt.service.serviceType === 'virtualService'"
@@ -59,10 +60,14 @@
                                                     {{appt.service.name | capitalizeFirst}} <span
                                                         *ngIf="appt.service.deptName">({{appt.service.deptName}})
                                                     </span>
-                                                    <a *ngIf="appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                    <a *ngIf="appt.apptStatus!=='Completed' && appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{appt.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
+                                                    <a *ngIf="appt.apptStatus!=='Completed' && appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'VideoCall')"
+                                                        class="joinMeeting"
+                                                        (click)="joinMeetitng('appt')"
+                                                        target="blank">Join Now</a>
                                                 </span>
                                             </div>
                                         </div>

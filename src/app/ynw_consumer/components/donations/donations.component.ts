@@ -7,6 +7,7 @@ import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
     selector: 'app-consumer-donations',
@@ -27,11 +28,24 @@ export class ConsumerDonationsComponent implements OnInit,OnDestroy {
 
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     private subs=new SubSink();
+    customId: any;
+    accountId: any;
     constructor(public shared_functions: SharedFunctions,
         private dateTimeProcessor: DateTimeProcessor,
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
         private dialog: MatDialog,
         private shared_services: SharedServices) {
-
+            this.subs.sink = this.activatedRoute.queryParams.subscribe(
+                params => {
+                    if (params.account_id) {
+                        this.accountId = params.account_id
+                    }
+                    if (params.customId) {
+                        this.customId = params.customId;
+                    }
+                }
+            );
     }
     ngOnInit() {
         this.getDonations();
@@ -43,9 +57,12 @@ export class ConsumerDonationsComponent implements OnInit,OnDestroy {
         return this.dateTimeProcessor.stringtoDate(dt, mod);
     }
     getDonations() {
-        const filter = {
+        let filter = {
             'donationStatus-eq' : 'SUCCESS'
         };
+        if (this.accountId){
+            filter['account-eq'] = this.accountId;
+        }
        this.subs.sink= this.shared_services.getConsumerDonations(filter).subscribe(
             (donations) => {
                 this.donations = donations;
@@ -66,5 +83,16 @@ export class ConsumerDonationsComponent implements OnInit,OnDestroy {
           if (result === 'reloadlist') {
           }
         });
+      }
+      gotoDashboard() {
+        let queryParam = {};
+        if (this.customId) {
+            queryParam['customId'] = this.customId;
+            queryParam['accountId'] = this.accountId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams:queryParam
+        }
+        this.router.navigate(['consumer'],navigationExtras);
       }
 }

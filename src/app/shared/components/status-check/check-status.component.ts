@@ -443,14 +443,14 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
       this.storeContactInfo = data;
     });
   }
-  isuser(user){
-    console.log(user)
-   const firstname = user.filter(obj => obj.firstName);
-   console.log(firstname);
-   if(firstname.length > 0){
-   return true
-   } 
-   return false
+  isuser(user) {
+    let lastname
+    const firstname = user.filter(obj => obj.firstName);
+    lastname = user.filter(obj => obj.lastName);
+    console.log(firstname);
+    if (firstname.length > 0 || lastname.length > 0) {
+      return true
+    }
+    return false
   }
 }
-

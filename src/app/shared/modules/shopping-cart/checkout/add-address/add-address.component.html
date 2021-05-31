@@ -10,12 +10,18 @@
 
 
         <div class="form-group" >
-          <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
+          <label>Mobile</label>
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="mobPrefix">
+                  <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                <input type="text" class="form-control" formControlName="phoneNumber" />
+            </div>
+          <!-- <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
             <span class="input-group-text" style="margin-top:auto;">+91</span>
             <mat-form-field>
                     <input matInput type="text" class="form-control" placeholder="Phone number*" formControlName="phoneNumber">
                   </mat-form-field>
-          </div>
+          </div> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
                                         {
                                           'required' : 'Mobile number is required',
@@ -27,9 +33,11 @@
         </div>
 
         <div class="form-group">
-            <mat-form-field>
+          <label>First Name*</label>
+                            <input type="text" class="form-control" formControlName="firstName" />
+            <!-- <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="First name*" formControlName="firstName">
-            </mat-form-field>
+            </mat-form-field> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                       {
                                         'required' : 'First name is required',
@@ -38,9 +46,11 @@
           </app-field-error-display>
         </div>
         <div class="form-group">
-            <mat-form-field>
+          <label>Last name*</label>
+          <input type="text" class="form-control" formControlName="lastName" />
+            <!-- <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="Last name*" formControlName="lastName">
-            </mat-form-field>
+            </mat-form-field> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                     {
                                       'required' : 'Last name is required',
@@ -49,9 +59,11 @@
           </app-field-error-display>
         </div>
         <div class="form-group">
-          <mat-form-field>
+          <label>Email*</label>
+          <input type="email" class="form-control" formControlName="email" />
+          <!-- <mat-form-field>
         <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
- </mat-form-field>
+ </mat-form-field> -->
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                 {
                                   'required' : 'Email is required',
@@ -64,21 +76,14 @@
 
       </div>
       <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
-        <div class="form-group">
-            <mat-form-field>
-          <input matInput type="text" class="form-control" placeholder="Address*" formControlName="address">
-            </mat-form-field>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
-          {
-            'required' : 'Please enter address'
-          })">
-          </app-field-error-display>
-        </div>
+        
 
         <div class="form-group">
-            <mat-form-field>
+          <label>City*</label>
+          <input type="text" class="form-control" formControlName="city" />
+            <!-- <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="City*" formControlName="city">
-            </mat-form-field>
+            </mat-form-field> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
         {
           'required' : 'Please enter city name',
@@ -88,9 +93,11 @@
         </div>
 
         <div class="form-group">
-            <mat-form-field>
+          <label>Postal Code /ZIP*</label>
+          <input type="text" class="form-control" formControlName="postalCode" />
+            <!-- <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="Postal Code /ZIP*" formControlName="postalCode">
-            </mat-form-field>
+            </mat-form-field> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
       {
         'required' : 'Please enter Postal Code ',
@@ -102,13 +109,31 @@
         </div>
 
         <div class="form-group">
-        <mat-form-field>
+          <label>Landmark*</label>
+          <input type="text" class="form-control" formControlName="landMark" />
+        <!-- <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="Landmark*" formControlName="landMark">
-        </mat-form-field>
+        </mat-form-field> -->
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
     {
       'required' : 'Please enter landmark'
     })">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label>Address*</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <textarea type="text" class="form-control" 
+                                    formControlName="address"></textarea>
+                            </div>
+            <!-- <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Address*" formControlName="address">
+            </mat-form-field> -->
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
+          {
+            'required' : 'Please enter address'
+          })">
           </app-field-error-display>
         </div>
 

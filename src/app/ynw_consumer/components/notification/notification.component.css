@@ -1,0 +1,38 @@
+.component-card_1 {
+    border: 1px solid #e0e6ed;
+    border-radius: 6px;
+    width: 50% !important;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
+    background-image: linear-gradient(to right,violet, #2980B9 , #6DD5FA);
+}
+.component-card_1 .card-body {
+    padding: 28px 25px;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+@media (max-width: 575px){
+.component-card_1 {
+    width: 100%!important;
+} 
+}
+span.badge {
+    font-size: large;
+    padding: 6px 10px;
+    color: #4361ee;
+    background-color: #eaf1ff;
+}
+.notistyle{
+font-size: large;
+font-weight: bold;
+}
+
+.text-right {
+    text-align: right!important;
+}
+.pl-0, .px-0 {
+    padding-left: 0!important;
+}

@@ -160,7 +160,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
-                            const logoObj = JSON.parse(displayboard_data.logoSettings.logo);
+                            const logoObj = displayboard_data.logoSettings.logo;
                             this.glogo = logoObj['url'];
                         }
                         this.gPosition = displayboard_data.logoSettings['position'];
@@ -192,7 +192,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
-                            const logoObj = JSON.parse(displayboard_data.logoSettings.logo);
+                            const logoObj = displayboard_data.logoSettings.logo;
                             this.blogo = logoObj['url'];
                         }
                         this.position = displayboard_data.logoSettings['position'];
@@ -244,7 +244,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
-                            const logoObj = JSON.parse(displayboard_data.logoSettings.logo);
+                            const logoObj = displayboard_data.logoSettings.logo;
                             this.blogo = logoObj['url'];
                         }
                         this.position = displayboard_data.logoSettings['position'];

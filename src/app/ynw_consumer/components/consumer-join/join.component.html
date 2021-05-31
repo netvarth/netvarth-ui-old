@@ -2,13 +2,13 @@
 
 
 <form [formGroup]="loginForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="loginForm.valid &&
-onSubmit(loginForm.value)">
+onSubmit(loginForm.value)" [ngClass]="theme?theme:''">
     <div class="mat-dialog-title">
         <!--  style="text-align: center;color: #3c8dbc !important; height: 40px !important;"> -->
-        <div class="title" *ngIf="step==1 && !phoneExists">Log-In/Sign-Up</div>
+        <!-- <div class="title" *ngIf="step==1 && !phoneExists">Log-In/Sign-Up</div>
         <div class="title" *ngIf="step==1 && phoneExists">Log-In</div>
         <div class="title" *ngIf="step==2">Forgot Password ?</div>
-        <div class="title" *ngIf="step==3 || step==4 || step==6 || step==7">Sign-Up</div>
+        <div class="title" *ngIf="step==3 || step==4 || step==6 || step==7">Sign-Up</div> -->
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -109,7 +109,7 @@ onSubmit(loginForm.value)">
     <!-- step 2 for forgot password -->
     <div class="example-container" *ngIf="step==2">
         <app-forgot-password (retonChangePassword)="onChangePassword()" [business]="true"
-            (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin]="consumerjoin"></app-forgot-password>
+            (retonCancelForgotPassword)="cancelForgotPassword()" [theme]="theme" [consumerlogin]="consumerjoin"></app-forgot-password>
     </div>
 
 
@@ -203,7 +203,7 @@ onSubmit(loginForm.value)">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
             <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
                 (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
-                [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
+                [theme]="theme" [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
                 (resendOTPEmail)="resendOTPEmail($event)">
             </app-otp-form>
         </div>
@@ -214,7 +214,7 @@ onSubmit(loginForm.value)">
 
     <div class="example-container" *ngIf="step==6">
         <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
-            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">
+            (onCancelBtn)="onCancelPass()" [theme]="theme" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">
         </app-sp-form>
     </div>
     <!-- step 7 for password cancel option -->

@@ -146,7 +146,7 @@ export class PhomeComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
-    const a = document.getElementById("hubspot-messages-iframe-container");
+    const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
     }
@@ -220,7 +220,7 @@ export class PhomeComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    const a = document.getElementById("hubspot-messages-iframe-container");
+    const a = document.getElementById("fb-root");
     if (a) {
     a.classList.remove('visible_chat');
     }

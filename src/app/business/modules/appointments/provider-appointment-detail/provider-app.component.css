@@ -15,3 +15,6 @@
     transition: fill 0.3s ease;
     fill: #1BC5BD !important;
   }
+  .fa-mobile {
+    font-size: 1.1rem !important;
+  }

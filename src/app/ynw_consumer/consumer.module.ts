@@ -63,7 +63,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionnaireModule } from '../shared/components/questionnaire/questionnaire.module';
 import { ApptCardComponent } from './components/home/appt-card/appt-card.component';
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
-import { WalletModule } from './modules/wallet/wallet.module';
+import { NotificationComponent } from './components/notification/notification.component';
+import { telegramPopupComponent } from './components/notification/telegrampopup/telegrampopup.component';
+
 
 @NgModule({
   imports: [
@@ -96,8 +98,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
     GalleryModule,
     MatTooltipModule,
     CapitalizeFirstPipeModule,
-    QuestionnaireModule,
-    WalletModule
+    QuestionnaireModule
   ],
   declarations: [
     ConsumerComponent,
@@ -118,8 +119,8 @@ import { WalletModule } from './modules/wallet/wallet.module';
     OrderDetailComponent,
     ApptCardComponent,
     WlCardComponent,
-
-
+    NotificationComponent,
+    telegramPopupComponent
   ],
   exports: [ConfirmBoxComponent, MatBadgeModule],
   schemas: [
@@ -133,7 +134,8 @@ import { WalletModule } from './modules/wallet/wallet.module';
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
     ActionPopupComponent,
-    CommunicationComponent
+    CommunicationComponent,
+    telegramPopupComponent
   ],
   providers: [
     SharedServices,

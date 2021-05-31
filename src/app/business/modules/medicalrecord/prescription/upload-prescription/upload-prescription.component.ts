@@ -55,6 +55,7 @@ export class UploadPrescriptionComponent implements OnInit {
   removeprescriptiondialogRef;
   imagesviewdialogRef;
   image_list_popup: Image[];
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -118,7 +119,8 @@ export class UploadPrescriptionComponent implements OnInit {
   getMrprescription(mrId) {
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
-        this.uploadImages = data;
+        if(Object.keys(data).length !== 0 && data.constructor === Object){
+        this.uploadImages = data['prescriptionsList'];
         console.log(data);
         this.image_list_popup = [];
         for (const pic of this.uploadImages) {
@@ -132,7 +134,8 @@ export class UploadPrescriptionComponent implements OnInit {
           this.image_list_popup.push(imgobj);
         }
         console.log(this.selectedMessage.files);
-      },
+      }
+    },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });

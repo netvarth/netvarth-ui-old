@@ -51,25 +51,54 @@
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin" id="apptsHeader" [class.index-zero]="filter_sidebar">
-          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
+          <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
+            style="background: transparent !important;">
             <div class="navbar-custom-menu width100pc">
-              <ul class="nav navbar-nav width100pc">
-                <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3">
-                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    *ngIf="selectedView" style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display && selectedView.name">
-                      {{selectedView.name}}</span>
-                    <span *ngIf="!small_device_display && !selectedView.name">
-                      <ng-container *ngIf="selectedView.businessName">
-                        {{selectedView.businessName}}</ng-container>
-                      <ng-container *ngIf="!selectedView.businessName">
-                        {{selectedView.firstName}}</ng-container>
-                    </span>
+              <ul class="nav navbar-nav width100pc"
+                style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important; flex-wrap: wrap !important;">
+                <li class="dropdown notifications-menu">
+                  <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                    data-toggle="dropdown">
+                    <i class="fa fa-plus"></i>
+                    <span>Appointment</span>
                   </a>
-                  <ul class="dropdown-menu">
+                </li>
+                <li class="dropdown notifications-menu">
+                  <a (click)="apptClicked('PHONE_IN_APPOINTMENT')"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                    data-toggle="dropdown">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    Phone in
+                  </a>
+                </li>
+                <li class="dropdown notifications-menu">
+                  <a (click)="searchCustomer()"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                    data-toggle="dropdown">
+                    <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
+                  </a>
+                </li>
+                <li class="dropdown customized-dd" *ngIf="time_type !==3"
+                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    *ngIf="selectedView">
+                    <span style="margin-right: 10px !important;">
+                      <i class="fa fa-users"></i>
+                      <span *ngIf="!small_device_display && selectedView.name">
+                        {{selectedView.name}}</span>
+                      <span *ngIf="!small_device_display && !selectedView.name">
+                        <ng-container *ngIf="selectedView.businessName">
+                          {{selectedView.businessName}}</ng-container>
+                        <ng-container *ngIf="!selectedView.businessName">
+                          {{selectedView.firstName}}</ng-container>
+                      </span>
+                    </span>
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" style="padding-bottom: 0 !important;">
                     <li>
-                      <ul class="menu">
+                      <ul class="menu dd-menu">
                         <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
                           <a class="pointer-cursor" (click)="handleViewSel(view)">
                             <ng-container *ngIf="view.name">
@@ -99,56 +128,9 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
+                    <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
+                        Views</a></li>
                   </ul>
-                </li>
-                <!-- <li class="pl5 dropdown messages-menu loc-lst queue-menu tok-db pull-right"
-                  *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
-                  <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display && selectedUser && selectedUser.firstName">
-                      {{selectedUser.firstName}}</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <ul class="menu">
-                        <li *ngFor="let user of users" [ngClass]="{'active': (user.id == selectedUser.id)}">
-                          <a class="pointer-cursor" (click)="handleUserSelection(user)">
-                            <h4 *ngIf="user.firstName.length>='27'">
-                              {{ user.firstName.substring(0,24) }}...</h4>
-                            <h4 *ngIf="user.firstName.length<'27'">
-                              {{(user.businessName) ? user.businessName : user.firstName}}
-                            </h4>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoUser()">Manage Users</a></li>
-                  </ul>
-                </li> -->
-                <li class="dropdown notifications-menu">
-                  <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                    data-toggle="dropdown">
-                    <i class="fa fa-plus"></i>
-                    <span>Appointment</span>
-                  </a>
-                </li>
-                <li class="dropdown notifications-menu">
-                  <a (click)="apptClicked('PHONE_IN_APPOINTMENT')"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                    data-toggle="dropdown">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
-                    Phone in
-                  </a>
-                </li>
-                <li class="dropdown notifications-menu">
-                  <a (click)="searchCustomer()"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                    data-toggle="dropdown">
-                    <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
-                  </a>
                 </li>
               </ul>
             </div>
@@ -189,20 +171,16 @@
                       <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
                       <span class="filter-head-title">Filter</span>
-                      <!-- <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Close filter window'"></i> -->
                       <i class="fa fa-angle-double-right ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Close filter window'"></i>                      
-                      <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <ul class="sidebar-menu accordion" id="accordion1">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseName1" aria-expanded="false">
                               Name
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -213,13 +191,15 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
+                                  placeholder="First Name">
                               </li>
                             </div>
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                                  class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name"
+                                  placeholder="Last Name">
                               </li>
                             </div>
                           </div>
@@ -228,7 +208,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseId1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseId1" aria-expanded="false">
                               {{customerIdTooltip | capitalizeFirst}}
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -249,8 +230,9 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseBNo1" aria-expanded="false">
-                              Booking  Id
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo1" aria-expanded="false">
+                              Booking Id
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
@@ -259,8 +241,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
-                                  (keyup)="keyPressed($event)" class="filterTextbox filter-textbox" placeholder="Booking Id">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
+                                  (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  placeholder="Booking Id">
                               </li>
                             </div>
                           </div>
@@ -269,7 +252,8 @@
                       <div class="card" *ngIf="service_list.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseServices1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseServices1" aria-expanded="false">
                               Services
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -294,8 +278,8 @@
                                     class="fa meet-icon"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
                                     class="fa zoom-icon"></i>
-                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                                     class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
+                                  <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                    class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
                                     class="fa phon-icon"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
@@ -311,7 +295,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsePayStatus1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapsePayStatus1" aria-expanded="false">
                               Payment Status
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -330,7 +315,8 @@
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                 *ngFor="let pay_status of payStatusList">
-                                <mat-checkbox class="filter-checkbox" [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                                <mat-checkbox class="filter-checkbox"
+                                  [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
                                   (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
                                   {{pay_status.value}}</mat-checkbox>
                               </li>
@@ -341,7 +327,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseAMode1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode1" aria-expanded="false">
                               Appointment Mode
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -371,7 +358,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLabels1" aria-expanded="false">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels1" aria-expanded="false">
                               Labels
                               <i class="fa fa-angle-down"></i>
                             </button>
@@ -383,8 +371,9 @@
                               <div>
                                 <!-- <label class="filterHeaders">Labels</label> -->
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
-                                  All</mat-checkbox>
+                                  <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
+                                    (change)="setLabelFilter('all', $event)">
+                                    All</mat-checkbox>
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                   *ngFor="let lbl of providerLabels">
@@ -435,17 +424,17 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="!loading && (startedAppts.length == 0 || activeSchedules.length == 0)">
+                  <tbody *ngIf="!loading && startedAppts.length == 0">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <td colspan="5" class="no-appt">
                         No Appointments Found
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && activeSchedules.length > 0">
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
@@ -477,7 +466,7 @@
                       </td>
                       <td class="title td-two">
                         <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.businessName}}
+                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -485,8 +474,9 @@
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                            <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                             class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
+                          <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -502,7 +492,7 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -516,7 +506,7 @@
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
@@ -557,7 +547,7 @@
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                           <span *ngIf="!appt.callingStatus">
-                            &nbsp;Call</span>
+                            &nbsp;Alert</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Started', appt)"
@@ -575,7 +565,8 @@
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                           <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>  
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -584,8 +575,14 @@
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span *ngIf="!small_device_display">
+                          <span
+                            *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                          </span>
+                          <span
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
+                            {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
+                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
@@ -617,7 +614,7 @@
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
-                  *ngIf="time_type === 1 && statusAction == 'new' && activeSchedules.length > 0">
+                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser)">
                   <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -652,7 +649,7 @@
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar"
-                    *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
+                    *ngIf="showSelectAll() && selected_type != 'free' && (activeSchedules.length > 0 || activeUser)">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -670,18 +667,18 @@
                     </tr>
                   </thead>
                   <tbody
-                    *ngIf="(statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                    *ngIf="(statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !loading && check_in_filtered_list.length == 0">
                     <tr>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <td colspan="5" class="no-appt">
                         <p *ngIf="statusAction === 'new'">No active appointments</p>
                         <p *ngIf="statusAction === 'completed'">No completed appointments
                         </p>
                         <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                         </p>
                       </td>
-                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                         {{no_service_cap}}
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                   <tbody *ngIf="!loading && scheduleSlots.length === 0 && selected_type === 'free'">
@@ -727,7 +724,7 @@
                         </td>
                         <td class="title td-two">
                           <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                            {{appt.provider.businessName}}
+                            {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                             class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -736,7 +733,8 @@
                             <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                             <i *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
+                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                              [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                             <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -752,7 +750,7 @@
                         </td>
                         <td class="td-three">
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                            <span class="dashboardrescheduled-icon mgn-rt-10"
+                            <!-- <span class="dashboardrescheduled-icon mgn-rt-10"
                               *ngIf="apptByTimeSlot[appt.time][0].isRescheduled" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Rescheduled'">
                             </span>
@@ -770,7 +768,7 @@
                             </span>
                             <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                               class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' && !apptByTimeSlot[appt.time][0].virtualService"></span>
+                              *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' && !apptByTimeSlot[appt.time][0].virtualService"></span> -->
                             <span
                               [matTooltip]="apptByTimeSlot[appt.time][0].service.consumerNoteTitle | capitalizeFirst"
                               class="pull-left cnote  pointer-cursor mgn-rt-10"
@@ -819,7 +817,7 @@
                             <span *ngIf="apptByTimeSlot[appt.time][0].callingStatus">&nbsp; Stop</span>
                             <i class="dashboardcall-icon" *ngIf="!apptByTimeSlot[appt.time][0].callingStatus"></i>
                             <span *ngIf="!apptByTimeSlot[appt.time][0].callingStatus">
-                              &nbsp;Call</span>
+                              &nbsp;Alert</span>
                           </a>
                           <a class="statusText btn-play pointer-cursor start-btn"
                             (click)="stopprop($event);addCustomerDetails(apptByTimeSlot[appt.time][0])"
@@ -844,7 +842,8 @@
                             <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                             <i *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>  
+                              class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                              [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                             <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -853,8 +852,14 @@
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp' && apptByTimeSlot[appt.time][0].service.virtualServiceType === 'videoService'"></i>
                             <span
                               *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                            <span *ngIf="!small_device_display">
-                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume':'Start'}}
+                            <span
+                              *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                              {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                            </span>
+                            <span
+                              *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
+                              {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
+                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                             </span>
                           </a>
                           <a class="statusText btn-play pointer-cursor done-btn"
@@ -902,7 +907,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -933,7 +938,7 @@
                       </td>
                       <td class="title td-two">
                         <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.businessName}}
+                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -942,7 +947,8 @@
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                           <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -958,7 +964,7 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -972,7 +978,7 @@
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
@@ -1013,7 +1019,7 @@
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                           <span *ngIf="!appt.callingStatus">
-                            &nbsp;Call</span>
+                            &nbsp;Alert</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
@@ -1037,7 +1043,8 @@
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                           <i *ngIf="appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
-                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
+                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                            [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
                           <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1046,8 +1053,14 @@
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span *ngIf="!small_device_display">
+                          <span
+                            *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                          </span>
+                          <span
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
+                            {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
+                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
@@ -1151,7 +1164,7 @@
                                 class="fa meet-icon"></i>
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
                                 class="fa zoom-icon"></i>
-                              <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" 
+                              <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
                                 *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                               <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
                                 class="fa phon-icon"></i>
@@ -1233,21 +1246,21 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                   <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                    <td colspan="5" class="no-appt">
                       <p *ngIf="statusAction === 'new'">No active appointments</p>
                       <p *ngIf="statusAction === 'completed'">No completed appointments
                       </p>
                       <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
                       </p>
                     </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                    <!-- <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0 && !activeUser">
                       {{no_service_cap}}
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1277,7 +1290,7 @@
                     </td>
                     <td class="title td-two">
                       <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.businessName}}
+                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1285,8 +1298,9 @@
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>    
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1302,7 +1316,7 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
                         <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -1316,7 +1330,7 @@
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
@@ -1357,7 +1371,7 @@
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
-                          &nbsp;Call</span>
+                          &nbsp;Alert</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', appt)"
@@ -1374,7 +1388,8 @@
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1384,8 +1399,14 @@
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
                           *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                        <span *ngIf="!small_device_display">
+                        <span
+                          *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                        </span>
+                        <span
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
+                          {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
+                          appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
@@ -1653,7 +1674,7 @@
                     </td>
                     <td class="title td-two">
                       <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.businessName}}
+                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1663,7 +1684,8 @@
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
@@ -1678,7 +1700,7 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
                         <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
@@ -1692,7 +1714,7 @@
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
@@ -1736,7 +1758,7 @@
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
-                          &nbsp;Call</span>
+                          &nbsp;Alert</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', appt)"
@@ -1746,7 +1768,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
-                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started') && appt.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(appt)">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1755,16 +1777,23 @@
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                         <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
+                        <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                         <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
                           *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                        <span *ngIf="!small_device_display">
+                        <span
+                          *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                        </span>
+                        <span
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
+                          {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
+                          appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"

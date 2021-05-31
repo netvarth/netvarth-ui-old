@@ -72,6 +72,7 @@ export class EditProfileComponent implements OnInit {
     private location: Location,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
+    private _location: Location,
     private snackbarService: SnackbarService
   ) { }
   goBack () {
@@ -183,7 +184,7 @@ export class EditProfileComponent implements OnInit {
           'firstName': sub_data.first_name.trim() || null,
           'lastName': sub_data.last_name.trim() || null,
           'dob': date_format || null,
-          'gender': sub_data.gender || null,
+          'gender': (sub_data.gender!=='')?sub_data.gender:null || null,
           'email': sub_data.email || ''
         };
         passtyp = 'consumer';
@@ -194,7 +195,7 @@ export class EditProfileComponent implements OnInit {
             'firstName': sub_data.first_name.trim() || null,
             'lastName': sub_data.last_name.trim() || null,
             'dob': date_format || null,
-            'gender': sub_data.gender || null,
+            'gender': (sub_data.gender!=='')? sub_data.gender:null || null,
             'email': sub_data.email || ''
           }
         };
@@ -251,6 +252,7 @@ export class EditProfileComponent implements OnInit {
     this.editProfileForm.get('dob').setValue(null);
   }
   redirecToSettings() {
-    this.router.navigate(['provider', 'settings', 'bprofile']);
+    this._location.back();
+    // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
 }

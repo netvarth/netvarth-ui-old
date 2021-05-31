@@ -3,6 +3,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
@@ -41,7 +42,8 @@ export class CustomViewListComponent implements OnInit {
     private dialog: MatDialog,
     private provider_services: ProviderServices,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    public location: Location) {
   }
   ngOnInit() {
     this.api_loading = true;
@@ -106,7 +108,8 @@ export class CustomViewListComponent implements OnInit {
     this.router.navigate(['provider/settings/general/customview/add']);
   }
   redirecToGeneral() {
-    this.router.navigate(['provider', 'settings' , 'general']);
+    this.location.back();
+    // this.router.navigate(['provider', 'settings' , 'general']);
   }
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/general->customview']);

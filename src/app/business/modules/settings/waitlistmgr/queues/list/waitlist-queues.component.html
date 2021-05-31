@@ -39,7 +39,7 @@
                         <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy">
-                                        <div class="col-md-12 no-padding" style="display: flex">
+                                        <div class="col-md-12 no-padding" style="display: flex" *ngIf="accountType !='BRANCH'">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
                                                 <mat-panel-description class="acc-plus-btn pointer-cursor"
@@ -52,7 +52,7 @@
                                                         </button>
                                                 </mat-panel-description>
                                         </div>
-                                        <div class="row m0" *ngIf="showInstantQFlag">
+                                        <div class="row m0" *ngIf="showInstantQFlag && accountType !='BRANCH'">
                                                 <div class="col-md-12 p0">
                                                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                                                         onSubmit(instantQForm.value)">
@@ -599,7 +599,7 @@
                                                                                         </button>
                                                                                         <button mat-menu-item
                                                                                                 (click)="addEditProviderQueue('editFromList', queue)"
-                                                                                                *ngIf="queue.queueState == 'EXPIRED'">
+                                                                                                *ngIf="queue.queueState == 'EXPIRED'&& !queue.provider">
                                                                                                 <i
                                                                                                         class="icon-edit"></i>Edit
                                                                                         </button>

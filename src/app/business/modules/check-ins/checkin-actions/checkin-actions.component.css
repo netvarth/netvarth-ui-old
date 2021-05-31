@@ -108,3 +108,27 @@
 .pad-9 {
   padding:9px !important;
 }
+.status-box {
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1e4079;
+  width: 30%;
+  padding: 20px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;   
+  border: 1px solid #cccccc60;
+}
+.status-box .status {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.hght {
+  height: 250px;
+}
+@media (max-width: 595px) {
+  .status-box {
+    width: 95% !important;
+  }
+}

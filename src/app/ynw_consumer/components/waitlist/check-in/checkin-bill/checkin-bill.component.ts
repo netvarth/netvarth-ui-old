@@ -5,7 +5,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,12 +19,13 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../../node_modules/subsink';
+import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
     templateUrl: './checkin-bill.component.html'
 })
-export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
+export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     @ViewChild('itemservicesearch') item_service_search;
     tooltipcls = '';
     new_cap = Messages.NEW_CAP;
@@ -92,9 +93,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     showPaidlist = false;
     showJCouponSection = false;
     jCoupon = '';
-    couponList: any = {
-        JC: [], OWN: []
-    };
+    couponList : any={
+        JC:[],OWN:[]
+      };
     refund_value;
     discountDisplayNotes = false;
     billNoteExists = false;
@@ -114,21 +115,14 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     provider_label = '';
-    api_loading = true;
+    api_loading=true;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
     newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     retval;
     // s3url;
     terminologiesjson;
     provider_id;
-    private subs = new SubSink();
-    checkJcash = false;
-    checkJcredit = false;
-    jaldeecash: any;
-    jcashamount: any;
-    jcreditamount: any;
-    remainingadvanceamount;
-    wallet: any;
+    private subs=new SubSink();
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -136,7 +130,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         public _sanitizer: DomSanitizer,
         private activated_route: ActivatedRoute,
         private wordProcessor: WordProcessor,
-        private snackbarService: SnackbarService,
+    private snackbarService: SnackbarService,
         private dialog: MatDialog,
         private locationobj: Location,
         @Inject(DOCUMENT) public document,
@@ -146,9 +140,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         private cdRef: ChangeDetectorRef,
         private location: Location,
         private s3Processor: S3UrlProcessor,
-        public router: Router,
+        public dateformat: DateFormatPipe,
     ) {
-        this.subs.sink = this.activated_route.queryParams.subscribe(
+        this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
                 if (params.accountId) {
                     this.accountId = params.accountId;
@@ -227,15 +221,15 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
 
 
     gets3curl() {
-        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id, null, 'terminologies,coupon,providerCoupon').subscribe(
-            (accountS3s) => {
-                if (accountS3s['terminologies']) {
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
+            (accountS3s) => {            
+                if(accountS3s['terminologies']) {
                     this.processS3s('terminologies', accountS3s['terminologies']);
                 }
-                if (accountS3s['coupon']) {
+                if(accountS3s['coupon']) {
                     this.processS3s('coupon', accountS3s['coupon']);
                 }
-                if (accountS3s['providerCoupon']) {
+                if(accountS3s['providerCoupon']) {
                     this.processS3s('providerCoupon', accountS3s['providerCoupon']);
                 }
             });
@@ -276,12 +270,12 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
-    }
+       }
     getWaitlist() {
         const params = {
             account: this.accountId
         };
-        this.subs.sink = this.consumer_services.getWaitlistDetail(this.uuid, params)
+        this.subs.sink= this.consumer_services.getWaitlistDetail(this.uuid, params)
             .subscribe(
                 data => {
                     this.checkin = data;
@@ -291,7 +285,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     this.gets3curl();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
-                    this.getPaymentModes();
+                    this.getPaymentModes();                    
                     // if (this.provider_label === 'provider') {
                     //     this.gets3curl();
                     // }
@@ -303,7 +297,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
             const datearr = this.bill_data.createdDate.split(' ');
             const billdatearr = datearr[0].split('-');
             // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-            this.billtime = datearr[1] + ' ' + datearr[2];
+            this.billtime = datearr[1] + ' ' + datearr[2];        
             this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
         }
         if (this.bill_data.hasOwnProperty('gstNumber')) {
@@ -343,11 +337,11 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink = this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
+        this.subs.sink=this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
             .subscribe(
                 data => {
                     this.bill_data = data;
-                    this.api_loading = false;
+                    this.api_loading=false;
                     for (let i = 0; i < this.bill_data.discount.length; i++) {
                         if (this.bill_data.discount[i].displayNote) {
                             this.discountDisplayNotes = true;
@@ -359,10 +353,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     if (this.bill_data.amountDue < 0) {
                         this.refund_value = Math.abs(this.bill_data.amountDue);
                     }
-                    if (this.bill_data.amountDue > 0) {
-                        this.getJaldeeCashandCredit();
-                    }
-
                     this.getBillDateandTime();
                 },
                 error => {
@@ -370,15 +360,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 () => {
                 }
             );
-    }
-    getJaldeeCashandCredit() {
-        this.sharedServices.getJaldeeCashandJcredit()
-            .subscribe(data => {
-                this.checkJcash = true
-                this.jaldeecash = data;
-                this.jcashamount = this.jaldeecash.jCashAmt;
-                this.jcreditamount = this.jaldeecash.creditAmt;
-            });
     }
     billNotesClicked() {
         if (!this.showBillNotes) {
@@ -394,7 +375,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink = this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
+        this.subs.sink=this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
             .subscribe(
                 data => {
                     this.pre_payment_log = data;
@@ -435,128 +416,37 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
      * Perform PayU Payment
      */
     payuPayment() {
-        if (this.jcashamount > 0 && this.checkJcash) {
-            this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
-                .subscribe(data => {
-                    this.remainingadvanceamount = data;
-                    if (this.remainingadvanceamount == 0 && this.checkJcash) {
-                        const postData = {
-                            'amountToPay': this.bill_data.amountDue,
-                            'accountId': this.accountId,
-                            'uuid': this.uuid,
-                            'paymentPurpose': 'billPayment',
-                            'isJcashUsed': true,
-                            'isreditUsed': false,
-                            'isRazorPayPayment': false,
-                            'isPayTmPayment': false,
-                            'paymentMode': 'JCASH'
-                        };
-                        this.sharedServices.PayByJaldeewallet(postData)
-                            .subscribe(data => {
-                                this.wallet = data;
-                                if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
-                                    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                                    this.router.navigate(['consumer']);
-                                }
-                            },
-                                error => {
-                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                                });
-                    } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        const postData = {
-                            'amountToPay': this.bill_data.amountDue,
-                            'accountId': this.accountId,
-                            'uuid': this.uuid,
-                            'paymentPurpose': 'billPayment',
-                            'isJcashUsed': true,
-                            'isreditUsed': false,
-                            'isRazorPayPayment': true,
-                            'isPayTmPayment': false,
-                            'paymentMode': 'DC'
-                        };
-                        this.sharedServices.PayByJaldeewallet(postData)
-                            .subscribe((pData: any) => {
-                                this.origin = 'consumer';
-                                if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                                    this.paywithRazorpay(pData.response);
-                                }
-                                // if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-                                //     this.pay_data.uuid = this.uuid;
-                                //     this.pay_data.amount = this.remainingadvanceamount;
-                                //     this.pay_data.paymentMode = 'DC';
-                                //     this.pay_data.accountId = this.accountId;
-                                //     this.pay_data.purpose = 'billPayment';
-                                //     this.resetApiError();
-                                //     if (this.pay_data.uuid != null &&
-                                //         this.pay_data.paymentMode != null &&
-                                //         this.pay_data.amount !== 0) {
-                                //         this.api_success = Messages.PAYMENT_REDIRECT;
-                                //         this.gateway_redirection = true;
-                                //         this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
-                                //             .subscribe(
-                                //                 (data: any) => {
-                                //                     this.origin = 'consumer';
-                                //                     this.pGateway = data.paymentGateway;
-                                //                     if (this.pGateway === 'RAZORPAY') {
-                                //                         this.paywithRazorpay(data);
-                                //                     } else {
-                                //                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                                //                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                                //                         setTimeout(() => {
-                                //                             this.document.getElementById('payuform').submit();
-                                //                         }, 2000);
-                                //                     }
-                                //                 },
-                                //                 error => {
-                                //                     this.resetApiError();
-                                //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                                //                 }
-                                //             );
-
-                                //     }
-                                // }
-                            },
-                                error => {
-                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                                });
-
-                    }
-                });
-        }
-        else {
-            this.pay_data.uuid = this.uuid;
-            this.pay_data.amount = this.bill_data.amountDue;
-            this.pay_data.paymentMode = 'DC';
-            this.pay_data.accountId = this.accountId;
-            this.pay_data.purpose = 'billPayment';
-            this.resetApiError();
-            if (this.pay_data.uuid != null &&
-                this.pay_data.paymentMode != null &&
-                this.pay_data.amount !== 0) {
-                this.api_success = Messages.PAYMENT_REDIRECT;
-                this.gateway_redirection = true;
-                this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
-                    .subscribe(
-                        (data: any) => {
-                            this.origin = 'consumer';
-                            this.pGateway = data.paymentGateway;
-                            if (this.pGateway === 'RAZORPAY') {
-                                this.paywithRazorpay(data);
-                            } else {
-                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                                setTimeout(() => {
-                                    this.document.getElementById('payuform').submit();
-                                }, 2000);
-                            }
-                        },
-                        error => {
-                            this.resetApiError();
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.pay_data.uuid = this.uuid;
+        this.pay_data.amount = this.bill_data.amountDue;
+        this.pay_data.paymentMode = 'DC';
+        this.pay_data.accountId = this.accountId;
+        this.pay_data.purpose = 'billPayment';
+        this.resetApiError();
+        if (this.pay_data.uuid != null &&
+            this.pay_data.paymentMode != null &&
+            this.pay_data.amount !== 0) {
+            this.api_success = Messages.PAYMENT_REDIRECT;
+            this.gateway_redirection = true;
+            this.subs.sink= this.sharedServices.consumerPayment(this.pay_data)
+                .subscribe(
+                    (data: any) => {
+                        this.origin = 'consumer';
+                        this.pGateway = data.paymentGateway;
+                        if (this.pGateway === 'RAZORPAY') {
+                            this.paywithRazorpay(data);
+                        } else {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                this.document.getElementById('payuform').submit();
+                            }, 2000);
                         }
-                    );
-
-            }
+                    },
+                    error => {
+                        this.resetApiError();
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                );
         }
     }
     paywithRazorpay(data: any) {
@@ -570,7 +460,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
         //    this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
     }
     paytmPayment() {
         this.pay_data.uuid = this.uuid;
@@ -584,7 +474,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
             this.pay_data.amount !== 0) {
             this.api_success = Messages.PAYMENT_REDIRECT;
             this.gateway_redirection = true;
-            this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+            this.subs.sink=this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
                     data => {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
@@ -624,7 +514,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
      */
     applyAction(action, uuid) {
         return new Promise<void>((resolve, reject) => {
-            this.subs.sink = this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
+            this.subs.sink= this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
                 (billInfo => {
                     this.bill_data = billInfo;
                     this.getWaitlistBill();
@@ -654,7 +544,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         bill_html += '<table width="100%">';
         bill_html += '	<tr style="line-height:20px">';
         bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
+        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' +  this.dateformat.transformToMonthlyDate(this.billdate)  +' '+ this.billtime+ '</td>';
         bill_html += '	</tr>';
         bill_html += '	<tr>';
         bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';
@@ -664,8 +554,8 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         }
         bill_html += '	<tr>';
         if (this.checkin.provider) {
-            bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label + ':' + this.checkin.provider.businessName + '</td>';
-        }
+        bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label +':'+  this.checkin.provider.businessName+ '</td>';
+       }
         bill_html += '</td>';
         bill_html += '	</tr>';
         bill_html += '</table>';
@@ -932,11 +822,5 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     backtoProviderDetails() {
         this.locationobj.back();
     }
-    changeJcashUse(event) {
-        if(event.checked){
-            this.checkJcash = true;
-        } else {
-            this.checkJcash = false;
-        }
-    }
 }
+

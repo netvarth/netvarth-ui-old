@@ -81,6 +81,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   addondialogRef: any;
   is_noSMS = false;
   FRM_LEVEL_ADJ_DELAY_MSG_CNGE = '';
+  api_loading = false;
 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -290,7 +291,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.servicesjson = this.serviceslist;
     if (this.filterDepart) {
       const filter = {
-        'departmentId-eq': obj
+        'deptId-eq': obj
       };
       this.provider_services.getUsers(filter).subscribe(
         (users: any) => {
@@ -375,7 +376,6 @@ export class AdjustqueueDelayComponent implements OnInit {
     }
   }
   getServicebyLocationId(locid, pdate) {
-    //  this.api_loading1 = true;
     this.resetApi();
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
@@ -551,6 +551,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.provider_services.getProviderQueues(filter)
       .subscribe(
         (data) => {
+          this.api_loading = true;
           this.queuejson = data;
           console.log(this.queuejson);
           this.queuejson = this.queuejson.filter(q => q.queueState !== 'EXPIRED');

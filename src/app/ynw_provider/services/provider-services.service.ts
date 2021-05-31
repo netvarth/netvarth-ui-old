@@ -1061,6 +1061,22 @@ editHoliday(data) {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  updateUserWaitlist(post_data) {
+    const url = 'provider/waitlist/update';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  updateUserAppointment(post_data) {
+    const url = 'provider/appointment/update';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  unassignUserWaitlist(post_data) {
+    const url = 'provider/waitlist/unassign';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  unassignUserAppointment(post_data) {
+    const url = 'provider/appointment/unassign';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   getUsersCount(filter = {}) {
     const url = 'provider/user/count';
     return this.servicemeta.httpGet(url, null, filter);
@@ -1269,10 +1285,14 @@ editHoliday(data) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
     return this.servicemeta.httpGet(url);
   }
-  getAppointmentSlotsByDate(scheduleid, date) {
-    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
+  getAppointmentSlotsByDate(scheduleid, date,serviceid) {
+    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date +'/' + serviceid;
     return this.servicemeta.httpGet(url);
   }
+  // getAppointmentSlotsByDate(scheduleid, date) {
+  //   const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
+  //   return this.servicemeta.httpGet(url);
+  // }
   addLabeltoAppointment(uuid, data) {
     const url = 'provider/appointment/addLabel/' + uuid;
     return this.servicemeta.httpPost(url, data);
@@ -2062,8 +2082,23 @@ editHoliday(data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
   }
-    deleteMRFile(mrId, fileId) {
+  deleteMRFile(mrId, fileId) {
     const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
     return this.servicemeta.httpDelete(url);
+  }
+  // getlocationbypincode(pincode) {
+  //   const url = 'provider/account/settings/locByPincode/'  + pincode;
+  //   return this.servicemeta.httpGet(url);
+  // }
+  getlocationbypincode(pincode) {
+    const url = 'provider/account/settings/locations/'  + pincode;
+    return this.servicemeta.httpGet(url);
+  }
+  terminateInstantQ(id) {
+    const url = 'provider/waitlist/queues/instant/terminate/' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  addMyAvailbility(data) {
+    return this.servicemeta.httpPut('provider/waitlist/queues/available', data);
   }
 }

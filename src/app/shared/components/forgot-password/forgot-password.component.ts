@@ -48,6 +48,7 @@ export class ForgotPasswordComponent {
   post_data;
 
   @Input() consumerlogin;
+  @Input() theme;
   @Input() business;
   @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
   @Output() retonCancelForgotPassword: EventEmitter<any> = new EventEmitter();

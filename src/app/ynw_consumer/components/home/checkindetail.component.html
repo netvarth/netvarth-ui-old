@@ -17,10 +17,9 @@
                                         src="assets/images/myjaldee/Group92.png" style="width: 400px;">
                                 </span>
                             </div> -->
-
                             <!-- Title with back option -->
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10 index-head">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
+                                <h5 class="mgn-up-10 index-head" *ngIf="api_loading">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
                                         (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
@@ -51,7 +50,9 @@
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>Provider : </span>
                                                 <span>
-                                                    {{waitlist.provider.businessName | capitalizeFirst}}
+                                                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName +
+                                                        ' ' + waitlist.provider.lastName}}
+                                                    <!-- {{waitlist.provider.businessName | capitalizeFirst}} -->
                                                     <!-- {{waitlist.provider.firstName | capitalizeFirst}}
                                                     {{waitlist.provider.lastName | capitalizeFirst}} -->
                                                 </span>
@@ -64,10 +65,14 @@
                                                     <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
                                                     </span>
-                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
+                                                    <a *ngIf="  waitlist.waitlistStatus !== 'done' && waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
+                                                    <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'VideoCall')"
+                                                        class="joinMeeting"
+                                                        (click)="joinMeetitng('wl')"
+                                                        target="blank">Join Now</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -87,9 +92,13 @@
                                                 <span class="item-label-val">{{waitlist.checkinEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
-                                                <span class="item-head">Phone No</span>
+                                                <span class="item-head">Phone #</span>
                                                 <span class="item-label-val">{{waitlist.countryCode}}
                                                     {{waitlist.waitlistPhoneNumber}}</span>
+                                            </div>
+                                            <div class="each-item" *ngIf="waitlist.service.serviceType === 'virtualService'&&waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <span class="item-head">WhatsApp #</span>
+                                                <span class="item-label-val"> {{ waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
                                                 <span class="item-head">Amount Paid</span>

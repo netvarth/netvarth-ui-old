@@ -296,6 +296,7 @@ export const projectConstantsLocal = {
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   VALIDATOR_NUMBERONLY: /^\d+$/, 
   VALIDATOR_ONLYNUMBER:/^[0-9]+$/, 
+  VALIDATOR_COUNTRYCODE:/^[+]?[0-9]+$/, 
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
   VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
@@ -484,9 +485,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
-    { displayName: 'Cancelled', value: 'Cancelled,Rejected' },
-    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
-    { displayName: 'Failed', value: 'failed' }
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+    // { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    // { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_APPT_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'Confirmed' },
@@ -497,9 +498,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },
-    { displayName: 'Cancelled', value: 'cancelled' },
-    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
-    { displayName: 'Failed', value: 'failed' }
+    { displayName: 'Cancelled', value: 'cancelled' }
+    // { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    // { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
@@ -577,6 +578,21 @@ export const projectConstantsLocal = {
     19: 'Jaldee_Messaging'
 
   },
+  MONTH:[
+    {value:'01',name:'Jan'},
+    {value:'02',name:'Feb'},
+    {value:'03',name:'Mar'},
+    {value:'04',name:'Apr'},
+    {value:'05',name:'May'},
+    {value:'06',name:'Jun'},
+    {value:'07',name:'Jul'},
+    {value:'08',name:'Aug'},
+    {value:'09',name:'Sep'},
+    {value:'10',name:'Oct'},
+    {value:'11',name:'Nov'},
+    {value:'12',name:'Dec'}
+
+  ],
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',
   KEY: 'JALDEESOFT',
@@ -998,8 +1014,7 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
-  WALLET_NOTES: {
-    APP_SIGNUP: 'APP SIGNUP',
-
-  },
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };
+

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
 import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
@@ -291,7 +290,8 @@ export class DisplayboardsComponent implements OnInit {
     }
     goDisplayboardLayoutDetails(layout, source?) {
         if (source) {
-            const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=appt';
+            const path = 'displayboard/' + layout.id + '?type=appt';
+            // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=appt';
             window.open(path, '_blank');
         } else {
             const navigationExtras: NavigationExtras = {

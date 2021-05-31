@@ -12189,7 +12189,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Canacel-01.svg);
   width: 40px;
 }
-
+.doctor-change-icon {
+  content: url(../images/dashboard-icons/doc.png);
+  width: 34px;
+}
 .changestatus-icon {
   content: url(../images/dashboard-icons/Changestatus.svg);
   width: 40px;
@@ -13843,8 +13846,13 @@ width: 40px !important;
 #hubspot-messages-iframe-container {
   visibility: hidden;
 }
+#fb-root {
+  visibility: hidden;
+  display: none !important;
+}
 .visible_chat {
   visibility: visible !important;
+  display: block !important;
 }
 @media only screen and (max-width: 767px) {
   .bt2 {
@@ -14179,3 +14187,80 @@ padding-left: 15px !important;
     width: 100% !important;
   }
   }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+    border-top : none !important;
+    border-left : none !important;
+    border-right : none !important;
+  }
+ 
+  .user-create-window .picker-form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:disabled {
+    background: transparent !important;
+    border-bottom: 1px solid #e6e6e6 !important;
+}
+.user-create-window .picker-form-group .mat-form-field-flex {
+  display: block !important;
+}
+.user-create-window .picker-form-group .mat-form-field-flex button{
+  float: right !important;
+  margin-top: -35px !important;
+}
+.user-create-window mat-radio-button label{
+  font-weight: normal !important;
+}
+@media (max-width: 468px) {
+  
+  .appt-details{
+    font-size: .815rem !important;
+    line-height: 1.75 !important;
+  }
+}
+
+.loginmainclass.popup-class,
+.commonpopupmainclass.popup-class.specialclass {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: white !important;
+}
+
+.loginmainclass.popup-class mat-dialog-container.mat-dialog-container,
+.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  margin: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  min-height: 300px !important;
+}
+
+.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+  max-width: 600px !important;
+}
+
+@media (max-width: 450px) {
+  .loginmainclass.popup-class {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .loginmainclass.popup-class mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .commonpopupmainclass.popup-class.specialclass {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+  }
+  
+  .commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
+    height: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

@@ -92,6 +92,7 @@ export class ShareRxComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  note = '';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
@@ -175,8 +176,9 @@ export class ShareRxComponent implements OnInit {
     console.log(this.sharewith);
     console.log(this.customid);
     if (this.sharewith !== 0 ) {
-      if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
-        this.api_error = 'Please enter a phone number or email';
+     // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
+       if(this.thirdpartyemail===''){
+        this.api_error = 'Please enter  email';
         this.disable = false;
         this.sharebtnloading = false;
                 return;
@@ -340,17 +342,19 @@ export class ShareRxComponent implements OnInit {
   getMrprescription() {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
-        .subscribe((data: any) => {
-
-          if (data[0].keyName) {
+        .subscribe((data) => {
+          if(Object.keys(data).length !== 0 && data.constructor === Object){
+          if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
             console.log(data);
             this.signature_loading=false;
           } else {
-            this.drugList = data;
+            this.drugList = data['prescriptionsList'];
+            this.note = data['notes'];
             this.signature_loading=false;
             this.getDigitalSign();
           }
           this.getProviderLogo();
+          }
         },
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
