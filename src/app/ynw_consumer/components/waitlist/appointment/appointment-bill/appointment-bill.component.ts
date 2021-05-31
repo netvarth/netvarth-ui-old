@@ -5,7 +5,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -124,6 +124,13 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     terminologiesjson;
     provider_id;
     private subs=new SubSink();
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
+    jcreditamount: any;
+    remainingadvanceamount;
+    wallet: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -138,9 +145,10 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         private cdRef: ChangeDetectorRef,
         private location: Location,
         private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService,
-    private s3Processor: S3UrlProcessor,
-    public dateformat: DateFormatPipe,
+        private snackbarService: SnackbarService,
+        private s3Processor: S3UrlProcessor,
+         public dateformat: DateFormatPipe,
+        public router: Router,
     ) {
         this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
@@ -185,7 +193,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink=this.consumer_services.getAppointmentDetail(this.uuid, params)
+        this.subs.sink = this.consumer_services.getAppointmentDetail(this.uuid, params)
             .subscribe(
                 data => {
                     this.checkin = data;
@@ -324,6 +332,9 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     if (this.bill_data.amountDue < 0) {
                         this.refund_value = Math.abs(this.bill_data.amountDue);
                     }
+                    if (this.bill_data.amountDue > 0) {
+                        this.getJaldeeCashandCredit();
+                    }
                     this.getBillDateandTime();
                 },
                 error => {
@@ -331,6 +342,16 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                 () => {
                 }
             );
+    }
+    getJaldeeCashandCredit() {
+        this.sharedServices.getJaldeeCashandJcredit()
+            .subscribe(data => {
+                this.checkJcash = true
+                this.jaldeecash = data;
+                this.jcashamount = this.jaldeecash.jCashAmt;
+                this.jcreditamount = this.jaldeecash.creditAmt;
+            });
+
     }
     billNotesClicked() {
         if (!this.showBillNotes) {
@@ -387,37 +408,126 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
      * Perform PayU Payment
      */
     payuPayment() {
-        this.pay_data.uuid = this.uuid;
-        this.pay_data.amount = this.bill_data.amountDue;
-        this.pay_data.paymentMode = 'DC';
-        this.pay_data.accountId = this.accountId;
-        this.pay_data.purpose = 'billPayment';
-        this.resetApiError();
-        if (this.pay_data.uuid != null &&
-            this.pay_data.paymentMode != null &&
-            this.pay_data.amount !== 0) {
-            this.api_success = Messages.PAYMENT_REDIRECT;
-            this.gateway_redirection = true;
-            this.subs.sink=this.sharedServices.consumerPayment(this.pay_data)
-                .subscribe(
-                    (data: any) => {
-                        this.origin = 'consumer';
-                        this.pGateway = data.paymentGateway;
-                        if (this.pGateway === 'RAZORPAY') {
-                            this.paywithRazorpay(data);
-                        } else {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            setTimeout(() => {
-                                this.document.getElementById('payuform').submit();
-                            }, 2000);
-                        }
-                    },
-                    error => {
-                        this.resetApiError();
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        if (this.jcashamount > 0 && this.checkJcash) {
+            this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
+                .subscribe(data => {
+                    this.remainingadvanceamount = data;
+                    if (this.remainingadvanceamount == 0 && this.checkJcash) {
+                        const postData = {
+                            'amountToPay': this.bill_data.amountDue,
+                            'accountId': this.accountId,
+                            'uuid': this.uuid,
+                            'paymentPurpose': 'billPayment',
+                            'isJcashUsed': true,
+                            'isreditUsed': false,
+                            'isRazorPayPayment': false,
+                            'isPayTmPayment': false,
+                            'paymentMode': 'JCASH'
+                        };
+                        this.sharedServices.PayByJaldeewallet(postData)
+                            .subscribe(data => {
+                                this.wallet = data;
+                                if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
+                                    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                                    this.router.navigate(['consumer']);
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                });
+                    } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                        const postData = {
+                            'amountToPay': this.bill_data.amountDue,
+                            'accountId': this.accountId,
+                            'uuid': this.uuid,
+                            'paymentPurpose': 'billPayment',
+                            'isJcashUsed': true,
+                            'isreditUsed': false,
+                            'isRazorPayPayment': true,
+                            'isPayTmPayment': false,
+                            'paymentMode': 'DC'
+                        };
+                        this.sharedServices.PayByJaldeewallet(postData)
+                            .subscribe((pData: any) => {
+                                this.origin = 'consumer';
+                                if (pData.isGateWayPaymentNeeded  && pData.isJCashPaymentSucess) {
+                                    this.paywithRazorpay(pData.response);
+                                }
+                                // if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
+                                //     this.pay_data.uuid = this.uuid;
+                                //     this.pay_data.amount = this.remainingadvanceamount;
+                                //     this.pay_data.paymentMode = 'DC';
+                                //     this.pay_data.accountId = this.accountId;
+                                //     this.pay_data.purpose = 'billPayment';
+                                //     this.resetApiError();
+                                //     if (this.pay_data.uuid != null &&
+                                //         this.pay_data.paymentMode != null &&
+                                //         this.pay_data.amount !== 0) {
+                                //         this.api_success = Messages.PAYMENT_REDIRECT;
+                                //         this.gateway_redirection = true;
+                                //         this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+                                //             .subscribe(
+                                //                 (data: any) => {
+                                //                     this.origin = 'consumer';
+                                //                     this.pGateway = data.paymentGateway;
+                                //                     if (this.pGateway === 'RAZORPAY') {
+                                //                         this.paywithRazorpay(data);
+                                //                     } else {
+                                //                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                //                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                //                         setTimeout(() => {
+                                //                             this.document.getElementById('payuform').submit();
+                                //                         }, 2000);
+                                //                     }
+                                //                 },
+                                //                 error => {
+                                //                     this.resetApiError();
+                                //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                //                 }
+                                //             );
+                                //     }
+                                // }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                });
+
                     }
-                );
+                });
+        }
+        else {
+            this.pay_data.uuid = this.uuid;
+            this.pay_data.amount = this.bill_data.amountDue;
+            this.pay_data.paymentMode = 'DC';
+            this.pay_data.accountId = this.accountId;
+            this.pay_data.purpose = 'billPayment';
+            this.resetApiError();
+            if (this.pay_data.uuid != null &&
+                this.pay_data.paymentMode != null &&
+                this.pay_data.amount !== 0) {
+                this.api_success = Messages.PAYMENT_REDIRECT;
+                this.gateway_redirection = true;
+                this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+                    .subscribe(
+                        (data: any) => {
+                            this.origin = 'consumer';
+                            this.pGateway = data.paymentGateway;
+                            if (this.pGateway === 'RAZORPAY') {
+                                this.paywithRazorpay(data);
+                            } else {
+                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                setTimeout(() => {
+                                    this.document.getElementById('payuform').submit();
+                                }, 2000);
+                            }
+                        },
+                        error => {
+                            this.resetApiError();
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        }
+                    );
+            }
         }
     }
     paytmPayment() {
@@ -459,7 +569,8 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
         // this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+
     }
 
     resetApiError() {
@@ -742,7 +853,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     //             s3Url => {
     //                 this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
     //                     .subscribe(res => {
-                            
+
     //                         this.couponList.JC = res;
     //                     });
     //             });
@@ -791,6 +902,13 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     }
                 });
             }
+        }
+    }
+    changeJcashUse(event) {
+        if(event.checked){
+            this.checkJcash = true;
+        } else {
+            this.checkJcash = false;
         }
     }
 }

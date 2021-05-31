@@ -1051,4 +1051,15 @@ export class SharedServices {
     const url = 'consumer/telegram/settings';
     return this.servicemeta.httpGet(url);
   }
+getJaldeeCashandJcredit(){
+  const url = 'consumer/wallet/redeem/eligible/amt';
+  return this.servicemeta.httpGet(url); 
+}
+getRemainingPrepaymentAmount(jcash? , jcredit? , advanceamount?){
+  const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash  + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+  return this.servicemeta.httpGet(url);
+}
+PayByJaldeewallet(postData){
+  return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+}
 }
