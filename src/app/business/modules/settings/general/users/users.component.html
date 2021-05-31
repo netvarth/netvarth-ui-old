@@ -308,8 +308,7 @@
                                                           {{provider_label}} name</th>
                                                       <th class="display-min-none" style="min-width: 125px;">User Type
                                                       </th>
-                                                      <th class="display-min-none" style="min-width: 125px;">Phone
-                                                          number</th>
+                                                      <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
                                                       <th class="display-min-none" style="width: 30%;">Specializations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
@@ -357,7 +356,10 @@
                                                                       </div>
                                                                       <div class="mgn-up-5" *ngIf="service.mobileNo">
                                                                           <span class="b2">
-                                                                             {{service.countryCode}} {{service.mobileNo}} </span>
+                                                                            <a>View</a>
+                                                                          </span>
+                                                                             <!-- {{service.countryCode}} {{service.mobileNo}} 
+                                                                          </span> -->
                                                                       </div>
                                                                       <div class="mgn-up-5"
                                                                           *ngIf="service.specialization"> <span
@@ -395,7 +397,9 @@
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.mobileNo">
-                                                              {{service.countryCode}} {{service.mobileNo}}</span>
+                                                            <a (click)="viewContactDetails(service)">View detail</a>
+                                                          </span>
+                                                              <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.specialization">
