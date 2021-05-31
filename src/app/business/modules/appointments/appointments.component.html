@@ -166,12 +166,13 @@
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
               <div>
                 <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container"
+                    [ngStyle]="{'margin-top.px': filterapplied === true ? 95 : 44}">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                      <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                      <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                       <span class="filter-head-title">Filter</span>
-                      <i class="fa fa-angle-double-right ng-star-inserted pointer-cursor pull-right"
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Close filter window'"></i>
                     </div>
@@ -179,27 +180,32 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseName1" aria-expanded="false">
-                              Name
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-user"></i>
+                                </div>
+                                <span>&nbsp;Name</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseName1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseName1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                   class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
-                                  placeholder="First Name">
+                                  placeholder="Enter First Name">
                               </li>
                             </div>
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                   class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name"
-                                  placeholder="Last Name">
+                                  placeholder="Enter Last Name">
                               </li>
                             </div>
                           </div>
@@ -208,20 +214,25 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseId1" aria-expanded="false">
-                              {{customerIdTooltip | capitalizeFirst}}
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-id-badge"></i>
+                                </div>
+                                <span>&nbsp;{{customerIdTooltip | capitalizeFirst}}</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseId1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseId1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
                                   (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
-                                  placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                                  placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                               </li>
                             </div>
                           </div>
@@ -230,20 +241,25 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseBNo1" aria-expanded="false">
-                              Booking Id
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-bookmark"></i>
+                                </div>
+                                <span>&nbsp;Booking ID</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseBNo1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
                                   (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
-                                  placeholder="Booking Id">
+                                  placeholder="Enter Booking ID">
                               </li>
                             </div>
                           </div>
@@ -252,14 +268,19 @@
                       <div class="card" *ngIf="service_list.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseServices1" aria-expanded="false">
-                              Services
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-cogs"></i>
+                                </div>
+                                <span>&nbsp;Services</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseServices1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseServices1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input" *ngIf="service_list.length > 0">
                               <!-- <label class="filterHeaders">Services</label> -->
@@ -285,7 +306,9 @@
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                     class="fa wtsapaud-icon"></i>
                                   <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                    class="fa wtsapvid-icon"></i>{{service.name}}
+                                    class="fa wtsapvid-icon"></i>
+                                  <span *ngIf="service.serviceType === 'virtualService'">&nbsp;</span>
+                                  <span class="service-name">{{service.name}}</span>
                                 </mat-checkbox>
                               </li>
                             </div>
@@ -295,14 +318,19 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapsePayStatus1" aria-expanded="false">
-                              Payment Status
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-inr"></i>
+                                </div>
+                                <span>&nbsp;Payment Status</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapsePayStatus1" class="collapse" data-parent="#accordion1">
+                        <div id="collapsePayStatus1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input">
                               <!-- <label class="filterHeaders">Payment Status</label> -->
@@ -327,14 +355,19 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseAMode1" aria-expanded="false">
-                              Appointment Mode
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-circle-o-notch"></i>
+                                </div>
+                                <span>&nbsp;Appointment Mode</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseAMode1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseAMode1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input">
                               <!-- <label class="filterHeaders">Appointment Mode</label> -->
@@ -358,14 +391,19 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
                               data-target="#collapseLabels1" aria-expanded="false">
-                              Labels
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-tags"></i>
+                                </div>
+                                <span>&nbsp;Labels</span>
+                              </div>
                               <i class="fa fa-angle-down"></i>
                             </button>
                           </h2>
                         </div>
-                        <div id="collapseLabels1" class="collapse" data-parent="#accordion1">
+                        <div id="collapseLabels1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
                               <div>
@@ -389,6 +427,14 @@
                       </div>
                     </ul>
                   </section>
+                  <div class="filter-footer" *ngIf="filterapplied === true">
+                    <button class="btn reset-btn" (click)="clearFilter()">
+                      <i class="fa fa-undo"></i>Reset
+                    </button>
+                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <i class="fa fa-check"></i>Apply
+                    </button>
+                  </div>
                 </aside>
               </div>
               <div class="inpro-box mgn-up-10" *ngIf="startedAppts.length > 0">
@@ -1112,119 +1158,262 @@
                   </i>
                 </a>
                 <div>
-                  <aside class="filterSidebar" *ngIf="filter_sidebar">
-                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                      <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                  <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container"
+                      [ngStyle]="{'margin-top.px': filterapplied === true ? 95 : 44}">
+                      <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                        <span class="filter-head-title">Filters</span>
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Close filter window'"></i>
-                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                        <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                       </div>
-                      <ul class="sidebar-menu">
-                        <div class="filterTextinput">
-                          <li class="filterli">
-                            <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                          </li>
+                      <ul class="sidebar-menu accordion" id="accordion2">
+                        <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-user"></i>
+                                  </div>
+                                  <span>&nbsp;Name</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseName2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filter-li">
+                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name" placeholder="Enter First Name">
+                                </li>
+                              </div>
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filter-li">
+                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" placeholder="Enter Last Name">
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="filterTextinput">
-                          <li class="filterli">
-                            <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                          </li>
+                        <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-id-badge"></i>
+                                  </div>
+                                  <span>&nbsp;{{customerIdTooltip | capitalizeFirst}}</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseId2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filter-li">
+                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                    placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="filterTextinput">
-                          <li class="filterli">
-                            <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                              (keyup)="keyPressed($event)" class="filterTextbox"
-                              placeholder="{{customerIdTooltip | capitalizeFirst}}">
-                          </li>
+                        <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-bookmark"></i>
+                                  </div>
+                                  <span>&nbsp;Booking ID</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseBNo2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filter-li">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
+                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="filterTextinput">
-                          <li class="filterli">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
-                              (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Booking Id">
-                          </li>
+                        <div class="card" *ngIf="service_list.length > 0">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServices2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-cogs"></i>
+                                  </div>
+                                  <span>&nbsp;Services</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseServices2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filter-checkbox-input" *ngIf="service_list.length > 0">
+                                <label class="filterHeaders">Services</label>
+                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox [checked]="allServiceSelected" class="filter-checkbox"
+                                    (change)="setFilterDataCheckbox('service', 'all', $event)">
+                                    All</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox *ngFor="let service of service_list" class="filter-checkbox"
+                                    [checked]="services.indexOf(service.id) !== -1"
+                                    (change)="setFilterDataCheckbox('service', service.id, $event)">
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                      class="fa meet-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                      class="fa zoom-icon"></i>
+                                    <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                      *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                      class="fa phon-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                      class="fa wtsapaud-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                      class="fa wtsapvid-icon"></i>
+                                    <span *ngIf="service.serviceType === 'virtualService'">&nbsp;</span>
+                                    <span class="service-name">{{getServiceName(service.name)}}</span>
+                                  </mat-checkbox>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div *ngIf="service_list.length > 0">
-                          <label class="filterHeaders">Services</label>
-                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox [checked]="allServiceSelected"
-                              (change)="setFilterDataCheckbox('service', 'all', $event)">
-                              All</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox *ngFor="let service of service_list"
-                              [checked]="services.indexOf(service.id) !== -1"
-                              (change)="setFilterDataCheckbox('service', service.id, $event)">
-                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                class="fa meet-icon"></i>
-                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                class="fa zoom-icon"></i>
-                              <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
-                                *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                class="fa phon-icon"></i>
-                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                class="fa wtsapaud-icon"></i>
-                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                class="fa wtsapvid-icon"></i>{{getServiceName(service.name)}}
-                            </mat-checkbox>
-                          </li>
+                        <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-inr"></i>
+                                  </div>
+                                  <span>&nbsp;Payment Status</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapsePayStatus2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filter-checkbox-input">
+                                <!-- <label class="filterHeaders">Payment Status</label> -->
+                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox class="filter-checkbox" [checked]="allPayStatusSelected"
+                                    (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                                    All</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                  *ngFor="let pay_status of payStatusList">
+                                  <mat-checkbox class="filter-checkbox" [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                                    (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                                    {{pay_status.value}}</mat-checkbox>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <label class="filterHeaders">Payment Status</label>
-                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox [checked]="allPayStatusSelected"
-                              (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
-                              All</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                            *ngFor="let pay_status of payStatusList">
-                            <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
-                              (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
-                              {{pay_status.value}}</mat-checkbox>
-                          </li>
+                        <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-circle-o-notch"></i>
+                                  </div>
+                                  <span>&nbsp;Appointment Mode</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseAMode2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filter-checkbox-input">
+                                <!-- <label class="filterHeaders">Appointment Mode</label> -->
+                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox class="filter-checkbox" [checked]="allModeSelected"
+                                    (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                                    All</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                  *ngFor="let mode of appointmentModes">
+                                  <mat-checkbox class="filter-checkbox" [checked]="apptModes.indexOf(mode.mode) !== -1"
+                                    (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                                    {{mode.value}}</mat-checkbox>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <label class="filterHeaders">Appointment Mode</label>
-                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox [checked]="allModeSelected"
-                              (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
-                              All</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                            *ngFor="let mode of appointmentModes">
-                            <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
-                              (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
-                              {{mode.value}}</mat-checkbox>
-                          </li>
-                        </div>
-                        <div *ngIf="providerLabels.length > 0">
-                          <div>
-                            <label class="filterHeaders">Labels</label>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
-                                All</mat-checkbox>
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                              *ngFor="let lbl of providerLabels">
-                              <mat-checkbox
-                                [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
-                                (change)="setLabelFilter(lbl, $event)">
-                                {{lbl.displayName}}</mat-checkbox>
-                            </li>
+                        <div class="card" *ngIf="providerLabels.length > 0">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-tags"></i>
+                                  </div>
+                                  <span>&nbsp;Labels</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
+                            <div class="card-body">
+                              <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                                <!-- <label class="filterHeaders">Labels</label> -->
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                                    All</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                  *ngFor="let lbl of providerLabels">
+                                  <mat-checkbox class="filter-checkbox"
+                                    [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                                    (change)="setLabelFilter(lbl, $event)">
+                                    {{lbl.displayName}}</mat-checkbox>
+                                </li>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </ul>
                     </section>
+                    <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>Apply
+                      </button>
+                    </div>
                   </aside>
                 </div>
               </div>
