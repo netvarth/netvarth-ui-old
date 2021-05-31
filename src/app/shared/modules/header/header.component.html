@@ -241,6 +241,10 @@
                                             <i class="icon-dashboard"></i>
                                             <span>{{dashboard_cap}}</span>
                                         </button>
+                                        <button mat-menu-item (click)="redirectto('wallet')" *ngIf="!accountId">
+                                            <i class="icon-dashboard"></i>
+                                            <span>{{wallet_cap}}</span>
+                                        </button>
                                         <button mat-menu-item (click)="redirectto('profile')" *ngIf="!accountId">
                                             <i class="icon-profile"></i>
                                             <span>{{user_profile}}</span>

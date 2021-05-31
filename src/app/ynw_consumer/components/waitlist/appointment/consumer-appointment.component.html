@@ -968,6 +968,13 @@
                                                     <span class="billing-value"> {{locationName}}
                                                         <!-- <a [href]="googleMapUrl" target="_blank"
                                                             class="icon-location" matTooltip="Click to navigate">
+                                                        </a></td>
+                                                </tr>
+                                                <!-- <tr>
+                                                    <td width="48%" align="right">Service</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <span class="service-icon pull-left"
                                                         </a> -->
                                                     </span>
                                                 </div>
@@ -995,6 +1002,21 @@
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>
+                                                    </td>
+                                                </tr> -->
+                                                <tr>
+                                                    <td width="48%" align="right">
+                                                        Appointment for</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>{{waitlist_for[0].firstName}}
+                                                        {{waitlist_for[0].lastName}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="48%" align="right">Contact #</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td>{{countryCode}} {{userPhone}}</td>
+                                                </tr>
+                                                <tr
                                                     </span>
                                                 </div>
                                                 <div class="disp-flex">
@@ -1032,16 +1054,27 @@
                                                 <span>{{getSingleTime(selectedApptTime['time'])}}</span>
                                             </div>
                                         </div>
-                                        <div class="pay-section"
-                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
-                                            <div>
+
+                                        <div class="containerpayment "
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                            <!-- <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
                                                 </span>
+                                            </div> -->
+                                            <div class="jaldeecredit">
+                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
+                                                Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
                                             </div>
-                                            <div class="bold">
-                                                Payment required now <span
-                                                    class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                            <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                Balance amount can be paid by other payment methods
+                                            </div>
+                                            <div class="prepayment">
+                                                Payment required now : &nbsp;
+                                                <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                    currency:'&#8377;'}}
+                                                </span>
+                                                <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
@@ -1260,7 +1293,7 @@
 
 
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
                                             <div class="mr-2">
                                                 <button type="button"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1271,9 +1304,16 @@
                                             <div>
                                                 <button type="button" (click)="saveCheckin('appt')" id="stepThreeConfirmButton"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                    <ng-container
+                                                    <!-- <ng-container
                                                         *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container> -->
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                          ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                         Confirm</ng-container>
+                                                    <ng-container
+                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                         Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>

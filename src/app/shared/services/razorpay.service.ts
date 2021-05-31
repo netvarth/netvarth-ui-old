@@ -92,6 +92,7 @@ export class RazorpayService {
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: { 'is_orderShow': 'false'}} ));
         } else if (checkin_type === 'donations') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], { queryParams: { 'uuid': uuid } }));
           let queryParams = {
             account_id: account_id,
             uuid: uuid
@@ -177,6 +178,45 @@ export class RazorpayService {
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
       }
+      if (checkin_type === 'appointment') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            uuid: uuid,
+            accountId: livetrack,
+            type: 'appointment',
+            'paidStatus': false
+          }
+        };
+        console.log(navigationExtras)
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
+      }
+      if (checkin_type === 'waitlist') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            uuid: uuid,
+            accountId: livetrack,
+            type: 'waitlist',
+            'paidStatus': false
+          }
+        };
+        console.log(navigationExtras)
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+      }
+      if (checkin_type === 'order') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            uuid: uuid,
+            accountId: livetrack,
+            type: 'order',
+            'paidStatus': false
+          }
+        };
+        console.log(navigationExtras);
+        this.onReloadPage();
+        // this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
+      }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();
@@ -185,4 +225,8 @@ export class RazorpayService {
       location.reload();
     }, 540000);
   }
+  onReloadPage() {
+   window.location.reload();
+
+}
 }

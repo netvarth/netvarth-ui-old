@@ -498,9 +498,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },
-    { displayName: 'Cancelled', value: 'cancelled' }
-    // { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
-    // { displayName: 'Failed', value: 'failed' }
+    { displayName: 'Cancelled', value: 'cancelled' },
+    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
@@ -1014,7 +1014,10 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
+  WALLET_NOTES: {
+    APP_SIGNUP: 'APP SIGNUP',
+
+  },
   UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
   // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };
-

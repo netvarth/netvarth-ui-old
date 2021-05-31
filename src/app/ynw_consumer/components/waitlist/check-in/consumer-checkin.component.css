@@ -861,7 +861,7 @@ ul.bus-actions li a.lnk {
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
-  border-color: #ccc;
+  border-color: #ccc !important;
   /* color:#ddd !important; */
 }
 .c-checkin-new mat-chip a {
@@ -1306,6 +1306,18 @@ ngx-intl-tel-input input {
   border: 1px solid #00008b26;
   box-shadow: 0px 0px 2px 2px #cac8c880;
 }
+.containerpayment {
+  font-size: 1.3rem;
+  margin: auto;
+  font-weight: bold;
+  margin-bottom: 20px;
+  /* border: 1px solid #00008b26; */
+  /* box-shadow: 4px 4px 1px 1px #d9d9d9; */
+  box-shadow:rgb(0 0 0 / 10%) 0px 30px 30px, rgb(0 0 0 / 10%) 0px -12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px;
+  border-radius: 10px;
+  padding-left: 10px;
+  height: 110px;
+}
 .selected-payment {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
   padding: 10px;
@@ -1476,6 +1488,9 @@ body.modal-open {
   .containerAppt {
     width: 80%;
   }
+  .containerpayment{
+    width: 80%;
+  }
   .check-new-group {
     margin-left: 10px;
   }
@@ -1517,7 +1532,6 @@ body.modal-open {
   width: 80px;    
   font-size: .7rem;
 }
-
 .billing-head {
   text-align: left !important;
   font: normal normal bold 15px/18px Roboto !important;
@@ -1717,4 +1731,27 @@ body.modal-open {
   font-weight: 500 !important;
   font-size: 0.8rem !important;
   color: red !important;
+}
+.creditleft{
+  font-size: small;
+  padding-left: 20px;
+  color: darkgrey;
+}
+.jaldeecredit{
+  /* color: darkgrey; */
+  font-size: medium;
+  padding-top: 5px;
+}
+.cancelpolicy{
+  text-align: center;
+  padding-bottom: 10px;
+}
+.prepayment{
+  text-align: center;
+  font-size: 1.3rem;
+}
+@media (max-width: 400px) {
+.containerpayment{
+  height: 140px;
+}
 }

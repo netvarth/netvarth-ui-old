@@ -296,8 +296,7 @@
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon mgn-lt-5"
-                                                                                style="width: 20px;"
+                                                                            <i class="fa wtsapvid-icon mgn-lt-5" style="width: 20px;"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
@@ -518,14 +517,6 @@
                                                                                 </mat-radio-button>
                                                                             </li>
                                                                         </mat-radio-group>
-                                                                    </ng-container>
-                                                                    <ng-container
-                                                                        *ngIf="sel_ser_det.serviceType === 'virtualService'">
-                                                                        <div class="card-title service mgn-bt-10"
-                                                                            *ngFor="let member of waitlist_for">
-                                                                            {{member.firstName | capitalizeFirst}}
-                                                                            {{member.lastName | capitalizeFirst}}
-                                                                        </div>
                                                                     </ng-container>
                                                                 </ul>
                                                             </div>
@@ -1030,7 +1021,7 @@
                                             </div>
                                             <div>
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')">
                                                     Next
                                                 </button>
@@ -1232,6 +1223,17 @@
                                                             </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
+                                            </div> 
+                                        </div>
+                                        <!-- <div class="pay-section" -->
+                                        <div class="containerpayment "
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                            <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
+                                                Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
+                                            </div>
+                                            <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                Balance amount can be paid by other payment methods
                                             </div>
                                         </div>
                                         <div class="pay-section"
@@ -1476,9 +1478,16 @@
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                    <ng-container
+                                                    <!-- <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container> -->
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                         ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || ( checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                         Confirm</ng-container>
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                         Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>
