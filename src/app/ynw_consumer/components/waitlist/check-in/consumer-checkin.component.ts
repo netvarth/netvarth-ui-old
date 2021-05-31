@@ -833,12 +833,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 else {
                     this.addCheckInConsumer(post_Data);
                 }
-            if (type === 'checkin') {
-                this.addCheckInConsumer(post_Data);
-            } else if (this.sel_ser_det.isPrePayment) {
+            }
+           else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
-        }
+        
     }
 }
     confirmVirtualServiceinfo(memberObject, type?) {
