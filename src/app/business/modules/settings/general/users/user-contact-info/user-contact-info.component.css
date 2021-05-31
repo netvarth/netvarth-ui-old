@@ -208,3 +208,12 @@ mat-dialog-content .actiondiv .confirm-button:hover {
     color: red !important;
     font-size: 12px !important;
 }
+.itemHead {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3c8dbc;
+  }
+  .itemVal {
+    font-size: 0.85rem;
+    line-height: 30px;
+  }

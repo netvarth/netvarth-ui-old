@@ -24,4 +24,15 @@ users_list: any = [];
     ngOnInit() {
 
     }
+    getLanguages(languages) {
+        languages = JSON.parse(languages);
+        for (let i = 0; i < languages.length; i++) {
+            languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
+        languages = languages.toString();
+        if (languages.length > 1) {
+            languages = languages.replace(/,/g, ", ");
+        }
+        return languages;
+    }
 }

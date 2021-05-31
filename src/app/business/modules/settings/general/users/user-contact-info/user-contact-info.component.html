@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">Set your availability
+<h1 class="mat-dialog-title">User's contact info
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -6,10 +6,50 @@
 <mat-dialog-content>
     <div class="row m0 instantQueue-component-modal-content">
             <div class="col-md-12 p0">
-                    <div class="text-message">
-                            This enables you to instantly make yourself available today for consultation within the
-                            time range you choose.
-                    </div>
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.firstName">
+                <span class="itemHead">User</span>
+                <div class="itemVal">
+                  {{users_list.firstName | capitalizeFirst}} {{users_list.lastName | capitalizeFirst}} 
+                </div>
+              </div>
+                    
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.mobileNo">
+                <span class="itemHead">Mobile Number</span>
+                <div class="itemVal">
+                  {{users_list.countryCode}} {{users_list.mobileNo}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.whatsAppNum">
+                <span class="itemHead">Whatsapp Number</span>
+                <div class="itemVal">
+                  {{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.telegramNum">
+                <span class="itemHead">Telegram Number</span>
+                <div class="itemVal">
+                  {{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.preferredLanguages">
+                <span class="itemHead">Languages Known</span>
+                <div class="itemVal">
+                    {{getLanguages(users_list.preferredLanguages)}}                
+                </div>
+              </div>
                     
             </div>
     </div>
