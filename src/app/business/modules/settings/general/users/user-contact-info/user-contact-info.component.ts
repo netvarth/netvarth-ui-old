@@ -18,7 +18,7 @@ users_list: any = [];
 
     ) {
        
-        this.users_list = data.selectedUser;
+        this.users_list = data.userData;
         console.log(this.users_list)
     }
     ngOnInit() {

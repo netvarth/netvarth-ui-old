@@ -551,13 +551,12 @@ export class BranchUsersComponent implements OnInit {
         event.stopPropagation();
     }
     viewContactDetails(user) {
-        this.selectedUser = user;
         this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-              userData: this.selectedUser
+              userData: user
           }
         });
     }
