@@ -462,15 +462,15 @@
     margin-top: 5px !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout {
     margin: 0 !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container {
     /* height: 20px !important;
     width: 20px !important; */
     height: 18px !important;
@@ -481,25 +481,25 @@
     margin-right: 10px !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame {
     /* border-radius: 50% !important;
     border-color: #888 !important; */
     border: 0 !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox.mat-checkbox-checked .mat-checkbox-inner-container .mat-checkbox-background {
     /* border-radius: 50% !important; */
     /* background-color: #1E4079 !important; */
     background-color: #0f73ee !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label {
     /* font-size: 15px !important;
     font-weight: 700 !important;
     color: darkslategrey !important; */
@@ -514,9 +514,9 @@
     justify-content: flex-start !important;
 }
 
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name,
-::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name {
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name,
+::ng-deep .app-appointments-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name {
     text-overflow: ellipsis !important;
     overflow: hidden !important;
     white-space: nowrap !important;
