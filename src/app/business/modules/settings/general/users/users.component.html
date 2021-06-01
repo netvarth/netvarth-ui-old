@@ -356,7 +356,7 @@
                                                                       </div>
                                                                       <div class="mgn-up-5" *ngIf="service.mobileNo">
                                                                           <span class="b2">
-                                                                            <a class="user-contact-details" (click)="viewContactDetails(service)">View</a>
+                                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                                           </span>
                                                                              <!-- {{service.countryCode}} {{service.mobileNo}} 
                                                                           </span> -->
@@ -397,7 +397,7 @@
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.mobileNo">
-                                                            <a class="user-contact-details" (click)="viewContactDetails(service)">View</a>
+                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                           </span>
                                                               <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
                                                       </td>
