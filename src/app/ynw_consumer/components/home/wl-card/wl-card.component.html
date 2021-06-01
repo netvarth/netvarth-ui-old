@@ -123,9 +123,9 @@
                 <div class="prov_nme line-clamp" >                    
                     <span [class.red]="booking.videoCallButton==='DISABLED'"
                        [class.green]="booking.videoCallButton==='ENABLED'">{{booking.videoCallMessage}}</span>
-                    <span *ngIf="booking.isRescheduled">
+                    <div *ngIf="booking.isRescheduled">
                           <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
-                    </span>
+                    </div>
                 </div>
             </div>
             <div *ngIf="booking.service.serviceType !== 'virtualService' || booking.waitlistStatus==='cancelled' ||  booking.waitlistStatus==='done'"
