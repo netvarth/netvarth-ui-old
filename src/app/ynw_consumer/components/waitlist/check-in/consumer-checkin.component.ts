@@ -2285,4 +2285,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
 }

@@ -555,7 +555,7 @@
                                                                         <input
                                                                             class="width100 height40 email-border input-field pull-right"
                                                                             id="newPhone" placeholder="" name="newPhone"
-                                                                            [(ngModel)]="newPhone" autocomplete="off">
+                                                                            [(ngModel)]="newPhone" autocomplete="off" (keypress)="isNumeric($event)" maxlength="10">
                                                                     </div>
                                                                     <!-- <ngx-intl-tel-input
                                                                         style="width: 210px !important;margin-left: auto"
