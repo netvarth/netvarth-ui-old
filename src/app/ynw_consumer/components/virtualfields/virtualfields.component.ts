@@ -409,6 +409,7 @@ isNumericSign(evt) {
   }
   saveLanguages() {
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+      this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
       return false;
     }
     this.hideLanguages = true;
