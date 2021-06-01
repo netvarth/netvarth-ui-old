@@ -28,7 +28,7 @@
       class="aside-menu">
       <ul class="menu-nav">
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()"  *ngIf="apptstatus">
           <a routerLink="appointments" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-calendar"></i>
