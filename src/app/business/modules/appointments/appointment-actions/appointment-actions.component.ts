@@ -94,6 +94,7 @@ export class AppointmentActionsComponent implements OnInit {
     buttonClicked = false;
     accountType: any;
     changeService = true;
+    check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -883,5 +884,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         smsdialogRef.afterClosed().subscribe(result => {
         });
+    }
+    getStatusLabel(status) {
+        const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
+        return label_status;
+    }
+    changeWaitlistStatusAction() {
+        this.action = 'status';
     }
 }
