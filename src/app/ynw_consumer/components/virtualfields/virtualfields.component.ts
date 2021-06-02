@@ -68,6 +68,8 @@ export class VirtualFieldsComponent implements OnInit {
   age: any;
   userId: any;
   countryCode: any;
+  serviceDetails: any;
+  provider: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -96,6 +98,7 @@ export class VirtualFieldsComponent implements OnInit {
     }
     this.dates = this.allDates;
     if (dialogData) {
+      console.log(dialogData);
       if (dialogData.consumer) {
         this.dialogData = this.s3Processor.getJson(dialogData.consumer);
       } else {
@@ -103,6 +106,17 @@ export class VirtualFieldsComponent implements OnInit {
       }
       if (dialogData.theme) {
         this.theme = dialogData.theme;
+      }
+      if(dialogData.service){
+        this.serviceDetails=dialogData.service;
+        console.log(this.serviceDetails);
+      }
+      if(dialogData.businessDetails){
+        if(dialogData.businessDetails.businessName){
+          this.provider=dialogData.businessDetails.businessName;
+        }else if(dialogData.businessDetails.businessName){
+          this.provider=dialogData.businessDetails.businessUserName ;
+        }
       }
 
     }
@@ -410,6 +424,7 @@ isNumericSign(evt) {
   }
   saveLanguages() {
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+      this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
       return false;
     }
     this.hideLanguages = true;
@@ -446,8 +461,10 @@ isNumericSign(evt) {
   }
   validateFields() {
     let isinvalid = false;
-    if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-      isinvalid = true;
+    if(this.countryCode==='+91'){
+      if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+        isinvalid = true;
+      }
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;

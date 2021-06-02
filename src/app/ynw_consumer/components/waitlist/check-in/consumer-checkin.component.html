@@ -2,9 +2,9 @@
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
-                </div>
+                </div> -->
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"></app-header>
                 </div>
@@ -322,6 +322,19 @@
                                                                     {{wtlst_for_lname | capitalizeFirst}}
                                                                 </h6>
                                                             </div>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                    Remote Consultation/Contact Information
+                                                                    <div class="mode-hint mgn-bt-5">
+                                                                        The provider will contact you in this
+                                                                        number
+                                                                        <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                    class="change-button changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModalCenter"
+                                                                    (click)="handleSideScreen('members')">Change
+                                                                </a>
+                                                                    </div> 
+                                                                </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding"
@@ -347,19 +360,19 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="pull-right"
+                                                                        <!-- <div class="pull-right"
                                                                             *ngIf="sel_ser_det.serviceType==='virtualService'">
                                                                             <a *ngIf="type !== 'waitlistreschedule'"
                                                                                 class="change-button changeitem  pointer-cursor  mgn-lt-5  pull-right"
                                                                                 data-toggle="modal"
                                                                                 data-target="#exampleModalCenter"
                                                                                 (click)="handleSideScreen('members')" style="color:#8D42A2" >Change
-                                                                            </a> </div>
-                                                                        <div class="mode-hint mgn-bt-5"
+                                                                            </a> </div> -->
+                                                                        <!-- <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The doctor will contact you in this
                                                                             number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -371,10 +384,10 @@
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="mode-hint mgn-bt-5">
+                                                                        <!-- <div class="mode-hint mgn-bt-5">
                                                                             The doctor will contact you in this
                                                                             number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class="email-section" *ngIf="payEmail">
                                                                         <!-- <i class="fa fa-envelope-o "></i> -->
@@ -487,6 +500,16 @@
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10">
+                                                <div class="mr-2">
+                                                        <button type="button"
+                                                            class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                            style="color: white !important;" (click)="goBack('back');">
+                                                            <!-- <i style="color: white !important;"
+                                                                class="fa fa-long-arrow-left"></i> -->
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                    <div>
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"
@@ -494,6 +517,7 @@
                                                     Next
                                                     <i class="fa fa-long-arrow-right"></i>
                                                 </button>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -514,12 +538,12 @@
                                                 </button>
                                             </div>
                                             <div class="modal-content">
-                                                <!-- <div class="close-btn">
+                                                <div class="close-btn">
                                                     <button type="button" class="close" aria-label="Close"
                                                         data-dismiss="modal" (click)="popupClosed()">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
-                                                </div> -->
+                                                </div>
                                                 <ng-container *ngIf="action=='members'">
                                                     <div class="col-xs-12">
                                                         <div
@@ -581,7 +605,7 @@
                                                                 <div class="mgn-bt-5">Booking
                                                                     alerts
                                                                     and communications will be
-                                                                    send to
+                                                                    sent to
                                                                 </div>
                                                             </div>
                                                             <div class="consumer_appt mgn-bt-10">
@@ -1004,8 +1028,8 @@
                                                     </div>
                                                 </ng-container>
                                                 <div class="col-xs-12 mgn-up-20">
-                                                    <button type="button" matButton class="btn cancel-button"
-                                                        data-dismiss="modal" #closebutton>Cancel</button>
+                                                    <!-- <button type="button" matButton class="btn cancel-button"
+                                                        data-dismiss="modal" #closebutton>Cancel</button> -->
                                                     <button type="button" matButton
                                                         class="btn btn-primary font-weight-bold ok-button"
                                                         (click)="actionCompleted()">Ok</button>

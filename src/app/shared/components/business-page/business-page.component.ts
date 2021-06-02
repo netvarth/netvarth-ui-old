@@ -1741,13 +1741,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     
       
     }else{
+      console.log(service);
+      console.log(this.businessjson );
+      
+
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '50%',
         minHeight: '100vh',
         minWidth: '100vw',
         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
         disableClose: true,
-        data: consumerdata
+        data: { consumer: consumerdata,service:service,businessDetails:this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {

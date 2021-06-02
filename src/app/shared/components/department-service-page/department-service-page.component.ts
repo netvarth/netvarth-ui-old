@@ -1651,7 +1651,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       minWidth: '100vw',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
       disableClose: true,
-      data: consumerdata
+      data: { consumer: consumerdata,service:service,businessDetails:this.businessjson }
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {

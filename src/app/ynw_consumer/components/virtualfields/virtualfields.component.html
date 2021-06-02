@@ -2,7 +2,7 @@
     <h1 class="modal-title pull-left service-detail-title">
         <span class="name">
             <span class="dispvalue">
-                Your Personal Information
+                    Patient Information
             </span>
         </span>
     </h1>
@@ -20,10 +20,15 @@
                         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                         <div class="cust-loginpge-color" *ngIf="!api_loading">
                             <div *ngIf="hideLanguages">
-                                <div class="">
-                                    Please provide necessary information (one time setup). This information will be
-                                    saved in your profile
-                                </div>
+                                    <div class="">
+                                            <label class="col-form-label" for="name">Service Provider Name : </label>
+                                            <span> {{ provider }}</span>
+                                    </div>
+                                    <div class="">
+                                            <label class="col-form-label" for="name">Consultation Request : </label>
+                                            <span> {{ serviceDetails.name }} </span>
+                                    </div>
+                            
                                 <div class="mgn-up-10">
                                     <label class="col-form-label" for="name">Consultation is For </label>
                                     <br />
@@ -38,13 +43,10 @@
                                         <mat-radio-button value="new_member">Someone else</mat-radio-button>
                                     </mat-radio-group>
                                 </div>
-                                <div class="mgn-up-10 mgn-bt-10">
-                                    <label class="col-form-label" for="phone">Phone # </label>
-                                    <br />
-                                    {{this.details.userProfile.countryCode}}
-                                    {{this.details.userProfile.primaryMobileNo}}
-                                </div>
                           
+                                <div style="font: size 0.5rem;">
+                                        Please provide necessary information. This information will be saved in your profile
+                                    </div>
                                 <div class="form-group"
                                     *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                                     <label class="col-form-label" for="firstName">First Name <span
@@ -57,38 +59,35 @@
                                             class="red">*</span></label><br/>
                                         <input class="form-control" placeholder="Enter your last name" formControlName="lastName">
                                 </div>
-                                <div class="col-xs-12  no-padding ">
-                                    <div class="col-xs-2 no-padding">
-                                        <label class="col-form-label" for="lastName">Age<span class="red">*</span></label><br>
-                                        <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
-                                            formControlName="age">
-                                    </div>
-                                    <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
-                                    <div class="col-xs-10 genderradio">
-                                        <label class="col-form-label" for="gender">{{gender_cap}} <span class="red">*</span></label>
-                                        <br />
-                                        <mat-radio-group formControlName="gender">
-                                            <mat-radio-button value="male">Male</mat-radio-button>
-                                            <mat-radio-button value="female">Female</mat-radio-button>
-                                            <mat-radio-button value="other">Other</mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                    <div class="col-xs-12 mgn-up-5">
-                                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
-                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
-                                  {
-                                    'required' : 'Age is required',
-                                    'min' : 'Minimum age required is 0',
-                                    'max' : 'Maximum age is 150'
-                                   
-                                  })">
-                                        </app-field-error-display>
-                                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
-                                            errorMsg="Please select the gender.">
-                                        </app-field-error-display>
-                                    </div>
-                                </div>
-                                <div class="form-group pwd">
+                               
+                    <div class="form-group ">
+                            <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
+                            <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
+                                formControlName="age" style="width:50%">
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                      {
+                        'required' : 'Age is required',
+                        'min' : 'Minimum age required is 0',
+                        'max' : 'Maximum age is 150'
+                       
+                      })">
+                            </app-field-error-display>
+                        </div>
+                        <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
+                        <div class="form-group ">
+                            <label class="col-form-label" for="gender" >{{gender_cap}} <span class="red">*</span></label>
+                            <br />
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button value="male">Male</mat-radio-button>
+                                <mat-radio-button value="female">Female</mat-radio-button>
+                                <mat-radio-button value="other">Other</mat-radio-button>
+                            </mat-radio-group>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                            errorMsg="Please select the gender.">
+                        </app-field-error-display>
+                        </div>
+                                <div class="form-group pwd"  *ngIf="countryCode=='+91'">
                                     <label for="pincode" class="col-form-label">Residing Pincode  in India  <span
                                             class="red">*</span></label>
                                     <input type="text" placeholder="xxxxxx"
@@ -171,9 +170,17 @@
                             </div>
                             <div class="clearfix"></div>
                             <ng-container *ngIf="hideLanguages">
-                                <div class="form-level-settings smallfont">
-                                    Communications or consultation may also happen over Whatsapp/Telegram
-                                 </div>
+                                    <label class="col-form-label" for="name">Contact Information </label>
+    
+                                    <div class="form-level-settings smallfont">
+                                            Communications,Remote consultation may  happen on your Whatsapp number.SMS alerts will be sent to your mobile phone number.Electronic Receipts/prescription status will sent to email
+                                         </div>
+                                 <div class="mgn-up-10 mgn-bt-10">
+                                        <label class="col-form-label" for="phone">Phone # </label>
+                                        <br />
+                                        {{this.details.userProfile.countryCode}}
+                                        {{this.details.userProfile.primaryMobileNo}}
+                                    </div>
                                 <div class="col-xs-12 no-padding">
                                     <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
                                     <div class="disp-flex">
