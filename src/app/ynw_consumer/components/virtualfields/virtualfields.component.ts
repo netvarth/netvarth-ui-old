@@ -459,9 +459,11 @@ isNumericSign(evt) {
   }
   validateFields() {
     let isinvalid = false;
+    if(this.countryCode==='+91'){
     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
       isinvalid = true;
     }
+  }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
     }
