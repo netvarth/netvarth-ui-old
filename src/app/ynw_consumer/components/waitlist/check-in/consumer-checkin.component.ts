@@ -1127,6 +1127,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
     }
+   
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
