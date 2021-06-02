@@ -1704,7 +1704,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (this.time_type === 2) {
       // date = this.filter.future_appt_date;
       // }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
+      this.router.navigate(['provider', 'appointments', 'appointment'],
         { queryParams: { timeslot: slot, scheduleId: scheduleId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
     }
   }
@@ -2654,7 +2654,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
+    this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
   selectAllStarted() {
     this.startedAppointmentsChecked = {};

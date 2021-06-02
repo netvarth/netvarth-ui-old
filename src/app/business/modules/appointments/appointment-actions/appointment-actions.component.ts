@@ -811,7 +811,7 @@ export class AppointmentActionsComponent implements OnInit {
                 virtualServicenumber = this.appt.virtualService[key];
             });
         }
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
+        this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
     }
     unBlockAppt() {
         this.provider_services.deleteAppointmentBlock(this.appt.uid)
