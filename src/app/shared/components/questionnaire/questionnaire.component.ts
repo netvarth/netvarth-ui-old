@@ -716,6 +716,9 @@ export class QuestionnaireComponent implements OnInit {
   }
   editQnr() {
     this.editQuestionnaire = !this.editQuestionnaire;
+    if (!this.editQuestionnaire) {
+      this.snackbarService.openSnackBar('Updated Successfully');
+    }
   }
   getDocuments(question) {
     if (question.filePropertie.maxNoOfFile > 1) {

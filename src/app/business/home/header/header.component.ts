@@ -110,6 +110,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'showmenu':
           this.showMenuSection = message.value;
           break;
+          case 'updateuserdetails':
+            this.getBusinessdetFromLocalstorage();
+            break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
