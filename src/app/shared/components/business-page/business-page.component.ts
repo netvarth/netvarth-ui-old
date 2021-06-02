@@ -30,7 +30,6 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
-// import { CustomAppService } from '../../services/custom-app.service';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -326,7 +325,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private domainConfigService: DomainConfigGenerator,
     // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor,
+    private s3Processor: S3UrlProcessor
     // private customAppSerice: CustomAppService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -423,14 +422,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
-      // Detects if device is in standalone mode
-
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      // Checks if should display install popup notification:
-      console.log(isInStandaloneMode);
-      if (!isInStandaloneMode()) {
-        this.customAppIOSPopup.nativeElement.style.display = 'block';
-      }
     } else {
       this.playstore = true;
       this.appstore = true;
@@ -470,6 +461,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
+
+        // Detects if device is in standalone mode
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+        // Checks if should display install popup notification:
+        console.log(isInStandaloneMode);
+        if (!isInStandaloneMode() && _this.customAppIOSPopup) {
+          _this.customAppIOSPopup.nativeElement.style.display = 'block';
+        }
+
 
         if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
           this.router.navigate(['heartfulnesshealthcare']);
