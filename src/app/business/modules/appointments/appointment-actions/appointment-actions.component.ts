@@ -424,7 +424,7 @@ export class AppointmentActionsComponent implements OnInit {
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
