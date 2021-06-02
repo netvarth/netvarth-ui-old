@@ -1815,7 +1815,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       height:'auto',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: {'consumer':consumerdata,'type':''}
+      data: {'consumer':consumerdata,'type':'','service':service,'businessDetails':this.businessjson}
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -2319,18 +2319,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userCount = 0;
     if (this.showDepartments) {
       if (this.userId) {
+        if(this.apptServices){
         for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
           if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
             servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
             this.serviceCount++;
           }
         }
+      }if(this.wlServices){
         for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
           if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
             servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
             this.serviceCount++;
           }
         }
+      }
       } else {
         for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
           const deptItem = {};

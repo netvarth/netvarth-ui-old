@@ -270,10 +270,10 @@
                                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                                 *ngIf="sel_ser_det.serviceType==='virtualService'">
                                                                 Booking
-                                                                For <a *ngIf="type !== 'waitlistreschedule'"
+                                                                For  <!--<a *ngIf="type !== 'waitlistreschedule'"
                                                                     class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
                                                                     (click)="virtualModal()">Change
-                                                                </a>
+                                                                </a> -->
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
@@ -290,6 +290,27 @@
                                                                         {{wtlst_for_fname | capitalizeFirst}}
                                                                         {{wtlst_for_lname | capitalizeFirst}}
                                                                     </h6>
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                        Remote Consultation/Contact Information
+                                                                        <div class="mode-hint mgn-bt-5">
+                                                                            The provider will contact you in this
+                                                                            number
+                                                                            <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                        class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"
+                                                                        (click)="handleSideScreen('members')">Change
+                                                                    </a>
+                                                                        </div> 
+                                                                    </div>
+                                                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10"
+                                                                    *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                                    <a *ngIf="type !== 'waitlistreschedule'"
+                                                                        class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"
+                                                                        (click)="handleSideScreen('members')">Change
+                                                                    </a> </div> -->
                                                                     <div class="contact-section">
                                                                         <i class="fa fa-mobile "></i>
                                                                         <ng-container
@@ -310,19 +331,12 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10"
-                                                                            *ngIf="sel_ser_det.serviceType==='virtualService'">
-                                                                            <a *ngIf="type !== 'waitlistreschedule'"
-                                                                                class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                                                data-toggle="modal"
-                                                                                data-target="#exampleModalCenter"
-                                                                                (click)="handleSideScreen('members')">Change
-                                                                            </a> </div>
-                                                                        <div class="mode-hint mgn-bt-5"
+                                                                    
+                                                                        <!-- <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact you in this
                                                                             number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -334,10 +348,10 @@
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="mode-hint mgn-bt-5">
+                                                                        <!-- <div class="mode-hint mgn-bt-5">
                                                                             The provider will contact you in this
                                                                             number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class="" *ngIf="payEmail">
                                                                         <i class="fa fa-envelope-o "></i>
@@ -535,7 +549,7 @@
                                                                 <h5 class="mgn-bt-5 primary-color">Booking
                                                                     alerts
                                                                     and communications will be
-                                                                    send to
+                                                                    sent to
                                                                 </h5>
                                                             </div>
                                                             <div class="consumer_appt mgn-bt-10">

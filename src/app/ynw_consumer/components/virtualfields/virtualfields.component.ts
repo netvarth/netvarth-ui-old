@@ -67,6 +67,8 @@ export class VirtualFieldsComponent implements OnInit {
   age: any;
   userId: any;
   countryCode: any;
+  serviceDetails: any;
+  provider: any;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -102,6 +104,17 @@ export class VirtualFieldsComponent implements OnInit {
       }
       if (dialogData.theme) {
         this.theme = dialogData.theme;
+      }
+      if(dialogData.service){
+        this.serviceDetails=dialogData.service;
+        console.log(this.serviceDetails);
+      }
+      if(dialogData.businessDetails){
+        if(dialogData.businessDetails.businessName){
+          this.provider=dialogData.businessDetails.businessName;
+        }else if(dialogData.businessDetails.businessName){
+          this.provider=dialogData.businessDetails.businessUserName 
+        }
       }
 
     }

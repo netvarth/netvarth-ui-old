@@ -462,15 +462,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(params => {
         this.accountEncId = params.get('id');
 
-        // Detects if device is in standalone mode
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-        // Checks if should display install popup notification:
-        console.log(isInStandaloneMode);
-        if (!isInStandaloneMode() && _this.customAppIOSPopup) {
-          _this.customAppIOSPopup.nativeElement.style.display = 'block';
-        }
-
-
         if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
           this.router.navigate(['heartfulnesshealthcare']);
         } else {
@@ -1893,7 +1884,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['loginmainclass', 'popup-class', this.theme],
         disableClose: true,
         //data: consumerdata
-        data: { consumer: consumerdata, theme: this.theme }
+        data: { consumer: consumerdata, theme: this.theme,service:service,businessDetails:this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {
