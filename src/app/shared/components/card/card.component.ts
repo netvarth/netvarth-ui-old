@@ -23,6 +23,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     timingCaption: string;
     timings: string;
     server_date;
+    HHMM = '';
     buttonCaption = Messages.GET_TOKEN;
     waitinglineCap = Messages.WAITINGLINE;
     personsAheadText = '';
@@ -58,15 +59,18 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                         this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
                     }
                 }
+                this.getServiceDuration(this.service.serviceDuration);
                 break;
             case 'appt':
                 this.service = this.item.item;
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 this.buttonCaption = 'Get Appointment';
+                this.getServiceDuration(this.service.serviceDuration);
                 break;
             case 'donation':
                 this.service = this.item.item;
+                this.getServiceDuration(this.service.serviceDuration);
                 this.buttonCaption = 'Donate';
                 break;
             case 'catalog':
@@ -88,6 +92,27 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 console.log(this.user);
                 break;
+        }
+    }
+    getServiceDuration(serDuration){
+        if (serDuration) {
+            const min = serDuration % 60;
+            const hour = (serDuration - min) / 60;
+            if (hour > 0 && min > 0) {
+              if (hour > 1) {
+                this.HHMM = hour + ' ' + 'HRS' + ' ' + min + ' ' + 'MINS';
+              } else {
+                this.HHMM = hour + ' ' + 'HR' + ' ' + min + ' ' + 'MINS';
+              }
+            } else if (hour === 0) {
+              this.HHMM = min + ' ' + 'MINS';
+            } else if (min === 0) {
+              if (hour > 1) {
+                this.HHMM = hour + ' ' + 'HRS';
+              } else {
+                this.HHMM = hour + ' ' + 'HR';
+              }
+            }
         }
     }
     ngOnChanges() {

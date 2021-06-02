@@ -10,7 +10,7 @@
     <!-- Card Head -->
     <div class="card-item-head">
         <div class="img-container">
-            <div class="card-img img-circle img-responsive" style="border: 0 !important;"
+            <div class="card-img img-responsive" style="border: 0 !important;"
                 *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                 <i class="fa phon-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -25,15 +25,15 @@
                 <i class="fa jaldeevideo-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
             </div>
-                <img class="card-img img-circle img-responsive" src="assets/images/donation.png" style="border: 0 !important;"
+                <img class="card-img img-responsive" src="assets/images/donation.png" style="border: 0 !important;"
                     *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'"
                     alt="Donation Image">
             
-                <img class="card-img img-circle img-responsive" src="assets/images/meeting_Artboard.png" style="border: 0 !important;"
+                <img class="card-img img-responsive" src="assets/images/meeting_Artboard.png" style="border: 0 !important;"
                     *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                     alt="Physical Service Image">
             
-                <img class="card-img img-circle img-responsive" src="assets/images/hindu-temple-clipart.jpg" style="border: 0 !important;"
+                <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg" style="border: 0 !important;"
                     *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
                     alt="Temple Service Image">
         </div>
@@ -44,13 +44,17 @@
             </span>
         </div>
         <div class="modes">
-            <div class="online">
-                <div class="icon"><i class="fa fa-video-camera"></i></div>
-                <div class="icon-text">Online</div>
-            </div>
-            <div class="in-person">
+            <div class="in-person" *ngIf="service.serviceType == 'physicalService'">
                 <div class="icon"><i class="fa fa-hospital-o"></i></div>
                 <div class="icon-text">In-Person</div>
+            </div>
+            <div class="video" *ngIf="service.serviceType == 'virtualService' && service.virtualServiceType == 'videoService'">
+                <div class="icon"><i class="fa fa-video-camera"></i></div>
+                <div class="icon-text">Video</div>
+            </div>
+            <div class="audio" *ngIf="service.serviceType == 'virtualService' && service.virtualServiceType == 'audioService'">
+                <div class="icon"><i class="fa fa-microphone"></i></div>
+                <div class="icon-text">Audio</div>
             </div>
         </div>
     </div>
@@ -105,6 +109,7 @@
             <div class="donation-amount" *ngIf="item.type=='donation'">
                 <div>
                     <label class="value">
+                        Amount:
                         <span><i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                         To
                         <span><i class="fa fa-inr"></i> {{service.maxDonationAmount}}</span>
@@ -116,23 +121,35 @@
                     <label class="value">{{personsAheadText}}</label>
                 </div>
             </div>
-            <div class="pay-section">
+            <div *ngIf="!(item.type=='donation') && !personsAheadText" style="height: 14px !important;">&nbsp;</div>
+            <div class="service-duration" *ngIf="HHMM">
                 <div>
-                    <div class="head">You Pay</div>
+                    <label class="value">Service Duration: {{HHMM}}</label>
+                </div>
+            </div>
+            <div *ngIf="!HHMM" style="height: 14px !important;">&nbsp;</div>
+            <div class="pay-section" *ngIf="!(item.type=='donation')">
+                <div>
+                    <div class="head">Total</div>
                     <div class="value">
-                        <i class="fa fa-inr"></i>&nbsp;1100
+                        <i class="fa fa-inr"></i>&nbsp;{{service.totalAmount}}
                     </div>
                 </div>
                 <div>
-                    <div class="head">Circle Member Pays</div>
-                    <div class="value">
-                        <i class="fa fa-inr"></i>&nbsp;950
+                    <div class="head">Advance</div>
+                    <div class="value" *ngIf="!service.isPrePayment">
+                        <i class="fa fa-inr"></i>&nbsp;0
                         <i class="fa fa-info"></i>
+                    </div>
+                    <div class="value" *ngIf="service.isPrePayment">
+                        <i class="fa fa-inr"></i>&nbsp;{{service.minPrePaymentAmount}}
+                        <i class="fa fa-info pointer-cursor" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"></i>
                     </div>
                 </div>
             </div>
-            <div class="degrees">MD., DCH., DAA., FACI, EAACI </div>
-            <div class="service-address">Appolo Children Hospital Chennai, Greams Road, Chennai</div>
+            <div *ngIf="item.type=='donation'" style="height: 61px !important;">&nbsp;</div>
+            <div class="service-description" *ngIf="service.description">Service Description:</div>
+            <div class="service-description-text" *ngIf="service.description">{{service.description}}</div>
             <!-- </div>
         <div class="card-content"> -->
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6> -->

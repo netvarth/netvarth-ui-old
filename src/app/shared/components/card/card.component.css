@@ -602,6 +602,13 @@ button.fxmenu1{
     margin-bottom: 5px !important;
 }
 
+.booking-card.card.service .card-body .card-title.service-name a {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: block !important;
+}
+
 .booking-card-user.user .card-item-content .qualification {
     margin: 6px 0;
     color: #073B4C;
@@ -1072,8 +1079,9 @@ button.fxmenu1{
 
 .booking-card.card.user .modes .online, 
 .booking-card.card.user .modes .in-person,
-.booking-card.card.service .modes .online, 
-.booking-card.card.service .modes .in-person {
+.booking-card.card.service .modes .video, 
+.booking-card.card.service .modes .in-person,
+.booking-card.card.service .modes .audio {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -1101,7 +1109,8 @@ button.fxmenu1{
 
 .booking-card.card.user .role-and-experience,
 .booking-card.card.service .donation-amount,
-.booking-card.card.service .people-ahead {
+.booking-card.card.service .people-ahead,
+.booking-card.card.service .service-duration {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
@@ -1114,14 +1123,16 @@ button.fxmenu1{
 }
 
 .booking-card.card.service .donation-amount > div:nth-child(1),
-.booking-card.card.service .people-ahead > div:nth-child(1) {
+.booking-card.card.service .people-ahead > div:nth-child(1),
+.booking-card.card.service .service-duration > div:nth-child(1) {
     width: 100% !important;
     text-align: left !important;
 }
 
 .booking-card.card.user .role-and-experience > div:nth-child(1) .role,
 .booking-card.card.service .donation-amount > div:nth-child(1) .value,
-.booking-card.card.service .people-ahead > div:nth-child(1) .value {
+.booking-card.card.service .people-ahead > div:nth-child(1) .value,
+.booking-card.card.service .service-duration > div:nth-child(1) .value {
     color: #098686 !important;
     font-weight: 700 !important;
     font-size: 10px !important;
@@ -1129,6 +1140,14 @@ button.fxmenu1{
     text-transform: uppercase !important;
     padding-right: 2px !important;
     margin-bottom: 15px !important;
+}
+
+.booking-card.card.service .donation-amount > div:nth-child(1) .value,
+.booking-card.card.service .people-ahead > div:nth-child(1) .value,
+.booking-card.card.service .service-duration > div:nth-child(1) .value {
+    margin-bottom: 0 !important;
+    display: block !important;
+    padding-right: 0 !important;
 }
 
 .booking-card.card.user .role-and-experience > div:nth-child(2) {
@@ -1160,6 +1179,10 @@ button.fxmenu1{
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: flex-start !important;
+}
+
+.booking-card.card.service .pay-section {
+    margin-top: 15px !important;
 }
 
 .booking-card.card.user .pay-section > div,
@@ -1236,7 +1259,7 @@ button.fxmenu1{
 }
 
 .booking-card.card.user .degrees,
-.booking-card.card.service .degrees {
+.booking-card.card.service .service-description {
     text-transform: uppercase !important;
     color: #717171 !important;
     font-size: 10px !important;
@@ -1245,11 +1268,18 @@ button.fxmenu1{
 }
 
 .booking-card.card.user .doctor-address,
-.booking-card.card.service .service-address {
+.booking-card.card.service .service-description-text {
     color: #717171 !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     text-align: left !important;
     hyphens: auto !important;
 }
- 
+
+.booking-card.card.service .service-description-text {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    hyphens: manual !important;
+}
