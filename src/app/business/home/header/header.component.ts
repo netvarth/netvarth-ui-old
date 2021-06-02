@@ -112,7 +112,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
           case 'updateuserdetails':
             this.getBusinessdetFromLocalstorage();
-            break;
+           break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
