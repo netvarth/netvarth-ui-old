@@ -1762,11 +1762,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid) {
+      if (queueid) {  
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
-        } else {
-          Mfilter['queue-eq'] = queueid;
+          // Mfilter['provider-eq'] = this.activeUser;
+          if(this.activeUser && this.unassignview){
+            Mfilter['provider-eq'] =  null;
+          }
+          else{
+            Mfilter['provider-eq'] = this.activeUser;
+            
+          }
+        }
+        else {
+          if(this.unassignview){
+            Mfilter['provider-eq'] =  null;
+          }
+          else{
+            Mfilter['queue-eq'] = queueid;
+          }
+          // Mfilter['queue-eq'] = queueid;
         }
       } else {
         if (this.activeUser) {
