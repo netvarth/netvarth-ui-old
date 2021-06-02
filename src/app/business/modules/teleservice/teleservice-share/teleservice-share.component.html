@@ -74,7 +74,7 @@
       </div>
     </mat-tab>
   </mat-tab-group>
-  <div *ngIf="!providerView" class="coupon-outer">
+  <div  class="coupon-outer">
     Share Meeting Details Via<br>
     <mat-checkbox [disabled]="is_noSMS" class="mgright50 example-margin" [(ngModel)]="sms">
       SMS
@@ -90,7 +90,7 @@
 </div>
 
 <!-- Actions -->
-<div *ngIf="!providerView" class="mat-dialog-actions ">
+<div class="mat-dialog-actions ">
   <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
     <!-- <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button> -->
     <button type="button" [disabled]="disableButton || (!sms && !email && !pushnotify)" mat-button

@@ -680,6 +680,10 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  shareMeetingdetails(data) {
+    const url = 'provider/waitlist/shareMeetingDetails';
+    return this.servicemeta.httpPost(url, data);
+  }
   consumerMassCommunicationWithId(data) {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
@@ -748,6 +752,10 @@ export class SharedServices {
   }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  shareMeetingDetailsAppt(data) {
+    const url = 'provider/appointment/shareMeetingDetails';
     return this.servicemeta.httpPost(url, data);
   }
   consumerOrderMassCommunicationAppt(data) {
