@@ -5,6 +5,7 @@ import { FormMessageDisplayModule } from "../../../shared/modules/form-message-d
 import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/loading-spinner.module";
 import { MaterialModule } from "../../../shared/modules/common/material.module";
 import { VirtualFieldsComponent } from "./virtualfields.component";
+import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { VirtualFieldsComponent } from "./virtualfields.component";
         CommonModule,
         FormMessageDisplayModule,
         LoadingSpinnerModule,
-        MaterialModule
+        MaterialModule,
+        CapitalizeFirstPipeModule
     ],
     declarations: [
         VirtualFieldsComponent

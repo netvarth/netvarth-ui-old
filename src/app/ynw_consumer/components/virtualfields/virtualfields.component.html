@@ -2,7 +2,7 @@
 <form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields"
     [ngClass]="theme?theme:''" novalidate>
     <div class="mat-dialog-title">
-        <div class="title" style="font-size: 16px !important;">Patient Information</div>
+        <div class="title" style="font-size: 16px !important;"> {{consumer_label| capitalizeFirst }} Information </div>
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
         </button>
@@ -21,7 +21,7 @@
                         <span> {{ serviceDetails.name }} </span>
                 </div>
               
-                <div class="mgn-up-10">
+                <div class="mgn-up-10 ">
                     <label class="col-form-label" for="name">Consultation is For </label>
                     
 
@@ -36,7 +36,7 @@
                         <mat-radio-button value="new_member">Someone else</mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <div style="font: size 0.5rem;">
+                <div class="mgn-up-10 mgn-btm-5" style="font-size: 0.75rem !important;">
                         Please provide necessary information. This information will be saved in your profile
                     </div>
                 
@@ -199,7 +199,7 @@
                     <label class="col-form-label" for="name">Contact Information </label>
     
                     <div class="form-level-settings smallfont">
-                            Communications,Remote consultation may  happen on your Whatsapp number.SMS alerts will be sent to your mobile phone number.Electronic Receipts/prescription status will sent to email
+                            Remote consultation may  happen on your Whatsapp number.SMS alerts will be sent to your phone number.Electronic Receipts/prescription and status will sent to email
                          </div>
                 <!-- <div class="form-group mobile-field" >
                         <label>Whatsapp #</label>
