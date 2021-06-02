@@ -680,7 +680,7 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
-  shareMeetingdetails(data) {
+  shareMeetingdetails(data){
     const url = 'provider/waitlist/shareMeetingDetails';
     return this.servicemeta.httpPost(url, data);
   }

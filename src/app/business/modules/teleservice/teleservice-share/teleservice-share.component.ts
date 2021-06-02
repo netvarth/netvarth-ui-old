@@ -214,7 +214,6 @@ export class TeleServiceShareComponent implements OnInit {
     //   this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // }
   }
-
   // Mass communication
   sendMessage() {
     console.log(this.providerView);
