@@ -228,3 +228,102 @@
 .mandatoryChip {
   border: 1px solid rgb(255, 0, 0) !important;
 }
+.step-icon {
+ border-radius: 50%;
+ color: white;
+ background-color: #aaaa;
+ min-width: 50px;
+ display: flex;
+ justify-content: center;
+ margin: auto;
+ text-align: center;
+ height: 50px;
+ align-items: center;
+}
+.wizard-title {
+  color: #aaaa !important;
+}
+@media (max-width: 767.98px) {
+.step-icon {
+   margin-right: 10px;
+}
+}
+.tab-selected h3,
+.tab-selected i {
+  color: darkblue;
+}
+.tab-selected .step-icon {
+  background: darkblue ;
+}
+.right-part {
+  min-height: 650px;
+  border-left: 1px solid #EBEDF3 !important;
+}
+@media (max-width: 767.98px) {
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+      flex-direction: unset !important;
+  }
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title, .booking-img {
+    display: none !important;
+  }
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
+    width: auto !important;
+  }
+  .displ-none {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+    display: block !important;
+  }
+  .wizard-label {
+    display: flex;
+  }
+  .wizard-arrow {
+    display: none !important;
+  }
+  .wizard-mgn-30 {
+    margin-bottom: 30px;
+  }
+  .wizard-nav {
+    margin-top: 50px;
+  }
+  .right-part {
+    min-height: 650px;
+    border-left: 1px solid #EBEDF3 !important;
+  }
+  .check-new-group {
+    margin-left: 10px;
+  }
+}
+.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-label {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
+}
+.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step .wizard-arrow.last {
+  display: none !important;
+}
+.fa {
+  font-family: "FontAwesome" !important;
+  font-weight: normal !important;
+}
+i {
+  font-size: unset !important;
+}
+.fade {
+  opacity: 2 !important;
+}
+/* body.modal-open {
+  overflow: hidden !important;
+} */
+.modal-dialog {
+  margin-top: 100px !important;
+}
+.modal-body {
+  max-height: 70vh;
+  overflow: auto;
+}
+::ng-deep .cdk-overlay-container {
+  z-index: 1050 !important;
+}

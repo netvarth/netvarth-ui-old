@@ -8,6 +8,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { ConsumerPaymentDetailsComponent } from './payment-details/payment-details.component';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 @NgModule({
     declarations: [
         ConsumerPaymentsComponent,
@@ -20,7 +21,8 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
         SharedModule,
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
-        HeaderModule
+        HeaderModule,
+        QuestionnaireModule
     ],
     exports: [
         ConsumerPaymentsComponent

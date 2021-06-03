@@ -17,18 +17,19 @@
                 <div *ngIf="donationDetails.donorPhoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{donationDetails.countryCode}} {{donationDetails.donorPhoneNumber}}
                 </div>
-                <div *ngIf="donationDetails.donorEmail"> <i class="fa fa-envelope"
-                    aria-hidden="true"></i> {{donationDetails.donorEmail}}
-            </div>
-                <div> 
+                <div *ngIf="donationDetails.donorEmail"> <i class="fa fa-envelope" aria-hidden="true"></i>
+                    {{donationDetails.donorEmail}}
+                </div>
+                <div>
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                     {{donationDetails.location.place}}
                 </div>
-                    <span class="customer-action-btn pointer-cursor pull-left mgn-rt-10 mgn-up-20" (click)="addInboxMessage()">
-                        <i class="fa fa-comments-o"></i> Send message</span>
-                    <span *ngIf="donationDetails.note" class="customer-action-btn pointer-cursor pull-left mgn-up-20"
-                        (click)="showConsumerNote()">
-                        <i class="icon-note mgn-rt-5"></i>Notes</span>
+                <span class="customer-action-btn pointer-cursor pull-left mgn-rt-10 mgn-up-20"
+                    (click)="addInboxMessage()">
+                    <i class="fa fa-comments-o"></i> Send message</span>
+                <span *ngIf="donationDetails.note" class="customer-action-btn pointer-cursor pull-left mgn-up-20"
+                    (click)="showConsumerNote()">
+                    <i class="icon-note mgn-rt-5"></i>Notes</span>
             </div>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding mgn-20 no-margin-small">
@@ -51,6 +52,22 @@
                 </table>
             </div>
         </div>
+        <!-- Questionnaire starts-->
+        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding mgn-20 no-margin-small">
+            <div class="card"
+                *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
+                <div class="">
+                    <h3 class="">
+                        {{customer_label | capitalizeFirst}} info
+                    </h3>
+                </div>
+                <div class="c-details">
+                    <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'">
+                    </app-questionnaire>
+                </div>
+            </div>
+        </div>
+        <!-- Questionnaire end-->
     </div>
     <div class="clearfix"></div>
 </section>

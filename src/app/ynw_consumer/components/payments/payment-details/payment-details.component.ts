@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-consumer-payment-details',
@@ -15,6 +16,8 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     breadcrumbs;
     showRefund = false;
     api_loading = false;
+    donationDetails: any = [];
+    questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         public locationobj: Location,
@@ -53,7 +56,11 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerPaymentById(id).subscribe(
             (payments) => {
                 this.payments = payments;
-                this.api_loading = false;
+                if (this.payments.txnType === 'Donation') {
+                    this.getDonations(this.payments.ynwUuid);
+                } else {
+                    this.api_loading = false;
+                }
             }
         );
     }
@@ -66,7 +73,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
             if (mod === 'all') {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
             } else if (mod === 'date') {
-                retval = this.dateformat.transformToMonthlyDate(dtarr[0] + '/' + dtarr[1] + '/' + dtarr[2]); 
+                retval = this.dateformat.transformToMonthlyDate(dtarr[0] + '/' + dtarr[1] + '/' + dtarr[2]);
                 // retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
@@ -84,6 +91,13 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     providerDetail(id, event) {
         event.stopPropagation();
         this.router.navigate(['searchdetail', id]);
-      }
+    }
+    getDonations(uuid) {
+        this.shared_services.getConsumerDonationByUid(uuid).subscribe(
+            (donations) => {
+                this.donationDetails = donations;
+                this.api_loading = false;
+            }
+        );
+    }
 }
-
