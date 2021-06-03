@@ -81,7 +81,7 @@
                 </li>
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
                   style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                  <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                     *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
                       <i class="fa fa-users"></i>
@@ -130,7 +130,81 @@
                     </li>
                     <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
                         Views</a></li>
-                  </ul>
+                  </ul> -->
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="modal" data-target="#selectViewModal"
+                    *ngIf="selectedView">
+                    <span style="margin-right: 10px !important;">
+                      <i class="fa fa-users"></i>
+                      <span *ngIf="!small_device_display && selectedView.name">
+                        {{selectedView.name}}</span>
+                      <span *ngIf="!small_device_display && !selectedView.name">
+                        <ng-container *ngIf="selectedView.businessName">
+                          {{selectedView.businessName}}</ng-container>
+                        <ng-container *ngIf="!selectedView.businessName">
+                          {{selectedView.firstName}}</ng-container>
+                      </span>
+                    </span>
+                    <span class="caret"></span>
+                  </button>
+                  <div class="modal fade" id="selectViewModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="selectViewModalLabel">Select View</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <ul class="" style="padding: 0 !important; list-style-type: none !important;">
+                            <li>
+                              <ul class="menu dd-menu">
+                                <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
+                                  <a class="pointer-cursor card" (click)="handleViewSel(view)" data-dismiss="modal">
+                                    <i class="fa fa-user"></i>
+                                    <ng-container *ngIf="view.name">
+                                      <h4 *ngIf="view.name.length>='27'">
+                                        {{view.name.substring(0,24) }}...</h4>
+                                      <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
+                                    </ng-container>
+                                    <ng-container *ngIf="!view.name">
+                                      <h4 *ngIf="!view.businessName">
+                                        <ng-container *ngIf="view.firstName.length>='27'">
+                                          {{ view.firstName.substring(0,24) }}...
+                                        </ng-container>
+                                        <ng-container *ngIf="view.firstName.length<'27'">
+                                          {{ view.firstName}}
+                                        </ng-container>
+                                      </h4>
+                                      <h4 *ngIf="view.businessName">
+                                        <ng-container *ngIf="view.businessName.length>='27'">
+                                          {{ view.businessName.substring(0,24) }}...
+                                        </ng-container>
+                                        <ng-container *ngIf="view.businessName.length<'27'">
+                                          {{ view.businessName}}
+                                        </ng-container>
+                                      </h4>
+                                    </ng-container>
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                            <!-- <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
+                              Views</a></li> -->
+                          </ul>
+                        </div>
+                        <div class="modal-footer">
+                          <li>
+                            <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>
+                          </li>
+                          <li class="footer manage-views"><a class="pointer-cursor btn" (click)="gotoCustomViews()">
+                            <i class="fa fa-cogs"></i>
+                            Manage Views</a>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>
