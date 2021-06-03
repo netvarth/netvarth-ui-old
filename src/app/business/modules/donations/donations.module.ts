@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DonationsRoutingModule } from './donations.rounting.module';
+import { DonationsRoutingModule } from './donations.routing.module';
 import { DonationsComponent } from './donations.component';
 import { DonationDetailsComponent } from './details/donation-details.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
