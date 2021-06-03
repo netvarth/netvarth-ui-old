@@ -175,7 +175,7 @@
     color: #1572a8 !important;
   }
   .coupon-apply-btn {
-    margin-left: 10px!important;
+    margin-top: 10px!important;
     padding: 6px 15px 8px!important;
     height: auto!important;
     background-color: #3c8dbc!important;
@@ -335,4 +335,24 @@ i {
 }
 a, .fa-file-text-o {
   color: #1572a8 !important;
+}
+@media (max-width: 400px) {
+.px-9 {
+  padding-left: 1.7rem !important;
+}
+.py-4 {
+  padding-bottom: .75rem !important;
+}
+.btn {
+  font-size: .85rem !important;
+}
+}
+.btnCancel {
+  background: #eee !important
+}
+.modal-body {
+  padding-top: 0 !important;
+}
+.col-xs-9 .col-sm-9 .col-md-9 .col-lg-9 {
+  width: 75% !important;
 }

@@ -11,8 +11,8 @@
                         [accountId]="account_id" [customId]="customId"></app-header>
                 </div>
             </div>
-            <div class="pad-10 d-flex flex-column-fluid hf-panel-body">
-                <div class="card card-custom no-margin no-padding">
+            <div class="flex-column-fluid hf-panel-body">
+                <div class="card card-custom no-margin">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
@@ -54,7 +54,7 @@
                                                     [class.tab-selected]="bookStep=='donation'">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">2</div>
-                                                        <h3 class="wizard-title mgn-lt-15">Confirm</h3>
+                                                        <h3 class="wizard-title mgn-lt-15">Payment</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow last">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -151,10 +151,10 @@
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
                                                                             <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-5 mgn-up-5 donation_label">
+                                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-5 mgn-up-5 donation_label no-padding">
                                                                                 Donor name <a
                                                                                     class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
-                                                                                    data-toggle="modal"
+                                                                                    (click)="editDonor()" data-toggle="modal"
                                                                                     data-target="#exampleModalCenter">Change
                                                                                 </a>
                                                                             </div>
@@ -216,13 +216,13 @@
                                                             </div>
                                                             <div
                                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20">
-                                                                <div class="col-md-6 col-xs-12 col-sm-12">
+                                                                <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding ">
                                                                         <div
                                                                             class="mgn-up-5 input-group mobile-error c-checkin-new">
                                                                             <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
+                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
                                                                                 Amount
                                                                             </div>
                                                                             <div
@@ -297,7 +297,7 @@
                                                                         <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                                             *ngIf="action=='note'">
                                                                             <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk">
                                                                                 {{sel_ser_det.consumerNoteTitle}}
                                                                             </div>
                                                                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -331,7 +331,7 @@
                                                                                             style="font-size: larger;"
                                                                                             type="text"
                                                                                             placeholder="donor name"
-                                                                                            class="phonenum"
+                                                                                            class="form-control phonenum"
                                                                                             [(ngModel)]="donor" />
                                                                                         <button (click)="addDonor()"
                                                                                             class="btn bt3 btn-default coupon-apply-btn"
@@ -387,7 +387,7 @@
                                                                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                                             *ngIf="action=='email'">
                                                                             <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-20">
                                                                                 Please
                                                                                 enter your
                                                                                 email for payment</div>
@@ -396,7 +396,7 @@
                                                                                 <ng-container>
                                                                                     <div class="form-group">
                                                                                         <input
-                                                                                            style="border-bottom: 1px solid"
+                                                                                            style="border: 1px solid #b6cdd8;"
                                                                                             class="form-control emailPrepay"
                                                                                             id="email"
                                                                                             placeholder="Email(user@xyz.com)"
@@ -417,7 +417,7 @@
                                                                                     <div class="form-group"
                                                                                         *ngIf="confrmshow">
                                                                                         <input
-                                                                                            style="border-bottom: 1px solid"
+                                                                                        style="border: 1px solid #b6cdd8;"
                                                                                             class="form-control emailPrepay"
                                                                                             id="email1"
                                                                                             placeholder="Re-enter Email(user@xyz.com)"
