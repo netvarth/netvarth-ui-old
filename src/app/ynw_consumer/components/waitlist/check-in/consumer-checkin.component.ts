@@ -209,13 +209,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newWhatsapp;
     virtualFields: any;
     whatsappCountryCode;
-    jcashamount: number;
-    checkJcash: any;
-    checkJcredit: any;
-    remainingadvanceamount=0;
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
     jcreditamount: any;
-    payAmount: number;
+    remainingadvanceamount;
+    amounttopay: any;
     wallet: any;
+    payAmount: number;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -822,24 +824,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             post_Data['useJcash'] = this.checkJcash
         }
         if (!this.is_wtsap_empty) {
-          if (type) {
+            if (type === 'checkin') {
                 if (this.jcashamount > 0 && this.checkJcash) {
                     this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
-                        .subscribe((data:any) => {
+                        .subscribe(data => {
                             this.remainingadvanceamount = data;
                             this.addCheckInConsumer(post_Data);
                         });
                 }
                 else {
-                    this.addCheckInConsumer(post_Data);
+                this.addCheckInConsumer(post_Data);
                 }
-            }
-           else if (this.sel_ser_det.isPrePayment) {
+            } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
-        
+        }
     }
-}
     confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
@@ -2129,7 +2129,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.saveCheckin('next');
         }
     }
-      addWaitlistAdvancePayment(post_Data) {
+    addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
@@ -2157,7 +2157,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
-      makeFailedPayment(paymentMode) {
+    makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
             'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
@@ -2375,11 +2375,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
     changeJcashUse(event) {
         if(event.checked){
             this.checkJcash = true;
         } else {
             this.checkJcash = false;
         }
-}
     }
+}
