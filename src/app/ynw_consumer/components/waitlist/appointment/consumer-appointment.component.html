@@ -1035,11 +1035,6 @@
 
                                         <div class="containerpayment "
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                            <!-- <div>
-                                                Service Fee <span class="rupee-font">{{serviceCost |
-                                                    currency:'&#8377;'}}
-                                                </span>
-                                            </div> -->
                                             <div class="jaldeecredit">
                                                 <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
@@ -1056,19 +1051,27 @@
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class=""
+                                            <div class="cancelpolicy pull-right mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div class="select-pay"> Payment option</div>
-                                                <div class="">
-                                                    <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="paytm-icon"></span> -->
-                                                </div>
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <a data-toggle="modal" data-target="#exampleModal"
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div>
+                                            <!-- <div class=""
+                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div class="select-pay"> Payment option</div>
+                                                <div class="">
+                                                    <span class="razorpay-icon selected-payment"></span>
+                                                    <span class="paytm-icon"></span>
+                                                </div>
+                                                <div
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                        class="refund_policy">Cancellation Policy</a>
+                                                </div>
+                                            </div> -->
 
                                             <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

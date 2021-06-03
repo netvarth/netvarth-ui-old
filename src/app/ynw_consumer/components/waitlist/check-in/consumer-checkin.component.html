@@ -1232,11 +1232,65 @@
                                                 <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
                                             </div>
+
                                             <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
                                                 Balance amount can be paid by other payment methods
                                             </div>
+                                            <div class="prepayment">
+                                                Payment Required now : &nbsp;
+                                                <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                    currency:'&#8377;'}}
+                                                </span>
+                                                <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
+                                                    currency:'&#8377;'}}
+                                                </span>
+                                            </div>
+
+                                            <div class="cancelpolicy pull-right mgn-rt-5"
+                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            <div
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <a data-toggle="modal" data-target="#exampleModal"
+                                                    class="refund_policy">Cancellation Policy</a>
+                                            </div>
+                                            </div>
+                                            <!-- modalbox -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog refundpol" role="document">
+                                                <div class="modal-content">
+                                                    <!-- <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                        </button>
+                                                    </div> -->
+                                                    <div class="modal-body pt-8 pb-0 refund_size">
+                                                        <span>Note:</span> Jaldee is not responsible for the
+                                                        transactions between Consumer and Provider.
+                                                        <ul>
+                                                            <li>Consumers can cancel the booking anytime</li>
+                                                            <li>If the consumer cancels the appointment, 3% will be
+                                                                deducted from the amount(which includes Jaldee
+                                                                service charges and Online Gateway fees).</li>
+                                                            <li>Refund will be received directly to the  consumer’s                                                                 bank account after he/she cancels the future
+                                                                bookings.</li>
+                                                            <li>If the booking is cancelled on the date of booking,
+                                                                refund will not be processed automatically(i.e
+                                                                Consumer must inform the provider to initiate the
+                                                                refund)</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                            class="btn btn-light-primary font-weight-bold"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="pay-section"
+                                        <!-- <div class="pay-section"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
@@ -1254,7 +1308,6 @@
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
                                                     <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="paytm-icon"></span> -->
                                                 </div>
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1263,17 +1316,10 @@
                                                 </div>
                                             </div>
 
-                                            <!-- modalbox -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog refundpol" role="document">
                                                     <div class="modal-content">
-                                                        <!-- <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                                            </button>
-                                                        </div> -->
                                                         <div class="modal-body pt-8 pb-0 refund_size">
                                                             <span>Note:</span> Jaldee is not responsible for the
                                                             transactions between Consumer and Provider.
@@ -1299,7 +1345,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="pad-10" *ngIf="heartfulnessAccount">
                                             <div class="t-and-c">
                                                 <div class="checkbox">

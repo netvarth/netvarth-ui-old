@@ -1855,7 +1855,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if( this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount){
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
                     console.log(this.payAmount);
-                } else if( this.checkJcash && this.paymentDetails.amountRequiredNow < this.jcashamount){
+                } else if( this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount){
                     this.payAmount = 0;
                     console.log(this.payAmount)
                 }
