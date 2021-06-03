@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -224,6 +224,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     questionAnswers;
     bookStep = 'donation';
     loading = true;
+    @ViewChild('closebutton') closebutton;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -376,7 +377,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             return;
         } else {
             this.donorFirstName = dnr;
-            this.donorLastName = '';
+            this.donorLastName = ''; 
+            this.closebutton.nativeElement.click();
             this.action = '';
             this.donorName = this.donor.trim();
         }
@@ -404,7 +406,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
-            this.edit = true;
+            this.edit = true; 
+            this.closebutton.nativeElement.click();
             this.action = '';
         }
     }
@@ -635,6 +638,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             () => {
                                 this.getProfile();
                                 // this.hideFilterSidebar();
+                                this.closebutton.nativeElement.click();
                                 this.action = '';
                             },
                             error => {
@@ -663,6 +667,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.action === '') {
             this.location.back();
         } else {
+            this.closebutton.nativeElement.click();
             this.action = '';
         }
     }

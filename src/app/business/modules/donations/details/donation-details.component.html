@@ -57,9 +57,9 @@
             <div class="card"
                 *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
                 <div class="">
-                    <h3 class="">
+                    <h5 class="">
                         {{customer_label | capitalizeFirst}} info
-                    </h3>
+                    </h5>
                 </div>
                 <div class="c-details">
                     <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'">
