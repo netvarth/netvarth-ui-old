@@ -185,6 +185,7 @@
     font-size: 1.5rem !important;
     color: #7a7a7a !important;
     line-height:normal !important;
+    font-weight: bold;
   }
   .cons-donate .content.loc-list .card .copy.locd{
     display: block !important;
@@ -314,9 +315,9 @@ i {
 .fade {
   opacity: 2 !important;
 }
-/* body.modal-open {
-  overflow: hidden !important;
-} */
+.disp-none {
+  display: none !important;
+}
 .modal-dialog {
   margin-top: 100px !important;
 }
@@ -326,4 +327,12 @@ i {
 }
 ::ng-deep .cdk-overlay-container {
   z-index: 1050 !important;
+}
+.close-btn button {
+  font-size: 2rem !important;
+  padding-right: 15px;
+  padding-top: 15px;
+}
+a, .fa-file-text-o {
+  color: #1572a8 !important;
 }
