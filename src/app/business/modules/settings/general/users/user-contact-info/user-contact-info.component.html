@@ -27,7 +27,12 @@
             <div class="figure-disp">
                 <span class="mgn-bt-10">Phone Number</span>
                 <div class="mgn-bt-10">
-                    <a href="tel:{{users_list.countryCode}} {{users_list.mobileNo}}" target="blank"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
+                  <ng-container>
+                    <a *ngIf="screenWidth <= 768" href="tel:{{users_list.countryCode}} {{users_list.mobileNo}}" target="blank"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
+                  </ng-container>
+                  <ng-container>
+                    <a *ngIf="screenWidth > 768"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
+                  </ng-container>
                     </div>
                 <div>{{users_list.countryCode}} {{users_list.mobileNo}}</div>
             </div>

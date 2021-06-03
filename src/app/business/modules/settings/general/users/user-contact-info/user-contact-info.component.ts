@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class userContactInfoComponent implements OnInit {
 
 users_list: any = [];
-screenWidth;
+screenWidth = window.innerWidth;
 no_of_grids = 3;
     constructor(
         public dialogRef: MatDialogRef<userContactInfoComponent>,
