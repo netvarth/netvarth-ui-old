@@ -98,7 +98,6 @@ export class VirtualFieldsComponent implements OnInit {
     }
     this.dates = this.allDates;
     if (dialogData) {
-      console.log(dialogData);
       if (dialogData.consumer) {
         this.dialogData = this.s3Processor.getJson(dialogData.consumer);
       } else {
@@ -238,9 +237,10 @@ isNumericSign(evt) {
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
-    } else {
-      this.virtualForm.patchValue({ gender: 'male' });
     }
+     //else {
+    //   this.virtualForm.patchValue({ gender: 'male' });
+    // }
     if (memberObj.userProfile && memberObj.userProfile.email) {
       this.virtualForm.patchValue({ email: memberObj.userProfile.email });
     }
@@ -291,7 +291,7 @@ isNumericSign(evt) {
     this.virtualForm.controls['countryCode_whtsap'].setValue(this.countryCode);
     this.virtualForm.controls['countryCode_telegram'].setValue(this.countryCode);
     this.virtualForm.controls['age'].setValue('');
-    this.virtualForm.controls['gender'].setValue('male');
+    this.virtualForm.controls['gender'].setValue('');
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
@@ -326,9 +326,10 @@ isNumericSign(evt) {
    
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
-    } else {
-      this.virtualForm.patchValue({ gender: 'male' });
     }
+    //  else {
+    //   this.virtualForm.patchValue({ gender: 'male' });
+    // }
     if (customer.userProfile && customer.userProfile.email) {
       this.virtualForm.patchValue({ email: customer.userProfile.email });
     }
@@ -385,7 +386,7 @@ isNumericSign(evt) {
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])]
     });
-    this.virtualForm.patchValue({ gender: 'male' });
+   // this.virtualForm.patchValue({ gender: 'male' });
     this.virtualForm.patchValue({ islanguage: 'yes' });
     // this.virtualForm.patchValue({ date: 'dd' });
     // this.virtualForm.patchValue({ month:'mm' });
@@ -465,6 +466,9 @@ isNumericSign(evt) {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
       }
+    }
+    if(this.virtualForm.get('gender').value===''){
+      isinvalid = true;
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
