@@ -16,8 +16,6 @@ import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { SignUpComponent } from './shared/components/signup/signup.component';
-import { LoginComponent } from './shared/components/login/login.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
@@ -84,8 +82,6 @@ export function init_app(globalService: GlobalService) {
     AppComponent,
     LogoutComponent,
     EqualValidator,
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
@@ -97,8 +93,6 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent
   ],
   entryComponents: [
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,

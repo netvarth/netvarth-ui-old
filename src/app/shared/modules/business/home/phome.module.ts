@@ -10,7 +10,6 @@ import { LazyModule } from '../../lazy-load/lazy.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
 import { ProvidersignupModule } from '../signup/providersignup.module';
 // import { MaterialModule } from '../../common/material.module';
-import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -20,7 +19,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         CommonModule,
         OwlModule,
         HeaderModule,
-        FooterModule,
         PhomeRoutingModule,
         RouterModule,
         // MaterialModule,
