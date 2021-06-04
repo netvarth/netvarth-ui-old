@@ -1718,3 +1718,11 @@ body.modal-open {
   font-size: 0.8rem !important;
   color: red !important;
 }
+.fa-mobile {
+  font-size: 1.5rem !important;
+  width: 20px !important;
+}
+.fa-envelope-o {
+  width: 20px !important;
+  font-size: 1.3rem !important;
+}
