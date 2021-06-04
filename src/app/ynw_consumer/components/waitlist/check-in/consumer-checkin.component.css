@@ -2195,3 +2195,11 @@ button.next-button {
   vertical-align: baseline !important;
   padding: 10px 10px !important;
 }
+.fa-mobile {
+  font-size: 1.5rem !important;
+  width: 20px !important;
+}
+.fa-envelope-o {
+  width: 20px !important;
+  font-size: 1.3rem !important;
+}
