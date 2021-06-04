@@ -253,6 +253,35 @@ color: #fff !important;
   background-color: transparent !important;
 }
 
+.heartfulness_theme1.content.bus-page .bus-page-header .panel-heading .dashboard-btn {
+  color: white !important;
+}
+
+footer.heartfulness_theme1.bus-page-footer.site-footer {
+  background-color: #8D42A2CC !important;
+  background-image: none !important;
+  border-bottom: 10px solid #d89fe8cc !important;
+}
+
+footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom {
+  border: none !important;
+}
+
+footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-links {
+  color: white !important;
+  margin: 0 !important;
+}
+
+footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-right {
+    padding-right: 10px !important;
+    border-right: 1px solid white !important;
+}
+
+footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
+    border-left: 1px solid white !important;
+    padding-left: 10px !important;
+}
+
 .heartfulness_theme1 .hf-bg-white {
   background-color: white !important;
 }

@@ -27,6 +27,7 @@ import { CardModule } from '../../../shared/components/card/card.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
+import { AppointmentComponent } from './appointment/appointment.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { UserServiceChangeModule } from '../../../shared/modules/user-service-ch
         AppointmentsComponent,
         ProviderAppointmentDetailComponent,
         AdjustscheduleDelayComponent,
-        AppointmentActionsComponent
+        AppointmentActionsComponent,
+        AppointmentComponent
     ],
     entryComponents: [
         AppointmentActionsComponent

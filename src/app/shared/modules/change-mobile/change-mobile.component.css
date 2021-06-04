@@ -13,3 +13,31 @@
         width: 50% !important;
     }
 }
+.email-border {
+    border: 1px solid #cccc;
+   }
+.width100 {
+    width: 100%;
+  }
+  .height40 {
+    height: 32px;
+    font-size: 12px !important;
+  }
+.input-field {
+    padding: 5px;
+  }
+  .email-field {
+    padding: 5px;
+  }
+.code-field {
+    width: 40px !important;
+  }
+  .codenumber {
+    display: flex;
+    margin-left: auto;
+    width: 100%;
+  }
+  .codenumber #countryCode,
+  .codenumber #whatsappCountryCode {
+    border-right: none;
+  }

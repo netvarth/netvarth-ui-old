@@ -41,6 +41,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   showMenu = false;
   enquiryCount;
   isadminPrivilege: any;
+  apptstatus: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -115,6 +116,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
+          break;
+        case 'apptStatus':
+          this.apptstatus = message.apptStatus;
           break;
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
@@ -244,10 +248,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     const settings = this.groupService.getitemFromGroupStorage('settings');
     if (settings) {
       this.donationstatus = settings.donationFundRaising;
+      this.apptstatus = settings.appointment;
     } else {
       this.provider_services.getGlobalSettings().subscribe(
         (data: any) => {
           this.donationstatus = data.donationFundRaising;
+          this.apptstatus = data.appointment;
         });
     }
   }

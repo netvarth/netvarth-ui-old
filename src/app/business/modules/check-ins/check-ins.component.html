@@ -45,14 +45,16 @@
                
             
             </li> -->
-            <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && qAvailability.availableNow">
+            <ng-container *ngIf="!apiloading && accountSettings.availability && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
+            <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="qAvailability.availableNow">
               <span class="status-val">I'm available till {{qAvailability.timeRange.eTime}}</span>
               <span class="btn btn-danger" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
             </li>
-            <li class="status-buttons-li make-available pull-right mgn-rt-15" *ngIf="!apiloading && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability && !qAvailability.availableNow">
+            <li class="status-buttons-li make-available pull-right mgn-rt-15" *ngIf="!qAvailability.availableNow">
               <span class="status-val">I'm not Available</span>
               <span class="btn btn-success" (click)="createInstantQ()">Make me available</span>
             </li>
+          </ng-container>
         </ul>
       </div>
     </nav>
@@ -200,7 +202,7 @@
                 </li> -->
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
                   style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
-                  <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                  <!-- <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                     *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
                       <i class="fa fa-users"></i>
@@ -253,7 +255,88 @@
                     </li>
                     <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
                         Views</a></li>
-                  </ul>
+                  </ul> -->
+                  <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="modal" data-target="#selectViewModal"
+                    *ngIf="selectedView">
+                    <span style="margin-right: 10px !important;">
+                      <i class="fa fa-users"></i>
+                      <span *ngIf="!small_device_display && selectedView.name && !unassignview">
+                        {{selectedView.name}}</span>
+                      <span *ngIf="!small_device_display && !selectedView.name && !unassignview">
+                        <ng-container *ngIf="selectedView.businessName">
+                          {{selectedView.businessName}}</ng-container>
+                        <ng-container *ngIf="!selectedView.businessName">
+                          {{selectedView.firstName}}</ng-container>
+                      </span>
+                      <span *ngIf="!small_device_display && unassignview">
+                        New requests</span>
+                    </span>
+                    <span class="caret"></span>
+                  </button>
+                  <div class="modal fade" id="selectViewModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="selectViewModalLabel">Select View</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <ul class="" style="padding: 0 !important; list-style-type: none !important;">
+                            <li>
+                              <ul class="menu dd-menu">
+                                <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
+                                  <a class="pointer-cursor card" (click)="handleViewSel(view)" data-dismiss="modal">
+                                    <i class="fa fa-user"></i>
+                                    <ng-container *ngIf="view.name">
+                                      <h4 *ngIf="view.name.length>='27'">
+                                        {{view.name.substring(0,24) }}...</h4>
+                                      <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
+                                    </ng-container>
+                                    <ng-container *ngIf="!view.name">
+                                      <h4 *ngIf="!view.businessName">
+                                        <ng-container *ngIf="view.firstName.length>='27'">
+                                          {{ view.firstName.substring(0,24) }}...
+                                        </ng-container>
+                                        <ng-container *ngIf="view.firstName.length<'27'">
+                                          {{ view.firstName}}
+                                        </ng-container>
+                                      </h4>
+                                      <h4 *ngIf="view.businessName">
+                                        <ng-container *ngIf="view.businessName.length>='27'">
+                                          {{ view.businessName.substring(0,24) }}...
+                                        </ng-container>
+                                        <ng-container *ngIf="view.businessName.length<'27'">
+                                          {{ view.businessName}}
+                                        </ng-container>
+                                      </h4>
+                                    </ng-container>
+                                  </a>
+                                </li>
+                                <li *ngIf="account_type == 'BRANCH'"><a class="pointer-cursor card" style="color: dimgray !important;" (click)="gotoUnassign()" data-dismiss="modal">
+                                  <i class="fa fa-question-circle"></i>
+                                  <h4>Unassigned Requests</h4></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <!-- <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
+                              Views</a>
+                            </li> -->
+                          </ul>
+                        </div>
+                        <div class="modal-footer">
+                          <li>
+                            <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>
+                          </li>
+                          <li class="footer manage-views"><a class="pointer-cursor btn" (click)="gotoCustomViews()">
+                            <i class="fa fa-cogs"></i>
+                            Manage Views</a>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
 
               </ul>
@@ -296,8 +379,8 @@
                 <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                      <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                      <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                       <span class="filter-head-title">Filters</span>
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -305,6 +388,7 @@
                       <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                     </div>
+                    <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion1">
                       <div class="card">
                         <div class="card-header">
@@ -444,7 +528,7 @@
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus1" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
-                                  <i class="fa fa-usd"></i>
+                                  <i class="fa fa-inr"></i>
                                 </div>
                                 <span>&nbsp;Payment Status</span>
                               </div>
@@ -544,6 +628,14 @@
                       </div>
                     </ul>
                   </section>
+                  <div class="filter-footer" *ngIf="filterapplied === true">
+                    <button class="btn reset-btn" (click)="clearFilter()">
+                      <i class="fa fa-undo"></i>&nbsp;Reset
+                    </button>
+                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <i class="fa fa-check"></i>&nbsp;Apply
+                    </button>
+                  </div>
                 </aside>
               </div>
               <div class="inpro-box mgn-up-10" *ngIf="startedCheckins.length > 0">
@@ -1126,8 +1218,8 @@
                   <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
                     <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                       <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                        <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                        <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                         <span class="filter-head-title">Filters</span>
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -1135,6 +1227,7 @@
                         <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                       </div>
+                      <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                       <ul class="sidebar-menu accordion" id="accordion2">
                         <div class="card">
                           <div class="card-header">
@@ -1276,7 +1369,7 @@
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus2" aria-expanded="false">
                                 <div>
                                   <div style="display: inline-block !important;">
-                                    <i class="fa fa-usd"></i>
+                                    <i class="fa fa-inr"></i>
                                   </div>
                                   <span>&nbsp;Payment Status</span>
                                 </div>
@@ -1376,6 +1469,14 @@
                         </div>
                       </ul>
                     </section>
+                    <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>&nbsp;Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>&nbsp;Apply
+                      </button>
+                    </div>
                   </aside>
                 </div>
               </div>
@@ -1658,8 +1759,8 @@
                   <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
                     <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                       <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                        <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span>
+                        <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
                         <span class="filter-head-title">Filters</span>  
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -1667,6 +1768,7 @@
                         <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                       </div>
+                      <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                       <ul class="sidebar-menu accordion" id="accordion3">
                         <div class="card">
                           <div class="card-header">
@@ -1855,7 +1957,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card" *ngIf="services.length > 0">
+                        <div class="card" *ngIf="services.length > 1">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServices3" aria-expanded="false">
@@ -1871,7 +1973,7 @@
                           </div>
                           <div id="collapseServices3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
-                              <div class="filter-checkbox-input" *ngIf="services.length > 0">
+                              <div class="filter-checkbox-input" *ngIf="services.length > 1">
                                 <!-- <label class="filterHeaders">Services</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
@@ -1946,7 +2048,7 @@
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus3" aria-expanded="false">
                                 <div>
                                   <div style="display: inline-block !important;">
-                                    <i class="fa fa-usd"></i>
+                                    <i class="fa fa-inr"></i>
                                   </div>
                                   <span>&nbsp;Payment Status</span>
                                 </div>
@@ -2044,7 +2146,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card" *ngIf="time_type == 3">
+                        <div class="card" *ngIf="time_type == 3" style="padding-bottom: 30px !important;">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3" aria-expanded="false">
@@ -2087,6 +2189,14 @@
                         </div>
                       </ul>
                     </section>
+                    <div class="filter-footer" *ngIf="filterapplied === true">
+                      <button class="btn reset-btn" (click)="clearFilter()">
+                        <i class="fa fa-undo"></i>&nbsp;Reset
+                      </button>
+                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                        <i class="fa fa-check"></i>&nbsp;Apply
+                      </button>
+                    </div>
                   </aside>
                 </div>
               </div>

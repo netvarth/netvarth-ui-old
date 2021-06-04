@@ -1,0 +1,494 @@
+<section class="container no-padding cons-donate no-padding-small">
+    <div class="content p0 loc-list p-checkin ynw-common-form-nm">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a class="pull-left back-btn mgn-up-5" (click)="goBack('backyy')"><i
+                            class="fa fa-arrow-left"></i></a>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'donation'"
+                        [accountId]="account_id" [customId]="customId"></app-header>
+                </div>
+            </div>
+            <div class="flex-column-fluid hf-panel-body">
+                <div class="card card-custom no-margin">
+                    <div class="card-body p-0">
+                        <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
+                            data-wizard-clickable="false">
+                            <div class="row justify-content-center">
+                                <div class="loading-hgt" *ngIf="loading">
+                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                </div>
+                                <div class="col-xl-12 no-padding-small" *ngIf="!loading">
+                                    <div
+                                        class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
+                                        <div class="wizard-nav">
+                                            <div class="wizard-steps p-8 p-lg-10"
+                                                *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                                <div class="wizard-step tab-selected wizard-mgn-30"
+                                                    data-wizard-type="step">
+                                                    <div class="wizard-label">
+                                                        <div class="step-icon">1</div>
+                                                        <h3 class="wizard-title mgn-lt-15">More Info</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="wizard-step" data-wizard-type="step"
+                                                    [class.tab-selected]="bookStep=='donation'">
+                                                    <div class="wizard-label">
+                                                        <div class="step-icon">2</div>
+                                                        <h3 class="wizard-title mgn-lt-15">Payment</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow last">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="booking-img"></div>
+                                    </div>
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
+                                        *ngIf="bookStep === 'qnr'">
+                                        <div class="pad-20 quest-head">
+                                            We need some more information
+                                        </div>
+                                        <app-questionnaire [questionnaireList]="questionnaireList"
+                                            [questionAnswers]="questionAnswers" [source]="'consDonation'"
+                                            (returnAnswers)="getQuestionAnswers($event)">
+                                        </app-questionnaire>
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToStep('donation')">
+                                                Next
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
+                                        *ngIf="bookStep === 'donation'">
+                                        <div class="panel-body no-padding">
+                                            <div class="c-outer m0">
+                                                <div class="c-body">
+                                                    <!-- <div class="card title-gb m0">
+                                                        <h5 class="mgn-up-10">
+                                                            <a class="back-btn" (click)="goBack()"><i
+                                                                    class="fa fa-arrow-left"></i></a>
+                                                            <span
+                                                                class=" mgn-lt-10 amount">{{businessjson.businessName}}</span>
+                                                        </h5>
+                                                    </div> -->
+                                                    <div class="col-md-12 no-padding">
+                                                        <div class="copy locd">
+                                                            <div
+                                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
+                                                                <div
+                                                                    class="col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                        <div
+                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
+                                                                            Donation For
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
+                                                                            <h6 class="card-title service"
+                                                                                *ngIf="sel_ser">
+                                                                                {{sel_ser_det.name |
+                                                                                capitalizeFirst}}
+                                                                                <p>{{sel_ser_det.description}}
+                                                                                </p>
+                                                                            </h6>
+                                                                            <div class="prenotes mgn-bt-10"
+                                                                                *ngIf="sel_ser_det.preInfoEnabled">
+                                                                                <div class="preinfo-title">
+                                                                                    {{sel_ser_det.preInfoTitle}}
+                                                                                </div>
+                                                                                <div
+                                                                                    [innerHTML]="sel_ser_det.preInfoText">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-6 col-lg-6 col-xs-12 col-sm-12 border-tp check-new-group">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                        <div
+                                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-5 mgn-up-5 donation_label no-padding">
+                                                                                Donor name <a
+                                                                                    class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
+                                                                                    (click)="editDonor()" data-toggle="modal"
+                                                                                    data-target="#exampleModalCenter">Change
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                            <div
+                                                                                class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                                                <h6 class="card-title service"
+                                                                                    *ngFor="let member of waitlist_for">
+                                                                                    {{donorName}}
+                                                                                </h6>
+                                                                                <div class="">
+                                                                                    <i class="fa fa-mobile "></i>
+                                                                                    <span
+                                                                                        class="mgn-lt-10 phonevallabel"
+                                                                                        *ngIf="userPhone">{{dialCode}}
+                                                                                        {{userPhone}}</span>
+                                                                                    <a
+                                                                                        class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                                            class="fa fa-pencil"
+                                                                                            (click)="editPhone()"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#exampleModalCenter"></i></a>
+                                                                                </div>
+                                                                                <div class=""
+                                                                                    *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                                                    <i class="fa fa-envelope-o "></i>
+                                                                                    <span
+                                                                                        class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
+                                                                                    <a
+                                                                                        class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                                            class="fa fa-pencil"
+                                                                                            (click)="handleEmail()"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#exampleModalCenter"></i></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
+                                                                                <a #modal data-toggle="modal"
+                                                                                    data-target="#exampleModalCenter">
+                                                                                </a>
+                                                                                <mat-chip-list class="btns">
+                                                                                    <mat-chip
+                                                                                        [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory"
+                                                                                        (click)="handleSideScreen('note');modal.click();">
+                                                                                        <a
+                                                                                            class="lnk action pointer-cursor"><i
+                                                                                                class="fa fa-file-text-o mgn-rt-5"
+                                                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
+                                                                                            <span
+                                                                                                *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
+                                                                                        </a>
+                                                                                    </mat-chip>
+                                                                                </mat-chip-list>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20">
+                                                                <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding ">
+                                                                        <div
+                                                                            class="mgn-up-5 input-group mobile-error c-checkin-new">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
+                                                                                Amount
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                                <label>
+                                                                                    <input type="number" min="0"
+                                                                                        class="form-control rupee-font"
+                                                                                        placeholder="&#8377; Enter Amount"
+                                                                                        [(ngModel)]="donationAmount"
+                                                                                        (keypress)=isNumeric($event)>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="prepay-amt mgn-bt-20">
+                                                                        <div *ngIf="sel_ser_det"
+                                                                            class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
+                                                                            <p class="form-level-settings applybill"
+                                                                                *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
+                                                                                Minimum <span
+                                                                                    class="bold rupee-font">{{sel_ser_det.minDonationAmount|
+                                                                                    currency:'&#8377;'}}</span>
+                                                                                Maximum <span
+                                                                                    class="bold rupee-font">{{sel_ser_det.maxDonationAmount|
+                                                                                    currency:'&#8377;'}}</span>
+                                                                            </p>
+                                                                            <p class="form-level-settings applybill"
+                                                                                *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
+                                                                                Donation Amount <span
+                                                                                    class="bold rupee-font">{{sel_ser_det.minDonationAmount|
+                                                                                    currency:'&#8377;'}}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="col-md-6 col-xs-12 col-sm-12">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
+                                                                        <div
+                                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                            <div
+                                                                                class="mainouter checkin-page c-checkin-new">
+                                                                                <div class="lnk">Make payment
+                                                                                </div>
+                                                                                <div class="mgn-bt-10">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
+                                                                                    style="display: flex;">
+                                                                                    <div class="donate-btn-bp pointer-cursor col-md-6 mgn-rt-10"
+                                                                                        (click)="payuPayment()">
+                                                                                        CC/DC/Net Banking/UPI
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="close-btn">
+                                                                        <button type="button" class="close"
+                                                                            aria-label="Close" data-dismiss="modal">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                                                            *ngIf="action=='note'">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk">
+                                                                                {{sel_ser_det.consumerNoteTitle}}
+                                                                            </div>
+                                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                <textarea
+                                                                                    class="form-control mgn-bt-20 mgn-up-20"
+                                                                                    [(ngModel)]="consumerNote"
+                                                                                    #consumernote
+                                                                                    (change)="handleConsumerNote(consumernote.value)"
+                                                                                    maxlength="1000"></textarea>
+                                                                                <div
+                                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
+                                                                                    <button mat-button
+                                                                                        class="cs-btn bt1 backtocheckin"
+                                                                                        (click)="goBack()">OK
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                                                            *ngIf="action=='donor'">
+                                                                            <div
+                                                                                class="mgn-up-5 input-group mobile-error c-checkin-new">
+                                                                                <div
+                                                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10">
+                                                                                    Enter Donor name
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+                                                                                    <label>
+                                                                                        <input
+                                                                                            style="font-size: larger;"
+                                                                                            type="text"
+                                                                                            placeholder="donor name"
+                                                                                            class="form-control phonenum"
+                                                                                            [(ngModel)]="donor" />
+                                                                                        <button (click)="addDonor()"
+                                                                                            class="btn bt3 btn-default coupon-apply-btn"
+                                                                                            type="button">Ok</button>
+                                                                                        <app-field-error-display
+                                                                                            [displayError]="true"
+                                                                                            *ngIf="donorerror != null"
+                                                                                            errorMsg={{donorerror}}>
+                                                                                        </app-field-error-display>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                                                            *ngIf="action=='phone'">
+                                                                            <div
+                                                                                class="mgn-up-5 input-group mobile-error c-checkin-new">
+                                                                                <div
+                                                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10">
+                                                                                    Enter new mobile number
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-8 col-xs-12 col-sm-6 mgn-bt-20">
+                                                                                    <div class="form-group">
+                                                                                        <ngx-intl-tel-input
+                                                                                            class="mobInput"
+                                                                                            [cssClass]="'custom'"
+                                                                                            [preferredCountries]="preferredCountries"
+                                                                                            [enableAutoCountrySelect]="true"
+                                                                                            [enablePlaceholder]="true"
+                                                                                            [searchCountryFlag]="true"
+                                                                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                                                            [selectFirstCountry]="false"
+                                                                                            [maxLength]="15"
+                                                                                            [phoneValidation]="true"
+                                                                                            [selectedCountryISO]="selectedCountry"
+                                                                                            [separateDialCode]="separateDialCode"
+                                                                                            [numberFormat]="PhoneNumberFormat.National"
+                                                                                            name="phone"
+                                                                                            [(ngModel)]="selected_phone">
+                                                                                        </ngx-intl-tel-input>
+                                                                                        <div class="sts-msg error"
+                                                                                            *ngIf="phoneerror!=''">
+                                                                                            {{phoneerror}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <button (click)="addPhone()"
+                                                                                        class="btn bt3 btn-default coupon-apply-btn"
+                                                                                        type="button">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                                                            *ngIf="action=='email'">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-20">
+                                                                                Please
+                                                                                enter your
+                                                                                email for payment</div>
+                                                                            <div
+                                                                                class="col-md-7 col-sm-12 col-xs-12 mgn-bt-20">
+                                                                                <ng-container>
+                                                                                    <div class="form-group">
+                                                                                        <input
+                                                                                            style="border: 1px solid #b6cdd8;"
+                                                                                            class="form-control emailPrepay"
+                                                                                            id="email"
+                                                                                            placeholder="Email(user@xyz.com)"
+                                                                                            [(ngModel)]="payEmail"
+                                                                                            autocomplete="off"
+                                                                                            (keyup)="resetApiErrors();showConfrmEmail($event)"
+                                                                                            onpaste="return false;"
+                                                                                            oncopy="return false"
+                                                                                            oncut="return false"
+                                                                                            ondrag="return false"
+                                                                                            ondrop="return false">
+                                                                                        <app-field-error-display
+                                                                                            [displayError]="true"
+                                                                                            *ngIf="emailerror != null"
+                                                                                            errorMsg={{emailerror}}>
+                                                                                        </app-field-error-display>
+                                                                                    </div>
+                                                                                    <div class="form-group"
+                                                                                        *ngIf="confrmshow">
+                                                                                        <input
+                                                                                        style="border: 1px solid #b6cdd8;"
+                                                                                            class="form-control emailPrepay"
+                                                                                            id="email1"
+                                                                                            placeholder="Re-enter Email(user@xyz.com)"
+                                                                                            [(ngModel)]="payEmail1"
+                                                                                            autocomplete="off"
+                                                                                            onpaste="return false;"
+                                                                                            oncopy="return false"
+                                                                                            oncut="return false"
+                                                                                            ondrag="return false"
+                                                                                            ondrop="return false"
+                                                                                            (keyup)="resetApiErrors()">
+                                                                                        <app-field-error-display
+                                                                                            [displayError]="true"
+                                                                                            *ngIf="email1error != null"
+                                                                                            errorMsg={{email1error}}>
+                                                                                        </app-field-error-display>
+                                                                                    </div>
+                                                                                    <span class="input-group-btn">
+                                                                                        <button
+                                                                                            class="btn bt3 btnCancel"
+                                                                                            type="button"
+                                                                                            (click)="goBack()">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                        <button
+                                                                                            class="btn bt3 btn-default"
+                                                                                            (click)="addEmail()"
+                                                                                            type="button">Add</button>
+                                                                                    </span>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="disp-none modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-light-primary font-weight-bold"
+                                                                            data-dismiss="modal" #closebutton></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+                                        </div>
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            <div class="mr-2"
+                                                *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                                <button type="button"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('qnr')">
+                                                    Go Back
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button" (click)="payuPayment()"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                    CC/DC/Net Banking/UPI
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

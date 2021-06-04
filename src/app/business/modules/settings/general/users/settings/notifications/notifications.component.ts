@@ -43,6 +43,7 @@ export class NotificationsUserComponent implements OnInit {
     custmr_domain_terminology = '';
     provdr_domain_terminology = '';
     userId: any;
+    isadminPrivilege: any;
 
     constructor(
         private router: Router,
@@ -60,6 +61,7 @@ export class NotificationsUserComponent implements OnInit {
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.isadminPrivilege = user.adminPrivilege
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
         });

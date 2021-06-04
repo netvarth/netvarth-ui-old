@@ -522,7 +522,7 @@ export class CustomerSearchComponent implements OnInit {
                                 id: data
                             }
                         };
-                        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                        this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
                     } else {
                         this.router.navigate(['provider', 'customers']);
                     }
@@ -621,14 +621,14 @@ export class CustomerSearchComponent implements OnInit {
                     ph: this.customerPhone, timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate
                 }
             };
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+            this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
         } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     ph: this.customerPhone, timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType
                 }
             };
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+            this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
         }
 
 
