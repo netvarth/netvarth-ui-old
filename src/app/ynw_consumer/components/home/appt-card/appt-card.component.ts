@@ -139,6 +139,9 @@ export class ApptCardComponent implements OnInit, OnChanges {
     });
     return fav;
   }
+  getProviderName(provider){
+    return provider.firstName +' '+provider.lastName;
+    }
   cardActionPerformed(type, action, booking, event) {
     event.stopPropagation();
     const actionObj = {};
