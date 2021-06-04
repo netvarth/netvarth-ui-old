@@ -25,7 +25,7 @@
                             <div class="col-md-12" *ngIf="actionparam.type !== 'view' && !api_loading">
                                 <div  class="create-dept">
                                     <ul class="info-lst serviceadd-info">
-                                            <li> <a class="pointlist"
+                                            <li *ngIf="isadminPrivilege"> <a class="pointlist"
                                                         routerLink="/provider/license/addons">To create an user, your license package needs to  be Premium or higher.In order to add additional users, you can purchase  'Multi User'
                                                         add-on from the Subscription Plan section.</a>
                                             </li>
@@ -204,7 +204,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
 
 <!-- *******User Telegram and what's up number ************ -->
-                                    <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
                                         <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
                                             <div class="form-group">
                                                 <mat-form-field>
@@ -266,7 +266,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="clearfix"></div>
+                                    <div class="clearfix"></div> -->
        <!-- close telegarm and whatsup  part  -->
 
 
@@ -341,6 +341,78 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
+
+
+
+
+
+
+
+                                    <!-- *******User Telegram and what's up number ************ -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text" (keypress)="isNumericSign($event)" matInput
+                                                        class="input-group-text" id="countryCode_whatsapp"
+                                                        placeholder="Country code " formControlName="countryCode_whatsapp"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                            class="form-control text-width" id="whatsappumber"
+                                                            placeholder="Enter whatsapp # " formControlName="whatsappumber"
+                                                            autocomplete="off">
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(userForm,'whatsappumber')"
+                                                    [errorMsgs]="fed_service.getErrorMessage(userForm,'whatsappumber',
+                        {
+                        'minlength' : 'Enter a 10 digit whatsapp number',
+                        'maxlength' : 'Enter a 10 digit whatsapp number',
+                        'pattern' : 'Enter a 10 digit whatsapp number'
+                        })">
+                                                </app-field-error-display>
+                                            </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;" *ngIf="showPrvdrFields">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text"  (keypress)="isNumericSign($event)"  matInput
+                                                        class="input-group-text" id="countryCode_telegram"
+                                                        placeholder="Country code " formControlName="countryCode_telegram"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="form-control text-width" id="telegramnumber"
+                                                        placeholder="Enter Telegram # " formControlName="telegramnumber"
+                                                        autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(userForm,'telegramnumber')"
+                                                [errorMsgs]="fed_service.getErrorMessage(userForm,'telegramnumber',
+                    {
+                    'minlength' : 'Enter a 10 digit Telegram number',
+                    'maxlength' : 'Enter a 10 digit Telegram number',
+                    'pattern' : 'Enter a 10 digit Telegram number'
+                    })">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="clearfix"></div>
+       <!-- close telegarm and whatsup  part  -->
 
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">

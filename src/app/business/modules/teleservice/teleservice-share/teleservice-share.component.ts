@@ -166,7 +166,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.waitFor = '\n2. Wait for the video call to begin';
     this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
-    this.provider_msgJV = 'How to start the video call -\n Click on "Start Video Consultation" button';
+    this.provider_msgJV = 'How to start the video call -\n Click on "Launch Meeting" button';
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
