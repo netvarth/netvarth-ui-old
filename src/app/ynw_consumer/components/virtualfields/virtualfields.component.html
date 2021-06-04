@@ -20,14 +20,14 @@
                         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                         <div class="cust-loginpge-color" *ngIf="!api_loading">
                             <div *ngIf="hideLanguages">
-                                    <div class="">
+                                    <!-- <div class="">
                                             <label class="col-form-label" for="name">Service Provider Name : </label>
                                             <span> {{ provider }}</span>
                                     </div>
                                     <div class="">
                                             <label class="col-form-label" for="name">Consultation Request : </label>
                                             <span> {{ serviceDetails.name }} </span>
-                                    </div>
+                                    </div> -->
                             
                                 <div class="mgn-up-10">
                                     <label class="col-form-label" for="name">Consultation is For </label>
@@ -45,7 +45,7 @@
                                 </div>
                           
                                 <div style="font: size 0.5rem;">
-                                        Please provide necessary information. This information will be saved in your profile
+                                    Please provide us with the below information which will be saved as part of your profile.
                                     </div>
                                 <div class="form-group"
                                     *ngIf="virtualForm.get('serviceFor').value==='new_member'">
@@ -173,7 +173,7 @@
                                     <label class="col-form-label" for="name">Contact Information </label>
     
                                     <div class="form-level-settings smallfont">
-                                            Communications,Remote consultation may  happen on your Whatsapp number.SMS alerts will be sent to your mobile phone number.Electronic Receipts/prescription status will sent to email
+                                        Please provide us with all the contact info you might have which might be used for remote consultation, sending sms alerts, notifications, ebills, e-prescription and more.
                                          </div>
                                  <div class="mgn-up-10 mgn-bt-10">
                                         <label class="col-form-label" for="phone">Phone # </label>
