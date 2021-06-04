@@ -10,12 +10,12 @@ export class MeetService {
     isProviderReady(post_data) {
         return this.servicemeta.httpPut('consumer/appointment/videocall/ready', post_data);
     }
-    // isConsumerReady(post_data) {
-    //     const path = 'provider/appointment/videocall/ready/' , post_data;
-    //     return this.servicemeta.httpPut(path);
-    // }
     isConsumerReady(post_data) {
-        return this.servicemeta.httpPut('provider/appointment/videocall/ready', post_data);
+        return this.servicemeta.httpPut('provider/appointment/videocall/ready/', post_data);
+    }
+    isConsumerReadyMeet(post_data) {
+        // alert('1')
+        return this.servicemeta.httpPut('provider/video/adhoc/ready', post_data);
     }
     getStatus(uuid) {
         const path = 'provider/appointment/video/status/' + uuid;
@@ -41,5 +41,13 @@ export class MeetService {
     //     const path = 'provider/appointment/video/link/' + videoId;
     //     return this.servicemeta.httpGet(path);
     //   }
+    linkExpired(id) {
+        const url = 'provider/video/adhoc/' + id + '/link/status';
+        return this.servicemeta.httpGet(url);
+      }
+      getStats(id) {
+        const url = 'provider/video/adhoc/' + id + '/status';
+        return this.servicemeta.httpGet(url);
+      }
 
 }

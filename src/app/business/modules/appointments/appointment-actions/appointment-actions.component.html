@@ -1,21 +1,24 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
-    Select an action to perform
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === '' || action === 'status'">
+    <ng-container *ngIf="action === ''">Select an action to perform</ng-container>
+    <ng-container *ngIf="action === 'status'">Change status to</ng-container>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
 <div *ngIf="apiloading">
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
-<div class="action-section col-md-12 no-padding" *ngIf="action==='' && !apiloading">
-    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10" *ngIf="!data.multiSelection">
-        <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''" style="font-weight: bold;">
-            {{customer_label | capitalizeFirst}} Name : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
-        <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''" style="font-weight: bold;;">
-            {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
-        <p style="font-weight: bold;">Appointment Time : {{getSingleTime(appt.appmtTime)}}
+<div class="action-section col-md-12 no-padding" *ngIf="(action === '' || action === 'status') && !apiloading">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-lt-20 no-padding" *ngIf="!data.multiSelection">
+        <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">
+            {{customer_label | capitalizeFirst}} Name : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}}
         </p>
+        <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''">
+            {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
+        <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
+        </p>
+        <p *ngIf="action === 'status'">Current Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
             (click)="goToCheckinDetails()">
             <div class="action-box-sub">
@@ -23,14 +26,16 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo"
-            (click)="!buttonClicked && changeWaitlistStatus('Confirmed')">
+        <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
+            *ngIf="showArrived || showCancel || showUndo || appt.apptStatus == 'Started'">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
-                <div class="icon-text">Change Status</div>
+                <div class="icon-text">Change Status to</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')" (click)="changeWaitlistservice()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+            (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
@@ -38,7 +43,9 @@
                 <div *ngIf="!appt.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div> -->
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider" (click)="removeProvider()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
+            (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Remove {{provider_label | capitalizeFirst}}</div>
@@ -52,14 +59,14 @@
                 <div class="icon-text">{{customer_label | capitalizeFirst}} info</div>
             </div>
         </div> -->
-       
-        <div class="action-box pointer-cursor" *ngIf="showArrived"
+
+        <!-- <div class="action-box pointer-cursor" *ngIf="showArrived"
             (click)="!buttonClicked && changeWaitlistStatus('Arrived')">
             <div class="action-box-sub">
                 <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
                 <span class="callstop-icon"></span>
@@ -85,8 +92,8 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
                 <span class="zoom-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
-                <span class="fa jvideo-icon jvideo-icon-sm" 
-                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span> 
+                <span class="fa jvideo-icon jvideo-icon-sm"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span>
                 <span class="phon-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
                 <span class="wtsapaud-icon"
@@ -99,13 +106,13 @@
             </div>
 
         </div>
-        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
+        <!-- <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
             (click)="!buttonClicked && changeWaitlistStatus('Completed')">
             <div class="action-box-sub">
                 <span class="complete-icon"></span>
                 <div class="icon-text">Complete</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
             (click)="rescheduleActionClicked()">
@@ -114,13 +121,13 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel"
+        <!-- <div class="action-box pointer-cursor" *ngIf="showCancel"
             (click)="!buttonClicked && changeWaitlistStatus('Cancelled')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel appointment</div>
             </div>
-        </div>
+        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
@@ -128,13 +135,13 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
-        (click)="printAppt()">
-        <div class="action-box-sub">
-            <span class="printer-icon"></span>
-            <div class="icon-text">Print</div>
+            (click)="printAppt()">
+            <div class="action-box-sub">
+                <span class="printer-icon"></span>
+                <div class="icon-text">Print</div>
+            </div>
         </div>
-    </div>
-    <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'"
             (click)="gotoCustomerDetails()">
             <div class="action-box-sub">
                 <span class="customerdetails-icon"></span>
@@ -142,27 +149,27 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'"
-        (click)="addProviderNote()">
-        <div class="action-box-sub">
-            <span class="notes-icon"></span>
-            <div class="icon-text">Private Notes</div>
+            (click)="addProviderNote()">
+            <div class="action-box-sub">
+                <span class="notes-icon"></span>
+                <div class="icon-text">Private Notes</div>
+            </div>
         </div>
-    </div>
-    <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
-        <div class="action-box-sub">
-            <span class="message-icon"></span>
-            <div class="icon-text">Send Message</div>
+        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
+            <div class="action-box-sub">
+                <span class="message-icon"></span>
+                <div class="icon-text">Send Message</div>
+            </div>
         </div>
-    </div>
-    <div class="action-box pointer-cursor" (click)="sendimages()"
-        *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && showAttachment">
-        <div class="action-box-sub">
-            <!-- <span class="message-icon"></span> -->
-            <span><i class="material-icons">attach_file</i></span>
-            <div class="icon-text">Send Attachments</div>
+        <div class="action-box pointer-cursor" (click)="sendimages()"
+            *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && showAttachment">
+            <div class="action-box-sub">
+                <!-- <span class="message-icon"></span> -->
+                <span><i class="material-icons">attach_file</i></span>
+                <div class="icon-text">Send Attachments</div>
+            </div>
         </div>
-    </div>
-    <div *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && !data.multiSelection && showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+        <div *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && !data.multiSelection && showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'"
             class="action-box pointer-cursor" (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
@@ -178,7 +185,7 @@
                 <!-- <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
-        
+
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="unBlockAppt()">
             <div class="action-box-sub">
                 <span class="unblock-appt-icon"></span>
@@ -191,9 +198,9 @@
                 <div class="icon-text">Add {{customer_label}}</div>
             </div>
         </div>
-        
-        
-        
+
+
+
         <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
             <div class="action-box-sub">
                 <span class="locate-icon"></span>
@@ -207,27 +214,27 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-       
-        
+
+
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-       
-        
-        
+
+
+
         <!--Added By Mani for Video Play-->
         <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
-        class="action-box pointer-cursor" (click)="viewRecordings()">
-        <div class="action-box-sub">
-            <!-- <span class="mr-rx-icon"></span> -->
-            <i class="fa fa-circle record red fa-2x pad-9"></i>
-            <div class="icon-text">View Recordings</div>
-            <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
+            class="action-box pointer-cursor" (click)="viewRecordings()">
+            <div class="action-box-sub">
+                <!-- <span class="mr-rx-icon"></span> -->
+                <i class="fa fa-circle record red fa-2x pad-9"></i>
+                <div class="icon-text">View Recordings</div>
+                <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <div class="dashqr" *ngIf="showQR">
@@ -278,15 +285,17 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <p>Service Provider : {{appt.providerAccount.businessName}} </p>
             <p *ngIf="appt.service.deptName">Department : {{appt.service.deptName}} </p>
-            <p *ngIf="appt.provider">{{provider_label | capitalizeFirst}} : {{appt.provider.businessName}}</p>
+            <p *ngIf="appt.provider">{{provider_label | capitalizeFirst}} : {{(appt.provider.businessName) ?
+                appt.provider.businessName : appt.provider.firstName
+                + ' ' + appt.provider.lastName}}</p>
             <p>Location: {{appt.location.place}}</p>
             <p>Service :
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                     class="fa meet-icon"></i>
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"
                     class="fa zoom-icon"></i>
-                <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" 
-                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i> 
+                <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"
                     class="fa phon-icon"></i>
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"
@@ -354,5 +363,27 @@
                     (click)="rescheduleAppointment()">Reschedule</button>
             </div>
         </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
+    <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
+        <div class="status"> Arrived</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('Started')">
+        <div class="status"> In Progress</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="appt.apptStatus == 'Started'" (click)="changeWaitlistStatus('Completed')">
+        <div class="status"> Complete</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">
+        <div class="status"> Cancel</div>
+        <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+    <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('Confirmed')">
+        <div class="status"> Checked In</div>
+        <!-- <div class="form-level-settings">hints</div> -->
     </div>
 </div>

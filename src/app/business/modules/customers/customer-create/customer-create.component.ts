@@ -603,7 +603,7 @@ export class CustomerCreateComponent implements OnInit {
           type: this.type
         }
       };
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+      this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
     } else if (this.source === 'appt-block') {
       this.confirmApptBlock(data);
     } else if (this.source === 'waitlist-block') {
@@ -639,7 +639,7 @@ export class CustomerCreateComponent implements OnInit {
           checkin_type: this.checkin_type
         }
       };
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+      this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
     } else if (this.source === 'order') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -732,7 +732,7 @@ export class CustomerCreateComponent implements OnInit {
           type: this.type
         }
       };
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+      this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
     } else {
       this._location.back();
     }

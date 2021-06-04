@@ -84,7 +84,8 @@ export class ProviderReimburseReportComponent implements OnInit {
     'pay_status': false
   };
   allPayStatusSelected = false;
-  statusMultiCtrl: any = [];
+  statusMultiCtrl: any = [];  
+  maxday = new Date();
   constructor(private dialog: MatDialog, private router: Router,
     public dateformat: DateFormatPipe,
     private provider_servicesobj: ProviderServices,

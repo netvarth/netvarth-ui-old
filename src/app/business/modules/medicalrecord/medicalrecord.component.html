@@ -11,7 +11,7 @@
   <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 mgn-up-10 no-padding-small">
     <div class="card title-gb no-padding">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
-          <label>{{customer_label | capitalizeFirst}} Name :</label>&nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+          <label *ngIf="customerDetails.firstName ||customerDetails.lastName">{{customer_label | capitalizeFirst}} Name :</label>&nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
           <label>{{customer_label | capitalizeFirst}} Id  :</label>&nbsp; <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
           <label  *ngIf="customerDetails.dob">DOB :</label> &nbsp;<span  *ngIf="customerDetails.dob">{{customerDetails.dob  | date:newDateFormat}} </span> <br  *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender :</label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>

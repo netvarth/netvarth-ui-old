@@ -197,9 +197,9 @@ export class CheckinDetailsSendComponent implements OnInit {
                   () => {
                       this.dialogRef.close();
                       if (this.showToken) {
-                        this.snackbarService.openSnackBar('Token details mailed successfully');
+                        this.snackbarService.openSnackBar('Token details sent successfully');
                       } else {
-                      this.snackbarService.openSnackBar('Check-in details mailed successfully');
+                      this.snackbarService.openSnackBar('Check-in details sent successfully');
                       }
                   },
                   error => {
@@ -223,7 +223,7 @@ export class CheckinDetailsSendComponent implements OnInit {
               this.provider_services.emailAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();
-                  this.snackbarService.openSnackBar('Appointment details mailed successfully');
+                  this.snackbarService.openSnackBar('Appointment details sent successfully');
                 },
                 error => {
                   this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

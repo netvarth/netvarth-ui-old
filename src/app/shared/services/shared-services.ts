@@ -594,7 +594,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   isuserAvailableNow(id) {
-    const url = 'provider/waitlist/queues/isAvailableNow/today/'+ id;
+    const url = 'provider/waitlist/queues/isAvailableNow/today/' + id;
     return this.servicemeta.httpGet(url);
   }
   getLicenseDetails() {
@@ -680,6 +680,10 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  shareMeetingdetails(data) {
+    const url = 'provider/waitlist/shareMeetingDetails';
+    return this.servicemeta.httpPost(url, data);
+  }
   consumerMassCommunicationWithId(data) {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
@@ -748,6 +752,10 @@ export class SharedServices {
   }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  shareMeetingDetailsAppt(data) {
+    const url = 'provider/appointment/shareMeetingDetails';
     return this.servicemeta.httpPost(url, data);
   }
   consumerOrderMassCommunicationAppt(data) {
@@ -1050,5 +1058,17 @@ export class SharedServices {
   getTelegramstat() {
     const url = 'consumer/telegram/settings';
     return this.servicemeta.httpGet(url);
+  }
+  getDonationQuestionnaire(serviceId, account_id) {
+    const url = 'consumer/questionnaire/donation/' + serviceId + '?account=' + account_id;
+    return this.servicemeta.httpGet(url);
+  }
+  submitDonationQuestionnaire(uuid, body, account_id) {
+    const url = 'consumer/donation/questionnaire/submit/' + uuid + '?account=' + account_id;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderDonationQuestionnaire(uuid, body) {
+    const url = 'provider/donation/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
   }
 }

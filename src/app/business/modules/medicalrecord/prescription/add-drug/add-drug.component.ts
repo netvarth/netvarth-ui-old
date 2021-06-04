@@ -137,6 +137,9 @@ export class AddDrugComponent implements OnInit {
     this.dialogRef.close(this.drugDetail);
     }
   }
+  clearError(event){
+    this.api_error = '';
+  }
   close() {
     if (this.addAnother === true) {
       this.dialogRef.close(this.drugDetail);

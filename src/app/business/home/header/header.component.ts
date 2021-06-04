@@ -80,6 +80,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
       switch (message.ttype) {
         case 'checkin-settings-changed':
           this.showCheckinED();
@@ -110,6 +111,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'showmenu':
           this.showMenuSection = message.value;
           break;
+          case 'updateuserdetails':
+            this.getBusinessdetFromLocalstorage();
+            break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();

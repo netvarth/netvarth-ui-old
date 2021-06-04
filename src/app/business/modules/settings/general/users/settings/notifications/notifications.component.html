@@ -29,7 +29,7 @@
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" style="padding-bottom: 10px;">
                 <label style="display: flex">Remaining SMS Credits: <span class="bold">
                         &nbsp;{{smsCredits}}</span> </label>
-                <ul class="info-lst serviceadd-info">
+                <ul *ngIf="isadminPrivilege" class="info-lst serviceadd-info">
                     <li>{{genrl_notification_cap}} <a class="pointlist" matTooltip="Go to Add-ons"
                             routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
                     </li>

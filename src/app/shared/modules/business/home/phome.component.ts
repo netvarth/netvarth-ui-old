@@ -1,16 +1,14 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';;
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { LoginComponent } from '../../../../shared/components/login/login.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { projectConstants } from '../../../../app.component';
-import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
 import { SessionStorageService } from '../../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -80,7 +78,6 @@ export class PhomeComponent implements OnInit {
   carouselTwo;
   evnt;
   constructor(
-    public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
     public shared_functions: SharedFunctions,
     // private routerobj: Router,
@@ -259,20 +256,6 @@ export class PhomeComponent implements OnInit {
     evt.target.className += ' active';
   }
 
-  doSignup(origin?) {
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-    });
-
-  }
   showMore(name) {
     switch (name) {
       case 'public_search': {

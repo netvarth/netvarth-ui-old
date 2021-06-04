@@ -25,8 +25,8 @@
               <div class="form-group phonenumber">
                 <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
               </div>
-              <div class="form-group col-lg-6">
-                <!-- <mat-form-field>
+              <!-- <div class="form-group col-lg-6">
+                 <mat-form-field>
                   <div class="input-group">
                     <div class="input-group-prepend mob-prefix">
                       <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
@@ -35,7 +35,7 @@
                       id="phonenumber" placeholder="Enter New Mobile #" formControlName="phonenumber" autocomplete="off"
                       ngModel maxlength="10">
                   </div>
-                </mat-form-field> -->
+                </mat-form-field> 
                 <div class="input-group">
                   <div class="input-group-prepend"><span class="input-group-text1"><i style="font-style: normal;font-size: small;">{{mob_prefix_cap}}</i></span></div>
                   <input type="text" class="form-control" (keypress)="isNumeric($event)" id="phonenumber" placeholder="Enter New Mobile #" formControlName="phonenumber" autocomplete="off"
@@ -49,7 +49,18 @@
                   'pattern' : 'Only numbers are allowed'
                 })">
                 </app-field-error-display>
-              </div>
+              </div> -->
+              <div class="codenumber">
+                <input
+                    class="width100 height40 email-border code-field pull-right"
+                    id="countryCode" placeholder=""
+                    name="countryCode"  formControlName="countryCode"
+                    autocomplete="off">
+                <input
+                    class="width100 height40 email-border input-field pull-right"
+                    id="newPhone" placeholder="" name="newPhone"
+                    formControlName="phonenumber" autocomplete="off" (keypress)="isNumeric($event)" maxlength="10" formc>
+            </div>
               <button type="submit" mat-button
                 [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{save_btn_cap}}</button>
             </form>

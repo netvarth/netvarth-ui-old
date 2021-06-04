@@ -57,6 +57,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   active_user;
   domain;
   qAvailability: any = [];
+  accountType: any;
   // router: any;
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -72,10 +73,11 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.accountType = user.accountType;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');   
   }
 
   ngOnDestroy() {

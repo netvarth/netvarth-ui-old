@@ -4,10 +4,7 @@ import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
-import { MatDialog } from '@angular/material/dialog';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { SignUpComponent } from '../../components/signup/signup.component';
-import { LoginComponent } from '../../components/login/login.component';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -109,7 +106,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
   constructor(
-    private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     public router: Router,
     private _scrollToService: ScrollToService,
@@ -320,35 +316,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
   doSignup(origin?, moreOptions = {}) {
     if (origin === 'provider') {
     }
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: this.checkProvider(origin),
-        moreOptions: moreOptions
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-    });
+    // const dialogRef = this.dialog.open(SignUpComponent, {
+    //   width: '50%',
+    //   panelClass: ['signupmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     is_provider: this.checkProvider(origin),
+    //     moreOptions: moreOptions
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(() => {
+    // });
   }
   doLogin(origin?) {
     if (origin === 'provider') {
     }
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '50%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: this.checkProvider(origin)
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'showsignupfromlogin') {
-        this.doSignup(origin);
-      }
-    });
+    // const dialogRef = this.dialog.open(LoginComponent, {
+    //   width: '50%',
+    //   panelClass: ['loginmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: this.checkProvider(origin)
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'showsignupfromlogin') {
+    //     this.doSignup(origin);
+    //   }
+    // });
   }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';

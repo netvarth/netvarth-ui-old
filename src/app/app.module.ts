@@ -16,8 +16,6 @@ import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { SignUpComponent } from './shared/components/signup/signup.component';
-import { LoginComponent } from './shared/components/login/login.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
@@ -73,7 +71,6 @@ import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
 import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
-import { ServicePageHealthcareComponent } from './shared/modules/business/service-page-healthcare/service-page-healthcare.component';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 export function init_app(globalService: GlobalService) {
@@ -85,8 +82,6 @@ export function init_app(globalService: GlobalService) {
     AppComponent,
     LogoutComponent,
     EqualValidator,
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
@@ -95,12 +90,9 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent,
-    ServicePageHealthcareComponent,
     ListRecordingsDialogComponent
   ],
   entryComponents: [
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,
@@ -194,3 +186,4 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

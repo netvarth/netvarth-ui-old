@@ -106,7 +106,7 @@ export class RazorpayService {
         } else if (checkin_type === 'payment_link') {
           this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
-          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+        
           let multiple;
           if (uuids && uuids.length > 1) {
             multiple = true;
@@ -126,10 +126,11 @@ export class RazorpayService {
             queryParams: queryParams
           }
           setTimeout(() => {
+          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
           },700);
         } else if (checkin_type === 'appt_prepayment') {
-          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          
           let queryParams = {
             'prepayment': prepayment,
             'account_id': account_id,
@@ -142,6 +143,7 @@ export class RazorpayService {
             queryParams: queryParams
           }
           setTimeout(() => {
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
           },700);
          

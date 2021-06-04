@@ -1148,6 +1148,15 @@ export class SharedFunctions {
       return false;
     }
   }
+  isNumericwithoutdot(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    if ((inputKeyCode >= 48 && inputKeyCode <= 57) || inputKeyCode === 8) {
+      return true;
+    } else {
+      evt.preventDefault();
+      return false;
+    }
+  }
   isNumericSign(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
     if ((inputKeyCode >= 48 && inputKeyCode <= 57) || inputKeyCode === 8 || inputKeyCode === 46 || inputKeyCode === 43) {
