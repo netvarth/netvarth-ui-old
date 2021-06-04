@@ -14,7 +14,7 @@ const routes: Routes = [
         path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
         canActivate: [AuthGuardConsumer]
     },
-    { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
+    { path: '', component: HomeComponent},
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
