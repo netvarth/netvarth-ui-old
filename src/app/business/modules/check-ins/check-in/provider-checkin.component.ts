@@ -856,10 +856,11 @@ export class ProviderCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        this.callingModes = this.customer_data.phoneNo.trim();
-                    
-                        this.wtsapmode = this.customer_data.phoneNo;
-                        console.log('whatsappmoe..'+this.wtsapmode);
+                        if(this.customer_data.phoneNo){
+                            this.callingModes = this.customer_data.phoneNo.trim();
+                            this.wtsapmode = this.customer_data.phoneNo;
+                            console.log('whatsappmoe..'+this.wtsapmode);
+                        }
                     }
                 }
             }
@@ -1644,7 +1645,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
             const filter = {
-                'departmentId-eq': obj,
+                'deptId-eq': obj,
                 'status-eq': 'ACTIVE'
             };
             this.provider_services.getUsers(filter).subscribe(
@@ -1961,7 +1962,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.showAction = false;
     }
     isNumeric(evt) {
-        return this.sharedFunctionobj.isNumeric(evt);
+        return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
     addCallingmode(index) {
         if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {

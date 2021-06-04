@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { projectConstantsLocal } from "../constants/project-constants";
 import { DateTimeProcessor } from "./datetime-processor.service";
 import { LocalStorageService } from "./local-storage.service";
 import { ServiceMeta } from "./service-meta";
@@ -62,6 +63,14 @@ export class DomainConfigGenerator {
      */
     bussinessDomains() {
         const path = 'ynwConf/businessDomains';
+        return this.servicemeta.httpGet(path);
+    }
+
+    /**
+     * 
+     */
+    getUIAccountConfig(account) {
+        const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json';
         return this.servicemeta.httpGet(path);
     }
 }

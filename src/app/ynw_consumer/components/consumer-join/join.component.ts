@@ -56,6 +56,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   close_message: any;
   fname: any;
   lname: any;
+  theme:any;
   phoneExists = false;
   isPhoneValid = false;
   resendViaEmail: boolean;
@@ -90,6 +91,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.joinStep = true;
     this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
+    this.theme = this.data.theme;
+    console.log(this.theme);
     this.createForm();
     this.api_loading = false;
     if (this.data.type === 'consumer') {

@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -91,6 +92,9 @@ export class AppointmentActionsComponent implements OnInit {
     labelsforRemove: any = [];
     showApply = false;
     buttonClicked = false;
+    accountType: any;
+    changeService = true;
+    check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -125,6 +129,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -318,7 +323,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -338,6 +343,43 @@ export class AppointmentActionsComponent implements OnInit {
             this.buttonClicked = true;
         }
         this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
+    }
+    changeWaitlistservice() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'user'], { queryParams: { source: 'appt' } });
+    }
+    removeProvider() {
+        let msg = '';
+        msg = 'Do you want to remove this ' + this.provider_label + '?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'uid': this.appt.uid,
+                    'provider': {
+                        'id': this.appt.provider.id
+                    },
+                };
+                this.provider_services.unassignUserAppointment(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
@@ -367,13 +409,13 @@ export class AppointmentActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked') {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && !this.data.teleservice) {
             this.showUndo = true;
         }
-        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService) {
+        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService && !this.data.teleservice) {
             this.showArrived = true;
         }
-        if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
+        if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
             this.showCancel = true;
         }
         if (this.data.timetype === 1 && this.appt.service.livetrack && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
@@ -385,13 +427,13 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
             this.showMsg = true;
         }
-        if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService)) {
+        if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started')) {
+        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
-        if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
+        if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
             this.showCall = true;
         }
         if (this.pos && this.appt.apptStatus !== 'blocked' && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'Cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
@@ -402,6 +444,9 @@ export class AppointmentActionsComponent implements OnInit {
         }
         if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
             this.showAttachment = true;
+        }
+        if (this.data.timetype === 3) {
+            this.changeService = false;
         }
     }
     getLabel() {
@@ -772,7 +817,7 @@ export class AppointmentActionsComponent implements OnInit {
                 virtualServicenumber = this.appt.virtualService[key];
             });
         }
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
+        this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
     }
     unBlockAppt() {
         this.provider_services.deleteAppointmentBlock(this.appt.uid)
@@ -845,5 +890,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         smsdialogRef.afterClosed().subscribe(result => {
         });
+    }
+    getStatusLabel(status) {
+        const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
+        return label_status;
+    }
+    changeWaitlistStatusAction() {
+        this.action = 'status';
     }
 }

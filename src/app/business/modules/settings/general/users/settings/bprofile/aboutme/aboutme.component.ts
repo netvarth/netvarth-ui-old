@@ -752,6 +752,8 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     if (source) {
       this.imgType = true;
     }
+    this.api_success=false;
+    this.api_error=false;
   }
 
   imageCropped(event: ImageCroppedEvent) {

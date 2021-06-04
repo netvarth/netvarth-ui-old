@@ -10,11 +10,13 @@ import { ShowMessageComponent } from '../../../show-messages/show-messages.compo
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
 
 @Component({
 
     'selector': 'app-branchusers',
-    'templateUrl': './users.component.html'
+    'templateUrl': './users.component.html',
+    styleUrls: ['./user.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 
@@ -31,8 +33,12 @@ export class BranchUsersComponent implements OnInit {
     filter = {
         firstName: '',
         lastName: '',
+        city: '',
+        state: '',
+        pincode: '',
         primaryMobileNo: '',
         userType: '',
+        available: '',
         page_count: projectConstants.PERPAGING_LIMIT,
         page: 1
 
@@ -41,8 +47,13 @@ export class BranchUsersComponent implements OnInit {
     filters: any = {
         'firstName': false,
         'lastName': '',
+        'city': false,
+        'state': false,
+        'pincode': false,
         'primaryMobileNo': false,
-        'userType': false
+        'userType': false,
+        'available': false,
+        
 
     };
 
@@ -61,7 +72,20 @@ export class BranchUsersComponent implements OnInit {
         }
     ];
 
-    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    // userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    userTypesFormfill: any = [
+        {
+            name: 'ASSISTANT',
+            displayName: 'Assistant'
+        },
+        {
+            name: 'PROVIDER',
+            displayName: 'Doctor'
+        },
+        {
+            name: 'ADMIN',
+            displayName: 'Admin'
+        }];
     api_loading: boolean;
     departments: any;
     loadComplete = false;
@@ -85,6 +109,21 @@ export class BranchUsersComponent implements OnInit {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    loading = true;
+    languages_arr: any = [];
+    specialization_arr: any = [];
+    user;
+    selectedLanguages: any = [];
+    selectedSpecialization: any = [];
+    selectedUser;
+    selectrow = false;
+    user_count_filterApplied: any;
+    allSelected: boolean;
+    availabileSelected: boolean;
+    notAvailabileSelected: boolean;
+    accountSettings;
+    contactDetailsdialogRef: any;
+
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -96,14 +135,17 @@ export class BranchUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
+        this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getLicenseUsage();
+        this.getSpokenLanguages();
+        this.getSpecializations();
     }
 
     addBranchSP() {
@@ -120,10 +162,10 @@ export class BranchUsersComponent implements OnInit {
 
             });
         } else {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'Add' }
-        };
-        this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
+            const navigationExtras: NavigationExtras = {
+                queryParams: { type: 'Add' }
+            };
+            this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
         }
     }
     personalProfile(user) {
@@ -148,22 +190,34 @@ export class BranchUsersComponent implements OnInit {
         if (user.userType === 'PROVIDER') {
             let msg;
             if (passingStatus === 'Disable') {
-               msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
+                msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
             } else {
-               msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
+                msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
             }
 
-        this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': msg
-            }
-        });
-        this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.provider_services.disableEnableuser(user.id, passingStatus)
+            this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': msg
+                }
+            });
+            this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.provider_services.disableEnableuser(user.id, passingStatus)
+                        .subscribe(
+                            () => {
+                                this.getUsers();
+                            },
+                            (error) => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                this.getUsers();
+                            });
+                }
+            });
+        } else {
+            this.provider_services.disableEnableuser(user.id, passingStatus)
                 .subscribe(
                     () => {
                         this.getUsers();
@@ -172,19 +226,7 @@ export class BranchUsersComponent implements OnInit {
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getUsers();
                     });
-            }
-        });
-    } else {
-             this.provider_services.disableEnableuser(user.id, passingStatus)
-            .subscribe(
-                () => {
-                    this.getUsers();
-                },
-                (error) => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getUsers();
-                });
-    }
+        }
     }
     getUsers(from_oninit = false) {
         let filter = this.setFilterForApi();
@@ -192,24 +234,23 @@ export class BranchUsersComponent implements OnInit {
             .then(
                 result => {
                     if (from_oninit) { this.user_count = result; }
-                    filter = this.setPaginationFilter(filter);
+                    // filter = this.setPaginationFilter(filter);
                     this.provider_services.getUsers(filter).subscribe(
                         (data: any) => {
                             this.provider_services.getDepartments().subscribe(
                                 (data1: any) => {
                                     this.departments = data1.departments;
                                     this.users_list = data;
+                                    this.user_count_filterApplied = this.users_list.length;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 },
-
                                 (error: any) => {
                                     this.users_list = data;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 });
                         },
-
                         (error: any) => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
@@ -228,6 +269,14 @@ export class BranchUsersComponent implements OnInit {
         }
         return departmentName;
     }
+    getUserImg(user) {
+        if (user.profilePicture) {
+            const proImage = user.profilePicture;
+            return proImage.url;
+        } else {
+            return '../../.././assets/images/avatar5.png';
+        }
+    }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
@@ -238,9 +287,12 @@ export class BranchUsersComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.filter_sidebar = false;
-        this.clearFilter();
+        /* this.clearFilter(); */
     }
     clearFilter() {
+        this.allSelected = false;
+        this.availabileSelected = false;
+        this.notAvailabileSelected = false;
         this.resetFilter();
         this.filterapplied = false;
         this.getUsers();
@@ -249,21 +301,31 @@ export class BranchUsersComponent implements OnInit {
         this.filters = {
             'firstName': false,
             'lastName': false,
+            'city': false,
+            'state': false,
+            'pincode': false,
             'primaryMobileNo': false,
-            'userType': false
+            'userType': false,
+            'available': false,
         };
         this.filter = {
             firstName: '',
             lastName: '',
+            city: '',
+            state: '',
+            pincode: '',
             primaryMobileNo: '',
             userType: '',
+            available: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
+        this.selectedSpecialization = [];
+        this.selectedLanguages = [];
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName || this.filter.primaryMobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -286,13 +348,25 @@ export class BranchUsersComponent implements OnInit {
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.firstName !== '') {
-            api_filter['firstName-eq'] = this.filter.firstName;
+            api_filter['firstName-like'] = this.filter.firstName;
         }
         if (this.filter.lastName !== '') {
-            api_filter['lastName-eq'] = this.filter.lastName;
+            api_filter['lastName-like'] = this.filter.lastName;
+        }
+        if (this.filter.city !== '') {
+            api_filter['city-like'] = this.filter.city;
+        }
+        if (this.filter.state !== '') {
+            api_filter['state-like'] = this.filter.state;
+        }
+        if (this.filter.pincode !== '') {
+            api_filter['pinCode-eq'] = this.filter.pincode;
         }
         if (this.filter.userType !== '') {
             api_filter['userType-eq'] = this.filter.userType;
+        }
+        if (this.filter.available !== '') {
+            api_filter['available-eq'] = this.filter.available;
         }
         if (this.filter.primaryMobileNo !== '') {
             const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -302,6 +376,12 @@ export class BranchUsersComponent implements OnInit {
             } else {
                 this.filter.primaryMobileNo = '';
             }
+        }
+        if (this.selectedLanguages.length > 0) {
+            api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+        }
+        if (this.selectedSpecialization.length > 0) {
+            api_filter['specialization-eq'] = this.selectedSpecialization.toString();
         }
         return api_filter;
 
@@ -315,6 +395,7 @@ export class BranchUsersComponent implements OnInit {
                     data => {
                         this.pagination.totalCnt = data;
                         this.user_count = this.pagination.totalCnt;
+                        console.log(this.user_count)
                         resolve(data);
                     },
                     error => {
@@ -327,40 +408,156 @@ export class BranchUsersComponent implements OnInit {
         this.pagination.startpageval = pg;
         this.filter.page = pg;
         this.getUsers();
-      }
+    }
     makeDefalutAdmin(id) {
         this.provider_services.makeDefalutAdmin(id)
-        .subscribe(
-            () => {
-                this.getUsers();
-            },
-            (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getUsers();
-            });
+            .subscribe(
+                () => {
+                    this.getUsers();
+                },
+                (error) => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getUsers();
+                });
 
     }
     redirecToGeneral() {
         this.routerobj.navigate(['provider', 'settings', 'general']);
-      }
-      redirecToHelp() {
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
     }
     getLicenseUsage() {
         this.provider_services.getLicenseUsage()
             .subscribe(
                 data => {
-                   this.use_metric = data;
-                   this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
-                   this.adon_total = this.adon_info[0].total;
-                   this.adon_used = this.adon_info[0].used;
-                   this.disply_name = this.adon_info[0].metricName;
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
-
+    getSpokenLanguages() {
+        this.provider_services.getSpokenLanguages()
+            .subscribe(data => {
+                this.languages_arr = data;
+            });
+    }
+    getSpecializations() {
+        let subDomain;
+        if (this.user.sector === 'healthCare') {
+            if (this.user.subSector === 'hospital') {
+                subDomain = 'physiciansSurgeons';
+            } else if (this.user.subSector === 'dentalHosp') {
+                subDomain = 'dentists';
+            } else if (this.user.subSector === 'alternateMedicineHosp') {
+                subDomain = 'alternateMedicinePractitioners';
+            }
+        } else if (this.user.sector === 'personalCare') {
+            subDomain = 'beautyCare';
+        } else if (this.user.sector === 'finance') {
+            subDomain = 'bank';
+        } else if (this.user.sector === 'veterinaryPetcare') {
+            if (this.user.subSector === 'veterinaryhospital') {
+                subDomain = 'veterinarydoctor';
+            }
+        } else if (this.user.sector === 'retailStores') {
+            subDomain = 'groceryShops';
+        }
+        this.provider_services.getSpecializations(this.user.sector, subDomain)
+            .subscribe(data => {
+                this.specialization_arr = data;
+            });
+    }
+    setFilterDataCheckbox(type, value) {
+        if (type === 'languages') {
+            const indx = this.selectedLanguages.indexOf(value);
+            if (indx === -1) {
+                this.selectedLanguages.push(value);
+            } else {
+                this.selectedLanguages.splice(indx, 1);
+            }
+        }
+        if (type === 'specializations') {
+            const indx = this.selectedSpecialization.indexOf(value);
+            if (indx === -1) {
+                this.selectedSpecialization.push(value);
+            } else {
+                this.selectedSpecialization.splice(indx, 1);
+            }
+        }
+        if (type === 'available') {
+            if(value === 'ALL'){
+              this.allSelected = true;
+              this.availabileSelected = false;
+              this.notAvailabileSelected = false;
+              this.filter.available = 'ALL';
+            }
+            else if(value === 'true'){
+              this.allSelected = false;
+              this.availabileSelected = true;
+              this.notAvailabileSelected = false;
+              this.filter.available = 'true';
+            }
+           else{
+            this.allSelected = false;
+            this.availabileSelected = false;
+            this.notAvailabileSelected = true;
+            this.filter.available = 'false';
+           }
+          }
+        this.doSearch();
+    }
+    getLanguages(languages) {
+        languages = JSON.parse(languages);
+        for (let i = 0; i < languages.length; i++) {
+            languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+        }
+        languages = languages.toString();
+        if (languages.length > 1) {
+            languages = languages.replace(/,/g, ", ");
+        }
+        return languages;
+    }
+    getSpecialization(specialization) {
+        for (let i = 0; i < specialization.length; i++) {
+            const special = this.specialization_arr.filter(speciall => speciall.name === specialization[i]);
+            if (special[0]) {
+                specialization[i] = special[0].displayName;
+            }
+        }
+        if (specialization.length > 1) {
+            specialization = specialization.toString();
+            return specialization.replace(/,/g, ", ");
+        }
+        return specialization;
+    }
+    selectedRow(index, user) {
+        this.selectrow = true;
+        this.selectedUser = user;
+        if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
+            this.manageSettings(user.id)
+        } else {
+            this.personalProfile(user.id)
+        }
+    }
+    stopprop(event) {
+        event.stopPropagation();
+    }
+    viewContactDetails(user) {
+        this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+              userData: user
+          }
+        });
+    }
 }

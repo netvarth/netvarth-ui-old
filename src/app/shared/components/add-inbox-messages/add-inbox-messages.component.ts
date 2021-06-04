@@ -127,7 +127,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-      this.subs.sink = this.s3Processor.getJsonsbyTypes(this.data.user_id, null, 'terminologies').subscribe(
+          const id = (this.data.userId) ? this.data.userId : this.data.user_id;
+      this.subs.sink = this.s3Processor.getJsonsbyTypes(id, null, 'terminologies').subscribe(
         (accountS3s) => {
           if (accountS3s['terminologies']) {
             this.terminologies = this.s3Processor.getJson(accountS3s['terminologies']);
@@ -659,9 +660,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       dataToSend.append('message', blobpost_Data);
       const filter = {};
       filter['account'] = this.user_id;
-      if (this.userId) {
-        filter['provider'] = this.userId;
-      }
+      // if (this.userId) {
+      //   filter['provider'] = this.userId;
+      // }
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
@@ -767,5 +768,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+  keyPressed(event) {
+    if(event.length == 330) {
+      this.snackbarService.openSnackBar('Character limit reached ');
+    } 
   }
 }

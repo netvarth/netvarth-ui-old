@@ -47,7 +47,7 @@ export class RazorpayService {
       rzp.open();
     });
   }
-  payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?) {
+  payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?) {
     let razorInterval;
     razorModel.retry = false;
     //   theme: {
@@ -62,13 +62,17 @@ export class RazorpayService {
     options.handler = ((response, error) => {
       options.response = response;
       clearTimeout(razorInterval);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'details': JSON.stringify(options.response),
-          'paidStatus': true,
-          account_id: account_id,
-          uuid: uuid
-        }
+      let queryParams = {
+        'details': JSON.stringify(options.response),
+        'paidStatus': true,
+        account_id: account_id,
+        uuid: uuid
+      };
+      if(from) {
+        queryParams['customId']= from;
+      }
+      let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
       };
       if (usertype === 'consumer') {
         if (checkin_type === 'appointment') {
@@ -88,21 +92,61 @@ export class RazorpayService {
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: { 'is_orderShow': 'false'}} ));
         } else if (checkin_type === 'donations') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], { queryParams: { 'uuid': uuid} }));
+          let queryParams = {
+            account_id: account_id,
+            uuid: uuid
+          };
+          if(from) {
+            queryParams['customId']= from;
+          }
+          let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          };
+          this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else if (checkin_type === 'payment_link') {
           this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
-          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+        
           let multiple;
           if (uuids && uuids.length > 1) {
             multiple = true;
           } else {
             multiple = false;
           }
-          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { 'uuid': uuids, 'account_id': account_id, 'prepayment': prepayment, 'multiple': multiple } }));
-        } else if (checkin_type === 'appt_prepayment') {
+          let queryParams = {
+            'multiple': multiple,
+            'prepayment': prepayment,
+            'account_id': account_id,
+            'uuid': uuids
+          };
+          if(from) {
+            queryParams['customId']= from;
+          }
+          let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          }
+          setTimeout(() => {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { 'uuid': uuid, 'account_id': account_id, 'prepayment': prepayment } }));
+          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
+          },700);
+        } else if (checkin_type === 'appt_prepayment') {
+          
+          let queryParams = {
+            'prepayment': prepayment,
+            'account_id': account_id,
+            'uuid': uuid
+          };
+          if(from) {
+            queryParams['customId']= from;
+          }
+          let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          }
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
+          },700);
+         
         } else if (checkin_type === 'order_prepayment') {
           this.lStorageService.removeitemfromLocalStorage('order_sp');
           this.lStorageService.removeitemfromLocalStorage('chosenDateTime');

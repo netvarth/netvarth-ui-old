@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import { SharedServices } from '../../../../../shared/services/shared-services';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
-import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
-import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { SnackbarService } from '../../../../../shared/services/snackbar.service';
-import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
-import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-appointment-checkin',
     templateUrl: './appointment.component.html',
-    styleUrls: ['../../../../../../assets/css/style.bundle.css']
+    styleUrls: ['../../../../../assets/css/style.bundle.css']
 })
 export class AppointmentComponent implements OnInit {
     appointmentSubscribtion: Subscription;
@@ -1548,7 +1548,7 @@ export class AppointmentComponent implements OnInit {
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
             const filter = {
-                'departmentId-eq': obj
+                'deptId-eq': obj
             };
             this.provider_services.getUsers(filter).subscribe(
                 (users: any) => {
@@ -1807,7 +1807,8 @@ export class AppointmentComponent implements OnInit {
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         this.api_loading = true;
         this.freeSlots = [];
-        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
+        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate,this.sel_ser)
+       //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
                     this.slots = data;

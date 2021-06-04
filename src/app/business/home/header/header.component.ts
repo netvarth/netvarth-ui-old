@@ -55,6 +55,13 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   showMenuSection = false;
   action = '';
   phoneNumber = '';
+  userData;
+  userDetails: any = [];
+  branchName = '';
+  location;
+  locName;
+  active_user;
+  account_type;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -65,6 +72,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
+    private routerobj: Router,
     private titleService: Title,
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
@@ -72,6 +80,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
       switch (message.ttype) {
         case 'checkin-settings-changed':
           this.showCheckinED();
@@ -102,10 +111,37 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'showmenu':
           this.showMenuSection = message.value;
           break;
+          case 'updateuserdetails':
+            this.getBusinessdetFromLocalstorage();
+            break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
     });
+    this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.userData);
+    this.account_type = this.userData.accountType;
+    if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
+      this.getUserDetails();
+    }
+    if (this.userData.accountType === 'BRANCH') {
+      const location = this.groupService.getitemFromGroupStorage('loc_id');
+      if (location) {
+        this.locName = location.place;
+      } else {
+        this.getProviderLocation();
+      }
+    }
+  }
+  getProviderLocation() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          this.location = data;
+          if (this.location.length > 0) {
+            this.locName = this.location[0].place;
+          }
+        });
   }
   closeMenu() {
     const screenWidth = window.innerWidth;
@@ -172,18 +208,40 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.gotoActiveHome();
   }
   gotoProfile() {
-    this.router.navigate(['provider', 'settings', 'bprofile']);
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    const userid = loggedUser.id
+    if(this.account_type == 'BRANCH' && this.userData.userType == 1){
+      this.routerobj.navigate(['provider', 'settings', 'general', 'users', userid, 'settings']);
+    }else{
+      this.router.navigate(['provider', 'settings', 'bprofile']);
+    }
+  
+
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
-      this.bname = bdetails.bn || 'User';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
+      if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
+        this.branchName = bdetails.bn || 'User';
+        this.bname = this.userData.userName || 'User';
+        this.blogo = (this.userDetails.profilePicture) ? this.userDetails.profilePicture.url : '../../../assets/images/img-null.svg';
+      } else {
+        this.bname = bdetails.bn || 'User';
+        this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
+      }
     }
   }
+  getUserDetails() {
+    this.provider_services.getUser(this.userData.id)
+      .subscribe(
+        res => {
+          this.userDetails = res;
+        });
+  }
   ngOnInit() {
+   
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       this.sessionStorage = true;
     }

@@ -214,7 +214,7 @@ export class CustomerDetailComponent implements OnInit {
                     type: this.type
                 }
             };
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+            this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
         } else {
             this._location.back();
         }

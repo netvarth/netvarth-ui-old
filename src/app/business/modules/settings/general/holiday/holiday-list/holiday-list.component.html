@@ -36,8 +36,10 @@
                                         <thead>
                                             <tr>
                                                 <th>{{date_cap}}</th>
-                                                <th>{{reason_cap}}</th>
+                                                <th style="width: 30%;">{{reason_cap}}</th>
                                                 <th>{{time_cap}}</th>
+                                                <th *ngIf="accountType=='BRANCH'">User</th>
+                                                
                                                 <th>
                                                     <span class="addbt" (click)="addHolidays()"></span>  
                                                 </th>
@@ -52,8 +54,12 @@
                                                 <td data-title="Reason" clas="td2">{{nonworking.description}}</td>
                                                 <td data-title="Time" clas="td3">{{nonworking.holidaySchedule.timeSlots[0].sTime}} -
                                                     {{nonworking.holidaySchedule.timeSlots[0].eTime}}</td>
+                                                <td *ngIf="nonworking.provider && accountType=='BRANCH'">{{nonworking.provider}}</td>
+                                                <td *ngIf="!nonworking.provider && accountType=='BRANCH'"> </td>
+
+
                                                 <td class="action">
-                                                    <span class="mbt">
+                                                    <span class="mbt" *ngIf="!nonworking.provider">
                                                         <button type="button" mat-icon-button
                                                             [matMenuTriggerFor]="menu">
                                                             <mat-icon>more_vert</mat-icon>
@@ -72,13 +78,20 @@
                                                         </mat-menu>
                                                     </span>
 
-                                                    <span class="mbt-mobile-show">
+                                                    <span class="mbt" *ngIf="nonworking.provider"><i class="fa fa-info-circle"
+                                                        matTooltip="User Non working days can be edit in user level"></i></span>
+
+                                                    <span class="mbt-mobile-show"  *ngIf="!nonworking.provider">
                                                         <button class="editcls" type="button"
                                                             (click)="editHolidays(nonworking)"
                                                             *ngIf="showEdit(nonworking.startDay)">{{edit_btn}}</button>
                                                         <button class="deletecls" type="button"
                                                             (click)="doRemoveHolidays(nonworking)">{{delete_btn}}</button>
-                                                    </span>
+                                                    </span>                                                    
+                                                    <span class="mbt-mobile-show" *ngIf="nonworking.provider"><i class="fa fa-info-circle"
+                                                        matTooltip="User Non working days can be edit in user level"></i></span>
+
+                                        
                                                 </td>
                                             </tr>
                                         </tbody>

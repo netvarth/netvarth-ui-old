@@ -44,6 +44,7 @@
               "src/assets/css/home_new.css",
               "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/assets/third-party/Admin-LTE/css/_all-skins.css",
+              "src/assets/css/themes.css",
               "node_modules/angular-calendar/css/angular-calendar.css"
             ],
             "scripts": [

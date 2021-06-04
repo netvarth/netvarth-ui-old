@@ -12,7 +12,7 @@
         </h5>
     </div>
 </section>
-<section>
+<section class="user-create-window">
     <div class="content loc-list bsp">
         <div class="col-md-12 no-padding-small">
             <div class="row">
@@ -132,7 +132,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                                         </div>
                                     </div> -->
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group mobile-field" style="width: 100%">
                                             <mat-form-field>
                                                 <div class="input-group">
@@ -155,15 +155,43 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
             })">
                                             </app-field-error-display>
                                         </div>
+                                    </div> -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text"  (keypress)="isNumericSign($event)" matInput
+                                                        class="input-group-text" id="countryCode"
+                                                        placeholder="Country code " formControlName="countryCode"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                            <div class="form-group">
+
+                                            <mat-form-field>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="form-control text-width" id="phonenumber"
+                                                        placeholder="Enter Mobile # " formControlName="phonenumber"
+                                                        autocomplete="off" >
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
+                                                [errorMsgs]="fed_service.getErrorMessage(userForm,'phonenumber',
+                                                    {
+                                                    'pattern' : 'Enter number only'
+                                                    })">
+                                            </app-field-error-display>
+                                            </div>
+                                        </div>  
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="email"
                                                     formControlName="email" placeholder="Email(user@xyz.com)"
-                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
-                                                    oncut="return false" ondrag="return false"
-                                                    ondrop="return false">
+                                                    autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display [displayError]="true"
                                                 *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
@@ -173,6 +201,73 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
 
                                     <div class="clearfix"></div>
+
+
+<!-- *******User Telegram and what's up number ************ -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text" (keypress)="isNumericSign($event)" matInput
+                                                        class="input-group-text" id="countryCode_whatsapp"
+                                                        placeholder="Country code " formControlName="countryCode_whatsapp"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text" (keypress)="isNumeric($event)" matInput
+                                                            class="form-control text-width" id="whatsappumber"
+                                                            placeholder="Enter whatsapp # " formControlName="whatsappumber"
+                                                            autocomplete="off">
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(userForm,'whatsappumber')"
+                                                    [errorMsgs]="fed_service.getErrorMessage(userForm,'whatsappumber',
+                        {
+                        'minlength' : 'Enter a 10 digit whatsapp number',
+                        'maxlength' : 'Enter a 10 digit whatsapp number',
+                        'pattern' : 'Enter a 10 digit whatsapp number'
+                        })">
+                                                </app-field-error-display>
+                                            </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;" *ngIf="showPrvdrFields">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                        <input type="text"  (keypress)="isNumericSign($event)"  matInput
+                                                        class="input-group-text" id="countryCode_telegram"
+                                                        placeholder="Country code " formControlName="countryCode_telegram"
+                                                        autocomplete="off" maxlength="5">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="form-control text-width" id="telegramnumber"
+                                                        placeholder="Enter Telegram # " formControlName="telegramnumber"
+                                                        autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(userForm,'telegramnumber')"
+                                                [errorMsgs]="fed_service.getErrorMessage(userForm,'telegramnumber',
+                    {
+                    'minlength' : 'Enter a 10 digit Telegram number',
+                    'maxlength' : 'Enter a 10 digit Telegram number',
+                    'pattern' : 'Enter a 10 digit Telegram number'
+                    })">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="clearfix"></div>
+       <!-- close telegarm and whatsup  part  -->
 
 
 
@@ -208,12 +303,13 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                            <div class="form-group" *ngIf="actionparam.type === 'edit'">
-                                                    <mat-form-field>
+                                            <div class="form-group mgn-up-20" *ngIf="actionparam.type === 'edit'">
+                                                <label>User Type : {{type}}</label>
+                                                    <!-- <mat-form-field>
                                                             <input matInput readonly type="text" class="form-control" value="{{type}}"
                                                                 placeholder="Usertype" 
                                                                 autocomplete="off">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                 </div>
                                         <div class="form-group" *ngIf="actionparam.type !== 'edit'"> 
                                             <mat-form-field>
@@ -245,20 +341,65 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showPrvdrFields">
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                                <mat-checkbox  formControlName="privileges">
-                                                    Admin Privileges
-                                                </mat-checkbox>
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="postalCode"
+                                                    placeholder="Postal Code /ZIP*" formControlName="postalCode" (keyup)="keyPressed($event.target.value)"
+                                                    (blur)="blurPincodeQty($event.target.value)"  autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(userForm,'postalCode')"
+                                                [errorMsgs]="fed_service.getErrorMessage(userForm,'postalCode',
+                        {
+                        'required' : 'Please enter Postal Code ',
+                        'minlength' : 'Enter a 6 digit Postal Code',
+                        'maxlength' : 'Enter a 6 digit Postal Code',
+                        'pattern' : 'Only numbers are allowed'
+                        })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="!fed_service.isFieldValid(userForm,'postalCode')"
+                                                [errorMsg]="lnameerror">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">          
+                                        <div *ngIf="actionparam.type === 'edit' && editloc" > 
+                                            <span *ngIf="user_data.city && user_data.state"> <i class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i> {{user_data.city}},&nbsp;{{user_data.state}}</span>
+                                         
+                                        </div>   
+                                        <div *ngIf="showloc">
+                                            <div *ngFor="let locationDetails of locations; let idx = index">
+                                                <mat-radio-button [checked]="idx === 0">
+                                                {{locationDetails.Name}},&nbsp;{{locationDetails.Block}},&nbsp;{{locationDetails.Region}},&nbsp;{{locationDetails.State}}
+                                                </mat-radio-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="clearfix"></div>
+                            
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;" *ngIf="type != 'ADMIN'">
+                                        <div class="form-group">
+                                            <mat-checkbox  formControlName="privileges">
+                                                Admin Privileges
+                                            </mat-checkbox>
+                                            <div class="form-level-settings">This privilege will allow the user to create new user, modify existing user etc.</div>
                                         </div>
                                     </div>
 
-
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20">
+                                        <h3><a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a></h3>
                                     </div>
                                     
-                                    <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20" *ngIf="showAdvancedSection">
                                         <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <mat-form-field>
@@ -275,12 +416,13 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </div>
                                         </div> -->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-form-label" for="gender">{{gender_cap}} </label>
+                                            <div class="form-group ">
+                                                <label class="col-form-label gender mgn-up-10" for="gender">{{gender_cap}} </label>
                                                 <mat-radio-group formControlName="gender">
-                                                    <mat-radio-button class="mgright50" value="male">{{male_cap}}
+                                                    <mat-radio-button class="mgn-rt-10" value="male">{{male_cap}}
                                                     </mat-radio-button>
-                                                    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                                    <mat-radio-button class="mgn-rt-10" value="female">{{female_cap}}</mat-radio-button>
+                                                    <mat-radio-button value="other">Other</mat-radio-button>
                                                 </mat-radio-group>
                                                 <app-field-error-display
                                                     [displayError]="fed_service.isFieldValid(userForm,'gender')"
@@ -289,7 +431,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group col-md-7 no-padding picker-form-group">
+                                            <div class="form-group col-md-12 no-padding picker-form-group">
                                                 <mat-form-field>
                                                     <input matInput [matDatepicker]="picker" placeholder="Date of birth"
                                                         #inputdob formControlName="dob" [max]="tday" [min]="minday"

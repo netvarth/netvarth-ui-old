@@ -19,6 +19,7 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../../node_modules/subsink';
+import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
@@ -138,7 +139,8 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         private location: Location,
         private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    public dateformat: DateFormatPipe,
     ) {
         this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
@@ -514,7 +516,8 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         bill_html += '<table width="100%">';
         bill_html += '	<tr style="line-height:20px">';
         bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
-        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
+        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' +  this.dateformat.transformToMonthlyDate(this.billdate)  +' '+ this.billtime+ '</td>';
+
         bill_html += '	</tr>';
         bill_html += '	<tr>';
         bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';

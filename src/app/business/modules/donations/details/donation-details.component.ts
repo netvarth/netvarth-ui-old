@@ -7,6 +7,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
     'selector': 'app-donation-details',
@@ -20,15 +21,18 @@ export class DonationDetailsComponent {
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
     loading = false;
+    customer_label = '';
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
         public location: Location, private dialog: MatDialog,
-        public provider_shared_functions: ProviderSharedFuctions) {
+        public provider_shared_functions: ProviderSharedFuctions,
+        private wordProcessor: WordProcessor) {
         this.activaterouter.params.subscribe(param => {
             this.uid = param.id;
             this.getDonationDetails(this.uid);
         });
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     getDonationDetails(uid) {
         this.loading = true;

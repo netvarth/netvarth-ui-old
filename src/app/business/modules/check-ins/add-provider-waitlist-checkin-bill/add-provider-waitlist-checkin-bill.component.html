@@ -170,14 +170,14 @@
 									</div>
 								</div>
 								<div style="display: flex;">
-									<div class="form-group mr-0 pt-1 ml-0 col-3" *ngIf="showAddItemsec">
+									<div class="form-group mr-0 pt-1 ml-0 col-3" style="max-width: 40% !important;"  *ngIf="showAddItemsec">
 										<button class="cs-btn bt1 ml-0 btn-temp-primary-light small_btn"
 											(click)="addService_Item()">{{(actiontype=='adjustService'
 											||
 											actiontype=='adjustItem')?'Change':
 											add_btn_cap}}</button>
 									</div>
-									<div class="form-group mr-0 pt-1 ml-0 col-3" *ngIf="showAddItemsec">
+									<div class="form-group mr-0 pt-1 ml-0 col-3"style="max-width: 40% !important;" *ngIf="showAddItemsec">
 										<button class="cs-btn bt2 ml-4 small_btn"
 											(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 									</div>
@@ -559,7 +559,7 @@
 												<option *ngFor="let discount of discounts; let i = index"
 													[value]="discount.id">{{discount.name}}</option>
 											</select>
-											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control"
+											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control  select-height"
 												[(ngModel)]="selOrderProviderCoupon">
 												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
@@ -576,7 +576,7 @@
 											<br>
 											<div *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">
 												<input class="form-control1" type="number" matInput #billdiscvalue
-													aria-label="Number" max="{{price_limit}}" min="0" matInput value="1"
+													aria-label="Number" max="{{price_limit}}" min="1" matInput value="1"
 													autocomplete="off" size="3" (keypress)="isNumeric($event)"
 													(keyup)="isvalid($event)" [(ngModel)]="discAmount"
 													[ngModelOptions]="{standalone: true}" placeholder="Enter Amount">
@@ -974,8 +974,7 @@
 																if the cancellation happens due to the fault of the
 																Service Provider. An amount of 3% of the service fees
 																will be levied from the provider.</li>
-															<li>Only the prepayment amount, and not the total bill
-																amount, will be transferred directly to
+															<li>Only the prepayment amount will be transferred directly to
 																{{customer_label}} bank account.</li>
 															<li>The refund option will be active for 2 days after the
 																service date for the service provider.</li>

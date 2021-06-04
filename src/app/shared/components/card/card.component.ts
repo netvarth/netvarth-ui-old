@@ -5,6 +5,9 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
+import { projectConstantsLocal } from '../../constants/project-constants';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { Router } from '@angular/router';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -18,6 +21,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() domain;
     @Output() actionPerformed = new EventEmitter<any>();
     @Output() noteClicked = new EventEmitter<any>();
+    @Input() type;
+    @Input() time_type;
+    @Input() allLabels;
+    @Input() checkins;
+    @Input() theme;
+    // @Input() pos;
+    @Input() statusAction;
     service: any;
     user: any;
     timingCaption: string;
@@ -30,18 +40,51 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     itemQty = 0;
     actions: string;
     todayDate;
+    waitlist;
+    newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+    customer_label = '';
+    selectedUser;
+    selQIds: any = [];
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
+        private groupService: GroupStorageService,
+        private router: Router,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
+        if (this.type) {
+            this.item.type = this.type;
+        }
+        if (this.item.type == 'checkin-dashboard') {
+            if (this.groupService.getitemFromGroupStorage('selectedUser')) {
+                this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
+            }
+            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
+            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('history_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('history_selQ');
+            }
+        } else {
+            if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
+                this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
+            }
+            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
+            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
+            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('appt_history_selQ')) {
+                this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
+            }
+        }
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
-        console.log(this.todayDate);
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
@@ -88,9 +131,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             case 'item-head':
                 break;
+            case 'checkin-dashboard':
+                this.waitlist = this.item;
+                break;
+            case 'appt-dashboard':
+                this.waitlist = this.item;
+                break;
             default:
                 this.user = this.item.item;
-                console.log(this.user);
                 break;
         }
     }
@@ -250,13 +298,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return '../../../../assets/images/order/Items.svg';
         }
     }
-    getServiceType(){
-        if(this.service.serviceType && this.service.serviceType == 'physicalService') {
+    getServiceType() {
+        if (this.service.serviceType && this.service.serviceType == 'physicalService') {
             return 'Physical Service';
-        } 
-        else if (this.service.serviceType && this.service.serviceType == 'virtualService'){
+        }
+        else if (this.service.serviceType && this.service.serviceType == 'virtualService') {
             return 'Virtual Service';
-        }        
+        }
         else {
             /* if(this.service.virtualServiceType == 'videoService') {
                 return this.service.virtualCallingModes[0].callingMode + " " + "Video";
@@ -278,4 +326,54 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return;
     } */
+    getDisplayname(label) {
+        for (let i = 0; i < this.allLabels.length; i++) {
+            if (this.allLabels[i].label === label) {
+                return this.allLabels[i].displayName;
+            }
+        }
+    }
+    getLabels(checkin) {
+        let label = [];
+        Object.keys(checkin.label).forEach(key => {
+            for (let i = 0; i < this.allLabels.length; i++) {
+                if (this.allLabels[i].label === key) {
+                    label.push(this.allLabels[i].displayName);
+                }
+            }
+        });
+        const lbl = label.toString();
+        return lbl.replace(/,/g, ", ");
+    }
+    checkinActions(waitlist, type) {
+        this.actionPerformed.emit({ waitlist: waitlist, type: type, statusAction: this.statusAction });
+    }
+    gotoDetails() {
+        if (this.item.type == 'checkin-dashboard') {
+            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
+        } else {
+            this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type } });
+        }
+    }
+    showMoreorLess(waitlist, type) {
+        for (let checkin of this.checkins) {
+            checkin.show = false;
+        }
+        if (type === 'more') {
+            const index = this.checkins.indexOf(waitlist);
+            this.checkins[index].show = true;
+        }
+    }
+    showDetails(waitlist) {
+        const currentcheckin = this.checkins.filter(checkin => checkin.ynwUuid === waitlist.ynwUuid);
+        if (currentcheckin[0].show) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    getAge(age) {
+        age = age.split(',');
+        return age[0];
+    }
 }

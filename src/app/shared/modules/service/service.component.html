@@ -24,6 +24,16 @@
         {{service_data.description | capitalizeFirst}}
       </div>
       <div class="c-ot">
+          <div class="item" *ngIf="!is_donation && showResources">
+              <span class="ttle">Number of resources</span>
+              <span > {{service_data.resoucesRequired}}
+              </span>
+            </div>
+            <div class="item" *ngIf="!is_donation && showResources">
+                <span class="ttle">Maximum bookings</span>
+                <span > {{service_data.maxBookingsAllowed}}
+                </span>
+              </div>
         <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
           <span class="ttle">Department Name</span>
           <span>{{departmentName}}</span>
@@ -182,6 +192,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
+
+     
+
+
       <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
         <mat-form-field>
           <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department"
@@ -291,6 +305,24 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  })"> </app-field-error-display> -->
         </ng-container>
       </div>
+<div class="col-md-6" *ngIf="showResources">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
+            placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      </div>
+      <div class="col-md-6" *ngIf="showResources">
+      <div class="form-group" *ngIf="!is_donation">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
+            placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      </div>
       <!-- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
  <div>
  <label style="margin-bottom: 0 !important;">{{enable_prepayment_cap}}
@@ -321,7 +353,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
         <div>
           <mat-form-field class="rupee-font">
-            <input min="1" matInput type="text" class="form-control number-ip-sm" id="minprice" maxlength="10"
+            <input min="1" matInput type="number" class="form-control number-ip-sm" id="minprice" maxlength="10"
               (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
               placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount" autocomplete="off">
           </mat-form-field>
@@ -334,7 +366,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
         <div>
           <mat-form-field class="rupee-font">
-            <input min="1" matInput type="text" class="form-control number-ip-sm" id="maxprice" maxlength="10"
+            <input min="1" matInput type="number" class="form-control number-ip-sm" id="maxprice" maxlength="10"
               (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
               placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount" autocomplete="off">
           </mat-form-field>
@@ -376,7 +408,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  <mat-slide-toggle class="example-margin" formControlName="livetrack">
  </mat-slide-toggle>
  </div> -->
- <div  *ngIf="!is_donation" class="mgn-bt-20">
+ <div class="mgn-bt-20">
     <label class="no-padding " 
       style="font-size: 1.1rem;">
       {{customer_label | capitalizeFirst}} Info</label>

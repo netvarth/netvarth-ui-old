@@ -1831,7 +1831,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+          this.showCommunicate(passParam['providerId'], passParam['provider_name'], passParam['userId']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId'], passParam['locId']);
         } else if (passParam['callback'] === 'servicedetail') {
@@ -1875,7 +1875,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+          this.showCommunicate(passParam['providerId'], passParam['provider_name'], passParam['userId']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId'], passParam['locId']);
         } else if (passParam['callback'] === 'servicedetail') {
@@ -2004,24 +2004,29 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.searchrefine_arr[indx]['showhiddendet'] = false;
   }
   communicateHandler(search_result) {
+    console.log(search_result);
     const name = search_result.fields.title || null; // providername
     const obj = search_result.id || null;
+  //  const uniqueId=search_result.fields.unique_id;
     if (obj) {
-      const arr = obj.split('-');
-      const providforCommunicate = arr[0];
+     const arr = obj.split('-');
+     const providforCommunicate = arr[0];
+     
+
       // check whether logged in as consumer
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          this.showCommunicate(providforCommunicate, name);
+          this.showCommunicate(providforCommunicate, name, search_result.fields.unique_id);
         }
       } else { // show consumer login
-        const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj };
+        const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj, userId: search_result.fields.unique_id };
         this.doLogin('', 'consumer', passParam);
       }
     }
   }
-  showCommunicate(provid, provider_name) {
+  showCommunicate(provid, provider_name, userId) {
+    console.log(userId);
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -2029,9 +2034,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       data: {
         caption: 'Enquiry',
         user_id: provid,
+        userId: userId,
         source: 'consumer-common',
         type: 'send',
-        name: provider_name
+        name: provider_name,
+        typeOfMsg: 'single'
       }
     });
 

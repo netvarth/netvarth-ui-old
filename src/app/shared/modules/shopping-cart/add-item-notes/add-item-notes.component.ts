@@ -23,7 +23,7 @@ export class AddItemNotesComponent implements OnInit {
   ngOnInit() {
 
     if (this.item.consumerNote) {
-      this.btnTitle = 'Edit';
+      this.btnTitle = 'Update';
 
       this.notes = this.item.consumerNote;
     }

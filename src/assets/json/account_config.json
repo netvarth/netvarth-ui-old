@@ -1,0 +1,162 @@
+{
+    "152877": {
+        "theme": "heartfulness_theme1",        
+        "smallDevices": {
+          "showProfile":false,
+          "showVerified": true,
+          "showSpecialization": false,
+          "showQualification": false,
+          "showAbout": true,
+          "showVirtualFields": false,
+          "showCoverPicture": true
+        },
+        "normalDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showSpecialization": false,
+          "showAbout": true,
+          "showQualification": true,
+          "showVirtualFields": false,
+          "showCoverPicture": true
+        },
+        "manifest": {
+            "name": "Heartfulness Care",
+            "short_name": "Heartfulness Care",
+            "theme_color": "#1976d2",
+            "background_color": "#fafafa",
+            "display": "standalone",
+            "scope": "localhost:4202",
+            "start_url": "/heartfulnessCare",
+            "icons": [
+                {
+                  "src": "assets/icons/icon-72x72.png",
+                  "sizes": "72x72",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-96x96.png",
+                  "sizes": "96x96",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-128x128.png",
+                  "sizes": "128x128",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-144x144.png",
+                  "sizes": "144x144",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-152x152.png",
+                  "sizes": "152x152",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-192x192.png",
+                  "sizes": "192x192",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-384x384.png",
+                  "sizes": "384x384",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-512x512.png",
+                  "sizes": "512x512",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                }
+            ]
+        }
+    },
+    "46805": {
+        "theme": "",
+        "smallDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showSpecialization": true,
+          "showAbout": false,
+          "showQualification": true,
+          "showVirtualFields": true,
+          "showCoverPicture": true
+        },
+        "normalDevices": {
+          "showProfile":true,
+          "showVerified": true,
+          "showAbout": false,
+          "showSpecialization": true,
+          "showQualification": true,
+          "showVirtualFields": true,
+          "showCoverPicture": true
+        },
+        "manifest": {
+            "name": "Dhyan Clinic",
+            "short_name": "Dhyan Clinic",
+            "theme_color": "#1976d2",
+            "background_color": "#fafafb",
+            "display": "standalone",
+            "scope": "localhost:4202",
+            "start_url": "/",
+            "icons": [
+                {
+                  "src": "assets/icons/icon-72x72.png",
+                  "sizes": "72x72",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-96x96.png",
+                  "sizes": "96x96",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-128x128.png",
+                  "sizes": "128x128",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-144x144.png",
+                  "sizes": "144x144",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-152x152.png",
+                  "sizes": "152x152",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-192x192.png",
+                  "sizes": "192x192",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-384x384.png",
+                  "sizes": "384x384",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                },
+                {
+                  "src": "assets/icons/icon-512x512.png",
+                  "sizes": "512x512",
+                  "type": "image/png",
+                  "purpose": "maskable any"
+                }
+            ]
+        }
+    }
+}

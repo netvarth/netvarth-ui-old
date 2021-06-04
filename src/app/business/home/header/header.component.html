@@ -10,7 +10,7 @@
 </div>
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
   <div class="topbar topbar-mobile-on">
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'" *ngIf="userData.adminPrivilege">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <i class="fa contact-help-icon"></i>
@@ -57,7 +57,7 @@
         </ul>
       </div>
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'" *ngIf="userData.adminPrivilege">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('license')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
@@ -116,7 +116,7 @@
     </a>
   </div>
   <div class="offcanvas-content pr-5 mr-n5">
-    <div class="d-flex align-items-center mt-5">
+    <div class="d-flex mt-5">
       <div class="symbol symbol-100 mr-5">
         <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
         </div>
@@ -129,6 +129,12 @@
         <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary" (click)="userPopup();gotoProfile()">
           {{bname}}
         </a>
+        <div class="font-weight-bold text-dark-75" *ngIf="branchName !== ''">
+          {{branchName}}
+        </div>
+        <div class="text-muted mt-1 sub-sec" *ngIf="locName">
+          <i class="icon-location"></i>{{locName}}
+        </div>
         <div class="text-muted mt-1">
           {{bsector}}
         </div>
@@ -165,12 +171,12 @@
               My Account
             </div>
             <div class="text-muted">
-              Manage your profile. 
+              Manage your profile.
             </div>
           </div>
         </div>
       </a>
-      <a (click)="userPopup();gotoSettings()" class="navi-item">
+      <a (click)="userPopup();gotoSettings()" class="navi-item" *ngIf="userData.adminPrivilege">
         <div class="navi-link">
           <div class="symbol symbol-40 bg-light mr-3">
             <div class="symbol-label">

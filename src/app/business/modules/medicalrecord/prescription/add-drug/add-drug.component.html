@@ -4,9 +4,31 @@
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
+  
   <mat-dialog-content>
+          <div>
+              <label *ngIf="customerDetails.firstName ||customerDetails.lastName">{{customer_label | capitalizeFirst}} Name :&nbsp;</label> <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br >
+              <label>{{customer_label | capitalizeFirst}} Id  :&nbsp;</label> <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
+              <label *ngIf="serviceName">Service/Consultation :&nbsp;</label><span *ngIf="serviceName">{{serviceName | capitalizeFirst}}</span><br  *ngIf="serviceName">
+              <label  *ngIf="customerDetails.dob">DOB :&nbsp;</label> <span  *ngIf="customerDetails.dob">{{customerDetails.dob  | date:newDateFormat}} </span> <br  *ngIf="customerDetails.dob">
+              <label *ngIf="customerDetails.gender">Gender :&nbsp;</label> <span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
+              
+          </div>
+          
+              
+         
+        <hr>
+     
     <div class="form-group">
-      <mat-form-field>
+      <label>Medicine name & size</label>
+          <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size" formControlName="medicine_name"/>
+     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
+{
+
+'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
+})">
+      </app-field-error-display>
+      <!-- <mat-form-field>
         <input matInput type="text" class="form-control" placeholder="Medicine name & size" formControlName="medicine_name">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
@@ -14,13 +36,15 @@
 
 'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
 })">
-      </app-field-error-display>
+      </app-field-error-display> -->
     </div>
 
     <div class="form-group">
-      <mat-form-field>
+    <label>Duration in days</label>
+          <input type="text"  class="form-control" (keypress)="clearError($event)"  formControlName="duration" placeholder="Duration in days"/>
+      <!-- <mat-form-field>
         <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days">
-      </mat-form-field>
+      </mat-form-field> -->
       <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'duration')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'duration',
 {
 
@@ -31,9 +55,11 @@
     </div>
 
     <div class="form-group">
-      <mat-form-field>
+    <label>Frequency per day</label>
+          <input type="text"  class="form-control"(keypress)="clearError($event)"  placeholder="Frequency per day" formControlName="frequency"/>
+      <!-- <mat-form-field>
         <input matInput type="text" class="form-control" placeholder="Frequency per day" formControlName="frequency">
-      </mat-form-field>
+      </mat-form-field> -->
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
 
@@ -42,9 +68,11 @@
       </app-field-error-display>
     </div>
     <div class="form-group">
-      <mat-form-field>
+    <label>Dosage per consumption</label>
+          <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption" formControlName="dosage"/>
+      <!-- <mat-form-field>
         <input matInput type="text" class="form-control" placeholder="Dosage per consumption" formControlName="dosage">
-      </mat-form-field>
+      </mat-form-field> -->
       <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
 {
 
@@ -57,9 +85,14 @@
 
 
     <div class="form-group">
-      <mat-form-field>
+    <label>Additional instructions</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+          <textarea type="text" class="form-control" (keypress)="clearError($event)" id="instructions" placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
+          </div>
+      <!-- <mat-form-field>
         <textarea matInput class="form-control" id="instructions" placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
-      </mat-form-field>
+      </mat-form-field> -->
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
 {
 
@@ -80,4 +113,5 @@
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+

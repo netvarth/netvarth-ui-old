@@ -459,9 +459,13 @@ export class SharedServices {
     const url = 'consumer/payment/status';
     return this.servicemeta.httpPost(url, data);
   }
-  getConsumerPayments() {
+  // getConsumerPayments() {
+  //   const url = 'consumer/payment';
+  //   return this.servicemeta.httpGet(url);
+  // }
+  getConsumerPayments(filter?) {
     const url = 'consumer/payment';
-    return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null, filter);
   }
   getConsumerPaymentById(id) {
     const url = 'consumer/payment/' + id;
@@ -589,6 +593,10 @@ export class SharedServices {
     const url = 'provider/waitlist/queues/isAvailableNow/today';
     return this.servicemeta.httpGet(url);
   }
+  isuserAvailableNow(id) {
+    const url = 'provider/waitlist/queues/isAvailableNow/today/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   getLicenseDetails() {
     // return this.servicemeta.httpGet('accounts/license');
     return this.servicemeta.httpGet('provider/license');
@@ -672,6 +680,10 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  shareMeetingdetails(data) {
+    const url = 'provider/waitlist/shareMeetingDetails';
+    return this.servicemeta.httpPost(url, data);
+  }
   consumerMassCommunicationWithId(data) {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
@@ -740,6 +752,10 @@ export class SharedServices {
   }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  shareMeetingDetailsAppt(data) {
+    const url = 'provider/appointment/shareMeetingDetails';
     return this.servicemeta.httpPost(url, data);
   }
   consumerOrderMassCommunicationAppt(data) {
@@ -860,15 +876,15 @@ export class SharedServices {
       // if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
       //   resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
       // } else {
-        this.gets3url(src)
-          .subscribe(
-            data => {
-              this.lStorageService.setitemonLocalStorage('s3Url', data);
-              resolve(data);
-            },
-            error => {
-              reject(error);
-            });
+      this.gets3url(src)
+        .subscribe(
+          data => {
+            this.lStorageService.setitemonLocalStorage('s3Url', data);
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
       // }
     });
     return promise;
@@ -983,52 +999,76 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   getConsumerAppointmentAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/appointment/attachment/' + uuid+'?account=' + accountid;
+    const url = 'consumer/appointment/attachment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
- }
- getConsumerWaitlistAttachmentsByUuid(uuid , accountid) {
-  const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
-  return this.servicemeta.httpGet(url);
-}
-getCartdetails(accountid, data) {
-  const url = 'consumer/orders/amount' + '?account=' + accountid;
-  return this.servicemeta.httpPut(url, data);
-}
-addWaitlistAdvancePayment(param, body) {
-  const url = 'consumer/waitlist/advancePayment';
-  return this.servicemeta.httpPut(url, body, null, param);
-}
-addApptAdvancePayment(param, body) {
-  const url = 'consumer/appointment/advancePayment';
-  return this.servicemeta.httpPut(url, body, null, param);
-}
-// Questionnaire Urls
-getConsumerQuestionnaire(serviceId, consumerId, accountId) {
-  const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
-  return this.servicemeta.httpGet(url);
-}
-submitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/waitlist/questionnaire/' + uuid + '?account=' + accountId;
-  return this.servicemeta.httpPost(url, body);
-}
-submitConsumerApptQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
-  return this.servicemeta.httpPost(url, body);
-}
-resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
-  return this.servicemeta.httpPost(url, body);
-}
-resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
-  const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
-  return this.servicemeta.httpPost(url, body);
-}
-validateConsumerQuestionnaire(body, accountId) {
-  const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
-  return this.servicemeta.httpPut(url, body);
-}
-validateConsumerQuestionnaireResbumit(body, accountId) {
-  const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
-  return this.servicemeta.httpPut(url, body);
-}
+  }
+  getConsumerWaitlistAttachmentsByUuid(uuid, accountid) {
+    const url = 'consumer/waitlist/attachment/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+  getCartdetails(accountid, data) {
+    const url = 'consumer/orders/amount' + '?account=' + accountid;
+    return this.servicemeta.httpPut(url, data);
+  }
+  addWaitlistAdvancePayment(param, body) {
+    const url = 'consumer/waitlist/advancePayment';
+    return this.servicemeta.httpPut(url, body, null, param);
+  }
+  addApptAdvancePayment(param, body) {
+    const url = 'consumer/appointment/advancePayment';
+    return this.servicemeta.httpPut(url, body, null, param);
+  }
+  // Questionnaire Urls
+  getConsumerQuestionnaire(serviceId, consumerId, accountId) {
+    const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  submitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/waitlist/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  submitConsumerApptQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  validateConsumerQuestionnaire(body, accountId) {
+    const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
+    return this.servicemeta.httpPut(url, body);
+  }
+  validateConsumerQuestionnaireResbumit(body, accountId) {
+    const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
+    return this.servicemeta.httpPut(url, body);
+  }
+  getLocationsByPincode(pinCode) {
+    const url = 'provider/account/settings/locations/' + pinCode;
+    return this.servicemeta.httpGet(url);
+  }
+  enableTelegramNoti(status) {
+    const url = 'consumer/telegram/settings/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getTelegramstat() {
+    const url = 'consumer/telegram/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getDonationQuestionnaire(serviceId, account_id) {
+    const url = 'consumer/questionnaire/donation/' + serviceId + '?account=' + account_id;
+    return this.servicemeta.httpGet(url);
+  }
+  submitDonationQuestionnaire(uuid, body, account_id) {
+    const url = 'consumer/donation/questionnaire/submit/' + uuid + '?account=' + account_id;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderDonationQuestionnaire(uuid, body) {
+    const url = 'provider/donation/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
 }

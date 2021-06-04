@@ -181,9 +181,13 @@ export class StatementsComponent implements OnInit {
     const invoiceJson = JSON.parse(this.invoice);
     this.source = this.data.source || 'payment-history';
     this.payMentShow = this.data.payMent;
-    this.pay_data.amount = invoiceJson.amount;
     this.pay_data.uuid = invoiceJson.ynwUuid;
     this.pay_data.refno = invoiceJson.invoiceRefNumber;
+    if(invoiceJson.cGstAmt > 0){
+      this.pay_data.amount = invoiceJson.totAmtIncludeTax;
+    } else {  
+      this.pay_data.amount = invoiceJson.amount;
+    }
   }
 
   ngOnInit() {

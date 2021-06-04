@@ -9,7 +9,7 @@
                     <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
                 </div> -->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accountId" [customId]="customId"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -17,14 +17,14 @@
                     <div class="c-body">
                         <div class="card title-gb">
                             <h5 class="mgn-up-10">Payments Log
-                                <a class="pull-left mgn-rt-20 back-btn" routerLink="/consumer"><i
+                                <a class="pull-left mgn-rt-20 back-btn" (click)="backToDashboard()"><i
                                         class="fa fa-arrow-left"></i></a>
                             </h5>
                         </div>
 
+                        <app-innerloading-spinner *ngIf="loading"></app-innerloading-spinner>
 
-
-                        <div class="c-outer bill-section-content">
+                        <div class="c-outer bill-section-content" *ngIf="!loading">
                             <div class="c-body bill-wrapper">
                                 <div class="card history one section-four no-padding">
                                     <div class="list-outer consumer-pay">

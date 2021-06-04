@@ -9,6 +9,8 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-menu',
@@ -38,6 +40,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   minimizeMenu = false;
   showMenu = false;
   enquiryCount;
+  isadminPrivilege: any;
+  apptstatus: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -47,7 +51,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private provider_dataStorage: ProviderDataStorageService,
+    private titleService: Title
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -110,6 +116,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
+          break;
+        case 'apptStatus':
+          this.apptstatus = message.apptStatus;
           break;
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
@@ -191,6 +200,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
+    this.isadminPrivilege = user.adminPrivilege
     this.domain = user.sector;
     this.getGlobalSettings();
     this.getBusinessdetFromLocalstorage();
@@ -238,10 +248,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     const settings = this.groupService.getitemFromGroupStorage('settings');
     if (settings) {
       this.donationstatus = settings.donationFundRaising;
+      this.apptstatus = settings.appointment;
     } else {
       this.provider_services.getGlobalSettings().subscribe(
         (data: any) => {
           this.donationstatus = data.donationFundRaising;
+          this.apptstatus = data.appointment;
         });
     }
   }
@@ -267,5 +279,17 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {
       this.enquiryCount = data;
     });
+  }
+  doLogout() {
+    this.shared_functions.doLogout()
+      .then(
+        () => {
+          this.provider_dataStorage.setWeightageArray([]);
+          this.titleService.setTitle('Jaldee');
+          this.router.navigate(['/home']);
+        },
+        () => {
+        }
+      );
   }
 }

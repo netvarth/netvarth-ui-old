@@ -15,6 +15,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 
 @Component({
   selector: 'app-checkindetail',
@@ -270,7 +271,6 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-
   addFavProvider(id, event) {
     event.stopPropagation();
     if (!id) {
@@ -302,5 +302,24 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     } else {
       return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
+  }
+  joinMeetitng(actionObj) {
+    if(actionObj === 'wl'){
+      this.getMeetingDetails(this.waitlist, 'waitlist');
+    }
+  }
+  getMeetingDetails(details, source) {
+    const passData = {
+      'type': source,
+      'details': details
+    };
+    this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: passData
+    });
+    this.addnotedialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

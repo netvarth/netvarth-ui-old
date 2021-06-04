@@ -107,7 +107,14 @@
                                             </div>
                                         </div>
 
-
+                                        <div class="cd-b" *ngIf="active_user && active_user.id == userId">
+                                            <div class="div-outline div-grn-outline custId-cursor"
+                                                (click)="gotoAccountSettings()">
+                                                <i class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                                                <i class="fa fa-gears"></i> &nbsp;&nbsp;
+                                                <span class="fontstyl">Account Settings</span>
+                                            </div>
+                                        </div>
 
 
 

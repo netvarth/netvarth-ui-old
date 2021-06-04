@@ -150,7 +150,9 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.provider_services.Paymentlink(this.pay_link)
         .subscribe(() => {
           this.dialogRef.close();
-          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
+          // this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
+          this.snackbarService.openSnackBar( Messages.PROVIDER_BILL_PAYMENT_link.replace('[customer]', this.customer_label));
+         ;
         },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -80,7 +80,7 @@
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                                            class="fa wtsapvid-icon"></i>
+                                                            style="width: 20px !important;"  class="fa wtsapvid-icon"></i>
 
                                                         {{service.name | capitalizeFirst}}
                                                     </span>
@@ -215,7 +215,7 @@
                 </nav>
                 <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
                     <div class="card que p0" *ngIf="services_list.length === 0">
-                        Atleast one service need to create queue
+                        Atleast one service needed to create queue
                     </div>
                     <div class="copy ynw-common-form-nm pro-schedule" *ngIf="amForm && services_list.length>0">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
@@ -315,7 +315,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                                class="fa wtsapvid-icon"></i>
+                                                style="width: 20px !important;"  class="fa wtsapvid-icon"></i>
 
                                             {{service.name | capitalizeFirst}}
                                         </mat-checkbox>

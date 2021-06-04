@@ -1,5 +1,5 @@
 <section class="">
-  <div class="card title-gb rounded-0">
+  <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span *ngIf="showToken">Token</span>
@@ -7,329 +7,6 @@
     </h5>
   </div>
 </section>
-
-
-
-
-<section class="content p-4">
-  <!--begin::First Row-->
-  <div class="row">
-    <div class="col-lg-8">
-      <!--begin::Advance Table Widget 4-->
-      <div class="card rounded-0 card-custom gutter-b wave wave-animate-fast wave-success pl-0 pr-0">
-        <!--begin::Header-->
-        <div class="card-header border-0 py-1 pl-1 pr-1">
-          <h3 class="card-title align-items-start flex-column pl-2">
-            <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
-                {{waitlist_data.service.name |
-                capitalizeFirst}}
-            <!-- <span class="card-label font-weight-bolder text-dark">RCT CONSULTATION
-              <i class="text-dark-50 flaticon-info"></i>
-            </span> -->
-            <span class="text-success mt-3 font-weight-bold font-size-sm">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
-              SERVICE HAS BEGUN</span>
-          </h3>
-          <div class="card-toolbar pr-2 disp-grid">
-            <div>
-              <button type="button" class="btn btn-lg lh-1 btn-start font-size-xs mb-2 btn-square btn-block">
-                <!-- <i class="socicon-telegram text-primary mr-5"></i> -->
-                Start Video Call
-              </button>
-              <!-- <a class="btn btn-start no-display mr-3 btn-square font-weight-bold mb-2 lh-80 font-size-xs">Relaunch Video Call</a>
-                <a  class="btn btn-danger no-display mb-2 btn-square lh-80 font-size-xs">
-                   Finish Session
-                </a> -->
-            </div>
-            <div>
-              <a class="btn btn-light-danger font-weight-bold btn-square font-size-xs mr-3 lh-1">Stop</a>
-              <a class="btn btn-light-primary mr-3 btn-square font-weight-bold  font-size-xs lh-1">Reschedule</a>
-              <a class="btn btn-danger btn-square lh-1 font-size-xs">
-                <!-- <i class="flaticon2-poll-symbol font-size-xs"></i> -->
-                Cancel
-              </a>
-            </div>
-          </div>
-        </div>
-        <!--end::Header-->
-      </div>
-
-      <!-- Patient details -->
-      <div class="card rounded-0 card-custom gutter-b wave-success p-0">
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-          <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
-            <div class="card-body p-0">
-              <!--begin::User-->
-              <div class="d-flex align-items-end">
-                <div class="d-flex align-items-center">
-                  <div class="d-flex flex-column p-2">
-                    <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-md mb-0">Rahul Menon</a>
-                    <span class="text-muted  font-size-xs font-weight-bold">24 years old</span>
-                    <span class="text-muted  font-size-xs font-weight-bold">luca@festudios.com</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-            <form class="form" style="width: 100%;">
-              <div class="card-body p-3">
-                <div class="form-group">
-                  <label class="text-muted font-p8">CHIEF COMPLAINT</label>
-                  <input type="email" class="form-control round-10 form-control-lg" placeholder="Large input">
-                </div>
-                <div class="form-group mb-0">
-                  <label for="exampleTextarea" class="text-muted font-p8">SUMMARY</label>
-                  <textarea class="form-control round-10" readonly="" rows="3"></textarea>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-lg-4">
-      <!--begin::Content-->
-      <div class="card">
-       Chat
-      </div>
-      <!--end::Content-->
-
-    </div>
-  </div>
-  <!--end:: First Row-->
-
-  <!--begin::Second Row-->
-  <div class="row">
-    <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4  gutter-b col-xs-12">
-      <div class="card card-custom stretch_card  pt-0">
-        <!--begin::Header-->
-        <div class="card-header border-0 p-0 min-ht-60">
-          <h3 class="card-title font-1rem font-weight-bolder text-dark">Case History</h3>
-          <div class="card-toolbar">
-            <!-- space for -->
-          </div>
-        </div>
-        <!--end::Header-->
-
-        <!--begin::Body-->
-        <div class="card-body pt-2 p-0">
-          <div class="d-flex flex-wrap align-items-center mb-6">
-
-            <div class="symbol symbol-40 symbol-light-info mr-2">
-              <span class="symbol-label">
-                <span class="svg-icon svg-icon-lg  svg-icon-info">
-                  <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg--><svg
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                    height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24"></rect>
-                      <path
-                        d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
-                        fill="#000000" opacity="0.3"></path>
-                      <path
-                        d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
-                        fill="#000000" opacity="0.3"></path>
-                      <path
-                        d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
-                        fill="#000000" opacity="0.3"></path>
-                    </g>
-                  </svg>
-                  <!--end::Svg Icon-->
-                </span> </span>
-            </div>
-            <!--begin::Title-->
-            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
-              <a class="text-dark-75 font-weight-bold text-hover-primary font-size-md mb-1">Virtual OP</a>
-              <span class="text-muted font-size-sm font-weight-bold">Appointment</span>
-            </div>
-            <!--end::Title-->
-
-            <!--begin::Section-->
-            <div class="d-flex align-items-center mt-lg-0 mt-3">
-              <!--begin::Label-->
-              <div class="mr-6">
-                <span class="text-dark-75 font-weight-bold font-size-xs">20-12-2021</span>
-              </div>
-              <!--end::Label-->
-            </div>
-            <!--end::Section-->
-          </div>
-          <div class="d-flex flex-wrap align-items-center mb-6">
-
-            <div class="symbol symbol-40 symbol-light-info mr-2">
-              <span class="symbol-label">
-                <span class="svg-icon svg-icon-lg  svg-icon-info">
-                  <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg--><svg
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                    height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24"></rect>
-                      <path
-                        d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
-                        fill="#000000" opacity="0.3"></path>
-                      <path
-                        d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
-                        fill="#000000" opacity="0.3"></path>
-                      <path
-                        d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
-                        fill="#000000" opacity="0.3"></path>
-                    </g>
-                  </svg>
-                  <!--end::Svg Icon-->
-                </span> </span>
-            </div>
-            <!--begin::Title-->
-            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
-              <a class="text-dark-75 font-weight-bold text-hover-primary font-size-md mb-1">Virtual OP</a>
-              <span class="text-muted font-size-sm font-weight-bold">Appointment</span>
-            </div>
-            <!--end::Title-->
-
-            <!--begin::Section-->
-            <div class="d-flex align-items-center mt-lg-0 mt-3">
-              <!--begin::Label-->
-              <div class="mr-6">
-                <span class="text-dark-75 font-weight-bold font-size-xs">20-12-2021</span>
-              </div>
-              <!--end::Label-->
-            </div>
-            <!--end::Section-->
-          </div>
-        </div>
-        <!--end::Body-->
-      </div>
-    </div>
-
-    <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4  gutter-b col-xs-12">
-      <div class="card card-custom stretch_card pt-0">
-        <div class="card-header border-0 p-0 min-ht-60">
-          <h3 class="card-title font-1rem font-weight-bolder text-dark">Medical Records</h3>
-          <div class="card-toolbar"></div>
-        </div>
-        <div class="card-body p-0 position-relative overflow-hidden">
-          <div>
-            <div class="row m-0">
-              <div class="col bg-light-warning px-5 py-1 rounded-sm mr-2 mb-3">
-
-                <a class="text-warning font-weight-bold font-size-xs">
-                  Prescriptions
-                </a>
-              </div>
-              <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
-                <a class="text-primary font-weight-bold font-size-xs mt-2">
-                  Symptoms
-                </a>
-              </div>
-            </div>
-            <div class="row m-0">
-              <div class="col bg-light-warning px-5 py-1 rounded-sm mr-2 mb-3">
-
-                <a class="text-warning font-weight-bold font-size-xs">
-                  Prescriptions
-                </a>
-              </div>
-              <div class="col bg-light-primary px-5 py-1 rounded-sm mr-2 mb-3">
-                <a class="text-primary font-weight-bold font-size-xs mt-2">
-                  Symptoms
-                </a>
-              </div>
-            </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Stats-->
-          <div class="resize-triggers">
-            <div class="expand-trigger">
-              <div style="width: 808px; height: 328px;"></div>
-            </div>
-            <div class="contract-trigger"></div>
-          </div>
-        </div>
-        <!--end::Body-->
-      </div>
-    </div>
-
-    <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12  gutter-b">
-      <div class="card card-custom stretch_card pt-0">
-        <div class="card-header border-0 p-0 min-ht-60">
-          <h3 class="card-title font-1rem font-weight-bolder text-dark">Documents</h3>
-          <div class="card-toolbar"></div>
-        </div>
-
-        <div class="card-body p-0 pt-2">
-          <!--begin::Item-->
-          <div class="d-flex align-items-center mb-5">
-            <!--begin::Symbol-->
-            <div class="symbol symbol-40 symbol-light-success mr-2">
-              <span class="symbol-label">
-                <img src="assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="">
-              </span>
-            </div>
-            <!--end::Symbol-->
-
-            <!--begin::Text-->
-            <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-              <a href="#" class="text-dark text-hover-primary mb-1 font-size-md">Checkup Results</a>
-
-            </div>
-            <!--end::Text-->
-
-            <!--begin::Dropdown-->
-            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="" data-placement="left"
-              data-original-title="Quick actions">
-              <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="ki ki-bold-more-hor"></i>
-              </a>
-            </div>
-            <!--end::Dropdown-->
-          </div>
-          <!--end::Item-->
-
-          <!--begin::Item-->
-          <div class="d-flex align-items-center mb-5">
-            <!--begin::Symbol-->
-            <div class="symbol symbol-40 symbol-light-success mr-2">
-              <span class="symbol-label">
-                <img src="assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="">
-              </span>
-            </div>
-            <!--end::Symbol-->
-
-            <!--begin::Text-->
-            <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-              <a class="text-dark text-hover-primary mb-1 font-size-md">Clinical Notes </a>
-
-            </div>
-            <!--end::Text-->
-
-            <!--begin::Dropdown-->
-            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="" data-placement="left"
-              data-original-title="Quick actions">
-              <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="ki ki-bold-more-hor"></i>
-              </a>
-            </div>
-            <!--end::Dropdown-->
-          </div>
-          <!--end::Item-->
-
-        </div>
-        <!--end::Body-->
-      </div>
-    </div>
-  </div>
-  <!--end:: Second Row-->
-</section>
-
-
-
-
-
-
 
 <section class="prov-apptDetail" *ngIf="waitlist_data">
   <div class="content comn-cls checkin-details">
@@ -352,12 +29,16 @@
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place
                   | capitalizeFirst}}</span><br>
-                <span *ngIf="waitlist_data.provider" class="mgn-up-10 sub-user-name">
+                <div *ngIf="waitlist_data.provider" class="mgn-up-5 sub-user-name">
                   <span>{{provider_label | capitalizeFirst}} : </span>
                   <!-- <span>{{spfname | capitalizeFirst}} {{splname}}
                   </span> -->
                   <span>{{spName}}</span>
-                </span>
+                </div>
+                <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
+                  <i class="fa fa-mobile icon"></i>
+                  <span> +91 {{waitlist_data.provider.mobileNo}}</span>
+                </div>
               </h2>
               <!-- Content -->
               <div class="mgn-up-10 stats-item"
@@ -371,9 +52,28 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.checkinEncId}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].bookingLocation">
+                <span class="itemHead">Location</span>
+                <span class="itemVal">
+                  {{waitlist_data.waitlistingFor[0].bookingLocation.district}},
+                  {{waitlist_data.waitlistingFor[0].bookingLocation.state}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].preferredLanguage">
+                <span class="itemHead">Language</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].dob">
+                <span class="itemHead">Date of Birth</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
-                <span class="itemHead">Phone No</span>
+                <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                <span class="itemHead">WhatsApp #</span>
+                <span class="itemVal">+
+                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
@@ -383,7 +83,6 @@
                 <span class="itemHead">Department</span>
                 <span class="itemVal">{{waitlist_data.service.deptName}}</span>
               </div>
-
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.batchName">
                 <span class="itemHead">Batch</span>
                 <span>
@@ -424,69 +123,67 @@
                     {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}
                   </span>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
-                  <div *ngIf="showToken">
-                    <span class="status-label">TOKEN NO</span><br>
-                    <span>
-                      {{waitlist_data.token}}
-                    </span>
-                  </div>
-                  <div
-                    *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived') && (waitlist_data && !waitlist_data.appointmentTime)">
-                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
-                      Time</span>
-                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service
-                      Time</span><br>
-                    <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
-                      {{getAppxTime(waitlist_data)}}</span>
-                  </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="showToken">
+                  <span class="status-label">TOKEN NO</span>
+                  <span>
+                    {{waitlist_data.token}}
+                  </span>
+               
+                <div
+                  *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived') && (waitlist_data && !waitlist_data.appointmentTime)">
+                  <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
+                    Time</span>
+                  <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service
+                    Time</span><br>
+                  <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
+                    {{getAppxTime(waitlist_data)}}</span>
                 </div>
               </div>
-
-              <!-- View more and Less -->
-              <div class="more_view mgn-up-20">
-                <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
-                    more</a></span>
-                <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a class="fl-left">View
-                    less</a></span>
               </div>
+            </div>
 
-              <!-- Instructions,messages,notes -->
-              <div class="more_view" *ngIf="view_more" class="mgn-up-30">
-                <mat-tab-group animationDuration="10ms" class="index-head">
-                  <mat-tab label="Private Notes" *ngIf="waitlist_data.waitlistStatus !== 'blocked'">
-                    <span>
-                      <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
-                        <p [innerHTML]="note.note | nl2br"></p>
-                        <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
-                          (click)="showImagesection(i)">
-                          <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
-                            {{note.attachment.length}} Attachment(s) </a>
-                        </div>
-                        <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
-                          <a class="mg-10" target="_blank" [href]="attachment.s3path"
-                            *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
-                              style="width:100px; height:100px" /></a>
-                        </div>
-                        <p>{{note.timeStamp | date: newTimeDateFormat}}</p>
+            <!-- View more and Less -->
+            <div class="more_view mgn-up-20">
+              <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
+                  more</a></span>
+              <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a class="fl-left">View
+                  less</a></span>
+            </div>
+
+            <!-- Instructions,messages,notes -->
+            <div class="more_view" *ngIf="view_more" class="mgn-up-30">
+              <mat-tab-group animationDuration="10ms" class="index-head">
+                <mat-tab label="Private Notes" *ngIf="waitlist_data.waitlistStatus !== 'blocked'">
+                  <span>
+                    <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
+                      <p [innerHTML]="note.note | nl2br"></p>
+                      <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
+                        (click)="showImagesection(i)">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+                          {{note.attachment.length}} Attachment(s) </a>
                       </div>
-                    </span>
-                    <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
-                  </mat-tab>
-                  <mat-tab label="Messages">
-                    <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                      (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
-                  </mat-tab>
-                  <mat-tab label="{{waitlist_data.service.consumerNoteTitle | capitalizeFirst}}">
-                    <span *ngIf="waitlist_data && waitlist_data.consumerNote">
-                      <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
-                      <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
-                    </span>
-                    <span *ngIf="waitlist_data && !waitlist_data.consumerNote">{{no_cus_notes_cap}}</span>
-                  </mat-tab>
-                </mat-tab-group>
-              </div>
-
+                      <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
+                        <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                          *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
+                            style="width:100px; height:100px" /></a>
+                      </div>
+                      <p>{{note.timeStamp | date: newDateFormat}}</p>
+                    </div>
+                  </span>
+                  <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
+                </mat-tab>
+                <mat-tab label="Messages">
+                  <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+                    (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                </mat-tab>
+                <mat-tab label="{{waitlist_data.service.consumerNoteTitle | capitalizeFirst}}">
+                  <span *ngIf="waitlist_data && waitlist_data.consumerNote">
+                    <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
+                    <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
+                  </span>
+                  <span *ngIf="waitlist_data && !waitlist_data.consumerNote">{{no_cus_notes_cap}}</span>
+                </mat-tab>
+              </mat-tab-group>
             </div>
           </div>
           <!-- Questionnaire starts-->
@@ -504,22 +201,22 @@
           </div>
           <!-- Questionnaire end-->
         </div>
-        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
-          <div class="card">
-            <h2 *ngIf="!showToken">{{checkin_label |capitalizeFirst}} History</h2>
-            <h2 *ngIf="showToken">Token History</h2>
-            <div class="c-history-outer">
-              <ul class="c-history">
-                <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                  <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
-                </li>
-              </ul>
-              <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
-            </div>
+      <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+        <div class="card">
+          <h2 *ngIf="!showToken">{{checkin_label |capitalizeFirst}} History</h2>
+          <h2 *ngIf="showToken">Token History</h2>
+          <div class="c-history-outer">
+            <ul class="c-history">
+              <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
+              </li>
+            </ul>
+            <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>

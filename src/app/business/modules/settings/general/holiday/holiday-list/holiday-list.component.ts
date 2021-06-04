@@ -57,6 +57,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   active_user;
   domain;
   qAvailability: any = [];
+  accountType: any;
   // router: any;
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -72,10 +73,11 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.accountType = user.accountType;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');   
   }
 
   ngOnDestroy() {
@@ -118,14 +120,17 @@ export class HolidayListComponent implements OnInit, OnDestroy {
       return false;
     }
     const date = new Date(holiday.holidaySchedule.startDate);
-    // const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    const end_date = new Date(holiday.holidaySchedule.terminator.endDate);   
     const date_format = this.dateformat.transformToMonthlyDate(date);
+    const end_date_format1 = this.dateformat.transformToMonthlyDate(end_date);
+    let msg = this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format);
+    msg = msg.replace('[date1]', end_date_format1);
     this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
+        'message': msg 
       }
     });
     this.remholdialogRef.afterClosed().subscribe(result => {

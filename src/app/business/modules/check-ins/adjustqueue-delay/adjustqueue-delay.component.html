@@ -13,12 +13,16 @@
 <section>
   <div class="content loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding">
-      <div class="row">
+      <div class="row"> 
         <div class="card p0">
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                <div  *ngIf="!api_loading">
+                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </div>
+                <div  *ngIf="api_loading">
               <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-            onSubmit(amForm.value)" class="ynw-common-form">
+            onSubmit(amForm.value)" class="ynw-common-form" >
                 <div class="col-md-12 col-xs-12 col-sm-12 adjustdelay no-padding">
                   <!-- <div class="form-group" *ngIf="queues.length>1"> -->
                   <p class="form-level-settings">{{FRM_LEVEL_ADJ_DELAY_MSG_CNGE}}</p>
@@ -160,6 +164,7 @@
                 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
                 </app-form-success-display>
               </form>
+              </div>
             </div>
 
           </div>

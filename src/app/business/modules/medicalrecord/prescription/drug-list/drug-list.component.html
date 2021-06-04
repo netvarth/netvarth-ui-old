@@ -21,20 +21,20 @@
                                 <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
                               </p> -->
                               <hr>
-                             <label>{{customer_label | capitalizeFirst}} Name</label>  <span> {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-                             <label>{{customer_label | capitalizeFirst}} Id</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
-                             <label *ngIf="patientDetails.dob">DOB</label>  <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
-                             <label *ngIf="patientDetails.gender">Gender</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
+                             <label *ngIf="patientDetails.firstName ||patientDetails.lastName">{{customer_label | capitalizeFirst}} Name :</label>  <span> {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
+                             <label>{{customer_label | capitalizeFirst}} Id :</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
+                             <label *ngIf="patientDetails.dob">DOB :</label>  <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:newDateFormat}}</span><br *ngIf="patientDetails.dob">
+                             <label *ngIf="patientDetails.gender">Gender :</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
                               <hr>
 
                           </div>
                           
 <ng-container *ngIf="!loading">
-  <div class="w-dta" >
+  <div class="w-dta" *ngIf="drugList && drugList.length>0">
     <div class="row">
         <div class="copy">
             <div class="table-outer q-itm">
- <div class="drugdetailslist pad-20 " *ngIf="drugList.length>0">
+ <div class="drugdetailslist pad-20 " >
   <h5> Medicines added to the prescription</h5>
 <table class="table" >
     <thead>
@@ -114,11 +114,26 @@
       </tr>
     </tbody>
   </table>
+  <div>
+      <div class="form-group notesize">
+          
+              <label>Instructions to the patient</label>
+            <textarea  class="form-control" id="message"
+            [(ngModel)]="note" 
+              maxlength="500"> </textarea>
+         </div>
+    <!-- <div>
+       <textarea class="form-control" id="message" 
+      [(ngModel)]="note" maxlength="360">
+   </textarea>
+   </div> -->
+  </div>
   <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
+  
 
  
 
-  <div  *ngIf="drugList.length > 0 && showSave" class="mgn-up-10">
+  <div  *ngIf="drugList && drugList.length > 0 && showSave" class="mgn-up-10">
       <button type="button" mat-button  class="cs-btn bt1" [disabled]="disable" (click)="saveRx()">Save Prescription </button>
   </div>
   <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">
@@ -135,7 +150,7 @@
       </div> -->
 </div></div></div></div>
 </div>
-<div class="btm-pad-20" *ngIf="drugList.length === 0">
+<div class="btm-pad-20" *ngIf="drugList && drugList.length == 0">
      <div>
       Medicines are not added
      </div>

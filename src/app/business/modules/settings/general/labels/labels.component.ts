@@ -85,7 +85,9 @@ source;
     }
     editLabel(label) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { id: label.id }
+            queryParams: { 
+                source: this.source,
+                id: label.id }
         };
         this.router.navigate(['provider', 'settings', 'general',
             'labels', 'edit'], navigationExtras);
@@ -119,6 +121,7 @@ source;
             });
     }
     redirecToGeneral() {
+        console.log(this.source);
         if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer' || this.source === 'order') {
             this._location.back();
         } else {

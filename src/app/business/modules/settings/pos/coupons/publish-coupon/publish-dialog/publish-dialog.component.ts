@@ -96,7 +96,7 @@ checkDayisBeforeEndDate(sDate, eDate) {
     }
     if(!this.startDaterequired &&!this.endDaterequired&& !this.endDateInvalidError){
   //  const  msg = 'This Coupon wil be visible to consumers after publishing.Are you sure you want publish this coupon?';
-   const  msg = 'This Coupon wil be visible to'  + '  ' + this.customer_label + 's'+ ' '+ 'after publishing.Are you sure you want publish this coupon?'; 
+   const  msg = 'This Coupon will be visible to'  + '  ' + this.customer_label + 's'+ ' '+ 'after publishing.Are you sure you want publish this coupon?'; 
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

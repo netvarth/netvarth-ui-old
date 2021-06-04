@@ -45,6 +45,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
   showPaidInfo = false;
   
   virtualMode;
+  customId: any;
   constructor(
     private wordProcessor: WordProcessor, 
     private dateTimeProcessor: DateTimeProcessor, 
@@ -120,7 +121,10 @@ export class ApptCardComponent implements OnInit, OnChanges {
     if(this.booking.amountPaid){
       this.showPaidInfo = true;
     }
-    if (this.extras && this.extras['favourites']) {
+    if (this.extras  && this.extras['customId']) {
+      this.customId = this.extras['customId'];
+    }
+    if (this.extras && this.extras['favourites'] && !this.extras['customId']) {
       if (!this.checkIfFav(this.booking.providerAccount.id)) {
         this.showFavouritesBtn = true;
         this.showRemFavouritesBtn = false;

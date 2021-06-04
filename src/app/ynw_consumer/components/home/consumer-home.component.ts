@@ -167,7 +167,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   callingModesDisplayName = projectConstants.CALLING_MODES;
   breadcrumbs;
   donations: any = [];
-  rupee_symbol = 'â‚¹';
+  rupee_symbol = 'Ã¢â€šÂ¹';
   appttime_arr: any = [];
   api_error: any;
   api_loading = false;
@@ -235,6 +235,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   extras: any;
 
   private subs = new SubSink();
+  accountId: any;
+  customAppid: any;
+  customId: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -258,6 +261,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.source) {
         this.showOrder = true;
+      }
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
       }
     });
   }
@@ -416,7 +425,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   paymentsClicked() {
-    this.router.navigate(['consumer', 'payments']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'payments'], navigationExtras);
   }
   orderpaymentsClicked() {
     this.router.navigate(['consumer', 'order', 'order-payments']);
@@ -532,9 +549,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
-    const params = {
+    let params = {
       'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
@@ -807,27 +827,33 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log('In Get Favourites');
     const _this = this;
     // return new Promise(function (resolve, reject) {
-      _this.loadcomplete.fav_provider = false;
-      _this.subs.sink = _this.shared_services.getFavProvider()
-        .subscribe(
-          data => {
-            _this.loadcomplete.fav_provider = true;
-            _this.fav_providers = data;
-            _this.fav_providers_id_list = [];
-            _this.setWaitlistTimeDetails();
-            this.extras = {
-              'favourites': _this.fav_providers_id_list
-            }
-            // resolve(_this.fav_providers_id_list);
-          },
-          error => {
-            _this.loadcomplete.fav_provider = true;
-            this.extras = {
-              'favourites': []
-            }
-            // resolve([]);
+    _this.loadcomplete.fav_provider = false;
+    _this.subs.sink = _this.shared_services.getFavProvider()
+      .subscribe(
+        data => {
+          _this.loadcomplete.fav_provider = true;
+          _this.fav_providers = data;
+          _this.fav_providers_id_list = [];
+          _this.setWaitlistTimeDetails();
+          this.extras = {
+            'favourites': _this.fav_providers_id_list
           }
-        );
+          if (this.customId) {
+            this.extras['customId'] = this.customId;
+          }
+          // resolve(_this.fav_providers_id_list);
+        },
+        error => {
+          _this.loadcomplete.fav_provider = true;
+          this.extras = {
+            'favourites': []
+          }
+          if (this.customId) {
+            this.extras['customId'] = this.customId;
+          }
+          // resolve([]);
+        }
+      );
     // });
   }
 
@@ -1094,24 +1120,32 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer/waitlist', waitlist.providerAccount.id, waitlist.ynwUuid]);
   }
   gotoAptmtReschedule(apptlist) {
+    let queryParams = {
+      uuid: apptlist.uid,
+      type: 'reschedule',
+      account_id: apptlist.providerAccount.id,
+      unique_id: apptlist.providerAccount.uniqueId
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: apptlist.uid,
-        type: 'reschedule',
-        account_id: apptlist.providerAccount.id,
-        unique_id: apptlist.providerAccount.uniqueId
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   gotoWaitlistReschedule(waitlist) {
+    let queryParams = {
+      uuid: waitlist.ynwUuid,
+      type: 'waitlistreschedule',
+      account_id: waitlist.providerAccount.id,
+      unique_id: waitlist.providerAccount.uniqueId
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: waitlist.ynwUuid,
-        type: 'waitlistreschedule',
-        account_id: waitlist.providerAccount.id,
-        unique_id: waitlist.providerAccount.uniqueId
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
@@ -1145,6 +1179,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     if (type === 'appt') {
@@ -1197,7 +1232,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log('In ProviderDetail');
     // console.log('order');
     // event.stopPropagation();
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    if (this.customId) {
+      this.gotoDetails();
+    } else {
+      this.router.navigate(['searchdetail', provider.uniqueId]);
+    }
+
   }
 
   goCheckin(data, location, type) {
@@ -1228,15 +1268,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   //   this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   // }
   setCheckinData(provider, location, currdate, chdatereq = false) {
+    let queryParams = {
+      loc_id: location.id,
+      sel_date: currdate,
+      cur: chdatereq,
+      unique_id: provider.uniqueId,
+      account_id: provider.id,
+      tel_serv_stat: provider.virtulServiceStatus
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        loc_id: location.id,
-        sel_date: currdate,
-        cur: chdatereq,
-        unique_id: provider.uniqueId,
-        account_id: provider.id,
-        tel_serv_stat: provider.virtulServiceStatus
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
     // const post_data = {
@@ -1799,22 +1843,40 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   gotoHistory() {
     console.log(this.showOrder);
+    let queryParams = {
+      is_orderShow: this.showOrder
+    }
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+      queryParams['accountId'] = this.accountId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        is_orderShow: this.showOrder
-      }
-    };
+      queryParams: queryParams
+    }
     this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras);
   }
   gotoApptmentHistory() {
-    this.router.navigate(['consumer', 'appointment', 'history']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    }
+    this.router.navigate(['consumer', 'appointment', 'history'], navigationExtras);
   }
   gotoOrderHistory() {
     this.router.navigate(['consumer', 'order', 'order-history']);
   }
 
   getAppointmentToday() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    let params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
+
     this.subs.sink = this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
@@ -1828,7 +1890,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
   getAppointmentFuture() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    let params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
@@ -1852,7 +1917,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // }
 
   getWaitlistFuture() {
-    const params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
+    let params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
@@ -1974,11 +2042,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescUrl
+        accencUid: checkin.prescShortUrl
       }
     });
   }
-
   // Order Functions
 
   getTdyOrder() {
@@ -2116,6 +2183,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
             const thumbPath = communications[comIndex].thumbPath;
             let imagePath = thumbPath;
+            const caption = communications[comIndex].caption;
             const description = communications[comIndex].s3path;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
             if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
@@ -2125,7 +2193,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                // description: description
+                description: caption
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2150,6 +2218,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             const thumbPath = communications[comIndex].thumbPath;
             let imagePath = thumbPath;
             const description = communications[comIndex].s3path;
+            const caption = communications[comIndex].caption;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
             if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
               imagePath = communications[comIndex].s3path;
@@ -2158,7 +2227,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                // description: description
+                description: caption
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2320,5 +2389,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         break;
     }
   }
-
+  gotoDetails() {
+    this.router.navigate([this.customId]);
+  }
 }

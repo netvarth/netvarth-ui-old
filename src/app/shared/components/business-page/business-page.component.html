@@ -1,21 +1,26 @@
-<section class="content bus-page">
+<section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <div class="panel-heading top-row" *ngIf="pSource && pSource == 'bp'">
+                <div class="panel-heading top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                        <!-- <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a> -->
+                        &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
+                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"></app-header>
+                        <div class="view-booking" *ngIf="!sharedFunctionobj.checkLogin()" >
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Cover Foto -->
-                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
+                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
-                        <div class="badge-smalldv  visible-xs visible-sm">
+                        <div class="badge-smalldv  visible-xs visible-sm"
+                            *ngIf="profileSettings && profileSettings['showVerified']">
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                     class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
@@ -40,7 +45,8 @@
                     </div>
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="businessjson">
-                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding">
+                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                            *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
                             <div class="no-padding right-padding-md-15"
                                 [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
@@ -64,8 +70,9 @@
                                             2).join(',').length)}}</a>
                                     </h6>
                                 </div>
+
                                 <div class="about question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
-                                    *ngIf="bNameStart!='' || bNameEnd!=''">
+                                    *ngIf="(bNameStart!='' || bNameEnd!='') && (!profileSettings || (profileSettings && profileSettings['showAbout']))">
                                     <div class="question-outer">
                                         <ng-container>
                                             <div class="question-header">About Us
@@ -83,15 +90,17 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1"
-                                    class="specialization-header question-header mgn-up-5">
+                                <div *ngIf="specializationslist.length == 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
+                                    class="specialization-header question-header mgn-up-5"
+                                    >
                                     Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1"
+                                <div *ngIf="specializationslist.length > 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5">
                                     Specializations
                                 </div>
-                                <div class="specialization-value question-value1">
+                                <div class="specialization-value question-value1"
+                                    *ngIf="!profileSettings || (profileSettings && profileSettings['showSpecialization'])">
                                     <ul class="comma-list">
                                         <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
@@ -105,7 +114,8 @@
                                     </ul>
                                 </div>
 
-                                <div class="showmoresec" *ngIf="showMore">
+                                <div class="showmoresec" *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"
+                                    >
                                     <div class="" *ngIf="showMore">
                                         <div class="">
                                             <!-- <div class="question-main-outer" *ngIf="!userId">
@@ -148,6 +158,18 @@
                                                             *ngIf="i<(businessjson.languagesSpoken.length-1)">,
                                                         </ng-container>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="question-main-outer" *ngIf="socialMedialist.length>0">
+                                                <div class="question-header">Social Media Links and Listing Sites</div>
+                                                <div class="question-value1">
+                                                    <ul class="details socialmedia m0 no-padding">
+                                                        <li *ngFor="let soc of socialMedialist"><a rel="noopener"
+                                                                [href]="soc.value" target="_blank"><i
+                                                                    [class]="getSocialdet(soc.resource, 'iconClass')"
+                                                                    [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                             <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
@@ -269,7 +291,7 @@
                                     </a>
                                 </li>
                                 <li class="share">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             Share
@@ -296,18 +318,18 @@
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul> -->
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="coupons bus-actions bus-actions-horiz no-padding">
                                 <li
                                     *ngIf="(s3CouponList.JC!=undefined && s3CouponList.JC.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0)||(s3CouponList.OWN!=undefined && s3CouponList.OWN.length>0 && isfirstCheckinOfferProvider() && frstChckinCupnCunt>0)">
                                     <i class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                         (click)="openCoupons('first')">{{first_time_coupon}}</span>
                                 </li>
-                                <!-- <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 "><i class="fa fa-tags blue"></i><span
+                                <li *ngIf="s3CouponList.JC.length>0 && nonfirstCouponCount>0||s3CouponList.OWN.length>0 && nonfirstCouponCount>0 "><i class="fa fa-tags blue"></i><span
                                         class="more_less icon-jal-coupon pointer-cursor"
-                                        (click)="openCoupons()">{{coupon}}</span></li> -->
+                                        (click)="openCoupons()">{{coupon}}</span></li> 
                             </ul>
-                        </div>
+                        </div> -->
                         <div style="position: absolute !important; bottom: 0 !important; right: 0 !important;">
                             <ul class="bus-actions bus-actions-large no-padding mgn-up-10 visible-md visible-lg"
                                 *ngIf="settings_exists && business_exists">
@@ -325,22 +347,22 @@
                                     </a>
                                 </li>
                                 <li class="share" [matTooltip]="'Share'">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <!-- Share -->
                                         </span>
                                     </a>
-                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                    <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <!-- Share -->
                                         </span>
                                     </a>
                                 </li>
-                                <li class="share" [matTooltip]="'Coupon'"  *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
-                                    <a class="like-btn" (click)="openCoupons()"
-                                       >
+                                <li class="share" [matTooltip]="'Coupon'"
+                                    *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
+                                    <a class="like-btn" (click)="openCoupons()">
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
 
@@ -348,18 +370,19 @@
                                     </a>
                                 </li>
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="!showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
                                     </a></li>
                                 <li [matTooltip]="'Less Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- Less Info -->...
                                     </a></li>
                             </ul>
                         </div>
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10 width-100" *ngIf="settings_exists && business_exists">
+                            <ul class="bus-actions no-padding mgn-up-10 width-100"
+                                *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
@@ -374,31 +397,31 @@
                                     </a>
                                 </li>
                                 <li class="small-devices-share centeralign">
-                                    <a *ngIf="!customId" class="like-btn" (click)="qrCodegeneraterOnlineID(accEncUid)">
+                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
                                         </span>
                                     </a>
-                                    <a *ngIf="customId" class="like-btn" (click)="qrCodegeneraterOnlineID(customId)">
+                                    <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-share centeralign" *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0">
-                                    <a class="like-btn" 
-                                        (click)="openCoupons()">
+                                <li class="small-devices-share centeralign"
+                                    *ngIf="s3CouponList.JC.length>0||s3CouponList.OWN.length>0">
+                                    <a class="like-btn" (click)="openCoupons()">
                                         <span>
                                             <i class="fa fa-tags" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;{{coupon}}</span>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="!showMore  && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
-                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore"><a
+                                <li class="small-devices-more-less more_less centeralign" *ngIf="showMore  && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
 
                             </ul>
@@ -554,20 +577,12 @@
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
-                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
+                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                         [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
+                        <h5 class="mgn-bt-5 primary-color"> {{service_cap}}dd
                         </h5>
-                        <!-- <h6 *ngIf="servicesAndProviders.length !== 0" class="question-header">Book online now and save
-                            your
-                            time
-                        </h6> -->
-                        <!-- <h6 *ngIf="servicesAndProviders.length == 0" class="question-header"> No services or
-                            consultations
-                            in this location.
-                        </h6> -->
-                    </div>
+                    </div> -->
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
                         [class.mgn-bt-10]="!showDepartments">
@@ -597,14 +612,14 @@
                             </div>
                         </div> -->
                     <!-- Departments True-->
-                    <ng-container *ngIf="showDepartments && !this.userId">
+                    <ng-container *ngIf="showDepartments && !userId">
                         <ng-container *ngFor="let sps of servicesAndProviders">
                             <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
                                 *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0">
                                 {{sps.departmentName}}
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                     [terminology]='terminologiesjson' [loc]="selectedLocation"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
@@ -612,16 +627,16 @@
                             <hr class="my-4" *ngIf="sps['departmentItems'] && sps['departmentItems'].length > 0" />
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
+                    <ng-container *ngIf="!showDepartments || (showDepartments && userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
                         <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
@@ -678,7 +693,7 @@
                 <ng-container
                     *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-I" *ngFor="let item of orderItems">
-                        <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
+                        <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
@@ -714,11 +729,57 @@
                         src="assets/images/img-glplay.png"></a>
                 <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
                         src="assets/images/img-aplstore.png"></a>
-                <h6 class="mgn-up-20">After installing app, search for <span *ngIf="customId">"{{customId}}"</span><span
-                        *ngIf="!customId">"{{accEncUid}}"</span></h6>
+                <h6 class="mgn-up-20">After installing app, search for <span *ngIf="businessjson.customId">"{{businessjson.customId}}"</span><span
+                        *ngIf="!businessjson.customId">"{{businessjson.accEncUid}}"</span></h6>
             </div>
         </div>
     </div>
 
 </div>
+<div id="customAppIOSPopup"  class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="text-center">
+                &nbsp;
+                <span class="close" (click)="closeIOSAppModal()">&times;</span>
+            </h5>
+        </div>
+        <div class="modal-body">
+            <h5 style="line-height: 20px;">
+                <span>"{{this.businessName}}" App can do so much more.</span>
+                 <p>Install this app on your Iphone/Ipad. Tap <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
+            </h5>
+        </div>
+    </div>
+
+</div>
+<div id="customAppPopup" #popupforCustomApp class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="text-center">&nbsp;
+                <span class="close" (click)="closeCustomAppModal()">&times;</span>
+            </h5>
+        </div>
+        <div class="modal-body" *ngIf="!pwaIOShint">
+            <h5 class="text-center">
+                <span>"{{this.businessName}}" App can do so much more.</span><br/>
+                <button id="btnInstallCustomApp" class=" btn btn-primary">Install App</button>
+                <!-- <span class="close" (click)="closeCustomAppModal()">&times;</span> -->
+            </h5>
+        </div>
+    </div>
+</div>
+<footer class="site-footer bus-page-footer" *ngIf="(privacy || terms) && !userId"  [ngClass]="accountProperties?accountProperties['theme']:''">
+    <div class="footer-bottom brd-tp pad-up-20">
+        <div class="container">
+            <div class="row align-items-center justify-content-between text-center">
+                <div class="footer-bottom--links col-md-auto mgn-bt-20">
+                    <!-- <span>Follow Us: </span> -->
+                    <a *ngIf="privacy" class="footer-links bd-pd-right" (click)="privacyClicked()">Privacy</a>
+                    <a *ngIf="terms" class="footer-links bd-pd-left" (click)="termsClicked()">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 <!-- <app-consumer-footer></app-consumer-footer> -->

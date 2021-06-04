@@ -383,22 +383,7 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="c-row two section-two"
-                                                                                            *ngIf="bill_data.amountDue >= 0">
-                                                                                            <div
-                                                                                                class="discount-row two-col">
-                                                                                                <div
-                                                                                                    class="name st paymentlink-color">
-                                                                                                    Amount Due
-                                                                                                </div>
-                                                                                                <div class="price paymentlink-color rupee-font"
-                                                                                                    style="flex-basis:30% !important">
-                                                                                                    {{bill_data.amountDue
-                                                                                                    |
-                                                                                                    currency:'&#8377;
-                                                                                                    '}}</div>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                       
 
                                                                                         <div class="c-row two section-two"
                                                                                         *ngIf="bill_data.refundedAmount > 0">
@@ -418,6 +403,24 @@
                                                                                        
                                                                                     
                                                                                     </div>
+
+                                                                                    <div class="c-row two section-two"
+                                                                                    *ngIf="bill_data.amountDue >= 0">
+                                                                                    <div
+                                                                                        class="discount-row two-col">
+                                                                                        <div
+                                                                                            class="name st paymentlink-color">
+                                                                                            Amount Due
+                                                                                        </div>
+                                                                                        <div class="price paymentlink-color rupee-font"
+                                                                                            style="flex-basis:30% !important">
+                                                                                            {{bill_data.amountDue
+                                                                                            |
+                                                                                            currency:'&#8377;
+                                                                                            '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
                                                                                     <div class="amountSaved"
                                                                                     *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
                                                                                     <div class="price rupee-font"> You

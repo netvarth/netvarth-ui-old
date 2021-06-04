@@ -205,8 +205,8 @@
                 <i class="pull-right fa fa-ellipsis-h order-actions" (click)="stopprop($event);showActionPopup(order)"></i>
               </div>
               <div class="main-sec">
-                <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div style="height: 25px !important;" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">&nbsp;</div>
+                <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div style="height: 25px !important;" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">&nbsp;{{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
                 
                 <div class="date-and-time">
                   {{order.orderDate | date: display_dateFormat}},

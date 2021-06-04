@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="col-md-12 mgn-bt-50" #privacyPolicy *ngIf="!termsUrl">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 mgn-bt-50" *ngIf="privacyUrl">
+        <iframe [src]="privacyUrl" width="100%" height="600"></iframe>
+    </div>
+    <div class="clearfix"></div>
+    <div id="terms">
+        <div class="col-md-12 mgn-bt-50" #termsConditions *ngIf="!termsUrl">
+            <!-- <iframe [src]="termsUrl" width="500" height="600" type='application/pdf'></iframe> -->
+        </div>
+        <div class="col-md-12 mgn-bt-50" *ngIf="termsUrl">
+            <iframe [src]="termsUrl" width="500" height="600"></iframe>
+        </div>
+    </div>
+</div>

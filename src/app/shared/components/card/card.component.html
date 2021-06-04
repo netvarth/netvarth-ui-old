@@ -1,5 +1,5 @@
 <!-- Card -->
-<div class="card booking-card pointer-cursor service"
+<div class="card booking-card pointer-cursor service" [ngClass]="theme?theme:''"
     *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
  
@@ -169,7 +169,7 @@
             <!-- </div>
         <div class="card-footer"> -->
             <!-- <div class="service-buttons"> -->
-                <!-- <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button> -->
+                <!-- <button type="button" class="hf-btn btn btn-outline-warning bookingButton">{{buttonCaption}}</button> -->
                 <!-- <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
                     class="btn pointer-cursor btn-warning moreDetails">. . .</button> -->
             <!-- </div> -->
@@ -220,7 +220,8 @@
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
             <div style="height: 22px !important;">
-                <div *ngIf="service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim() | capitalizeFirst}}</div>
+                <div *ngIf="service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim()
+                    | capitalizeFirst}}</div>
             </div>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
@@ -371,7 +372,9 @@
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
             </ng-container>
-        </p> -->
+        </p> 
+         <p class="availability user-available" *ngIf="user.locationName">{{user.locationName}}</p>
+        <p class="availability user-available" *ngIf="!user.locationName"></p> -->
         <!-- <button type="button" class="btn btn-outline-warning">Book Now</button> -->
     </div>
     <button type="button" class="btn btn-outline-warning user-card-button">Book Now</button>
@@ -388,7 +391,7 @@
     </div>
 </div>
 <div class="card booking-card order" *ngIf="item.type=='order-details-item'">
-    <div class="card-item-head" >
+    <div class="card-item-head">
         <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
     </div>
     <div class="card-item-content">
@@ -405,5 +408,163 @@
         </div>
     </div>
 </div>
+<ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
+    <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
+        <div class="main-sec">
+            <div class="token" *ngIf="time_type!==3 && waitlist.token && !waitlist.provider">
+                {{waitlist.token}}
+            </div>
+            <div class="user-token" *ngIf="time_type!==3 && waitlist.token && waitlist.provider">
+                {{waitlist.token}}
+            </div>
+            <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
+                    {{waitlist.waitlistingFor[0].firstName}}
+                    {{waitlist.waitlistingFor[0].lastName}}
+                </div>
+                
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="time_type == 3 && waitlist.waitlistStatus">
+                    <span class="started_status_clr" *ngIf="waitlist.waitlistStatus == 'started' || waitlist.waitlistStatus == 'arrived'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>
+                    <span class="cancelled_status_clr" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>
+                    <span class="" *ngIf="waitlist.waitlistStatus !== 'started' && waitlist.waitlistStatus !== 'arrived' && waitlist.waitlistStatus !== 'cancelled'">
+                        {{waitlist.waitlistStatus | capitalizeFirst}}
+                    </span>   
+                    </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="waitlist.provider">
+                    Assigned: {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
+                    Not assigned
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
+                    <!-- <span class="b1">Location : </span> -->
+                    <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 
+                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
+                </div>
+                <div class="col-xs-12 col-sm-12 no-padding view-details">
+                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}}</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].age">&nbsp;</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].age">,</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].preferredLanguage && (waitlist.waitlistingFor[0].gender || waitlist.waitlistingFor[0].age)">&nbsp;,</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].preferredLanguage">{{waitlist.waitlistingFor[0].preferredLanguage}}</span>
+                    </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item"> 
+                    <i class="fa meet-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                    <i class="fa zoom-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                    <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                    <i class="fa phon-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                    <i class="fa wtsapaud-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'audioService'"></i>
+                    <i class="fa wtsapvid-icon"
+                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType === 'videoService'"></i>
+                    {{waitlist.service.name}}
+                </div>
+                <div>
+                    <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
+                        <span class="b1">Time Window : </span>
+                        <span class="b2"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
+                    </div> -->
+                    <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
+                        <span class="b1">Date : </span> <span class="b2">{{waitlist.date | date: newTimeDateFormat}}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(waitlist)">
+                        <span class="b1">Label : </span> <span class="b2"> {{getLabels(waitlist)}}</span>
+                    </div>
+                   
+                      <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].gender">
+                        Gender: {{waitlist.waitlistingFor[0].gender | capitalizeFirst}}
+                      </div> -->
+                   
+                    <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].preferredLanguage">
+                        <span class="b1">Language : </span>
+                        <span class="b2">{{waitlist.waitlistingFor[0].preferredLanguage}} </span>
+                    </div> -->
+                </div>
+                
+            </div>
+            <div class="box4">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
+                    <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="waitlist.isRescheduled">
+                    </span>
+                    <span class="online-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'ONLINE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'ONLINE_APPOINTMENT')">
+                    </span>
+                    <span class="phonein-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'PHONE_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'PHONE_IN_APPOINTMENT')">
+                    </span>
+                    <span class="walkin-icon mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistMode == 'WALK_IN_CHECKIN') || (item.type=='appt-dashboard' && waitlist.appointmentMode == 'WALK_IN_APPOINTMENT')">
+                    </span>
+                    <span class="dashboardarrived-icon checkin_status mgn-rt-10"
+                        *ngIf="(item.type=='checkin-dashboard' && waitlist.waitlistStatus == 'arrived') || (item.type=='appt-dashboard' && waitlist.apptStatus == 'Arrived') && !waitlist.virtualService"></span> -->
+                    <span class="cnote  pointer-cursor mgn-rt-10" *ngIf="waitlist.consumerNote"
+                        (click)="stopProp($event);checkinActions(waitlist, 'note')">
+                        <i class="icon-note"></i>
+                    </span>
+                    <span (click)="stopProp($event);checkinActions(waitlist, 'attachment')"
+                        class="cnote pointer-cursor mgn-rt-10" *ngIf="waitlist.hasAttachment"><i
+                            style="font-size: 20px;" class="material-icons">attach_file</i></span>
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
+                    <a class="action-btn" (click)="stopProp($event);checkinActions(waitlist, 'actions')">
+                        Actions
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mgn-up-5 mgn-lt-5 mgn-bt-5 mgn-rt-5">
+            <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="item.type=='checkin-dashboard' && selQIds.length > 1">
+                <span class="b1">Time Window : </span>
+                <span class="b2"> {{waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
+                <span class="b1">Date : </span> <span class="b2">{{waitlist.date | date: newTimeDateFormat}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(waitlist)">
+                <span class="b1">Label : </span> <span class="b2"> {{getLabels(waitlist)}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].age">
+                Age: {{getAge(waitlist.waitlistingFor[0].age)}}</div>
+              <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].gender">
+                Gender: <span><i *ngIf="waitlist.waitlistingFor[0].gender == 'male'" class="fa fa-mars"></i>
+                  <i *ngIf="waitlist.waitlistingFor[0].gender == 'Female'" class="fa fa-venus"></i>
+                  <i *ngIf="waitlist.waitlistingFor[0].gender == 'others'" class="fa fa-transgender"></i>
+                </span> {{waitlist.waitlistingFor[0].gender | capitalizeFirst}}
+              </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
+                <span class="b1">Location : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].bookingLocation.localArea}},
+                    {{waitlist.waitlistingFor[0].bookingLocation.district}} </span>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].preferredLanguage">
+                <span class="b1">Language : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].preferredLanguage}} </span>
+            </div> -->
+            <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].dob">
+                <span class="b1">Date of Birth : </span>
+                <span class="b2">{{waitlist.waitlistingFor[0].dob | date: newTimeDateFormat}} </span>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="col-sm-12 col-xs-12 view-more" (click)="showMoreorLess(waitlist, 'more')" *ngIf="!showDetails(waitlist)">
+        View More <i class="fa fa-caret-down"></i>
+    </div>
+    <div class="col-sm-12 col-xs-12 view-more" (click)="showMoreorLess(waitlist, 'less')" *ngIf="showDetails(waitlist)">
+        View Less <i class="fa fa-caret-up"></i>
+    </div> -->
+</ng-container>
 <!-- Card -->
  

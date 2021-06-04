@@ -68,12 +68,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
    }
 ngOnDestroy() {
-  const a = document.getElementById("hubspot-messages-iframe-container");
+  const a = document.getElementById("fb-root");
   if (a) {
   a.classList.remove('visible_chat');
   }
   // alert('destroy');
-  // let a = document.getElementById('hubspot-messages-iframe-container');
+  // let a = document.getElementById('fb-root');
   //   a.setAttribute('style', 'visibility:hidden !important');
 }
 ngAfterViewInit() {
@@ -83,7 +83,7 @@ ngAfterViewInit() {
 }
   ngOnInit() {
 
-    const a = document.getElementById("hubspot-messages-iframe-container");
+    const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
     }
