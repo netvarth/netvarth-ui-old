@@ -883,10 +883,10 @@ export class SharedFunctions {
     }
     // if (prepay) {
     this.tdata = {
-      'message': 'Cancellation and Refund policy',
+      'message': (waitlist.service.minPrePaymentAmount) ? 'Cancellation and Refund policy' : 'Are you sure you want to cancel this ' + msg,
       'heading': 'Confirm',
       'type': 'yes/no',
-      'cancelPolicy': 'show',
+      'cancelPolicy': (waitlist.service.minPrePaymentAmount) ? true : false,
       'book': msg,
       'wtlist': waitlist
     }
