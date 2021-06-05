@@ -2234,3 +2234,6 @@
 ::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-border-radius-0 mat-dialog-container {
   border-radius: 0 !important;
 }
+.panel-body .text-center img {
+  width: 60%;
+}
