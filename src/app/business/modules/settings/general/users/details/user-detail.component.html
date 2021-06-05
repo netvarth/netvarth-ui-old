@@ -174,7 +174,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     <input type="text" (keypress)="isNumeric($event)" matInput
                                                         class="form-control text-width" id="phonenumber"
                                                         placeholder="Enter Mobile # " formControlName="phonenumber"
-                                                        autocomplete="off" >
+                                                        autocomplete="off"  maxlength="15">
                                             </mat-form-field>
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
