@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
-import {version} from './shared/constants/version';
+import { version } from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 // import { Device } from '@ionic-native/device/ngx';
 // import { FCM } from '@ionic-native/fcm/ngx';
@@ -17,7 +17,7 @@ export let projectConstants: any = {};
  * Root class of Jaldee Application
  */
 export class AppComponent implements OnInit {
-  
+
   // not used
   title = 'app';
 
@@ -45,12 +45,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     console.log("In ngOnInit");
     // localStorage.setItem("token", '12345');
-
     let token = this.lStorageService.getitemfromLocalStorage('authToken');
-    let regexToReplace = /\-/gi;
-    let authToken = token.replace(regexToReplace, "&");
-    this.lStorageService.setitemonLocalStorage('authToken', authToken);
-    
+    if (token) {
+      let regexToReplace = /\-/gi;
+      let authToken = token.replace(regexToReplace, "&");
+      this.lStorageService.setitemonLocalStorage('authToken', authToken);
+    }
+
     // this.fcm.getToken().then(token => {
     //   console.log(token);
     //   this.lStorageService.setitemonLocalStorage('mUniqueId', token);
