@@ -383,7 +383,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
           const itemObject = orderItem.item;
           console.log(itemqty);
-          this.orderList = [];
+         // this.orderList = [];
           for (let i = 0; i < itemqty; i++) {
             this.orderList.push({ 'item': itemObject });
           }
