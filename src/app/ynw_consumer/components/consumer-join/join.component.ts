@@ -17,7 +17,7 @@ import { SubSink } from 'subsink';
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.css'] 
+  styleUrls: ['./join.component.css']
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
@@ -163,38 +163,39 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       'countryCode': dialCode,
       'loginId': loginId,
       'password': data.password,
-      'mUniqueId': null,
-      'token': null
+      'mUniqueId': null
     };
     _this.api_loading = true;
-      // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-      if (post_data.loginId.startsWith('55') && _this.test_provider === false) {
-        setTimeout(() => {
-          _this.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
+    // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+    if (post_data.loginId.startsWith('55') && _this.test_provider === false) {
+      setTimeout(() => {
+        _this.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
+        _this.api_loading = false;
+      }, projectConstants.TIMEOUT_DELAY_SMALL);
+    } else {
+      console.log("Before Checking authToken");
+      console.log("Token: " + _this.lStorageService.getitemfromLocalStorage('authToken'));
+      if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
+        post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
+      }
+      console.log("Post Data");
+      console.log(post_data);
+      _this.shared_functions.consumerLogin(post_data, _this.moreParams).then(
+        () => {
+          let pre_header = dialCode.split('+')[1] + "-" + loginId;
+          if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+            _this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+          }
+          _this.dialogRef.close('success');
+        },
+        error => {
+          console.log("Login Error :");
+          console.log(error);
+          _this.shared_services.callHealth(error.message);
+          _this.api_error = _this.wordProcessor.getProjectErrorMesssages(error);
           _this.api_loading = false;
-        }, projectConstants.TIMEOUT_DELAY_SMALL);
-      } else {
-        console.log("Before Checking authToken");
-        console.log("Token: " + _this.lStorageService.getitemfromLocalStorage('authToken'));
-        if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
-          post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
         }
-        console.log("Post Data");
-        console.log(post_data);
-        _this.shared_functions.consumerLogin(post_data, _this.moreParams).then(
-            () => {  
-              let pre_header = dialCode.split('+')[1] + "-" + loginId;
-              _this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-              _this.dialogRef.close('success');
-            },
-            error => {
-              console.log("Login Error :");
-              console.log(error);
-              _this.shared_services.callHealth(error.message);
-              _this.api_error = _this.wordProcessor.getProjectErrorMesssages(error);
-              _this.api_loading = false;
-            }
-          );
+      );
     }
   }
 
@@ -310,7 +311,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             'countryCode': dialCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password,
-            'mUniqueId' : this.lStorageService.getitemfromLocalStorage('mUniqueId')
+            'mUniqueId': this.lStorageService.getitemfromLocalStorage('mUniqueId')
           };
           if (this.lStorageService.getitemfromLocalStorage('authToken')) {
             post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
@@ -322,7 +323,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                 this.user_details.userProfile['lastName'] = this.loginForm.get('last_name').value;
                 this.user_details.userProfile['id'] = login_info.id;
                 let pre_header = dialCode.split('+')[1] + "-" + this.user_details.userProfile.primaryMobileNo;
-                this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                  this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                }
                 this.shared_services.updateProfile(this.user_details.userProfile, 'consumer').subscribe(
                   () => {
                     login_info['firstName'] = this.user_details.userProfile['firstName'];
@@ -433,11 +436,11 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   toastNext(str) {
     console.log('toast');
     this.joinStep = !this.joinStep;
-    if(str === 'sUp') {
+    if (str === 'sUp') {
       this.step = 3;
     } else {
       this.step = 1;
     }
   }
-  
- }
+
+}
