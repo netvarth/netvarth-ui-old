@@ -8,7 +8,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
     selector: 'app-gallery-import',
-    templateUrl: './gallery-import.component.html'
+    templateUrl: './gallery-import.component.html',
+    styleUrls: ['./gallery-import.component.css']
 })
 
 export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
