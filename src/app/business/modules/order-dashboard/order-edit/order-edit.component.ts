@@ -369,10 +369,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   // fetch orderdetails using order id
   getOrderDetails(uid) {
-    this.orderList = [];
     this.providerservice.getProviderOrderById(uid)
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
+      this.orderList = [];
       this.orderDetails = data;
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
