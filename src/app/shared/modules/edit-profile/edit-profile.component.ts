@@ -59,7 +59,7 @@ export class EditProfileComponent implements OnInit {
   breadcrumbs_init = [
     {
       title: Messages.USER_PROF_CAP,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
+      url: '/consumer/profile'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -88,8 +88,7 @@ export class EditProfileComponent implements OnInit {
       email: [''],
       email1: ['']
     });
-    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
-    this.getProfile(this.curtype);
+    this.getProfile('consumer');
     // const tday = new Date();
     const month = (this.tday.getMonth() + 1);
     let dispmonth = '';

@@ -60,24 +60,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.hide_reply_button = false;
     }
     this.terminologies = this.wordProcessor.getTerminologies();
-    this.usertype = this.shared_functions.isBusinessOwner('returntyp');
-
-    if (this.usertype === 'provider') {
-      this.inbox_services.getBussinessProfile()
-        .subscribe(
-          (data: any) => {
-            this.user_id = data.id;
-            this.loading = false;
-          },
-          () => {
-            this.loading = false;
-          }
-        );
-    } else {
-      const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
-      this.user_id = userDet.id;
-      this.loading = false;
-    }
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.user_id = userDet.id;
+    this.loading = false;
 
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadApi.emit();

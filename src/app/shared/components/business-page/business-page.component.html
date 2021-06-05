@@ -28,7 +28,8 @@
                                     <a class="like-btn action-btns" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="msg-icon" aria-hidden="true"></i>
-                                            <span class="display-text" style="margin-left: 3px !important;">&nbsp;Send Message</span>
+                                            <span class="display-text" style="margin-left: 3px !important;">&nbsp;Send
+                                                Message</span>
                                         </span>
                                     </a>
                                 </li>
@@ -54,16 +55,18 @@
                     <div class="bSection" *ngIf="userId">
                         <img alt="Profile Image" src="{{bLogo}}">
                         <div class="name-dept">
-                        <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
-                        <div class="bname dept" *ngIf="apptServices[0]"> {{apptServices[0].deptName}}</div>
-                        <div class="bname dept" *ngIf="!apptServices[0] && wlServices[0]">  {{wlServices[0].deptName}}</div>
-                    </div>
+                            <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
+                            <div class="bname dept" *ngIf="apptServices[0]"> {{apptServices[0].deptName}}</div>
+                            <div class="bname dept" *ngIf="!apptServices[0] && wlServices[0]">
+                                {{wlServices[0].deptName}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
         <!-- Locations -->
-        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
                 <div class="col-md-7 col-xs-8 no-padding">
                     <h4 *ngIf="!isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
@@ -91,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <ng-container *ngIf="showDepartments && !this.userId">
@@ -119,17 +122,15 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
-                        <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <div class="mgn-bt-15">
-                                <div class="dept-card" (click)="gotoDonation(sp.item)">
-                                    <div class="dept-img">
-                                        <img src="assets/images/donation.png">
-                                    </div>
-                                    <div class="dept-name">
-                                        {{sp.item.name}}</div>
-                                    <div class="service-buttons">
-                                        <button type="button" class="book-btn">Donate</button>
-                                    </div>
+                        <div class="mgn-bt-15 " *ngFor="let sp of donationServices">
+                            <div class="dept-card" (click)="gotoDonation(sp.item)">
+                                <div class="dept-img">
+                                    <img src="assets/images/donation.png">
+                                </div>
+                                <div class="dept-name">
+                                    {{sp.item.name}}</div>
+                                <div class="service-buttons">
+                                    <button type="button" class="book-btn">Donate</button>
                                 </div>
                             </div>
                         </div>

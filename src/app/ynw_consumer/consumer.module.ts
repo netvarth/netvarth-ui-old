@@ -46,8 +46,8 @@ import { ConsumerFooterModule } from './components/footer/footer.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ActionPopupComponent } from './components/home/action-popup/action-popup.component';
 import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
-import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
-import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+// import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+// import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
@@ -88,8 +88,8 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../shared/component
     ConsumerDonationModule,
     ConsumerFooterModule,
     NgxQRCodeModule,
-    ShareButtonsModule,
-    ShareIconsModule,
+    // ShareButtonsModule,
+    // ShareIconsModule,
     ModalGalleryModule,
     MatBadgeModule,
     GalleryModule,

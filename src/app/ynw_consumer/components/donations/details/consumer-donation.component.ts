@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DOCUMENT, Location } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -236,7 +236,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
-        private location: Location,
         private s3Processor: S3UrlProcessor) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
@@ -633,7 +632,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     goBack() {
         if (this.action === '') {
-            this.location.back();
+            this.router.navigate(['/']);
         } else {
             this.action = '';
         }

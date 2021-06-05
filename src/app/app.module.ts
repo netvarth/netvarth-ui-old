@@ -20,14 +20,12 @@ import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-chec
 import { AppComponent, projectConstants } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { SignUpComponent } from './shared/components/signup/signup.component';
-import { LoginComponent } from './shared/components/login/login.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
-import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
+import { AuthGuardConsumer, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -55,7 +53,7 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
-import { ShareService } from 'ngx-sharebuttons';
+// import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { TruncateModule } from './shared/pipes/limitTo.module';
@@ -70,14 +68,13 @@ import { GroupStorageService } from './shared/services/group-storage.service';
 import { WordProcessor } from './shared/services/word-processor.service';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
-import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+// import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
@@ -91,6 +88,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { QRCodeGeneratordetailComponent } from './shared/components/qrcodegenerator/qrcodegeneratordetail.component';
+import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+// import { FCM } from '@ionic-native/fcm/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -101,8 +100,6 @@ export function init_app(globalService: GlobalService) {
     HomeComponent,
     LogoutComponent,
     EqualValidator,
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
@@ -116,11 +113,10 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     CommunicationComponent,
     DepartmentServicePageComponent,
-    QRCodeGeneratordetailComponent
+    QRCodeGeneratordetailComponent,
+    NotificationDialogComponent
   ],
   entryComponents: [
-    SignUpComponent,
-    LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
     ServiceDetailComponent,
@@ -128,7 +124,8 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     ForceDialogComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    NotificationDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -163,15 +160,15 @@ export function init_app(globalService: GlobalService) {
     NgxIntlTelInputModule,
     MatSelectModule,
     ModalModule.forRoot(),
-    ShareIconsModule,
+    // ShareIconsModule,
     MatNativeDateModule,
     MatDatepickerModule,
     VirtualFieldsModule
   ],
   providers: [
     BsModalService,
+    // FCM,
     AuthGuardConsumer,
-    AuthGuardProvider,
     AuthGuardHome,
     AuthGuardLogin,
     ServiceMeta,
@@ -184,7 +181,6 @@ export function init_app(globalService: GlobalService) {
       useClass: ExtendHttpInterceptor,
       multi: true
     },
-    AuthService,
     SharedServices,
     GlobalService,
     ProviderServices,
@@ -192,7 +188,7 @@ export function init_app(globalService: GlobalService) {
     FormMessageDisplayService,
     ErrorMessagingService,
     ProviderDetailService,
-    ShareService,
+    // ShareService,
     SessionStorageService,
     LocalStorageService,
     CookieProcessor,

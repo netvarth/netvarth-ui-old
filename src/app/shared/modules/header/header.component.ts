@@ -4,10 +4,7 @@ import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
-import { MatDialog } from '@angular/material/dialog';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { SignUpComponent } from '../../components/signup/signup.component';
-import { LoginComponent } from '../../components/login/login.component';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -90,7 +87,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { url: null, class: 'dashb' },
   ];
   isprovider = false;
-  ctype;
   active_license;
   avoidClear = 1;
   upgradablepackages: any = [];
@@ -108,7 +104,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
   constructor(
-    private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     public router: Router,
     private _scrollToService: ScrollToService,
@@ -171,22 +166,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.provsignTooltip = this.wordProcessor.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
-    this.isprovider = this.shared_functions.isBusinessOwner();
-    this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
-    // Section which handles the periodic reload
-    // if (this.ctype === 'consumer' || this.ctype === 'provider') {
-    //   this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-    //     this.reloadHandler();
-    //   });
-    // } else {
-      // if (this.cronHandle) {
-      //   this.cronHandle.unsubscribe();
-      // }
-    // }
-    // if (this.ctype === 'consumer') {
-    //   this.getInboxUnreadCnt();
-    // }
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
@@ -205,15 +185,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.groupService.getitemFromGroupStorage('ynw-user');
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    if (cuser && usertype === 'provider') {
-      if (cuser.new_lic) {
-        this.active_license = cuser.new_lic;
-      } else {
-        this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
-      }
-    }
   }
   showHidemobileSubMenu() {
     if (this.showmobileSubmenu) {
@@ -266,7 +237,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userdet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userdet) {
       if (this.shared_functions.checkLogin()) {
-        this.ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.userdet.isProvider === true) {
           this.provider_loggedin = true;
           this.consumer_loggedin = false;
@@ -279,10 +249,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.consumer_loggedin = true;
             this.provider_loggedin = false;
           }
-        }
-        if (this.ctype === 'provider') {
-          this.getUpgradablePackages();
-          this.getBusinessprofile();
         }
       }
     }
@@ -316,39 +282,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.headercls = 'dashb';
     }
   }
-  doSignup(origin?, moreOptions = {}) {
-    if (origin === 'provider') {
-    }
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: this.checkProvider(origin),
-        moreOptions: moreOptions
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-  doLogin(origin?) {
-    if (origin === 'provider') {
-    }
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '50%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: this.checkProvider(origin)
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'showsignupfromlogin') {
-        this.doSignup(origin);
-      }
-    });
-  }
+  // doSignup(origin?, moreOptions = {}) {
+  //   if (origin === 'provider') {
+  //   }
+  //   const dialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: this.checkProvider(origin),
+  //       moreOptions: moreOptions
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
+  // doLogin(origin?) {
+  //   if (origin === 'provider') {
+  //   }
+  //   const dialogRef = this.dialog.open(LoginComponent, {
+  //     width: '50%',
+  //     panelClass: ['loginmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: this.checkProvider(origin)
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'showsignupfromlogin') {
+  //       this.doSignup(origin);
+  //     }
+  //   });
+  // }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
@@ -356,6 +322,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.doLogout()
       .then(
         () => {
+          this.lStorageService.removeitemfromLocalStorage('pre-header');
+          this.lStorageService.removeitemfromLocalStorage('authToken');
           this.router.navigate(['/home']);
         },
         () => {
@@ -371,7 +339,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   redirectto(mod) {
     this.showmobileSubmenu = false;
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    const usertype = 'consumer';
     switch (mod) {
       case 'profile':
         this.router.navigate([usertype, 'profile']);
@@ -396,17 +364,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  // getInboxUnreadCnt() {
-  //   let usertype;
-  //   usertype = this.ctype;
-  //   this.shared_service.getInboxUnreadCount(usertype)
-  //     .subscribe(data => {
-  //       this.inboxCntFetched = true;
-  //       this.inboxUnreadCnt = data;
-  //     },
-  //       () => {
-  //       });
-  // }
   gototop() {
     window.scrollTo(0, 0);
   }

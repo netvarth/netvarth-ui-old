@@ -94,8 +94,7 @@ export class InboxOuterComponent implements OnInit {
     }
   }
   getInboxMessages() {
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    this.inbox_services.getInbox(usertype)
+    this.inbox_services.getInbox('consumer')
       .subscribe(
         data => {
           this.messages = data;

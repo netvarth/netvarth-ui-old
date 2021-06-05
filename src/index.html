@@ -40,7 +40,8 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </html>
 <script>
-  var DEBUG_MODE_ON = false; // hide browser console in production
+  
+  var DEBUG_MODE_ON = true; // hide browser console in production
   if (!DEBUG_MODE_ON) {
     console = console || {};
     console.log = function () { };
@@ -57,50 +58,54 @@
 
   }
   function onDeviceReady() {
-    if (typeof FCMPlugin != 'undefined') {
-      FCMPlugin.getToken(function (token) {
-        console.log(token);
-        localStorage.setItem("mUniqueId", token);
-      }, function (err) {
-        localStorage.setItem("mUniqueId", null);
-      });
-      FCMPlugin.onTokenRefresh(function (token) {
-        console.log("Token Refreshed : " + token);
-        localStorage.setItem("mUniqueId", token);
-        if (localStorage.getItem("ynw-user")) {
-          setPushToken(token);
-        }
-      });
-      FCMPlugin.onNotification(function (data) {
-        if (data.wasTapped) {
-          navigator.notification.alert(
-            data.message,  // message
-            alertDismissed,         // callback
-            data.title,            // title
-            'Ok'                  // buttonName
-          );
-        } else {
-          //Notification was received in foreground. Maybe the user needs to be notified.
-          navigator.notification.alert(
-            data.message,  // message
-            alertDismissed,         // callback
-            data.title,            // title
-            'Ok'                  // buttonName
-          );
+    if (device && device.uuid) {
+      console.log(device.uuid);
+      localStorage.setItem('authToken',JSON.stringify(device.uuid));
+    }
+    // if (typeof FCMPlugin != 'undefined') {
+    //   FCMPlugin.getToken(function (token) {
+    //     console.log(token);
+    //     localStorage.setItem("mUniqueId", token);
+    //   }, function (err) {
+    //     localStorage.setItem("mUniqueId", null);
+    //   });
+    //   FCMPlugin.onTokenRefresh(function (token) {
+    //     console.log("Token Refreshed : " + token);
+    //     localStorage.setItem("mUniqueId", token);
+    //     if (localStorage.getItem("ynw-user")) {
+    //       setPushToken(token);
+    //     }
+    //   });
+    //   FCMPlugin.onNotification(function (data) {
+    //     if (data.wasTapped) {
+    //       navigator.notification.alert(
+    //         data.message,  // message
+    //         alertDismissed,         // callback
+    //         data.title,            // title
+    //         'Ok'                  // buttonName
+    //       );
+    //     } else {
+    //       //Notification was received in foreground. Maybe the user needs to be notified.
+    //       navigator.notification.alert(
+    //         data.message,  // message
+    //         alertDismissed,         // callback
+    //         data.title,            // title
+    //         'Ok'                  // buttonName
+    //       );
 
-        }
-      }, function (msg) {
-        console.log('onNotification callback successfully registered: ' + msg);
-      },
-        function (err) {
-          console.log('Error registering onNotification callback: ' + err);
-        }
-      );
-    };
+    //     }
+    //   }, function (msg) {
+    //     console.log('onNotification callback successfully registered: ' + msg);
+    //   },
+    //     function (err) {
+    //       console.log('Error registering onNotification callback: ' + err);
+    //     }
+    //   );
+    // };
     document.addEventListener("backbutton", function (e) {
       e.preventDefault();
       if (exitApp) {
-        navigator.notification.confirm('Press Ok to Exit from Jaldee Business App', onConfirm, 'Jaldee for Business', ['Cancel', 'Ok']);
+        navigator.notification.confirm('Press Ok to Exit from Heartfulness App', onConfirm, 'Heartfulness Healthcare', ['Cancel', 'Ok']);
       }
       else {
         exitApp = true

@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { SharedFunctions } from '../../functions/shared-functions';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
@@ -30,8 +28,6 @@ export class CommunicationComponent implements OnInit {
   newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(public dialogRef: MatDialogRef<CommunicationComponent>,
-    private shared_functions: SharedFunctions,
-    private providerServices: ProviderServices,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -54,40 +50,13 @@ export class CommunicationComponent implements OnInit {
       }
     });
     console.log(JSON.stringify(this.message));
-    this.usertype = this.shared_functions.isBusinessOwner('returntyp');
-
-    if (this.usertype === 'provider') {
-      this.providerServices.getBussinessProfile()
-        .subscribe(
-          (data: any) => {
-            this.user_id = data.id;
-            this.loading = false;
-          },
-          () => {
-            this.loading = false;
-          }
-        );
-    } else {
-      const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
-      this.user_id = userDet.id;
-      this.loading = false;
-    }
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.user_id = userDet.id;
+    this.loading = false;
   }
-  // showMsg(indx, message) {
-  //   this.selectedMsg = indx;
-  //   if (!message.read && this.isRecievedOrSent(message) === 'receive') {
-  //     const consumerId = message.owner.id;
-  //     const providerId = message.receiver.id;
-  //     this.readConsumerMessages(consumerId, message.messageId, providerId);
-  //   }
-  // }
-  // closeMsg() {
-  //   this.selectedMsg = -1;
-  // }
-
   sendMessage() {
     if (this.type === 'consumer') {
-   this.addWaitlistMessage(this.orderDetails, 'orders');
+      this.addWaitlistMessage(this.orderDetails, 'orders');
     } else {
       let order = [];
       if (this.orderDetails.length > 1) {
@@ -98,13 +67,13 @@ export class CommunicationComponent implements OnInit {
       console.log(order);
       this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
         .then(
-          () => { 
+          () => {
             this.dialogRef.close('reloadlist');
           },
           () => { }
-          
+
         );
-     // this.dialogRef.close('reloadlist');
+      // this.dialogRef.close('reloadlist');
     }
   }
   addWaitlistMessage(waitlist, type?) {
@@ -133,9 +102,9 @@ export class CommunicationComponent implements OnInit {
       data: pass_ob
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
-     // if (result === 'reloadlist') {
-        this.dialogRef.close('reloadlist');
-     // }
+      // if (result === 'reloadlist') {
+      this.dialogRef.close('reloadlist');
+      // }
     });
   }
 

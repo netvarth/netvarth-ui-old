@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
@@ -51,7 +51,6 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   legal_cap = Messages.LEGALCAP;
   tooltipcls = '';
   curyear;
-  ctype;
   auditlog: any = [];
   auditCnt = projectConstants.AUDITLOG_CNT;
   alerts: any = [];
@@ -93,20 +92,10 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
       this.includedFrom = '';
     }
     this.curyear = new Date().getFullYear();
-    this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.selOpt = '';
     this.clearDivs();
-    if (this.ctype === 'provider') {
-      this.getAlertCount();
-    }
-    if (this.ctype === 'provider') {
-      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-        this.reloadHandler();
-      });
-    } else {
       if (this.cronHandle) {
         this.cronHandle.unsubscribe();
-      }
     }
 
     // Update from alert page
@@ -137,11 +126,6 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.ctype === 'provider') {
-      if (this.router.url.substr(-8) !== '/bwizard') {
-        this.show_prov_bottomicons = true;
-      }
-    }
   }
 
   reloadHandler() {

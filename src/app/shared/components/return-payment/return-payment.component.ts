@@ -18,7 +18,6 @@ export class ReturnPaymentComponent implements OnInit {
 
   status = null;
   statussmall = null;
-  user_type = null;
   unq_id = null;
   loading = 1;
 
@@ -61,8 +60,7 @@ export class ReturnPaymentComponent implements OnInit {
   }
 
   getPaymentStatus(src) {
-    this.user_type = this.shared_functions.isBusinessOwner('returntyp');
-    this.shared_services.getPaymentStatus(this.user_type, this.unq_id)
+    this.shared_services.getPaymentStatus('consumer', this.unq_id)
       .subscribe(
         data => {
           this.status = data;
@@ -73,12 +71,7 @@ export class ReturnPaymentComponent implements OnInit {
           } else {
             this.snackbarService.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
           }
-          if (this.user_type === 'consumer') {
-            this.router.navigate(['consumer']);
-          } else if (src === 'p_src') {
-            this.lStorageService.removeitemfromLocalStorage('p_src');
-            this.router.navigate(['provider', 'license']);
-          }
+          this.router.navigate(['consumer']);
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -10,24 +10,7 @@ export class AuthGuardConsumer implements CanActivate {
   constructor(private router: Router, private lStorageService: LocalStorageService) { }
 
   canActivate() {
-    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
-      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
-      return true;
-    }
-
-    this.router.navigate(['/logout']);
-    return false;
-  }
-}
-
-@Injectable()
-export class AuthGuardProvider implements CanActivate {
-
-  constructor(private router: Router, private lStorageService: LocalStorageService) { }
-
-  canActivate() {
-    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
-      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
       return true;
     }
 

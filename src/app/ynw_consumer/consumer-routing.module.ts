@@ -6,8 +6,6 @@ import { WaitlistComponent } from './components/waitlist/waitlist.component';
 import { MembersComponent } from './components/members/members.component';
 import { AuthGuardLogin } from '../shared/guard/auth.guard';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
-import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
-import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
@@ -18,8 +16,6 @@ const routes: Routes = [
       { path: 'checkin', loadChildren: () => import('../ynw_consumer/components/waitlist/check-in/consumer-checkin.module').then(m => m.ConsumerCheckinModule) },
       { path: 'waitlist/:provider_id/:uuid', component: WaitlistComponent },
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
-      { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
-      { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
       { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin] },
       { path: 'learn_more', loadChildren: () => import('./components/help/consumer-learnmore.module').then(m => m.ConsumerLearnmoreModule), canActivate: [AuthGuardLogin] },
       { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin] },

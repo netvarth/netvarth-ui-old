@@ -8,7 +8,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
     handleError(error: any): void {
-        console.error(error);
+        console.log(error);
         this.shared_services.callHealth(error.message);
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {

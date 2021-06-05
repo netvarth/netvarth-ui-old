@@ -27,8 +27,9 @@ export class LocalStorageService {
      */
     public getitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            if (localStorage.getItem(itemname) !== 'undefined') {
-                return JSON.parse(localStorage.getItem(itemname));
+            let storage = window.localStorage;
+            if (storage.getItem(itemname) !== 'undefined') {
+                return JSON.parse(storage.getItem(itemname));
             }
         // }
         // return null;
@@ -39,8 +40,9 @@ export class LocalStorageService {
      * @param itemvalue value to set
      */
     public setitemonLocalStorage(itemname, itemvalue) {
+        let storage = window.localStorage;
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem(itemname, JSON.stringify(itemvalue));
+            storage.setItem(itemname, JSON.stringify(itemvalue));
         // }
     }
     /**
@@ -49,18 +51,20 @@ export class LocalStorageService {
      */
     public removeitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem(itemname);
+            let storage = window.localStorage;
+            storage.removeItem(itemname);
         // }
     }
     /**
      * Method to clear the local storage items except the ones contained in 'dont_delete_localstorage'
      */
     public clearLocalstorage() {
+        let storage = window.localStorage;
         // if (isPlatformBrowser(this.platformId)) {
             this.removeitemfromLocalStorage('ynw-credentials');
-            for (let index = 0; index < localStorage.length; index++) {
-                if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-                    localStorage.removeItem(localStorage.key(index));
+            for (let index = 0; index < storage.length; index++) {
+                if (this.dont_delete_localstorage.indexOf(storage.key(index)) === -1) {
+                    storage.removeItem(storage.key(index));
                     index = index - 1; // manage index after remove
                 }
             }

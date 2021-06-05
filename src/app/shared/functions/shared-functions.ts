@@ -126,9 +126,6 @@ export class SharedFunctions {
 
   public setLoginData(data, post_data, mod) {
     this.groupService.setitemToGroupStorage('ynw-user', data);
-    this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
-    if (mod === 'provider') {
-    }
     delete post_data['password'];
     this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
   }
@@ -136,25 +133,6 @@ export class SharedFunctions {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
   }
-
-  public isBusinessOwner(passtyp?) {
-    let is_business_owner;
-    if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
-      if (passtyp === 'returntyp') {
-        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
-      } else {
-        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? true : false;
-      }
-    } else {
-      if (passtyp === 'returntyp') {
-        is_business_owner = '';
-      } else {
-        is_business_owner = false;
-      }
-    }
-    return is_business_owner;
-  }
-
   public getCurrentUTCdatetimestring() {
     const curdate = new Date();
     const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
@@ -198,7 +176,7 @@ export class SharedFunctions {
       if (!user.id) {
         this.router.navigate(['logout']);
       }
-      this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
+      this.shared_service.getProfile(user.id, 'consumer')
         .subscribe(
           data => {
             resolve(data);
@@ -397,7 +375,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price.toFixed(2);;
+    return 'â‚¹' + ' ' + price.toFixed(2);;
   }
 
   imageValidation(file, source?) {
@@ -810,7 +788,7 @@ export class SharedFunctions {
 
 
   redirectto(mod) {
-    const usertype = this.isBusinessOwner('returntyp');
+    const usertype = 'consumer';
     switch (mod) {
       case 'profile':
         this.router.navigate([usertype, 'profile']);

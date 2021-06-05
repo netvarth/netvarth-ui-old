@@ -1,6 +1,6 @@
 <section class="content bus-page" style="padding-bottom: 0 !important;">
     <div class="container background-img" style="min-height: 100vh !important;">
-        <div class="row pad-bt-10 bus-page-header">
+        <div class="row pad-bt-10 bus-page-header" >
             <div class="panel panel-default">
                 <div class="panel-heading top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -17,7 +17,8 @@
                 </div>
             </div>
         </div>
-        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
+        <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
+        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <ng-container *ngFor="let sps of servicesAndProviders">
