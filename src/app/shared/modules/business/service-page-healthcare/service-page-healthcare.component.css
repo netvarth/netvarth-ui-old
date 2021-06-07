@@ -198,7 +198,8 @@
 }
 .section.section1 > div:nth-child(1) {
     z-index: 2 !important;
-    width: 40% !important;
+    /* width: 40% !important; */ /* Uncomment when image issue is fixed */
+    width: 100% !important; /* Delete when image issue is fixed */
     background-image: linear-gradient(to right, #ecf7fb, #eff4f8 50%, #eaf0f3) !important;
     box-shadow: -50px 0px 25px 70px #eaf0f3 !important;
 }
@@ -1127,3 +1128,42 @@
         display: block !important;
     }
 }
+
+
+/* Start commenting here when image issue is fixed */
+
+.section.section1 {
+    height: 400px !important;
+}
+
+@media (max-width: 1200px) {
+    .section.section1 {
+        height: 350px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .section.section1 {
+        height: 280px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .section.section1 {
+        height: 220px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .section.section1 {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .section.section1 {
+        height: 250px !important;
+    }
+}
+
+/* End commenting here when image issue is fixed */
