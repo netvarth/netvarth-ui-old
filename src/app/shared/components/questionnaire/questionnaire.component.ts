@@ -7,7 +7,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ButtonEvent } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../constants/project-messages';
 
 @Component({
@@ -51,6 +51,13 @@ export class QuestionnaireComponent implements OnInit {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
+      {
+        className: 'fa fa-download',
+        type: ButtonType.DOWNLOAD,
+        ariaLabel: 'custom close aria label',
+        title: 'Download',
+        fontSize: '20px'
+      },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -540,8 +547,8 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitDonationQuestionnaire(body) {
     this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
-        this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
+      this.editQnr();
+      this.snackbarService.openSnackBar('Updated Successfully');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -698,7 +705,14 @@ export class QuestionnaireComponent implements OnInit {
       return true;
     }
   }
-  onButtonBeforeHook() { }
+  onButtonBeforeHook(event: ButtonEvent) {
+    if (!event || !event.button) {
+      return;
+    }
+    if (event.button.type === ButtonType.DOWNLOAD) {
+      console.log(event.image);
+    }
+  }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document) {
     this.image_list_popup = [];
