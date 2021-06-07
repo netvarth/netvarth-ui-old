@@ -122,6 +122,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.userId=this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log(this.consumer_label);
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
      this.countryCode=this.customer_data.userProfile.countryCode;

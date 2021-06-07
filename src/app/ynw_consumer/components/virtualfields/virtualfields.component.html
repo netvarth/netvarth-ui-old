@@ -1,6 +1,7 @@
 <!-- join Section starts -->
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields"
-    [ngClass]="theme?theme:''" novalidate>
+    [ngClass]="theme?theme:''" novalidate *ngIf="!api_loading">
     <div class="mat-dialog-title">
         <div class="title" style="font-size: 16px !important;"> {{consumer_label| capitalizeFirst }} Information </div>
         <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
@@ -8,8 +9,8 @@
         </button>
     </div>
     <!-- step 1 for mobile number entering  -->
-    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-    <div class="cust-loginpge-color" *ngIf="!api_loading">
+    
+    <div class="cust-loginpge-color" >
         <div class="mat-dialog-content" style="overflow: auto !important;">
             <div *ngIf="hideLanguages">
                 <!-- <div class="">
@@ -22,7 +23,7 @@
                 </div> -->
               
                 <div class="mgn-up-10 ">
-                    <label class="col-form-label" for="name">Consultation is For </label>
+                    <label class="col-form-label" for="name">Consultation  For </label>
                     
 
                     <br />
