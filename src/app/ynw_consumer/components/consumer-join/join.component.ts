@@ -307,14 +307,14 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.actionstarted = false;
-          const login_data = {
+          let login_data = {
             'countryCode': dialCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password,
             'mUniqueId': this.lStorageService.getitemfromLocalStorage('mUniqueId')
           };
           if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-            post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
+            login_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
           }
           this.shared_functions.consumerLogin(login_data, this.moreParams)
             .then(

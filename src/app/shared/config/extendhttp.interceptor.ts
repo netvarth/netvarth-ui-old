@@ -139,7 +139,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     if(this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    } 
+    } else if(this.lStorageService.getitemfromLocalStorage('authToken')) {
+      let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    }
     req = req.clone({ url: url, responseType: 'json' });
     console.log(req);
     return req;

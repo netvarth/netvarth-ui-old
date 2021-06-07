@@ -354,7 +354,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
     // this.gets3curl();
-    this.getFavouriteProvider();
+    // this.getFavouriteProvider();
     this.getAppointmentToday();
     // this.getAppointmentFuture();
     // this.getTdyOrder();
@@ -801,33 +801,33 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     mom_date.set('minute', sMinutes);
     return mom_date;
   }
-  getFavouriteProvider() {
-    // console.log('In Get Favourites');
-    const _this = this;
-    // return new Promise(function (resolve, reject) {
-      _this.loadcomplete.fav_provider = false;
-      _this.subs.sink = _this.shared_services.getFavProvider()
-        .subscribe(
-          data => {
-            _this.loadcomplete.fav_provider = true;
-            _this.fav_providers = data;
-            _this.fav_providers_id_list = [];
-            _this.setWaitlistTimeDetails();
-            this.extras = {
-              'favourites': _this.fav_providers_id_list
-            }
-            // resolve(_this.fav_providers_id_list);
-          },
-          error => {
-            _this.loadcomplete.fav_provider = true;
-            this.extras = {
-              'favourites': []
-            }
-            // resolve([]);
-          }
-        );
-    // });
-  }
+  // getFavouriteProvider() {
+  //   // console.log('In Get Favourites');
+  //   const _this = this;
+  //   // return new Promise(function (resolve, reject) {
+  //     _this.loadcomplete.fav_provider = false;
+  //     _this.subs.sink = _this.shared_services.getFavProvider()
+  //       .subscribe(
+  //         data => {
+  //           _this.loadcomplete.fav_provider = true;
+  //           _this.fav_providers = data;
+  //           _this.fav_providers_id_list = [];
+  //           _this.setWaitlistTimeDetails();
+  //           this.extras = {
+  //             'favourites': _this.fav_providers_id_list
+  //           }
+  //           // resolve(_this.fav_providers_id_list);
+  //         },
+  //         error => {
+  //           _this.loadcomplete.fav_provider = true;
+  //           this.extras = {
+  //             'favourites': []
+  //           }
+  //           // resolve([]);
+  //         }
+  //       );
+  //   // });
+  // }
 
   setWaitlistTimeDetails() {
     // let k = 0;
@@ -1049,35 +1049,35 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  doDeleteFavProvider(fav) {
-    if (!fav.id) {
-      return false;
-    }
-    this.shared_functions.doDeleteFavProvider(fav, this)
-      .then(
-        data => {
-          if (data === 'reloadlist') {
-            this.getFavouriteProvider();
-          }
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-  }
+  // doDeleteFavProvider(fav) {
+  //   if (!fav.id) {
+  //     return false;
+  //   }
+  //   this.shared_functions.doDeleteFavProvider(fav, this)
+  //     .then(
+  //       data => {
+  //         if (data === 'reloadlist') {
+  //           this.getFavouriteProvider();
+  //         }
+  //       },
+  //       error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       });
+  // }
 
-  addFavProvider(id) {
-    if (!id) {
-      return false;
-    }
-    this.subs.sink = this.shared_services.addProvidertoFavourite(id)
-      .subscribe(
-        data => {
-          this.getFavouriteProvider();
-        },
-        error => {
-        }
-      );
-  }
+  // addFavProvider(id) {
+  //   if (!id) {
+  //     return false;
+  //   }
+  //   this.subs.sink = this.shared_services.addProvidertoFavourite(id)
+  //     .subscribe(
+  //       data => {
+  //         this.getFavouriteProvider();
+  //       },
+  //       error => {
+  //       }
+  //     );
+  // }
 
   goWaitlistDetail(waitlist) {
     this.router.navigate(['consumer/waitlist', waitlist.providerAccount.id, waitlist.ynwUuid]);
@@ -2129,12 +2129,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       case 'meetingDetails':
         this.getMeetingDetails(booking, 'waitlist');
         break;
-      case 'removeFavourite':
-        this.doDeleteFavProvider(booking.providerAccount);
-        break;
-      case 'addToFavourites':
-        this.addFavProvider(booking.providerAccount.id);
-        break;
+      // case 'removeFavourite':
+      //   this.doDeleteFavProvider(booking.providerAccount);
+      //   break;
+      // case 'addToFavourites':
+      //   this.addFavProvider(booking.providerAccount.id);
+      //   break;
       case 'moreInfo':
         this.gotoQuestionnaire(booking);
         break;
@@ -2181,12 +2181,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       case 'meetingDetails':
         this.getMeetingDetails(booking, 'appt');
         break;
-      case 'removeFavourite':
-        this.doDeleteFavProvider(booking.providerAccount);
-        break;
-      case 'addToFavourites':
-        this.addFavProvider(booking.providerAccount.id);
-        break;
+      // case 'removeFavourite':
+      //   this.doDeleteFavProvider(booking.providerAccount);
+      //   break;
+      // case 'addToFavourites':
+      //   this.addFavProvider(booking.providerAccount.id);
+      //   break;
       case 'moreInfo':
         this.gotoQuestionnaire(booking);
         break;

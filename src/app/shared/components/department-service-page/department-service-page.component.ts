@@ -1460,6 +1460,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             resolve(data);
           },
           (error) => {
+            console.log(error);
             _this.shared_services.callHealth(error.message);
             console.log("Get Profile Information Error: ");
             reject();

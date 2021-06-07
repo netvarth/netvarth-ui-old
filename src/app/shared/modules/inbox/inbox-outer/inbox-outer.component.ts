@@ -94,33 +94,39 @@ export class InboxOuterComponent implements OnInit {
     }
   }
   getInboxMessages() {
+    const _this = this;
+    console.log("In GetInbox Messages");
     this.inbox_services.getInbox('consumer')
       .subscribe(
         data => {
-          this.messages = data;
-          this.scrollDone = true;
-          this.sortMessages();
-          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
-          this.selectedProvider = projectConstantsLocal.PROVIDER_ACCOUNT_ID.toString();
-          if (this.selectedProvider !== '') {
-            this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            if (this.selectedUserMessages) {
-            const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
+          _this.messages = data;
+          console.log(_this.message);
+          _this.scrollDone = true;
+          _this.sortMessages();
+          console.log("After Sortmessages");
+          _this.groupedMsgs = _this.shared_functions.groupBy(_this.messages, 'accountId');
+          console.log("After groupedMsgs");
+          console.log(_this.groupedMsgs);
+          _this.selectedProvider = projectConstantsLocal.PROVIDER_ACCOUNT_ID.toString();
+          if (_this.selectedProvider !== '') {
+            _this.selectedUserMessages = _this.groupedMsgs[_this.selectedProvider];
+            if (_this.selectedUserMessages) {
+            const unreadMsgs = _this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== _this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
               const messageids = ids.toString();
-              this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
+              _this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
             }
             setTimeout(() => {
-              this.scrollToElement();
+              _this.scrollToElement();
             }, 100);
           }
           }
-          this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
-          this.loading = false;
+          _this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
+          _this.loading = false;
         },
         () => {
-          this.loading = false;
+          _this.loading = false;
         }
       );
   }
@@ -186,8 +192,10 @@ export class InboxOuterComponent implements OnInit {
     return unreadMsgs.length;
   }
   readProviderMessages(providerId, messageId, accountId) {
-    this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
-      this.getInboxMessages();
+    console.log("readProviderMessages");
+    const _this = this;;
+    _this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
+      _this.getInboxMessages();
     });
   }
   sendMessage() {

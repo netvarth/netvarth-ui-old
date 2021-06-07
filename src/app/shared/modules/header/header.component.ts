@@ -323,7 +323,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .then(
         () => {
           this.lStorageService.removeitemfromLocalStorage('pre-header');
-          this.lStorageService.removeitemfromLocalStorage('authToken');
           this.router.navigate(['/home']);
         },
         () => {
