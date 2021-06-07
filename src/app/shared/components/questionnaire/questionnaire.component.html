@@ -156,4 +156,4 @@
 </section>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+    (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
