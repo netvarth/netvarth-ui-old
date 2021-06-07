@@ -183,12 +183,14 @@ isNumericSign(evt) {
   }
   onServiceForChange(event) {
     this.serviceFormReset();
+    console.log(event);
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
       if (chosen_Object.length !== 0) {
         this.is_parent = false;
         this.chosen_person = chosen_Object[0]
+        console.log(this.chosen_person);
         this.setMemberDetails(chosen_Object[0]);
       } else {
         this.chosen_person = this.customer_data
@@ -200,22 +202,6 @@ isNumericSign(evt) {
   
     }
 
-  }
-  checkMainMemberEmailId() {
-    let isemail=false;
-    if(this.mandatoryEmail==='' && this.virtualForm.get('email').value===''){
-      isemail=false;
-    }else if(this.mandatoryEmail==='' &&this.virtualForm.get('email').value!==''){
-      this.updateParentInfo(this.virtualForm.value).then(
-        (result) => {
-          isemail=true;
-          this.getActiveUserInfo();
-        });
-    }else{
-      isemail=true;
-    }
-    console.log(isemail);
-    return isemail;
   }
 
   setMemberDetails(memberObj) {
@@ -241,6 +227,8 @@ isNumericSign(evt) {
     } 
     if (memberObj.userProfile && memberObj.userProfile.email) {
       this.virtualForm.patchValue({ email: memberObj.userProfile.email });
+    }else{
+      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email  });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
@@ -330,6 +318,7 @@ isNumericSign(evt) {
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
+      console.log(preferredLanguage);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
@@ -406,6 +395,7 @@ isNumericSign(evt) {
     this.hideLanguages = false;
   }
   updateForm() {
+    console.log(this.dialogData.type);
     if (this.dialogData.type && this.dialogData.type === 'member') {
       this.details = this.dialogData.consumer
     } else {
@@ -414,7 +404,9 @@ isNumericSign(evt) {
     if (this.details.parent) {
       this.setMemberDetails(this.details);
     } else {
+      console.log(this.details);
       this.setparentDetails(this.details);
+      
     }
 
   }
@@ -428,8 +420,11 @@ isNumericSign(evt) {
     elmnt.scrollIntoView();
   }
   cancelLanguageSelection() {
+   const selectedperson=this.virtualForm.get('serviceFor').value;
+   this.virtualForm.patchValue({'preferredLanguage':[]});
+   this.onServiceForChange(selectedperson);
     this.hideLanguages = true;
-    this.updateForm();
+   // this.updateForm();
     let elmnt = document.getElementById("plng");
     elmnt.scrollIntoView();
   }
