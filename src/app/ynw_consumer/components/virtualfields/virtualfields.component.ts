@@ -70,6 +70,7 @@ export class VirtualFieldsComponent implements OnInit {
   countryCode: any;
   serviceDetails: any;
   provider: any;
+  languageSelected: any=[];
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -410,6 +411,9 @@ isNumericSign(evt) {
     this.dialogRef.close();
   }
   editLanguage() {
+    console.log(this.virtualForm.get('preferredLanguage').value);
+    this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
+    console.log(this.languageSelected);
     this.hideLanguages = false;
   }
   updateForm() {
@@ -426,35 +430,47 @@ isNumericSign(evt) {
 
   }
   saveLanguages() {
+    this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
       return false;
     }
     this.hideLanguages = true;
-    let elmnt = document.getElementById("plng");
-    elmnt.scrollIntoView();
+    this.languageSelected = [];
+    // let elmnt = document.getElementById("plng");
+    // elmnt.scrollIntoView()
   }
   cancelLanguageSelection() {
+    if (this.virtualForm.get('preferredLanguage').value.length == 0) {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+      this.lngknown = 'yes';
+      this.virtualForm.patchValue({ islanguage: 'yes' });
+    } else {
+      this.languageSelected = [];
+
+    }
     this.hideLanguages = true;
-    this.updateForm();
-    let elmnt = document.getElementById("plng");
-    elmnt.scrollIntoView();
+    // let elmnt = document.getElementById("plng");
+    // elmnt.scrollIntoView();
   }
+
   langSel(sel) {
-    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
-      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(sel);
+
+    if (this.languageSelected.length > 0) {
+      const existindx = this.languageSelected.indexOf(sel);
       if (existindx === -1) {
-        this.virtualForm.get('preferredLanguage').value.push(sel);
+        this.languageSelected.push(sel);
       } else {
-        this.virtualForm.get('preferredLanguage').value.splice(existindx, 1);
+        this.languageSelected.splice(existindx, 1);
       }
     } else {
-      this.virtualForm.get('preferredLanguage').value.push(sel);
+      this.languageSelected.push(sel);
     }
+
   }
   checklangExists(lang) {
-    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
-      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(lang);
+    if (this.languageSelected.length > 0) {
+      const existindx = this.languageSelected.indexOf(lang);
       if (existindx !== -1) {
         return true;
       }
