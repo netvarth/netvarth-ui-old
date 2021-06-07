@@ -243,6 +243,8 @@ isNumericSign(evt) {
     // }
     if (memberObj.userProfile && memberObj.userProfile.email) {
       this.virtualForm.patchValue({ email: memberObj.userProfile.email });
+    }else{
+      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email  });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
