@@ -60,20 +60,7 @@
                                         <input class="form-control" placeholder="Enter your last name" formControlName="lastName">
                                 </div>
                                
-                    <div class="form-group ">
-                            <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
-                            <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
-                                formControlName="age" style="width:50%">
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
-                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
-                      {
-                        'required' : 'Age is required',
-                        'min' : 'Minimum age required is 0',
-                        'max' : 'Maximum age is 150'
-                       
-                      })">
-                            </app-field-error-display>
-                        </div>
+    
                         <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
                         <div class="form-group ">
                             <label class="col-form-label" for="gender" >{{gender_cap}} <span class="red">*</span></label>
@@ -86,6 +73,20 @@
                             <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
                             errorMsg="Please select the gender.">
                         </app-field-error-display>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
+                            <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
+                                formControlName="age" style="width:50%" (keypress)=isNumeric($event)>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                      {
+                        'required' : 'Age is required',
+                        'min' : 'Minimum age required is 0',
+                        'max' : 'Maximum age is 150'
+                       
+                      })">
+                            </app-field-error-display>
                         </div>
                                 <div class="form-group pwd"  *ngIf="countryCode=='+91'">
                                     <label for="pincode" class="col-form-label">Residing Pincode  in India  <span
