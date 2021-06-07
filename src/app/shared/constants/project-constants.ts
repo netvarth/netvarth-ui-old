@@ -985,6 +985,7 @@ export const projectConstantsLocal = {
     { value: 'Jaldee Messaging', class: 'fa ico_sms' },
     { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
     { value: 'Multi User', class: 'fa ico_usr' },
+    { value: 'Jaldee Video Calling', class: 'fa ico-video' },
   ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },

@@ -180,7 +180,7 @@
                                                 <div class="question-value1">
                                                     <ul class="details badges m0 no-padding">
                                                         <ng-container *ngIf="selectedLocation">
-                                                            <li *ngIf="selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none'"
+                                                            <li *ngIf="selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType !== 'None'"
                                                                 [matTooltip]="'Parking Type: ' + selectedLocation.parkingType">
                                                                 <span class="icon-parking"></span>
                                                             </li>

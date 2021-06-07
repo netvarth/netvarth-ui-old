@@ -292,15 +292,15 @@
                                                                     </h6>
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                                     Contact Information
+                                                                    <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                    class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModalCenter"
+                                                                    (click)="handleSideScreen('members')">Change
+                                                                </a>
                                                                         <div class="mode-hint mgn-bt-5">
                                                                             The provider will contact you in this
                                                                             number
-                                                                            <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
-                                                                        class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter"
-                                                                        (click)="handleSideScreen('members')">Change
-                                                                    </a>
                                                                         </div> 
                                                                     </div>
                                                                     <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10"
@@ -323,11 +323,11 @@
                                                                         </ng-container>
                                                                         <i class="fa phon-icon mgn-lt-10"
                                                                             *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                        <span class="mgn-lt-10 phonevallabel"
-                                                                            *ngIf="userPhone && !changePhno">{{countryCode}}
+                                                                        <span class="phonevallabel"
+                                                                            *ngIf="userPhone && !changePhno">&nbsp;{{countryCode}}
                                                                             {{userPhone}}</span>
-                                                                        <span class="mgn-lt-10 phonevallabel"
-                                                                            *ngIf="currentPhone && changePhno">{{countryCode}}
+                                                                        <span class="phonevallabel"
+                                                                            *ngIf="currentPhone && changePhno">&nbsp;{{countryCode}}
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
@@ -345,7 +345,7 @@
                                                                         <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         <span
-                                                                            class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
+                                                                            class="phonevallabel">&nbsp;+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <!-- <div class="mode-hint mgn-bt-5">
@@ -546,10 +546,8 @@
                                                         </div>
                                                         <div class="grey">
                                                             <div class="serv-head">
-                                                                <h5 class="mgn-bt-5 primary-color">Booking
-                                                                    alerts
-                                                                    and communications will be
-                                                                    sent to
+                                                                <h5 class="mgn-bt-5 primary-color">
+                                                                    Status, alerts, communications will be sent to
                                                                 </h5>
                                                             </div>
                                                             <div class="consumer_appt mgn-bt-10">

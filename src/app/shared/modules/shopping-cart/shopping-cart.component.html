@@ -36,7 +36,7 @@
                            <span class="add_nte" (click)="addNotes(item,i)">
                                {{item.consumerNote ? 'Edit Note':'Add Note'}}
                            </span> &nbsp;
-                           <span class="add_nte" (click)="deleteNotes(item,i)">
+                           <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
                               <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
                            </span>
                         </div>

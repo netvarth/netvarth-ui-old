@@ -12,14 +12,14 @@
     <div class="cust-loginpge-color" *ngIf="!api_loading">
         <div class="mat-dialog-content" style="overflow: auto !important;">
             <div *ngIf="hideLanguages">
-                <div class="">
+                <!-- <div class="">
                         <label class="col-form-label" for="name">Service Provider Name : </label>
                         <span> {{ provider }}</span>
                 </div>
                 <div class="">
                         <label class="col-form-label" for="name">Consultation Request : </label>
                         <span> {{ serviceDetails.name }} </span>
-                </div>
+                </div> -->
               
                 <div class="mgn-up-10 ">
                     <label class="col-form-label" for="name">Consultation is For </label>
@@ -37,8 +37,8 @@
                     </mat-radio-group>
                 </div>
                 <div class="mgn-up-10 mgn-btm-5" style="font-size: 0.75rem !important;">
-                        Please provide necessary information. This information will be saved in your profile
-                    </div>
+                    Please provide us with the below information which will be saved as part of your profile.
+                </div>
                 
                 <div class="form-group" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                     <label class="col-form-label" for="firstName">First Name <span class="red">*</span></label>
@@ -113,7 +113,7 @@
                     <!-- <mat-form-field> -->
                     <label for="pincode" class="col-form-label">Residing Pincode  in India <span class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
-                        formControlName="pincode" (keyup)="showLocations($event)">
+                        formControlName="pincode" (keyup)="showLocations($event)" style="width:50%">
                     <!-- </mat-form-field> -->
                     <div style="display: flex; justify-content: space-between;">
                         <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
@@ -199,7 +199,7 @@
                     <label class="col-form-label" for="name">Contact Information </label>
     
                     <div class="form-level-settings smallfont">
-                            Remote consultation may  happen on your Whatsapp number.SMS alerts will be sent to your phone number.Electronic Receipts/prescription and status will sent to email
+                        Please provide us with all the contact info you might have which might be used for remote consultation, sending sms alerts, notifications, ebills, e-prescription and more.
                          </div>
                 <!-- <div class="form-group mobile-field" >
                         <label>Whatsapp #</label>

@@ -142,6 +142,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
               },
                 error => {
                   this.savedisabled = false;
+                  this.img_save_caption = 'Save';
                   this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
           }

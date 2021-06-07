@@ -88,13 +88,15 @@ export class instantQueueComponent implements OnInit {
     createForm(server_date) {
         this.qId = this.queue_list.id;
         const todaydt = new Date(server_date);
+        console.log(server_date);
+        console.log(moment(server_date).format());
         this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
         this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
         this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
         this.fromDateCaption = 'Now';
         this.toDateCaption = '11:59 PM';
         this.instantQForm = this.fb.group({
-            dstart_time: [{ hour: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH')), minute: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm')) }, Validators.compose([Validators.required])],
+            dstart_time: [{ hour: parseInt(moment(server_date).format('HH')), minute: parseInt(moment(server_date).format('mm')) }, Validators.compose([Validators.required])],
             dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])]
         });
         setTimeout(() => {
@@ -107,9 +109,20 @@ export class instantQueueComponent implements OnInit {
         const curtime = {};
         if (this.fromDateCaption === 'Now') {
             const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+            console.log(server_date);
             const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            curtime['hour'] = parseInt(moment(new Date(today), ['hh:mm A']).format('HH'), 10);
-            curtime['minutes'] = parseInt(moment(new Date(today), ['hh:mm A']).format('mm'), 10);
+            console.log(today);
+            console.log("moment(server_date, ['hh:mm A']):"+moment(server_date, ['hh:mm:ss A']));
+            console.log("moment(server_date, ['hh:mm A']).format('HH'):"+moment(server_date, ['hh:mm:ss A']).format('HH'));
+            console.log("moment(server_date, ['hh:mm A']).format('hh'):"+moment(server_date, ['hh:mm:ss A']).format('hh'));
+            console.log("parseInt(moment(server_date).format('HH'):"+parseInt(moment(server_date).format('HH')));
+            console.log(moment("2010-10-20 4:30","YYYY-MM-DD HH:mm").format('HH'));
+            console.log(moment(server_date,"YYYY-MM-DD HH:mm").format('HH'));
+            console.log(moment(server_date,"YYYY-MM-DD HH:mm")); 
+            // curtime['hour'] = parseInt(moment(server_date, ['hh:mm A']).format('HH'));
+            // curtime['minutes'] = parseInt(moment(server_date, ['hh:mm A']).format('mm'));
+            curtime['hour'] = parseInt(moment(server_date).format('HH'));
+            curtime['minutes'] = parseInt(moment(server_date).format('mm'));
         } else {
             curtime['hour'] = parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('HH'), 10);
             curtime['minutes'] = parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('mm'), 10);
@@ -118,6 +131,7 @@ export class instantQueueComponent implements OnInit {
             hour: curtime['hour'],
             minute: curtime['minutes']
         };
+        console.log(sttime);
         this.instantQForm.patchValue({
             dstart_time: sttime || null,
         });
