@@ -3338,7 +3338,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
-    } else if (event.type === 'note') {
+    } else if (event.type === 'attachment') {
       this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);

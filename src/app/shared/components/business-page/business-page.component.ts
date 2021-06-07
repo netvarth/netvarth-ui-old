@@ -709,6 +709,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case 'terminologies': {
         this.terminologiesjson = result;
+        this.wordProcessor.setTerminologies(this.terminologiesjson);
         break;
       }
       case 'businessProfile': {

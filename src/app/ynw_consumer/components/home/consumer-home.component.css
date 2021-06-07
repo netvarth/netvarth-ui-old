@@ -53,7 +53,11 @@ app-appt-card, app-wl-card {
     height: 100%;
     overflow: auto;
 }
-
+@media (max-width: 575px) {
+    h1.hello-msg {
+        text-align: left !important;
+    }
+}
 
 
 [class^="ribbon-new"] {

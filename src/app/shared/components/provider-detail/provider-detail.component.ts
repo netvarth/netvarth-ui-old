@@ -611,6 +611,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       case 'terminologies': {
         this.terminologiesjson = result;
+        this.wordProcessor.setTerminologies(this.terminologiesjson);
         break;
       }
       case 'businessProfile': {
