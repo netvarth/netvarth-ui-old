@@ -20,7 +20,7 @@
     <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}
     </p>
   </div>
-  <div *ngIf="type == 'appt' || type == 'checkin' || type == 'order-details'" class="prov-wtlst-note-border"
+  <div style="word-break: break-all;" *ngIf="type == 'appt' || type == 'checkin' || type == 'order-details'" class="prov-wtlst-note-border"
     [innerHTML]="checkin.consumerNote | nl2br">
   </div>
   <div *ngIf="type == 'donation'" class="prov-wtlst-note-border" [innerHTML]="checkin.note | nl2br">
