@@ -87,10 +87,10 @@
                                     <span>
                                         <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item (click)="editService(service)"
-                                                *ngIf="service.status=='ACTIVE' && service.serviceType !== 'virtualService'">
+                                                *ngIf="service.status=='ACTIVE'">
                                                 <i class="icon-edit chkin-mobic"></i>Edit
                                             </button>
-                                            <button mat-menu-item
+                                            <!-- <button mat-menu-item
                                                 [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'"
                                                 (click)="(is_virtual_enbl && service.serviceType === 'virtualService') && editService(service)"
                                                 *ngIf="service.status=='ACTIVE'&& service.serviceType === 'virtualService'">
@@ -99,7 +99,7 @@
                                                 <i [matTooltip]="'Please turn on Teleservice in settings'"
                                                     *ngIf="!is_virtual_enbl && service.serviceType === 'virtualService'"
                                                     class="material-icons" style="cursor: help;">help</i>Edit
-                                            </button>
+                                            </button> -->
                                             <button mat-menu-item (click)="changeServiceStatus(service)">
                                                 <i *ngIf="service.status=='INACTIVE' || !service.status"
                                                     class="icon-enable"></i>
