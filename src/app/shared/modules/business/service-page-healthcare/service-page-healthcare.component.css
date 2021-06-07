@@ -198,10 +198,15 @@
 }
 .section.section1 > div:nth-child(1) {
     z-index: 2 !important;
-    /* width: 40% !important; */ /* Uncomment when image issue is fixed */
-    width: 100% !important; /* Delete when image issue is fixed */
+    width: 40% !important;
     background-image: linear-gradient(to right, #ecf7fb, #eff4f8 50%, #eaf0f3) !important;
     box-shadow: -50px 0px 25px 70px #eaf0f3 !important;
+}
+
+@media (max-width: 991px) {
+    .section.section1 > div:nth-child(1) {
+        width: 100% !important;
+    }
 }
 
 .section.section1 .image-text {
@@ -1129,22 +1134,13 @@
     }
 }
 
-
-/* Start commenting here when image issue is fixed */
-
-.section.section1 {
-    height: 400px !important;
-}
-
-@media (max-width: 1200px) {
-    .section.section1 {
-        height: 350px !important;
-    }
-}
-
 @media (max-width: 991px) {
     .section.section1 {
         height: 280px !important;
+    }
+
+    .main-image {
+        display: none !important;
     }
 }
 
@@ -1165,5 +1161,3 @@
         height: 250px !important;
     }
 }
-
-/* End commenting here when image issue is fixed */
