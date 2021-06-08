@@ -705,6 +705,21 @@ export class QuestionnaireComponent implements OnInit {
       return true;
     }
   }
+  showEditBtn() {
+    if (this.type) {
+      if (this.source === 'consCheckin' || this.source === 'proCheckin') {
+        if (this.bookingDetails.waitlistStatus !== 'checkedIn' && this.bookingDetails.waitlistStatus !== 'arrived') {
+          return false;
+        }
+      }
+      if (this.source === 'consAppt' || this.source === 'proAppt') {
+        if (this.bookingDetails.apptStatus !== 'Confirmed' && this.bookingDetails.apptStatus !== 'Arrived') {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
   onButtonBeforeHook(event: ButtonEvent) {
     if (!event || !event.button) {
       return;

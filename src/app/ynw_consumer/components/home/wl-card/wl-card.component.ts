@@ -54,8 +54,7 @@ export class WlCardComponent implements OnInit, OnChanges {
     if (this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus == 'arrived' || this.booking.waitlistStatus == 'prepaymentPending') {
       this.showCancelBtn = true;
     }
-    if ((this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus == 'arrived') &&
-      this.booking.questionnaire && this.booking.questionnaire.questionAnswers && this.booking.questionnaire.questionAnswers.length > 0) {
+    if (this.booking.questionnaire && this.booking.questionnaire.questionAnswers && this.booking.questionnaire.questionAnswers.length > 0) {
       this.showMoreInfoBtn = true;
     }
     if (this.booking.prescShared) {
