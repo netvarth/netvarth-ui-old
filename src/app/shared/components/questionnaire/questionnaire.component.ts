@@ -373,7 +373,6 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     let data = [];
-    console.log(this.answers);
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
@@ -676,7 +675,7 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.uploadedImages[indx].s3path;
+        const path = this.uploadedImages[indx].thumbPath;
         return path;
       }
     }
@@ -731,7 +730,6 @@ export class QuestionnaireComponent implements OnInit {
       return;
     }
     if (event.button.type === ButtonType.DOWNLOAD) {
-      console.log(event.image);
     }
   }
   onButtonAfterHook() { }

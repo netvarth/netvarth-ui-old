@@ -616,7 +616,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       case 'appointmentsettings': {
         this.apptSettingsJson = [];
         this.apptSettingsJson = result;
-        console.log(this.apptSettingsJson);
         break;
       }
       case 'terminologies': {
@@ -2364,7 +2363,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.serviceCount++;
             }
           }
-          if (!this.userId && this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
+          if (!this.userId && (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt)) {
             for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
               const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
               const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
@@ -2408,7 +2407,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.serviceCount++;
           }
         }
-        if (this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
+        if (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt) {
           for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
             this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
             this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
