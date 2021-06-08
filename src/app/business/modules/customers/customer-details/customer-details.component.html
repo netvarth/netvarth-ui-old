@@ -44,8 +44,8 @@
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
                                     (click)="showCustomerAction()">Actions</span>
-                                    <!-- <span class="customer-action-btn pointer-cursor" 
-                                    ><button style="border: none;"  (click)="gotoMeet()"  [disabled]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'" [ngClass]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'?'black':'grey'">Instant Chat</button></span><br> -->
+                                    <span class="customer-action-btn pointer-cursor" 
+                                    ><button style="border: none;"  (click)="gotoMeet()"  [disabled]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'" [ngClass]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'?'black':'grey'">Instant Chat</button></span><br>
                                    
                                   
                                 <div>{{customer_label | capitalizeFirst}} ID: <span
@@ -72,11 +72,11 @@
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>
                                 </div>
-                                <!-- <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
+                                <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
                                 (click)="goMeetProvider()">Start Chat</div><br>
                                 <div class="cs-btn bt1 btn-orange txt-trans-none" style="float: right;" *ngIf="showRejoinBt"
                                 (click)="goMeetProvider()">Rejoin</div><br>
-                                <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br> -->
+                                <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br>
                             </div>
                            
                             <div *ngIf="!showMoreHistory">
