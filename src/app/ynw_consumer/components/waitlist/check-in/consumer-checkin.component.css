@@ -2203,3 +2203,27 @@ button.next-button {
   width: 20px !important;
   font-size: 1.3rem !important;
 }
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.br-top-left-0 {
+  border-top-left-radius: 0 !important;
+}
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.br-bottom-left-0 {
+  border-bottom-left-radius: 0 !important;
+}
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.margin-left-0{
+  margin-left: 0 !important;
+}
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.br-top-right-0 {
+  border-top-right-radius: 0 !important;
+}
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.br-bottom-right-0 {
+  border-bottom-right-radius: 0 !important;
+}
+
+.c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.margin-right-0{
+  margin-right: 0 !important;
+}

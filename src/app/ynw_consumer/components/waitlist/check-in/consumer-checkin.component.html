@@ -607,10 +607,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="consumer_appt mgn-bt-10">
-                                                                <div class="mgn-bt-20 mgn-lt-10 mgn-up-10 disp-flex"
-                                                                    [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                <div class="mgn-bt-20 mgn-lt-10 mgn-up-10 disp-flex">
+                                                                    <!-- [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'" -->
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa fa-phone" style="font-size: 20px !important; align-self: center; padding-right: 9px;"
+                                                                        *ngIf="!(sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')"></i>
                                                                     <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Phone#</div>
                                                                     <!-- <b>{{countryCode}}
                                                                         {{selected_phone}}</b> -->
@@ -690,8 +692,9 @@
                                                                         {{whatsapperror}}</div>
 
                                                                 </div>
-                                                                <div class="mgn-up-5 mgn-lt-10 disp-flex"
-                                                                    [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                <div class="mgn-up-5 mgn-lt-10 disp-flex">
+                                                                    <!-- [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'" -->
+                                                                    <i class="fa fa-envelope" style="font-size: 18px !important; align-self: center; padding-right: 7px;"></i>
                                                                     <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Email </div>
                                                                     <!-- <b>{{payEmail}}</b> -->
                                                                     <div class="width-100">
@@ -1071,7 +1074,10 @@
                                                                     <span
                                                                         *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
                                                             </mat-chip>
-                                                            <mat-chip class="notes-and-file-chip"><a
+                                                            <span>
+                                                            <mat-chip 
+                                                                [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}"    
+                                                                class="notes-and-file-chip"><a
                                                                     class="lnk action pointer-cursor"
                                                                     (click)="imagefile1.click();"><input #imagefile1
                                                                         type="file" accept="/*;capture=camera"
@@ -1080,9 +1086,15 @@
                                                                         class="fa fa-paperclip mgn-rt-5"
                                                                         aria-hidden="true"></i>Upload
                                                                     File
-                                                                    <span
-                                                                        *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
+                                                                    <!-- <span
+                                                                        *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
                                                                 </a></mat-chip>
+                                                                <mat-chip *ngIf="getAttachLength() > 0" class="notes-and-file-chip br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                    <a class="lnk action pointer-cursor" (click)="viewAttachments()">
+                                                                        View (<span>{{getAttachLength()}}</span>)
+                                                                    </a>
+                                                                </mat-chip>
+                                                            </span>
                                                         </mat-chip-list>
                                                     </div>
                                                 </div>
