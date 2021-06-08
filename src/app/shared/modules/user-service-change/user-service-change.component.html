@@ -294,7 +294,7 @@
                               aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
                             <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum">
-                              <a class="user-contact-details" (click)="viewContactDetails(service)">View</a>
+                              <a class="user-contact-details" (click)="stopprop($event);viewContactDetails(service)">View</a>
                               <!-- <span class="b2">+91 {{service.mobileNo}} </span> -->
                             </div>
                             <div class="mgn-up-5" *ngIf="service.specialization">
