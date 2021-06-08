@@ -118,8 +118,9 @@
                                     </div>
 
                                     <!-- Status and Date, Queue -->
-                                    <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                                    <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar"
+                                        style="padding: 10px !important; display: flex !important; align-items: flex-start !important; justify-content: space-between !important;">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label">STATUS</span>
                                             <span>
                                                 <!-- <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
@@ -136,13 +137,13 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item" style="padding-right: 4px !important; padding-left: 4px !important; flex: 1 !important;">
                                             <span class="status-label">DATE & TIME-WINDOW</span>
                                             <span class="item-label-val">{{waitlist.date | date:newDateFormat}}</span>
-                                            <span class="item-label-val">{{waitlist.queue.queueStartTime}} -
-                                                {{waitlist.queue.queueEndTime}}</span>
+                                            <span class="item-label-val"><span style="display: inline-block !important;">{{waitlist.queue.queueStartTime}}</span> -
+                                                <span style="display: inline-block !important;">{{waitlist.queue.queueEndTime}}</span></span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center" style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                             <!-- virtual time today -->
@@ -177,7 +178,7 @@
                                                 at : {{waitlist.serviceTime}}</span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
-                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item" style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label">BATCH</span>
                                             <span class="item-label-val">{{waitlist.batchName}}</span>
                                         </div>
