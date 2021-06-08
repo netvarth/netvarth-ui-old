@@ -179,22 +179,30 @@
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <div class="input-group date">
+                          <!-- <div class="input-group date"> -->
                             <label>Start Date</label>
-                            <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)"
-                              placeholder="Start Date" formControlName="startdate" />
-                          </div>
+                            <!-- <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)"
+                              placeholder="Start Date" formControlName="startdate" /> -->
+                              <input class="form-control1" matInput [matDatepicker]="picker" (dateChange)="compareDate($event.value,0)"
+                              placeholder="Start Date" formControlName="startdate" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          <!-- </div> -->
                         </div>
                         <!--end::Input-->
                       </div>
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <div class="input-group date">
+                          <!-- <div class="input-group date"> -->
                             <label>End Date</label>
-                            <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)"
-                              placeholder="End Date" formControlName="enddate" />
-                          </div>
+                            <!-- <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)"
+                              placeholder="End Date" formControlName="enddate" /> -->
+                              <input class="form-control1" matInput [matDatepicker]="picker1" (dateChange)="compareDate($event.value,1)"
+                            placeholder="End Date" formControlName="enddate" readonly>
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                          <!-- </div> -->
                         </div>
                         <!--end::Input-->
                       </div>
@@ -661,24 +669,32 @@
                             <div class="col-xl-4">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <div class="input-group date">
+                                <!-- <div class="input-group date"> -->
                                   <label>Start Date</label>
-                                  <input class="form-control1" type="date"
+                                  <!-- <input class="form-control1" type="date"
                                     (dateChange)="compareDatestore($event.value,0)" placeholder="Start Date"
-                                    formControlName="startdatestore" />
-                                </div>
+                                    formControlName="startdatestore" /> -->
+                                    <input class="form-control1" matInput [matDatepicker]="picker2" (dateChange)="compareDatestore($event.value,0)"
+                                    placeholder="Start Date" formControlName="startdatestore" readonly>
+                                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker2></mat-datepicker>
+                                <!-- </div> -->
                               </div>
                               <!--end::Input-->
                             </div>
                             <div class="col-xl-4">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <div class="input-group date">
+                                <!-- <div class="input-group date"> -->
                                   <label>End Date</label>
-                                  <input class="form-control1" type="date"
+                                  <!-- <input class="form-control1" type="date"
                                     (dateChange)="compareDatestore($event.value,1)" placeholder="End Date"
-                                    formControlName="enddatestore" />
-                                </div>
+                                    formControlName="enddatestore" /> -->
+                                    <input class="form-control1" matInput [matDatepicker]="picker3" (dateChange)="compareDatestore($event.value,1)"
+                                placeholder="End Date" formControlName="enddatestore" readonly>
+                              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                              <mat-datepicker #picker3></mat-datepicker>
+                                <!-- </div> -->
                               </div>
                               <!--end::Input-->
                             </div>
@@ -734,24 +750,32 @@
                             <div class="col-xl-4">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <div class="input-group date">
+                                <!-- <div class="input-group date"> -->
                                   <label>Start Date </label>
-                                  <input class="form-control1" type="date"
+                                  <!-- <input class="form-control1" type="date"
                                     (dateChange)="compareDatehome($event.value,0)" placeholder="Start Date"
-                                    formControlName="startdatehome" />
-                                </div>
+                                    formControlName="startdatehome" /> -->
+                                    <input class="form-control1" matInput [matDatepicker]="picker4" (dateChange)="compareDatehome($event.value,0)"
+                                    placeholder="Start Date" formControlName="startdatehome" readonly>
+                                  <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker4></mat-datepicker>
+                                <!-- </div> -->
                               </div>
                               <!--end::Input-->
                             </div>
                             <div class="col-xl-4">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <div class="input-group date">
+                                <!-- <div class="input-group date"> -->
                                   <label>End Date</label>
-                                  <input class="form-control1" type="date"
+                                  <!-- <input class="form-control1" type="date"
                                     (dateChange)="compareDatehome($event.value,1)" placeholder="End Date"
-                                    formControlName="enddatehome" />
-                                </div>
+                                    formControlName="enddatehome" /> -->
+                                    <input matInput class="form-control1" [matDatepicker]="picker5" (dateChange)="compareDatehome($event.value,1)"
+                                placeholder="End Date" formControlName="enddatehome" readonly>
+                              <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                              <mat-datepicker #picker5></mat-datepicker>
+                                <!-- </div> -->
                               </div>
                               <!--end::Input-->
                             </div>
