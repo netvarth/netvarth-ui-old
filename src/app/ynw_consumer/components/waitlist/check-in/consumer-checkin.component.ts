@@ -2289,4 +2289,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
     }
+    viewAttachments(){
+        this.action = 'attachment';
+        this.modal.nativeElement.click();
+    }
 }
