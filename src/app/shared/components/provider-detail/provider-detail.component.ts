@@ -158,6 +158,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   jdnDiscountType;
   playstore = true;
   appstore = true;
+  apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -497,7 +498,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   gets3curl() {
     console.log(this.provider_id);
-    let accountS3List = 'settings,terminologies,coupon,providerCoupon,location';
+    let accountS3List = 'settings,appointmentsettings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
@@ -511,6 +512,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           if (this.userId) {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
+            }
+            if (accountS3s['appointmentsettings']) {
+              this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
             }
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
@@ -607,6 +611,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'settings': {
         this.setAccountSettings(result);
+        break;
+      }
+      case 'appointmentsettings': {
+        this.apptSettingsJson = [];
+        this.apptSettingsJson = result;
+        console.log(this.apptSettingsJson);
         break;
       }
       case 'terminologies': {
@@ -1671,15 +1681,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (service.serviceType === 'virtualService') {
         console.log('checkin');
         this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
         });
 
-      }else{
-        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service,null, 'consumer');
+      } else {
+        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
       }
-      
+
     } else if (this.userType === '') {
-      const passParam = { callback: 'checkin', current_provider: current_provider,serviceType: service.serviceType };
+      const passParam = { callback: 'checkin', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
     }
   }
@@ -1729,8 +1739,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
       // }
       // else {
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-     // }
+      this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      // }
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1760,7 +1770,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        console.log('logged in' +passParam['serviceType']);
+        console.log('logged in' + passParam['serviceType']);
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
@@ -1775,7 +1785,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-        //  if (passParam['serviceType'] === 'virtualService') {
+          //  if (passParam['serviceType'] === 'virtualService') {
           //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
 
           //     this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
@@ -1783,8 +1793,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
           // }
           // else {
-            this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
-         // }
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+          // }
 
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
@@ -1796,39 +1806,39 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getFavProviders();
           if (passParam['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'checkin',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
 
-          }else{
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],'waitlist',current_provider['service'] );
+          } else {
+            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
           }
-          
+
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
       }
     });
   }
-  collectRequiredinfo(id, place, location, date,type, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log('inisdee  collecte required ingo');
     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
       width: '40%',
-      height:'auto',
+      height: 'auto',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
-      data: {'consumer':consumerdata,'type':'','service':service,'businessDetails':this.businessjson}
+      data: { 'consumer': consumerdata, 'type': '', 'service': service, 'businessDetails': this.businessjson }
     });
     virtualdialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log("Result:");
         console.log(result);
         this.consumerVirtualinfo = result;
-        if(type==='appt'){
+        if (type === 'appt') {
           this.showAppointment(id, place, location, date, service, 'consumer', result);
-        }else{
-          this.showCheckin(id,place,location, date,service,'consumer',result );
+        } else {
+          this.showCheckin(id, place, location, date, service, 'consumer', result);
         }
-        
+
       }
     });
   }
@@ -1883,13 +1893,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             console.log('after signup');
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
 
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
             });
 
-          }else{
+          } else {
             this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
           }
-          
+
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1901,18 +1911,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             console.log('inisdee signup first line')
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               console.log(consumerdata);
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
+              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
             });
 
           } else {
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
           }
-          
+
         }
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?,virtualinfo?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
 
     const queryParam = {
       loc_id: locid,
@@ -2320,21 +2330,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userCount = 0;
     if (this.showDepartments) {
       if (this.userId) {
-        if(this.apptServices){
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+        } if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
-      }if(this.wlServices){
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
-          }
-        }
-      }
       } else {
         for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
           const deptItem = {};
@@ -2354,7 +2364,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.serviceCount++;
             }
           }
-          if (!this.userId) {
+          if (!this.userId && this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
             for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
               const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
               const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
@@ -2398,11 +2408,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.serviceCount++;
           }
         }
-        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-          this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-          this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-          servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.userCount++;
+        if (this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
+          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+            this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+            this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+            servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+            this.userCount++;
+          }
         }
       }
       this.servicesAndProviders = servicesAndProviders;

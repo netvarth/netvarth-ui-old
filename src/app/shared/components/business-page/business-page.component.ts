@@ -166,6 +166,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   activeCatalog: any;
   qrdialogRef;
   wndw_path = projectConstants.PATH;
+  apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -513,7 +514,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 }, (error) => {
                   console.log(error);
                   // _this.gets3curl();
-                 }
+                }
               );
             }
           )
@@ -604,7 +605,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   gets3curl() {
     this.showServices = false;
-    let accountS3List = 'settings,terminologies,coupon,providerCoupon,location';
+    let accountS3List = 'settings,appointmentsettings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
@@ -618,6 +619,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           if (this.userId) {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
+            }
+            if (accountS3s['appointmentsettings']) {
+              this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
             }
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
@@ -705,6 +709,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (type) {
       case 'settings': {
         this.setAccountSettings(result);
+        break;
+      }
+      case 'appointmentsettings': {
+        this.apptSettingsJson = [];
+        this.apptSettingsJson = result;
         break;
       }
       case 'terminologies': {
@@ -1885,7 +1894,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['loginmainclass', 'popup-class', this.theme],
         disableClose: true,
         //data: consumerdata
-        data: { consumer: consumerdata, theme: this.theme,service:service,businessDetails:this.businessjson }
+        data: { consumer: consumerdata, theme: this.theme, service: service, businessDetails: this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         if (result) {
@@ -2115,7 +2124,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       queryParam['dept'] = service['department'];
       queryParam['theme'] = this.theme;
     }
-    queryParam['customId']= this.accountEncId;
+    queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam,
     };
@@ -2146,7 +2155,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       queryParam['dept'] = service['department'];
       queryParam['theme'] = this.theme;
     }
-    queryParam['customId']= this.accountEncId;
+    queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
@@ -2306,7 +2315,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.showDonation(locid, cdate, service);
           }
         } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service:service, consumer: 'consumer' };
+          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
           this.doLogin('consumer', passParam);
         }
       });
@@ -2608,7 +2617,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.serviceCount++;
             }
           }
-          if (!this.userId) {
+          if (!this.userId && this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
             for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
               const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
               const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
@@ -2652,11 +2661,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.serviceCount++;
           }
         }
-        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-          this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-          this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-          servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.userCount++;
+        if (this.settingsjson && this.settingsjson.enabledWaitlist && this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
+          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+            this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+            this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+            servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+            this.userCount++;
+          }
         }
       }
       this.servicesAndProviders = servicesAndProviders;
@@ -2984,7 +2995,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.router.navigate([this.accEncUid, 'home'], navigationExtras);
   }
-  privacyClicked(){
+  privacyClicked() {
     this.router.navigate([this.accEncUid, 'home']);
   }
   dashboardClicked() {
@@ -2994,7 +3005,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         if (status) {
           this.viewDashboard();
         } else {
-          const passParam = { callback: 'dashboard'};
+          const passParam = { callback: 'dashboard' };
           this.doLogin('consumer', passParam);
         }
       });
@@ -3007,6 +3018,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
-    this.routerobj.navigate(['consumer'], navigationExtras );
+    this.routerobj.navigate(['consumer'], navigationExtras);
   }
 }

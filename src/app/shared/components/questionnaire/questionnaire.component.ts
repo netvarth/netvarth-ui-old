@@ -373,6 +373,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     let data = [];
+    console.log(this.answers);
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
@@ -664,7 +665,12 @@ export class QuestionnaireComponent implements OnInit {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.selectedMessage[indx].path;
+        let path;
+        if (this.selectedMessage[indx].type === 'application/pdf') {
+          path = 'assets/images/pdf.png';
+        } else {
+          path = this.selectedMessage[indx].path;
+        }
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
