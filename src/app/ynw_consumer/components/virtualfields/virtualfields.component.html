@@ -4,7 +4,7 @@
     [ngClass]="theme?theme:''" novalidate *ngIf="!api_loading">
     <div class="mat-dialog-title">
         <div class="title" style="font-size: 16px !important;"> {{consumer_label| capitalizeFirst }} Information </div>
-        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
+        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1" *ngIf="hideLanguages">
             <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
         </button>
     </div>

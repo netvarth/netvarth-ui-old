@@ -721,7 +721,7 @@ export class VirtualFieldsComponent implements OnInit {
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappumber !== '') {
+    if (formdata.whatsappnumber !== '') {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
