@@ -555,6 +555,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
             }
+            if (accountS3s['appointmentsettings']) {
+              this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+            }
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
@@ -2363,7 +2366,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.serviceCount++;
             }
           }
-          if (!this.userId && (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt)) {
+          if (!this.userId && (this.settingsjson && this.settingsjson.enabledWaitlist || this.apptSettingsJson && this.apptSettingsJson.enableAppt)) {
             for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
               const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
               const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
@@ -2407,7 +2410,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.serviceCount++;
           }
         }
-        if (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt) {
+        if (this.settingsjson && this.settingsjson.enabledWaitlist || this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
           for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
             this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
             this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];

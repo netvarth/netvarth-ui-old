@@ -655,6 +655,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
             }
+            if (accountS3s['appointmentsettings']) {
+              this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+            }
             if (accountS3s['terminologies']) {
               this.processS3s('terminologies', accountS3s['terminologies']);
             }
