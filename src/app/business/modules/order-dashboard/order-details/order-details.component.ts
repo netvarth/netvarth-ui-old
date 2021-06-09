@@ -126,13 +126,18 @@ export class OrderDetailsComponent implements OnInit {
     this.selectedType = type;
   }
   showOrderActions() {
+    let timeType='';
+    if (this.uid.indexOf('h_') > -1){
+      timeType='history';
+    }
     const actiondialogRef = this.dialog.open(OrderActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
       disableClose: true,
       data: {
         selectedOrder: this.orderDetails,
-        source: 'details'
+        source: 'details',
+        type:timeType
       }
     });
     actiondialogRef.afterClosed()

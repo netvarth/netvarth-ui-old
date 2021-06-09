@@ -104,6 +104,7 @@ export class BranchUserDetailComponent implements OnInit {
     telegramCountry;
     whatsappCountry;
     countrycode;
+    isadminPrivilege: any;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -141,12 +142,13 @@ export class BranchUserDetailComponent implements OnInit {
         const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
+        this.isadminPrivilege = user.adminPrivilege;
         this.sector = user.sector;
         console.log(this.sector);
         console.log(this.subsector);
-        // if (this.sector === 'healthCare') {
-        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
-        // }
+        if (this.sector !== 'healthCare') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'ADMIN' }];
+        }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {

@@ -25,13 +25,13 @@
                       </mat-expansion-panel-header>
                       <ng-container *ngIf="appointmentReports.length===0">
                         <div *ngIf="appt_criteria.length === 0">
-                          <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
+                          <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
                           <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
                         </div>
-                        <table style="width:300px" *ngIf="appt_criteria.length > 0">
-                          <div class="savd-report">Saved Reports
-                            <i class="fa fa-chevron-circle-down"></i>
-                          </div>
+                        <table *ngIf="appt_criteria.length > 0">
+                          <span class="savd-report">Saved Reports</span>
+                            <!-- <i class="fa fa-chevron-circle-down"></i> -->
+                          
                            <tr *ngFor="let apt_cr of appt_criteria">
                             <td>{{apt_cr.reportName}}</td>
                             <td><a (click)="recreateReport(apt_cr)">Generate</a></td>
@@ -60,13 +60,11 @@
                     </mat-expansion-panel-header>
                     <ng-container *ngIf="paymentReports.length===0">
                       <div *ngIf="payment_criteria.length === 0">
-                        <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
+                        <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
                       </div>
-                      <table style="width:300px" *ngIf="payment_criteria.length > 0">
-                        <div class="savd-report">Saved Reports
-                          <i class="fa fa-chevron-circle-down"></i>
-                        </div>
+                      <table *ngIf="payment_criteria.length > 0">
+                        <span class="savd-report">Saved Reports</span>
                         <tr *ngFor="let pay_cr of payment_criteria">
                           <td>{{pay_cr.reportName}}</td>
                           <td><a (click)="recreateReport(pay_cr)">Generate</a></td>
@@ -95,13 +93,11 @@
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">
                     <div *ngIf="token_criteria.length === 0">
-                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
+                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
                     </div>
-                    <table style="width:300px" *ngIf="token_criteria.length > 0">
-                      <div class="savd-report">Saved Reports
-                        <i class="fa fa-chevron-circle-down"></i>
-                      </div>
+                    <table  *ngIf="token_criteria.length > 0">
+                      <span class="savd-report">Saved Reports</span>
                       <tr *ngFor="let tkn_cr of token_criteria">
                         <td>{{tkn_cr.reportName}}</td>
                         <td><a (click)="recreateReport(tkn_cr)">Generate</a></td>
@@ -129,13 +125,11 @@
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="donationReports.length===0">
                     <div *ngIf="donation_criteria.length === 0">
-                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
+                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
                       <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
                     </div>
-                    <table style="width:300px" *ngIf="donation_criteria.length > 0">
-                      <div class="savd-report">Saved Reports
-                        <i class="fa fa-chevron-circle-down"></i>
-                      </div>
+                    <table  *ngIf="donation_criteria.length > 0">
+                      <span class="savd-report">Saved Reports</span>
                       <tr *ngFor="let don_cr of donation_criteria">
                         <td>{{don_cr.reportName}}</td>
                         <td><a (click)="recreateReport(don_cr)">Generate</a></td>
@@ -162,14 +156,12 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <ng-container *ngIf="orderReports.length===0">
-                          <div *ngIf="order_criteria.length === 0">
-                            <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                            <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
+                          <div *ngIf="order_criteria.length === 0" >
+                            <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                      <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
                           </div>
-                          <table style="width:300px" *ngIf="order_criteria.length > 0">
-                            <div class="savd-report">Saved Reports
-                              <i class="fa fa-chevron-circle-down"></i>
-                            </div>
+                          <table  *ngIf="order_criteria.length > 0">
+                            <span class="savd-report">Saved Reports</span>
                             <tr *ngFor="let order_cr of order_criteria">
                               <td>{{order_cr.reportName}}</td>
                               <td><a (click)="recreateReport(order_cr)">Generate</a></td>

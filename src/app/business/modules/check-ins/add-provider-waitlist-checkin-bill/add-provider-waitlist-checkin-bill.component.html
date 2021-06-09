@@ -63,11 +63,14 @@
 												capitalizeFirst}}:</span>
 											<span class="dynamic">{{spname}}</span>
 										</span>
+										<span class="dynamic fl-right" *ngIf="location">
+											<span class="dynamic">{{location}}</span>
+											<span class="icon-location"></span>
+										</span>
 										<span class="dynamic fl-right" *ngIf="gstnumber">
 											<span class="title">{{gstin_cap}} </span>
 											<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
 										</span>
-										<!-- <span>Thrissur</span> -->
 									</span>
 								</div>
 							</div>

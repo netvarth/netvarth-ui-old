@@ -13763,6 +13763,13 @@ color: #fff !important;
   width: 46px;
   margin-top: -14px;
 }
+.ico-video {
+  content: url(../images/teleservice/video-icon-small.png);
+  position: absolute;
+  padding-right: 5px;
+  width: 46px;
+  margin-top: -14px;
+}
 .ico_que {
   content: url(../images/addons/Queues-services.svg);
   position: absolute;
@@ -14263,4 +14270,7 @@ padding-left: 15px !important;
     width: 100% !important;
     max-width: 100% !important;
   }
+}
+.tblscroll {
+  overflow: auto;
 }

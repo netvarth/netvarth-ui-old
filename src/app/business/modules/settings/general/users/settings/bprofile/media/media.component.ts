@@ -333,6 +333,7 @@ export class MediaComponent implements OnInit, OnDestroy {
                     this.getBusinessProfile();
                 },
                 (error) => {
+                    this.getBusinessProfile();
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );

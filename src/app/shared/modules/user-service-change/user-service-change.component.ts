@@ -320,7 +320,11 @@ export class UserServiceChnageComponent implements OnInit {
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
           'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount
+          'currentWlCount': serviceObj.currentWlCount,
+          'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
+          'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
+          'countryCode':  serviceObj.countryCode || '',
+
 
         });
     });

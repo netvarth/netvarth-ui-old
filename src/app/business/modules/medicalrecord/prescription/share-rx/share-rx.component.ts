@@ -94,6 +94,7 @@ export class ShareRxComponent implements OnInit {
   is_noSMS = false;
   note = '';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  doctorName;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -113,6 +114,10 @@ export class ShareRxComponent implements OnInit {
     this.mrId = this.data.mrId;
     this.type = this.data.type;
     this.patientId = this.data.patientId;
+    if(this.data.docname){
+      this.doctorName = this.data.docname;
+    }
+    console.log(this.data.docname);
     this.getPatientDetails(this.patientId);
 
 
