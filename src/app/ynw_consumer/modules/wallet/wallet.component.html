@@ -27,7 +27,8 @@
                 <a  (click)="gotoJaldeeCashdetails()">view details</a>
             </div>
           </div> -->
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing" >
+          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing" *ngIf="!loading">
 
             <div class="widget widget-account-invoice-three">
 
