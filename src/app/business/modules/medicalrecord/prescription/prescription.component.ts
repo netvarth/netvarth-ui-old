@@ -75,6 +75,7 @@ export class PrescriptionComponent implements OnInit {
   addnotedialogRef: any;
   note = '';
   prescList = true;
+  doctorName;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -111,6 +112,9 @@ export class PrescriptionComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
+          if (data.provider && data.provider.id) {
+            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
+          }
           this.prescriptionShared = data.prescShared;
           this.prescriptionSharedTimestamp = data.lastSharedTime;
 
@@ -172,7 +176,8 @@ export class PrescriptionComponent implements OnInit {
       data: {
         mrId: this.mrId,
         type: type,
-        patientId: this.patientId
+        patientId: this.patientId,
+        docname:this.doctorName
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {

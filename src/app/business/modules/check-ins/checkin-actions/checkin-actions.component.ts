@@ -110,6 +110,8 @@ export class CheckinActionsComponent implements OnInit {
     userid: any;
     active_user: any;
     check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+    user_arr: any;
+    isUserdisable;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -172,6 +174,24 @@ export class CheckinActionsComponent implements OnInit {
                     );
             }
         });
+        if (this.accountType === 'BRANCH') {
+            this.getUser();
+        }
+    }
+    getUser() {
+        if(this.userid){
+            this.provider_services.getUser(this.userid)
+            .subscribe((data: any) => {
+              this.user_arr = data;
+              if( this.user_arr.status === 'ACTIVE'){
+                  this.isUserdisable = true
+              } else{
+                  this.isUserdisable = false
+              }
+            }
+            , error => {
+          });
+        }   
     }
     ngOnDestroy() {
         if (this.subscription) {

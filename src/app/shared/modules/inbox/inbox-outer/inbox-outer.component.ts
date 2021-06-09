@@ -330,7 +330,8 @@ export class InboxOuterComponent implements OnInit {
       const imgobj = new Image(
         count,
         {
-          img: imagePath
+          img: imagePath,
+          description: (attachements[comIndex].caption) ? attachements[comIndex].caption : ''
         },
       );
       this.image_list_popup_temp.push(imgobj);

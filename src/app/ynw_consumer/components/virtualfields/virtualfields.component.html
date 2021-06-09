@@ -1,0 +1,307 @@
+<!-- join Section starts -->
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+<form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields"
+    [ngClass]="theme?theme:''" novalidate *ngIf="!api_loading">
+    <div class="mat-dialog-title">
+        <div class="title" style="font-size: 16px !important;"> {{consumer_label| capitalizeFirst }} Information </div>
+        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1" *ngIf="hideLanguages">
+            <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
+        </button>
+    </div>
+    <!-- step 1 for mobile number entering  -->
+    
+    <div class="cust-loginpge-color" >
+        <div class="mat-dialog-content" style="overflow: auto !important;">
+            <div *ngIf="hideLanguages">
+                <!-- <div class="">
+                        <label class="col-form-label" for="name">Service Provider Name : </label>
+                        <span> {{ provider }}</span>
+                </div>
+                <div class="">
+                        <label class="col-form-label" for="name">Consultation Request : </label>
+                        <span> {{ serviceDetails.name }} </span>
+                </div> -->
+              
+                <div class="mgn-up-10 ">
+                    <label class="col-form-label" for="name">Consultation  For </label>
+                    
+
+                    <br />
+                    <!-- <mat-form-field> -->
+                    <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup"
+                        (change)="onServiceForChange($event.value)">
+                        <mat-radio-button [value]="customer_data.id">{{customer_data.userProfile.firstName}}
+                            {{customer_data.userProfile.lastName}}</mat-radio-button>
+                        <mat-radio-button [value]="member.user" *ngFor="let member of familymembers">
+                            {{member.userProfile.firstName}} {{member.userProfile.lastName}}</mat-radio-button>
+                        <mat-radio-button value="new_member">Someone else</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="mgn-up-10 mgn-bt-10" style="font-size: 0.75rem !important;">
+                    Please provide basic information about the <span>{{consumer_label}}</span>
+                </div>
+                
+                <div class="form-group" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                    <label class="col-form-label" for="firstName">First Name <span class="red">*</span></label>
+                    <input placeholder="Enter your first name" class="form-control" formControlName="firstName">
+                </div>
+                <div class="form-group " *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                    <label class="col-form-label" for="lastName">Last Name <span class="red">*</span></label>
+                    <input placeholder="Enter your last name" class="form-control" formControlName="lastName">
+                </div>
+                <!-- <div class="form-group col-xs-12 dob no-padding mgn-up-20">
+                    <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
+                    <br />
+
+                  <select [(ngModel)]="selectedDate" formControlName="date">
+                        <option value="dd">dd</option>
+                            <option *ngFor="let date of dates" [value]="date">
+                                {{date}}
+                            </option>
+                        </select>
+                    
+                    &nbsp;
+                    <select [(ngModel)]="selectedMonth" formControlName="month">
+                        <option value="mm">mm</option>
+                        <option *ngFor="let month of months" [value]="month.value">
+                            {{month.name}}
+                        </option>
+                    </select>
+                    &nbsp;
+                    <select [(ngModel)]="selectedYear" formControlName="year">
+                            <option value="yyyy">yyyy</option>
+                        <option *ngFor="let year of years" [value]="year">
+                            {{year}}
+                        </option>
+                    </select>
+                
+                </div> -->
+             
+                  
+                    <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
+                    <div class="form-group ">
+                        <label class="col-form-label" for="gender" >{{gender_cap}} <span class="red">*</span></label>
+                        <br />
+                        <mat-radio-group formControlName="gender">
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="other">Other</mat-radio-button>
+                        </mat-radio-group>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                        errorMsg="Please select the gender.">
+                    </app-field-error-display>
+                    </div>
+               
+                    <div class="form-group ">
+                        <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
+                        <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
+                            formControlName="age" style="width:50%" (keypress)=isNumeric($event)>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                  {
+                    'required' : 'Age is required',
+                    'min' : 'Minimum age required is 0',
+                    'max' : 'Maximum age is 150'
+                   
+                  })">
+                        </app-field-error-display>
+                    </div>
+                      
+               
+                
+                <!-- Signin Password -->
+                <div class="form-group pwd" *ngIf="countryCode=='+91'">
+                    <!-- <mat-form-field> -->
+                    <label for="pincode" class="col-form-label">Residing Pincode  in India <span class="red">*</span></label>
+                    <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
+                        formControlName="pincode" (keyup)="showLocations($event)" style="width:50%">
+                    <!-- </mat-form-field> -->
+                    <div style="display: flex; justify-content: space-between;">
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
+                            errorMsg="Pincode is required">
+                        </app-field-error-display>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <div *ngIf="!loading && locations" class="mgn-up-10">
+                        <mat-radio-group aria-label="Select your location" class="mgn-up-5" formControlName='location'>
+                            <mat-radio-button *ngFor="let location of locations.PostOffice" [value]="location">
+                                {{location.Name}}, {{location.State}}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <!-- Signin Password -->
+                <div class="form-group" id="plng">
+                    <!-- <mat-form-field> -->
+                    <label class="col-form-label" for="v">Select your preferred language <span
+                            class="red">*</span></label>
+                    <br />
+                    <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
+                        formControlName="islanguage">
+                        <mat-radio-button value="yes">English</mat-radio-button>
+                        <mat-radio-button value="no">Other Languages</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- </mat-form-field> -->
+                    <div style="display: flex; justify-content: space-between;">
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                            errorMsg="please choose one">
+                        </app-field-error-display>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                <label class="col-form-label" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length >1?'Your preferred languages': 'Your preferred language'}}
+                </label><br />
+                
+                <div class="col-form-label"><span
+                        style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
+
+                    <span class="pull-right" (click)="editLanguage()"><i class="fa fa-edit fa-1x"
+                            style="font-size: large;"></i></span>
+                </div>
+            </div>
+            <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
+                <div class="form-group" *ngIf="lngknown==='no'">
+                    <!-- <mat-form-field> -->
+                    <label class="col-form-label" for="preferredLanguage">Choose your preferred languages
+                        <span class="red">*</span></label>
+                    <!-- <mat-form-field>
+                    <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
+                            <mat-option *ngFor="let language of languages"
+                                [value]="language" >
+                                {{language}}</mat-option>
+                        </mat-select>
+                </mat-form-field> -->
+                    <div class="form-group">
+                        <div class="languagesouter" *ngIf="languages.length >0">
+                            <div *ngFor="let lang of languages">
+                                <mat-checkbox style="padding-left: 10px;" (change)="langSel(lang)"
+                                    [checked]="checklangExists(lang)">{{lang}}</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
+                            <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
+                            [disabled]="disableButton">Cancel</button>&nbsp; -->
+                            <button (click)="saveLanguages()" type="button" mat-button class="cs-btn bt1"
+                                [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
+                            <button (click)="cancelLanguageSelection()" type="button" mat-button
+                                class="cs-btn bt1">Cancel</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <app-field-error-display
+                            [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
+                            errorMsg="Language is required">
+                        </app-field-error-display>
+                    </div>
+                </div>
+            </div>
+           
+            <ng-container *ngIf="hideLanguages">
+                    <label class="col-form-label" for="name">Contact Information </label>
+    
+                    <div class="form-level-settings smallfont">
+                        Provide your contact info  for alerts,status updates and for any other booking related communications
+                         </div>
+                <!-- <div class="form-group mobile-field" >
+                        <label>Whatsapp #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="whatsappnumber"
+                               formControlName="whatsappnumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                  
+                </div> -->
+                <div class="mgn-up-10 mgn-bt-10">
+                        <label class="col-form-label" for="phone">Phone # </label>
+                        <br />
+                        {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
+                    </div>
+                <div class="col-xs-12 no-padding optional">
+                    <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
+                    <div class="disp-flex">
+                        <div class="form-group no-margin">
+                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                class="form-control input-group-text" id="countryCode_whtsap"
+                                placeholder="" formControlName="countryCode_whtsap" autocomplete="off"
+                                maxlength="5" style="width:60px">
+                        </div>
+                        <div class="form-group width-100">
+                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                class="form-control text-width" id="whatsappnumber" formControlName="whatsappnumber"
+                                autocomplete="off" maxlength="10">
+                            <app-field-error-display
+                                [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
+                            {
+                            'minlength' : 'Enter a 10 digit whatsapp number',
+                            'maxlength' : 'Enter a 10 digit whatsapp number',
+                            'pattern' : 'Enter a 10 digit whatsapp number'
+                            })">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group mobile-field" >
+                        <label>Telegram #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="telegramnumber"
+                               formControlName="telegramnumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                </div> -->
+                <div class=" col-xs-12 no-padding optional">
+                    <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram #</label>
+                    <div class="disp-flex">
+                        <div class="form-group no-margin">
+                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                class="form-control input-group-text" id="countryCode_telegram"
+                                placeholder="" formControlName="countryCode_telegram"
+                                autocomplete="off" maxlength="5" style="width:60px">
+                        </div>
+                        <div class="form-group width-100">
+                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                class="form-control text-width" id="telegramnumber" formControlName="telegramnumber"
+                                autocomplete="off" maxlength="10">
+                            <app-field-error-display
+                                [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
+                            {
+                            'minlength' : 'Enter a 10 digit telegram number',
+                            'maxlength' : 'Enter a 10 digit telegram number',
+                            'pattern' : 'Enter a 10 digit telegram number'
+                            })">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group optional">
+                    <label for="email" class="col-form-label">Email</label>
+                    <input type="email" class="form-control" formControlName="email" />
+                    <!-- <mat-form-field>
+                  <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
+           </mat-form-field> -->
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'email')"
+                        [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                          {
+                                            'pattern' : 'Please enter valid email'
+                                          })">
+                    </app-field-error-display>
+                </div>
+            </ng-container>
+            <div class="form-group" *ngIf="hideLanguages" class="mgn-bt-50">
+                <button class="cust-logpg-submt mgn-up-20 continue-button" mat-button
+                    (click)="onSubmit(virtualForm.value)" style="margin-bottom:10%">
+                    <span>Continue</span>
+                </button>
+            </div>
+            <div class="">&nbsp;</div>
+        </div>
+    </div>
+</form>
+<!-- join section ends -->

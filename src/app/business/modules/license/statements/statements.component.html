@@ -194,11 +194,11 @@
                                                     <td class="previousDue rupee-font" style="text-align: end;">{{invoice.amount | currency:'&#8377;'}}</td>
                                                 </tr>
                                                 <tr *ngIf="invoice.cGstAmt > 0">
-                                                    <td class="rupee-font" style="float: right;" ><b>CGST @ 9% on {{invoice.amount | currency:'&#8377;'}}</b></td>
+                                                    <td class="rupee-font" style="float: right;" ><b>CGST @ {{invoice.cGstPct}}% on {{invoice.amount | currency:'&#8377;'}}</b></td>
                                                     <td class="previousDue rupee-font" style="text-align: end;"> {{invoice.cGstAmt | currency:'&#8377;'}}</td>
                                                 </tr>
                                                 <tr *ngIf="invoice.cGstAmt > 0">
-                                                    <td class="rupee-font" style="float: right;"><b>SGST @ 9% on {{invoice.amount | currency:'&#8377;'}}</b></td>
+                                                    <td class="rupee-font" style="float: right;"><b>SGST @ {{invoice.sGstPct}}% on {{invoice.amount | currency:'&#8377;'}}</b></td>
                                                     <td class="previousDue rupee-font" style="text-align: end;"> {{invoice.sGstAmt | currency:'&#8377;'}}</td>
                                                 </tr>
                                                 <tr *ngIf="invoice.cGstAmt > 0">

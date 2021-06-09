@@ -136,11 +136,18 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Date -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                    <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
                         <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                            id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
-                            min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
-                            max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
+                                id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
+                                max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
+                        <!-- <input class="form-control1" [matDatepicker]="picker"
+                            [(ngModel)]="answers[getQuestion(question).labelName]"
+                            (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()"
+                            [min]="getDate(getQuestion(question).dateProperties.startDate)"
+                            [max]="getDate(getQuestion(question).dateProperties.endDate)" (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker> -->
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
@@ -156,4 +163,4 @@
 </section>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+    (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

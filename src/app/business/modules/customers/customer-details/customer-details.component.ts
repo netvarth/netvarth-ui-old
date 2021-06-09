@@ -13,7 +13,8 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-
+import { interval as observableInterval } from 'rxjs';
+import { SubSink } from 'subsink';
 @Component({
     selector: 'app-customer-details',
     templateUrl: './customer-details.component.html'
@@ -107,6 +108,16 @@ export class CustomerDetailComponent implements OnInit {
     showToken;
     questionnaireList: any = [];
     showQuestionnaire = false;
+    providerMeetingUrl: any;
+    meet_data: any;
+    id: any;
+    showStartBt;
+    subs = new SubSink();
+    refreshTime = 10;
+    linkStatus: any;
+    meetingStatus: string;
+    showEndBt: boolean;
+    showRejoinBt: boolean;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -224,6 +235,59 @@ export class CustomerDetailComponent implements OnInit {
             queryParams: { action: 'edit' }
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
+    }
+    gotoMeet() {
+        this.provider_services.meetReady(this.customerId).subscribe(
+            (data: any) => {
+                this.meet_data = data;
+                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
+                this.showStartBt = true;
+                this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
+                    this.getMeetingStatus();
+                });
+                const retcheckarr = this.providerMeetingUrl.split('/');
+                this.id = retcheckarr[4]
+            }
+        );
+
+    }
+    goMeetProvider() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { custId: this.customerId }
+        };
+        // const path = 'meet/' + this.id ;
+        // window.open(path, '_blank');
+        this.router.navigate(['meet', this.id], navigationExtras);
+    }
+    getMeetingStatus() {
+        this.showStartBt = true;
+        this.provider_services.getStatus(this.id).subscribe(
+            (data: any) => {
+                this.linkStatus = data.linkStatus;
+                this.meetingStatus = data.meetingStatus;
+                if (this.meetingStatus === 'REQUESTED' && this.linkStatus === 'ENABLED') {
+                    this.showStartBt = true;
+                    this.showRejoinBt = false;
+                    this.showEndBt = false;
+                }
+                else if (this.meetingStatus === 'STARTED' && this.linkStatus === 'ENABLED') {
+
+                    this.showStartBt = true;
+                    this.showRejoinBt = false;
+                    this.showEndBt = false;
+                }
+                else if (this.meetingStatus === 'INTERRUPTED' && this.linkStatus === 'ENABLED') {
+                    this.showStartBt = false;
+                    this.showRejoinBt = true;
+                    this.showEndBt = false;
+                }
+                else {
+                    this.showStartBt = false;
+                    this.showRejoinBt = false;
+                    this.showEndBt = true;
+                }
+            }
+        );
     }
     getCustomerTodayVisit() {
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
@@ -379,10 +443,10 @@ export class CustomerDetailComponent implements OnInit {
         let uuid;
         if (this.selectedDetailsforMsg.waitlist) {
             uuid = this.selectedDetailsforMsg.waitlist.ynwUuid;
-        } else if(this.selectedDetailsforMsg.appointmnet) {
+        } else if (this.selectedDetailsforMsg.appointmnet) {
             uuid = this.selectedDetailsforMsg.appointmnet.uid;
-        }else {
-            uuid=this.selectedDetailsforMsg.uid;
+        } else {
+            uuid = this.selectedDetailsforMsg.uid;
         }
         this.provider_services.getProviderInbox()
             .subscribe(

@@ -1,0 +1,61 @@
+.mgl-auto {
+    margin-left: auto !important;
+}
+.serv-name {
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.serv-width {
+    max-width: 40%;
+}
+.con-width {
+    max-width: 60%;
+}
+.green {
+    color: green !important;
+}
+.m-hgt-50 {
+    min-height: 50px;
+}
+.bg-cover {
+    /* height: 200px;
+    background-attachment: fixed; */
+    margin-bottom: 20px;
+}
+.mt-80 {
+    margin-top: 80px;
+}
+.svg-align {
+    overflow: hidden;
+    vertical-align: middle;
+}
+.ansr {
+    color: #7E8299 !important;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+.svg-icon.svg-icon-success svg g [fill] {
+    -webkit-transition: fill 0.3s ease;
+    transition: fill 0.3s ease;
+    fill: #1BC5BD !important;
+  }
+  
+  .consumer-dash .grid-card button:disabled {
+    background-color: grey !important;
+}
+
+.mat-grid-tile .mat-grid-tile-footer {
+    padding: 0 8px !important;
+}
+app-appt-card, app-wl-card {
+    height: 100%;
+    overflow: auto;
+}
+
+@media (max-width: 575px) {
+    h1.hello-msg {
+        text-align: left !important;
+    }
+}

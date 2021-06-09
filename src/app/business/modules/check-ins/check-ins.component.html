@@ -716,7 +716,7 @@
                             {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
                             <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
@@ -743,9 +743,9 @@
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
                         </div>
-                        <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                        <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
-                        </div>
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -988,7 +988,7 @@
                             {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                             <div class="location">
                               <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                              <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                              <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
                               <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                               <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                               <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
@@ -1017,9 +1017,9 @@
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
                         </div>
-                        <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                        <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
-                        </div>
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1545,7 +1545,7 @@
                        
                         <div class="location">
                           <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                          <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                          <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
                           <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                           <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                           <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
@@ -1574,9 +1574,9 @@
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
                       </div>
-                      <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                      <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
-                      </div>
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -2256,7 +2256,7 @@
                           {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
-                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}}</span>
+                            <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
                             <span *ngIf="checkin.waitlistingFor[0].age">,</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender | capitalizeFirst}}</span>
@@ -2285,9 +2285,9 @@
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
                       </div>
-                      <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
+                      <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
-                      </div>
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
