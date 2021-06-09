@@ -2086,14 +2086,14 @@ editHoliday(data) {
     const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
     return this.servicemeta.httpDelete(url);
   }
-  // getlocationbypincode(pincode) {
-  //   const url = 'provider/account/settings/locByPincode/'  + pincode;
-  //   return this.servicemeta.httpGet(url);
-  // }
   getlocationbypincode(pincode) {
-    const url = 'provider/account/settings/locations/'  + pincode;
+    const url = 'provider/account/settings/locByPincode/'  + pincode;
     return this.servicemeta.httpGet(url);
   }
+  // getlocationbypincode(pincode) {
+  //   const url = 'provider/account/settings/locations/'  + pincode;
+  //   return this.servicemeta.httpGet(url);
+  // }
   terminateInstantQ(id) {
     const url = 'provider/waitlist/queues/instant/terminate/' + id;
     return this.servicemeta.httpPut(url);
