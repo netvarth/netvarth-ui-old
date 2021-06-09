@@ -35,7 +35,7 @@
             <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12 no-padding">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
                     <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <h1 *ngIf="!loading">Ready To Start ?</h1>
+                        <!-- <h1 *ngIf="!loading">Ready To Start ?</h1> -->
                         <h1 *ngIf="loading">Getting Ready...</h1>
                     </div>
                     <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading">
@@ -49,11 +49,11 @@
                         *ngIf="!loading">
                         <button [disabled]="!consumerReady || btnClicked" (click)="!btnClicked && consumerReady && joinRoom()">Start Sharing Video
                         </button>
-                        <button (click)="joinRoom()">Start Sharing Video
-                        </button> 
+                        <!-- <button (click)="joinRoom()">Start Sharing Video
+                        </button>  -->
                         <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                         <br><br>
-                        <div class="pt-0">
+                        <div class="pt-0" *ngIf="showRecording">
                             <mat-checkbox class="rec-check" [(ngModel)]="recordingFlag"
                                 (change)="updateRecordingFlag( $event)">Record this video consultation</mat-checkbox>
                         </div>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}"
+        <!-- <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}"
             [ngClass]="{'hide': !twilioService.preview}">
             <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer"
                 class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 video-container-org no-padding"
             [ngStyle]="{'height.px': (screenHeight)}" [ngClass]="{'hide': twilioService.preview}">
             <div class="remote" id="remote-video" #remoteVideo
@@ -118,12 +118,12 @@
                 </i>
                 <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
                     (click)="disconnect()"></i>
-                <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
-                    (click)="openChat()"></i>
-                <span class="pull-right fa-stack" style="vertical-align: top;" *ngIf="recordingFlag">
-                    <i class="fa fa-square fa-stack-2x"></i>
+                <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"
+                    (click)="openChat()"></i> -->
+                <!-- <span class="pull-right fa-stack" style="vertical-align: top;" *ngIf="recordingFlag">
+                    <i class="fa fa-square fa-stack-2x"></i> -->
                     <i class="fa fa-circle record red blink pull-right" *ngIf="recordingFlag"></i>
-                </span>
+                <!-- </span> -->
             </div>
         </div>
         <select id="video-devices" hidden></select>
