@@ -791,4 +791,15 @@ export class QuestionnaireComponent implements OnInit {
       return question.filePropertie.allowedDocuments;
     }
   }
+  showQuestions(question) {
+    if ((this.source === 'consCheckin' || this.source === 'consAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
+      return false;
+    }
+    return true;
+  }
+  showProviderText(question) {
+    if ((this.source === 'proCheckin' || this.source === 'proAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
+      return true;
+    }
+  }
 }

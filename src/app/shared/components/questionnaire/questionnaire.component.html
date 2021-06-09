@@ -21,12 +21,14 @@
             <div class="my-5">
                 <ng-container *ngFor="let question of questions;let i = index">
                     <div class="form-group card mgn-0"
-                        *ngIf="getQuestion(question).whoCanAnswer && getQuestion(question).whoCanAnswer!='PROVIDER_ONLY'">
+                        *ngIf="showQuestions(getQuestion(question))">
                         <label class="col-12 quest">{{getQuestion(question).label}}
+                            <div class="pro-only" *ngIf="showProviderText(getQuestion(question))">For Providers</div>
                             <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
                             <div class="form-level-settings" *ngIf="getQuestion(question).hint">
                                 {{getQuestion(question).hint}}</div>
                         </label>
+                        <!-- <div></div> -->
                         <!-- for file upload -->
                         <div class="col-12 ynw-common-form-nm"
                             *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">

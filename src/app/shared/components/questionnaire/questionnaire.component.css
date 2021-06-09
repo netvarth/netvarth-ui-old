@@ -101,3 +101,8 @@
 .single-file .gal_action {
     top: -5px !important;
 }
+.pro-only {
+    float: right;
+    color: red;
+    font-size: 0.8rem;
+}
