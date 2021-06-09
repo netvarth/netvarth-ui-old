@@ -1059,7 +1059,7 @@ export class SharedServices {
     const url = 'consumer/telegram/settings';
     return this.servicemeta.httpGet(url);
   }
-  getDonationQuestionnaire(serviceId, account_id) {
+    getDonationQuestionnaire(serviceId, account_id) {
     const url = 'consumer/questionnaire/donation/' + serviceId + '?account=' + account_id;
     return this.servicemeta.httpGet(url);
   }
@@ -1071,4 +1071,15 @@ export class SharedServices {
     const url = 'provider/donation/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+getJaldeeCashandJcredit(){
+  const url = 'consumer/wallet/redeem/eligible/amt';
+  return this.servicemeta.httpGet(url); 
+}
+getRemainingPrepaymentAmount(jcash? , jcredit? , advanceamount?){
+  const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash  + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+  return this.servicemeta.httpGet(url);
+}
+PayByJaldeewallet(postData){
+  return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+}
 }
