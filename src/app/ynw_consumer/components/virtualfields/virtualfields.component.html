@@ -232,7 +232,7 @@
                         <div class="form-group width-100">
                             <input type="text" (keypress)="isNumeric($event)" matInput
                                 class="form-control text-width" id="whatsappnumber" formControlName="whatsappnumber"
-                                autocomplete="off" maxlength="10">
+                                autocomplete="off">
                             <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
                             {
@@ -268,7 +268,7 @@
                         <div class="form-group width-100">
                             <input type="text" (keypress)="isNumeric($event)" matInput
                                 class="form-control text-width" id="telegramnumber" formControlName="telegramnumber"
-                                autocomplete="off" maxlength="10">
+                                autocomplete="off" >
                             <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
                             {
