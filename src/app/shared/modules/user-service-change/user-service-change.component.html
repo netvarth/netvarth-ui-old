@@ -293,8 +293,9 @@
                               class="fa fa-map-marker mgn-rt-5"
                               aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}</div>
                           <div class="d-lg-none">
-                            <div class="mgn-up-5" *ngIf="service.mobileNo">
-                              <span class="b2">+91 {{service.mobileNo}} </span>
+                            <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum">
+                              <a class="user-contact-details" (click)="stopprop($event);viewContactDetails(service)">View</a>
+                              <!-- <span class="b2">+91 {{service.mobileNo}} </span> -->
                             </div>
                             <div class="mgn-up-5" *ngIf="service.specialization">
                               <span class="b2">{{service.specialization}} </span>
@@ -310,8 +311,10 @@
                       </div>
                     </td>
                     <td class="display-min-none">
-                      <span *ngIf="service.mobileNo">
-                        +91 {{service.mobileNo}}</span>
+                      <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum">
+                        <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                        <!-- +91 {{service.mobileNo}} -->
+                      </span>
                     </td>
                     <td class="display-min-none">
                       {{service.specialization}}

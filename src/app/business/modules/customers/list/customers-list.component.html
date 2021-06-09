@@ -316,8 +316,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="no-customer"
-                *ngIf="!apiloading && customers.length === 0 && !filterapplied && selectedGroup == 'all'">
+              <div class="no-customer" *ngIf="!apiloading && customers.length === 0 && !filterapplied">
                 <div>
                   You don't have any {{customer_label}}s
                   <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create
@@ -326,9 +325,13 @@
                     capitalizeFirst}}</button>
                 </div>
               </div>
-              <div
-                *ngIf="(!apiloading && customers.length === 0 && filterapplied) || (!apiloading && customers.length === 0 && selectedGroup !== 'all')">
-                No {{customer_label}}s added to this group.
+              <div *ngIf="!apiloading && customers.length === 0 && filterapplied">
+                <ng-container *ngIf="selectedGroup != 'all'">
+                  No {{customer_label}}s added to this group.
+                </ng-container>
+                <ng-container *ngIf="selectedGroup == 'all'">
+                  No {{customer_label}}s found.
+                </ng-container>
               </div>
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
                 *ngIf="!apiloading && !showCustomers">

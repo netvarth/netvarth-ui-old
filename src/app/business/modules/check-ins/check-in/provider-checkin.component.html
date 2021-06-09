@@ -295,9 +295,9 @@
                             <i *ngIf="mode.callingMode === 'Phone'" class="fa phon-icon ph-cal" aria-hidden="true"></i>
                           </span>
                           <span>
-                            <input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
+                            <input type="number" *ngIf="!showInputSection" (keypress)="isNumeric($event)"
                               class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
-                              placeholder="" [(ngModel)]="callingModes" autocomplete="off" maxlength="10">
+                              placeholder="" [(ngModel)]="callingModes" autocomplete="off" maxlength="10" min="0">
                           </span>
                           <span class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
                             {{callingModes}}</span>

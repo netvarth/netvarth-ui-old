@@ -11,6 +11,8 @@ import { Location } from '@angular/common';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { isValidNumber  } from 'libphonenumber-js';
 
 @Component({
   selector: 'app-change-mobile',
@@ -43,7 +45,7 @@ export class ChangeMobileComponent implements OnInit {
   step = 1;
   curtype;
   usertype;
-  submit_data = { 'phonenumber': null };
+  submit_data :any={};
   // breadcrumbs_init = [
   //   {
   //     title: this.changemob_cap,
@@ -60,7 +62,8 @@ export class ChangeMobileComponent implements OnInit {
     private location: Location,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private s3Processor: S3UrlProcessor,
   ) { }
   goBack () {
     this.location.back();
@@ -68,6 +71,11 @@ export class ChangeMobileComponent implements OnInit {
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.spForm = this.fb.group({
+      countryCode:['',Validators.compose([
+        Validators.required,
+        Validators.maxLength(4),
+        Validators.minLength(2),
+      ])],
       phonenumber: ['', Validators.compose(
         [Validators.required,
         Validators.maxLength(10),
@@ -87,16 +95,16 @@ export class ChangeMobileComponent implements OnInit {
             this.prev_phonenumber = success['basicInfo']['mobile'];
             this.currentcountryCode = success['basicInfo']['countryCode'];
 
-            // this.spForm.setValue({
-            //   'phonenumber': success['basicInfo']['mobile'] || null
-            // });
+            this.spForm.patchValue({
+              'countryCode':this.currentcountryCode || null
+            });
             this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
             this.prev_phonenumber = success['userProfile']['primaryMobileNo'];
             this.currentcountryCode = success['userProfile']['countryCode'];
-            // this.spForm.setValue({
-            //   'phonenumber': success['userProfile']['primaryMobileNo'] || null
-            // });
+            this.spForm.patchValue({
+              'countryCode': this.currentcountryCode || null
+            });
             this.is_verified = success['userProfile']['phoneVerified'];
           }
         },
@@ -104,11 +112,12 @@ export class ChangeMobileComponent implements OnInit {
       );
   }
   onSubmit(submit_data) {
+    console.log(submit_data.countryCode +submit_data.phonenumber);
     if (!submit_data.phonenumber) { return false; }
-
+    if (!submit_data.countryCode) { return false; }  
     this.resetApiErrors();
-
-    this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'), this.countryCode)
+if(isValidNumber(submit_data.countryCode +submit_data.phonenumber)){
+    this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'), submit_data.countryCode)
       .subscribe(
         () => {
           this.step = 2;
@@ -124,6 +133,9 @@ export class ChangeMobileComponent implements OnInit {
           this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
+}else{
+  this.snackbarService.openSnackBar('Please recheck the country code and number', { 'panelClass': 'snackbarerror' });
+}
   }
 
   isVerified(data) {
@@ -149,13 +161,15 @@ export class ChangeMobileComponent implements OnInit {
   resendOtp(phonenumber) {
     this.onSubmit(phonenumber);
   }
-
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+  }
   onOtpSubmit(submit_data) {
 
     this.resetApiErrors();
 
     const post_data = { 
-      'countryCode': this.countryCode,
+      'countryCode': this.submit_data.countryCode,
       'loginId': this.submit_data.phonenumber
      };
     this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
@@ -165,8 +179,10 @@ export class ChangeMobileComponent implements OnInit {
           console.log(this.submit_data.phonenumber);
           this.api_success = null;
           this.snackbarService.openSnackBar(Messages.PHONE_VERIFIED);
-          const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+          const ynw = this.s3Processor.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); 
+          console.log(ynw)// get the credentials from local storage variable
           ynw['loginId'] = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
+          ynw['countryCode'] = this.submit_data.countryCode; 
           console.log(ynw);
           this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
           // console.log('going back');

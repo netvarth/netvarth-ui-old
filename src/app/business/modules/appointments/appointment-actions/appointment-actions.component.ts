@@ -94,6 +94,7 @@ export class AppointmentActionsComponent implements OnInit {
     buttonClicked = false;
     accountType: any;
     changeService = true;
+    check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -423,7 +424,7 @@ export class AppointmentActionsComponent implements OnInit {
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
@@ -810,7 +811,7 @@ export class AppointmentActionsComponent implements OnInit {
                 virtualServicenumber = this.appt.virtualService[key];
             });
         }
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
+        this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.appt.service.id, apptMode: this.appt.appointmentMode } });
     }
     unBlockAppt() {
         this.provider_services.deleteAppointmentBlock(this.appt.uid)
@@ -883,5 +884,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         smsdialogRef.afterClosed().subscribe(result => {
         });
+    }
+    getStatusLabel(status) {
+        const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
+        return label_status;
+    }
+    changeWaitlistStatusAction() {
+        this.action = 'status';
     }
 }

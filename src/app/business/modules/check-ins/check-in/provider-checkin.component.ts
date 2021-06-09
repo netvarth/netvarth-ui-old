@@ -1962,7 +1962,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.showAction = false;
     }
     isNumeric(evt) {
-        return this.sharedFunctionobj.isNumeric(evt);
+        return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
     addCallingmode(index) {
         if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {

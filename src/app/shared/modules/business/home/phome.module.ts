@@ -16,6 +16,7 @@ import { ForgotPasswordModule } from '../../../../shared/components/forgot-passw
 import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ServicePageHealthcareComponent } from '../service-page-healthcare/service-page-healthcare.component';
 
 // import { ContactusComponent } from './contactus/contactus.component';
 @NgModule({
@@ -39,6 +40,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ],
     declarations: [
         PhomeComponent,
+        ServicePageHealthcareComponent
         // ContactusComponent
        ],
          entryComponents: [

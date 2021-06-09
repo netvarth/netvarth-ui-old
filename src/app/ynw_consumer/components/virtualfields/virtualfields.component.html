@@ -1,22 +1,31 @@
 <!-- join Section starts -->
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <form [formGroup]="virtualForm" class="login-form custom-login-form consumer-join-component virtual-fields"
-    [ngClass]="theme?theme:''" novalidate>
+    [ngClass]="theme?theme:''" novalidate *ngIf="!api_loading">
     <div class="mat-dialog-title">
-        <div class="title" style="font-size: 16px !important;">Your Personal Information</div>
-        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1">
+        <div class="title" style="font-size: 16px !important;"> {{consumer_label| capitalizeFirst }} Information </div>
+        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1" *ngIf="hideLanguages">
             <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 10px !important;"></i>
         </button>
     </div>
     <!-- step 1 for mobile number entering  -->
-    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-    <div class="cust-loginpge-color" *ngIf="!api_loading">
+    
+    <div class="cust-loginpge-color" >
         <div class="mat-dialog-content" style="overflow: auto !important;">
             <div *ngIf="hideLanguages">
-                <div class="">
-                    Please provide necessary information. 
+                <!-- <div class="">
+                        <label class="col-form-label" for="name">Service Provider Name : </label>
+                        <span> {{ provider }}</span>
                 </div>
-                <div class="mgn-up-10">
-                    <label class="col-form-label" for="name">Consultation is For </label>
+                <div class="">
+                        <label class="col-form-label" for="name">Consultation Request : </label>
+                        <span> {{ serviceDetails.name }} </span>
+                </div> -->
+              
+                <div class="mgn-up-10 ">
+                    <label class="col-form-label" for="name">Consultation  For </label>
+                    
+
                     <br />
                     <!-- <mat-form-field> -->
                     <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup"
@@ -28,10 +37,8 @@
                         <mat-radio-button value="new_member">Someone else</mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <div class="mgn-up-10 mgn-bt-10">
-                    <label class="col-form-label" for="phone">Phone # </label>
-                    <br />
-                    {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
+                <div class="mgn-up-10 mgn-bt-10" style="font-size: 0.75rem !important;">
+                    Please provide basic information about the <span>{{consumer_label}}</span>
                 </div>
                 
                 <div class="form-group" *ngIf="virtualForm.get('serviceFor').value==='new_member'">
@@ -69,24 +76,27 @@
                     </select>
                 
                 </div> -->
-                <div class="col-xs-12  no-padding ">
-                    <div class="col-xs-2 no-padding">
-                        <label class="col-form-label" for="lastName">Age(yrs)<span class="red">*</span></label><br>
-                        <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
-                            formControlName="age">
-                    </div>
+             
+                  
                     <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
-                    <div class="col-xs-10 genderradio">
-                        <label class="col-form-label" for="gender" style="padding-left:10px;">{{gender_cap}} <span class="red">*</span></label>
+                    <div class="form-group ">
+                        <label class="col-form-label" for="gender" >{{gender_cap}} <span class="red">*</span></label>
                         <br />
                         <mat-radio-group formControlName="gender">
                             <mat-radio-button value="male">Male</mat-radio-button>
                             <mat-radio-button value="female">Female</mat-radio-button>
                             <mat-radio-button value="other">Other</mat-radio-button>
                         </mat-radio-group>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                        errorMsg="Please select the gender.">
+                    </app-field-error-display>
                     </div>
-                    <div class="col-xs-12 mgn-up-5">
-                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+               
+                    <div class="form-group ">
+                        <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
+                        <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
+                            formControlName="age" style="width:50%" (keypress)=isNumeric($event)>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
                             [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
                   {
                     'required' : 'Age is required',
@@ -95,17 +105,16 @@
                    
                   })">
                         </app-field-error-display>
-                        <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
-                            errorMsg="Please select the gender.">
-                        </app-field-error-display>
                     </div>
-                </div>
+                      
+               
+                
                 <!-- Signin Password -->
-                <div class="form-group pwd">
+                <div class="form-group pwd" *ngIf="countryCode=='+91'">
                     <!-- <mat-form-field> -->
                     <label for="pincode" class="col-form-label">Residing Pincode  in India <span class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
-                        formControlName="pincode" (keyup)="showLocations($event)">
+                        formControlName="pincode" (keyup)="showLocations($event)" style="width:50%">
                     <!-- </mat-form-field> -->
                     <div style="display: flex; justify-content: space-between;">
                         <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
@@ -188,8 +197,10 @@
             </div>
            
             <ng-container *ngIf="hideLanguages">
+                    <label class="col-form-label" for="name">Contact Information </label>
+    
                     <div class="form-level-settings smallfont">
-                            Communications or consultation may also happen over Whatsapp/Telegram
+                        Provide your contact info  for alerts,status updates and for any other booking related communications
                          </div>
                 <!-- <div class="form-group mobile-field" >
                         <label>Whatsapp #</label>
@@ -204,6 +215,11 @@
                 
                   
                 </div> -->
+                <div class="mgn-up-10 mgn-bt-10">
+                        <label class="col-form-label" for="phone">Phone # </label>
+                        <br />
+                        {{this.details.userProfile.countryCode}} {{this.details.userProfile.primaryMobileNo}}
+                    </div>
                 <div class="col-xs-12 no-padding optional">
                     <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
                     <div class="disp-flex">
@@ -284,6 +300,7 @@
                     <span>Continue</span>
                 </button>
             </div>
+            <div class="">&nbsp;</div>
         </div>
     </div>
 </form>

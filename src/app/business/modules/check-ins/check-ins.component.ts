@@ -939,7 +939,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const qsActive = this.getDefaultViewQs(queues);
     return new Promise(function (resolve, reject) {
       const tempView = {};
-      tempView['name'] = Messages.DEFAULTVIEWCAP;
+      tempView['name'] = 'All Tokens';
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].queues = qsActive;
@@ -1005,7 +1005,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
-    if (view && view.name !== Messages.DEFAULTVIEWCAP) {
+    if (view && view.name !== 'All Tokens') {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
           if (queues[i].id === view.customViewConditions.queues[j].id) {
@@ -1058,7 +1058,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view, source, type?) {
 
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
+    if (view.name === 'All Tokens' && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
 
@@ -1068,7 +1068,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeQs = groupbyQs['ENABLED'];
       }
       // const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
-      if (view.name !== Messages.DEFAULTVIEWCAP) {
+      if (view.name !== 'All Tokens') {
         if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
           this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
         }
@@ -1762,11 +1762,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid) {
+      if (queueid) {  
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
-        } else {
-          Mfilter['queue-eq'] = queueid;
+          // Mfilter['provider-eq'] = this.activeUser;
+          if(this.activeUser && this.unassignview){
+            Mfilter['provider-eq'] =  null;
+          }
+          else{
+            Mfilter['provider-eq'] = this.activeUser;
+            
+          }
+        }
+        else {
+          if(this.unassignview){
+            Mfilter['provider-eq'] =  null;
+          }
+          else{
+            Mfilter['queue-eq'] = queueid;
+          }
+          // Mfilter['queue-eq'] = queueid;
         }
       } else {
         if (this.activeUser) {
@@ -3324,7 +3338,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
-    } else if (event.type === 'note') {
+    } else if (event.type === 'attachment') {
       this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);

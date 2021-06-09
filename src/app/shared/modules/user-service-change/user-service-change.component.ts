@@ -164,6 +164,7 @@ import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/conf
 import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
 
 @Component({
   selector: 'app-user-service-change',
@@ -222,6 +223,8 @@ export class UserServiceChnageComponent implements OnInit {
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
   accountSettings;
+  contactDetailsdialogRef: any;
+
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -317,7 +320,11 @@ export class UserServiceChnageComponent implements OnInit {
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
           'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount
+          'currentWlCount': serviceObj.currentWlCount,
+          'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
+          'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
+          'countryCode':  serviceObj.countryCode || '',
+
 
         });
     });
@@ -422,6 +429,9 @@ export class UserServiceChnageComponent implements OnInit {
       this.showDetails[index] = true;
     }
   }
+  stopprop(event) {
+    event.stopPropagation();
+}
   showFilterSidebar() {
     this.filter_sidebar = true;
   }
@@ -592,4 +602,14 @@ export class UserServiceChnageComponent implements OnInit {
     }
     this.doSearch();
   }
+  viewContactDetails(user) {
+    this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+          userData: user
+      }
+    });
+}
 }

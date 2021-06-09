@@ -85,7 +85,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-square ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal" #closebutton>Close</button>
-                                                                <button [class.btn_disable]="api_success" type="button" class="btn ln-ht-1 btn-square btn-primary font-weight-bold" (click)="saveImages()">{{spinner_load ? 'Uploading': 'save'}}
+                                                                <button *ngIf="fileToReturn" [class.btn_disable]="api_success" type="button" class="btn ln-ht-1 btn-square btn-primary font-weight-bold" (click)="saveImages()">{{spinner_load ? 'Uploading': 'save'}}
                                   <i *ngIf="spinner_load" class="fas fa-spinner fa-spin" style="font-family: 'FontAwesome';"></i>
                                 </button>
                                                                 <app-form-success-display class="wdth_full" [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">

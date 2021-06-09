@@ -1,0 +1,115 @@
+<h1 class="mat-dialog-title">User contact info
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content class="pop-content">
+    <div class="p0">
+        <div class="mgn-up-10 stats-item">
+        <div class='user-img'>
+            <img [src]="getUserImg(users_list)" />
+        </div>
+        <!-- <span class="itemHead">User</span> -->
+        <div class="itemVal mgn-up-5">
+          {{users_list.firstName | capitalizeFirst}} {{users_list.lastName | capitalizeFirst}} 
+        </div>
+        <div class="itemVal"
+            *ngIf="users_list.city && users_list.state"><i
+            class="fa fa-map-marker mgn-rt-5"
+            aria-hidden="true"></i>{{users_list.city}},&nbsp;{{users_list.state}}
+            </div>
+      </div>
+            
+    </div>
+    <mat-grid-list class="mgn-up-10" cols="{{no_of_grids}}" rowHeight="120px" [gutterSize]="'30px'" >
+        <mat-grid-tile *ngIf="users_list.mobileNo">
+            <div class="figure-disp">
+                <span class="mgn-bt-10">Phone Number</span>
+                <div class="mgn-bt-10">
+                  <ng-container>
+                    <a *ngIf="screenWidth <= 768" href="tel:{{users_list.countryCode}} {{users_list.mobileNo}}" target="blank"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
+                  </ng-container>
+                  <ng-container>
+                    <a *ngIf="screenWidth > 768"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
+                  </ng-container>
+                    </div>
+                <div>{{users_list.countryCode}} {{users_list.mobileNo}}</div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="users_list.whatsAppNum">
+            <div class="figure-disp">
+                <span class="mgn-bt-10">WhatsApp</span>
+                <div class="mgn-bt-10">
+                    <a href="https://wa.me/{{users_list.whatsAppNum.countryCode}}{{users_list.whatsAppNum.number}}" target="_blank"><i class="fa contact-wtsap-icon"></i></a></div>
+                <div>{{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}}</div>
+            </div>
+        </mat-grid-tile>
+    
+        <mat-grid-tile *ngIf="users_list.telegramNum">
+            <div class="figure-disp">
+                <span class="mgn-bt-10">Telegram</span>
+                <div class="mgn-bt-10">
+                    <a href="https://web.telegram.org/#/login" target="blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+                    </div>
+                <div>{{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}}</div>
+            </div>
+        </mat-grid-tile>
+        
+      </mat-grid-list>
+
+
+
+    <!-- <div class="row m0 instantQueue-component-modal-content">
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.firstName">
+                <span class="itemHead">User</span>
+                <div class="itemVal">
+                  {{users_list.firstName | capitalizeFirst}} {{users_list.lastName | capitalizeFirst}} 
+                </div>
+              </div>
+                    
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.mobileNo">
+                <span class="itemHead">Mobile Number</span>
+                <div class="itemVal">
+                  {{users_list.countryCode}} {{users_list.mobileNo}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.whatsAppNum">
+                <span class="itemHead">Whatsapp Number</span>
+                <div class="itemVal">
+                  {{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.telegramNum">
+                <span class="itemHead">Telegram Number</span>
+                <div class="itemVal">
+                  {{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}} 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p0">
+                <div class="mgn-up-10 stats-item"
+                *ngIf="users_list.preferredLanguages">
+                <span class="itemHead">Languages Known</span>
+                <div class="itemVal">
+                    {{getLanguages(users_list.preferredLanguages)}}                
+                </div>
+              </div>
+                    
+            </div>
+    </div> -->
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+    </app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display> -->
+</mat-dialog-content>

@@ -101,6 +101,8 @@
                   <h2 style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
                   <div *ngIf="userbname" style="margin: 0; padding: 0px 0 4px 0;">{{userbname}}
                   </div>
+                  <div *ngIf="!userbname && doctorName" style="margin: 0; padding: 0px 0 4px 0;">{{doctorName}}
+                </div>
                   <div style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
                   <div>Ph: +91 {{mobile}}</div>
               </div>
@@ -150,9 +152,9 @@
                               <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">{{drug.instructions}}</td>
                           </tr>
                       </tbody>
-                  </table>
-                  <label  *ngIf="note">Instructions to the patient</label><br>
-                  <span>{{note}}</span>
+                  </table><br>
+                  <label  *ngIf="note" style="text-decoration: underline;color: #1E4079">Instructions to the patient</label><br>
+                  <span style="font-style: italic;color: #3c8dbc">{{note}}</span>
               </div>
           </div>
           <div class="footer" style="height: 30mm;width: 100%;border-top: 1px solid #ddd;margin: auto">

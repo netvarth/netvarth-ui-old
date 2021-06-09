@@ -1557,10 +1557,10 @@ body.modal-open {
   margin-right: 10px;
   margin-top: auto;
   margin-bottom: auto;
-  width: 100px;
+  width: 40%;
 }
 .width-input {
-  width: 130px !important;
+  width: 40% !important;
 }
 .input-field {
   padding: 5px;

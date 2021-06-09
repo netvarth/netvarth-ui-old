@@ -2101,4 +2101,12 @@ editHoliday(data) {
   addMyAvailbility(data) {
     return this.servicemeta.httpPut('provider/waitlist/queues/available', data);
   }
+  meetReady(id) {
+    const url = 'provider/video/adhoc/start/consumer/' + id;
+    return this.servicemeta.httpPost(url);
+  }
+  getStatus(id) {
+      const url = 'provider/video/adhoc/' + id + '/status';
+      return this.servicemeta.httpGet(url);
+  }
 }

@@ -861,7 +861,7 @@ ul.bus-actions li a.lnk {
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
-  border-color: #ccc !important;
+  border-color: #ccc;
   /* color:#ddd !important; */
 }
 .c-checkin-new mat-chip a {
@@ -1306,18 +1306,6 @@ ngx-intl-tel-input input {
   border: 1px solid #00008b26;
   box-shadow: 0px 0px 2px 2px #cac8c880;
 }
-.containerpayment {
-  font-size: 1.3rem;
-  margin: auto;
-  font-weight: bold;
-  margin-bottom: 20px;
-  /* border: 1px solid #00008b26; */
-  /* box-shadow: 4px 4px 1px 1px #d9d9d9; */
-  box-shadow:rgb(0 0 0 / 10%) 0px 30px 30px, rgb(0 0 0 / 10%) 0px -12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px;
-  border-radius: 10px;
-  padding-left: 10px;
-  height: 110px;
-}
 .selected-payment {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
   padding: 10px;
@@ -1488,9 +1476,6 @@ body.modal-open {
   .containerAppt {
     width: 80%;
   }
-  .containerpayment{
-    width: 80%;
-  }
   .check-new-group {
     margin-left: 10px;
   }
@@ -1532,6 +1517,7 @@ body.modal-open {
   width: 80px;    
   font-size: .7rem;
 }
+
 .billing-head {
   text-align: left !important;
   font: normal normal bold 15px/18px Roboto !important;
@@ -1632,10 +1618,10 @@ body.modal-open {
   margin-right: 10px;
   margin-top: auto;
   margin-bottom: auto;
-  width: 100px;
+  width: 40%;
 }
 .width-input {
-  width: 130px !important;
+  width: 40% !important;
 }
 .input-field {
   padding: 5px;
@@ -1732,26 +1718,35 @@ body.modal-open {
   font-size: 0.8rem !important;
   color: red !important;
 }
-.creditleft{
-  font-size: small;
-  padding-left: 20px;
-  color: darkgrey;
+.fa-mobile {
+  font-size: 1.5rem !important;
+  width: 20px !important;
 }
-.jaldeecredit{
-  /* color: darkgrey; */
-  font-size: medium;
-  padding-top: 5px;
+.fa-envelope-o {
+  width: 20px !important;
+  font-size: 1.3rem !important;
 }
-.cancelpolicy{
-  text-align: center;
-  padding-bottom: 10px;
+
+.c-checkin-new .chk-btns-div mat-chip.br-top-left-0 {
+  border-top-left-radius: 0 !important;
 }
-.prepayment{
-  text-align: center;
-  font-size: 1.3rem;
+
+.c-checkin-new .chk-btns-div mat-chip.br-bottom-left-0 {
+  border-bottom-left-radius: 0 !important;
 }
-@media (max-width: 400px) {
-.containerpayment{
-  height: 140px;
+
+.c-checkin-new .chk-btns-div mat-chip.margin-left-0{
+  margin-left: 0 !important;
 }
+
+.c-checkin-new .chk-btns-div mat-chip.br-top-right-0 {
+  border-top-right-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.br-bottom-right-0 {
+  border-bottom-right-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.margin-right-0{
+  margin-right: 0 !important;
 }

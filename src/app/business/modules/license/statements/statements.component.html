@@ -118,8 +118,9 @@
                                         <span class="amount-pay">
                                             <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                                             <span *ngIf="source === 'payment-history'"> Amount paid</span>
-                                            <span class="result rupee-font"
-                                                style="float: right">{{invoice.amount | currency:'&#8377;'}}</span></span>
+                                            <span *ngIf="invoice.cGstAmt === 0" class="result rupee-font" style="float: right">{{invoice.amount | currency:'&#8377;'}}</span>
+                                            <span *ngIf="invoice.cGstAmt > 0"class="result rupee-font" style="float: right">{{invoice.totAmtIncludeTax | currency:'&#8377;'}}</span>
+                                        </span>
                                     </div>
                                     <div style="border-bottom:2px solid #ddd"></div>
                                 </div>
@@ -153,14 +154,14 @@
                                                     <td class="invoice-head rupee-font" *ngIf="crdt_debtJson.type =='credit'">
                                                         {{crdt_debtJson.amount | currency:'&#8377;'}}(Cr)</td>
                                                 </tr>
-                                                <tr class="invoice-discount"
+                                                <!-- <tr class="invoice-discount"
                                                     *ngFor="let discount of latestInvoiceDiscount">
                                                     <td style="text-align: left">{{discount.name}} <span
                                                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                                                     </td>
                                                     <td class="price invoice-head rupee-font">
                                                         (-){{discount.discountedAmt| currency:'&#8377;'}}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr *ngIf="invoice.balance !== 0">
                                                     <th style="float: right;">Previous Balance Due</th>
                                                     <th class="previousDue" style="text-align: end;"
@@ -169,6 +170,14 @@
                                                             style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a>
                                                     </th>
                                                 </tr>
+                                                <tr class="invoice-discount"
+                                                *ngFor="let discount of latestInvoiceDiscount">
+                                                    <td  style="float: right;">{{discount.name}} <span
+                                                            *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
+                                                    </td>
+                                                    <td  class="previousDue  rupee-font" style="text-align: end;">
+                                                        (-){{discount.discountedAmt| currency:'&#8377;'}}</td>
+                                               </tr>
                                                 <tr [hidden]="showPreviousDue == false"
                                                     *ngIf="mergeinvoicerefno.length > 0">
                                                     <td style="float: right;">Previous Ref #</td>
@@ -180,9 +189,21 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Total</b></td>
-                                                    <td class="invoice-head rupee-font">{{invoice.amount | currency:'&#8377;'}}
-                                                    </td>
+                                                    <td  style="float: right;" *ngIf="invoice.sGstAmt > 0"><b>Sub Total</b></td>
+                                                    <td  style="float: right;" *ngIf="invoice.sGstAmt == 0"><b>Total</b></td>
+                                                    <td class="previousDue rupee-font" style="text-align: end;">{{invoice.amount | currency:'&#8377;'}}</td>
+                                                </tr>
+                                                <tr *ngIf="invoice.cGstAmt > 0">
+                                                    <td class="rupee-font" style="float: right;" ><b>CGST @ {{invoice.cGstPct}}% on {{invoice.amount | currency:'&#8377;'}}</b></td>
+                                                    <td class="previousDue rupee-font" style="text-align: end;"> {{invoice.cGstAmt | currency:'&#8377;'}}</td>
+                                                </tr>
+                                                <tr *ngIf="invoice.cGstAmt > 0">
+                                                    <td class="rupee-font" style="float: right;"><b>SGST @ {{invoice.sGstPct}}% on {{invoice.amount | currency:'&#8377;'}}</b></td>
+                                                    <td class="previousDue rupee-font" style="text-align: end;"> {{invoice.sGstAmt | currency:'&#8377;'}}</td>
+                                                </tr>
+                                                <tr *ngIf="invoice.cGstAmt > 0">
+                                                    <td style="float: right;"><b>Total</b></td>
+                                                    <td class="previousDue rupee-font" style="text-align: end;"> {{invoice.totAmtIncludeTax | currency:'&#8377;' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

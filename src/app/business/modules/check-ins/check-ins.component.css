@@ -623,3 +623,175 @@
 }
   
 /* Filter Code Ends */
+
+#selectViewModal.modal.fade.in {
+    display: flex !important;
+}
+
+#selectViewModal .modal-dialog {
+    max-width: calc(100% - 20px) !important;
+    max-height: calc(100% - 20px) !important;
+}
+
+#selectViewModal .modal-content {
+    max-height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+@media (max-width: 991px) {
+    #selectViewModal {
+        top: 105px !important;
+    }
+}
+
+#selectViewModal .modal-content {
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+}
+
+#selectViewModal .modal-body {
+    overflow: auto !important;
+    max-height: 400px !important;
+}
+
+#selectViewModal .modal-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-direction: row !important;
+}
+
+#selectViewModal .modal-header::before,
+#selectViewModal .modal-header::after {
+    content: none !important;
+}
+
+#selectViewModal .modal-header h5 {
+    color: #1E4079 !important;
+    font-size: 25px !important;
+}
+
+#selectViewModal .modal-header button {
+    font-size: 28px !important;
+    color: red !important;
+    opacity: 1 !important;
+    margin-top: 0 !important;
+}
+
+.dropdown.customized-dd:hover button.close {
+    background-color: white !important;
+    color: red !important;
+}
+
+#selectViewModal .modal-body ul.menu.dd-menu {
+    padding: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    max-width: -webkit-fill-available !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+#selectViewModal .modal-body ul.menu.dd-menu li {
+    width: 33% !important;
+}
+
+@media(max-width: 767px) {
+    #selectViewModal .modal-body ul.menu.dd-menu li {
+        width: 25% !important;
+    }
+}
+
+@media(max-width: 675px) {
+    #selectViewModal .modal-body ul.menu.dd-menu li {
+        width: 33% !important;
+    }
+}
+
+@media(max-width: 525px) {
+    #selectViewModal .modal-body ul.menu.dd-menu li {
+        width: 50% !important;
+    }
+}
+
+@media(max-width: 375px) {
+    #selectViewModal .modal-body ul.menu.dd-menu li {
+        width: 100% !important;
+    }
+}
+
+#selectViewModal .modal-body ul.menu.dd-menu li a {
+    margin: 5px !important;
+    width: auto !important;
+    height: 150px !important;
+    padding: 15px !important;
+}
+
+#selectViewModal .modal-body ul.menu.dd-menu li a i.fa.fa-user,
+#selectViewModal .modal-body ul.menu.dd-menu li a i.fa.fa-question-circle {
+    text-align: center !important;
+    font-size: 85px !important;
+    color: #5580c7 !important;
+}
+
+#selectViewModal .modal-body ul.menu.dd-menu li a h4 {
+    margin-bottom: 0 !important;
+    text-align: center !important;
+    margin-top: 2px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    color: #717171 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+}
+
+#selectViewModal .modal-footer {
+    background: #F9F9F9 !important;
+}
+
+#selectViewModal .modal-footer li {
+    background: transparent !important;
+    display: inline-block !important;
+    margin: 0 5px !important;
+    height: auto !important;
+}
+
+#selectViewModal .modal-footer li a.btn {
+    background-color: #1E4079 !important;
+    border-radius: 5px !important;
+    height: 40px !important;
+    color: white !important;
+    line-height: 40px !important;
+    font-weight: 500 !important;
+    border: none !important;
+    font-size: 0.85rem !important;
+    text-align: center !important;
+    text-transform: capitalize !important;
+}
+
+#selectViewModal .modal-footer li a.btn:hover {
+    color: white !important;
+    background-color: #123167 !important;
+}
+
+#selectViewModal .modal-footer li button.btn.close-btn {
+    border-radius: 5px !important;
+    height: 40px !important;
+    border: none !important;
+    text-align: center !important;
+    text-transform: capitalize !important;
+    font-weight: 700 !important;
+    color: #3D3D3D !important;
+    font-size: 0.85rem !important;
+    background-color: #d0d0d0 !important;
+}
+
+#selectViewModal .modal-footer li button.btn.close-btn:hover {
+    color: #3d3d3d !important;
+    background-color: #C9C9C9 !important;
+}

@@ -162,7 +162,7 @@ export class BusinessComponent implements OnInit {
         if (!this.contactInfo.primaryEmail) {
           this.getProfile();
         }
-      }
+      } 
     );
   }
   updateEmailPopup() {
@@ -186,7 +186,7 @@ export class BusinessComponent implements OnInit {
       .then(
         (data: any) => {
           this.profile = data;
-          if (this.profile.basicInfo.emailVerified) {
+          if (this.profile.basicInfo.email) {
             this.updateEmail(this.profile.basicInfo.email);
           } else {
             this.updateEmailPopup();
@@ -199,7 +199,8 @@ export class BusinessComponent implements OnInit {
       'primaryEmail': email,
       'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber,
       'contactFirstName': this.contactInfo.contactFirstName,
-      'contactLastName': this.contactInfo.contactLastName
+      'contactLastName': this.contactInfo.contactLastName,
+      'countryCode': this.contactInfo.countryCode
     };
     this.provider_services.updateAccountContactInfo(post_data).subscribe(
       data => {

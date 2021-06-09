@@ -40,11 +40,11 @@
             *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
-                <div class="icon-text">Change status to</div>
+                <div class="icon-text">Change Status to</div>
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && changeService && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && changeService && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && isUserdisable"
             (click)="assignMyself()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>

@@ -241,6 +241,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   refund_show;
   btn_hide = false;
   is_policy = false;
+  location: any;
 
 
   constructor(
@@ -550,6 +551,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.spname = this.bill_data.accountProfile.providerBusinessName;
           }
+          if (this.bill_data.accountProfile.location && this.bill_data.accountProfile.location.place) {
+            this.location = this.bill_data.accountProfile.location.place;
+          }
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -579,6 +583,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getDomainSubdomainSettings() {
     const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(user_data);
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise<void>((resolve, reject) => {

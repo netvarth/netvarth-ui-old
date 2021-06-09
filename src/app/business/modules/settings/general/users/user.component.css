@@ -539,5 +539,7 @@ td, .d-lg-none .mgn-up-5 {
   color: white !important;
   font-size: 14px !important;
 }
-
+.user-contact-details{
+  color: blue !important;
+}
 /* Filter Code Ends Here */

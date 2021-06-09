@@ -74,8 +74,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
       && this.booking.apptStatus !== 'Cancelled') {
       this.showMeetingDetailsBtn = true;
     }
-    if ((this.booking.apptStatus == 'Confirmed' || this.booking.apptStatus == 'Arrived')
-      && this.booking.questionnaire && this.booking.questionnaire.questionAnswers &&
+    if (this.booking.questionnaire && this.booking.questionnaire.questionAnswers &&
       this.booking.questionnaire.questionAnswers.length > 0) {
       this.showMoreInfoBtn = true;
     }

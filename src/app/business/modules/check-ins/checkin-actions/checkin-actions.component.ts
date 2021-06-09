@@ -109,6 +109,8 @@ export class CheckinActionsComponent implements OnInit {
     userid: any;
     active_user: any;
     check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+    user_arr: any;
+    isUserdisable;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -171,6 +173,24 @@ export class CheckinActionsComponent implements OnInit {
                     );
             }
         });
+        if (this.accountType === 'BRANCH') {
+            this.getUser();
+        }
+    }
+    getUser() {
+        if(this.userid){
+            this.provider_services.getUser(this.userid)
+            .subscribe((data: any) => {
+              this.user_arr = data;
+              if( this.user_arr.status === 'ACTIVE'){
+                  this.isUserdisable = true
+              } else{
+                  this.isUserdisable = false
+              }
+            }
+            , error => {
+          });
+        }   
     }
     ngOnDestroy() {
         if (this.subscription) {
@@ -585,7 +605,7 @@ export class CheckinActionsComponent implements OnInit {
         if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService') && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started') && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived') && !this.data.teleservice) {

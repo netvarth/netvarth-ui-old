@@ -296,6 +296,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       let consumerNote = '';
       const itemId = item.item.itemId;
       const qty = this.getItemQty(item);
+      console.log(qty);
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
@@ -368,10 +369,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   // fetch orderdetails using order id
   getOrderDetails(uid) {
-    this.orderList = [];
     this.providerservice.getProviderOrderById(uid)
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
+      this.orderList = [];
       this.orderDetails = data;
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
@@ -381,13 +382,18 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           const itemId = item.id;
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
           const itemObject = orderItem.item;
+          console.log(itemqty);
+         // this.orderList = [];
           for (let i = 0; i < itemqty; i++) {
             this.orderList.push({ 'item': itemObject });
           }
 
         }
+        console.log(this.orderList);
         this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
       this.orderCount = this.orders.length;
+      console.log(this.orders);
+      console.log(this.orderCount);
       }  
       if (this.orderDetails && this.orderDetails.shoppingList) {
         this.image_list_popup = [];
@@ -536,6 +542,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
+    console.log(qty);
     return qty;
   }
 

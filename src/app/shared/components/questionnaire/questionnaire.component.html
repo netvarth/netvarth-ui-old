@@ -14,7 +14,9 @@
     <div class="d-flex flex-column-fluid pull-right mgn-rt-10" *ngIf="type">
         <button class="normal-btn edit" mat-flat-button (click)="editQnr()">Edit</button>
     </div>
-    <div class="d-flex flex-column-fluid width-100" [class.container]="uuid && (source === 'consCheckin' || source === 'consAppt')" [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
+    <div class="d-flex flex-column-fluid width-100"
+        [class.container]="uuid && (source === 'consCheckin' || source === 'consAppt')"
+        [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
             <div class="my-5">
                 <div class="form-group card mgn-0" *ngFor="let question of questions;let i = index">
@@ -46,7 +48,7 @@
                                             (click)="openAttachmentGallery(getQuestion(question), doc)">
                                             <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                         </div>
-                                        <div class="gal_action" *ngIf="!type || type && editQuestionnaire"
+                                        <div class="gal_action" *ngIf="!disableInput()"
                                             (click)="changeImageSelected(getQuestion(question), doc)">
                                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </div>
@@ -90,7 +92,7 @@
                         *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                <input type="radio" name="radio1" [disabled]="disableInput()"
+                                <input type="radio" [disabled]="disableInput()"
                                     [checked]="isChecked(value, getQuestion(question))"
                                     (change)="listChange($event, value, getQuestion(question))">
                                 <span></span>
@@ -104,7 +106,7 @@
                     <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                <input type="radio" name="radio2" [disabled]="disableInput()"
+                                <input type="radio" [disabled]="disableInput()"
                                     [checked]="isBooleanChecked(value, getQuestion(question))"
                                     (change)="booleanChange($event, value, getQuestion(question))">
                                 <span></span>
@@ -134,18 +136,25 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Date -->
-                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                    <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
                         <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                            id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
-                            min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
-                            max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
+                                id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
+                                max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
+                        <!-- <input class="form-control1" [matDatepicker]="picker"
+                            [(ngModel)]="answers[getQuestion(question).labelName]"
+                            (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()"
+                            [min]="getDate(getQuestion(question).dateProperties.startDate)"
+                            [max]="getDate(getQuestion(question).dateProperties.endDate)" (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker> -->
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
-                *ngIf="(uuid || source === 'customer-details') && !disableInput()">
+                *ngIf="(uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
                 <button class="normal-btn" mat-flat-button
                     (click)="!buttonDisable && onSubmit('submit')">Update</button>
             </div>
@@ -154,4 +163,4 @@
 </section>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+    (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

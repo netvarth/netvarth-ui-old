@@ -90,7 +90,11 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
             <div class="pull-left col-xs-6 no-padding" *ngIf="booking.provider">
                 <div class="prov_lbl">Provider</div>
-                <div class="prov_nme">{{booking.provider.businessName}}</div>
+                <div class="prov_nme">
+                    <!-- {{booking.provider.businessName}} -->
+                    {{(booking.provider.businessName) ? booking.provider.businessName : booking.provider.firstName +
+                        ' ' + booking.provider.lastName}}
+                </div>
             </div>
             <div *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus!=='Cancelled' && booking.apptStatus!=='Completed'"
                 [class.col-xs-6]="booking.provider" [class.pull-left]="booking.provider"

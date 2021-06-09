@@ -43,7 +43,7 @@ export class TeleServiceShareComponent implements OnInit {
     { value: '1 Hour', viewValue: '1 Hour' }
   ];
   api_success = null;
-  providerView = true;
+  providerView = false;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
   internt_cap: any;
@@ -97,7 +97,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.getSMSCredits();
     if (this.data.reminder) {
       this.getReminderData();
-      this.providerView = false;
+      this.providerView = true;
     } else if (this.data.meetingDetail) {
       this.getMeetingDetailsData();
     }
@@ -110,11 +110,13 @@ export class TeleServiceShareComponent implements OnInit {
     this.msg_to_user = evt;
   }
   tabClick(evt) {
+    console.log(this.providerView);
     if (evt.index === 0) {
-      this.providerView = true;
-    } else {
       this.providerView = false;
+    } else {
+      this.providerView = true;
     }
+    console.log(this.providerView);
   }
   // Reminder textarea msg content
   getReminderData() {
@@ -164,7 +166,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.waitFor = '\n2. Wait for the video call to begin';
     this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
-    this.provider_msgJV = 'How to start the video call -\n Click on "Start Video Consultation" button';
+    this.provider_msgJV = 'How to start the video call -\n Click on "Launch Meeting" button';
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
@@ -177,7 +179,7 @@ export class TeleServiceShareComponent implements OnInit {
         break;
       case 'Phone':
         this.msg_to_user = 'When it is time for your phone call, you will receive a call on +' + this.meetingLink;
-        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no- +' + this.meetingLink;
+        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no +' + this.meetingLink;
         break;
       case 'Zoom':
         this.msg_to_user = this.videocall_msg + this.instalZoom + this.waitFor;
@@ -212,19 +214,21 @@ export class TeleServiceShareComponent implements OnInit {
     //   this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // }
   }
-
   // Mass communication
   sendMessage() {
+    console.log(this.providerView);
     this.disableButton = true;
-    const post_data = {
-      medium: {
-        email: this.email,
-        sms: this.sms,
-        pushNotification: this.pushnotify
-      },
-      communicationMessage: this.msg_to_user,
-      uuid: [this.data.waitingId]
-    };
+   
+    if(this.providerView){
+      const post_data = {
+        medium: {
+          email: this.email,
+          sms: this.sms,
+          pushNotification: this.pushnotify
+        },
+        communicationMessage: this.msg_to_user, 
+        uuid: [this.data.waitingId]
+      };
     if (this.data.waitingType === 'checkin') {
       this.shared_services.consumerMassCommunication(post_data).
         subscribe(() => {
@@ -246,6 +250,39 @@ export class TeleServiceShareComponent implements OnInit {
         }
         );
     }
+  }
+  else{
+    const post_data = {
+      medium: {
+        email: this.email,
+        sms: this.sms,
+        pushNotification: this.pushnotify
+      },
+      meetingDetails: this.msg_to_me, 
+      uuid: this.data.waitingId
+    };
+    if (this.data.waitingType === 'checkin') {
+      this.shared_services.shareMeetingdetails(post_data).
+        subscribe(() => {
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.disableButton = false;
+          setTimeout(() => {
+            this.dialogRef.close();
+          }, 2000);
+        }
+        );
+    } else {
+      this.shared_services.shareMeetingDetailsAppt(post_data).
+        subscribe(() => {
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.disableButton = false;
+          setTimeout(() => {
+            this.dialogRef.close();
+          }, 2000);
+        }
+        );
+    }
+  }
   }
 
   getSMSCredits() {

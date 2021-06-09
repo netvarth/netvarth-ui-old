@@ -503,7 +503,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.views = [];
     return new Promise(function (resolve, reject) {
       const tempView = {};
-      tempView['name'] = Messages.DEFAULTVIEWCAP;
+      tempView['name'] = 'All Appointments';
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].schedules = qsActive;
@@ -690,7 +690,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSchedulesFromView(view, schedules) {
     const qs = [];
-    if (view && view.name !== Messages.DEFAULTVIEWCAP) {
+    if (view && view.name !== 'All Appointments') {
       for (let i = 0; i < schedules.length; i++) {
         for (let j = 0; j < view.customViewConditions.schedules.length; j++) {
           if (schedules[i].id === view.customViewConditions.schedules[j].id) {
@@ -800,7 +800,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view, source, type?) {
 
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === Messages.DEFAULTVIEWCAP && !loggedUser.adminPrivilege) {
+    if (view.name === 'All Appointments' && !loggedUser.adminPrivilege) {
       this.activeUser = loggedUser.id;
     } else {
 
@@ -809,7 +809,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
         this.activeSchedules = groupbyQs['ENABLED'];
       }
-      if (view.name !== Messages.DEFAULTVIEWCAP) {
+      if (view.name !== 'All Appointments') {
         if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
           this.activeSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
         }
@@ -1704,7 +1704,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (this.time_type === 2) {
       // date = this.filter.future_appt_date;
       // }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
+      this.router.navigate(['provider', 'appointments', 'appointment'],
         { queryParams: { timeslot: slot, scheduleId: scheduleId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
     }
   }
@@ -2654,7 +2654,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
+    this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
   selectAllStarted() {
     this.startedAppointmentsChecked = {};

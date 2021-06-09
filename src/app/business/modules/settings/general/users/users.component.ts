@@ -10,6 +10,7 @@ import { ShowMessageComponent } from '../../../show-messages/show-messages.compo
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
 
 @Component({
 
@@ -121,6 +122,8 @@ export class BranchUsersComponent implements OnInit {
     availabileSelected: boolean;
     notAvailabileSelected: boolean;
     accountSettings;
+    contactDetailsdialogRef: any;
+
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -546,5 +549,15 @@ export class BranchUsersComponent implements OnInit {
     }
     stopprop(event) {
         event.stopPropagation();
+    }
+    viewContactDetails(user) {
+        this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+              userData: user
+          }
+        });
     }
 }

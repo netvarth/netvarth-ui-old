@@ -14,12 +14,14 @@ import { UserDataStorageService } from './settings/user-datastorage.service';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
 
 
 @NgModule({
     declarations: [
         BranchUsersComponent,
-        BranchUserDetailComponent
+        BranchUserDetailComponent,
+        userContactInfoComponent
     ],
     imports: [
         UsersRoutingModule,
