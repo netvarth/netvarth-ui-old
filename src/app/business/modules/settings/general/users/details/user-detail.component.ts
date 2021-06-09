@@ -563,7 +563,7 @@ export class BranchUserDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.locationDetails = data;
-                    this.locations = this.locationDetails[0].PostOffice;
+                    // this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
                     this.editloc = false;
                 },
