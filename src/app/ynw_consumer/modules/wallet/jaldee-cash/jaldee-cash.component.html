@@ -11,7 +11,8 @@
               <div class="card title-gb">
                 <h5 class="mgn-up-10">Jaldee cash<a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
               </div>
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding ">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding "  *ngIf="!loading">
                 <!-- <div *ngIf="!small_device_display">
                                 <div class="pull-left">                               
                                     <img src="assets/images/wallet.jpeg" class="cashbackimg">
@@ -65,7 +66,7 @@
                                   </div>
                               </div>
                               <div class="t-name">
-                                  <span>{{wallet_notes[details.triggerWhen]}}</span>
+                                  <span>{{details.jCashOffer.name}}</span>
                                   <p class="meta-date">{{details.jCashIssueInfo.issuedDt | date: newDateFormat}}</p>
                               </div>
     
@@ -92,13 +93,13 @@
                                 </div>
                             </div>
                             <div class="t-name">
-                                <span>{{wallet_notes[details.jCash.triggerWhen]}}</span>
+                                <span>{{details.jCash.jCashOffer.name}}</span>
                                 <p class="meta-date">{{details.jCash.jCashIssueInfo.issuedDt | date: newDateFormat}}</p>
                             </div>
   
                         </div>
                         <div class="t-rate rate-dec">
-                            <p><span><i class="fa fa-inr" aria-hidden="true"></i> {{details.jCash.originalAmt}}</span></p>
+                            <p><span><i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}</span></p>
                         </div>
                     </div>
                     <span >
@@ -122,7 +123,7 @@
                   <thead>
                     <tr>
                       <!-- <th>Booking/Order ID</th> -->
-                      <th>Cash reward</th>
+                      <th>Offer</th>
                       <th>Amount earned</th>
                       <th>Amount spent</th>
                       <th>Date</th>
@@ -138,8 +139,8 @@
                         <!-- <td data-title="Booking/Order ID" >
                           {{details.id}}
                            </td> -->
-                      <td data-title="Cash reward" >
-                      {{wallet_notes[details.triggerWhen]}}
+                      <td data-title="Offer" >
+                      {{details.jCashOffer.name}}
                       </td>
                       <td  data-title="Amount earned" >
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}
@@ -147,7 +148,7 @@
                       <td data-title="Amount spent" >
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt-details.remainingAmt}}
                       </td>
-                      <td data-title="Date" >
+                      <td data-title="Awarded date" >
                         {{details.jCashIssueInfo.issuedDt  | date: newDateFormat}}
                       </td>
                       <td data-title="Expiry date" class="red" >
@@ -173,10 +174,10 @@
           <thead>
             <tr>
               <!-- <th>Booking/Order ID</th> -->
-              <th>Cash reward</th>
+              <th>Offer</th>
               <th>Amount earned</th>
-              <th>Amount spent</th>
-              <th>Date</th>
+              <th>Amount expired</th>
+              <th>Awarded date</th>
               <th>Expired date</th>
               <!-- <th></th> -->
             </tr>
@@ -189,16 +190,16 @@
                 <!-- <td data-title="Booking/Order ID" >
                   {{details.id}}
                    </td> -->
-              <td data-title="Cash reward" >
-              {{wallet_notes[details.jCash.triggerWhen]}}
+              <td data-title="Offer" >
+              {{details.jCash.jCashOffer.name}}
               </td>
               <td  data-title="Amount earned" >
                   <i class="fa fa-inr" aria-hidden="true"></i> {{details.jCash.originalAmt}}
               </td>
-              <td data-title="Amount spent" >
-                  <i class="fa fa-inr" aria-hidden="true"></i> {{details.jCash.originalAmt - details.jCash.remainingAmt}}
+              <td data-title="Amount expired" >
+                  <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
               </td>
-              <td data-title="Date" >
+              <td data-title="Awarded date" >
                 {{details.jCash.jCashIssueInfo.issuedDt  | date: newDateFormat}}
               </td>
               <td data-title="Expiry date" class="red" >

@@ -6,6 +6,8 @@ import { WalletComponent } from './wallet.component';
 import { JaldeeCashComponent } from './jaldee-cash/jaldee-cash.component';
 import { StoreCreditComponent } from './store-credit/store-credit.component';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
+import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
+
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
   imports: [
     CommonModule,
     WalletRoutingModule,
-    HeaderModule
+    HeaderModule,
+    LoadingSpinnerModule
   ]
 })
 export class WalletModule { }

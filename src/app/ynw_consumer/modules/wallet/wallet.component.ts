@@ -14,6 +14,7 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 export class WalletComponent implements OnInit {
   remainamount;
   cashbalanceInfo:any ;
+  loading = true;
   private subs = new SubSink();
   constructor(private location: Location,
     public shared_functions: SharedFunctions,
@@ -36,10 +37,11 @@ export class WalletComponent implements OnInit {
         //  for(let info of this.cashbalanceInfo){
         //   this.remainamount= info.remainingAmt;
         //  }
-         
+        this.loading = false;
         
         },
         error => {
+          this.loading = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );

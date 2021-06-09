@@ -19,6 +19,7 @@ background-color: aliceblue;
 .walletfont{
     font-size: smaller;
     color: darkgrey;
+    cursor: pointer;
 }
 .walletexpiry{
     color: darkred;

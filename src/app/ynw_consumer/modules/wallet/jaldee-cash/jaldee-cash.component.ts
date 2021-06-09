@@ -24,6 +24,7 @@ export class JaldeeCashComponent implements OnInit {
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   cashbalanceInfoExpireddetail:any = [];
   expiredcash = false;
+  loading = true;
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -50,10 +51,10 @@ export class JaldeeCashComponent implements OnInit {
       data => {
        console.log(data);
        this.cashbalanceInfo = data;
-       
-      
+       this.loading = false;
       },
       error => {
+        this.loading = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
@@ -64,14 +65,10 @@ export class JaldeeCashComponent implements OnInit {
         data => {
          console.log(data);
          this.cashbalanceInfodetail = data;
-        
-        //  for(let info of this.cashbalanceInfo){
-        //   this.remainamount= info.remainingAmt;
-        //  }
-         
-        
+         this.loading = false;
         },
         error => {
+          this.loading = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
@@ -83,8 +80,10 @@ export class JaldeeCashComponent implements OnInit {
       data => {
        console.log(data);
        this.cashbalanceInfoExpireddetail = data;
+       this.loading = false;
       },
       error => {
+        this.loading = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
