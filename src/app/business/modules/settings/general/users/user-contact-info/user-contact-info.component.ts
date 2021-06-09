@@ -48,7 +48,7 @@ no_of_grids = 3;
             const proImage = user.profilePicture;
             return proImage.url;
         } else {
-            return '../../../.././assets/images/avatar5.png';
+            return './assets/images/avatar5.png';
         }
     }
 }
