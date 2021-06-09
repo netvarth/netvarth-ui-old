@@ -660,7 +660,8 @@ export class VirtualFieldsComponent implements OnInit {
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    if (formdata.whatsappnumber !== '') {
+    console.log(formdata.whatsappnumber);
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -670,7 +671,7 @@ export class VirtualFieldsComponent implements OnInit {
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -679,6 +680,7 @@ export class VirtualFieldsComponent implements OnInit {
       }
       telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
+
     }
     if (formdata.email !== '') {
       memberInfo['userProfile']['email'] = formdata.email
