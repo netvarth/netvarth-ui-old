@@ -10,6 +10,7 @@ import { TodayBookingStatsModule } from './today-booking-stats/today-booking-sta
 import { BookingFeedsModule } from './booking-feeds/booking-feeds.module';
 import { BookingAppointmentsModule } from './booking-appointments/booking-appointments.module';
 import { BookingCheckinsModule } from './booking-checkins/booking-checkins.module';
+import { BookingDashboardAdminModule } from './booking-dashboard-admin/booking-dashboard-admin.module';
 
 
 
@@ -25,7 +26,8 @@ import { BookingCheckinsModule } from './booking-checkins/booking-checkins.modul
     TodayBookingStatsModule,
     BookingFeedsModule,
     BookingAppointmentsModule,
-    BookingCheckinsModule
+    BookingCheckinsModule,
+    BookingDashboardAdminModule
   ],
   exports:[BookingDashboardComponent]
 
