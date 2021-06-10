@@ -1071,4 +1071,12 @@ export class SharedServices {
     const url = 'provider/donation/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+  consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/waitlist/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
+  consumerApptQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
 }
