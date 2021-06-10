@@ -144,7 +144,7 @@
                                 *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                 | capitalizeFirst}}</span>
                         </span>
-                        <span *ngIf="booking.isRescheduled">
+                        <span *ngIf="booking.isRescheduled && booking.waitlistStatus !=='cancelled'">
                             <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
                         </span>
                     </div>
