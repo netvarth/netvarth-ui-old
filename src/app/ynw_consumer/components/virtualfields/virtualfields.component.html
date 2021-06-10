@@ -93,7 +93,7 @@
                                             class="red">*</span></label>
                                     <input type="text" placeholder="xxxxxx" style="width:50%"
                                         class="form-control vt_dt no-padding mgn-up-5" id="location"
-                                        formControlName="pincode" (keyup)="showLocations($event)">
+                                        formControlName="pincode" (keypress)="isNumeric($event)" (keyup)="showLocations($event)">
                                     <div style="display: flex; justify-content: space-between;">
                                         <app-field-error-display
                                             [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
