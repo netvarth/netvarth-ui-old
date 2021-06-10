@@ -486,11 +486,7 @@ export class VirtualFieldsComponent implements OnInit {
         console.log(isinvalid);
       }
     }
-    let emailControl = this.virtualForm.get('email');
-    if(emailControl.invalid){
-      this.snackbarService.openSnackBar('Please give valid email ', { 'panelClass': 'snackbarerror' });
-      return false;
-    }
+   
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
       if (this.virtualForm.get('firstName').value == '') {
@@ -552,13 +548,13 @@ console.log(isinvalid);
   onSubmit(formdata) {
     this.submitbtndisabled = true;
     formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
-    console.log(this.validateFields());
+     if(this.virtualForm.controls.email.invalid){
+       return false;
+     }
     if (this.validateFields() === true) {
-      this.snackbarService.openSnackBar('Please give valid data for all mandatory fields', { 'panelClass': 'snackbarerror' });
-    } else {
-      // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
-
-      // formdata['dob'] = dob;
+      this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+    } else  {
+  
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
@@ -604,9 +600,11 @@ console.log(isinvalid);
         }
 
 
-      }
+      
+    
 
     }
+  }
 
 
 
