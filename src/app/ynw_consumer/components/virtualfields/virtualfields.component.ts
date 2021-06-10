@@ -488,7 +488,8 @@ export class VirtualFieldsComponent implements OnInit {
     }
     let emailControl = this.virtualForm.get('email');
     if(emailControl.invalid){
-      isinvalid = true;
+      this.snackbarService.openSnackBar('Please give valid email ', { 'panelClass': 'snackbarerror' });
+      return false;
     }
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
