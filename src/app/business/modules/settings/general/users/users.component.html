@@ -448,7 +448,8 @@
                                                       </td>
                                                   </tr>
                                                   <tr *ngIf="users_list.length == 0 && !api_loading">
-                                                      No {{provider_label}} found
+                                                      <!-- No {{provider_label}} found -->
+                                                      No users found
                                                   </tr>
                                               </tbody>
                                               <app-common-innerloading-spinner *ngIf="api_loading">
