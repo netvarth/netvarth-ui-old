@@ -2113,7 +2113,7 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
-  providerWaitlistQnrUploadStatusUpdate(uid, account, data) {
+  providerWaitlistQnrUploadStatusUpdate(uid, data) {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }

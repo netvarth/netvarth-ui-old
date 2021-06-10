@@ -260,7 +260,10 @@ showFile(file){
     width: '50%',
     panelClass: ['popup-class', 'commonpopupmainclass'],
     disableClose: true,
-    data: file,
+    data: {
+      file: file,
+      source: 'mr'
+    }
   });
   this.fileviewdialogRef.afterClosed().subscribe(result => {
     if (result) {
