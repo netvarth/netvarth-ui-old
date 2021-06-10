@@ -266,6 +266,9 @@ export class NewReportComponent implements OnInit {
     }
 
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+}
   setServiceData(res) {
     switch (this.report_type) {
       case 'payment': {
