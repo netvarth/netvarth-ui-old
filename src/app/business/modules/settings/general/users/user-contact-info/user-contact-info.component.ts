@@ -12,7 +12,7 @@ export class userContactInfoComponent implements OnInit {
 
 users_list: any = [];
 screenWidth = window.innerWidth;
-no_of_grids = 3;
+no_of_grids = 2;
     constructor(
         public dialogRef: MatDialogRef<userContactInfoComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,8 +28,8 @@ no_of_grids = 3;
     @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth < 375) {
-      this.no_of_grids = 2;
+    if (this.screenWidth < 450) {
+      this.no_of_grids = 1;
     }
   }
     getLanguages(languages) {
