@@ -36,8 +36,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <div class="form-group" *ngIf="calledFrom !='checkin'">
         <label class="col-form-label" for="gender">{{gender_cap}} </label>
         <mat-radio-group [(ngModel)]="gender" (change)="valuechange()">
-            <mat-radio-button value="Male">{{male_cap}}</mat-radio-button>
-            <mat-radio-button value="Female">{{female_cap}}</mat-radio-button>
+            <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+            <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+            <mat-radio-button value="other">Other</mat-radio-button>
         </mat-radio-group>
     </div>
     <div class="form-group col-md-3 no-padding" *ngIf="calledFrom !='checkin'">
