@@ -558,6 +558,9 @@ isNumericSign(evt) {
   onSubmit(formdata) {
     this.submitbtndisabled=true;
     formdata['phoneno']=this.customer_data.userProfile.primaryMobileNo;
+    if(this.virtualForm.controls.email.invalid){
+      return false;
+    }
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
     } else {

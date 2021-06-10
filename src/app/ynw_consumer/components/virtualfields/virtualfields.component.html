@@ -6,7 +6,7 @@
             </span>
         </span>
     </h1>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()" *ngIf="hideLanguages">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
