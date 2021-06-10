@@ -19,145 +19,138 @@
         [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
             <div class="my-5">
-                <ng-container *ngFor="let question of questions;let i = index">
-                    <div class="form-group card mgn-0"
-                        *ngIf="showQuestions(getQuestion(question))">
-                        <label class="col-12 quest">{{getQuestion(question).label}}
-                            <div class="pro-only" *ngIf="showProviderText(getQuestion(question))">For Providers</div>
-                            <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
-                            <div class="form-level-settings" *ngIf="getQuestion(question).hint">
-                                {{getQuestion(question).hint}}</div>
-                        </label>
-                        <!-- <div></div> -->
-                        <!-- for file upload -->
-                        <div class="col-12 ynw-common-form-nm"
-                            *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
-                            <mat-select multiple #deptsel [disabled]="disableInput()"
-                                *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
-                                [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box">
-                                <mat-option
-                                    *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
-                                    [value]="document" (click)="changeImageSelected(getQuestion(question), document)">
-                                    {{document}}</mat-option>
-                            </mat-select>
-                            <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
-                                *ngIf="getDocuments(getQuestion(question)) && getDocuments(getQuestion(question)).length > 0">
-                                <div class="dropzone dropzone-default dropzone-primary dz-clickable"
-                                    [class.single-file]="getQuestion(question).filePropertie.maxNoOfFile == 1"
-                                    style="cursor: auto;">
-                                    <ng-container *ngFor="let doc of getDocuments(getQuestion(question))">
-                                        <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
-                                            *ngIf="getImg(getQuestion(question), doc)">
-                                            <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
-                                                {{doc}}</ng-container>
-                                            <div class="dzimage pointer-cursor"
-                                                (click)="openAttachmentGallery(getQuestion(question), doc)">
-                                                <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
-                                            </div>
-                                            <div class="gal_action" *ngIf="!disableInput()"
-                                                (click)="changeImageSelected(getQuestion(question), doc)">
-                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                            </div>
+                <div class="form-group card mgn-0" *ngFor="let question of questions;let i = index">
+                    <label class="col-12 quest">{{getQuestion(question).label}}
+                        <div class="pro-only" *ngIf="showProviderText(getQuestion(question))">For Providers</div>
+                        <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
+                        <div class="form-level-settings" *ngIf="getQuestion(question).hint">
+                            {{getQuestion(question).hint}}</div>
+                    </label>
+                    <!-- for file upload -->
+                    <div class="col-12 ynw-common-form-nm" *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
+                        <mat-select multiple #deptsel [disabled]="disableInput()"
+                            *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
+                            [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box">
+                            <mat-option *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
+                                [value]="document" (click)="changeImageSelected(getQuestion(question), document)">
+                                {{document}}</mat-option>
+                        </mat-select>
+                        <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
+                            *ngIf="getDocuments(getQuestion(question)) && getDocuments(getQuestion(question)).length > 0">
+                            <div class="dropzone dropzone-default dropzone-primary dz-clickable"
+                                [class.single-file]="getQuestion(question).filePropertie.maxNoOfFile == 1"
+                                style="cursor: auto;">
+                                <ng-container *ngFor="let doc of getDocuments(getQuestion(question))">
+                                    <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
+                                        *ngIf="getImg(getQuestion(question), doc)">
+                                        <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
+                                            {{doc}}</ng-container>
+                                        <div class="dzimage pointer-cursor"
+                                            (click)="openAttachmentGallery(getQuestion(question), doc)">
+                                            <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                         </div>
-                                        <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
-                                            (click)="logofile1.click()" *ngIf="!getImg(getQuestion(question), doc)">
-                                            <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
-                                                {{doc}}</ng-container>
-                                            <div class="dz-image pointer-cursor">
-                                            </div>
-                                            <input #logofile1 type="file" accept="/*;capture=camera"
-                                                style="display:none;" [disabled]="disableInput()"
-                                                (change)="filesSelected($event, getQuestion(question), doc)">
-                                            <div class="dz-error-mark">
-                                                <a class="btn btn-icon btn-light-success btn-circle mr-2"><i
-                                                        class="text-dark-50 flaticon-upload"></i></a>
-                                            </div>
+                                        <div class="gal_action" *ngIf="!disableInput()"
+                                            (click)="changeImageSelected(getQuestion(question), doc)">
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </div>
-                                    </ng-container>
-                                </div>
+                                    </div>
+                                    <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
+                                        (click)="logofile1.click()" *ngIf="!getImg(getQuestion(question), doc)">
+                                        <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
+                                            {{doc}}</ng-container>
+                                        <div class="dz-image pointer-cursor">
+                                        </div>
+                                        <input #logofile1 type="file" accept="/*;capture=camera" style="display:none;"
+                                            [disabled]="disableInput()"
+                                            (change)="filesSelected($event, getQuestion(question), doc)">
+                                        <div class="dz-error-mark">
+                                            <a class="btn btn-icon btn-light-success btn-circle mr-2"><i
+                                                    class="text-dark-50 flaticon-upload"></i></a>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
                         </div>
-                        <!-- for checkbox -->
-                        <div class="col-12"
-                            *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers > 1">
-                            <div class="checkbox-list">
-                                <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
-                                    <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
-                                        (change)="listChange($event, value, getQuestion(question))"
-                                        [disabled]="disableInput()">
-                                    <span></span>
-                                    {{value}}
-                                </label>
-                            </div>
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <!-- for checkbox -->
+                    <div class="col-12"
+                        *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers > 1">
+                        <div class="checkbox-list">
+                            <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
+                                <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
+                                    (change)="listChange($event, value, getQuestion(question))"
+                                    [disabled]="disableInput()">
+                                <span></span>
+                                {{value}}
+                            </label>
                         </div>
-                        <div class="col-12"
-                            *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
-                            <div class="radio-list">
-                                <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                    <input type="radio" [disabled]="disableInput()"
-                                        [checked]="isChecked(value, getQuestion(question))"
-                                        (change)="listChange($event, value, getQuestion(question))">
-                                    <span></span>
-                                    {{value}}
-                                </label>
-                            </div>
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <div class="col-12"
+                        *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
+                        <div class="radio-list">
+                            <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
+                                <input type="radio" [disabled]="disableInput()"
+                                    [checked]="isChecked(value, getQuestion(question))"
+                                    (change)="listChange($event, value, getQuestion(question))">
+                                <span></span>
+                                {{value}}
+                            </label>
                         </div>
-                        <!-- for toggel boolean -->
-                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
-                            <div class="radio-list">
-                                <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                    <input type="radio" [disabled]="disableInput()"
-                                        [checked]="isBooleanChecked(value, getQuestion(question))"
-                                        (change)="booleanChange($event, value, getQuestion(question))">
-                                    <span></span>
-                                    {{value}}
-                                </label>
-                            </div>
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <!-- for toggel boolean -->
+                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
+                        <div class="radio-list">
+                            <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
+                                <input type="radio" [disabled]="disableInput()"
+                                    [checked]="isBooleanChecked(value, getQuestion(question))"
+                                    (change)="booleanChange($event, value, getQuestion(question))">
+                                <span></span>
+                                {{value}}
+                            </label>
                         </div>
-                        <!-- for Text -->
-                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
-                            <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                (input)="onSubmit('inputChange');" [disabled]="disableInput()"
-                                [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
-                                [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
-                                class="form-control1 form-control-solid" type="text">
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
-                        </div>
-                        <!-- for Number -->
-                        <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
-                            <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
-                                [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
-                                class="form-control1 form-control-solid" type="number">
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
-                        </div>
-                        <!-- for Date -->
-                        <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
-                            <!-- <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <!-- for Text -->
+                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
+                        <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                            (input)="onSubmit('inputChange');" [disabled]="disableInput()"
+                            [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
+                            [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
+                            class="form-control1 form-control-solid" type="text">
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <!-- for Number -->
+                    <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
+                        <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                            (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
+                            [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
+                            class="form-control1 form-control-solid" type="number">
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
+                    </div>
+                    <!-- for Date -->
+                    <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                        <!-- <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
                                 id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
                                 min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
                                 max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}"> -->
-                            <input class="form-control1" [matDatepicker]="picker"
-                                [(ngModel)]="answers[getQuestion(question).labelName]"
-                                (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()"
-                                (click)="picker.open()">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker>
-                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                                {{apiError[getQuestion(question).labelName]}}</div>
-                        </div>
+                        <input class="form-control1" [matDatepicker]="picker"
+                            [(ngModel)]="answers[getQuestion(question).labelName]"
+                            (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()" (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker>
+                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                            {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
-                </ng-container>
+                </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                 *ngIf="(uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
