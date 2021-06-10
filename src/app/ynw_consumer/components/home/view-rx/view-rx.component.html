@@ -6,7 +6,10 @@
 
   
   <mat-dialog-content>
-    <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId>
+       <div class="coupon-outer textcenter" *ngIf="qr_code_oId && !accuid" >
+            Prescription link expired 
+       </div>
+    <div class="coupon-outer textcenter" *ngIf="qr_code_oId && accuid" #qrCodeOnlineId >
 
         <div>
             <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">

@@ -8,10 +8,10 @@
   <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>  -->
   <div class="card title-gb">
     <div class="mgn-up-10" *ngIf="!loading">
-     <label>{{customer_label | capitalizeFirst}} Name</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-     <label>{{customer_label | capitalizeFirst}} Id</label> &nbsp; <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
-     <label  *ngIf="patientDetails.dob">DOB &nbsp;</label>  <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
-     <label *ngIf="patientDetails.gender">Gender &nbsp;</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
+     <label>{{customer_label | capitalizeFirst}} Name :&nbsp;</label>  <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
+     <label>{{customer_label | capitalizeFirst}} Id :&nbsp;</label><span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
+     <label  *ngIf="patientDetails.dob">DOB :&nbsp;</label>  <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
+     <label *ngIf="patientDetails.gender">Gender :&nbsp;</label> <span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
       <hr>
     </div>
     <!-- <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">

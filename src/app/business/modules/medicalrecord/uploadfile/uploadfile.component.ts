@@ -137,10 +137,10 @@ export class UploadFileComponent implements OnInit {
   }
   getImageSource(file) {
     let imgsrc='/assets/images/pdf.png';
-    console.log(file);
+   // console.log(file);
     let type = '';
               type = file.type.split("/");
-              console.log(type[0]);
+             // console.log(type[0]);
               if(type[0] == 'video'){
                 imgsrc='/assets/images/video.png';
               } else if( type[0] == 'audio') {
@@ -211,11 +211,11 @@ export class UploadFileComponent implements OnInit {
         if (data) {
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
-            console.log(this.uploadFiles);
+            //console.log(this.uploadFiles);
             for (let file of this.uploadFiles) {
               let type = '';
               type = file.type.split("/");
-              console.log(type[0]);
+             // console.log(type[0]);
               if(type[0] == 'video' || type[0] =='audio'|| type[0] =='image'){
                 this.mediafiles.push(file);
               } else {
@@ -254,8 +254,8 @@ export class UploadFileComponent implements OnInit {
 
  
 showFile(file){
-  let type = file.type.split("/");
-  console.log(type[0]);
+  //let type = file.type.split("/");
+  //console.log(type[0]);
   this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
     width: '50%',
     panelClass: ['popup-class', 'commonpopupmainclass'],
