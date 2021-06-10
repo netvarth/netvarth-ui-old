@@ -206,11 +206,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
+                                            <mat-tab label="Patient Note">
                                                 <div class="pad-10"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
                                                     <div class="pad-10"
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</div>
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No patient note found</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">
