@@ -468,29 +468,37 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
     if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
-    // if (this.virtualForm.get('dob').value === '') {
-    //   isinvalid = true;
-    // }
+
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
+        console.log(isinvalid);
       }
+    }
+    let emailControl = this.virtualForm.get('email');
+    if(emailControl.invalid){
+      isinvalid = true;
     }
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -502,7 +510,7 @@ export class VirtualFieldsComponent implements OnInit {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-
+console.log(isinvalid);
     return isinvalid;
   }
 
@@ -543,8 +551,9 @@ export class VirtualFieldsComponent implements OnInit {
   onSubmit(formdata) {
     this.submitbtndisabled = true;
     formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+    console.log(this.validateFields());
     if (this.validateFields() === true) {
-      this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please give valid data for all mandatory fields', { 'panelClass': 'snackbarerror' });
     } else {
       // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
 
