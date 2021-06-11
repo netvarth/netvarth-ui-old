@@ -1475,7 +1475,7 @@
                                             <div class="mr-2">
                                                 <button type="button" style="color: white !important;"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('prev')" [disabled]="disablebutton">
+                                                    (click)="goToStep('prev')">
                                                     <i style="color: white !important;"
                                                         class="fa fa-long-arrow-left"></i>
                                                     Go Back
@@ -1486,7 +1486,7 @@
                                                     Cancellation Policy
                                                 </button> -->
                                                 <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy || disablebutton">
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay by CC/DC/UPI
