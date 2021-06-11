@@ -51,7 +51,8 @@
           <h3 class="align-items-start flex-column">
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup == 'all' && groups.length > 0">All
-              {{customer_label | capitalizeFirst}}s</span>
+              {{customer_label | capitalizeFirst}}s</span> <span class="card-label font-1 font-weight-bolder text-dark">
+              </span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
             <div class="sel-group-desc">{{selectedGroup.description}}</div>
@@ -224,7 +225,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index">
+                  <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index"  (click)="selectedRow(customer)">
                     <td class="pl-0 py-4">
                       <div class="d-flex align-items-center">
                         <div class="pr-3">
@@ -259,18 +260,23 @@
                         {{customer.dob | date : dateFormat}}
                       </span>
                     </td> -->
-                    <td *ngIf="!showCustomers">
+                    <!-- <td *ngIf="!showCustomers">
                       <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button
                         (click)="CustomersInboxMessage(customer)">Message</button>
                       <i *ngIf="customer.phoneNo || customer.email" class="text-dark-50 flaticon2-chat-1 hidden_th"
                         (click)="CustomersInboxMessage(customer)"></i>
-                    </td>
-                    <td *ngIf="!showCustomers">
+                    </td> -->
+                    <!-- <td *ngIf="!showCustomers">
                       <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
                       <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
+                    </td> -->
+                      <td *ngIf="!showCustomers">
+                      <button mat-flat-button class="prof_btn" (click)="stopprop($event); showCustomerAction()">Actions</button>
+                      <!-- <button mat-flat-button class="prof_btn hide_th" (click)="stopprop($event); showCustomerAction()">Actions</button>
+                      <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i> -->
                     </td>
                     <td class="pr-0 text-right" *ngIf="!showCustomers">
-                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu">

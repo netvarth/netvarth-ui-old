@@ -74,6 +74,9 @@
                     <th>Gateway Service Tax</th>
                     <th>Jaldee Commission</th>
                     <th>Settlement Amount</th>
+                     <th>Settlement</th>
+                     <th>Settlement ID</th>
+                     <th>Settlement UTR</th>
                     <th>Refund Amount</th>
                    
                     <!-- <th>{{check_in_cap}} {{id_cap}}</th> -->
@@ -92,6 +95,9 @@
                     <td data-title="Gateway Service Tax"> <span class="price rupee-font">{{jbank.gateway_service_charge_tax| currency:'&#8377;'}}</span></td>
                     <td data-title="Jaldee Commission"> <span class="price rupee-font">{{jbank.jaldeeCommission| currency:'&#8377;'}}</span></td>
                     <td data-title="Settlement Amount"><span class="price rupee-font">{{jbank.settlementAmount| currency:'&#8377;'}}</span></td>
+                    <td data-title="Settlement"><span class="price rupee-font">{{(jbank.is_settled) ? jbank.is_settled : '-'}}</span></td>
+                    <td data-title="Settlement ID"><span class="price rupee-font">{{(jbank.settlement_id) ? jbank.settlement_id : '-'}}</span></td>
+                    <td data-title="Settlement UTR"><span class="price rupee-font">{{(jbank.settlement_utr) ? jbank.settlement_utr : '-'}}</span></td>
                     <td data-title="Refund Amount"><span class="price rupee-font">{{jbank.refund| currency:'&#8377;'}}</span></td>
                     <!-- <td data-title="Check-in Id">{{jbank.checkinId}}</td> -->
                   </tr>
