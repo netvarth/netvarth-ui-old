@@ -792,8 +792,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
-               if(this.payEmail!==''){
-                    this.waitlist_for[0]['email']=this.payEmail;
+                if (this.payEmail !== '') {
+                    this.waitlist_for[0]['email'] = this.payEmail;
                 }
             }
         }
@@ -937,30 +937,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 for (const url of data.urls) {
                     console.log(this.questionAnswers.filestoUpload[url.labelName]);
                     Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
-                    const file = this.questionAnswers.filestoUpload[url.labelName][key];
-                    console.log(file);
-                    this.provider_services.videoaudioS3Upload(file, url.url)
-                        .subscribe(() => {
-                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                            console.log(postData);
-                            console.log(postData['urls'].length);
-                            console.log(data.urls.length);
-                            if (data.urls.length === postData['urls'].length) {
-                                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                    .subscribe((data) => {
-                                        console.log(data);
-                                        this.paymentOperation();
-                                    },
-                                    error => {
-                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        this.disablebutton = false;
-                                    });
-                            }
-                        },
-                        error => {
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                            this.disablebutton = false;
-                        });
+                        const file = this.questionAnswers.filestoUpload[url.labelName][key];
+                        console.log(file);
+                        this.provider_services.videoaudioS3Upload(file, url.url)
+                            .subscribe(() => {
+                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                                console.log(postData);
+                                console.log(postData['urls'].length);
+                                console.log(data.urls.length);
+                                if (data.urls.length === postData['urls'].length) {
+                                    this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                        .subscribe((data) => {
+                                            console.log(data);
+                                            this.paymentOperation();
+                                        },
+                                            error => {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                this.disablebutton = false;
+                                            });
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    this.disablebutton = false;
+                                });
                     });
                 }
             } else {

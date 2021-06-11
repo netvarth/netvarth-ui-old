@@ -156,7 +156,8 @@
                 *ngIf="(uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
                 <button class="normal-btn" mat-flat-button [class.spinner]="buttonDisable"
                     [class.spinner-darker-success]="buttonDisable" [class.spinner-center]="buttonDisable"
-                    (click)="!buttonDisable && onSubmit('submit')" [disabled]="buttonDisable">Update</button>
+                    (click)="!buttonDisable && onSubmit('submit')" [disabled]="buttonDisable"
+                    [class.disabled]="buttonDisable">Update</button>
             </div>
         </div>
     </div>
