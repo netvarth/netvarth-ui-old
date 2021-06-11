@@ -1338,8 +1338,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
                     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
