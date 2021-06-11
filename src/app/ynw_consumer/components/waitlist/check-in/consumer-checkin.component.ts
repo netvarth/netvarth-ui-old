@@ -204,6 +204,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     consumerType: string;
     whatsappCountryCode;
     checkPolicy = true;
+    disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -785,6 +786,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         post_Data['consumer'] = { id: this.customer_data.id };
         if (!this.is_wtsap_empty) {
             if (type === 'checkin') {
+                this.disablebutton = true;
                 this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
@@ -899,6 +901,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     submitQuestionnaire(uuid) {
@@ -926,6 +929,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         },
             error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
             });
     }
     showCheckinButtonCaption() {
@@ -1312,7 +1316,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     () => {
                     },
                     error => {
-                        this.wordProcessor.apiErrorAutoHide(this, error);
+                        this.wordProcessor.apiErrorAutoHide(this, error); 
+                        this.disablebutton = false;
                     }
                 );
         }
@@ -2004,6 +2009,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     paywithRazorpay(pData: any) {
