@@ -2015,7 +2015,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                // description: description
+                description: communications[comIndex].caption
               },
             );
             this.image_list_popup_temp.push(imgobj);
@@ -2048,7 +2048,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               count,
               {
                 img: imagePath,
-                // description: description
+               description: communications[comIndex].caption
               },
             );
             this.image_list_popup_temp.push(imgobj);
