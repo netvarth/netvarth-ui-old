@@ -393,7 +393,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
             'date': this.selectedDate,
-            'queue': this.queueId
+            'queue': this.queueId,
+            'consumerNote': this.consumerNote
         };
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
@@ -2287,5 +2288,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
+    }
+    viewAttachments(){
+        this.action = 'attachment';
+        this.modal.nativeElement.click();
     }
 }

@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { projectConstantsLocal } from '../../../../app/shared/constants/project-constants';
- import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
+import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
 import { LocalStorageService } from '../../../../app/shared/services/local-storage.service';
 
 
@@ -32,7 +32,7 @@ export class VirtualFieldsComponent implements OnInit {
   consumer_label: any;
   disableButton;
   loading = false;
-  submitbtndisabled=false;
+  submitbtndisabled = false;
   languages = [
     "Hindi",
     "Kannada",
@@ -69,6 +69,7 @@ export class VirtualFieldsComponent implements OnInit {
   countryCode: any;
   serviceDetails: any;
   provider: any;
+  languageSelected: any = [];
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -76,7 +77,7 @@ export class VirtualFieldsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
-     private shared_functions:SharedFunctions,
+    private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
@@ -105,28 +106,28 @@ export class VirtualFieldsComponent implements OnInit {
       if (dialogData.theme) {
         this.theme = dialogData.theme;
       }
-      if(dialogData.service){
-        this.serviceDetails=dialogData.service;
+      if (dialogData.service) {
+        this.serviceDetails = dialogData.service;
         console.log(this.serviceDetails);
       }
-      if(dialogData.businessDetails){
-        if(dialogData.businessDetails.businessName){
-          this.provider=dialogData.businessDetails.businessName;
-        }else if(dialogData.businessDetails.businessName){
-          this.provider=dialogData.businessDetails.businessUserName 
+      if (dialogData.businessDetails) {
+        if (dialogData.businessDetails.businessName) {
+          this.provider = dialogData.businessDetails.businessName;
+        } else if (dialogData.businessDetails.businessName) {
+          this.provider = dialogData.businessDetails.businessUserName
         }
       }
 
     }
     this.age = this.lStorageService.getitemfromLocalStorage('age');
-    this.userId=this.lStorageService.getitemfromLocalStorage('userId');
+    this.userId = this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
     console.log(this.consumer_label);
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
-     this.countryCode=this.customer_data.userProfile.countryCode;
-      this.mandatoryEmail=this.customer_data.userProfile.email;
+      this.countryCode = this.customer_data.userProfile.countryCode;
+      this.mandatoryEmail = this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
     });
@@ -137,10 +138,10 @@ export class VirtualFieldsComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
-}
-isNumericSign(evt) {
-  return this.shared_functions.isNumericSign(evt);
-}
+  }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+  }
   ngOnInit(): void {
 
 
@@ -199,7 +200,7 @@ isNumericSign(evt) {
     } else {
       this.is_parent = false;
       this.chosen_person = 'new_member'
-  
+
     }
 
   }
@@ -217,18 +218,18 @@ isNumericSign(evt) {
     //   this.virtualForm.patchValue({ month:'mm' });
     //   this.virtualForm.patchValue({ year: 'yyyy' });
     // }
-    if(memberObj.userProfile.age){
+    if (memberObj.userProfile.age) {
       this.virtualForm.patchValue({ age: memberObj.userProfile.age });
-    }if(memberObj.userProfile.id===this.userId&&this.age){
+    } if (memberObj.userProfile.id === this.userId && this.age) {
       this.virtualForm.patchValue({ age: this.age });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
-    } 
+    }
     if (memberObj.userProfile && memberObj.userProfile.email) {
       this.virtualForm.patchValue({ email: memberObj.userProfile.email });
-    }else{
-      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email  });
+    } else {
+      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
@@ -256,14 +257,14 @@ isNumericSign(evt) {
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
-    }else{
-      this.virtualForm.patchValue({ whatsappnumber:this.customer_data.userProfile.primaryMobileNo });
+    } else {
+      this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
     if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
-    }else{
+    } else {
       this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode })
     }
@@ -284,12 +285,12 @@ isNumericSign(evt) {
     this.virtualForm.controls['location'].setValue('');
     this.virtualForm.patchValue({ email: '' });
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
-    this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo  });
+    this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
   setparentDetails(customer) {
-  
 
-    
+
+
     // if (customer.userProfile && customer.userProfile.dob!==undefined) {
 
     //   const dob = customer.userProfile.dob.split('-');
@@ -302,17 +303,17 @@ isNumericSign(evt) {
     //   this.virtualForm.patchValue({ month: 'mm' });
     //   this.virtualForm.patchValue({ year: 'yyyy' });
     // }
-    if(customer.userProfile.age){
+    if (customer.userProfile.age) {
       this.virtualForm.patchValue({ age: customer.userProfile.age });
     }
-     if(customer.userProfile.id===this.userId&&this.age){
-        this.virtualForm.patchValue({ age: this.age });
-      }
-    
-   
+    if (customer.userProfile.id === this.userId && this.age) {
+      this.virtualForm.patchValue({ age: this.age });
+    }
+
+
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
-    } 
+    }
     if (customer.userProfile && customer.userProfile.email) {
       this.virtualForm.patchValue({ email: customer.userProfile.email });
     }
@@ -334,8 +335,8 @@ isNumericSign(evt) {
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
-      
-    }else{
+
+    } else {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
     }
@@ -343,7 +344,7 @@ isNumericSign(evt) {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }
-    else{
+    else {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
     }
@@ -354,15 +355,15 @@ isNumericSign(evt) {
       firstName: [''],
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
-      countryCode_whtsap:[this.countryCode],
-      countryCode_telegram:[this.countryCode],
+      countryCode_whtsap: [this.countryCode],
+      countryCode_telegram: [this.countryCode],
       // dob: ['', Validators.compose([Validators.required])],
       // date: [''],
       // month: [''],
       // year: [''],
-      age:['', Validators.compose([Validators.required,Validators.min(0),Validators.max(150)])],
+      age: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(150)])],
       pincode: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+      email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
@@ -392,6 +393,9 @@ isNumericSign(evt) {
     this.dialogRef.close();
   }
   editLanguage() {
+    console.log(this.virtualForm.get('preferredLanguage').value);
+    this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
+    console.log(this.languageSelected);
     this.hideLanguages = false;
   }
   updateForm() {
@@ -406,43 +410,52 @@ isNumericSign(evt) {
     } else {
       console.log(this.details);
       this.setparentDetails(this.details);
-      
+
     }
 
   }
   saveLanguages() {
+    this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
       return false;
     }
     this.hideLanguages = true;
-    let elmnt = document.getElementById("plng");
-    elmnt.scrollIntoView();
+    this.languageSelected = [];
+    // let elmnt = document.getElementById("plng");
+    // elmnt.scrollIntoView()
   }
   cancelLanguageSelection() {
-   const selectedperson=this.virtualForm.get('serviceFor').value;
-   this.virtualForm.patchValue({'preferredLanguage':[]});
-   this.onServiceForChange(selectedperson);
+    if (this.virtualForm.get('preferredLanguage').value.length == 0) {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+      this.lngknown = 'yes';
+      this.virtualForm.patchValue({ islanguage: 'yes' });
+    } else {
+      this.languageSelected = [];
+
+    }
     this.hideLanguages = true;
-   // this.updateForm();
-    let elmnt = document.getElementById("plng");
-    elmnt.scrollIntoView();
+    // let elmnt = document.getElementById("plng");
+    // elmnt.scrollIntoView();
   }
+
   langSel(sel) {
-    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
-      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(sel);
+
+    if (this.languageSelected.length > 0) {
+      const existindx = this.languageSelected.indexOf(sel);
       if (existindx === -1) {
-        this.virtualForm.get('preferredLanguage').value.push(sel);
+        this.languageSelected.push(sel);
       } else {
-        this.virtualForm.get('preferredLanguage').value.splice(existindx, 1);
+        this.languageSelected.splice(existindx, 1);
       }
     } else {
-      this.virtualForm.get('preferredLanguage').value.push(sel);
+      this.languageSelected.push(sel);
     }
+
   }
   checklangExists(lang) {
-    if (this.virtualForm.get('preferredLanguage').value.length > 0) {
-      const existindx = this.virtualForm.get('preferredLanguage').value.indexOf(lang);
+    if (this.languageSelected.length > 0) {
+      const existindx = this.languageSelected.indexOf(lang);
       if (existindx !== -1) {
         return true;
       }
@@ -452,32 +465,37 @@ isNumericSign(evt) {
   }
   validateFields() {
     let isinvalid = false;
-    if(this.countryCode==='+91'){
-    if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-      isinvalid = true;
+    if (this.countryCode === '+91') {
+      if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+        isinvalid = true;
+        console.log(isinvalid);
+      }
     }
-  }
-  if(this.virtualForm.get('gender').value===''){
-    isinvalid = true;
-  }
+    if (this.virtualForm.get('gender').value === '') {
+      isinvalid = true;
+      console.log(isinvalid);
+    }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
-    // if (this.virtualForm.get('dob').value === '') {
-    //   isinvalid = true;
-    // }
+
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
+   
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -489,7 +507,7 @@ isNumericSign(evt) {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-
+console.log(isinvalid);
     return isinvalid;
   }
 
@@ -528,25 +546,26 @@ isNumericSign(evt) {
   }
 
   onSubmit(formdata) {
-    this.submitbtndisabled=true;
-    formdata['phoneno']=this.customer_data.userProfile.primaryMobileNo;
+    this.submitbtndisabled = true;
+    formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+     if(this.virtualForm.controls.email.invalid){
+       return false;
+     }
     if (this.validateFields() === true) {
-      this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
-    } else {
-      // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
-
-      // formdata['dob'] = dob;
+      this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+    } else  {
+  
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
             if (result !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               this.dialogRef.close(formdata);
             }
           },
           (error) => {
-            this.submitbtndisabled=false;
+            this.submitbtndisabled = false;
             return false;
           }
         );
@@ -556,34 +575,36 @@ isNumericSign(evt) {
             if (data !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
               formdata['newMemberId'] = data;
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               this.dialogRef.close(formdata);
             }
           },
             () => {
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               return false;
             })
         } else {
           this.updateMemberInfo(formdata).then(
             (data) => {
               if (data !== false) {
-                this.submitbtndisabled=false;
+                this.submitbtndisabled = false;
                 this.lStorageService.setitemonLocalStorage('age', formdata.age);
                 this.dialogRef.close(formdata);
               }
             },
             () => {
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               return false;
             }
           );
         }
 
 
-      }
+      
+    
 
     }
+  }
 
 
 
@@ -597,26 +618,26 @@ isNumericSign(evt) {
       userObj['id'] = _this.customer_data.id;
       if (formdata.whatsappnumber !== '') {
         const whatsup = {}
-        if(formdata.countryCode_whtsap.startsWith('+')){
-        whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
+        if (formdata.countryCode_whtsap.startsWith('+')) {
+          whatsup["countryCode"] = formdata.countryCode_whtsap
+        } else {
+          whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
         }
-          whatsup["number"] = formdata.whatsappnumber
+        whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
       if (formdata.telegramnumber !== '') {
         const telegram = {}
-        if(formdata.countryCode_telegram.startsWith('+')){
+        if (formdata.countryCode_telegram.startsWith('+')) {
           telegram["countryCode"] = formdata.countryCode_telegram
-          }else{
-            telegram["countryCode"] = '+'+formdata.countryCode_telegram
-          }
-          telegram["number"] = formdata.telegramnumber
+        } else {
+          telegram["countryCode"] = '+' + formdata.countryCode_telegram
+        }
+        telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      if(formdata.email!==''){
-        userObj['email']=formdata.email
+      if (formdata.email !== '') {
+        userObj['email'] = formdata.email
       }
       userObj['gender'] = formdata.gender;
       userObj['firstName'] = firstName;
@@ -631,7 +652,7 @@ isNumericSign(evt) {
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
-          
+
           resolve(true);
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -647,31 +668,33 @@ isNumericSign(evt) {
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    if (formdata.whatsappnumber !== '') {
+    console.log(formdata.whatsappnumber);
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
-      if(formdata.countryCode_whtsap.startsWith('+')){
+      if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
-        }
-        whatsup["number"] = formdata.whatsappnumber
+      } else {
+        whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+      }
+      whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
-      if(formdata.countryCode_telegram.startsWith('+')){
+      if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
-        }else{
-          telegram["countryCode"] = '+'+formdata.countryCode_telegram
-        }
-        telegram["number"] = formdata.telegramnumber
+      } else {
+        telegram["countryCode"] = '+' + formdata.countryCode_telegram
+      }
+      telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
+
     }
-    if(formdata.email!==''){
-      memberInfo['userProfile']['email']=formdata.email
+    if (formdata.email !== '') {
+      memberInfo['userProfile']['email'] = formdata.email
     }
-   
-    
+
+
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
     memberInfo.userProfile['gender'] = formdata.gender;
@@ -708,29 +731,29 @@ isNumericSign(evt) {
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappumber !== '') {
+    if (formdata.whatsappnumber !== '') {
       const whatsup = {}
-      if(formdata.countryCode_whtsap.startsWith('+')){
+      if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
-        }
-        whatsup["number"] = formdata.whatsappumber
+      } else {
+        whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+      }
+      whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== '') {
       const telegram = {}
-      if(formdata.countryCode_telegram.startsWith('+')){
+      if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
-        }else{
-          telegram["countryCode"] = '+'+formdata.countryCode_telegram
-        }
+      } else {
+        telegram["countryCode"] = '+' + formdata.countryCode_telegram
+      }
       telegram["countryCode"] = formdata.countryCode_telegram
-        telegram["number"] = formdata.telegramnumber
-        memberInfo['userProfile']['telegramNum'] = telegram;
+      telegram["number"] = formdata.telegramnumber
+      memberInfo['userProfile']['telegramNum'] = telegram;
     }
-    if(formdata.email!==''){
-      memberInfo['userProfile']['email']=formdata.email
+    if (formdata.email !== '') {
+      memberInfo['userProfile']['email'] = formdata.email
     }
 
 

@@ -6,11 +6,13 @@
   <mat-dialog-content>
         <img  style="width:100%;margin-top: -20px;" [src]="details.url" *ngIf="details.type && details.type == 'image/bmp'|| details.type =='image/png'|| details.type == 'image/gif' || details.type == 'image/jpg' ||details.type =='image/jpeg'||details.type == 'image/webp'"/>  
         <video style="width:100%;margin-top: -20px;" controls *ngIf="details.type && details.type == 'video/mp4' || details.type == 'video/mpeg'||details.type == 'video/quicktime'">
-            <source [src]="details.url" />
+            <source *ngIf="data.source=='mr'" [src]="details.url" />
+            <source *ngIf="data.source=='qnr'" [src]="details.s3path" />
           </video>  
           <audio style="width:100%;margin-top: -20px;" controls *ngIf="details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3'">
            
-            <source [src]="details.url"/>
+            <source *ngIf="data.source=='mr'" [src]="details.url"/>
+            <source *ngIf="data.source=='qnr'" [src]="details.s3path" />
          </audio>
          
 </mat-dialog-content>

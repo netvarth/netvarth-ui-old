@@ -131,7 +131,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   createForm() {
     this.couponForm = this.formbuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      couponCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+      couponCode: ['', Validators.compose([Validators.required,  Validators.maxLength(this.maxChars)])],
       description: [''],
       calculationType: ['', [Validators.required]],
       amount: ['', [Validators.required]],
@@ -342,13 +342,17 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         let calmodeControl = this.couponForm.get('calculationType');
         calmodeControl.markAsTouched();
 
-        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl.valid) {
+        if (nameControl.valid && codeControl.valid && amountControl.valid && calmodeControl.valid &&
+           this.couponForm.get('name').value.trim()!=='' &&this.couponForm.get('couponCode').value.trim()!=''
+           && this.couponForm.get('amount').value!==0){
           this.step = this.step + 1;
           setTimeout(() => {
             this.startDatePicker.nativeElement.focus();
           }, 100);
 
 
+        }else{
+          this.snackbarService.openSnackBar('Fill all required fields',{ 'panelClass': 'snackbarerror' })
         }
       } else if (this.step == 2) {
         const startDateVal = this.couponForm.get('couponRules').get('startDate').value;

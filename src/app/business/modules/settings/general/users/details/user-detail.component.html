@@ -174,7 +174,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     <input type="text" (keypress)="isNumeric($event)" matInput
                                                         class="form-control text-width" id="phonenumber"
                                                         placeholder="Enter Mobile # " formControlName="phonenumber"
-                                                        autocomplete="off"  maxlength="15">
+                                                        autocomplete="off" >
                                             </mat-form-field>
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
@@ -193,16 +193,19 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     formControlName="email" placeholder="Email(user@xyz.com)"
                                                     autocomplete="off">
                                             </mat-form-field>
-                                            <app-field-error-display [displayError]="true"
+                                            <!-- <app-field-error-display [displayError]="true"
                                                 *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
                                                 [errorMsg]="emailerror">
-                                            </app-field-error-display>
+                                            </app-field-error-display> -->
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(userForm,'email')" [errorMsgs]="fed_service.getErrorMessage(userForm,'email',
+                                                                                            {
+                                                                                              'pattern' : 'Please enter valid email'
+                                                                                            })">
+                                              </app-field-error-display>
                                         </div>
                                     </div>
 
                                     <div class="clearfix"></div>
-
-
 <!-- *******User Telegram and what's up number ************ -->
                                     <!-- <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
                                         <div class="col-md-4 col-sm-4 col-xs-4 mgn-rt-10 no-padding">
@@ -447,9 +450,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                          
                                         </div>   
                                         <div *ngIf="showloc">
-                                            <div *ngFor="let locationDetails of locations; let idx = index">
+                                            <!-- <div *ngFor="let locationDetails of locations; let idx = index">
                                                 <mat-radio-button [checked]="idx === 0">
                                                 {{locationDetails.Name}},&nbsp;{{locationDetails.Block}},&nbsp;{{locationDetails.Region}},&nbsp;{{locationDetails.State}}
+                                                </mat-radio-button>
+                                            </div> -->
+                                            <div>
+                                                <mat-radio-button checked="checked" >
+                                                {{locationDetails.District}},&nbsp;{{locationDetails.State}}
                                                 </mat-radio-button>
                                             </div>
                                         </div>

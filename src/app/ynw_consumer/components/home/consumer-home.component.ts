@@ -238,6 +238,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   accountId: any;
   customAppid: any;
   customId: any;
+  orderstatus = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -264,6 +265,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.accountId) {
         this.accountId = qparams.accountId;
+        this.shared_services.getOrderSettings(this.accountId).subscribe(
+          (settings: any) => {
+            this.orderstatus = settings.enableOrder;
+          }
+        );
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;

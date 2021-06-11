@@ -110,6 +110,7 @@ import { ListRecordingsDialogComponent } from './shared/components/list-recordin
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 import { MeetRoomComponent } from './ynw_consumer/components/meet-room/meet-room.component';
+import { MeetRoomModule } from './ynw_consumer/components/meet-room/meet-room.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -206,6 +207,7 @@ export function init_app(globalService: GlobalService) {
     ModalModule.forRoot(),
     ShareIconsModule,
     VirtualFieldsModule,
+    MeetRoomModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

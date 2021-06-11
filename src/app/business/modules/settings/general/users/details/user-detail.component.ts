@@ -228,7 +228,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            gender: ['male'],
+            gender: [''],
             // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
@@ -563,7 +563,7 @@ export class BranchUserDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.locationDetails = data;
-                    this.locations = this.locationDetails[0].PostOffice;
+                    // this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
                     this.editloc = false;
                 },

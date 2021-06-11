@@ -14285,3 +14285,6 @@ padding-left: 15px !important;
     max-width: 100% !important;
   }
 }
+.tblscroll {
+  overflow: auto;
+}

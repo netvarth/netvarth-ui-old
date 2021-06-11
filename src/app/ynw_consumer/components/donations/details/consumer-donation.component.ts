@@ -858,9 +858,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     //         this.dispCustomerEmail = true;
     //     }
     // }
-    handleEmail() {
+    handleEmail(email) {
         this.action = 'email';
         this.confrmshow = false;
+        this.payEmail= email;
         // if (this.dispCustomerEmail) {
         //     this.dispCustomerEmail = false;
         // } else {

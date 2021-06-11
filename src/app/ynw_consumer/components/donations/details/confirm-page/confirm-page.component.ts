@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -47,16 +47,22 @@ export class ConfirmPageComponent implements OnDestroy {
     );
   }
   okClick() {
-    // let queryParams = {};
-    // if(this.customId) {
-    //   queryParams['customId']= this.customId;
-    //   queryParams['account_id'] = this.accountId;
-    // }
+    let queryParams = {};
+    if(this.customId) {
+      queryParams['customId']= this.customId;
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams,
+    };
+    if(this.customId) {
+      this.router.navigate(['consumer'], navigationExtras);
+    } else {
+      this.router.navigate(['consumer'])
+    }
 
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: queryParams,
-    // };
-    this.router.navigate(['consumer'])
+
+    
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();

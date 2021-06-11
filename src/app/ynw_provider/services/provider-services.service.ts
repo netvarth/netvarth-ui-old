@@ -213,29 +213,29 @@ export class ProviderServices {
   // }
 
   // Non working days new Url's
-getProviderNonworkingdays(id?) {
-  if (id) {
-    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday/' + id);
-  } else {
-    return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday');
+  getProviderNonworkingdays(id?) {
+    if (id) {
+      return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday/' + id);
+    } else {
+      return this.servicemeta.httpGet('provider/settings/nonBusinessDays/holiday');
+    }
   }
-}
-addHoliday(data) {
-  return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
-}
-Holidaywaitlist(id) {
-  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
-}
-userHolidaywaitlist(id) {
-  return this.servicemeta.httpPut('provider/vacation/mark/' + id);
-}
-deleteHoliday(id) {
-  const path = 'provider/settings/nonBusinessDays/holiday/' + id;
-  return this.servicemeta.httpDelete(path);
-}
-editHoliday(data) {
-  return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday', data);
-}
+  addHoliday(data) {
+    return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
+  }
+  Holidaywaitlist(id) {
+    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
+  }
+  userHolidaywaitlist(id) {
+    return this.servicemeta.httpPut('provider/vacation/mark/' + id);
+  }
+  deleteHoliday(id) {
+    const path = 'provider/settings/nonBusinessDays/holiday/' + id;
+    return this.servicemeta.httpDelete(path);
+  }
+  editHoliday(data) {
+    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday', data);
+  }
   // business profile Primary fields
   getParkingtypes() {
     return this.servicemeta.httpGet('ynwConf/parkingTypes');
@@ -968,7 +968,7 @@ editHoliday(data) {
     return this.servicemeta.httpPut(url);
   }
   getJaldeeVideoRecording() {
-    const url = 'provider/account/settings/videoCallMinutes' ;
+    const url = 'provider/account/settings/videoCallMinutes';
     return this.servicemeta.httpGet(url);
   }
   getGlobalSettings() {
@@ -1158,7 +1158,7 @@ editHoliday(data) {
   //   return this.servicemeta.httpGet('provider/vacation/' + id);
   // }
 
-   // **User vacation URL's New***
+  // **User vacation URL's New***
   getUserProviderNonworkingdays(id?) {
     return this.servicemeta.httpGet('provider/vacation/getvacation/' + id);
   }
@@ -1285,8 +1285,8 @@ editHoliday(data) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
     return this.servicemeta.httpGet(url);
   }
-  getAppointmentSlotsByDate(scheduleid, date,serviceid) {
-    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date +'/' + serviceid;
+  getAppointmentSlotsByDate(scheduleid, date, serviceid) {
+    const url = 'provider/appointment/schedule/' + scheduleid + '/' + date + '/' + serviceid;
     return this.servicemeta.httpGet(url);
   }
   // getAppointmentSlotsByDate(scheduleid, date) {
@@ -1798,17 +1798,17 @@ editHoliday(data) {
   paymentRefund(data) {
     return this.servicemeta.httpPost('provider/payment/refund', data);
   }
-  saveReportCriteria(reportName, data) {
-    const url = 'provider/report/' + reportName;
+  saveReportCriteria(data) {
+    const url = 'provider/report/ops';
     return this.servicemeta.httpPost(url, data);
   }
   getCriteriaList() {
     const url = 'provider/report/criteria';
     return this.servicemeta.httpGet(url);
   }
-  deleteCriteria(reportName, reportType) {
-    const path = 'provider/report/' + reportName + '/' + reportType;
-    return this.servicemeta.httpDelete(path);
+  deleteCriteria(data) {
+    const path = 'provider/report/ops'
+    return this.servicemeta.httpDelete(path, data);
   }
 
   uploadItemImages(id, data) {
@@ -1950,8 +1950,8 @@ editHoliday(data) {
   // Customer
   deleteLabelfromOrder(data) {
     const url = 'provider/orders/masslabel';
-    return this.servicemeta.httpDelete(url,data);
-  } 
+    return this.servicemeta.httpDelete(url, data);
+  }
   createCustomerGroup(data) {
     const url = 'provider/customers/group';
     return this.servicemeta.httpPost(url, data);
@@ -2071,34 +2071,50 @@ editHoliday(data) {
     const url = 'provider/questionnaire/change/' + status + '/' + id;
     return this.servicemeta.httpPut(url);
   }
-  videoaudioUploadurl(id,data){
+  videoaudioUploadurl(id, data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPost(url, data);
   }
-  videoaudioS3Upload(file,url){
-    return this.servicemeta.httpPut(url,file);
+  videoaudioS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
   }
-  videoaudioUploadconfirm(id,data){
+  videoaudioUploadconfirm(id, data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
   }
   deleteMRFile(mrId, fileId) {
-    const url = 'provider/mr/upload/url/'  + mrId +'/'+fileId;
+    const url = 'provider/mr/upload/url/' + mrId + '/' + fileId;
     return this.servicemeta.httpDelete(url);
   }
-  // getlocationbypincode(pincode) {
-  //   const url = 'provider/account/settings/locByPincode/'  + pincode;
-  //   return this.servicemeta.httpGet(url);
-  // }
   getlocationbypincode(pincode) {
-    const url = 'provider/account/settings/locations/'  + pincode;
+    const url = 'provider/account/settings/locByPincode/' + pincode;
     return this.servicemeta.httpGet(url);
   }
+  // getlocationbypincode(pincode) {
+  //   const url = 'provider/account/settings/locations/'  + pincode;
+  //   return this.servicemeta.httpGet(url);
+  // }
   terminateInstantQ(id) {
     const url = 'provider/waitlist/queues/instant/terminate/' + id;
     return this.servicemeta.httpPut(url);
   }
   addMyAvailbility(data) {
     return this.servicemeta.httpPut('provider/waitlist/queues/available', data);
+  }
+  meetReady(id) {
+    const url = 'provider/video/adhoc/start/consumer/' + id;
+    return this.servicemeta.httpPost(url);
+  }
+  getStatus(id) {
+    const url = 'provider/video/adhoc/' + id + '/status';
+    return this.servicemeta.httpGet(url);
+  }
+  providerApptQnrUploadStatusUpdate(uid, data) {
+    const url = 'provider/appointment/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
+  providerWaitlistQnrUploadStatusUpdate(uid, data) {
+    const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
   }
 }

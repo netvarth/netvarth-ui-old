@@ -440,9 +440,9 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="waitlist.provider">
                     Assigned: {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
+                <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
                     Not assigned
-                </div>
+                </div> -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation">
                     <!-- <span class="b1">Location : </span> -->
                     <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 

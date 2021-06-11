@@ -1761,8 +1761,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
+  // gotoCustomViews() {
+  //   this.router.navigate(['provider', 'settings', 'general', 'customview']);
+  // }
   gotoCustomViews() {
-    this.router.navigate(['provider', 'settings', 'general', 'customview']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'appt'
+      }
+    };
+    this.router.navigate(['provider', 'settings', 'general', 'customview'], navigationExtras);
   }
   gotoUser() {
     this.router.navigate(['provider', 'settings', 'general', 'users']);

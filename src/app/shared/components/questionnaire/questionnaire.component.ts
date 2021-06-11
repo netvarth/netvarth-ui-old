@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ButtonEvent } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../constants/project-messages';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -77,6 +78,7 @@ export class QuestionnaireComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
+    private dateProcessor: DateTimeProcessor,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
@@ -384,7 +386,11 @@ export class QuestionnaireComponent implements OnInit {
         questiontype = question[0].question.fieldDataType;
       }
       if (this.answers[key] || questiontype === 'bool') {
-        newMap[questiontype] = this.answers[key];
+        let answer = this.answers[key];
+        if (questiontype === 'date') {
+          answer = this.dateProcessor.transformToYMDFormat(answer);
+        }
+        newMap[questiontype] = answer;
         data.push({
           'labelName': key,
           'answer': newMap
@@ -419,7 +425,11 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getDate(date) {
-    return new Date(date);
+    console.log(date);
+    const dates = date.split('-');
+    console.log(dates);
+    console.log(new Date(dates[2], dates[1], dates[0]));
+    return new Date(dates[2], dates[1], dates[0]);
   }
   listChange(ev, value, question) {
     if (ev.target.checked) {
@@ -664,13 +674,18 @@ export class QuestionnaireComponent implements OnInit {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.selectedMessage[indx].path;
+        let path;
+        if (this.selectedMessage[indx].type === 'application/pdf') {
+          path = 'assets/images/pdf.png';
+        } else {
+          path = this.selectedMessage[indx].path;
+        }
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.uploadedImages[indx].s3path;
+        const path = this.uploadedImages[indx].thumbPath;
         return path;
       }
     }
@@ -705,12 +720,26 @@ export class QuestionnaireComponent implements OnInit {
       return true;
     }
   }
+  showEditBtn() {
+    if (this.type) {
+      if (this.source === 'consCheckin' || this.source === 'proCheckin') {
+        if (this.bookingDetails.waitlistStatus !== 'checkedIn' && this.bookingDetails.waitlistStatus !== 'arrived') {
+          return false;
+        }
+      }
+      if (this.source === 'consAppt' || this.source === 'proAppt') {
+        if (this.bookingDetails.apptStatus !== 'Confirmed' && this.bookingDetails.apptStatus !== 'Arrived') {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
   onButtonBeforeHook(event: ButtonEvent) {
     if (!event || !event.button) {
       return;
     }
     if (event.button.type === ButtonType.DOWNLOAD) {
-      console.log(event.image);
     }
   }
   onButtonAfterHook() { }
@@ -760,6 +789,17 @@ export class QuestionnaireComponent implements OnInit {
       return this.uploadFilesTemp[question.labelName];
     } else {
       return question.filePropertie.allowedDocuments;
+    }
+  }
+  showQuestions(question) {
+    if ((this.source === 'consCheckin' || this.source === 'consAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
+      return false;
+    }
+    return true;
+  }
+  showProviderText(question) {
+    if ((this.source === 'proCheckin' || this.source === 'proAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
+      return true;
     }
   }
 }

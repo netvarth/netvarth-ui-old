@@ -793,7 +793,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'uid': this.rescheduleUserId,
             'time': this.selectedApptTime['time'],
             'date': this.selectedDate,
-            'schedule': this.selectedApptTime['scheduleId']
+            'schedule': this.selectedApptTime['scheduleId'],
+            'consumerNote': this.consumerNote
         };
         this.subs.sink = this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(

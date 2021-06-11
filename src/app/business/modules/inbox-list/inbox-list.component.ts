@@ -470,6 +470,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         count,
         {
           img: imagePath,
+          description: (attachements[comIndex].caption) ? attachements[comIndex].caption : ''
         },
       );
       this.image_list_popup_temp.push(imgobj);

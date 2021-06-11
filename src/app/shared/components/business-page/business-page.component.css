@@ -1409,7 +1409,7 @@ img.ordericon.home {
 
 .content.bus-page .bus-page-header .bus-title-content .business-name,
 .content.bus-page .bus-page-header .bus-title-content .business-user-name {
-  color: darkslategrey;
+  color: darkslategrey !important;
   margin-bottom: 10px !important;
   margin-top: 0 !important;
 }

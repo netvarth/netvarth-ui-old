@@ -2,14 +2,13 @@ import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, Render
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
+import { interval as observableInterval } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
 import { SubSink } from "subsink";
 import { MatDialog } from "@angular/material/dialog";
 import { AddInboxMessagesComponent } from "../../../shared/components/add-inbox-messages/add-inbox-messages.component";
-// import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
-import { interval as observableInterval } from 'rxjs';
 
 @Component({
     selector: 'app-meet-room',
@@ -48,6 +47,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     Id: any;
     checkId: any;
     custId: any;
+    showRecording: boolean;
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
@@ -57,7 +57,6 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         private router: Router,
         private cd: ChangeDetectorRef,
         private dialog: MatDialog,
-        // private teleService: TeleBookingService,
         private activated_route: ActivatedRoute,
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -159,6 +158,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
      */
     isConsumerReady() {
         if(this.checkId === true){
+            this.showRecording = true;
             const _this = this;
             const post_data = {
                 id: this.Id,
@@ -211,7 +211,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                     _this.consumerReady = false;
                     _this.meetObj = null;
                     // _this.status = 'Waiting for the consumer...'
-                    _this.status = 'Waiting for "' + this.booking.bookingFor + '" to start';
+                    _this.status = 'Waiting for Consumer';
                 }
             }, error => {
                 _this.loading = false;
@@ -232,8 +232,8 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         this.cd.detectChanges();
         // this.isConsumerReady();
         this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-            this.isLinkExpired();
-            this.getMeetingStatus();
+            // this.isLinkExpired();
+            // this.getMeetingStatus();
             this.isConsumerReady();
         });
         this.twilioService.previewContainer = this.previewContainer;
@@ -258,14 +258,20 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         // if (this.type === 'wl') {
         //     type = 'checkin'
         // }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                type: 'video',
-                id: this.Id
-            }
-        };
-        // this.location.back();
-        this.router.navigate(['provider', 'customers' , this.custId], navigationExtras);
+        if(this.checkId === true){
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    // type: 'video',
+                    id: this.Id
+                }
+            };
+            // this.location.back();
+            this.router.navigate(['provider', 'customers' , this.custId], navigationExtras);
+        }
+       else{
+        this.router.navigate(['/']);
+       }
+       
     }
 
     /**
@@ -379,48 +385,48 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     switchCamera() {
         this.twilioService.switchCamera();
     }
-    isLinkExpired(){
-        this.meetService.linkExpired(this.Id).subscribe(
-            (data: any) => {
-                this.linkStatus = data.linkStatus;
-                if(this.linkStatus === 'ENABLED'){
-                    this.showStartBt = true;
-                }
-                else{
-                    this.showStartBt = false; 
-                }
-            }
-        ); 
-      }
-      getMeetingStatus(){
-        this.meetService.getStats(this.Id).subscribe(
-            (data: any) => {
-                this.meetingStatus = data.meetingStatus;
-                if(this.meetingStatus === 'REQUESTED'){
-                    this.showStartBt = true;
-                    this.showRejoinBt = false;
-                    this.showEndBt = false;
-                    this.btndisabled = false;
-                }
-                else if(this.meetingStatus === 'INTERRUPTED'){
-                    this.showStartBt = false; 
-                    this.showRejoinBt = true;
-                    this.showEndBt = false;
-                    this.btndisabled = false;
-                }
-                else if(this.meetingStatus === 'STARTED'){
-                    this.showStartBt = true; 
-                    this.showRejoinBt = false;
-                    this.showEndBt = false;
-                    this.btndisabled = false;
-                }
-                else{
-                    this.showStartBt = false; 
-                    this.showRejoinBt = false;
-                    this.showEndBt = true;
-                    this.btndisabled = true;
-                }
-            }
-        ); 
-      }
+    // isLinkExpired(){
+    //     this.meetService.linkExpired(this.Id).subscribe(
+    //         (data: any) => {
+    //             this.linkStatus = data.linkStatus;
+    //             if(this.linkStatus === 'ENABLED'){
+    //                 this.showStartBt = true;
+    //             }
+    //             else{
+    //                 this.showStartBt = false; 
+    //             }
+    //         }
+    //     ); 
+    //   }
+    //   getMeetingStatus(){
+    //     this.meetService.getStats(this.Id).subscribe(
+    //         (data: any) => {
+    //             this.meetingStatus = data.meetingStatus;
+    //             if(this.meetingStatus === 'REQUESTED'){
+    //                 this.showStartBt = true;
+    //                 this.showRejoinBt = false;
+    //                 this.showEndBt = false;
+    //                 this.btndisabled = false;
+    //             }
+    //             else if(this.meetingStatus === 'INTERRUPTED'){
+    //                 this.showStartBt = false; 
+    //                 this.showRejoinBt = true;
+    //                 this.showEndBt = false;
+    //                 this.btndisabled = false;
+    //             }
+    //             else if(this.meetingStatus === 'STARTED'){
+    //                 this.showStartBt = true; 
+    //                 this.showRejoinBt = false;
+    //                 this.showEndBt = false;
+    //                 this.btndisabled = false;
+    //             }
+    //             else{
+    //                 this.showStartBt = false; 
+    //                 this.showRejoinBt = false;
+    //                 this.showEndBt = true;
+    //                 this.btndisabled = true;
+    //             }
+    //         }
+    //     ); 
+    //   }
 }

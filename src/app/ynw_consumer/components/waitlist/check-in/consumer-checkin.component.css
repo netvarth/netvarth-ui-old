@@ -1726,3 +1726,27 @@ body.modal-open {
   width: 20px !important;
   font-size: 1.3rem !important;
 }
+
+.c-checkin-new .chk-btns-div mat-chip.br-top-left-0 {
+  border-top-left-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.br-bottom-left-0 {
+  border-bottom-left-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.margin-left-0{
+  margin-left: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.br-top-right-0 {
+  border-top-right-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.br-bottom-right-0 {
+  border-bottom-right-radius: 0 !important;
+}
+
+.c-checkin-new .chk-btns-div mat-chip.margin-right-0{
+  margin-right: 0 !important;
+}
