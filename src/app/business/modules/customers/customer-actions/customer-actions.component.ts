@@ -24,6 +24,9 @@ export class CustomerActionsComponent implements OnInit {
     showApply = false;
     labelsforRemove: any = [];
     labelMap = {};
+    meet_data: any;
+    id: any;
+    providerMeetingUrl: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
@@ -94,6 +97,30 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
+    }
+    gotoMeet() {
+        this.closeDialog();
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        this.provider_services.meetReady(customerId).subscribe(
+            (data: any) => {
+                this.meet_data = data;
+                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
+                // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
+                //     this.getMeetingStatus();
+                // });
+                const retcheckarr = this.providerMeetingUrl.split('/');
+                this.id = retcheckarr[4]
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { custId: customerId }
+                };
+                // const path = 'meet/' + this.id ;
+                // window.open(path, '_blank');
+                this.router.navigate(['meet', this.id], navigationExtras);
+            }
+        );
+         
+
     }
     editCustomer() {
         this.closeDialog();

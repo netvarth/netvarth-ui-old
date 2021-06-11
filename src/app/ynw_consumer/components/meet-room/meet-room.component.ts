@@ -266,7 +266,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                 }
             };
             // this.location.back();
-            this.router.navigate(['provider', 'customers' , this.custId], navigationExtras);
+            this.router.navigate(['provider', 'customers'], navigationExtras);
         }
        else{
         this.router.navigate(['/']);

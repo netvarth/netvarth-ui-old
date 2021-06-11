@@ -108,10 +108,6 @@ export class CustomerDetailComponent implements OnInit {
     showToken;
     questionnaireList: any = [];
     showQuestionnaire = false;
-    providerMeetingUrl: any;
-    meet_data: any;
-    id: any;
-    showStartBt;
     subs = new SubSink();
     refreshTime = 10;
     linkStatus: any;
@@ -236,27 +232,7 @@ export class CustomerDetailComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
-    gotoMeet() {
-        this.provider_services.meetReady(this.customerId).subscribe(
-            (data: any) => {
-                this.meet_data = data;
-                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
-                // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-                //     this.getMeetingStatus();
-                // });
-                const retcheckarr = this.providerMeetingUrl.split('/');
-                this.id = retcheckarr[4]
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { custId: this.customerId }
-                };
-                // const path = 'meet/' + this.id ;
-                // window.open(path, '_blank');
-                this.router.navigate(['meet', this.id], navigationExtras);
-            }
-        );
-         
-
-    }
+   
     // goMeetProvider() {
     //     const navigationExtras: NavigationExtras = {
     //         queryParams: { custId: this.customerId }
