@@ -236,6 +236,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     newWhatsapp;
     virtualFields: any;
     whatsappCountryCode;
+    disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -759,6 +760,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log(type);
         if (!this.is_wtsap_empty) {
             if (type==='appt') {
+                this.disablebutton = true;
                 this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment ) {
                 this.addApptAdvancePayment(post_Data);
@@ -878,6 +880,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
+                    this.disablebutton = false;
                 });
     }
     handleOneMemberSelect(id, firstName, lastName) {
@@ -1179,6 +1182,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.disablebutton = false;
                 }
             );
     }
@@ -1834,6 +1838,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     paywithRazorpay(pData: any) {

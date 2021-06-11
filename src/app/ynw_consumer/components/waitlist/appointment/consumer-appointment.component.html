@@ -1296,15 +1296,16 @@
                                             <div class="mr-2">
                                                 <button type="button"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('prev')">
+                                                    (click)="goToStep('prev')" [disabled]="disablebutton">
                                                     Previous
                                                 </button>
                                             </div>
                                             <div>
                                                 <button type="button" (click)="saveCheckin('appt')"
                                                     id="stepThreeConfirmButton"
+                                                    [class.spinner]="disablebutton" [class.spinner-darker-success]="disablebutton" [class.spinner-center]="disablebutton"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    [disabled]="!checkPolicy && heartfulnessAccount">
+                                                    [disabled]="(!checkPolicy && heartfulnessAccount) || disablebutton">
                                                     <ng-container
                                                         *ngIf="paymentLength > 0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         Pay</ng-container>
