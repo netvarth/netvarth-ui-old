@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
   templateUrl: './showuploadfile.component.html'
 })
 export class ShowuploadfileComponent implements OnInit {
-  details: any;
+  details: any = [];
   locationImg: any;
   cacheavoider = '';
   title = 'Detailed View';
