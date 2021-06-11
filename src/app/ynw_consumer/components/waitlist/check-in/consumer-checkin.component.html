@@ -204,7 +204,10 @@
                                                                         <span
                                                                             *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
                                                                 </mat-chip>
-                                                                <mat-chip class="notes-and-file-chip"><a
+                                                                <span>
+                                                                <mat-chip class="notes-and-file-chip"
+                                                                    [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                                <a
                                                                         class="lnk action pointer-cursor"
                                                                         (click)="imagefile1.click();"><input #imagefile1
                                                                             type="file" accept="/*;capture=camera"
@@ -213,9 +216,15 @@
                                                                             class="fa fa-paperclip mgn-rt-5"
                                                                             aria-hidden="true"></i>Upload
                                                                         File
-                                                                        <span
-                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
+                                                                        <!-- <span
+                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
                                                                     </a></mat-chip>
+                                                                    <mat-chip *ngIf="getAttachLength() > 0" class="notes-and-file-chip br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                        <a class="lnk action pointer-cursor" (click)="viewAttachments()">
+                                                                            View (<span>{{getAttachLength()}}</span>)
+                                                                        </a>
+                                                                    </mat-chip>
+                                                                </span>
                                                             </mat-chip-list>
                                                         </div>
                                                     </div>
