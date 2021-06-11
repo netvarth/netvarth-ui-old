@@ -407,4 +407,253 @@
             </div>
         </div>
     </div>
+    <div class="operations-row">
+        <div class="column operations-column">
+            <div class="card">
+                <div class="header">
+                    <h2>Operations</h2>
+                    <button mat-icon-button [matMenuTriggerFor]="operationsMenu" aria-label="Operations Menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #operationsMenu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>dialpad</mat-icon>
+                            <span>Redial</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>voicemail</mat-icon>
+                            <span>Check voice mail</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>notifications_off</mat-icon>
+                            <span>Disable alerts</span>
+                        </button>
+                    </mat-menu>
+                </div>
+                <div class="tableBody">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Doctors Team</th>
+                                    <th scope="col">Date of Operation</th>
+                                    <th scope="col">Report</th>
+                                    <th scope="col">Diseases</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user8.jpg" alt="">
+                                    </td>
+                                    <td>John Doe</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user1.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user2.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user3.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+4</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>12-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Cancer</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user5.jpg" alt="">
+                                    </td>
+                                    <td>Jens Brincker</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user7.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user2.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+3</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>14-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Fracture</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user3.jpg" alt="">
+                                    </td>
+                                    <td>Mark Hay</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user2.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user1.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user8.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+2</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>18-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Cataract Surgery</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user6.jpg" alt="">
+                                    </td>
+                                    <td>Mark Hay</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user5.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user3.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user9.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+4</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>20-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Cholecystectomy</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user1.jpg" alt="">
+                                    </td>
+                                    <td>Mark Hay</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user2.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user4.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+3</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>22-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Hysterectomy</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-img">
+                                        <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user2.jpg" alt="">
+                                    </td>
+                                    <td>Mark Hay</td>
+                                    <td class="text-truncate">
+                                        <ul class="list-unstyled order-list">
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user6.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user9.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <img src="https://radixtouch.com/templates/admin/cliniva/source/light/assets/images/user/user4.jpg" alt="user" class="rounded-circle">
+                                            </li>
+                                            <li class="avatar avatar-sm">
+                                                <span class="badge">+2</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>28-08-2019</td>
+                                    <td>
+                                        <i class="fa fa-file-pdf-o tbl-pdf"></i>
+                                    </td>
+                                    <td>Back Pain Surgery</td>
+                                    <td>
+                                        <button mat-icon-button class="btn-tbl-edit">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="btn-tbl-delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

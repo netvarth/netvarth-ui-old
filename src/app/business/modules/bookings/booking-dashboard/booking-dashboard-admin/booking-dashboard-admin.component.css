@@ -281,6 +281,61 @@
     list-style: none !important;
 }
 
+.operations-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    padding: 12.5px 7.5px 0 !important;
+}
+
+.operations-row .operations-column {
+    width: 100% !important;
+}
+
+.operations-row .column .card {
+    margin: 0 5px 12.5px !important;
+    width: auto !important;
+    background: #fff !important;
+    overflow: hidden !important;
+    position: relative !important;
+    border: 1px solid #f2f4f9 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
+    -webkit-box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+}
+
+.operations-row .column .card .header {
+    display: flex !important;
+    width: 100% !important;
+    color: #555 !important;
+    padding: 10px 15px !important;
+    line-height: 40px !important;
+}
+
+.operations-row .column .card .header h2 {
+    margin: 0 !important;
+    color: #5b626b !important;
+    font-size: 17px !important;
+    line-height: 40px !important;
+    padding-right: 10px !important;
+    font-weight: 500 !important;
+    font-family: "Roboto", sans-serif !important;
+}
+
+.operations-row .column .card .header > button {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    list-style: none !important;
+}
+
 ::ng-deep .mat-menu-content button.mat-menu-item {
     font-family: Roboto, "Helvetica Neue", sans-serif !important;
 }
@@ -429,4 +484,106 @@ td a:hover {
     td {
         font-size: 14px !important;
     }
+}
+
+.table tbody tr td ul {
+    margin: 0 !important;
+}
+
+.order-list li + li {
+    margin-left: -14px;
+}
+
+.avatar-sm {
+    width: 32px !important;
+}
+
+.avatar {
+    position: relative !important;
+    width: 30px;
+    white-space: nowrap !important;
+    border-radius: 1000px !important;
+    vertical-align: bottom !important;
+    display: inline-block !important;
+}
+
+.order-list li img {
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 2px 10px 0 rgba(107, 111, 130, 0.3) !important;
+}
+
+.avatar img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border: 0;
+    border-radius: 1000px;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.order-list li .badge {
+    background: rgba(255, 255, 255, 0.8)  !important;
+    color: #6b6f82 !important;
+    margin-bottom: 6px !important;
+}
+
+span.badge {
+    min-width: auto !important;
+    float: none !important;
+    font-size: 13px !important;
+}
+
+.table .tbl-pdf {
+    color: #f96332 !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 400 !important;
+}
+
+.btn-tbl-edit {
+    background-color: #96a2b4 !important;
+    height: 30px !important;
+    width: 30px !important;
+    margin: 2px !important;
+    line-height: 30px !important;
+    color: #fff !important;
+}
+
+.btn-tbl-edit:hover {
+    background-color: #888 !important;
+    color: #fff !important;
+}
+
+.btn-tbl-edit:focus {
+    background-color: #888 !important;
+}
+
+.btn-tbl-edit .material-icons {
+    font-size: 16px !important;
+}
+
+.btn-tbl-delete {
+    background-color: #ff944f !important;
+    height: 30px !important;
+    width: 30px !important;
+    margin: 2px !important;
+    line-height: 30px !important;
+    color: #fff !important;
+}
+
+.btn-tbl-delete:hover {
+    background-color: #ff9600 !important;
+    color: #fff !important;
+}
+
+.btn-tbl-delete:focus {
+    background-color: #ff9600 !important;
+}
+
+.btn-tbl-delete .material-icons {
+    font-size: 16px !important;
 }
