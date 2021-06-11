@@ -111,6 +111,7 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx i {
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
     font-size: .875rem;
     font-weight: 500;
+    padding-right: 10px;
 }
 
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin {
@@ -2054,3 +2055,6 @@ header {
     height: 20px;
   }
 
+  /* header .lgin.cust button, header .ot-bx {
+      margin-top: 0px !important;
+  } */

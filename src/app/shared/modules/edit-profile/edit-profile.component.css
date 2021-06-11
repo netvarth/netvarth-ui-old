@@ -1,0 +1,16 @@
+.myaccount .panel {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.myaccount .panel .card {
+    background-color: transparent !important;
+}
+
+.myaccount .panel .mat-radio-label {
+    padding-right: 10px !important;
+}
+.myaccount .picker-form-group input {
+    padding: 0px 0px 0px 10px !important;
+    height: 35px;
+}
