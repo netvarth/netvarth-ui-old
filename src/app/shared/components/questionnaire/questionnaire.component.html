@@ -134,14 +134,20 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Date -->
-                    <div class="col-12 no-padding" *ngIf="getQuestion(question).fieldDataType === 'date'">
-                        <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                            id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
-                            min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
-                            max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
-                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                            {{apiError[getQuestion(question).labelName]}}</div>
-                    </div>
+                      <div class="col-12 no-padding disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                            <!-- <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
+                                id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
+                                max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}"> -->
+                            <input class="form-control1" [matDatepicker]="picker"
+                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                (click)="picker.open()">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker>
+                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                                {{apiError[getQuestion(question).labelName]}}</div>
+                      </div>
                 </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
