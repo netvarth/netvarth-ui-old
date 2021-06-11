@@ -130,11 +130,14 @@
                                         <div class="form-group col-md-7 no-padding picker-form-group">
                                             <!-- <mat-form-field> -->
                                                 <label class="col-form-label" for="dob">Date of birth</label>
-                                                <input  [matDatepicker]="picker" placeholder="Date of birth"
+                                                <div style = "display: flex;">
+                                                    <input  [matDatepicker]="picker" placeholder="Date of birth"
                                                     #inputdob formControlName="dob" [max]="tday" [min]="minday" disabled
                                                     class="nofocus" tabindex="-1" readonly>
                                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                                                </div>
+                                                
                                             <!-- </mat-form-field> -->
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
