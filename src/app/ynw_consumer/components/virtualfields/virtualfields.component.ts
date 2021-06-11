@@ -283,7 +283,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
-    this.virtualForm.patchValue({ email: '' });
+    this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
     this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
