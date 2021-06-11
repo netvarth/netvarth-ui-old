@@ -499,6 +499,7 @@ export class QuestionnaireComponent implements OnInit {
         this.editQnr();
         this.snackbarService.openSnackBar('Updated Successfully');
       }
+      this.buttonDisable = false;
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -512,6 +513,7 @@ export class QuestionnaireComponent implements OnInit {
         this.editQnr();
         this.snackbarService.openSnackBar('Updated Successfully');
       }
+      this.buttonDisable = false;
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -632,7 +634,6 @@ export class QuestionnaireComponent implements OnInit {
   validateConsumerQuestionnaireResubmit(answers, dataToSend) {
     this.sharedService.validateConsumerQuestionnaireResbumit(answers, this.accountId).subscribe((data: any) => {
       this.setValidateError(data);
-      this.buttonDisable = false;
       if (data.length === 0) {
         if (this.source === 'consCheckin') {
           this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
