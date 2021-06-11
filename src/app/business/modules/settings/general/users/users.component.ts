@@ -150,7 +150,7 @@ export class BranchUsersComponent implements OnInit {
            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Doctor'},{name: 'ADMIN',displayName: 'Admin'}];
         }
         if (this.domain === 'finance') {
-            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Officer'},{name: 'ADMIN',displayName: 'Admin'}];
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Staff Member'},{name: 'ADMIN',displayName: 'Admin'}];
         }        
     }
 
@@ -566,11 +566,11 @@ export class BranchUsersComponent implements OnInit {
           }
         });
     }
-    getproider() {
-        if(this.domain === 'finance'){
-            return 'Officer';
-        } else{
-            return this.provider_label;
-        }
-    }
+    // getproider() {
+    //     if(this.domain === 'finance'){
+    //         return 'Staff Member';
+    //     } else{
+    //         return this.provider_label;
+    //     }
+    // }
 }
