@@ -576,7 +576,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
-                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.uid);
                     } else {
                         this.router.navigate(['provider', 'check-ins']);
@@ -1254,7 +1254,7 @@ export class ProviderCheckinComponent implements OnInit {
                     this.trackUuid = retData[key];
                     parentUid = retData['parent_uuid'];;
                 });
-                if (this.questionAnswers) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
                     this.router.navigate(['provider', 'check-ins']);

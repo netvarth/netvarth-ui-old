@@ -560,7 +560,7 @@ export class AppointmentComponent implements OnInit {
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
-                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.uid);
                     } else {
                         this.router.navigate(['provider', 'appointments']);
@@ -1182,7 +1182,7 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionAnswers) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(retUuid);
                 } else {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
