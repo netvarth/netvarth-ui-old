@@ -16,7 +16,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
-  // styleUrls: ['./home.component.scss']
+  styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
 
@@ -152,7 +152,7 @@ export class EditProfileComponent implements OnInit {
       date_format = moment(date).format(projectConstants.POST_DATE_FORMAT);
     }
     let post_data;
-    let passtyp;
+    // let passtyp;
     const curuserdet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (sub_data.email) {
       const stat = this.validateEmail(sub_data.email);
@@ -176,7 +176,6 @@ export class EditProfileComponent implements OnInit {
       return;
     }
     if (sub_data.email === sub_data.email1) {
-      if (this.curtype === 'consumer') {
         post_data = {
           'id': curuserdet['id'] || null,
           'firstName': sub_data.first_name.trim() || null,
@@ -185,21 +184,7 @@ export class EditProfileComponent implements OnInit {
           'gender': sub_data.gender || null,
           'email': sub_data.email || ''
         };
-        passtyp = 'consumer';
-      } else if (this.curtype === 'provider') {
-        post_data = {
-          'basicInfo': {
-            'id': curuserdet['id'] || null,
-            'firstName': sub_data.first_name.trim() || null,
-            'lastName': sub_data.last_name.trim() || null,
-            'dob': date_format || null,
-            'gender': sub_data.gender || null,
-            'email': sub_data.email || ''
-          }
-        };
-        passtyp = 'provider/profile';
-      }
-      this.shared_services.updateProfile(post_data, passtyp)
+      this.shared_services.updateProfile(post_data, 'consumer')
         .subscribe(
           () => {
             // this.api_success = Messages.PROFILE_UPDATE;

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                     </div>
                 </div>
@@ -206,11 +206,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
+                                            <mat-tab label="Patient Note">
                                                 <div class="pad-10"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
                                                     <div class="pad-10"
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</div>
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No patient note found</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">

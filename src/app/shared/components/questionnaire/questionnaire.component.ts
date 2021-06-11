@@ -7,8 +7,9 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ButtonEvent } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../constants/project-messages';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -51,6 +52,13 @@ export class QuestionnaireComponent implements OnInit {
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
+        className: 'fa fa-download',
+        type: ButtonType.DOWNLOAD,
+        ariaLabel: 'custom close aria label',
+        title: 'Download',
+        fontSize: '20px'
+      },
+      {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
         ariaLabel: 'custom close aria label',
@@ -69,6 +77,7 @@ export class QuestionnaireComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
+    private dateProcessor: DateTimeProcessor,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
@@ -369,7 +378,11 @@ export class QuestionnaireComponent implements OnInit {
         questiontype = question[0].question.fieldDataType;
       }
       if (this.answers[key] || questiontype === 'bool') {
-        newMap[questiontype] = this.answers[key];
+        let answer = this.answers[key];
+        if (questiontype === 'date') {
+          answer = this.dateProcessor.transformToYMDFormat(answer);
+        }
+        newMap[questiontype] = answer;
         data.push({
           'labelName': key,
           'answer': newMap
@@ -473,6 +486,7 @@ export class QuestionnaireComponent implements OnInit {
   updateConsumerQnr(dataToSend) {
     this.providerService.resubmitProviderCustomerQuestionnaire(this.customerDetails[0].id, dataToSend).subscribe(data => {
       this.editQnr();
+      this.snackbarService.openSnackBar('Updated Successfully');
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     });
@@ -483,6 +497,7 @@ export class QuestionnaireComponent implements OnInit {
         this.location.back();
       } else {
         this.editQnr();
+        this.snackbarService.openSnackBar('Updated Successfully');
       }
     }, error => {
       this.buttonDisable = false;
@@ -495,6 +510,7 @@ export class QuestionnaireComponent implements OnInit {
         this.location.back();
       } else {
         this.editQnr();
+        this.snackbarService.openSnackBar('Updated Successfully');
       }
     }, error => {
       this.buttonDisable = false;
@@ -633,13 +649,18 @@ export class QuestionnaireComponent implements OnInit {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.selectedMessage[indx].path;
+        let path;
+        if (this.selectedMessage[indx].type === 'application/pdf') {
+          path = 'assets/images/pdf.png';
+        } else {
+          path = this.selectedMessage[indx].path;
+        }
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.uploadedImages[indx].s3path;
+        const path = this.uploadedImages[indx].thumbPath;
         return path;
       }
     }
@@ -670,11 +691,32 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-    if (this.source === 'qnrDetails' || (this.type && !this.editQuestionnaire)) {
+    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || (this.type && !this.editQuestionnaire)) {
       return true;
     }
   }
-  onButtonBeforeHook() { }
+  showEditBtn() {
+    if (this.type) {
+      if (this.source === 'consCheckin' || this.source === 'proCheckin') {
+        if (this.bookingDetails.waitlistStatus !== 'checkedIn' && this.bookingDetails.waitlistStatus !== 'arrived') {
+          return false;
+        }
+      }
+      if (this.source === 'consAppt' || this.source === 'proAppt') {
+        if (this.bookingDetails.apptStatus !== 'Confirmed' && this.bookingDetails.apptStatus !== 'Arrived') {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+  onButtonBeforeHook(event: ButtonEvent) {
+    if (!event || !event.button) {
+      return;
+    }
+    if (event.button.type === ButtonType.DOWNLOAD) {
+    }
+  }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document) {
     this.image_list_popup = [];

@@ -204,6 +204,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     consumerType: string;
     whatsappCountryCode;
     checkPolicy = true;
+    disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -785,6 +786,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         post_Data['consumer'] = { id: this.customer_data.id };
         if (!this.is_wtsap_empty) {
             if (type === 'checkin') {
+                this.disablebutton = true;
                 this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
@@ -875,7 +877,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
                 }
-                if (this.questionAnswers && this.questionAnswers.answers && this.questionAnswers.answers.answerLine && this.questionAnswers.answers.answerLine.length > 0) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
@@ -899,6 +901,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     submitQuestionnaire(uuid) {
@@ -926,6 +929,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         },
             error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
             });
     }
     showCheckinButtonCaption() {
@@ -1269,8 +1273,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
                     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1310,7 +1316,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     () => {
                     },
                     error => {
-                        this.wordProcessor.apiErrorAutoHide(this, error);
+                        this.wordProcessor.apiErrorAutoHide(this, error); 
+                        this.disablebutton = false;
                     }
                 );
         }
@@ -2002,6 +2009,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     paywithRazorpay(pData: any) {

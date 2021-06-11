@@ -299,7 +299,11 @@ isNumericSign(evt) {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
-    this.virtualForm.patchValue({ email: '' });
+    if(this.customer_data.userProfile.email){
+      this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
+      }else{
+        this.virtualForm.patchValue({ email: ''}); 
+      }
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
     this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo  });
   }
@@ -558,6 +562,9 @@ isNumericSign(evt) {
   onSubmit(formdata) {
     this.submitbtndisabled=true;
     formdata['phoneno']=this.customer_data.userProfile.primaryMobileNo;
+    if(this.virtualForm.controls.email.invalid){
+      return false;
+    }
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
     } else {

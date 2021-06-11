@@ -36,13 +36,13 @@
                                         <!-- Checkin + Appointment -->
                                         <tr *ngFor="let his_wait of entire_history">
                                             <ng-container *ngIf="his_wait.waitlistStatus">
-                                                <td data-title="Date & Time" class="td3">
+                                                <td data-title="Date & Time" >
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i *ngIf="his_wait.token" [matTooltip]="'Token'"  class="fa token-icon"></i>
-                                                            <i *ngIf="!his_wait.token"  [matTooltip]="'Waitlist'" class="fa chckn-icon"></i>
+                                                            <i *ngIf="!his_wait.token"  [matTooltip]="'Waitlist'" class="fa chckn-icon"></i>&nbsp;
                                                         </div>
-                                                        <span>&nbsp;{{his_wait.date | date: newDateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
+                                                        <span>{{his_wait.date | date: newDateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
                                                             -
                                                             {{his_wait.queue.queueEndTime}}</span>
                                                     </div>
@@ -53,12 +53,12 @@
                                                     <span
                                                         class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 </td>
-                                                <td data-title="Location" class="td2">
-                                                    {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
+                                                <td data-title="Location" >
+                                                    <span class="mgn-lt-15">{{his_wait.queue.location.place || '' | capitalizeFirst}}</span></td>
                                                 <td data-title="Service for">
                                                     {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}}
                                                     {{his_wait.waitlistingFor[0].lastName || '' | capitalizeFirst}}</td>
-                                                <td data-title="Service" class="td6">
+                                                <td data-title="Service" >
                                                     <span class="service-icon"
                                                         *ngIf="his_wait.service.serviceType == 'virtualService'">
                                                         <i class="fa phon-icon"
@@ -77,7 +77,7 @@
                                                     <span>{{his_wait.service.name || '' | capitalizeFirst}}
                                                     </span>
                                                 </td>
-                                                <td data-title="Status" class="td4">
+                                                <td data-title="Status" >
                                                     <span class="{{his_wait.waitlistStatus}}">
                                                         <span *ngIf="his_wait.waitlistStatus == 'done'">Completed</span>
                                                         <span
@@ -99,7 +99,7 @@
                                                         </li>
                                                     </ul>
                                                 </td> -->
-                                                <td data-title="" class="td5">
+                                                <td data-title="" >
                                                     <button class="d-small-none" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
@@ -133,12 +133,12 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container *ngIf="his_wait.apptStatus">
-                                                <td data-title="Date & Time" class="td3">
+                                                <td data-title="Date & Time" >
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
-                                                            <i class="fa appt-icon"  [matTooltip]="'Appointment'"></i>
+                                                            <i class="fa appt-icon"  [matTooltip]="'Appointment'"></i>&nbsp;
                                                         </div>
-                                                        <span> &nbsp;{{his_wait.date | date: newDateFormat }},<br>
+                                                        <span> {{his_wait.date | date: newDateFormat }},<br>
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].sTime}} -
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].eTime}}</span>
                                                     </div>
@@ -149,12 +149,12 @@
                                                     <span
                                                         class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 </td>
-                                                <td data-title="Location" class="td2">
-                                                    {{his_wait.location.place || '' | capitalizeFirst}}</td>
+                                                <td data-title="Location" >
+                                                    <span class="mgn-lt-15">{{his_wait.location.place || '' | capitalizeFirst}}</span></td>
                                                 <td data-title="Service for">
                                                     {{his_wait.appmtFor[0].firstName || '' | capitalizeFirst}}
                                                     {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
-                                                <td data-title="Service" class="td6">
+                                                <td data-title="Service" >
                                                     <span class="service-icon"
                                                         *ngIf="his_wait.service.serviceType == 'virtualService'">
                                                         <i class="fa phon-icon"
@@ -172,11 +172,11 @@
                                                     </span>
                                                     <span>{{his_wait.service.name || '' | capitalizeFirst}}</span>
                                                 </td>
-                                                <td data-title="Status" class="td4">
+                                                <td data-title="Status" >
                                                     <span
                                                         class="{{his_wait.apptStatus}}">{{getStatusLabel(his_wait.apptStatus)}}</span>
                                                 </td>
-                                                <td data-title="" class="td5">
+                                                <td data-title="" >
                                                     <button class="d-small-none" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
@@ -295,7 +295,7 @@
                                 [curpage]="pagination.startpageval"></app-pager>
                         </div> -->
                         <div *ngIf="entire_history && entire_history.length == 0 && !loading" class="noprevhist">
-                            <p>No previous history available</p>
+                            <p>No previous bookings</p>
                         </div>
                     </div>
                 </div>

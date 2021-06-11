@@ -11,10 +11,10 @@
         </div>
     </div>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-    <div class="d-flex flex-column-fluid pull-right" *ngIf="type">
+    <div class="d-flex flex-column-fluid pull-right" *ngIf="showEditBtn()">
         <button class="normal-btn edit" mat-flat-button (click)="editQnr()">Edit</button>
     </div>
-    <div class="d-flex flex-column-fluid width-100">
+    <div class="d-flex flex-column-fluid width-100" [class.qnrDisableState]="disableInput()">
         <div class="col-xl-12 force_center">
             <div class="my-5">
                 <div class="form-group card mgn-0" *ngFor="let question of questions;let i = index">
@@ -134,14 +134,20 @@
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
                     <!-- for Date -->
-                    <div class="col-12 no-padding" *ngIf="getQuestion(question).fieldDataType === 'date'">
-                        <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                            id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
-                            min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
-                            max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}">
-                        <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
-                            {{apiError[getQuestion(question).labelName]}}</div>
-                    </div>
+                      <div class="col-12 no-padding disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
+                            <!-- <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
+                                id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
+                                max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}"> -->
+                            <input class="form-control1" [matDatepicker]="picker"
+                                [(ngModel)]="answers[getQuestion(question).labelName]"
+                                (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()"
+                                (click)="picker.open()">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker>
+                            <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
+                                {{apiError[getQuestion(question).labelName]}}</div>
+                      </div>
                 </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
@@ -154,5 +160,5 @@
 </section>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+    (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
     

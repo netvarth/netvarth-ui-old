@@ -43,8 +43,8 @@
                 <i class="fa fa-times fl-right"></i>Sharing location</button>
             <button class="custId-cursor" mat-menu-item *ngIf="showViewPrescritionBtn" (click)="cardActionPerformed('wl', 'viewPrescription', booking, $event)">
                 <i class="mr-rx-icon-customer"></i>View Prescription</button>
-            <button class="custId-cursor" *ngIf="showMoreInfoBtn" mat-menu-item (click)="cardActionPerformed('wl', 'moreInfo', booking, $event)">
-                <i class="mr-rx-icon-customer"></i>More info</button>
+            <!-- <button class="custId-cursor" *ngIf="showMoreInfoBtn" mat-menu-item (click)="cardActionPerformed('wl', 'moreInfo', booking, $event)">
+                <i class="mr-rx-icon-customer"></i>More info</button> -->
         </mat-menu>
     </div>
 
@@ -144,7 +144,7 @@
                                 *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                 | capitalizeFirst}}</span>
                         </span>
-                        <span *ngIf="booking.isRescheduled">
+                        <span *ngIf="booking.isRescheduled && booking.waitlistStatus !=='cancelled'">
                             <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
                         </span>
                     </div>
