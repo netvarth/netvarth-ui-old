@@ -906,31 +906,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
-                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                        this.payuPayment();
-                    } else {
-                        let multiple;
-                        if (this.uuidList.length > 1) {
-                            multiple = true;
-                        } else {
-                            multiple = false;
-                        }
-                        setTimeout(() => {
-                            let queryParams = {
-                                account_id: this.account_id,
-                                uuid: this.uuidList,
-                                multiple: multiple,
-                                theme: this.theme
-                            }
-                            if (this.businessId) {
-                                queryParams['customId'] = this.customId;
-                            }
-                            let navigationExtras: NavigationExtras = {
-                                queryParams: queryParams
-                            };
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
-                        }, 2000);
-                    }
+                    this.paymentOperation();
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -951,36 +927,75 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
-
-            if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                this.payuPayment();
+        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
+            console.log(data);
+            console.log(this.questionAnswers);
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
+                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
+                    const file = this.questionAnswers.filestoUpload[url.labelName][key];
+                    console.log(file);
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            console.log(postData);
+                            console.log(postData['urls'].length);
+                            console.log(data.urls.length);
+                            if (data.urls.length === postData['urls'].length) {
+                                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                    .subscribe((data) => {
+                                        console.log(data);
+                                        this.paymentOperation();
+                                    },
+                                    error => {
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        this.disablebutton = false;
+                                    });
+                            }
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            this.disablebutton = false;
+                        });
+                    });
+                }
             } else {
-                let multiple;
-                if (this.uuidList.length > 1) {
-                    multiple = true;
-                } else {
-                    multiple = false;
-                }
-                let queryParams = {
-                    account_id: this.account_id,
-                    uuid: this.uuidList,
-                    multiple: multiple,
-                    theme: this.theme
-                }
-                if (this.businessId) {
-                    queryParams['customId'] = this.customId;
-                }
-                let navigationExtras: NavigationExtras = {
-                    queryParams: queryParams
-                };
-                this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+                this.paymentOperation();
             }
         },
             error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
             });
+    }
+    paymentOperation() {
+        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+            this.payuPayment();
+        } else {
+            let multiple;
+            if (this.uuidList.length > 1) {
+                multiple = true;
+            } else {
+                multiple = false;
+            }
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                multiple: multiple,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+        }
     }
     showCheckinButtonCaption() {
         let caption = '';

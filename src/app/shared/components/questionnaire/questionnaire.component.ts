@@ -10,6 +10,8 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ButtonEvent } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../constants/project-messages';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { ShowuploadfileComponent } from '../../../business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-questionnaire',
@@ -72,6 +74,7 @@ export class QuestionnaireComponent implements OnInit {
   questionnaire_heading = '';
   customer_label = '';
   editQuestionnaire = false;
+  audioVideoFiles: any = [];
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -79,6 +82,7 @@ export class QuestionnaireComponent implements OnInit {
     private sharedFunctionobj: SharedFunctions,
     private providerService: ProviderServices,
     private dateProcessor: DateTimeProcessor,
+    public dialog: MatDialog,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
@@ -127,6 +131,9 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
+      }
+      if (this.questionAnswers.audioVideo) {
+        this.audioVideoFiles = this.questionAnswers.audioVideo;
       }
       if (this.questionAnswers.filestoUpload) {
         this.filestoUpload = this.questionAnswers.filestoUpload;
@@ -177,6 +184,8 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
               for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
+                console.log(type);
+                console.log(answ.answerLine.answer[answ.question.fieldDataType]);
                 if (type === 'get') {
                   this.uploadedImages.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.uploadedFiles[answ.answerLine.labelName]) {
@@ -186,6 +195,8 @@ export class QuestionnaireComponent implements OnInit {
                     this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
+                  console.log(this.uploadedImages);
+                  console.log(this.uploadedFiles);
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.filestoUpload[answ.answerLine.labelName]) {
@@ -206,6 +217,8 @@ export class QuestionnaireComponent implements OnInit {
         this.answers[answ.labelName] = answ.answer[Object.keys(answ.answer)[0]];
       }
     }
+    console.log(this.uploadedImages);
+    console.log(this.uploadedFiles);
     if (type === 'get') {
       Object.keys(this.uploadedFiles).forEach(key => {
         Object.keys(this.uploadedFiles[key]).forEach(key1 => {
@@ -229,6 +242,8 @@ export class QuestionnaireComponent implements OnInit {
         });
       });
     }
+    console.log(this.uploadedImages);
+    console.log(this.uploadedFiles);
     this.onSubmit();
   }
   filesSelected(event, question, document) {
@@ -239,28 +254,39 @@ export class QuestionnaireComponent implements OnInit {
     if (!this.filestoUpload[question.labelName][document]) {
       this.filestoUpload[question.labelName][document] = {};
     }
+    console.log(input);
     if (input) {
       for (const file of input) {
-        const size = file.size / 1000;
+        // const size = file.size / 1000;
         let type = file.type.split('/');
-        type = type[1];
+        type = type[0];
         this.apiError[question.labelName] = [];
-        if (question.filePropertie.fileTypes.indexOf(type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (size > question.filePropertie.maxSize) {
-          this.snackbarService.openSnackBar('Please upload images with size < ' + question.filePropertie.maxSize + 'kb', { 'panelClass': 'snackbarerror' });
-        } else {
-          if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-            const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-            if (index !== -1) {
-              this.selectedMessage.splice(index, 1);
-              delete this.filestoUpload[question.labelName][document];
-              delete this.answers[question.labelName][index];
-            }
+        // if (question.filePropertie.fileTypes.indexOf(type) === -1) {
+        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        // } else if (size > question.filePropertie.maxSize) {
+        //   this.snackbarService.openSnackBar('Please upload images with size < ' + question.filePropertie.maxSize + 'kb', { 'panelClass': 'snackbarerror' });
+        // } else {
+        if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+          let index;
+          if (type === 'application' || type === 'image') {
+            index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+          } else {
+            index = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
           }
+          if (index !== -1) {
+            if (type === 'application' || type === 'image') {
+              this.selectedMessage.splice(index, 1);
+            } else {
+              this.audioVideoFiles.splice(index, 1);
+            }
+            delete this.filestoUpload[question.labelName][document];
+            delete this.answers[question.labelName][index];
+          }
+        }
+        this.filestoUpload[question.labelName][document] = file;
+        if (type === 'application' || type === 'image') {
           this.selectedMessage.push(file);
           const indx = this.selectedMessage.indexOf(file);
-          this.filestoUpload[question.labelName][document] = file;
           if (indx !== -1) {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -268,7 +294,18 @@ export class QuestionnaireComponent implements OnInit {
             };
             reader.readAsDataURL(file);
           }
+        } else {
+          this.audioVideoFiles.push(file);
+          const indx = this.audioVideoFiles.indexOf(file);
+          if (indx !== -1) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.audioVideoFiles[indx]['path'] = e.target['result'];
+            };
+            reader.readAsDataURL(file);
+          }
         }
+        // }
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
@@ -277,10 +314,23 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   changeImageSelected(question, document) {
+    console.log(question);
+    console.log(document);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-      const index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      let type = this.filestoUpload[question.labelName][document].type.split('/');
+      type = type[0];
+      let index;
+      if (type === 'application' || type === 'image') {
+        index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      } else {
+        index = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
+      }
       if (index !== -1) {
-        this.selectedMessage.splice(index, 1);
+        if (type === 'application' || type === 'image') {
+          this.selectedMessage.splice(index, 1);
+        } else {
+          this.audioVideoFiles.splice(index, 1);
+        }
         delete this.filestoUpload[question.labelName][document];
         if (this.answers[question.labelName] && this.answers[question.labelName].length > 0) {
           const filteredAnswer = this.answers[question.labelName].filter(answer => answer.caption === document);
@@ -306,7 +356,10 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.onSubmit('inputChange');
   }
-  onSubmit(type?) {
+  onSubmit(keytype?) {
+    console.log(this.filestoUpload);
+    console.log(this.uploadedFiles);
+    console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -314,7 +367,14 @@ export class QuestionnaireComponent implements OnInit {
       if (Object.keys(this.filestoUpload[key]).length > 0) {
         Object.keys(this.filestoUpload[key]).forEach(key1 => {
           if (this.filestoUpload[key][key1]) {
-            let indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
+            let type = this.filestoUpload[key][key1].type.split('/');
+            type = type[0];
+            let indx;
+            if (type === 'application' || type === 'image') {
+              indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
+            } else {
+              indx = this.audioVideoFiles.indexOf(this.filestoUpload[key][key1]);
+            }
             if (indx !== -1) {
               let status = 'add';
               if (this.uploadedFiles[key] && this.uploadedFiles[key][key1]) {
@@ -329,7 +389,16 @@ export class QuestionnaireComponent implements OnInit {
                   }
                 }
               }
-              this.answers[key].push({ index: indx, caption: key1, action: status });
+              console.log(this.filestoUpload[key][key1]);
+              let type = this.filestoUpload[key][key1].type.split('/');
+              console.log(type);
+              type = type[0];
+              if (type === 'application' || type === 'image') {
+                this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size });
+              } else {
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size });
+                console.log(this.answers);
+              }
             }
           } else {
             if (this.answers[key] && this.answers[key].length > 0) {
@@ -374,6 +443,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     });
+    console.log(this.answers);
     let data = [];
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
@@ -406,11 +476,11 @@ export class QuestionnaireComponent implements OnInit {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
-    const passData = { 'answers': postData, 'files': this.selectedMessage, 'filestoUpload': this.filestoUpload };
-    if (type === 'inputChange') {
+    const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload };
+    if (keytype === 'inputChange') {
       this.changeHappened = true;
     }
-    if (type === 'submit') {
+    if (keytype === 'submit') {
       if (this.changeHappened) {
         this.submitQuestionnaire(passData);
       } else {
@@ -425,11 +495,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getDate(date) {
-    console.log(date);
-    const dates = date.split('-');
-    console.log(dates);
-    console.log(new Date(dates[2], dates[1], dates[0]));
-    return new Date(dates[2], dates[1], dates[0]);
+    return new Date(date);
   }
   listChange(ev, value, question) {
     if (ev.target.checked) {
@@ -481,14 +547,22 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
+    console.log(passData);
     if (passData.files && passData.files.length > 0) {
       for (let pic of passData.files) {
-        dataToSend.append('files', pic);
+        let type = pic.type.split('/');
+        type = type[0];
+        console.log(type);
+        if (type === 'application' || type === 'image') {
+          dataToSend.append('files', pic);
+        }
       }
     }
+    console.log(dataToSend);
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
+    console.log(passData);
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
     } else {
@@ -499,18 +573,16 @@ export class QuestionnaireComponent implements OnInit {
     this.providerService.resubmitProviderCustomerQuestionnaire(this.customerDetails[0].id, dataToSend).subscribe(data => {
       this.editQnr();
       this.snackbarService.openSnackBar('Updated Successfully');
+      this.buttonDisable = false;
     }, error => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.buttonDisable = false;
     });
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
     this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      if (!this.type) {
-        this.location.back();
-      } else {
-        this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
-      }
+      console.log(data);
+      this.uploadAudioVideo(data, 'consCheckin');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -518,12 +590,8 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitConsumerApptQuestionnaire(body) {
     this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      if (!this.type) {
-        this.location.back();
-      } else {
-        this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
-      }
+      console.log(data);
+      this.uploadAudioVideo(data, 'consAppt');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -531,12 +599,8 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
-      if (!this.type) {
-        this.location.back();
-      } else {
-        this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
-      }
+      console.log(data);
+      this.uploadAudioVideo(data, 'proCheckin');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -544,12 +608,8 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
-      if (!this.type) {
-        this.location.back();
-      } else {
-        this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
-      }
+      console.log(data);
+      this.uploadAudioVideo(data, 'proAppt');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -559,10 +619,84 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
       this.editQnr();
       this.snackbarService.openSnackBar('Updated Successfully');
+      this.buttonDisable = false;
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
+  }
+  uploadAudioVideo(data, type) {
+    console.log(data);
+    console.log(this.filestoUpload);
+    console.log(this.uploadedFiles);
+    if (data.urls && data.urls.length > 0) {
+      let postData = {
+        urls: []
+      };
+      for (const url of data.urls) {
+        console.log(this.filestoUpload[url.labelName]);
+        Object.keys(this.filestoUpload[url.labelName]).forEach(key => {
+          const file = this.filestoUpload[url.labelName][key];
+          console.log(file);
+          this.providerService.videoaudioS3Upload(file, url.url)
+            .subscribe(() => {
+              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+              console.log(postData);
+              console.log(postData['urls'].length);
+              console.log(data.urls.length);
+              if (data.urls.length === postData['urls'].length) {
+                if (type === 'consCheckin') {
+                  this.sharedService.consumerWaitlistQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                    .subscribe((data) => {
+                      console.log(data);
+                      this.successGoback();
+                    },
+                      error => {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.buttonDisable = false;
+                      });
+                } else if (type === 'consAppt') {
+                  this.sharedService.consumerApptQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                    .subscribe((data) => {
+                      console.log(data);
+                      this.successGoback();
+                    },
+                      error => {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.buttonDisable = false;
+                      });
+                } else if (type === 'proCheckin') {
+                  this.providerService.providerWaitlistQnrUploadStatusUpdate(this.uuid, postData)
+                    .subscribe((data) => {
+                      console.log(data);
+                      this.successGoback();
+                    },
+                      error => {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.buttonDisable = false;
+                      });
+                } else {
+                  this.providerService.providerApptQnrUploadStatusUpdate(this.uuid, postData)
+                    .subscribe((data) => {
+                      console.log(data);
+                      this.successGoback();
+                    },
+                      error => {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.buttonDisable = false;
+                      });
+                }
+              }
+            },
+              error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.buttonDisable = false;
+              });
+        });
+      }
+    } else {
+      this.successGoback();
+    }
   }
   goBack() {
     this.location.back();
@@ -637,7 +771,8 @@ export class QuestionnaireComponent implements OnInit {
   validateProviderQuestionnaireResubmit(answers, dataToSend) {
     this.providerService.validateProviderQuestionnaireResbmit(answers).subscribe((data: any) => {
       this.setValidateError(data);
-      this.buttonDisable = false;
+      console.log(dataToSend);
+      console.log(answers);
       if (data.length === 0) {
         if (this.source === 'customer-details') {
           this.updateConsumerQnr(dataToSend);
@@ -657,7 +792,6 @@ export class QuestionnaireComponent implements OnInit {
   validateConsumerQuestionnaireResubmit(answers, dataToSend) {
     this.sharedService.validateConsumerQuestionnaireResbumit(answers, this.accountId).subscribe((data: any) => {
       this.setValidateError(data);
-      this.buttonDisable = false;
       if (data.length === 0) {
         if (this.source === 'consCheckin') {
           this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
@@ -672,34 +806,42 @@ export class QuestionnaireComponent implements OnInit {
   }
   getImg(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+      let type = this.filestoUpload[question.labelName][document].type.split('/');
+      type = type[0];
+      let file;
+      if (type === 'application' || type === 'image') {
+        file = this.selectedMessage;
+      } else {
+        file = this.audioVideoFiles;
+      }
+      const indx = file.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
         let path;
-        if (this.selectedMessage[indx].type === 'application/pdf') {
+        if (file[indx].type === 'application/pdf') {
           path = 'assets/images/pdf.png';
+        } else if (file[indx].type === 'video/mp4' || file[indx].type === 'video/mpeg' || file[indx].type === 'video/quicktime') {
+          path = 'assets/images/video.png';
+        } else if (file[indx].type === 'audio/ogg' || file[indx].type === 'audio/mpeg' || file[indx].type === 'audio/mp3') {
+          path = 'assets/images/audio.png';
         } else {
-          path = this.selectedMessage[indx].path;
+          path = file[indx].path;
         }
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        const path = this.uploadedImages[indx].thumbPath;
+        let path;
+        if (this.uploadedImages[indx].type === '.pdf') {
+          path = 'assets/images/pdf.png';
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && (this.uploadedImages[indx].type === 'video/mp4' || this.uploadedImages[indx].type === 'video/mpeg' || this.uploadedImages[indx].type === 'video/quicktime')) {
+          path = 'assets/images/video.png';
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && (this.uploadedImages[indx].type === 'audio/ogg' || this.uploadedImages[indx].type === 'audio/mpeg' || this.uploadedImages[indx].type === 'audio/mp3')) {
+          path = 'assets/images/audio.png';
+        } else {
+          path = this.uploadedImages[indx].thumbPath;
+        }
         return path;
-      }
-    }
-  }
-  getImgName(question) {
-    if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]) {
-      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][question.filePropertie.allowedDocuments[0]]);
-      if (indx !== -1) {
-        return this.selectedMessage[indx].name;
-      }
-    } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]) {
-      const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][question.filePropertie.allowedDocuments[0]]);
-      if (indx !== -1) {
-        return this.uploadedImages[indx].originalName;
       }
     }
   }
@@ -744,18 +886,38 @@ export class QuestionnaireComponent implements OnInit {
   }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document) {
+    console.log(question);
+    console.log(document);
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-      const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-      if (indx !== -1) {
-        imagePath = this.selectedMessage[indx].path;
+      let type = this.filestoUpload[question.labelName][document].type.split('/');
+      type = type[0];
+      if (type === 'video' || type === 'audio') {
+        const indx = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
+        console.log(this.audioVideoFiles);
+        console.log(indx);
+        this.showAudioVideoFile(this.audioVideoFiles[indx]);
+      } else {
+        console.log(this.selectedMessage);
+        const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
+        if (indx !== -1) {
+          imagePath = this.selectedMessage[indx].path;
+        }
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
+      let type = this.uploadedFiles[question.labelName][document].type.split('/');
+      type = type[0];
+      console.log(type);
+      console.log(this.uploadedFiles);
       if (indx !== -1) {
-        imagePath = this.uploadedImages[indx].s3path;
+        if (type === 'video' || type === 'audio') {
+          this.showAudioVideoFile(this.uploadedImages[indx]);
+        } else {
+          imagePath = this.uploadedImages[indx].s3path;
+        }
       }
     }
     if (imagePath) {
@@ -781,6 +943,19 @@ export class QuestionnaireComponent implements OnInit {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
+  showAudioVideoFile(file) {
+    const fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+      disableClose: true,
+      data: {
+        file: file,
+        source: 'qnr'
+      }
+    });
+    fileviewdialogRef.afterClosed().subscribe(result => {
+    });
+  }
   editQnr() {
     this.editQuestionnaire = !this.editQuestionnaire;
   }
@@ -791,15 +966,18 @@ export class QuestionnaireComponent implements OnInit {
       return question.filePropertie.allowedDocuments;
     }
   }
-  showQuestions(question) {
-    if ((this.source === 'consCheckin' || this.source === 'consAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
-      return false;
-    }
-    return true;
-  }
   showProviderText(question) {
-    if ((this.source === 'proCheckin' || this.source === 'proAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
+    if (question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
       return true;
+    }
+  }
+  successGoback() {
+    this.buttonDisable = false;
+    if (!this.type) {
+      this.location.back();
+    } else {
+      this.editQnr();
+      this.snackbarService.openSnackBar('Updated Successfully');
     }
   }
 }
