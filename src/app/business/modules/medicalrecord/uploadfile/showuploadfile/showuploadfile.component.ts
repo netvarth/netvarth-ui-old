@@ -15,7 +15,7 @@ export class ShowuploadfileComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.details = this.data;
+    this.details = this.data.file;
   }
   ngOnInit() {
       console.log(this.details);
