@@ -30,7 +30,7 @@
                                     </div> -->
                             
                                 <div class="mgn-up-10">
-                                    <label class="col-form-label" for="name">Consultation  For </label>
+                                    <label class="col-form-label" for="name">Consultation For </label>
                                     <br />
                                     <mat-radio-group formControlName="serviceFor" class="mgn-up-5 userGroup"
                                         (change)="onServiceForChange($event.value)">
@@ -44,8 +44,8 @@
                                     </mat-radio-group>
                                 </div>
                           
-                                <div style="font: size 0.5rem;">
-                                    Please provide basic information about the patient.
+                                <div style="font: size 0.5rem; margin-top: 15px;">
+                                    Please provide your basic informations.
                                     </div>
                                 <div class="form-group"
                                     *ngIf="virtualForm.get('serviceFor').value==='new_member'">
@@ -91,7 +91,7 @@
                         </div>
                         </div>
                                 <div class="form-group pwd"  *ngIf="countryCode=='+91'">
-                                    <label for="pincode" class="col-form-label">Residing Pincode  in India  <span
+                                    <label for="pincode" class="col-form-label">Residing Pincode in India  <span
                                             class="red">*</span></label>
                                     <input type="text" placeholder="xxxxxx" style="width:50%"
                                         class="form-control vt_dt no-padding mgn-up-5" id="location"
@@ -176,7 +176,7 @@
                                     <label class="col-form-label" for="name">Contact Information </label>
     
                                     <div class="form-level-settings smallfont">
-                                       Provide your contact info  for alerts,status updates and for any other booking related communications
+                                       Provide your contact info to send alerts, status updates, other booking related communications.
                                          </div>
                                  <div class="mgn-up-10 mgn-bt-10">
                                         <label class="col-form-label" for="phone">Phone # </label>
