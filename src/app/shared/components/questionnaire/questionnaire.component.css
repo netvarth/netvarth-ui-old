@@ -106,3 +106,8 @@
     color: red;
     font-size: 0.8rem;
 }
+.qnrDisableState .card,
+.qnrDisableState .dropzone-default, 
+.qnrDisableState .dz-image-preview {
+    background: #eeeeee9e !important;
+}
