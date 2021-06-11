@@ -191,26 +191,7 @@ export class CustomersListComponent implements OnInit {
   selectedRow(customer) {
     this.router.navigate(['/provider/customers/' + customer.id]);
 }
-showCustomerAction() {
-  const notedialogRef = this.dialog.open(CustomerActionsComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-          customer: this.customers,
-      }
-  });
-  notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'edit') {
-          // this.editCustomer();
-      } else {
-          // this.getCustomers(this.customerId).then(
-          //     (customer) => {
-          //         this.customer = customer;
-          //     });
-      }
-  });
-}
+
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
     this.customers = [];
@@ -226,7 +207,7 @@ showCustomerAction() {
             .subscribe(
               data => {
                 this.customers = data;
-               
+               console.log(this.customers)
                 console.log(this.customers.length);
                 this.apiloading = false;
                 this.loadComplete = true;
@@ -242,6 +223,28 @@ showCustomerAction() {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  showCustomerAction(customer) {
+    const cust = [];
+    cust.push(customer)
+    const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+            customer: cust,
+        }
+    });
+    notedialogRef.afterClosed().subscribe(result => {
+        if (result === 'edit') {
+            // this.editCustomer();
+        } else {
+            // this.getCustomers(this.customerId).then(
+            //     (customer) => {
+            //         this.customer = customer;
+            //     });
+        }
+    });
   }
   clearFilter() {
     this.resetFilter();
