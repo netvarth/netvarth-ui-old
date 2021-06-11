@@ -1103,14 +1103,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     submitQuestionnaire(uuid, post_Data, paymentWay) {
         const dataToSend: FormData = new FormData();
-        if (!this.questionAnswers) {
-            this.questionAnswers = {
-                answers: {
-                    answerLine: [],
-                    questionnaireId: this.questionnaireList.id
-                }
-            }
-        }
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files) {
                 dataToSend.append('files', pic, pic['name']);
