@@ -77,6 +77,14 @@ export class ServiceActionsComponent implements OnInit {
             this.bookingType = params.type;
             this.timeType = JSON.parse(params.timetype);
         });
+        this.sharedFunctions.getMessage().subscribe((message) => {
+            console.log(message.type);
+            switch (message.type) {
+              case 'statuschange':
+                this.setActions();
+                break;
+            }
+          });
     }
 
     ngOnInit(): void {
@@ -97,6 +105,7 @@ export class ServiceActionsComponent implements OnInit {
 
     }
     setActions() {
+        console.log(this.waitlist_data);
         if (this.bookingType === 'checkin') {
             // this.apiloading = false;
             if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'done' && this.waitlist_data.waitlistStatus !== 'checkedIn' && this.waitlist_data.waitlistStatus !== 'blocked') {
@@ -182,7 +191,7 @@ export class ServiceActionsComponent implements OnInit {
             const status = (this.waitlist_data.callingStatus) ? 'Disable' : 'Enable';
             this.provider_services.setCallStatus(this.waitlist_data.ynwUuid, status).subscribe(
                 () => {
-                    
+
                 });
         }
     }
@@ -190,7 +199,7 @@ export class ServiceActionsComponent implements OnInit {
         if (this.bookingType == 'checkin') {
             console.log(action)
             if (action !== 'CANCEL') {
-                
+
             }
             this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
         } else if (this.bookingType == 'appointment') {
@@ -207,19 +216,19 @@ export class ServiceActionsComponent implements OnInit {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
-                        
+                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
                     },
                     error => {
-                        
+
                     });
         } else if (this.bookingType == 'appointment') {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
-                        
+                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
                     },
                     error => {
-                        
+
                     });
         }
 
@@ -286,7 +295,7 @@ export class ServiceActionsComponent implements OnInit {
         const status = (this.waitlist_data.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.waitlist_data.uid, status).subscribe(
             () => {
-                
+
             });
     }
     smsApptmnt() {
@@ -356,34 +365,34 @@ export class ServiceActionsComponent implements OnInit {
     }
     witlistRescheduleActionClicked() {
         const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-          disableClose: true,
-          data: {
-            checkinData: this.waitlist_data,
-            timetype: this.timeType,
-            type: 'reschedule'
-          }
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+            disableClose: true,
+            data: {
+                checkinData: this.waitlist_data,
+                timetype: this.timeType,
+                type: 'reschedule'
+            }
         });
         actiondialogRef.afterClosed().subscribe(data => {
-            this.sharedFunctions.sendMessage({ type: 'reschedule' });
+            this.sharedFunctions.sendMessage({ type: 'statuschange' });
         });
-      }
-      apptRescheduleActionClicked() {
+    }
+    apptRescheduleActionClicked() {
         const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
             disableClose: true,
             data: {
-              checkinData: this.waitlist_data,
-              timetype: this.timeType,
-              type: 'reschedule'
+                checkinData: this.waitlist_data,
+                timetype: this.timeType,
+                type: 'reschedule'
             }
-          });
-          actiondialogRef.afterClosed().subscribe(data => {
-              this.sharedFunctions.sendMessage({ type: 'reschedule' });
-          });
-      }
+        });
+        actiondialogRef.afterClosed().subscribe(data => {
+            this.sharedFunctions.sendMessage({ type: 'statuschange' });
+        });
+    }
     changeSlot() {
         this.action = 'slotChange';
         // this.selectedTime = '';

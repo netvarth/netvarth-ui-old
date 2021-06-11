@@ -59,8 +59,10 @@ private sharedFunctions: SharedFunctions
     });
     
     this.sharedFunctions.getMessage().subscribe((message) => {
+      console.log(message.type);
       switch (message.type) {
-        case 'reschedule':
+        case 'statuschange':
+          this.api_loading = true;
           if (this.bookingType === 'checkin') {
             this.getWaitlistDetail();
           } else{

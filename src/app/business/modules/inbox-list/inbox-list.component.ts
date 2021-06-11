@@ -100,6 +100,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.activateRoute.queryParams.subscribe(params => {
       this.qParams = params;
     });
+    this.shared_functions.getMessage().subscribe((message) => {
+      console.log(message.type);
+      switch (message.type) {
+        case 'statuschange':
+          this.getInboxMessages();
+          break;
+      }
+    });
   }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -240,6 +248,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
+          console.log(this.messages);
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
