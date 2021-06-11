@@ -24,7 +24,6 @@ export class QuestionnaireComponent implements OnInit {
   @Input() customerDetails;
   @Input() uuid;
   @Input() type;
-  @Input() donationDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
   selectedMessage: any = [];
@@ -133,13 +132,6 @@ export class QuestionnaireComponent implements OnInit {
       }
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
-      }
-    }
-    if (this.donationDetails) {
-      this.questionnaireList = this.donationDetails.questionnaire;
-      this.questions = this.questionnaireList.questionAnswers;
-      if (this.questions && this.questions.length > 0) {
-        this.getAnswers(this.questions, 'get');
       }
     }
     if (this.uuid) {
@@ -425,11 +417,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getDate(date) {
-    console.log(date);
-    const dates = date.split('-');
-    console.log(dates);
-    console.log(new Date(dates[2], dates[1], dates[0]));
-    return new Date(dates[2], dates[1], dates[0]);
+    return new Date(date);
   }
   listChange(ev, value, question) {
     if (ev.target.checked) {
@@ -535,7 +523,6 @@ export class QuestionnaireComponent implements OnInit {
         this.location.back();
       } else {
         this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
       }
     }, error => {
       this.buttonDisable = false;
@@ -548,17 +535,7 @@ export class QuestionnaireComponent implements OnInit {
         this.location.back();
       } else {
         this.editQnr();
-        this.snackbarService.openSnackBar('Updated Successfully');
       }
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitDonationQuestionnaire(body) {
-    this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
-      this.editQnr();
-      this.snackbarService.openSnackBar('Updated Successfully');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -641,8 +618,6 @@ export class QuestionnaireComponent implements OnInit {
       if (data.length === 0) {
         if (this.source === 'customer-details') {
           this.updateConsumerQnr(dataToSend);
-        } else if (this.source === 'proDonation') {
-          this.resubmitDonationQuestionnaire(dataToSend);
         } else if (this.source === 'proCheckin') {
           this.resubmitProviderWaitlistQuestionnaire(dataToSend);
         } else {
@@ -789,17 +764,6 @@ export class QuestionnaireComponent implements OnInit {
       return this.uploadFilesTemp[question.labelName];
     } else {
       return question.filePropertie.allowedDocuments;
-    }
-  }
-  showQuestions(question) {
-    if ((this.source === 'consCheckin' || this.source === 'consAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
-      return false;
-    }
-    return true;
-  }
-  showProviderText(question) {
-    if ((this.source === 'proCheckin' || this.source === 'proAppt') && question.whoCanAnswer && question.whoCanAnswer === 'PROVIDER_ONLY') {
-      return true;
     }
   }
 }
