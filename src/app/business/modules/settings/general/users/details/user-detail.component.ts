@@ -146,8 +146,11 @@ export class BranchUserDetailComponent implements OnInit {
         this.sector = user.sector;
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector !== 'healthCare') {
+        if (this.sector !== 'healthCare' && this.sector !== 'finance') {
             this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'ADMIN' }];
+        }
+        if (this.sector === 'finance') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Officer' }, { value: 'ADMIN', name: 'ADMIN' }];
         }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
@@ -272,6 +275,11 @@ export class BranchUserDetailComponent implements OnInit {
                             if (this.sector === 'healthCare') {
                                 if (this.type === 'PROVIDER') {
                                     this.type = 'DOCTOR';
+                                }
+                            }
+                            if (this.sector === 'finance') {
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'Officer';
                                 }
                             }
                             // this.createForm();

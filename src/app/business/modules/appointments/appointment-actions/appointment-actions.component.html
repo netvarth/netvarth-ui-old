@@ -374,8 +374,8 @@
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="appt.apptStatus == 'Started'" (click)="changeWaitlistStatus('Completed')">
-        <div class="status"> Complete</div>
+    <div class="status-box" *ngIf="appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' " (click)="changeWaitlistStatus('Completed')">
+            <div class="status"> Complete</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
     <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">

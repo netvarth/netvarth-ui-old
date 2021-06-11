@@ -80,7 +80,7 @@ export class BranchUsersComponent implements OnInit {
         },
         {
             name: 'PROVIDER',
-            displayName: 'Doctor'
+            displayName: 'Provider'
         },
         {
             name: 'ADMIN',
@@ -146,6 +146,12 @@ export class BranchUsersComponent implements OnInit {
         this.getLicenseUsage();
         this.getSpokenLanguages();
         this.getSpecializations();
+         if (this.domain === 'healthCare') {
+           this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Doctor'},{name: 'ADMIN',displayName: 'Admin'}];
+        }
+        if (this.domain === 'finance') {
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Officer'},{name: 'ADMIN',displayName: 'Admin'}];
+        }        
     }
 
     addBranchSP() {
@@ -559,5 +565,12 @@ export class BranchUsersComponent implements OnInit {
               userData: user
           }
         });
+    }
+    getproider() {
+        if(this.domain === 'finance'){
+            return 'Officer';
+        } else{
+            return this.provider_label;
+        }
     }
 }
