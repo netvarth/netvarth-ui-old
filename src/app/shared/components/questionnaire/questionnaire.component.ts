@@ -14,7 +14,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 @Component({
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../assets/css/style.bundle.css']
+  styleUrls: ['./questionnaire.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/css/style.bundle.css']
 })
 export class QuestionnaireComponent implements OnInit {
   @Input() questionnaireList;
