@@ -1307,7 +1307,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 console.log(postData['urls'].length);
                                 console.log(data.urls.length);
                                 if (data.urls.length === postData['urls'].length) {
-                                    this.provider_services.providerApptQnrUploadStatusUpdate(uuid, postData)
+                                    this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
                                         .subscribe((data) => {
                                             console.log(data);
                                             if (this.settingsjson.showTokenId) {
