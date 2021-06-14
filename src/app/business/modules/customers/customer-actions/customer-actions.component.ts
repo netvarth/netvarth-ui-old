@@ -123,34 +123,34 @@ export class CustomerActionsComponent implements OnInit {
          
 
     }
-    startVoiceCall() {
-        this.closeDialog();
-        const customerDetails = this.customerDetails;
-        const customerId = customerDetails[0].id;
-        this.provider_services.voiceCallReady(customerId).subscribe(data => {
-            this.voiceCallConfirm()
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
-    }
-    voiceCallConfirm() {
-        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            // profile: this.profile
-          }
-        });
-        dialogref.afterClosed().subscribe(
-          result => {
-            this.router.navigate(['provider', 'customers']);
-            // if (result) {
-            // }
-          }
-        );
-      }
+    // startVoiceCall() {
+    //     this.closeDialog();
+    //     const customerDetails = this.customerDetails;
+    //     const customerId = customerDetails[0].id;
+    //     this.provider_services.voiceCallReady(customerId).subscribe(data => {
+    //         this.voiceCallConfirm()
+    //     },
+    //         error => {
+    //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //         });
+    // }
+    // voiceCallConfirm() {
+    //     const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         // profile: this.profile
+    //       }
+    //     });
+    //     dialogref.afterClosed().subscribe(
+    //       result => {
+    //         this.router.navigate(['provider', 'customers']);
+    //         // if (result) {
+    //         // }
+    //       }
+    //     );
+    //   }
     editCustomer() {
         this.closeDialog();
         const navigationExtras: NavigationExtras = {
