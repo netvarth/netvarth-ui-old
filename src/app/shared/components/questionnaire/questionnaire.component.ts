@@ -253,24 +253,20 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (input) {
       for (const file of input) {
-        // const size = file.size / 1000;
         let type = file.type.split('/');
-        type = type[0];
         this.apiError[question.labelName] = [];
-        // if (question.filePropertie.fileTypes.indexOf(type) === -1) {
-        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        // } else if (size > question.filePropertie.maxSize) {
-        //   this.snackbarService.openSnackBar('Please upload images with size < ' + question.filePropertie.maxSize + 'kb', { 'panelClass': 'snackbarerror' });
-        // } else {
+        if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
+          this.snackbarService.openSnackBar('Selected type not supported', { 'panelClass': 'snackbarerror' });
+        } else {
         if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
           let index;
-          if (type === 'application' || type === 'image') {
+          if (type[0] === 'application' || type[0] === 'image') {
             index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
           } else {
             index = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
           }
           if (index !== -1) {
-            if (type === 'application' || type === 'image') {
+            if (type[0] === 'application' || type[0] === 'image') {
               this.selectedMessage.splice(index, 1);
             } else {
               this.audioVideoFiles.splice(index, 1);
@@ -280,7 +276,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
         this.filestoUpload[question.labelName][document] = file;
-        if (type === 'application' || type === 'image') {
+        if (type[0] === 'application' || type[0] === 'image') {
           this.selectedMessage.push(file);
           const indx = this.selectedMessage.indexOf(file);
           if (indx !== -1) {
@@ -301,7 +297,7 @@ export class QuestionnaireComponent implements OnInit {
             reader.readAsDataURL(file);
           }
         }
-        // }
+        }
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
