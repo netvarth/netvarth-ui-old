@@ -1158,7 +1158,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
@@ -1179,7 +1179,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {

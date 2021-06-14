@@ -386,7 +386,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
           this.weekdayError = true;
         }
 
-        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false &&this.maxdiscountRequired == false) {
+        if (this.startDaterequired == false && this.endDaterequired === false && this.endDateInvalidError == false && this.weekdayError === false &&this.maxdiscountRequired == false&&  this.minbillamountError == false) {
           this.step = this.step + 1;
         }
       }
