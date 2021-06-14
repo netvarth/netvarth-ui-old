@@ -28,7 +28,7 @@
                     </label>
                     <!-- for file upload -->
                     <div class="col-12 ynw-common-form-nm" *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
-                        <mat-select multiple #deptsel [disabled]="disableInput()"
+                        <mat-select multiple #deptsel [disabled]="buttonDisable || disableInput()"
                             *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
                             [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box">
                             <mat-option *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
@@ -49,7 +49,7 @@
                                             (click)="openAttachmentGallery(getQuestion(question), doc)">
                                             <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                         </div>
-                                        <div class="gal_action" *ngIf="!disableInput()"
+                                        <div class="gal_action" *ngIf="!buttonDisable && !disableInput()"
                                             (click)="changeImageSelected(getQuestion(question), doc)">
                                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </div>
@@ -61,7 +61,7 @@
                                         <div class="dz-image pointer-cursor">
                                         </div>
                                         <input #logofile1 type="file" accept="/*;capture=camera" style="display:none;"
-                                            [disabled]="disableInput()"
+                                            [disabled]="buttonDisable || disableInput()"
                                             (change)="filesSelected($event, getQuestion(question), doc)">
                                         <div class="dz-error-mark">
                                             <a class="btn btn-icon btn-light-success btn-circle mr-2"><i
@@ -81,7 +81,7 @@
                             <label class="checkbox" *ngFor="let value of getQuestion(question).labelValues">
                                 <input type="checkbox" [checked]="isChecked(value, getQuestion(question))"
                                     (change)="listChange($event, value, getQuestion(question))"
-                                    [disabled]="disableInput()">
+                                    [disabled]="buttonDisable || disableInput()">
                                 <span></span>
                                 {{value}}
                             </label>
@@ -93,7 +93,7 @@
                         *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                <input type="radio" [disabled]="disableInput()"
+                                <input type="radio" [disabled]="buttonDisable || disableInput()"
                                     [checked]="isChecked(value, getQuestion(question))"
                                     (change)="listChange($event, value, getQuestion(question))">
                                 <span></span>
@@ -107,7 +107,7 @@
                     <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'bool'">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                <input type="radio" [disabled]="disableInput()"
+                                <input type="radio" [disabled]="buttonDisable || disableInput()"
                                     [checked]="isBooleanChecked(value, getQuestion(question))"
                                     (change)="booleanChange($event, value, getQuestion(question))">
                                 <span></span>
@@ -120,7 +120,7 @@
                     <!-- for Text -->
                     <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
                         <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
-                            (input)="onSubmit('inputChange');" [disabled]="disableInput()"
+                            (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
                             [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                             [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
                             class="form-control1 form-control-solid" type="text">
@@ -131,7 +131,7 @@
                     <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
                         <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
                             (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
-                            [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
+                            [max]="getQuestion(question).numberPropertie.end" [disabled]="buttonDisable || disableInput()"
                             class="form-control1 form-control-solid" type="number">
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
@@ -144,9 +144,9 @@
                                 max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}"> -->
                         <input class="form-control1" [matDatepicker]="picker"
                             [(ngModel)]="answers[getQuestion(question).labelName]"
-                            (dateChange)="onSubmit('inputChange')" [disabled]="disableInput()" (click)="picker.open()">
+                            (dateChange)="onSubmit('inputChange')" [disabled]="buttonDisable || disableInput()" (click)="picker.open()">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker [disabled]="disableInput()"></mat-datepicker>
+                        <mat-datepicker #picker [disabled]="buttonDisable || disableInput()"></mat-datepicker>
                         <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                             {{apiError[getQuestion(question).labelName]}}</div>
                     </div>
