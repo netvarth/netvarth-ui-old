@@ -10,6 +10,7 @@ export class ShowuploadfileComponent implements OnInit {
   locationImg: any;
   cacheavoider = '';
   title = 'Detailed View';
+  type;
   constructor(
     public dialogRef: MatDialogRef<ShowuploadfileComponent>,
     public sharedfunctionObj: SharedFunctions,
@@ -24,6 +25,8 @@ export class ShowuploadfileComponent implements OnInit {
       } else {
         this.details.url = this.details.path;
       }
+      this.type = this.details.type.split('/');
+      this.type = this.type[0];
     }
     console.log(this.details);
   }
