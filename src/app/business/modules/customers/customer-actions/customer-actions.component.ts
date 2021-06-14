@@ -7,7 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
+// import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
 
 @Component({
     selector: 'app-customer-actions',
