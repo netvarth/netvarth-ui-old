@@ -255,9 +255,9 @@ export class QuestionnaireComponent implements OnInit {
       for (const file of input) {
         let type = file.type.split('/');
         this.apiError[question.labelName] = [];
-        if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
-          this.snackbarService.openSnackBar('Selected type not supported', { 'panelClass': 'snackbarerror' });
-        } else {
+        // if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
+        //   this.snackbarService.openSnackBar('Selected type not supported', { 'panelClass': 'snackbarerror' });
+        // } else {
         if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
           let index;
           if (type[0] === 'application' || type[0] === 'image') {
@@ -297,7 +297,7 @@ export class QuestionnaireComponent implements OnInit {
             reader.readAsDataURL(file);
           }
         }
-        }
+        // }
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
