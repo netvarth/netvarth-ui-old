@@ -7,11 +7,11 @@
   <img style="width:100%;margin-top: -20px;" [src]="details.url"
     *ngIf="details.type && details.type == 'image/bmp'|| details.type =='image/png'|| details.type == 'image/gif' || details.type == 'image/jpg' ||details.type =='image/jpeg'||details.type == 'image/webp'" />
   <video style="width:100%;height: 75vh;" controls [class.mgn-up-minus-20]="data.source === 'mr'"
-    *ngIf="details.type && details.type == 'video/mp4' || details.type == 'video/mpeg'||details.type == 'video/quicktime'">
+    *ngIf="data.source === 'qnr' || (data.source === 'mr' && details.type && details.type == 'video/mp4' || details.type == 'video/mpeg'||details.type == 'video/quicktime')">
     <source [src]="details.url" />
   </video>
   <audio style="width:100%;" controls [class.mgn-up-minus-20]="data.source === 'mr'"
-    *ngIf="details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3'">
+    *ngIf="data.source === 'qnr' || (data.source === 'mr' && data.source === 'qnr' && (data.source === 'mr' && details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3')">
     <source [src]="details.url" />
   </audio>
 </div>

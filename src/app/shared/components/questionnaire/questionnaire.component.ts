@@ -169,6 +169,7 @@ export class QuestionnaireComponent implements OnInit {
         this.apiError[error.questionField] = [];
         this.apiError[error.questionField].push(error.error);
       }
+      this.buttonDisable = false;
     }
   }
   getAnswers(answerData, type?) {
@@ -184,8 +185,6 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
               for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
-                console.log(type);
-                console.log(answ.answerLine.answer[answ.question.fieldDataType]);
                 if (type === 'get') {
                   this.uploadedImages.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.uploadedFiles[answ.answerLine.labelName]) {
@@ -195,8 +194,6 @@ export class QuestionnaireComponent implements OnInit {
                     this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
-                  console.log(this.uploadedImages);
-                  console.log(this.uploadedFiles);
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.filestoUpload[answ.answerLine.labelName]) {
@@ -217,8 +214,6 @@ export class QuestionnaireComponent implements OnInit {
         this.answers[answ.labelName] = answ.answer[Object.keys(answ.answer)[0]];
       }
     }
-    console.log(this.uploadedImages);
-    console.log(this.uploadedFiles);
     if (type === 'get') {
       Object.keys(this.uploadedFiles).forEach(key => {
         Object.keys(this.uploadedFiles[key]).forEach(key1 => {
@@ -226,7 +221,9 @@ export class QuestionnaireComponent implements OnInit {
             if (!this.uploadFilesTemp[key]) {
               this.uploadFilesTemp[key] = [];
             }
+            if (this.uploadedFiles[key][key1].status === 'COMPLETE') {
             this.uploadFilesTemp[key].push(key1);
+            }
           }
         });
       });
@@ -254,7 +251,6 @@ export class QuestionnaireComponent implements OnInit {
     if (!this.filestoUpload[question.labelName][document]) {
       this.filestoUpload[question.labelName][document] = {};
     }
-    console.log(input);
     if (input) {
       for (const file of input) {
         // const size = file.size / 1000;
@@ -314,8 +310,6 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   changeImageSelected(question, document) {
-    console.log(question);
-    console.log(document);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
       type = type[0];
@@ -389,15 +383,12 @@ export class QuestionnaireComponent implements OnInit {
                   }
                 }
               }
-              console.log(this.filestoUpload[key][key1]);
               let type = this.filestoUpload[key][key1].type.split('/');
-              console.log(type);
               type = type[0];
               if (type === 'application' || type === 'image') {
                 this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size });
               } else {
                 this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size });
-                console.log(this.answers);
               }
             }
           } else {
@@ -458,7 +449,9 @@ export class QuestionnaireComponent implements OnInit {
       if (this.answers[key] || questiontype === 'bool') {
         let answer = this.answers[key];
         if (questiontype === 'date') {
+          console.log(answer);
           answer = this.dateProcessor.transformToYMDFormat(answer);
+          console.log(answer);
         }
         newMap[questiontype] = answer;
         data.push({
@@ -547,22 +540,18 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
-    console.log(passData);
     if (passData.files && passData.files.length > 0) {
       for (let pic of passData.files) {
         let type = pic.type.split('/');
         type = type[0];
-        console.log(type);
         if (type === 'application' || type === 'image') {
           dataToSend.append('files', pic);
         }
       }
     }
-    console.log(dataToSend);
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
-    console.log(passData);
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
     } else {
@@ -581,7 +570,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitConsumerWaitlistQuestionnaire(body) {
     this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      console.log(data);
       this.uploadAudioVideo(data, 'consCheckin');
     }, error => {
       this.buttonDisable = false;
@@ -590,7 +578,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitConsumerApptQuestionnaire(body) {
     this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      console.log(data);
       this.uploadAudioVideo(data, 'consAppt');
     }, error => {
       this.buttonDisable = false;
@@ -599,7 +586,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
-      console.log(data);
       this.uploadAudioVideo(data, 'proCheckin');
     }, error => {
       this.buttonDisable = false;
@@ -608,7 +594,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
-      console.log(data);
       this.uploadAudioVideo(data, 'proAppt');
     }, error => {
       this.buttonDisable = false;
@@ -626,29 +611,20 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   uploadAudioVideo(data, type) {
-    console.log(data);
-    console.log(this.filestoUpload);
-    console.log(this.uploadedFiles);
     if (data.urls && data.urls.length > 0) {
       let postData = {
         urls: []
       };
       for (const url of data.urls) {
-        console.log(this.filestoUpload[url.labelName]);
         Object.keys(this.filestoUpload[url.labelName]).forEach(key => {
           const file = this.filestoUpload[url.labelName][key];
-          console.log(file);
           this.providerService.videoaudioS3Upload(file, url.url)
             .subscribe(() => {
               postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-              console.log(postData);
-              console.log(postData['urls'].length);
-              console.log(data.urls.length);
               if (data.urls.length === postData['urls'].length) {
                 if (type === 'consCheckin') {
                   this.sharedService.consumerWaitlistQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                     .subscribe((data) => {
-                      console.log(data);
                       this.successGoback();
                     },
                       error => {
@@ -658,7 +634,6 @@ export class QuestionnaireComponent implements OnInit {
                 } else if (type === 'consAppt') {
                   this.sharedService.consumerApptQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                     .subscribe((data) => {
-                      console.log(data);
                       this.successGoback();
                     },
                       error => {
@@ -668,7 +643,6 @@ export class QuestionnaireComponent implements OnInit {
                 } else if (type === 'proCheckin') {
                   this.providerService.providerWaitlistQnrUploadStatusUpdate(this.uuid, postData)
                     .subscribe((data) => {
-                      console.log(data);
                       this.successGoback();
                     },
                       error => {
@@ -678,7 +652,6 @@ export class QuestionnaireComponent implements OnInit {
                 } else {
                   this.providerService.providerApptQnrUploadStatusUpdate(this.uuid, postData)
                     .subscribe((data) => {
-                      console.log(data);
                       this.successGoback();
                     },
                       error => {
@@ -771,8 +744,6 @@ export class QuestionnaireComponent implements OnInit {
   validateProviderQuestionnaireResubmit(answers, dataToSend) {
     this.providerService.validateProviderQuestionnaireResbmit(answers).subscribe((data: any) => {
       this.setValidateError(data);
-      console.log(dataToSend);
-      console.log(answers);
       if (data.length === 0) {
         if (this.source === 'customer-details') {
           this.updateConsumerQnr(dataToSend);
@@ -886,8 +857,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   onButtonAfterHook() { }
   openAttachmentGallery(question, document) {
-    console.log(question);
-    console.log(document);
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
@@ -897,7 +866,6 @@ export class QuestionnaireComponent implements OnInit {
       if (type === 'video' || type === 'audio') {
         const indx = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
         console.log(this.audioVideoFiles);
-        console.log(indx);
         this.showAudioVideoFile(this.audioVideoFiles[indx]);
       } else {
         console.log(this.selectedMessage);
@@ -910,8 +878,6 @@ export class QuestionnaireComponent implements OnInit {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       let type = this.uploadedFiles[question.labelName][document].type.split('/');
       type = type[0];
-      console.log(type);
-      console.log(this.uploadedFiles);
       if (indx !== -1) {
         if (type === 'video' || type === 'audio') {
           this.showAudioVideoFile(this.uploadedImages[indx]);
