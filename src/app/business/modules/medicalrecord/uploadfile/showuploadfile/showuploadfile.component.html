@@ -11,7 +11,7 @@
     <source [src]="details.url" />
   </video>
   <audio style="width:100%;" controls [class.mgn-up-minus-20]="data.source === 'mr'"
-    *ngIf="data.source === 'qnr' || (data.source === 'mr' && data.source === 'qnr' && (data.source === 'mr' && details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3')">
+    *ngIf="data.source === 'qnr' || (data.source === 'mr' && details.type && details.type == 'audio/ogg'|| details.type == 'audio/mpeg'|| details.type == 'audio/mp3')">
     <source [src]="details.url" />
   </audio>
 </div>
