@@ -14,6 +14,7 @@ import { SharedServices } from '../../../../../../shared/services/shared-service
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-managesettings',
@@ -206,6 +207,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
 
   settings: any = [];
   showToken = false;
+  services_cap = Messages.WAITLIST_SERVICES_CAP;
   constructor(
     private router: Router,
     private routerobj: Router,
@@ -251,6 +253,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       // console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
+    if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
+        this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+    }
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
