@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
 
 @Component({
     selector: 'app-customer-actions',
@@ -122,6 +123,34 @@ export class CustomerActionsComponent implements OnInit {
          
 
     }
+    startVoiceCall() {
+        this.closeDialog();
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        this.provider_services.voiceCallReady(customerId).subscribe(data => {
+            this.voiceCallConfirm()
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+    voiceCallConfirm() {
+        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            // profile: this.profile
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            this.router.navigate(['provider', 'customers']);
+            // if (result) {
+            // }
+          }
+        );
+      }
     editCustomer() {
         this.closeDialog();
         const navigationExtras: NavigationExtras = {

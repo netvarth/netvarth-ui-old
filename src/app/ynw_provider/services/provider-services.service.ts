@@ -2105,6 +2105,10 @@ export class ProviderServices {
     const url = 'provider/video/adhoc/start/consumer/' + id;
     return this.servicemeta.httpPost(url);
   }
+  voiceCallReady(id) {
+    const url = 'provider/voice/adhoc/start/consumer/' + id;
+    return this.servicemeta.httpPost(url);
+  }
   getStatus(id) {
     const url = 'provider/video/adhoc/' + id + '/status';
     return this.servicemeta.httpGet(url);
