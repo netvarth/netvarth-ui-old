@@ -48,7 +48,7 @@
                                                 {{waitlist.queue.location.place | capitalizeFirst}}
                                             </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
-                                                <span>Provider : </span>
+                                                <span>{{provider_label | capitalizeFirst}} :</span>
                                                 <span>
                                                     {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName +
                                                         ' ' + waitlist.provider.lastName}}
