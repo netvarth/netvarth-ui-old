@@ -135,6 +135,7 @@ export class SocialMediaComponent implements OnInit {
         this.provider_services.updateSocialMediaLinks(submit_data)
             .subscribe(
                 () => {
+                    this.snackbarService.openSnackBar('link deleted successfully');
                     this.getBusinessProfile();
                 },
                 () => {
