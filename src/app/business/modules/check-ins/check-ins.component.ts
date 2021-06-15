@@ -2385,7 +2385,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   gotoCustomViews() {
-    this.router.navigate(['provider', 'settings', 'general', 'customview']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'checkin'
+      }
+    };
+    this.router.navigate(['provider', 'settings', 'general', 'customview'], navigationExtras);
   }
   gotoUser() {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
@@ -3053,9 +3058,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           const description = communications[comIndex].s3path;
           const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          //   imagePath = communications[comIndex].s3path;
+          // }
+          if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-          }
+        }
+          console.log(imagePath);
           const imgobj = new Image(
             count,
             { // modal

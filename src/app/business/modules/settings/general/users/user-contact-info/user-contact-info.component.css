@@ -248,7 +248,46 @@ mat-dialog-content .actiondiv .confirm-button:hover {
     }
 }
 .user-img img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 0.42rem;
   }
+  .revamp_addon .pad-30 {
+    padding: 20px;
+}
+.revamp_addon .bx-shadw {
+    /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important; */
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccccc7d !important;
+}
+.revamp_addon .txt_disp_name {
+    margin-right: 60px;
+    margin-bottom: 20px;
+    /* font-size: 1rem;
+    color: #1e4079; */
+    font-weight: 600;
+    font-size: medium;
+    color: #1e4079;
+}
+.revamp_addon .flx_8 {
+    flex: 0.9;
+}
+.phone{
+   padding-top : 2px !important;  
+}
+.whatsp{
+    padding-top : 8px !important;  
+ }
+ .telegrm{
+    padding-top : 1px !important;  
+ }
+ @media (min-width: 450px) {
+    .disply  {
+        display: none !important;
+    }
+}
+@media  (max-width: 750px)  {
+    .mobile_disply  {
+        display: none !important;
+    }
+}

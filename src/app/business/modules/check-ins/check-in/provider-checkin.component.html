@@ -540,7 +540,7 @@
                                 <mat-radio-button *ngIf="!memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
-                                  Patient Id:{{memb.id}}
+                                  {{customer_label | capitalizeFirst}} Id:{{memb.jaldeeId}}
                                 </mat-radio-button>
                               </li>
                             </mat-radio-group>

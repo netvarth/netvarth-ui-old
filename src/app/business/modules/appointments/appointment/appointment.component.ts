@@ -560,7 +560,7 @@ export class AppointmentComponent implements OnInit {
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
-                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.uid);
                     } else {
                         this.router.navigate(['provider', 'appointments']);
@@ -1182,7 +1182,7 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionAnswers) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(retUuid);
                 } else {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
@@ -1215,9 +1215,45 @@ export class AppointmentComponent implements OnInit {
         }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-            this.router.navigate(['provider', 'appointments']);
+        this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+            console.log(data);
+            console.log(this.questionAnswers);
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
+                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
+                    const file = this.questionAnswers.filestoUpload[url.labelName][key];
+                    console.log(file);
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            console.log(postData);
+                            console.log(postData['urls'].length);
+                            console.log(data.urls.length);
+                            if (data.urls.length === postData['urls'].length) {
+                                this.provider_services.providerApptQnrUploadStatusUpdate(uuid, postData)
+                                    .subscribe((data) => {
+                                        console.log(data);
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                                        this.router.navigate(['provider', 'appointments']);
+                                    },
+                                    error => {
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    });
+                            }
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        });
+                    });
+                }
+            } else {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.router.navigate(['provider', 'appointments']);
+            }
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });

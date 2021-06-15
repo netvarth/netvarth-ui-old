@@ -111,7 +111,8 @@ export class ReportsComponent implements OnInit {
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-        this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
+        console.log(del_item);
+        this.provider_services.deleteCriteria(del_item).subscribe(data => {
           if (data) {
             this.getCriteriaList();
             this.snackbarService.openSnackBar('Report Deleted');

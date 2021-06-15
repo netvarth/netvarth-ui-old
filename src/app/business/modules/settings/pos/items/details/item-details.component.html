@@ -362,7 +362,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group" *ngIf="showPromotionalPrice">
                                         <label class="col-form-label" for="PromotionalPricetype">Promotional
-                                            price type</label>
+                                            price type <span style="color:red">*</span></label>
                                         <mat-radio-group formControlName="promotionalPriceType">
                                             <mat-radio-button (click)="handleTypechange('FIXED')" value="FIXED">Fixed
                                             </mat-radio-button>&nbsp;&nbsp;
@@ -383,7 +383,7 @@
                                             <label class="form-control-label">
                                                 Discounted Price 
                                                 <span *ngIf="curtype == 'FIXED'" class='rupee'>(<i class="fa fa-inr"></i>)</span>
-                                                <span *ngIf="curtype == 'PCT'" class='rupee'>(%)</span>
+                                                <span *ngIf="curtype == 'PCT'" class='rupee'>(%) </span><span style="color:red">*</span>
                                             </label>
                                             <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"
                                                 (keyup)="isvalid($event)" class="form-control number-ip-sm"
@@ -403,7 +403,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group" *ngIf="showPromotionalPrice">
-                                        <label class="col-form-label" for="PromotionalPricelabel">Promotional Label</label>
+                                        <label class="col-form-label" for="PromotionalPricelabel">Promotional Label <span style="color:red">*</span></label>
                                         <mat-radio-group formControlName="promotionallabel">
                                             <mat-radio-button (click)="handleLabelchange('Sale')" value="ONSALE">Sale
                                             </mat-radio-button>&nbsp;&nbsp;
@@ -436,7 +436,6 @@
                                     </app-field-error-display>
                                     </div>
                                 </div> 
-                                
                                 <div class="section-title col-sm-12">
                                     <span>Settings</span>
                                     <span class="h-rule"></span>

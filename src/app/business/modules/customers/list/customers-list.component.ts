@@ -114,7 +114,7 @@ export class CustomersListComponent implements OnInit {
   groupLoaded = false;
   groupIdEdit = '';
   showAddCustomerHint = false;
-  newlyCreatedGroupId;
+  newlyCreatedGroupId
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -188,6 +188,10 @@ export class CustomersListComponent implements OnInit {
   redirecToHelp() {
     this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
   }
+  selectedRow(customer) {
+    this.router.navigate(['/provider/customers/' + customer.id]);
+}
+
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
     this.customers = [];
@@ -203,6 +207,8 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
+               console.log(this.customers)
+                console.log(this.customers.length);
                 this.apiloading = false;
                 this.loadComplete = true;
               },
@@ -217,6 +223,28 @@ export class CustomersListComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  showCustomerAction(customer) {
+    const cust = [];
+    cust.push(customer)
+    const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+            customer: cust,
+        }
+    });
+    notedialogRef.afterClosed().subscribe(result => {
+        if (result === 'edit') {
+            // this.editCustomer();
+        } else {
+            // this.getCustomers(this.customerId).then(
+            //     (customer) => {
+            //         this.customer = customer;
+            //     });
+        }
+    });
   }
   clearFilter() {
     this.resetFilter();

@@ -42,8 +42,8 @@
       <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10 mgn-bt-10 ">
     <div class="form-group" *ngIf="showthirdparty">
         <mat-form-field>
-            <input matInput type="text" class="form-control" id="thirdpartyemail"
-                placeholder="Email" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
+            <input matInput type="text" class="form-control" id="thirdpartyemail" (keyup)="resetApiErrors()"
+                placeholder="Email *" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
                 autocomplete="off">
         </mat-form-field>
 
@@ -120,7 +120,7 @@
                           <span *ngIf="!customerDetail.gender">......</span>
                       </td>
                       <td><label>Dob:&nbsp;</label>
-                          <span *ngIf="customerDetail.dob">{{customerDetail.dob  | date:display_dateFormat}}</span>
+                          <span *ngIf="customerDetail.dob">{{customerDetail.dob  | date:newDateFormat}}</span>
                           <span *ngIf="!customerDetail.dob">..........</span>
                       </td>
                   </tr>

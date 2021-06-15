@@ -450,9 +450,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                          
                                         </div>   
                                         <div *ngIf="showloc">
-                                            <div *ngFor="let locationDetails of locations; let idx = index">
+                                            <!-- <div *ngFor="let locationDetails of locations; let idx = index">
                                                 <mat-radio-button [checked]="idx === 0">
                                                 {{locationDetails.Name}},&nbsp;{{locationDetails.Block}},&nbsp;{{locationDetails.Region}},&nbsp;{{locationDetails.State}}
+                                                </mat-radio-button>
+                                            </div> -->
+                                            <div>
+                                                <mat-radio-button checked="checked" >
+                                                {{locationDetails.District}},&nbsp;{{locationDetails.State}}
                                                 </mat-radio-button>
                                             </div>
                                         </div>

@@ -60,6 +60,7 @@
 }
 .normal-btn {
     padding: 5px 20px;
+    border: none !important;
 }
 .edit {
     padding: 3px 25px;
@@ -100,4 +101,14 @@
 }
 .single-file .gal_action {
     top: -5px !important;
+}
+.pro-only {
+    float: right;
+    color: red;
+    font-size: 0.8rem;
+}
+.qnrDisableState .card,
+.qnrDisableState .dropzone-default, 
+.qnrDisableState .dz-image-preview {
+    background: #eeeeee9e !important;
 }

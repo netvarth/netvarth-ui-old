@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
@@ -35,6 +35,7 @@ export class CustomViewListComponent implements OnInit {
       title: 'Custom Views'
     }
   ];
+  back_type: any;
 
   constructor(
     private router: Router,
@@ -43,7 +44,14 @@ export class CustomViewListComponent implements OnInit {
     private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
+    private activated_route: ActivatedRoute,
     public location: Location) {
+      this.activated_route.queryParams.subscribe(qparams => {   
+        if (qparams.type) {
+           this.back_type = qparams.type;
+           console.log(this.back_type)
+        }  
+      });
   }
   ngOnInit() {
     this.api_loading = true;
@@ -105,10 +113,21 @@ export class CustomViewListComponent implements OnInit {
       );
   }
   addView() {
-    this.router.navigate(['provider/settings/general/customview/add']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: this.back_type
+      }
+    };
+    this.router.navigate(['provider/settings/general/customview/add'],navigationExtras);
   }
   redirecToGeneral() {
-    this.location.back();
+    if(this.back_type === 'checkin'){
+      this.router.navigate(['provider', 'check-ins']);
+    }else if(this.back_type === 'appt'){
+      this.router.navigate(['provider', 'appointments']);
+    }else{
+      this.location.back();
+    }
     // this.router.navigate(['provider', 'settings' , 'general']);
   }
   redirecToHelp() {

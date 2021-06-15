@@ -324,6 +324,11 @@ export class UserServiceChnageComponent implements OnInit {
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
           'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
           'countryCode':  serviceObj.countryCode || '',
+          'firstName': serviceObj.firstName,
+          'lastName': serviceObj.lastName,
+          'email': serviceObj.email || ''
+
+          // serviceObj.firstName + ' ' + serviceObj.lastName;
 
 
         });
@@ -603,6 +608,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.doSearch();
   }
   viewContactDetails(user) {
+    console.log(user);
     this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
