@@ -146,8 +146,11 @@ export class BranchUserDetailComponent implements OnInit {
         this.sector = user.sector;
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector !== 'healthCare') {
+        if (this.sector !== 'healthCare' && this.sector !== 'finance') {
             this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'ADMIN' }];
+        }
+        if (this.sector === 'finance') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'ADMIN' }];
         }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
@@ -228,7 +231,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            gender: ['male'],
+            gender: [''],
             // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
@@ -272,6 +275,11 @@ export class BranchUserDetailComponent implements OnInit {
                             if (this.sector === 'healthCare') {
                                 if (this.type === 'PROVIDER') {
                                     this.type = 'DOCTOR';
+                                }
+                            }
+                            if (this.sector === 'finance') {
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'Staff Member';
                                 }
                             }
                             // this.createForm();
@@ -563,7 +571,7 @@ export class BranchUserDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.locationDetails = data;
-                    this.locations = this.locationDetails[0].PostOffice;
+                    // this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
                     this.editloc = false;
                 },

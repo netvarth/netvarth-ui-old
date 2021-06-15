@@ -58,7 +58,7 @@
                                                     {{views.name}}
                                                 </h3>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item routerLink="../custom-view" [queryParams]="{id:views.id}">
+                                                    <button mat-menu-item routerLink="../custom-view" [queryParams]="{id:views.id ,type: back_type}">
                                                         Update View
                                                     </button>
                                                     <button mat-menu-item (click)="doRemoveView(views)">

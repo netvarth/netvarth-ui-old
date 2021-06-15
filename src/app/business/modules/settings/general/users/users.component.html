@@ -354,7 +354,7 @@
                                                                           <span class="b2"
                                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                       </div>
-                                                                      <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum">
+                                                                      <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                                           <span class="b2">
                                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                                           </span>
@@ -385,9 +385,9 @@
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span class="ttle"
-                                                              *ngIf="service.userType === 'PROVIDER' ">{{provider_label
-                                                              |
-                                                              capitalizeFirst}}</span>
+                                                              *ngIf="service.userType === 'PROVIDER' ">
+                                                              {{provider_label | capitalizeFirst}}
+                                                          </span>
                                                           <span class="ttle"
                                                               *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
                                                               |
@@ -396,7 +396,7 @@
                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                       </td>
                                                       <td class="display-min-none">
-                                                          <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum">
+                                                          <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                           </span>
                                                               <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
@@ -448,7 +448,8 @@
                                                       </td>
                                                   </tr>
                                                   <tr *ngIf="users_list.length == 0 && !api_loading">
-                                                      No {{provider_label}} found
+                                                      <!-- No {{provider_label}} found -->
+                                                      No users found
                                                   </tr>
                                               </tbody>
                                               <app-common-innerloading-spinner *ngIf="api_loading">

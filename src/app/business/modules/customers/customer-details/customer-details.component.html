@@ -43,9 +43,9 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
-                                    (click)="showCustomerAction()">Actions</span>
+                                    (click)="showCustomerAction()">Actions</span> &nbsp;
                                     <!-- <span class="customer-action-btn pointer-cursor" 
-                                    ><button style="border: none;"  (click)="gotoMeet()"  [disabled]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'" [ngClass]="meetingStatus === 'REQUESTED' || meetingStatus === 'INTERRUPTED' || meetingStatus === 'STARTED'?'black':'grey'">Instant Chat</button></span><br> -->
+                                     (click)="gotoMeet()">Initiate Video Call</span><br> -->
                                    
                                   
                                 <div>{{customer_label | capitalizeFirst}} ID: <span

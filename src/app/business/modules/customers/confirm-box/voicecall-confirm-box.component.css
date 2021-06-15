@@ -1,0 +1,24 @@
+.btn-grn{
+    background: #00cc96 !important;
+  }
+.txt-trans-none{
+    text-transform: none !important;
+}
+.centeralign  .fa{
+  width:20px !important;
+}
+.pad-15 {
+  padding: 15px !important;
+}
+.txt-color{
+  color: rgb(60 141 188) !important;
+}
+.msg{
+  margin-top: 50px;
+    margin-left: 20px;
+}
+/* @media (max-width: 767px) {
+  .modal-dialog-bt {
+    float: right;
+  }
+} */
