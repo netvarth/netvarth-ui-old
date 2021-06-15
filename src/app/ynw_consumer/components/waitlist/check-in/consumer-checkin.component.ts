@@ -903,11 +903,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
                 }
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.submitQuestionnaire(parentUid);
-                } else {
-                    this.paymentOperation();
+                else{
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(parentUid);
+                    } else {
+                        this.paymentOperation();
+                    }
                 }
+                
                 const member = [];
                 for (const memb of this.waitlist_for) {
                     member.push(memb.firstName + ' ' + memb.lastName);
