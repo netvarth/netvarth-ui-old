@@ -568,6 +568,7 @@ export class AppointmentComponent implements OnInit {
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
                 });
     }
     getGlobalSettings() {
@@ -1168,7 +1169,6 @@ export class AppointmentComponent implements OnInit {
         //  this.shared_services.addProviderCheckin(post_Data)
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
-                this.api_loading = false;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
@@ -1242,11 +1242,13 @@ export class AppointmentComponent implements OnInit {
                                     },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        this.api_loading = false;
                                     });
                             }
                         },
                         error => {
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            this.api_loading = false;
                         });
                     });
                 }
@@ -1256,6 +1258,7 @@ export class AppointmentComponent implements OnInit {
             }
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.api_loading = false;
         });
     }
     handleGoBack(cstep) {
@@ -1828,6 +1831,7 @@ export class AppointmentComponent implements OnInit {
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.api_loading = false;
                 }
             );
     }
@@ -1996,8 +2000,13 @@ export class AppointmentComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = true;
-        this.heading = 'More Info';
+        console.log(this.sel_ser_det);
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.showQuestionnaire = true;
+            this.heading = 'More Info';
+        }
     }
     getProviderQuestionnaire() {
         let consumerId;
@@ -2019,6 +2028,7 @@ export class AppointmentComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
+        this.api_loading = true;
         if (!this.questionAnswers) {
           this.questionAnswers = {
             answers: {
@@ -2039,6 +2049,7 @@ export class AppointmentComponent implements OnInit {
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
             });
         }
     }
