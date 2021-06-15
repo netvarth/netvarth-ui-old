@@ -1377,7 +1377,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             count++;
                             if (count === uuids.length) {
                                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                                    this.submitQuestionnaire(uuid);
+                                    this.submitQuestionnaire(parentUid);
                                 } else {
                                     this.paymentOperation();
                                 }
