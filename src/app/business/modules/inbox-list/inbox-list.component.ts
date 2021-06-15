@@ -181,7 +181,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     if (this.source) {
       this.small_device_display = true;
-      this.msgHeight = 300;
+      this.msgHeight = 395;
       this.showChat = true;
     }
   }

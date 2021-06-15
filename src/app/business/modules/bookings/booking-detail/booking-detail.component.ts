@@ -12,7 +12,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.css','../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
+  styleUrls: ['./booking-detail.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
 
 
@@ -34,13 +34,14 @@ export class BookingDetailComponent implements OnInit {
   isCheckin
   api_loading = true;
   bookingType;
-source = '';
-uuid;
-customer;
-provider;
-customerId;
-domain;
-subdomain;
+  source = '';
+  uuid;
+  customer;
+  provider;
+  customerId;
+  domain;
+  subdomain;
+  pos;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -48,8 +49,8 @@ subdomain;
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private jaldeeTimeService: JaldeeTimeService,
-private sharedFunctions: SharedFunctions
-  ) { 
+    private sharedFunctions: SharedFunctions
+  ) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
     });
@@ -57,7 +58,7 @@ private sharedFunctions: SharedFunctions
       this.bookingType = params.type;
       console.log(this.bookingType)
     });
-    
+
     this.sharedFunctions.getMessage().subscribe((message) => {
       console.log(message.type);
       switch (message.type) {
@@ -65,25 +66,25 @@ private sharedFunctions: SharedFunctions
           this.api_loading = true;
           if (this.bookingType === 'checkin') {
             this.getWaitlistDetail();
-          } else{
+          } else {
             this.getApptDetails();
           }
           break;
       }
     });
   }
-  
+
 
   ngOnInit(): void {
-        this.api_loading = true;
-
-        if (this.bookingType === 'checkin') {
-          this.source = 'proCheckin';
-          this.getWaitlistDetail();
-        } else{
-          this.source = 'proAppt';
-          this.getApptDetails();
-        }
+    this.api_loading = true;
+    this.getPos();
+    if (this.bookingType === 'checkin') {
+      this.source = 'proCheckin';
+      this.getWaitlistDetail();
+    } else {
+      this.source = 'proAppt';
+      this.getApptDetails();
+    }
     // this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -109,15 +110,15 @@ private sharedFunctions: SharedFunctions
           this.uuid = this.waitlist_data.ynwUuid;
           this.customerId = this.waitlist_data.waitlistingFor[0].id;
           if (this.waitlist_data.jaldeeConsumer) {
-          this.customer = this.waitlist_data.jaldeeConsumer.id;
+            this.customer = this.waitlist_data.jaldeeConsumer.id;
           }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider) {
               this.provider = this.waitlist_data.provider.id;
             } else {
-            this.provider = this.waitlist_data.providerAccount.id;
+              this.provider = this.waitlist_data.providerAccount.id;
+            }
           }
-        }
           console.log(this.customer);
           console.log(this.provider);
           console.log(this.waitlist_data)
@@ -192,15 +193,15 @@ private sharedFunctions: SharedFunctions
           this.uuid = this.waitlist_data.uid;
           this.customerId = this.waitlist_data.appmtFor[0].id;
           if (this.waitlist_data.consumer) {
-          this.customer = this.waitlist_data.consumer.id;
+            this.customer = this.waitlist_data.consumer.id;
           }
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider) {
               this.provider = this.waitlist_data.provider.id;
             } else {
-            this.provider = this.waitlist_data.providerAccount.id;
+              this.provider = this.waitlist_data.providerAccount.id;
+            }
           }
-        }
           console.log(this.provider);
           this.api_loading = false;
           console.log(this.waitlist_data)
@@ -339,5 +340,11 @@ private sharedFunctions: SharedFunctions
         }
       );
   }
-
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    },
+      error => {
+      });
+  }
 }

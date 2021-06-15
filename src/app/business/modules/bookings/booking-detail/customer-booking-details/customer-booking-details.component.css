@@ -230,4 +230,6 @@
         display: flex !important;
     }
 }
- 
+.box-hgt {
+    height: 320px !important;
+}

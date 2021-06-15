@@ -15,9 +15,9 @@ export class BookingBillComponent implements OnInit {
 
   @Input() waitlist_data;
   @Input() bookingType;
+  @Input() pos;
   bill_data: any = [];
   refund_value;
-  pos;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -41,13 +41,6 @@ export class BookingBillComponent implements OnInit {
         this.getWaitlistBill();
       }
     }
-  }
-  getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
-      this.pos = data['enablepos'];
-    },
-      error => {
-      });
   }
   getWaitlistBill() {
     let uid;

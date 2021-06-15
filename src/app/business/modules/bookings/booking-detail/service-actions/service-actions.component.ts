@@ -92,6 +92,7 @@ export class ServiceActionsComponent implements OnInit {
         console.log(this.waitlist_data)
         console.log(this.bookingType)
         console.log(this.timeType)
+        if (this.waitlist_data) {
         this.location_id = this.waitlist_data.queue.location.id;
         this.serv_id = this.waitlist_data.service.id;
         this.accountid = this.waitlist_data.providerAccount.id;
@@ -102,7 +103,7 @@ export class ServiceActionsComponent implements OnInit {
         } else {
             this.checkin_date = this.waitlist_data.date;
         }
-
+    }
     }
     setActions() {
         console.log(this.waitlist_data);
