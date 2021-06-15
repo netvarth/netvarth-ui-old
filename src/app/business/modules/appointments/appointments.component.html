@@ -828,7 +828,7 @@
                     </tr>
                   </tbody>
                   <tbody *ngIf="scheduleSlots.length > 0 && statusAction == 'new' && selected_type != 'booked'">
-                    <tr [class.user-tr-backclr]="appt.provider" *ngFor="let appt of scheduleSlots" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
+                    <tr *ngFor="let appt of scheduleSlots" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
                       [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container
                         *ngIf="apptByTimeSlot[appt.time] && appt.scheduleId === apptByTimeSlot[appt.time][0].schedule.id && selected_type === 'all'">
@@ -1047,7 +1047,7 @@
                   </tbody>
                   <tbody
                     *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
                         <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
@@ -1559,7 +1559,7 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">
-                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
                       <input [checked]="chkAppointments[i]" type="checkbox" *ngIf="appt.providerConsumer"
@@ -2158,7 +2158,7 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0">
-                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
