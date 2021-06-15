@@ -224,5 +224,13 @@ export class ConsumerServices {
     const url = 'consumer/wallet/cash/expired';
      return this.servicemeta.httpGet(url);
   }
+  getConsumerCashspentWithIdDetails(id){
+    const url = 'consumer/wallet/cash/'+ id +'/txn/log';
+     return this.servicemeta.httpGet(url);
+  }
+  getConsumerTotalCashspent(){
+    const url = 'consumer/wallet/cash/spent';
+     return this.servicemeta.httpGet(url);
+  }
 
 }

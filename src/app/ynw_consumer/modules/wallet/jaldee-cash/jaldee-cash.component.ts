@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SpentlistwithidComponent } from './spentlistwithId/spentlistwithidpopup.component';
 
 
 @Component({
@@ -101,6 +102,21 @@ export class JaldeeCashComponent implements OnInit {
       disableClose: true,
       data: {
         'messages': displayNote
+      }
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+        }
+      });
+  }
+  spentlist(id?){
+    const dialogref = this.dialog.open(SpentlistwithidComponent, {
+      width: '70%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        'cashid': id
       }
     });
     dialogref.afterClosed().subscribe(

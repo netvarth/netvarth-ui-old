@@ -43,7 +43,7 @@
 
                           <div class="w-a-info funds-spent" *ngIf="cashbalanceInfodetail">
                               <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                              <p><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashSpent}}</p>
+                              <p (click)="spentlist()"><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashSpent}}</p>
                           </div>
                       </div>
 
@@ -145,7 +145,7 @@
                       <td  data-title="Amount earned" >
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}
                       </td>
-                      <td data-title="Amount spent" >
+                      <td data-title="Amount spent"  class="{'pointlist': (details.amount > 0)}" (click)="spentlist(details.id)">
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt-details.remainingAmt}}
                       </td>
                       <td data-title="Awarded date" >

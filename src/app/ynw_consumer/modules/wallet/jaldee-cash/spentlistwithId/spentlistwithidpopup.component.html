@@ -1,0 +1,32 @@
+<div class="mat-dialog-title">Spent list<button mat-dialog-close (click)="close()" class="modal_close" tabindex="-1"><i
+    class="fa fa-window-close" aria-hidden="true"></i></button></div>
+<div  class="mat-dialog-content">
+    <div  *ngIf="cashspentInfo && cashspentInfo.length > 0">
+        <div>
+  <div class="table-outer q-itm">
+    <table class="table transbase">
+      <thead>
+        <tr>
+          <th>Spent to</th>
+          <th>Amount spent</th>
+          <th>Reference No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let details of cashspentInfo; let i = index;">
+          <td data-title="Spent to">
+          {{details.spentToBizName}}
+          </td>
+          <td data-title="Amount spent">
+              <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
+          </td>
+          <td data-title="Reference No">
+            {{details.spentRef}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
