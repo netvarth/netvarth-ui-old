@@ -75,6 +75,11 @@
                 <span class="itemVal">+
                   {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
+                <span class="itemHead">Email</span>
+                <span class="itemVal">
+                  {{ waitlist_data.waitlistingFor[0].email}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
                 <span class="itemVal">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
