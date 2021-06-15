@@ -247,6 +247,7 @@ export class QuestionnaireComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
+        console.log(file);
         let type = file.type.split('/');
         this.apiError[question.labelName] = [];
         console.log(type);
@@ -782,23 +783,20 @@ export class QuestionnaireComponent implements OnInit {
   getImg(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
-      type = type[0];
       let file;
-      if (type === 'application' || type === 'image') {
-        file = this.selectedMessage;
-      } else {
+      if (type[0] === 'video' || type[0] === 'audio') {
         file = this.audioVideoFiles;
+      } else {
+        file = this.selectedMessage;
       }
       const indx = file.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
         let path;   
-        let type = file[indx].type.split('/');
-        type = type[0];
-        if (type === 'pdf' || type === 'docx' || type === 'txt' || type === 'doc') {
+        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
           path = 'assets/images/pdf.png';
-        } else if (type === 'video') {
+        } else if (type[0] === 'video') {
           path = 'assets/images/video.png';
-        } else if (type === 'audio') {
+        } else if (type[0] === 'audio') {
           path = 'assets/images/audio.png';
         } else {
           path = file[indx].path;
