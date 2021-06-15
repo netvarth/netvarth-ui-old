@@ -1,7 +1,14 @@
 <!-- BEGIN: Datatable -->
-<div class="intro-y datatable-wrapper box p-5 mt-5">
-    <table class="table table-report table-report--bordered display datatable w-full no-margin">
-        
+<div class="intro-y datatable-wrapper box" style="padding: 20px !important; margin-top: 26px !important; margin-bottom: 0 !important;">
+    <table class="table table-hover table-report table-report--bordered display w-full no-margin">
+        <thead>
+            <tr>
+                <td>Appointment For / Time</td>
+                <td style="text-align: center;">Id</td>
+                <td>Service</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
         <tbody>
             <tr *ngFor="let appt of appt_list, let i=index">
                 <td class="border-b">
@@ -9,22 +16,22 @@
                         {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
                     <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
+                        <span class="greenc bold font11" style="color: #1E4079 !important; font-size: 14px !important;">{{getSingleTime(appt.appmtTime)}}</span>
                         <!-- S{{getScheduleIndex(appt.schedule.id) + 1}} -->
                         </div>
                 </td>
                 
                 <td class="text-center border-b">
-                    <div *ngIf="appt.providerConsumer && appt.providerConsumer.jaldeeId !== '' ">id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div></td>
+                    <div *ngIf="appt.providerConsumer && appt.providerConsumer.jaldeeId !== '' ">&nbsp; {{appt.providerConsumer.jaldeeId}}</div></td>
                 <td class="text-center border-b">
-                    <div class="flex items-center sm:justify-center text-theme-9">{{appt.service.name}}</div>
+                    <div class="flex items-center sm:justify-center text-theme-9" style="color: #515151 !important;">{{appt.service.name}}</div>
                 </td>
                 <td class="border-b w-5 actions">
                     <div class="flex sm:justify-center items-center">
-                        <button class="button1">
+                        <button class="button1 btn-start">
                             Start
                         </button>
-                        <button class="button2">
+                        <button class="button2 btn-actions">
                             Actions
                         </button>
                     </div>

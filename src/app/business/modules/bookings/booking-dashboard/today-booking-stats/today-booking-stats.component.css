@@ -92,3 +92,35 @@
     margin-right: auto !important;
     margin-left: auto !important;
 }
+
+.container-today-bookings {
+    margin-right: 6.25px !important;
+    width: auto !important;
+    height: 335px !important;
+    overflow: auto !important;
+    border-radius: 8px !important;
+}
+
+.container-today-bookings .heading {
+    font-size: 18px !important;
+    font-family: "Roboto", sans-serif !important;
+    font-weight: 400 !important;
+    color: #515151 !important;
+}
+
+.container-today-bookings .value {
+    font-family: "Roboto", sans-serif !important;
+    font-weight: 400 !important;
+    color: #515151 !important;
+}
+
+.container-today-bookings .value .icon {
+    color: #1E4079 !important;
+}
+
+.container-today-bookings .value-inr {
+    color: #515151 !important;
+    font-family: FontAwesome !important;
+    font-weight: 500 !important;
+    padding-left: 8px !important;
+}

@@ -1,28 +1,28 @@
-<div class="card card-custom card-stretch card-stretch-half gutter-b p-0">
+<div class="card container-upcoming-bookings card-custom card-stretch card-stretch-half gutter-b p-0">
     <div class="card-body p-0 adjust_ht bg_peacok">
         <div class="">
             <div class=" align-items-start flex-column">
-                <div class="card-label p-3 ml-5 font-weight-bolder text-light">Next Appointment </div>
+                <div class="card-label p-5 font-weight-bolder text-light heading" style="color: #ffffff !important;">Next Appointment</div>
             </div>
         </div>
         <div class="spinner spinner-darker-success spinner-center" *ngIf="loading"></div>
-        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading && nextAppt.length > 0">
-            <div class="d-flex align-items-center mb-10">
-                <div class="symbol symbol-40 symbol-light-white mr-5">
+        <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="!loading && nextAppt.length > 0">
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-40 symbol-light-white mr-3">
                     <div class="symbol-label">
-                        <img src="assets/media/004-boy-1.svg" class="h-75 align-self-end" alt="">
+                        <img src="assets/media/004-boy-1.svg" class="h-75" alt="">
                     </div>
                 </div>
                 <div class="d-flex flex-column font-weight-bold">
-                    <a class="text-hover-primary mb-1 font-size-lg clr_white">{{nextAppt[0].service.name}}</a>
-                    <span class="text-muted">{{nextAppt[0].appmtFor[0].firstName}} {{nextAppt[0].appmtFor[0].lastName}}</span>
+                    <a class="ser-name mb-1 font-size-lg clr_white" style="color: #ffffff !important;">{{nextAppt[0].service.name}}</a>
+                    <span class="cons-name" style="color: #ffffff !important;">{{nextAppt[0].appmtFor[0].firstName}} {{nextAppt[0].appmtFor[0].lastName}}</span>
                 </div>
             </div>
-            <div class="d-flex flex-column text-right mtn_40">
+            <div class="d-flex flex-column text-right" style="width: 160px !important;">
                 <span
-                    class="text-light font-weight-bolder font-size-sm clr_white">{{nextAppt[0].schedule.apptSchedule.timeSlots[0].sTime}}
+                    class="timings font-weight-bolder font-size-sm clr_white" style="color: #ffffff !important;">{{nextAppt[0].schedule.apptSchedule.timeSlots[0].sTime}}
                     - {{nextAppt[0].schedule.apptSchedule.timeSlots[0].eTime}}</span>
-                <a class="btn mt-2 font-weight-bolder btn-sm btn_action" (click)="gotoDetails('appointment')">
+                <a class="btn mt-2 font-weight-bolder btn-sm btn_action action-btn" style="color: #1E4079 !important;" (click)="gotoDetails('appointment')">
                     Actions
                 </a>
             </div>
@@ -31,27 +31,27 @@
     <div class="card-body p-0 adjust_ht">
         <div class="">
             <div class=" align-items-start flex-column">
-                <div class="card-label p-3 ml-5 font-weight-bolder text-dark-light">Next Token </div>
+                <div class="card-label p-5 font-weight-bolder text-dark-light heading" style="color: #515151 !important;">Next Token</div>
             </div>
         </div>
         <div class="spinner spinner-darker-success spinner-center" *ngIf="loading"></div>
-        <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1" *ngIf="!loading && nextWaitlist.length > 0">
-            <div class="d-flex align-items-center mb-10">
-                <div class="symbol symbol-40 symbol-light-dark mr-5">
-                    <div class="symbol-label">
-                        <img src="assets/media/004-boy-1.svg" class="h-75 align-self-end" alt="">
+        <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="!loading && nextWaitlist.length > 0">
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-40 symbol-light-dark mr-3">
+                    <div class="symbol-label" style="background-color: #00acac !important;">
+                        <img src="assets/media/004-boy-1.svg" class="h-75" alt="">
                     </div>
                 </div>
                 <div class="d-flex flex-column font-weight-bold">
-                    <a class="text-dark text-hover-primary mb-1 font-size-lg">{{nextWaitlist[0].service.name}}</a>
-                    <span class="text-muted">{{nextWaitlist[0].waitlistingFor[0].firstName}}
+                    <a class="ser-name text-dark mb-1 font-size-lg" style="color: #515151 !important;">{{nextWaitlist[0].service.name}}</a>
+                    <span class="cons-name" style="color: #515151 !important;">{{nextWaitlist[0].waitlistingFor[0].firstName}}
                         {{nextWaitlist[0].waitlistingFor[0].lastName}}</span>
                 </div>
             </div>
-            <div class="d-flex flex-column text-right mtn_40">
-                <span class="text-dark-light font-weight-bolder font-size-sm">{{nextWaitlist[0].queue.queueStartTime}} -
+            <div class="d-flex flex-column text-right" style="width: 160px !important">
+                <span class="timings font-weight-bolder font-size-sm" style="color: #515151 !important;">{{nextWaitlist[0].queue.queueStartTime}} -
                     {{nextWaitlist[0].queue.queueEndTime}}</span>
-                <a class="btn mt-2 font-weight-bolder btn-sm btn_action2" (click)="gotoDetails('checkin')">
+                <a class="btn mt-2 font-weight-bolder btn-sm btn_action2 action-btn" style="color: #ffffff !important;" (click)="gotoDetails('checkin')">
                     Actions
                 </a>
             </div>
