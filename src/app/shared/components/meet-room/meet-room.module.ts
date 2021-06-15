@@ -2,7 +2,7 @@
 import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { TwilioService } from "../../../shared/services/twilio-service";
+import { TwilioService } from "../../services/twilio-service";
 import { MeetRoomComponent } from "./meet-room.component";
 
 @NgModule({

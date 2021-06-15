@@ -1,14 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import { TwilioService } from "../../../shared/services/twilio-service";
+import { TwilioService } from "../../services/twilio-service";
 import { interval as observableInterval } from 'rxjs';
-import { MeetService } from "../../../shared/services/meet-service";
+import { MeetService } from "../../services/meet-service";
 import { Title } from "@angular/platform-browser";
-import { SnackbarService } from "../../../shared/services/snackbar.service";
+import { SnackbarService } from "../../services/snackbar.service";
 import { SubSink } from "subsink";
 import { MatDialog } from "@angular/material/dialog";
-import { AddInboxMessagesComponent } from "../../../shared/components/add-inbox-messages/add-inbox-messages.component";
+import { AddInboxMessagesComponent } from "../add-inbox-messages/add-inbox-messages.component";
 
 @Component({
     selector: 'app-meet-room',
