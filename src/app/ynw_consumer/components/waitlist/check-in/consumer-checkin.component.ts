@@ -928,40 +928,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
-            console.log(data);
-            console.log(this.questionAnswers);
             let postData = {
                 urls: []
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
-                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
-                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
-                        const file = this.questionAnswers.filestoUpload[url.labelName][key];
-                        console.log(file);
-                        this.provider_services.videoaudioS3Upload(file, url.url)
-                            .subscribe(() => {
-                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                                console.log(postData);
-                                console.log(postData['urls'].length);
-                                console.log(data.urls.length);
-                                if (data.urls.length === postData['urls'].length) {
-                                    this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                        .subscribe((data) => {
-                                            console.log(data);
-                                            this.paymentOperation();
-                                        },
-                                            error => {
-                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                this.disablebutton = false;
-                                            });
-                                }
-                            },
-                                error => {
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    this.disablebutton = false;
-                                });
-                    });
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                    .subscribe((data) => {
+                                        this.paymentOperation();
+                                    },
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.disablebutton = false;
+                                        });
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                            });
                 }
             } else {
                 this.paymentOperation();
@@ -1158,7 +1148,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
@@ -1179,7 +1169,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {

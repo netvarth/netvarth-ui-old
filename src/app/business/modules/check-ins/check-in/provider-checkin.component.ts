@@ -1288,46 +1288,35 @@ export class ProviderCheckinComponent implements OnInit {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-
-            console.log(data);
-            console.log(this.questionAnswers);
             let postData = {
                 urls: []
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
-                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
-                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
-                        const file = this.questionAnswers.filestoUpload[url.labelName][key];
-                        console.log(file);
-                        this.provider_services.videoaudioS3Upload(file, url.url)
-                            .subscribe(() => {
-                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                                console.log(postData);
-                                console.log(postData['urls'].length);
-                                console.log(data.urls.length);
-                                if (data.urls.length === postData['urls'].length) {
-                                    this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
-                                        .subscribe((data) => {
-                                            console.log(data);
-                                            if (this.settingsjson.showTokenId) {
-                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-                                            } else {
-                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
-                                            }
-                                            this.router.navigate(['provider', 'check-ins']);
-                                        },
-                                            error => {
-                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                this.api_loading = false;
-                                            });
-                                }
-                            },
-                                error => {
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    this.api_loading = false;
-                                });
-                    });
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
+                                    .subscribe((data) => {
+                                        if (this.settingsjson.showTokenId) {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                                        } else {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                                        }
+                                        this.router.navigate(['provider', 'check-ins']);
+                                    },
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.api_loading = false;
+                                        });
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.api_loading = false;
+                            });
                 }
             } else {
                 if (this.settingsjson.showTokenId) {
@@ -1337,8 +1326,6 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.router.navigate(['provider', 'check-ins']);
             }
-
-
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.api_loading = false;
@@ -2097,7 +2084,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        console.log(this.sel_ser_det);
         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
             this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
         } else {

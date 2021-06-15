@@ -1902,40 +1902,30 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.subs.sink = this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
-            console.log(data);
-            console.log(this.questionAnswers);
             let postData = {
                 urls: []
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
-                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
-                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
-                        const file = this.questionAnswers.filestoUpload[url.labelName][key];
-                        console.log(file);
-                        this.provider_services.videoaudioS3Upload(file, url.url)
-                            .subscribe(() => {
-                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                                console.log(postData);
-                                console.log(postData['urls'].length);
-                                console.log(data.urls.length);
-                                if (data.urls.length === postData['urls'].length) {
-                                    this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                        .subscribe((data) => {
-                                            console.log(data);
-                                            this.paymentOperation();
-                                        },
-                                            error => {
-                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                this.disablebutton = false;
-                                            });
-                                }
-                            },
-                                error => {
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    this.disablebutton = false;
-                                });
-                    });
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                    .subscribe((data) => {
+                                        this.paymentOperation();
+                                    },
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.disablebutton = false;
+                                        });
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                            });
                 }
             } else {
                 this.paymentOperation();
