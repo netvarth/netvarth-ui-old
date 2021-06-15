@@ -901,16 +901,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     parentUid = retData['parent_uuid'];
                 });
                 if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList);
+                    this.consumerNoteAndFileSave(this.uuidList, parentUid);
                 }
-                else{
+                else {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(parentUid);
                     } else {
                         this.paymentOperation();
                     }
                 }
-                
+
                 const member = [];
                 for (const memb of this.waitlist_for) {
                     member.push(memb.firstName + ' ' + memb.lastName);
@@ -1355,7 +1355,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.selectedMessage.base64.splice(i, 1);
         this.selectedMessage.caption.splice(i, 1);
     }
-    consumerNoteAndFileSave(uuids) {
+    consumerNoteAndFileSave(uuids, parentUid?) {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
@@ -1368,10 +1368,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
+        let count = 0;
         for (const uuid of uuids) {
             this.subs.sink = this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
                 .subscribe(
                     () => {
+                        if (this.type !== 'waitlistreschedule') {
+                            count++;
+                            if (count === uuids.length) {
+                                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                                    this.submitQuestionnaire(uuid);
+                                } else {
+                                    this.paymentOperation();
+                                }
+                            }
+                        }
                     },
                     error => {
                         this.wordProcessor.apiErrorAutoHide(this, error);

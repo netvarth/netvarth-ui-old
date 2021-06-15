@@ -1167,11 +1167,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
             .subscribe(
                 () => {
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(uuid);
-                    } else {
-                        this.paymentOperation();
-                    }
+                    if (this.type !== 'reschedule') {
+                        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                            this.submitQuestionnaire(uuid);
+                        } else {
+                            this.paymentOperation();
+                        }
+                    }  
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
