@@ -1327,6 +1327,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.disableDiscountbtn = true;
     if ((this.discount_type.discType === 'OnDemand' && discount['discValue']) || this.discount_type.discType !== 'OnDemand') {
       this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
+      this.discount_type  = '';
     } else {
       this.disableDiscountbtn = false;
     }
