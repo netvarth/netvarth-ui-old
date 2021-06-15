@@ -861,10 +861,8 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
-          console.log(type);
-          console.log(this.uploadedFiles[question.labelName][document]);
           if (type[1] === '.pdf' || type[1] === '.docx' || type[1] === '.txt' || type[1] === '.doc') {
-            window.open(this.uploadedFiles[question.labelName][document].path, '_blank');
+            window.open(this.selectedMessage[indx].path, '_blank');
           } else {
             imagePath = this.uploadedImages[indx].path;
           }
