@@ -2786,6 +2786,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
+  getAge(age) {
+    age = age.split(',');
+    return age[0];
+  }
   // setWaitlistStatusFilterForHistory() {
   //   for (const apptStatus of this.check_in_statuses_filter) {
   //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {

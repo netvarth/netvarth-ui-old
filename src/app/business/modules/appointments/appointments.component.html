@@ -557,7 +557,7 @@
                     </tr>
                   </tbody>
                   <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
                         <input *ngIf="appt.providerConsumer" [checked]="startedChkAppointments[i]" type="checkbox"
@@ -579,6 +579,19 @@
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
+                          <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                            {{appt.appmtFor[0].bookingLocation.district}},
+                            {{appt.appmtFor[0].bookingLocation.state}}</div>
+                          <div class="location">
+                            <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                            <span *ngIf="appt.appmtFor[0].age">,</span>
+                            <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                            </div>
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -587,8 +600,10 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                            ' ' + appt.provider.lastName}}
+                          <!-- {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}} -->
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -813,7 +828,7 @@
                     </tr>
                   </tbody>
                   <tbody *ngIf="scheduleSlots.length > 0 && statusAction == 'new' && selected_type != 'booked'">
-                    <tr *ngFor="let appt of scheduleSlots" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
+                    <tr [class.user-tr-backclr]="appt.provider" *ngFor="let appt of scheduleSlots" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
                       [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container
                         *ngIf="apptByTimeSlot[appt.time] && appt.scheduleId === apptByTimeSlot[appt.time][0].schedule.id && selected_type === 'all'">
@@ -1053,6 +1068,19 @@
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
+                          <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                            {{appt.appmtFor[0].bookingLocation.district}},
+                            {{appt.appmtFor[0].bookingLocation.state}}</div>
+                          <div class="location">
+                            <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                            <span *ngIf="appt.appmtFor[0].age">,</span>
+                            <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                            </div>
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -1061,8 +1089,9 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                            ' ' + appt.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1550,6 +1579,19 @@
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
+                        <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                          {{appt.appmtFor[0].bookingLocation.district}},
+                          {{appt.appmtFor[0].bookingLocation.state}}</div>
+                        <div class="location">
+                          <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                          <span *ngIf="appt.appmtFor[0].age">,</span>
+                          <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                          </div>
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -1558,8 +1600,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                          ' ' + appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -2135,6 +2178,19 @@
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
+                        <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                          {{appt.appmtFor[0].bookingLocation.district}},
+                          {{appt.appmtFor[0].bookingLocation.state}}</div>
+                        <div class="location">
+                          <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                          <span *ngIf="appt.appmtFor[0].age">,</span>
+                          <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                          </div>
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -2143,8 +2199,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                          ' ' + appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
