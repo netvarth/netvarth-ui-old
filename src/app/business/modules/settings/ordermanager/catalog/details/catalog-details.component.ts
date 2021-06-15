@@ -286,11 +286,14 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             }
         }
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
-            console.log('inside');
             this.step = 3;
             return;
         } 
-        
+        if (this.step === 1 && this.amForm.get('catalogName').value === '') {
+            console.log('catalogName');
+            this.snackbarService.openSnackBar('Please enter the catalog name', { 'panelClass': 'snackbarerror' });
+            return;
+        } 
         if (this.step === 2) {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
