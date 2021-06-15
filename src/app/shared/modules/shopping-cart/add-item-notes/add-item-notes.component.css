@@ -31,3 +31,11 @@
     border-radius: 4px;
     padding: 10px;
 }
+.txt-area-msg .snd-btn[disabled]{
+    width: 100%;
+    background: #55585c;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    padding: 10px;
+}

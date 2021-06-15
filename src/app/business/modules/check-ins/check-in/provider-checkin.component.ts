@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -576,7 +576,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
-                    if (this.questionAnswers && this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.uid);
                     } else {
                         this.router.navigate(['provider', 'check-ins']);
@@ -584,6 +584,7 @@ export class ProviderCheckinComponent implements OnInit {
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
                 });
     }
     initCheckIn(thirdParty?) {
@@ -856,10 +857,10 @@ export class ProviderCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        if(this.customer_data.phoneNo){
+                        if (this.customer_data.phoneNo) {
                             this.callingModes = this.customer_data.phoneNo.trim();
                             this.wtsapmode = this.customer_data.phoneNo;
-                            console.log('whatsappmoe..'+this.wtsapmode);
+                            console.log('whatsappmoe..' + this.wtsapmode);
                         }
                     }
                 }
@@ -1136,9 +1137,9 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                if (this.countryCode ) {
-                    let unChangedPhnoCountryCode='91';
-                    if(this.countryCode.split('+')[1]!==undefined){
+                if (this.countryCode) {
+                    let unChangedPhnoCountryCode = '91';
+                    if (this.countryCode.split('+')[1] !== undefined) {
                         unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                     }
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
@@ -1206,7 +1207,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
- console.log(JSON.stringify(post_Data));
+        console.log(JSON.stringify(post_Data));
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             post_Data['ignorePrePayment'] = true;
@@ -1228,7 +1229,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     addWaitlistBlock(post_Data) {
-        console.log('data'+post_Data);
+        console.log('data' + post_Data);
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {
@@ -1245,7 +1246,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_loading = true;
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
-                this.api_loading = false;
                 const retData = data;
                 let retUuid;
                 let parentUid;
@@ -1254,7 +1254,7 @@ export class ProviderCheckinComponent implements OnInit {
                     this.trackUuid = retData[key];
                     parentUid = retData['parent_uuid'];;
                 });
-                if (this.questionAnswers) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
                     this.router.navigate(['provider', 'check-ins']);
@@ -1287,15 +1287,48 @@ export class ProviderCheckinComponent implements OnInit {
         }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
-            if (this.settingsjson.showTokenId) {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+        this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
+                                    .subscribe((data) => {
+                                        if (this.settingsjson.showTokenId) {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                                        } else {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                                        }
+                                        this.router.navigate(['provider', 'check-ins']);
+                                    },
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.api_loading = false;
+                                        });
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.api_loading = false;
+                            });
+                }
             } else {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                if (this.settingsjson.showTokenId) {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                }
+                this.router.navigate(['provider', 'check-ins']);
             }
-            this.router.navigate(['provider', 'check-ins']);
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.api_loading = false;
         });
     }
     handleGoBack(cstep) {
@@ -1887,6 +1920,7 @@ export class ProviderCheckinComponent implements OnInit {
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.api_loading = false;
                 }
             );
     }
@@ -2050,8 +2084,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = true;
-        this.heading = 'More Info';
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.showQuestionnaire = true;
+            this.heading = 'More Info';
+        }
     }
     getProviderQuestionnaire() {
         let consumerId;
@@ -2073,6 +2111,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
+        this.api_loading = true;
         if (!this.questionAnswers) {
             this.questionAnswers = {
                 answers: {
@@ -2093,6 +2132,7 @@ export class ProviderCheckinComponent implements OnInit {
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
             });
         }
     }

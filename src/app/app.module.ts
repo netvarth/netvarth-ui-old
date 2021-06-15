@@ -109,8 +109,8 @@ import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
-import { MeetRoomComponent } from './ynw_consumer/components/meet-room/meet-room.component';
-import { MeetRoomModule } from './ynw_consumer/components/meet-room/meet-room.module';
+import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
+import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }

@@ -545,7 +545,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
-                if (this.questionAnswers && this.questionAnswers.answers && this.questionAnswers.answers.answerLine && this.questionAnswers.answers.answerLine.length > 0) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.uid, post_Data, paymentWay);
                 } else {
                     this.consumerPayment(this.uid, post_Data, paymentWay);

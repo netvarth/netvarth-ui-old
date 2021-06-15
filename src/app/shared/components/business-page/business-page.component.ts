@@ -2843,9 +2843,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
       const businessObject = {
         'bname': this.businessjson.businessName,
-        'blocation': this.locationjson[0].place
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
       };
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);

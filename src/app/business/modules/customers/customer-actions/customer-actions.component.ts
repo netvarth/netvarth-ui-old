@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+// import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
 
 @Component({
     selector: 'app-customer-actions',
@@ -24,6 +25,9 @@ export class CustomerActionsComponent implements OnInit {
     showApply = false;
     labelsforRemove: any = [];
     labelMap = {};
+    meet_data: any;
+    id: any;
+    providerMeetingUrl: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
@@ -95,6 +99,58 @@ export class CustomerActionsComponent implements OnInit {
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
     }
+    gotoMeet() {
+        this.closeDialog();
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        this.provider_services.meetReady(customerId).subscribe(
+            (data: any) => {
+                this.meet_data = data;
+                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
+                // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
+                //     this.getMeetingStatus();
+                // });
+                const retcheckarr = this.providerMeetingUrl.split('/');
+                this.id = retcheckarr[4]
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { custId: customerId }
+                };
+                // const path = 'meet/' + this.id ;
+                // window.open(path, '_blank');
+                this.router.navigate(['meet', this.id], navigationExtras);
+            }
+        );
+         
+
+    }
+    // startVoiceCall() {
+    //     this.closeDialog();
+    //     const customerDetails = this.customerDetails;
+    //     const customerId = customerDetails[0].id;
+    //     this.provider_services.voiceCallReady(customerId).subscribe(data => {
+    //         this.voiceCallConfirm()
+    //     },
+    //         error => {
+    //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //         });
+    // }
+    // voiceCallConfirm() {
+    //     const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         // profile: this.profile
+    //       }
+    //     });
+    //     dialogref.afterClosed().subscribe(
+    //       result => {
+    //         this.router.navigate(['provider', 'customers']);
+    //         // if (result) {
+    //         // }
+    //       }
+    //     );
+    //   }
     editCustomer() {
         this.closeDialog();
         const navigationExtras: NavigationExtras = {

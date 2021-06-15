@@ -28,7 +28,7 @@
                               <div class="form-group no-padding nonworking">   
                                   <mat-form-field class="selctDte">
                                     <input type="text" matInput [matDatepicker]="picker" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose start date" readonly
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose start date *" readonly
                                       (keypress)="isNumeric($event)" readonly (click)="picker.open()">
                                       <!-- <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
                                       [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date"> -->
@@ -38,7 +38,7 @@
 
                                   <mat-form-field class="selctDte" >
                                     <input type="text" matInput [matDatepicker]="picker1" formControlName="enddate" [min]="minDate"
-                                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose end date"
+                                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose end date *"
                                       (keypress)="isNumeric($event)" readonly (click)="picker1.open()">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1 [disabled]="false"></mat-datepicker>

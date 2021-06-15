@@ -259,6 +259,7 @@
 										<tr class="font-weight-boldest font-size-md bdr_bt"
 											*ngFor="let service of bill_data.service; let i = index">
 											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}
+											<span class="rupee-font">{{service.price | currency:'&#8377;'}}</span>
 												<br> <br>
 												<!-- Incase of discount name -->
 												<span *ngFor="let discount of service.discount"
@@ -408,6 +409,8 @@
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg bdr_bt">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}
+											<span class="rupee-font">{{item.price | currency:'&#8377;'}}
+												</span>
 												<br> <br>
 												<!-- Incase of discount name -->
 												<span *ngFor="let discount of item.discount"

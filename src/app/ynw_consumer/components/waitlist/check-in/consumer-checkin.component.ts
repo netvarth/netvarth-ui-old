@@ -209,6 +209,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newWhatsapp;
     virtualFields: any;
     whatsappCountryCode;
+    disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -791,13 +792,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
-               if(this.payEmail!==''){
-                    this.waitlist_for[0]['email']=this.payEmail;
+                if (this.payEmail !== '') {
+                    this.waitlist_for[0]['email'] = this.payEmail;
                 }
             }
         }
 
-      
+
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -813,6 +814,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         post_Data['consumer'] = { id: this.customer_data.id };
         if (!this.is_wtsap_empty) {
             if (type === 'checkin') {
+                this.disablebutton = true;
                 this.addCheckInConsumer(post_Data);
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
@@ -901,34 +903,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
                 }
-                if (this.questionAnswers && this.questionAnswers.answers && this.questionAnswers.answers.answerLine && this.questionAnswers.answers.answerLine.length > 0) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
-                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                        this.payuPayment();
-                    } else {
-                        let multiple;
-                        if (this.uuidList.length > 1) {
-                            multiple = true;
-                        } else {
-                            multiple = false;
-                        }
-                        setTimeout(() => {
-                            let queryParams = {
-                                account_id: this.account_id,
-                                uuid: this.uuidList,
-                                multiple: multiple,
-                                theme: this.theme
-                            }
-                            if (this.businessId) {
-                                queryParams['customId'] = this.customId;
-                            }
-                            let navigationExtras: NavigationExtras = {
-                                queryParams: queryParams
-                            };
-                            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
-                        }, 2000);
-                    }
+                    this.paymentOperation();
                 }
                 const member = [];
                 for (const memb of this.waitlist_for) {
@@ -937,6 +915,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     submitQuestionnaire(uuid) {
@@ -948,35 +927,65 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
-        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
-
-            if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                this.payuPayment();
+        this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                    .subscribe((data) => {
+                                        this.paymentOperation();
+                                    },
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.disablebutton = false;
+                                        });
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                            });
+                }
             } else {
-                let multiple;
-                if (this.uuidList.length > 1) {
-                    multiple = true;
-                } else {
-                    multiple = false;
-                }
-                let queryParams = {
-                    account_id: this.account_id,
-                    uuid: this.uuidList,
-                    multiple: multiple,
-                    theme: this.theme
-                }
-                if (this.businessId) {
-                    queryParams['customId'] = this.customId;
-                }
-                let navigationExtras: NavigationExtras = {
-                    queryParams: queryParams
-                };
-                this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+                this.paymentOperation();
             }
         },
             error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
             });
+    }
+    paymentOperation() {
+        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+            this.payuPayment();
+        } else {
+            let multiple;
+            if (this.uuidList.length > 1) {
+                multiple = true;
+            } else {
+                multiple = false;
+            }
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                multiple: multiple,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+        }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1130,8 +1139,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     setVirtualTeleserviceCustomer() {
         console.log(this.virtualInfo);
-        if(this.virtualInfo &&this.virtualInfo.email&&this.virtualInfo.email!==''){
-            this.payEmail=this.virtualInfo.email;
+        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
+            this.payEmail = this.virtualInfo.email;
         }
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
@@ -1139,7 +1148,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
@@ -1160,7 +1169,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '') {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
@@ -1319,8 +1328,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
                     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    return;
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1361,6 +1372,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     },
                     error => {
                         this.wordProcessor.apiErrorAutoHide(this, error);
+                        this.disablebutton = false;
                     }
                 );
         }
@@ -2159,6 +2171,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
                 });
     }
     paywithRazorpay(pData: any) {
@@ -2289,7 +2302,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
     }
-    viewAttachments(){
+    viewAttachments() {
         this.action = 'attachment';
         this.modal.nativeElement.click();
     }

@@ -14288,3 +14288,9 @@ padding-left: 15px !important;
 .tblscroll {
   overflow: auto;
 }
+.uploadfilecomponentclass {
+  width: 600vw !important;
+}
+app-showuploadfile .mat-dialog-content {
+  max-height: 80vh !important;
+}

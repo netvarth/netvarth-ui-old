@@ -29,14 +29,14 @@
                 <div class="form-group no-padding nonworking">
                   <mat-form-field class="selctDte">
                     <input type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate"
-                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose start date"
+                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose start date *"
                       (keypress)="isNumeric($event)" readonly (click)="picker.open()">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                   </mat-form-field>
                   <mat-form-field class="selctDte" >
                     <input type="text" matInput [matDatepicker]="picker1" formControlName="enddate" [min]="minDate"
-                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose end date"
+                      [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose end date *"
                       (keypress)="isNumeric($event)" readonly (click)="picker1.open()">
         
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

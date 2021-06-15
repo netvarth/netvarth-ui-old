@@ -83,7 +83,7 @@
                         </span>
                       </td>
                       <td class="">
-                        <i class="fa fa-arrow-right black" aria-hidden="true"></i> 
+                        <i class="fa fa-arrow-right black" aria-hidden="true"></i>
                       </td>
                     </tr>
                   </tbody>
@@ -240,13 +240,13 @@
                           class="fa wtsapaud-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType==='videoService'"
                           class="fa wtsapvid-icon"></i>
-                       
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
+
+                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                           class="fa zoom-icon"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
+                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
                           class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
-                        
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+
+                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                           class="fa meet-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
                           class="fa phon-icon" aria-hidden="true"></i>
@@ -484,7 +484,9 @@
                   [disabled]="api_loading"
                   *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                 <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-                  [disabled]="api_loading" *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
+                  [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                  [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+                  *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
               </div>
             </ng-container>
           </div>
@@ -540,7 +542,7 @@
                                 <mat-radio-button *ngIf="!memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
-                                  Patient Id:{{memb.jaldeeId}}
+                                  {{customer_label | capitalizeFirst}} Id:{{memb.jaldeeId}}
                                 </mat-radio-button>
                               </li>
                             </mat-radio-group>
@@ -691,9 +693,12 @@
           </div>
           <div>
             <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-              [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+              [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+              [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+              *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
             <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
-              [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+              [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+              [class.spinner-center]="api_loading" [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
           </div>
         </div>
       </div>

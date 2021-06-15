@@ -16,7 +16,7 @@ import { CheckoutSharedComponent } from './shared/components/checkout/checkout.c
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
-import { MeetRoomComponent } from './ynw_consumer/components/meet-room/meet-room.component';
+import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {

@@ -96,6 +96,7 @@
                         <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
                         <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
                             formControlName="age" style="width:50%" (keypress)=isNumeric($event)>
+                            <div style="display: flex; justify-content: space-between;">
                             <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
                             [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
                   {
@@ -105,6 +106,7 @@
                    
                   })">
                         </app-field-error-display>
+                    </div>
                     </div>
                       
                

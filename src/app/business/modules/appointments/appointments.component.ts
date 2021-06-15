@@ -2439,9 +2439,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           const description = communications[comIndex].s3path;
           const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          //   imagePath = communications[comIndex].s3path;
+          // }
+          if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-          }
+        }
           const imgobj = new Image(
             count,
             { // modal
@@ -2782,6 +2785,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return false;
     }
+  }
+  getAge(age) {
+    age = age.split(',');
+    return age[0];
   }
   // setWaitlistStatusFilterForHistory() {
   //   for (const apptStatus of this.check_in_statuses_filter) {

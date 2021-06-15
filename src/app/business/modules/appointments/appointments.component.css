@@ -870,3 +870,9 @@
     color: #3d3d3d !important;
     background-color: #C9C9C9 !important;
 }
+.user-txt-clr {
+    color: #3E234B;
+}
+.user-tr-backclr {
+    background: #f0ecf6;
+}

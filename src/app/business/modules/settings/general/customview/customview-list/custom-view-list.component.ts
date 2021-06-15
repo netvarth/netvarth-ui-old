@@ -125,7 +125,10 @@ export class CustomViewListComponent implements OnInit {
       this.router.navigate(['provider', 'check-ins']);
     }else if(this.back_type === 'appt'){
       this.router.navigate(['provider', 'appointments']);
-    }else{
+    } else if (this.back_type === 'view'){
+      this.router.navigate(['provider', 'settings' , 'general']);
+    } else{
+      console.log(this.back_type);
       this.location.back();
     }
     // this.router.navigate(['provider', 'settings' , 'general']);
