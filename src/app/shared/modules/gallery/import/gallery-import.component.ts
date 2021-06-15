@@ -129,7 +129,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     saveImages() {
         this.error_msg = '';
         this.error_list = [];
-        this.img_save_caption = 'Uploading .. ';
+        this.img_save_caption = 'Uploading';
         this.savedisabled = true;
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
