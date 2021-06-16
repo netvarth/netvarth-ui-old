@@ -37,11 +37,12 @@ export class BookingDetailComponent implements OnInit {
   source = '';
   uuid;
   customer;
-  provider;
+  provider = 0;
   customerId;
   domain;
   subdomain;
   pos;
+  height;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -56,7 +57,6 @@ export class BookingDetailComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
-      console.log(this.bookingType)
     });
 
     this.sharedFunctions.getMessage().subscribe((message) => {
@@ -74,7 +74,6 @@ export class BookingDetailComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
     this.api_loading = true;
     this.getPos();
@@ -85,7 +84,6 @@ export class BookingDetailComponent implements OnInit {
       this.source = 'proAppt';
       this.getApptDetails();
     }
-    // this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
@@ -93,12 +91,6 @@ export class BookingDetailComponent implements OnInit {
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = this.userDet.sector;
     this.subdomain = this.userDet.subSector;
-    if (this.waitlist_id) {
-      // this.getWaitlistDetail();
-      // this.getProviderSettings();
-    } else {
-      // this.goBack();
-    }
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
@@ -115,15 +107,10 @@ export class BookingDetailComponent implements OnInit {
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider) {
               this.provider = this.waitlist_data.provider.id;
-            } else {
-              this.provider = this.waitlist_data.providerAccount.id;
             }
           }
-          console.log(this.customer);
-          console.log(this.provider);
           console.log(this.waitlist_data)
           this.api_loading = false;
-          console.log(this.api_loading)
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
               case 'Zoom': {
@@ -153,8 +140,6 @@ export class BookingDetailComponent implements OnInit {
             this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
           }
           if (this.waitlist_data.appointmentTime) {
-            // tslint:disable-next-line: radix
-            // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
             this.apptTime = this.waitlist_data.appointmentTime;
           } else {
             this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -166,11 +151,7 @@ export class BookingDetailComponent implements OnInit {
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // if (this.waitlist_data.waitlistStatus !== 'blocked') {
-          //   this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          // }
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
-          // this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
             this.spName = this.waitlist_data.provider.businessName;
             this.spfname = this.waitlist_data.provider.firstName;
@@ -180,7 +161,6 @@ export class BookingDetailComponent implements OnInit {
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
-          // this.goBack();
         }
       );
   }
@@ -198,11 +178,8 @@ export class BookingDetailComponent implements OnInit {
           if (this.userDet.accountType === 'BRANCH') {
             if (this.waitlist_data.provider) {
               this.provider = this.waitlist_data.provider.id;
-            } else {
-              this.provider = this.waitlist_data.providerAccount.id;
             }
           }
-          console.log(this.provider);
           this.api_loading = false;
           console.log(this.waitlist_data)
           if (this.waitlist_data.service.serviceType === 'virtualService') {
@@ -229,7 +206,6 @@ export class BookingDetailComponent implements OnInit {
               }
             }
           }
-          // this.getTimeSlots();
           if (this.waitlist_data.appmtTime) {
             this.apptTime = this.waitlist_data.appmtTime;
           }
@@ -240,15 +216,11 @@ export class BookingDetailComponent implements OnInit {
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // if (this.waitlist_data.apptStatus !== 'blocked') {
-          //   this.getWaitlistNotes(this.waitlist_data.uid);
-          // }
           this.getApptHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
           }
-
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -261,8 +233,6 @@ export class BookingDetailComponent implements OnInit {
     this.availableSlots = [];
     const _this = this;
     const locId = this.groupService.getitemFromGroupStorage('loc_id');
-    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
-    // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     const nextTimeDt = this.dateTimeProcessor.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const filter = {};
     this.availableSlots = [];
@@ -314,7 +284,6 @@ export class BookingDetailComponent implements OnInit {
           this.waitlist_notes = data;
         },
         () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -325,7 +294,6 @@ export class BookingDetailComponent implements OnInit {
           this.waitlist_history = data;
         },
         () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -336,7 +304,6 @@ export class BookingDetailComponent implements OnInit {
           this.waitlist_history = data;
         },
         () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -346,5 +313,8 @@ export class BookingDetailComponent implements OnInit {
     },
       error => {
       });
+  }
+  getHeight(event) {
+    this.height = event;
   }
 }

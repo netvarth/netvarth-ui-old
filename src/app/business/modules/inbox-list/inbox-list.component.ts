@@ -87,6 +87,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() customer;
   @Input() provider;
   @Input() source;
+  @Input() height;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -109,6 +110,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     });
   }
+  ngOnChanges() {
+    this.msgHeight = 400;
+    if (this.height) {
+      this.msgHeight = this.msgHeight + this.height;
+    }
+  }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -123,16 +130,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.selectedCustomer = this.qParams.customer;
       }
     }
-    console.log(this.customer);
-    console.log(this.provider);
     if (this.customer) {
-      if (this.provider) {
+      if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.customer + '=' + this.provider;
       } else {
-      this.selectedCustomer = this.customer;
+        this.selectedCustomer = this.customer;
       }
     }
-    console.log(this.selectedCustomer);
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -181,7 +185,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     if (this.source) {
       this.small_device_display = true;
-      this.msgHeight = 395;
+      this.msgHeight = 400;
       this.showChat = true;
     }
   }
@@ -248,7 +252,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
-          console.log(this.messages);
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
