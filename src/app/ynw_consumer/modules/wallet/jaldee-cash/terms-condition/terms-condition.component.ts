@@ -4,12 +4,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-termscondition',
-  templateUrl: './termsconditionpopup.component.html'
+  templateUrl: './terms-condition.component.html'
 })
 
-export class TermsconditionComponent implements OnInit {
+export class TermsConditionComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<TermsconditionComponent>,
+  constructor(public dialogRef: MatDialogRef<TermsConditionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {

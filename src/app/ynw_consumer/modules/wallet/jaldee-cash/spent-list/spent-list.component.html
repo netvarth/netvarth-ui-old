@@ -1,9 +1,10 @@
-<div class="mat-dialog-title">Spent list<button mat-dialog-close (click)="close()" class="modal_close" tabindex="-1"><i
+<div class="mat-dialog-title">Spent list
+  <button mat-dialog-close (click)="close()" class="modal_close" tabindex="-1"><i
     class="fa fa-window-close" aria-hidden="true"></i></button></div>
-<div  class="mat-dialog-content">
-    <div  *ngIf="cashspentInfo && cashspentInfo.length > 0">
-        <div>
-  <div class="table-outer q-itm">
+    <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
+    
+<div  class="mat-dialog-content" >
+  <div class="table-outer q-itm" >
     <table class="table transbase">
       <thead>
         <tr>
@@ -13,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let details of cashspentInfo; let i = index;">
+        <tr *ngFor="let details of cashspentInfo">
           <td data-title="Spent to">
           {{details.spentToBizName}}
           </td>
@@ -27,6 +28,6 @@
       </tbody>
     </table>
   </div>
+
 </div>
-</div>
-</div>
+

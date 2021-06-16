@@ -6,27 +6,32 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 
 @Component({
-  selector: 'app-spentlistwithid',
-  templateUrl: './spentlistwithidpopup.component.html'
+  selector: 'app-spentlist',
+  templateUrl: './spent-list.component.html'
 })
 
-export class SpentlistwithidComponent implements OnInit {
+export class SpentListComponent implements OnInit {
     private subs = new SubSink();
     loading = true;
     cashspentInfo:any =[];
     totalCashspentInfo:any = [];
+   
 
-  constructor(public dialogRef: MatDialogRef<SpentlistwithidComponent>,
+  constructor(public dialogRef: MatDialogRef<SpentListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
     private consumer_services: ConsumerServices) { }
 
   ngOnInit() {
-    console.log(this.data);
-    if (this.data.cashid) {
-        this.spentlist();
-    }
     this.totalSpentlist();
+
+    // if (this.data && this.data.cashid!==undefined) {
+    //     this.spentlist();
+    // }
+    // else{
+    //   console.log('total spent');
+    // this.totalSpentlist();
+    // }
   }
     spentlist() {
         this.subs.sink=this.consumer_services.getConsumerCashspentWithIdDetails(this.data.cashid)
@@ -45,10 +50,11 @@ export class SpentlistwithidComponent implements OnInit {
     totalSpentlist() {
       this.subs.sink=this.consumer_services.getConsumerTotalCashspent()
   .subscribe(
-    data => {
+    (data:any) => {
+      console.log('hai');
      console.log(data);
      this.cashspentInfo = data;
-     this.loading = false;
+    // this.loading = false;
     },
     error => {
       this.loading = false;

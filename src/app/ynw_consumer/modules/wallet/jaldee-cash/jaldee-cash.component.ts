@@ -2,12 +2,12 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SubSink } from '../../../../../../node_modules/subsink';
-import { TermsconditionComponent } from './termscondition/termsconditionpopup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { SpentlistwithidComponent } from './spentlistwithId/spentlistwithidpopup.component';
+import { TermsConditionComponent } from './terms-condition/terms-condition.component';
+import { SpentListComponent } from './spent-list/spent-list.component';
 
 
 @Component({
@@ -96,7 +96,7 @@ export class JaldeeCashComponent implements OnInit {
     this.subs.unsubscribe();
   }
   termsAndCondition(displayNote){
-    const dialogref = this.dialog.open(TermsconditionComponent, {
+    const dialogref = this.dialog.open(TermsConditionComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
@@ -111,7 +111,7 @@ export class JaldeeCashComponent implements OnInit {
       });
   }
   spentlist(id?){
-    const dialogref = this.dialog.open(SpentlistwithidComponent, {
+    const dialogref = this.dialog.open(SpentListComponent, {
       width: '70%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
