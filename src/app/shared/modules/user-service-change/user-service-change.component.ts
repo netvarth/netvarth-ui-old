@@ -372,7 +372,6 @@ export class UserServiceChnageComponent implements OnInit {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               }
             );
-
         }
         else {
           const post_data = {

@@ -431,7 +431,6 @@ export class BranchUsersComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getUsers();
                 });
-
     }
     redirecToGeneral() {
         this.routerobj.navigate(['provider', 'settings', 'general']);
