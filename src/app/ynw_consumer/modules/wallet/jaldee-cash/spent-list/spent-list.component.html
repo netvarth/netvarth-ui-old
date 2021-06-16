@@ -10,7 +10,7 @@
         <tr>
           <th>Spent to</th>
           <th>Amount spent</th>
-          <th>Reference No</th>
+          <th>Date</th>
         </tr>
       </thead>
       <tbody>
@@ -22,7 +22,7 @@
               <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
           </td>
           <td >
-            {{details.spentRef}}
+            {{details.createdDate | date: newDateFormat}}
           </td>
         </tr>
       </tbody>

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubSink } from '../../../../../../../node_modules/subsink';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-spentlist',
@@ -15,6 +16,7 @@ export class SpentListComponent implements OnInit {
     loading = true;
     cashspentInfo:any =[];
     totalCashspentInfo:any = [];
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
    
 
   constructor(public dialogRef: MatDialogRef<SpentListComponent>,
