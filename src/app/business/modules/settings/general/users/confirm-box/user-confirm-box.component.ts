@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-user-confirm-box',
   templateUrl: './user-confirm-box.component.html',
-  styleUrls: ['./user-confirm-box.component.scss']
+  styleUrls: ['./user-confirm-box.component.css']
 })
 
 
