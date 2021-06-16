@@ -114,6 +114,9 @@ export class NewReportComponent implements OnInit {
   payment_paymentMode: any;
   payment_paymentStatus: any;
   reportDateCategory: any;
+  payment_donationName:any;
+  payment_donationPhone:any;
+  payment_donationEmail:any;
 
 
 
@@ -210,6 +213,9 @@ export class NewReportComponent implements OnInit {
           this.payment_amount = res.amount;
           this.payment_transactionType = res.transactionType || 0;
           this.payment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          this.payment_donationName=res.donationName;
+          this.payment_donationEmail=res.donationEmail;
+          this.payment_donationPhone=res.donationPhone;
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.payment_startDate = res.startDate;
@@ -516,7 +522,10 @@ export class NewReportComponent implements OnInit {
           'queue': this.payment_queue_id,
           'service': this.payment_service_id,
           'schedule': this.payment_schedule_id,
-          'providerOwnConsumerId': this.payment_customerId
+          'providerOwnConsumerId': this.payment_customerId,
+          'donationName':this.payment_donationName,
+          'donationEmail':this.payment_donationEmail,
+          'donationPhone':this.payment_donationPhone,
 
         };
 
@@ -550,6 +559,15 @@ export class NewReportComponent implements OnInit {
         }
         if (this.payment_amount === undefined) {
           delete this.filterparams.amount;
+        }
+        if(this.payment_donationName===''||this.payment_donationName===undefined){
+          delete this.filterparams.payment_donationName;
+        }
+        if(this.payment_donationEmail===''||this.payment_donationEmail===undefined){
+          delete this.filterparams.payment_donationEmail;
+        }
+        if(this.payment_donationPhone===''||this.payment_donationPhone===undefined){
+          delete this.filterparams.payment_donationPhone;
         }
         const filter = {};
         for (const key in this.filterparams) {
