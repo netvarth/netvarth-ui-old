@@ -2,27 +2,27 @@
 <section class="container no-padding no-padding-small" >
         <div class="content p0 see-pages cons-members">
           <div class="panel panel-default">
-            <!-- <div class="panel-heading top-row">        
+            <div class="panel-heading top-row">        
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <app-header *ngIf="shared_functions.checkLogin()"></app-header>
               </div>
-            </div> -->
+            </div> 
             <div class="panel-body no-padding">
-              <!-- <div class="card title-gb">
+              <div class="card title-gb">
                 <h5 class="mgn-up-10">Jaldee cash<a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
-              </div> -->
+              </div> 
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding "  *ngIf="!loading">
-                <!-- <div *ngIf="!small_device_display">
+               <div *ngIf="!small_device_display">
                                 <div class="pull-left">                               
                                     <img src="assets/images/wallet.jpeg" class="cashbackimg">
                                 </div>
                                 <div class="pull-left mgn-up-10 cashbackfont" *ngIf="cashbalanceInfodetail && cashbalanceInfodetail.totCashAvailable">                               
                                     <span>Jaldee cash balance</span><br><span><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{cashbalanceInfodetail.totCashAvailable}}</span> 
                                 </div>
-                </div> -->
+                </div> 
                 
-                <!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing" >
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing" >
 
                   <div class="widget widget-account-invoice-three">
 
@@ -50,8 +50,7 @@
                       
 
                   </div>
-              </div> -->
-
+              </div> 
                <div *ngIf="small_device_display">
 
                 <div class=" col-sm-12 col-12 layout-spacing">
