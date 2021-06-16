@@ -370,6 +370,9 @@
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>
                                                             </div>
+                                                            <div *ngIf="payment_options.length==0">
+                                                               <p>Online payment option is disabled. Contact your service provider for further assistance.</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div *ngIf="paidStatus == 'true'">
