@@ -478,9 +478,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             if (serv.serviceType === 'virtualService' && this.virtualInfo) {
-                                if (this.virtualInfo.whatsappnumber) {
+                                if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
-                                    this.callingModes = whtsappcountryCode + ' ' + this.virtualInfo.whatsappnumber;
+                                    this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
                                     console.log(this.callingModes);
                                 }
                             }
@@ -1083,7 +1083,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }, 2000);
     }
     setVirtualTeleserviceCustomer() {
-        console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
             this.payEmail = this.virtualInfo.email;
         }
@@ -1093,7 +1092,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
@@ -1112,9 +1111,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap!==undefined && this.virtualInfo.whatsappnumber !== undefined) {
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {

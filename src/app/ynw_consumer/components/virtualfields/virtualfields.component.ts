@@ -630,28 +630,28 @@ isNumericSign(evt) {
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      if (formdata.whatsappnumber !== '') {
+      if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
         const whatsup = {}
-        if(formdata.countryCode_whtsap.startsWith('+')){
-        whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
+        if (formdata.countryCode_whtsap.startsWith('+')) {
+          whatsup["countryCode"] = formdata.countryCode_whtsap
+        } else {
+          whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
         }
-          whatsup["number"] = formdata.whatsappnumber
+        whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
-      if (formdata.telegramnumber !== '') {
+      if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
         const telegram = {}
-        if(formdata.countryCode_telegram.startsWith('+')){
+        if (formdata.countryCode_telegram.startsWith('+')) {
           telegram["countryCode"] = formdata.countryCode_telegram
-          }else{
-            telegram["countryCode"] = '+'+formdata.countryCode_telegram
-          }
-          telegram["number"] = formdata.telegramnumber
+        } else {
+          telegram["countryCode"] = '+' + formdata.countryCode_telegram
+        }
+        telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      if(formdata.email!==''){
-        userObj['email']=formdata.email
+      if (formdata.email !== '') {
+        userObj['email'] = formdata.email
       }
       userObj['gender'] = formdata.gender;
       userObj['firstName'] = firstName;
@@ -666,7 +666,7 @@ isNumericSign(evt) {
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
-          
+
           resolve(true);
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -682,31 +682,33 @@ isNumericSign(evt) {
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    if (formdata.whatsappnumber !== '') {
+    console.log(formdata.whatsappnumber);
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
-      if(formdata.countryCode_whtsap.startsWith('+')){
+      if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
-        }
-        whatsup["number"] = formdata.whatsappnumber
+      } else {
+        whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+      }
+      whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
-      if(formdata.countryCode_telegram.startsWith('+')){
+      if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
-        }else{
-          telegram["countryCode"] = '+'+formdata.countryCode_telegram
-        }
-        telegram["number"] = formdata.telegramnumber
+      } else {
+        telegram["countryCode"] = '+' + formdata.countryCode_telegram
+      }
+      telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
+
     }
-    if(formdata.email!==''){
-      memberInfo['userProfile']['email']=formdata.email
+    if (formdata.email !== '') {
+      memberInfo['userProfile']['email'] = formdata.email
     }
-   
-    
+
+
     memberInfo.bookingLocation = {}
     memberInfo.userProfile['id'] = formdata.serviceFor;
     memberInfo.userProfile['gender'] = formdata.gender;
@@ -743,29 +745,29 @@ isNumericSign(evt) {
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappumber !== '') {
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
-      if(formdata.countryCode_whtsap.startsWith('+')){
+      if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
-        }else{
-          whatsup["countryCode"] = '+'+ formdata.countryCode_whtsap
-        }
-        whatsup["number"] = formdata.whatsappumber
+      } else {
+        whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+      }
+      whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
-      if(formdata.countryCode_telegram.startsWith('+')){
+      if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
-        }else{
-          telegram["countryCode"] = '+'+formdata.countryCode_telegram
-        }
+      } else {
+        telegram["countryCode"] = '+' + formdata.countryCode_telegram
+      }
       telegram["countryCode"] = formdata.countryCode_telegram
-        telegram["number"] = formdata.telegramnumber
-        memberInfo['userProfile']['telegramNum'] = telegram;
+      telegram["number"] = formdata.telegramnumber
+      memberInfo['userProfile']['telegramNum'] = telegram;
     }
-    if(formdata.email!==''){
-      memberInfo['userProfile']['email']=formdata.email
+    if (formdata.email !== '') {
+      memberInfo['userProfile']['email'] = formdata.email
     }
 
 
