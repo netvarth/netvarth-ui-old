@@ -25,6 +25,7 @@ export class AddAddressComponent implements OnInit {
   address_title;
   index: any;
   source: any;
+  submitBtn: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddAddressComponent>,
@@ -38,11 +39,13 @@ export class AddAddressComponent implements OnInit {
     private snackbarService: SnackbarService
   ) {
     this.address_title = 'Add New Address';
+    this.submitBtn='Save';
     this.formMode = data.type;
     this.source = data.source;
     if (this.formMode === 'edit') {
       this.edit_address = data.update_address;
       this.address_title = 'Edit Address';
+      this.submitBtn='Update';
     }
     if (data.address !== null) {
       this.exist_add = data.address;
