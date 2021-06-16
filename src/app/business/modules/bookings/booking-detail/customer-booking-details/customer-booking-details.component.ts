@@ -84,6 +84,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
             this.selectedMessage.base64 = [];
             this.selectedMessage.caption = [];
             this.sharedFunctions.sendMessage({ type: 'addnote' });
+            this.heightCalc();
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -99,6 +100,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
             this.selectedMessage.base64 = [];
             this.selectedMessage.caption = [];
             this.sharedFunctions.sendMessage({ type: 'addnote' });
+            this.heightCalc();
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -156,21 +158,13 @@ export class CustomerBookingDetailsComponent implements OnInit {
         }
       }
     }
-    setTimeout(() => {
-      const height = this.elementView.nativeElement.offsetHeight;
-      this.addedHeight = height - 340;
-      this.getHeight.emit(this.addedHeight);
-    }, 200);
+    this.heightCalc();
   }
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
-    setTimeout(() => {
-      const height = this.elementView.nativeElement.offsetHeight;
-      this.addedHeight = height - 340;
-      this.getHeight.emit(this.addedHeight);
-    }, 200);
+    this.heightCalc();
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
@@ -178,5 +172,12 @@ export class CustomerBookingDetailsComponent implements OnInit {
     } else {
       return url;
     }
+  }
+  heightCalc() {
+    setTimeout(() => {
+      const height = this.elementView.nativeElement.offsetHeight;
+      this.addedHeight = height - 340;
+      this.getHeight.emit(this.addedHeight);
+    }, 200);
   }
 }

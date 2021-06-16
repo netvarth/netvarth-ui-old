@@ -80,20 +80,22 @@ export class BookingPrivateNotesComponent implements OnInit {
   openImage(index) {
     this.image_list_popup = [];
     let count = 0;
-    for (let comIndex = 0; comIndex < this.selectedNote.attachment.length; comIndex++) {
-      let imagePath;
-      if (this.checkImgType(this.selectedNote.attachment[comIndex].s3path) === 'img') {
-        imagePath = this.selectedNote.attachment[comIndex].s3path;
-        const imgobj = new Image(
-          count,
-          {
-            img: imagePath,
-          },
-        );
-        this.image_list_popup.push(imgobj);
-        count++;
-      } else {
-        window.open(this.selectedNote.attachment[index].s3path, '_blank');
+    if (this.checkImgType(this.selectedNote.attachment[index].s3path) !== 'img') {
+      window.open(this.selectedNote.attachment[index].s3path, '_blank');
+    } else {
+      for (let comIndex = 0; comIndex < this.selectedNote.attachment.length; comIndex++) {
+        if (this.checkImgType(this.selectedNote.attachment[index].s3path) === 'img') {
+          let imagePath;
+          imagePath = this.selectedNote.attachment[comIndex].s3path;
+          const imgobj = new Image(
+            count,
+            {
+              img: imagePath,
+            },
+          );
+          this.image_list_popup.push(imgobj);
+          count++;
+        }
       }
     }
     if (count > 0) {
