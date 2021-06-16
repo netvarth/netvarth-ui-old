@@ -5,10 +5,15 @@
 /dist-server
 /tmp
 /out-tsc
+/www
 
 # dependencies
 /node_modules
 /documentation
+/platforms
+/plugins
+/resources/android
+/resources/ios
 
 # IDEs and editors
 /.idea

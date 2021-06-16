@@ -74,6 +74,9 @@ import { BookingService } from './shared/services/booking-service';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { IonicModule } from '@ionic/angular';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -91,7 +94,8 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    NotificationDialogComponent
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -99,7 +103,8 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    NotificationDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -132,6 +137,8 @@ export function init_app(globalService: GlobalService) {
     IonicModule.forRoot()
   ],
   providers: [
+    FirebaseX,
+    Device,
     AuthGuardConsumer,
     AuthGuardProvider,
     AuthGuardHome,

@@ -60,51 +60,8 @@
   }
   document.addEventListener("deviceready", onDeviceReady, false);
   function alertDismissed() {
-
   }
   function onDeviceReady() {
-    localStorage.setItem('deviceName', JSON.stringify(device.name));
-    if (typeof FCMPlugin != 'undefined') {
-      FCMPlugin.getToken(function (token) {
-        console.log(token);
-        localStorage.setItem("mUniqueId", JSON.stringify(token));
-      }, function (err) {
-        localStorage.setItem("mUniqueId", null);
-      });
-      FCMPlugin.onTokenRefresh(function (token) {
-        console.log("Token Refreshed : " + token);
-        localStorage.setItem("mUniqueId", JSON.stringify(token));
-        if (localStorage.getItem("ynw-user")) {
-          setPushToken(token);
-        }
-      });
-      FCMPlugin.onNotification(function (data) {
-        console.log(data);
-        if (data.wasTapped) {
-          navigator.notification.alert(
-            data.body,  // message
-            alertDismissed,         // callback
-            data.title,            // title
-            'Ok'                  // buttonName
-          );
-        } else {
-          //Notification was received in foreground. Maybe the user needs to be notified.
-          navigator.notification.alert(
-            data.body,  // message
-            alertDismissed,         // callback
-            data.title,            // title
-            'Ok'                  // buttonName
-          );
-
-        }
-      }, function (msg) {
-        console.log('onNotification callback successfully registered: ' + msg);
-      },
-        function (err) {
-          console.log('Error registering onNotification callback: ' + err);
-        }
-      );
-    };
     document.addEventListener("backbutton", function (e) {
       e.preventDefault();
       if (exitApp) {
@@ -131,5 +88,3 @@
     (window.EventTarget || Document).prototype.removeEventListener.apply(this, arguments);
   };
 </script>
-<script src="cordova.js"></script>
-

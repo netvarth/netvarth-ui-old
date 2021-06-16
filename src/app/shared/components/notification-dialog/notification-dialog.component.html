@@ -1,0 +1,14 @@
+
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    {{data.title}}
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+</h1>
+<div mat-dialog-content>
+    <p class="rupee-font"> {{data.message}} </p>
+</div>
+<div class="paddingtop centeralign mgn-bt-20">
+    <!-- <button tabindex="-1" class="cs-btn bt2" (click)="onClick(0)">{{cancel_btn_cap}}</button> -->
+    <!-- <button tabindex="2" class="cs-btn bt1 dialog-btn close-btn mgn-rt-10" (click)="onClick(0)">Close</button> -->
+    <button tabindex="2" class="cs-btn bt1 dialog-btn ok-btn" (click)="onClick(1)">{{ok_btn_cap}}</button>
+</div>

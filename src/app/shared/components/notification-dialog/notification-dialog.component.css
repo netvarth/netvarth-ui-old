@@ -1,0 +1,15 @@
+.close-btn {
+    background-color: #ccc !important;
+}
+.centeralign {
+     text-align: center !important;
+}
+.mgn-rt-10 {
+    margin-right: 10px !important;
+}
+button.dialog-btn {
+    width:40% !important;
+}
+button .fa-window-close {
+    color: #000 !important;
+}
