@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('v7-you-never-wait App', () => {
+describe('jaldeeprovider App', () => {
   let page: AppPage;
 
   beforeEach(() => {
