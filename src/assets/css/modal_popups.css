@@ -2613,12 +2613,6 @@
     position: absolute;
 }
 
-@media only screen and (max-width: 575px) {
-    .googlemainmappopup .mat-dialog-content #pac-input {
-        /* top: 40px !important; */
-    }
-}
-
 .googlemainmappopup .mat-dialog-content #pac-input:focus {
     background: #fff;
     outline: none;
