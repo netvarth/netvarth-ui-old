@@ -10,7 +10,7 @@
       <button type="submit" class="form-control btn btn-primary" [disabled]="!otp_form.valid">VERIFY</button>
     </div>
     <div class="resendouter" *ngIf="resetCounterVal==0">
-      <span class="link" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+      <span class="link" (click)="resendOTPMobile()"  *ngIf="submitdata.userProfile.countryCode == '+91'" mat-button> {{resend_otp_to_cap}} <ng-container
           *ngIf="type=='change_email'">
           Email</ng-container></span>
     </div>

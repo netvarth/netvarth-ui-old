@@ -181,7 +181,7 @@ export class LabelComponent implements OnInit {
         const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
         const statusmsg = (label.status === 'ENABLED') ? 'disabled' : 'enabled';
         this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
-            this.snackbarService.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.snackbarService.openSnackBar(label.displayName  + ' ' +  statusmsg + ' successfully');
             this.editLabelbyId(label.id);
         },
             error => {
