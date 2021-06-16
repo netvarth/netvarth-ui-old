@@ -4,8 +4,8 @@
     <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
     
 <div  class="mat-dialog-content" >
-  <div class="table-outer q-itm" >
-    <table class="table transbase">
+  <div class="table-responsive" >
+    <table class="table table-bordered table-striped">
       <thead>
         <tr>
           <th>Spent to</th>
@@ -15,13 +15,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let details of cashspentInfo">
-          <td data-title="Spent to">
+          <td >
           {{details.spentToBizName}}
           </td>
-          <td data-title="Amount spent">
+          <td >
               <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
           </td>
-          <td data-title="Reference No">
+          <td >
             {{details.spentRef}}
           </td>
         </tr>
@@ -30,4 +30,5 @@
   </div>
 
 </div>
+
 

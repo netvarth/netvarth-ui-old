@@ -23,15 +23,14 @@ export class SpentListComponent implements OnInit {
     private consumer_services: ConsumerServices) { }
 
   ngOnInit() {
-    this.totalSpentlist();
+    //this.totalSpentlist();
 
-    // if (this.data && this.data.cashid!==undefined) {
-    //     this.spentlist();
-    // }
-    // else{
-    //   console.log('total spent');
-    // this.totalSpentlist();
-    // }
+    if (this.data && this.data.cashid!==undefined) {
+        this.spentlist();
+    } else{
+      console.log('total spent');
+    this.totalSpentlist();
+    }
   }
     spentlist() {
         this.subs.sink=this.consumer_services.getConsumerCashspentWithIdDetails(this.data.cashid)

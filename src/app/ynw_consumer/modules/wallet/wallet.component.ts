@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../services/consumer-services.service';
+import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-wallet',
@@ -17,6 +19,7 @@ export class WalletComponent implements OnInit {
   loading = true;
   private subs = new SubSink();
   constructor(private location: Location,
+    private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private consumer_services: ConsumerServices,
@@ -55,5 +58,20 @@ export class WalletComponent implements OnInit {
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+  spentlist(id?){
+    const dialogref = this.dialog.open(SpentListComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'cashid': id
+      }
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+        }
+      });
   }
 }

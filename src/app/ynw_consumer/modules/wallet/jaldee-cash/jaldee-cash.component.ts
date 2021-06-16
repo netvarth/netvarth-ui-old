@@ -112,8 +112,8 @@ export class JaldeeCashComponent implements OnInit {
   }
   spentlist(id?){
     const dialogref = this.dialog.open(SpentListComponent, {
-      width: '70%',
-      panelClass: ['loginmainclass', 'popup-class'],
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'cashid': id
