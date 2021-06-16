@@ -7,6 +7,7 @@ import { ReturnPaymentComponent } from './shared/components/return-payment/retur
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),

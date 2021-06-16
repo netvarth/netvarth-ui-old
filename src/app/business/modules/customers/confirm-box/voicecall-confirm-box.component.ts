@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-voicecall-confirm-box',
   templateUrl: './voicecall-confirm-box.component.html',
-  styleUrls: ['./voicecall-confirm-box.component.scss']
+  styleUrls: ['./voicecall-confirm-box.component.css']
 })
 
 
