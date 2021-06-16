@@ -24,7 +24,7 @@
     </mat-dialog-content>
     <mat-dialog-actions>
       <div class="resendouter" *ngIf="resetCounterVal==0">
-        <span class="link" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+        <span class="link" (click)="resendOTPMobile()"  *ngIf="submitdata.userProfile.countryCode == '+91'" mat-button> {{resend_otp_to_cap}} <ng-container
             *ngIf="type=='change_email'">
             Email</ng-container></span>
         <ul class="info-lst" *ngIf="type=='signup'">
