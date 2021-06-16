@@ -568,6 +568,7 @@ export class AppointmentComponent implements OnInit {
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
                 });
     }
     getGlobalSettings() {
@@ -1168,7 +1169,6 @@ export class AppointmentComponent implements OnInit {
         //  this.shared_services.addProviderCheckin(post_Data)
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
-                this.api_loading = false;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
@@ -1216,39 +1216,31 @@ export class AppointmentComponent implements OnInit {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-            console.log(data);
-            console.log(this.questionAnswers);
             let postData = {
                 urls: []
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
-                    console.log(this.questionAnswers.filestoUpload[url.labelName]);
-                    Object.keys(this.questionAnswers.filestoUpload[url.labelName]).forEach(key => {
-                    const file = this.questionAnswers.filestoUpload[url.labelName][key];
-                    console.log(file);
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
                     this.provider_services.videoaudioS3Upload(file, url.url)
                         .subscribe(() => {
                             postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                            console.log(postData);
-                            console.log(postData['urls'].length);
-                            console.log(data.urls.length);
                             if (data.urls.length === postData['urls'].length) {
                                 this.provider_services.providerApptQnrUploadStatusUpdate(uuid, postData)
                                     .subscribe((data) => {
-                                        console.log(data);
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                                         this.router.navigate(['provider', 'appointments']);
                                     },
-                                    error => {
-                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    });
+                                        error => {
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.api_loading = false;
+                                        });
                             }
                         },
-                        error => {
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        });
-                    });
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.api_loading = false;
+                            });
                 }
             } else {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
@@ -1256,6 +1248,7 @@ export class AppointmentComponent implements OnInit {
             }
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.api_loading = false;
         });
     }
     handleGoBack(cstep) {
@@ -1828,6 +1821,7 @@ export class AppointmentComponent implements OnInit {
                 },
                 error => {
                     this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.api_loading = false;
                 }
             );
     }
@@ -1843,8 +1837,8 @@ export class AppointmentComponent implements OnInit {
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         this.api_loading = true;
         this.freeSlots = [];
-        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate,this.sel_ser)
-       //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
+        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate, this.sel_ser)
+            //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
                     this.slots = data;
@@ -1996,8 +1990,12 @@ export class AppointmentComponent implements OnInit {
         this.questionAnswers = event;
     }
     showQnr() {
-        this.showQuestionnaire = true;
-        this.heading = 'More Info';
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.showQuestionnaire = true;
+            this.heading = 'More Info';
+        }
     }
     getProviderQuestionnaire() {
         let consumerId;
@@ -2019,13 +2017,14 @@ export class AppointmentComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
+        this.api_loading = true;
         if (!this.questionAnswers) {
-          this.questionAnswers = {
-            answers: {
-              answerLine: [],
-              questionnaireId: this.questionnaireList.id
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
             }
-          }
         }
         if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
@@ -2039,6 +2038,7 @@ export class AppointmentComponent implements OnInit {
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
             });
         }
     }

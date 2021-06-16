@@ -204,16 +204,18 @@ addItem(post_data) {
             (data) => {
                 if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                     this.saveImages(data);
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
+                    this.api_loading = false;
+                    this.dialogRef.close();
                 }
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
-                this.api_loading = false;
-                this.dialogRef.close();
+                
 
-                if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                // if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                   
-                } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
+                // } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
                    
-                }
+                // }
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -375,7 +377,9 @@ saveImages(id, routeTo?) {
         };
         this.image_list_popup = [];
         this.mainimage_list_popup = [];
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
         this.api_loading = false;
+        this.dialogRef.close();
     },
         error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

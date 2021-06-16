@@ -77,6 +77,8 @@ import { IonicModule } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
+import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -104,7 +106,8 @@ export function init_app(globalService: GlobalService) {
     RequestForComponent,
     ForceDialogComponent,
     ListRecordingsDialogComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    MeetRoomComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -134,7 +137,8 @@ export function init_app(globalService: GlobalService) {
     JoyrideModule.forRoot(),
     TruncateModule,
     CardModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    MeetRoomModule
   ],
   providers: [
     FirebaseX,

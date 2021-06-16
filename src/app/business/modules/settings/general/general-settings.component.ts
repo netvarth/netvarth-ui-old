@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
@@ -91,7 +91,11 @@ export class GeneralSettingsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'general', 'livetrack']);
     }
     gotocustomview() {
-        this.router.navigate(['provider', 'settings', 'general', 'customview']);
+        // this.router.navigate(['provider', 'settings', 'general', 'customview']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: 'view' }
+        };
+        this.router.navigate(['provider', 'settings', 'general', 'customview'], navigationExtras);
     }
     gotoLabels() {
         this.router.navigate(['provider', 'settings', 'general', 'labels']);

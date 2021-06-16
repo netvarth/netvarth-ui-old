@@ -106,7 +106,7 @@
                                                 </span>
                                             </td>
                                             <td class="">
-                                              <i class="fa fa-arrow-right black" aria-hidden="true"></i> 
+                                                <i class="fa fa-arrow-right black" aria-hidden="true"></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -343,14 +343,16 @@
                                                             (keypress)="isNumeric($event)"
                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
                                                             style="width:150px!important;" placeholder=""
-                                                            [(ngModel)]="callingModes" autocomplete="off"
-                                                            maxlength="10" type="number" min="0"></span>
+                                                            [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
+                                                            type="number" min="0"></span>
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                         *ngIf="showInputSection"> {{callingModes}}</span>
                                                     <div class="input-group-append mgn-up-6"
                                                         style="padding-left: 10px;">
-                                                        <button *ngIf="!showInputSection" style="background-color: #29b6f6; color: white;" class="btn bt3 btn-default"
-                                                            (click)="addCallingmode(i)" type="button">Add</button>
+                                                        <button *ngIf="!showInputSection"
+                                                            style="background-color: #29b6f6; color: white;"
+                                                            class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            type="button">Add</button>
                                                         <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                                                             (click)="editCallingmodes(i)"></span>
                                                     </div>
@@ -552,7 +554,8 @@
                                     [disabled]="api_loading || !showApptTime"
                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                                 <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-                                    [disabled]="api_loading || !showApptTime"
+                                    [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                    [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
                                     *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
                             </div>
                         </ng-container>
@@ -607,7 +610,8 @@
                                                                 <mat-radio-button *ngIf="!memb.firstName"
                                                                     (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
-                                                                    {{customer_label | capitalizeFirst}} Id: {{memb.jaldeeId}}
+                                                                    {{customer_label | capitalizeFirst}} Id:
+                                                                    {{memb.jaldeeId}}
                                                                 </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
@@ -762,9 +766,13 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-                            [disabled]="api_loading" *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+                            [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                            [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+                            *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
                         <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
-                            [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+                            [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                            [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+                            *ngIf="showBlockHint">Confirm</button>
                     </div>
                 </div>
             </div>

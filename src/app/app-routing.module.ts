@@ -6,7 +6,7 @@ import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
-import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
@@ -21,6 +21,7 @@ const routes: Routes = [
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
     },
+    { path: 'meet/:id', component: MeetRoomComponent },
     {path: 'meeting/provider/:id', component: MeetingRoomComponent}, 
     { path: 'maintenance', component: MaintenanceComponent }
 ];

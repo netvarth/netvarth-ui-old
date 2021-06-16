@@ -151,15 +151,18 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (this.uuid) {
       this.loading = true;
-      if (this.source === 'consCheckin') {
-        this.getConsumerCheckinDetails();
-      } else if (this.source === 'consAppt') {
-        this.getConsumerApptDetails();
-      } else if (this.source === 'proCheckin') {
-        this.getCheckinDetailsProvider();
-      } else {
-        this.getApptDetailsProvider();
-      }
+      this.getWaitlistDetails();
+    }
+  }
+  getWaitlistDetails() {
+    if (this.source === 'consCheckin') {
+      this.getConsumerCheckinDetails();
+    } else if (this.source === 'consAppt') {
+      this.getConsumerApptDetails();
+    } else if (this.source === 'proCheckin') {
+      this.getCheckinDetailsProvider();
+    } else {
+      this.getApptDetailsProvider();
     }
   }
   setValidateError(errors) {
@@ -221,7 +224,8 @@ export class QuestionnaireComponent implements OnInit {
             if (!this.uploadFilesTemp[key]) {
               this.uploadFilesTemp[key] = [];
             }
-            if (this.uploadedFiles[key][key1].status === 'COMPLETE') {
+            const type = this.uploadedFiles[key][key1].type.split('/');
+            if (type[0] !== 'audio' && type[0] !== 'video' || ((type[0] === 'audio' || type[0] === 'video') && this.uploadedFiles[key][key1].status === 'COMPLETE')) {
               this.uploadFilesTemp[key].push(key1);
             }
           }
@@ -239,20 +243,16 @@ export class QuestionnaireComponent implements OnInit {
         });
       });
     }
-    console.log(this.uploadedImages);
-    console.log(this.uploadedFiles);
     this.onSubmit();
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        console.log(file);
         let type = file.type.split('/');
         this.apiError[question.labelName] = [];
         console.log(type);
         console.log(question.filePropertie.fileTypes);
-        console.log(question.filePropertie.fileTypes.indexOf(type[1]));
         if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
           this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
         } else {
@@ -351,9 +351,6 @@ export class QuestionnaireComponent implements OnInit {
     this.onSubmit('inputChange');
   }
   onSubmit(keytype?) {
-    console.log(this.filestoUpload);
-    console.log(this.uploadedFiles);
-    console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -434,7 +431,6 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     });
-    console.log(this.answers);
     let data = [];
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
@@ -449,9 +445,7 @@ export class QuestionnaireComponent implements OnInit {
       if (this.answers[key] || questiontype === 'bool') {
         let answer = this.answers[key];
         if (questiontype === 'date') {
-          console.log(answer);
           answer = this.dateProcessor.transformToYMDFormat(answer);
-          console.log(answer);
         }
         newMap[questiontype] = answer;
         data.push({
@@ -615,62 +609,55 @@ export class QuestionnaireComponent implements OnInit {
       let postData = {
         urls: []
       };
-      console.log(data.urls);
       for (const url of data.urls) {
-        console.log(url);
-        console.log(this.filestoUpload[url.labelName]);
-        Object.keys(this.filestoUpload[url.labelName]).forEach(key => {
-          console.log(key);
-          const file = this.filestoUpload[url.labelName][key];
-          console.log(file);
-          this.providerService.videoaudioS3Upload(file, url.url)
-            .subscribe(() => {
-              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-              if (data.urls.length === postData['urls'].length) {
-                if (type === 'consCheckin') {
-                  this.sharedService.consumerWaitlistQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
-                    .subscribe((data) => {
-                      this.successGoback();
-                    },
-                      error => {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.buttonDisable = false;
-                      });
-                } else if (type === 'consAppt') {
-                  this.sharedService.consumerApptQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
-                    .subscribe((data) => {
-                      this.successGoback();
-                    },
-                      error => {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.buttonDisable = false;
-                      });
-                } else if (type === 'proCheckin') {
-                  this.providerService.providerWaitlistQnrUploadStatusUpdate(this.uuid, postData)
-                    .subscribe((data) => {
-                      this.successGoback();
-                    },
-                      error => {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.buttonDisable = false;
-                      });
-                } else {
-                  this.providerService.providerApptQnrUploadStatusUpdate(this.uuid, postData)
-                    .subscribe((data) => {
-                      this.successGoback();
-                    },
-                      error => {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.buttonDisable = false;
-                      });
-                }
+        const file = this.filestoUpload[url.labelName][url.document];
+        this.providerService.videoaudioS3Upload(file, url.url)
+          .subscribe(() => {
+            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+            if (data.urls.length === postData['urls'].length) {
+              if (type === 'consCheckin') {
+                this.sharedService.consumerWaitlistQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
+              } else if (type === 'consAppt') {
+                this.sharedService.consumerApptQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
+              } else if (type === 'proCheckin') {
+                this.providerService.providerWaitlistQnrUploadStatusUpdate(this.uuid, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
+              } else {
+                this.providerService.providerApptQnrUploadStatusUpdate(this.uuid, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
               }
-            },
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.buttonDisable = false;
-              });
-        });
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              this.buttonDisable = false;
+            });
       }
     } else {
       this.successGoback();
@@ -791,7 +778,7 @@ export class QuestionnaireComponent implements OnInit {
       }
       const indx = file.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        let path;   
+        let path;
         if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
           path = 'assets/images/pdf.png';
         } else if (type[0] === 'video') {
@@ -809,7 +796,7 @@ export class QuestionnaireComponent implements OnInit {
         let path;
         let type = this.uploadedImages[indx].type.split('/');
         type = type[0];
-        if (this.uploadedImages[indx].type === 'pdf' || this.uploadedImages[indx].type === 'docx' || this.uploadedImages[indx].type === 'txt' || this.uploadedImages[indx].type === 'doc') {
+        if (this.uploadedImages[indx].type === '.pdf' || this.uploadedImages[indx].type === '.docx' || this.uploadedImages[indx].type === '.txt' || this.uploadedImages[indx].type === '.doc') {
           path = 'assets/images/pdf.png';
         } else if (this.uploadedImages[indx].status === 'COMPLETE' && type === 'video') {
           path = 'assets/images/video.png';
@@ -868,16 +855,17 @@ export class QuestionnaireComponent implements OnInit {
     let imagePath;
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
-      type = type[0];
-      if (type === 'video' || type === 'audio') {
+      if (type[0] === 'video' || type[0] === 'audio') {
         const indx = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
-        console.log(this.audioVideoFiles);
         this.showAudioVideoFile(this.audioVideoFiles[indx]);
       } else {
-        console.log(this.selectedMessage);
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
-          imagePath = this.selectedMessage[indx].path;
+          if (type[1] === '.pdf' || type[1] === '.docx' || type[1] === '.txt' || type[1] === '.doc') {
+            window.open(this.selectedMessage[indx].path, '_blank');
+          } else {
+            imagePath = this.uploadedImages[indx].path;
+          }
         }
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
@@ -887,6 +875,8 @@ export class QuestionnaireComponent implements OnInit {
       if (indx !== -1) {
         if (type === 'video' || type === 'audio') {
           this.showAudioVideoFile(this.uploadedImages[indx]);
+        } else if (type === '.pdf' || type === '.docx' || type === '.txt' || type === '.doc') {
+          window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
         } else {
           imagePath = this.uploadedImages[indx].s3path;
         }
@@ -948,6 +938,8 @@ export class QuestionnaireComponent implements OnInit {
     if (!this.type) {
       this.location.back();
     } else {
+      this.filestoUpload = [];
+      this.getWaitlistDetails();
       this.editQnr();
       this.snackbarService.openSnackBar('Updated Successfully');
     }
