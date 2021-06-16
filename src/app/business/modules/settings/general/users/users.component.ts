@@ -279,8 +279,14 @@ export class BranchUsersComponent implements OnInit {
         if (user.profilePicture) {
             const proImage = user.profilePicture;
             return proImage.url;
-        } else {
+        } else if(user.gender ==='male'){
             return '../../.././assets/images/avatar5.png';
+        }
+        else if(user.gender ==='female'){
+            return '../../.././assets/images/unnamed.png';
+        }
+        else{
+            return '../../.././assets/images/avatar5.png'; 
         }
     }
     performActions(action) {

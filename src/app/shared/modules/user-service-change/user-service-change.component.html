@@ -284,7 +284,10 @@
                           <img [src]="getUserImg(service)">
                         </div>
                         <div class="mgn-lt-10">
-                          <div class="username">{{service.Username?service.Username : ''}}&nbsp;
+                          <div class="username">
+                            {{(service.businessName) ? service.businessName
+                              : service.firstName + ' ' +
+                              service.lastName}}&nbsp;
                             <div class='status-circle' [ngClass]="service.isAvailable ? 'green' : 'grey'"
                               *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
                             </div>
