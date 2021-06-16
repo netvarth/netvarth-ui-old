@@ -163,7 +163,7 @@
                   </tr>
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right" *ngIf="statusInfo.storePickup">Store pickup Time</td>
-                    <td width="48%" align="right" *ngIf="statusInfo.homeDelivery">Delivery Time</td>
+                    <td width="48%" align="right" *ngIf="statusInfo.homeDelivery">Delivery Date & Time</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.orderDate | date: newDateFormat }},
                       {{statusInfo.timeSlot.sTime}} -
