@@ -123,7 +123,9 @@
             <div class="card-footer bg-transparent">
                 <div class="actions">
                     <button (click)="viewBillPage()" class="btn view-bill-btn">View Bill</button>
-                    <button (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
+                    <button
+                        *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+                        (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
                 </div>
             </div>
         </div>

@@ -199,7 +199,6 @@
 }
 
 .records .private-notes > div:nth-child(1) {
-    display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
@@ -210,6 +209,8 @@
     font-size: 0.75rem !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
+    cursor: pointer;
+    float: right;
 }
 
 .records .private-notes textarea.private-notes-input {
@@ -229,7 +230,38 @@
     .disp-md-flex {
         display: flex !important;
     }
+    .box-hgt {
+        min-height: 340px !important;
+    }
 }
-.box-hgt {
-    height: 320px !important;
+textarea {
+   resize: none !important;
+}
+.img-section img {
+    width: 80px;
+    height: 80px;
+    cursor: auto;
+}
+.gal_action {
+    position: absolute;
+    top: -5px;
+    right: -3px;
+    background: rgba(0,0,0,.5);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.galimg_outer {
+    position: relative;
+    padding: 5px;
+}
+.galul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.galul li {
+    float: left;
 }

@@ -652,7 +652,8 @@ export class CustomerCreateComponent implements OnInit {
       };
       this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
     } else {
-      this.router.navigate(['provider', 'customers']);
+      // this.router.navigate(['provider', 'customers']);
+      this._location.back();
     }
   }
   confirmApptBlock(id, type?) {

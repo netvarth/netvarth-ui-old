@@ -6,25 +6,25 @@
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
       <div>
-      <div class="inner-card add-record rounded-sm pointer-cursor">
-        <a class="inner-card-heading">
-          Add Record
-        </a>
-        <div class="inner-card-text">
-          Diagnosis, Alergies, Prescription, etc.
+        <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')">
+          <a class="inner-card-heading">
+            Add Record
+          </a>
+          <div class="inner-card-text">
+            Diagnosis, Alergies, Prescription, etc.
+          </div>
         </div>
-      </div>
-      <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)">
-        <a class="inner-card-heading">
-          {{mr.mrNumber ? mr.mrNumber : ''}}
-        </a>
-        <div class="inner-card-text">
-          {{mr.mrCreatedDate ? mr.mrCreatedDate : ''}}
+        <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)">
+          <a class="inner-card-heading">
+            {{mr.mrNumber ? mr.mrNumber : ''}}
+          </a>
+          <div class="inner-card-text">
+            {{mr.mrCreatedDate ? mr.mrCreatedDate : ''}}
+          </div>
+          <div class="inner-card-text">
+            {{(mr.service && mr.service.name) ? mr.service.name : ''}}
+          </div>
         </div>
-        <div class="inner-card-text">
-          {{(mr.service && mr.service.name) ? mr.service.name : ''}}
-        </div>
-      </div>
       </div>
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="loading">

@@ -18,6 +18,7 @@ export class BookingBillComponent implements OnInit {
   @Input() pos;
   bill_data: any = [];
   refund_value;
+  paymentOnline;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -30,8 +31,7 @@ export class BookingBillComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    console.log(this.bookingType);
-    console.log(this.waitlist_data);
+    this.getPaymentSettings();
     if (this.bookingType === 'checkin') {
       if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
         this.getWaitlistBill();
@@ -122,5 +122,14 @@ export class BookingBillComponent implements OnInit {
         uuid: uid
       }
     });
+  }
+  getPaymentSettings() {
+    this.provider_services.getPaymentSettings()
+      .subscribe(
+        (data: any) => {
+          this.paymentOnline = data.onlinePayment;
+        },
+        () => {
+        });
   }
 }

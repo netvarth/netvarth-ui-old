@@ -56,7 +56,6 @@ export class BookingPrivateNotesComponent implements OnInit {
         .subscribe(
           data => {
             this.providerNotes = data;
-            console.log(this.providerNotes)
           });
     } else {
       this.provider_services.getProviderAppointmentNotes(this.uuid)
@@ -82,21 +81,41 @@ export class BookingPrivateNotesComponent implements OnInit {
     this.image_list_popup = [];
     let count = 0;
     for (let comIndex = 0; comIndex < this.selectedNote.attachment.length; comIndex++) {
-      const thumbPath = this.selectedNote.attachment[comIndex].thumbPath;
-      const imagePath = thumbPath;
-      const imgobj = new Image(
-        count,
-        {
-          img: imagePath,
-        },
-      );
-      this.image_list_popup.push(imgobj);
-      count++;
+      let imagePath;
+      if (this.checkImgType(this.selectedNote.attachment[comIndex].s3path) === 'img') {
+        imagePath = this.selectedNote.attachment[comIndex].s3path;
+        const imgobj = new Image(
+          count,
+          {
+            img: imagePath,
+          },
+        );
+        this.image_list_popup.push(imgobj);
+        count++;
+      } else {
+        window.open(this.selectedNote.attachment[index].s3path, '_blank');
+      }
     }
     if (count > 0) {
       setTimeout(() => {
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);
+    }
+  }
+  checkImgType(img) {
+    img = img.split('?');
+    if (img[0] && img[0].indexOf('.pdf') === -1) {
+      return 'img';
+    } else {
+      return 'pdf';
+    }
+  }
+  getImage(img) {
+    const type = img.s3path.split('?');
+    if (type[0] && type[0].indexOf('.pdf') === -1) {
+      return img.s3path;
+    } else {
+      return img.thumbPath;
     }
   }
 }

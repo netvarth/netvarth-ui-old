@@ -271,3 +271,7 @@ textarea {
     font-size: 13px !important;
     font-weight: 700 !important;
 }
+.details-inbox .card.p0 {
+    border: 1.75px solid #d0d0d0 !important;
+    min-height: 545px;
+}

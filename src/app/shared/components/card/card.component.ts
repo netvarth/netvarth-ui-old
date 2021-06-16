@@ -350,9 +350,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     gotoDetails() {
         if (this.item.type == 'checkin-dashboard') {
-            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
+            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type, type: 'checkin' } });
         } else {
-            this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type } });
+            this.router.navigate(['provider', 'appointments', this.waitlist.uid], { queryParams: { timetype: this.time_type, type: 'appointment' } });
         }
     }
     showMoreorLess(waitlist, type) {
