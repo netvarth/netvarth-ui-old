@@ -174,7 +174,7 @@
                                             </div>
                                             <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
                                                 (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
-                                                selectedLocation?.locationVirtualFields?.docambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.docambulance=='true'|| selectedLocation?.locationVirtualFields?.densistambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
@@ -197,7 +197,7 @@
                                                                 [matTooltip]="'Trauma Centre'"><span
                                                                     class="icon-trauma"></span>
                                                             </li>
-                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.docambulance=='true'"
+                                                            <li *ngIf="selectedLocation?.locationVirtualFields?.docambulance=='true'|| selectedLocation?.locationVirtualFields?.densistambulance=='true'"
                                                                 [matTooltip]="'Ambulance Services'"><span
                                                                     class="icon-ambulance"></span>
                                                             </li>
