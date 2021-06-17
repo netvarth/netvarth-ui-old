@@ -274,4 +274,6 @@ textarea {
 .details-inbox .card.p0 {
     border: 1.75px solid #d0d0d0 !important;
     min-height: 545px;
+    box-shadow: none !important;
+    padding: 0 !important;
 }

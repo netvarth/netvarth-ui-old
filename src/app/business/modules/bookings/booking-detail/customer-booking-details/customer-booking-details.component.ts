@@ -14,9 +14,7 @@ import { projectConstants } from '../../../../../app.component';
 export class CustomerBookingDetailsComponent implements OnInit {
   @Input() waitlist_data;
   @Output() getHeight = new EventEmitter<any>();
-  customerid;
   bookingType;
-  customerdetails: any = [];
   customer_label;
   privateNote = '';
   selectedMessage = {
@@ -40,27 +38,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.bookingType === 'checkin') {
-      this.customerid = this.waitlist_data.waitlistingFor[0].id;
-      this.getCustomerdetails(this.customerid);
-    } else if (this.bookingType === 'appointment') {
-      this.customerid = this.waitlist_data.appmtFor[0].id;
-      this.getCustomerdetails(this.customerid);
-    }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-  }
-  getCustomerdetails(customerId) {
-    if (customerId) {
-      const filter = { 'id-eq': customerId };
-      this.provider_services.getProviderCustomers(filter)
-        .subscribe(
-          data => {
-            this.customerdetails = data;
-          },
-          () => {
-          }
-        );
-    }
   }
   savePrivateNote() {
     if (this.privateNote.trim() === '') {

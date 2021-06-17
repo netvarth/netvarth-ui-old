@@ -22,6 +22,10 @@ import { CustomerActionsComponent } from './customer-actions/customer-actions.co
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { BookingMedicalRecordsModule } from '../bookings/booking-detail/booking-medical-records/booking-medical-records.module';
+import { BookingPrerscriptionModule } from '../bookings/booking-detail/booking-prescriptions/booking-prescriptions.module';
+import { InboxListModule } from '../inbox-list/inbox-list.module';
+import { RecordsDatagridModule } from '../records-datagrid/records-datagrid.module';
 
 
 @NgModule({
@@ -42,7 +46,11 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         NgbModule,
         OwlModule,
         InboxModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        BookingMedicalRecordsModule,
+        BookingPrerscriptionModule,
+        InboxListModule,
+        RecordsDatagridModule
     ],
     declarations: [
         CustomersListComponent,

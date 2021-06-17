@@ -44,10 +44,10 @@
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
                                     (click)="showCustomerAction()">Actions</span> &nbsp;
-                                    <!-- <span class="customer-action-btn pointer-cursor" 
+                                <!-- <span class="customer-action-btn pointer-cursor" 
                                      (click)="gotoMeet()">Initiate Video Call</span><br> -->
-                                   
-                                  
+
+
                                 <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
@@ -63,11 +63,11 @@
                                 </div>
                                 <div *ngIf="customer[0].address">Address: <span
                                         class="cust-detail">{{customer[0].address}}</span></div>
-                                <div class="mgn-up-15 mgn-bt-10" *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+                                <div class="mgn-up-15 mgn-bt-10"
+                                    *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
                                     <a (click)="showQnr()">More {{customer_label}} info</a>
                                 </div>
-                                <div class="mgn-bt-20"
-                                    *ngIf="showQuestionnaire">
+                                <div class="mgn-bt-20" *ngIf="showQuestionnaire">
                                     <app-questionnaire [questionnaireList]="questionnaireList"
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>
@@ -78,7 +78,7 @@
                                 (click)="goMeetProvider()">Rejoin</div><br>
                                 <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br> -->
                             </div>
-                           
+
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
                                     <span class="customer-action-btn pointer-cursor pull-right"
@@ -704,4 +704,113 @@
         </div>
     </div>
     <div class="clearfix"></div>
+</section>
+
+
+<section class="content" *ngIf="viewCustomer">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
+                    <div class="booking-details">
+                        <div class="booking-details-head">
+                            <div>
+                                <h5>
+                                    {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
+                                    capitalizeFirst}}
+                                </h5>
+                                <a (click)="editCustomerDetails()">Edit Details</a>
+                            </div>
+                        </div>
+                        <div class="user-img pull-right">
+                            <img src="assets/images/avatar5.png" />
+                        </div>
+                        <div class="booking-details-body">
+                            <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
+                                <i class="fa fa-id-card-o icon"></i>
+                                <span class="value">{{customer_label}} Id: {{customer[0].jaldeeId}}</span>
+                            </div>
+                            <div class="contact-no" *ngIf="customer[0].phoneNo && customer[0].phoneNo.trim() != ''">
+                                <i class="fa fa-mobile icon"></i>
+                                <span class="value">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                            </div>
+                            <div class="email" *ngIf="customer[0].email">
+                                <i class="fa fa-envelope icon"></i>
+                                <span class="value">{{customer[0].email}}</span>
+                            </div>
+                            <div class="gender-and-dob">
+                                <div *ngIf="customer[0].gender" class="gender">
+                                    <i *ngIf="customer[0].gender === 'male'" class="fa fa-mars icon"></i>
+                                    <i *ngIf="customer[0].gender === 'female'" class="fa fa-venus icon"></i>
+                                    <span class="value">{{customer[0].gender | capitalizeFirst}}</span>
+                                </div>
+                                <div class="dob" *ngIf="customer[0].dob">
+                                    <i class="fa fa-calendar-o icon"></i>
+                                    <span class="value">{{customer[0].dob | date: newDateFormat}}</span>
+                                </div>
+                            </div>
+                            <div class="location" *ngIf="customer[0].address">
+                                <i class="fa fa-map-marker icon"></i>
+                                <span class="value">{{customer[0].address}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cards-div">
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20 border"
+                    *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+                    <app-booking-medical-records [customerId]="customer[0].id">
+                    </app-booking-medical-records>
+                </div>
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20 border"
+                    *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+                    <app-booking-prescriptions></app-booking-prescriptions>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 no-padding gutter-b">
+            <app-provider-inbox-list [customer]="customer[0].jaldeeConsumer" [provider]="0" [source]="'details'">
+            </app-provider-inbox-list>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+            <div class="card card-custom">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">
+                            More {{customer_label}} info
+                        </h3>
+                    </div>
+                </div>
+                <div class="questionnaire-section">
+                    <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-details'"
+                        [type]="'details'" [customerDetails]="customer">
+                    </app-questionnaire>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row records-sec">
+        <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'waitlist'" [timeType]="1"
+            (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'waitlist'" [timeType]="2"
+            (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'waitlist'" [timeType]="3"
+            (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'order'"
+            [timeType]="1" (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'order'"
+            [timeType]="2" (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'" [source]="'order'" [timeType]="3"
+            (actionPerformed)="actionPerformed($event)">
+        </app-records-datagrid>
+    </div>
 </section>

@@ -17,7 +17,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { SubSink } from 'subsink';
 @Component({
     selector: 'app-customer-details',
-    templateUrl: './customer-details.component.html'
+    templateUrl: './customer-details.component.html',
+    styleUrls: ['./customer-details.component.css']
 })
 export class CustomerDetailComponent implements OnInit {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -275,16 +276,16 @@ export class CustomerDetailComponent implements OnInit {
     getCustomerTodayVisit() {
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {
-                this.todayVisitDetailsArray = data;
-                this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
+                this.todayVisitDetailsArray = this.todayvisitDetails = data;
+                // this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
             }
         );
     }
     getCustomerFutureVisit() {
         this.provider_services.getCustomerFutureVisit(this.customerId).subscribe(
             (data: any) => {
-                this.futureVisitDetailsArray = data;
-                this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
+                this.futureVisitDetailsArray = this.futurevisitDetails = data;
+                // this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
             }
         );
     }
@@ -302,10 +303,10 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.todayorderVisitDetailsArray = data.todayOrders;
-                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
-                this.futureorderVisitDetailsArray = data.futureOrders;
-                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
+                // this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
+                // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -362,9 +363,9 @@ export class CustomerDetailComponent implements OnInit {
     }
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
-            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type } });
+            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type, type: 'checkin' } });
         } else if (visit.appointmnet) {
-            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type } });
+            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type, type: 'appointment' } });
         } else {
             this.router.navigate(['provider', 'orders', visit.uid], { queryParams: { timetype: time_type } });
         }
@@ -514,5 +515,17 @@ export class CustomerDetailComponent implements OnInit {
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
+    }
+    editCustomerDetails() {
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'edit', id: this.customer[0].id }
+        };
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
+      }
+    actionPerformed(event) {
+        console.log(event);
+        if (event.type === 'details') {
+            this.gotoCustomerDetail(event.record, event.timeType);
+        }
     }
 }

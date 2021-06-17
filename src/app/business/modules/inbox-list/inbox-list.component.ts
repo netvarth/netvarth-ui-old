@@ -131,12 +131,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
     if (this.customer) {
+      console.log(this.userDet.accountType);
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.customer + '=' + this.provider;
       } else {
         this.selectedCustomer = this.customer;
       }
     }
+    console.log(this.selectedCustomer);
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -288,6 +290,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountId');
     }
     this.onResize();
+    console.log(this.groupedMsgs);
+    console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (this.small_device_display) {
