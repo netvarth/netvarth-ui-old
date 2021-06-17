@@ -192,7 +192,7 @@
                                                 <div
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                                                        *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+                                                        *ngIf="!api_loading1">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
@@ -212,7 +212,7 @@
                                                                 </span>
                                                             </h6>
                                                         </div>
-                                                        <div
+                                                        <div *ngIf="personsAhead == 0 ||personsAhead > 0"
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             Waiting in Line
                                                         </div>
@@ -243,14 +243,14 @@
                                                             </h6>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
+                                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
                                                         *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
                                                         No timings available.
                                                         <span><a class="lnk pointer-cursor action mgn-lt-10"
                                                                 (click)="changeTime()" data-toggle="modal"
                                                                 data-target="#exampleModalCenter">Change Time
                                                             </a></span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group">
@@ -828,18 +828,18 @@
                                                         <div class="pull-left brd-round brd-light mgn-up-20">
                                                             <div class="icon-minus pull-left"
                                                                 [class.disable]="disableMinus()"
-                                                                *ngIf="settingsjson.futureDateWaitlist"
+                                                                
                                                                 (click)="calculateDate(-1)">
                                                             </div>
                                                             <div class="pull-left chkindt">{{sel_checkindate |
                                                                 date:
                                                                 dateFormat}}</div>
                                                             <div class="icon-add pull-left"
-                                                                *ngIf="settingsjson.futureDateWaitlist"
+                                                                
                                                                 (click)="calculateDate(1)"></div>
                                                         </div>
                                                         <div class="pickerouter caldiv pull-left mgn-up-20"
-                                                            *ngIf="settingsjson.futureDateWaitlist">
+                                                            >
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
