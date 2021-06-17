@@ -8,6 +8,7 @@ import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.com
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-customer-actions',
@@ -32,6 +33,7 @@ export class CustomerActionsComponent implements OnInit {
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
         private router: Router,
+        private location: Location,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
@@ -144,7 +146,7 @@ export class CustomerActionsComponent implements OnInit {
         });
         dialogref.afterClosed().subscribe(
           result => {
-            this.router.navigate(['provider', 'customers']);
+            this.location.back();
             // if (result) {
             // }
           }
