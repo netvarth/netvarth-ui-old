@@ -84,7 +84,7 @@ export class BookingPrivateNotesComponent implements OnInit {
       window.open(this.selectedNote.attachment[index].s3path, '_blank');
     } else {
       for (let comIndex = 0; comIndex < this.selectedNote.attachment.length; comIndex++) {
-        if (this.checkImgType(this.selectedNote.attachment[index].s3path) === 'img') {
+        if (this.checkImgType(this.selectedNote.attachment[comIndex].s3path) === 'img') {
           let imagePath;
           imagePath = this.selectedNote.attachment[comIndex].s3path;
           const imgobj = new Image(

@@ -8,15 +8,14 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
   styleUrls: ['./upcoming-bookings.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
 })
 export class UpcomingBookingsComponent implements OnInit {
-  nextWaitlist: any = [];
-  nextAppt: any = [];
+  nextWaitlists: any = [];
+  nextAppts: any = [];
   loading = true;
   constructor(private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
     this.getTodayWatilists();
-    this.getTodayAppts();
   }
   getTodayWatilists() {
     const filter = {
@@ -25,13 +24,9 @@ export class UpcomingBookingsComponent implements OnInit {
     this.provider_services.getTodayWaitlist(filter)
       .subscribe(
         (data: any) => {
-          // if (data.length > 0) {
-            this.nextWaitlist = data;
-          // }
-          console.log(this.nextWaitlist);
-          setTimeout(() => {
-            this.loading = false;
-          }, 100);
+          this.nextWaitlists = data;
+          console.log(this.nextWaitlists);
+          this.getTodayAppts();
         });
   }
   getTodayAppts() {
@@ -41,17 +36,13 @@ export class UpcomingBookingsComponent implements OnInit {
     this.provider_services.getTodayAppointments(filter)
       .subscribe(
         (data: any) => {
-          // if (data.length > 0) {
-            this.nextAppt = data;
-          // }
-          console.log(this.nextAppt);
-          setTimeout(() => {
-            this.loading = false;
-          }, 100);
+          this.nextAppts = data;
+          console.log(this.nextAppts);
+          this.loading = false;
         });
   }
   gotoDetails(type) {
-    const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : this.nextAppt.uid;
+    const uid = (type === 'checkin') ? this.nextWaitlists[0].ynwUuid : this.nextAppts[0].uid;
     console.log(uid);
     this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
   }

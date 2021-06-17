@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 })
 export class BookingQuickActionsComponent implements OnInit {
   showToken = false;
-  constructor(private provider_services: ProviderServices) { }
+  constructor(private provider_services: ProviderServices,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getWaitlistMgr();
@@ -18,5 +20,15 @@ export class BookingQuickActionsComponent implements OnInit {
       .subscribe((data: any) => {
         this.showToken = data.showTokenId;
       });
+  }
+  apptClicked() {
+    console.log('appt');
+    this.router.navigate(['provider', 'appointments', 'appointment'],
+    { queryParams: { checkinType: 'WALK_IN_APPOINTMENT' } });
+  }
+  checkinClicked() {
+    console.log('check');
+    this.router.navigate(['provider', 'check-ins', 'add'],
+    { queryParams: { checkinType: 'WALK_IN_CHECKIN' } });
   }
 }

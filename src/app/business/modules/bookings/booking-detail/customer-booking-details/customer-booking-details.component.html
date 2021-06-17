@@ -8,18 +8,28 @@
           </h5>
           <a (click)="editCustomer()" *ngIf="waitlist_data.waitlistStatus!=='blocked'">Edit Details</a>
         </div>
-        <div class="age">
-          <span class="value">22 years old</span>
+        <div class="age" *ngIf="waitlist_data.waitlistingFor[0].age">
+          <span class="value">{{getAge(waitlist_data.waitlistingFor[0].age)}} yrs</span>
         </div>
       </div>
       <div class="booking-details-body">
         <div class="jaldee-id" *ngIf="waitlist_data.waitlistingFor[0].id">
           <i class="fa fa-id-card-o icon"></i>
-          <span class="value">Jaldee Id: {{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+          <span class="value">{{customer_label}} Id: {{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+        </div>
+        <div class="jaldee-id">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">Booking Id: {{waitlist_data.checkinEncId}}</span>
         </div>
         <div class="contact-no" *ngIf="waitlist_data.waitlistPhoneNumber">
           <i class="fa fa-mobile icon"></i>
-          <span class="value">{{waitlist_data.countryCode}}-{{waitlist_data.waitlistPhoneNumber}}</span>
+          <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
+        </div>
+        <div class="contact-no"
+          *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">WhatsApp # +{{
+            waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
         </div>
         <div class="email" *ngIf="waitlist_data.waitlistingFor[0].email">
           <i class="fa fa-envelope icon"></i>
@@ -31,21 +41,25 @@
             <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fa fa-venus icon"></i>
             <span class="value">{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
           </div>
-          <div class="dob">
+          <!-- <div class="dob">
             <i class="fa fa-calendar-o icon"></i>
             <span class="value">25/07/1996</span>
-          </div>
+          </div> -->
         </div>
-        <div class="location">
+        <div class="location" *ngIf="waitlist_data.waitlistingFor[0].bookingLocation">
           <i class="fa fa-map-marker icon"></i>
-          <span class="value">HSR Layout, Bangalore</span>
+          <span class="value">{{waitlist_data.waitlistingFor[0].bookingLocation.district}},
+            {{waitlist_data.waitlistingFor[0].bookingLocation.state}}</span>
         </div>
-        <div class="available-records">
+        <div class="location" *ngIf="waitlist_data.waitlistingFor[0].preferredLanguage">
+          <i class="fa fa-map-marker icon"></i>
+          <span class="value">{{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
+        </div>
+        <!-- <div class="available-records">
           <div class="head">Available Records</div>
           <div class="value">2 case entries, 2 medical records, 4 documents</div>
-        </div>
-        <button class="btn create-prescription-button" (click)="gotoPrescription()"
-          *ngIf="waitlist_data.waitlistStatus!=='blocked'">Create Prescription</button>
+        </div> -->
+        <button class="btn create-prescription-button">Communication</button>
       </div>
     </div>
     <div class="booking-details" *ngIf="bookingType === 'appointment'">
@@ -57,18 +71,28 @@
           </h5>
           <a (click)="editCustomer()" *ngIf="waitlist_data.apptStatus!=='blocked'">Edit Details</a>
         </div>
-        <div class="age">
-          <span class="value">22 years old</span>
+        <div class="age" *ngIf="waitlist_data.appmtFor[0].age">
+          <span class="value">{{getAge(waitlist_data.appmtFor[0].age)}} yrs</span>
         </div>
       </div>
       <div class="booking-details-body">
         <div class="jaldee-id" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
           <i class="fa fa-id-card-o icon"></i>
-          <span class="value">Jaldee Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+          <span class="value">{{customer_label}} Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+        </div>
+        <div class="jaldee-id">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">Booking Id: {{waitlist_data.appointmentEncId}}</span>
         </div>
         <div class="contact-no" *ngIf="waitlist_data.phoneNumber">
           <i class="fa fa-mobile icon"></i>
           <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
+        </div>
+        <div class="contact-no"
+          *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">WhatsApp # +{{
+            waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
         </div>
         <div class="email" *ngIf="waitlist_data.appmtFor[0].email">
           <i class="fa fa-envelope icon"></i>
@@ -80,21 +104,25 @@
             <i *ngIf="waitlist_data.appmtFor[0].gender === 'female'" class="fa fa-venus icon"></i>
             <span class="value">{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
           </div>
-          <div class="dob">
+          <!-- <div class="dob">
             <i class="fa fa-calendar-o icon"></i>
             <span class="value">25/07/1996</span>
-          </div>
+          </div> -->
         </div>
-        <div class="location">
+        <div class="location" *ngIf="waitlist_data.appmtFor[0].bookingLocation">
           <i class="fa fa-map-marker icon"></i>
-          <span class="value">HSR Layout, Bangalore</span>
+          <span class="value">{{waitlist_data.appmtFor[0].bookingLocation.district}},
+            {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
         </div>
-        <div class="available-records">
+        <div class="location" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
+          <i class="fa fa-map-marker icon"></i>
+          <span class="value">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
+        </div>
+        <!-- <div class="available-records">
           <div class="head">Available Records</div>
           <div class="value">2 case entries, 2 medical records, 4 documents</div>
-        </div>
-        <button class="btn create-prescription-button" (click)="gotoPrescription()"
-          *ngIf="waitlist_data.apptStatus!=='blocked'">Create Prescription</button>
+        </div> -->
+        <button class="btn create-prescription-button">Communication</button>
       </div>
     </div>
   </div>

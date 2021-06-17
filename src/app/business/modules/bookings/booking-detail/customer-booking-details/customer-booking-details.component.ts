@@ -180,4 +180,8 @@ export class CustomerBookingDetailsComponent implements OnInit {
       this.getHeight.emit(this.addedHeight);
     }, 200);
   }
+  getAge(age) {
+    age = age.split(',');
+    return age[0];
+  }
 }

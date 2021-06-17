@@ -89,7 +89,11 @@ export class ServiceActionsComponent implements OnInit {
     ngOnInit(): void {
         this.setActions();
         if (this.waitlist_data) {
-            this.location_id = this.waitlist_data.queue.location.id;
+            if (this.bookingType === 'checkin') {
+                this.location_id = this.waitlist_data.queue.location.id;
+            } else {
+                this.location_id = this.waitlist_data.location.id;
+            }
             this.serv_id = this.waitlist_data.service.id;
             this.accountid = this.waitlist_data.providerAccount.id;
             if (this.timeType === 3) {

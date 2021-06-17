@@ -2,7 +2,7 @@
     <div class="heading">Quick Actions</div>
     <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'">
         <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info">
+            <div class="symbol symbol-40 new_svg symbol-light-info" (click)="apptClicked()">
                 <span class="symbol-label">
                     <span class="appt-icon">
                     </span>
@@ -13,7 +13,7 @@
             </mat-grid-tile-footer>
         </mat-grid-tile>
         <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info">
+            <div class="symbol symbol-40 new_svg symbol-light-info" (click)="checkinClicked()">
                 <span class="symbol-label">
                     <span [class.token-icon]="showToken" [class.chckn-icon]="!showToken">
                     </span>
