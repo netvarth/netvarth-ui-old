@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && changeService && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && isUserdisable"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && !checkin.provider && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && isUserdisable"
             (click)="assignMyself()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && changeService && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
             (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>

@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
             (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
