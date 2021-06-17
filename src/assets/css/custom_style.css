@@ -12999,6 +12999,10 @@ hr {
   content: url(../images/phonein.svg);
   width: 25px;
 }
+.phone-icon {
+  content: url(../images/phonein.svg);
+  width: 50px;
+}
 .walkin-icon {
   content: url(../images/walkin.svg);
   width: 25px;

@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../services/twilio-service";
 import { interval as observableInterval } from 'rxjs';
 import { MeetService } from "../../services/meet-service";
@@ -9,6 +9,7 @@ import { SnackbarService } from "../../services/snackbar.service";
 import { SubSink } from "subsink";
 import { MatDialog } from "@angular/material/dialog";
 import { AddInboxMessagesComponent } from "../add-inbox-messages/add-inbox-messages.component";
+import { Location } from "@angular/common";
 
 @Component({
     selector: 'app-meet-room',
@@ -58,6 +59,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         private cd: ChangeDetectorRef,
         private dialog: MatDialog,
         private activated_route: ActivatedRoute,
+        private location: Location,
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
@@ -259,14 +261,13 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         //     type = 'checkin'
         // }
         if(this.checkId === true){
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    // type: 'video',
-                    id: this.Id
-                }
-            };
-            // this.location.back();
-            this.router.navigate(['provider', 'customers'], navigationExtras);
+            // const navigationExtras: NavigationExtras = {
+            //     queryParams: {
+            //         id: this.Id
+            //     }
+            // };
+            this.location.back();
+            // this.router.navigate(['provider', 'customers'], navigationExtras);
         }
        else{
         this.router.navigate(['/']);

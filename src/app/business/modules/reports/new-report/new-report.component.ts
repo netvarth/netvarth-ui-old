@@ -117,6 +117,9 @@ export class NewReportComponent implements OnInit {
   payment_donationName:any;
   payment_donationPhone:any;
   payment_donationEmail:any;
+  donation_donorFirstName:string;
+  donation_donorLastName:string;
+  donation_donorPhoneNumber:any;
 
 
 
@@ -713,19 +716,36 @@ export class NewReportComponent implements OnInit {
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-
+         let donorName=''
         this.filterparams = {
 
           'service': this.donation_service_id,
-          'donationAmount': this.donation_amount
-
+          'donationAmount': this.donation_amount,
+          'donorPhoneNumber':this.donation_donorPhoneNumber
 
         };
+        if(this.donation_donorFirstName!==''&&this.donation_donorFirstName!==undefined){
+          donorName='firstName ::'+this.donation_donorFirstName;
+          if(this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined){
+            donorName= donorName+',lastName::'+this.donation_donorLastName;
+          }
+        }
+        if(this.donation_donorFirstName===''||this.donation_donorFirstName===undefined &&this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined ){
+          donorName='lastName::'+this.donation_donorLastName;
+        }
+        this.filterparams['donor']=donorName;
         if (this.donation_service === 'All') {
           delete this.filterparams.service;
         }
         if (this.donation_amount === undefined) {
           delete this.filterparams.amount;
+        }
+        if(this.donation_donorPhoneNumber ==''){
+          delete this.filterparams.donorPhoneNumber;
+        }
+        if(this.filterparams['donor']==''||this.filterparams['donor']==undefined ){
+         console.log('delete dontion'+this.donation_donorFirstName);
+          delete this.filterparams.donor;
         }
 
         const filter = {};

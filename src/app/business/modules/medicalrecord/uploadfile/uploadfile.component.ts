@@ -258,7 +258,7 @@ showFile(file){
   //console.log(type[0]);
   this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
     width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
+    panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
     disableClose: true,
     data: {
       file: file,

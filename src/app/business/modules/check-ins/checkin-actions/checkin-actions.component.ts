@@ -25,6 +25,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { VoicecallConfirmBoxComponent } from '../../customers/confirm-box/voicecall-confirm-box.component';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -111,6 +113,9 @@ export class CheckinActionsComponent implements OnInit {
     check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     user_arr: any;
     isUserdisable;
+    meet_data: any;
+    id: any;
+    providerMeetingUrl: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -122,6 +127,7 @@ export class CheckinActionsComponent implements OnInit {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
+        private location: Location,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -641,6 +647,61 @@ export class CheckinActionsComponent implements OnInit {
             }
             this.loading = false;
         });
+    }
+    gotoMeet() {
+        this.dialogRef.close();
+        const customerDetails = this.checkin.waitlistingFor[0];
+        const customerId = customerDetails.id;
+        this.provider_services.meetReady(customerId).subscribe(data => {
+            this.meet_data = data;
+                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
+                  // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
+                //     this.getMeetingStatus();
+                // });
+                const retcheckarr = this.providerMeetingUrl.split('/');
+                this.id = retcheckarr[4]
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { custId: customerId }
+                };
+                 // const path = 'meet/' + this.id ;
+                // window.open(path, '_blank');
+                this.router.navigate(['meet', this.id], navigationExtras);
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+    startVoiceCall() {
+        this.closeDialog();
+        const customerDetails = this.checkin.waitlistingFor[0];
+        console.log(customerDetails.id)
+        const customerId = customerDetails.id;
+        this.provider_services.voiceCallReady(customerId).subscribe(data => {
+            this.voiceCallConfirm()
+        },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+    voiceCallConfirm() {
+        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            // profile: this.profile
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            this.location.back();
+            // if (result) {
+            // }
+          }
+        );
+      }
+    closeDialog() {
+        this.dialogRef.close();
     }
     deleteLabel() {
         // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
