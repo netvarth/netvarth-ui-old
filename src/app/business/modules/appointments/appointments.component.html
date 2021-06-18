@@ -556,7 +556,7 @@
                       </td> -->
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
@@ -747,6 +747,25 @@
                       </td>
                     </tr>
                   </tbody>
+
+                  <tbody
+                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                    <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let appt of startedAppts, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedAppts.length > 1">
+                       
+                        <input *ngIf="appt.providerConsumer" [checked]="startedChkAppointments[i]" type="checkbox"
+                          class="pull-left" (click)="stopprop($event)"
+                          (change)="chkStartedAptHistoryClicked(i, appt)" />
+                      </div>
+                      <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                        [checkins]="startedAppts" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [statusAction]="'started'">
+                      </app-card>
+                    </div>
+                  </tbody>
+
+
                 </table>
               </div>
               <div class="">
@@ -1046,7 +1065,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -1242,6 +1261,24 @@
                       </td>
                     </tr>
                   </tbody>
+
+
+                  <tbody
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
+                    <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let appt of check_in_filtered_list, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox" class="pull-left"
+                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                      </div>
+                      <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [allLabels]="allLabels" [statusAction]="statusAction">
+                      </app-card>
+                    </div>
+                  </tbody>
+
+
                 </table>
               </div>
             </div>
@@ -1558,7 +1595,7 @@
                     </td> -->
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1752,6 +1789,23 @@
                     </td>
                   </tr>
                 </tbody>
+
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                  <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                      <input [checked]="chkAppointments[i]" type="checkbox" *ngIf="appt.providerConsumer"
+                      class="pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </div>
+                    <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
+                  </div>
+                </tbody>
+
+
               </table>
             </div>
           </mat-tab>
@@ -2157,7 +2211,7 @@
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
@@ -2347,6 +2401,20 @@
                       </span>
                     </td>
                   </tr>
+                </tbody>
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && small_device_display">
+                  <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
+                      <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                      class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </div>
+                    <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
+                  </div>
                 </tbody>
                 <tfoot>
                   <tr>

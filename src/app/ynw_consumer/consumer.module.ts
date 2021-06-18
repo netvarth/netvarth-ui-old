@@ -65,6 +65,7 @@ import { ApptCardComponent } from './components/home/appt-card/appt-card.compone
 import { WlCardComponent } from './components/home/wl-card/wl-card.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { telegramPopupComponent } from './components/notification/telegrampopup/telegrampopup.component';
+import { ConsumerEmailComponent } from './shared/component/consumer-email/consumer-email.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { telegramPopupComponent } from './components/notification/telegrampopup/
     ApptCardComponent,
     WlCardComponent,
     NotificationComponent,
-    telegramPopupComponent
+    telegramPopupComponent,
+    ConsumerEmailComponent
   ],
   exports: [ConfirmBoxComponent, MatBadgeModule],
   schemas: [
@@ -135,7 +137,8 @@ import { telegramPopupComponent } from './components/notification/telegrampopup/
     MeetingDetailsComponent,
     ActionPopupComponent,
     CommunicationComponent,
-    telegramPopupComponent
+    telegramPopupComponent,
+    ConsumerEmailComponent
   ],
   providers: [
     SharedServices,

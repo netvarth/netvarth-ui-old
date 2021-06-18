@@ -29,6 +29,7 @@ import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Co
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
 import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
+import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 
 @Component({
     selector: 'app-consumer-appointment',
@@ -670,6 +671,21 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     confirmcheckin(type?) {
+        if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
+            const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
+                width: '40%',
+                panelClass: ['loginmainclass', 'popup-class'],
+           
+    
+            });
+            emaildialogRef.afterClosed().subscribe(result => {
+                if (result!== '' && result!==undefined) {
+                    this.payEmail = result;
+                }
+    
+            });
+    
+           }else{
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -766,6 +782,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.addApptAdvancePayment(post_Data);
             }
         }
+    }
     }
 
     saveCheckin(type?) {
