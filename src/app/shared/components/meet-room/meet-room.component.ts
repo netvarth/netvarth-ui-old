@@ -10,6 +10,7 @@ import { SubSink } from "subsink";
 import { MatDialog } from "@angular/material/dialog";
 import { AddInboxMessagesComponent } from "../add-inbox-messages/add-inbox-messages.component";
 import { Location } from "@angular/common";
+import { WordProcessor } from "../../services/word-processor.service";
 
 @Component({
     selector: 'app-meet-room',
@@ -41,6 +42,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     showEndBt: boolean;
     btndisabled = true;
     showStartBt: boolean;
+    customer_label;
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
     @ViewChild('remoteVideo') remoteVideo: ElementRef;
@@ -60,6 +62,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         private dialog: MatDialog,
         private activated_route: ActivatedRoute,
         private location: Location,
+        public wordProcessor: WordProcessor,
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
@@ -131,6 +134,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
      * Init method
      */
     ngOnInit(): void {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         const isMobile = {
@@ -182,7 +186,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                         _this.consumerReady = false;
                         _this.meetObj = null;
                         // _this.status = 'Waiting for the consumer...'
-                        _this.status = 'Waiting for Consumer';
+                        _this.status = 'Waiting for ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1);
                     }
                 }, error => {
                     _this.loading = false;
@@ -213,7 +217,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                     _this.consumerReady = false;
                     _this.meetObj = null;
                     // _this.status = 'Waiting for the consumer...'
-                    _this.status = 'Waiting for Consumer';
+                    _this.status = 'Waiting for ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1);
                 }
             }, error => {
                 _this.loading = false;
