@@ -15,7 +15,6 @@
 
 .title-row .title-head {
     width: auto !important;
-    border-right: 1px solid #c5c5c5;
     padding-right: 10px !important;
     font-size: 23px !important;
     font-weight: 500 !important;
@@ -218,7 +217,6 @@
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    padding: 12.5px 7.5px 0 !important;
 }
 
 .appointments-and-doctors-row .appointments-column {

@@ -1,0 +1,231 @@
+<div class="operations-row">
+    <div class="column operations-column">
+        <div class="card">
+            <div class="header">
+                <h2>{{heading}}</h2>
+            </div>
+            <div class="tableBody">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr class="pointer-cursor" *ngFor="let record of records"
+                                (click)="actionClick('details', record)">
+                                <ng-container *ngIf="source == 'customer-waitlist' && record.waitlist">
+                                    <td class="consumer-appthistory">
+                                        <i *ngIf="!record.waitlist.showToken" class="fa chckn-icon"
+                                            [matTooltip]="'Check-in'"></i>
+                                        <i *ngIf="record.waitlist.showToken" class="fa token-icon"
+                                            [matTooltip]="'Token'"></i>
+                                    </td>
+                                    <td> {{record.waitlist.date | date: newDateFormat}}
+                                        <div *ngIf="record.waitlist.token">Token#
+                                            {{record.waitlist.token}} </div>
+                                    </td>
+                                    <td> <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                            class="fa meet-icon"></i>
+                                        <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                            class="fa zoom-icon"></i>
+                                        <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                        <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                            class="fa phon-icon"></i>
+                                        <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.waitlist.service.virtualServiceType === 'audioService'"
+                                            class="fa wtsapaud-icon"></i>
+                                        <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.waitlist.service.virtualServiceType === 'videoService'"
+                                            class="fa wtsapvid-icon"></i>
+                                        {{record.waitlist.service.name}}
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="record.waitlist.showToken">
+                                            {{tokenWaitlistModes[record.waitlist.waitlistMode]}}
+                                        </ng-container>
+                                        <ng-container *ngIf="!record.waitlist.showToken">
+                                            {{waitlistModes[record.waitlist.waitlistMode]}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <span class="rupee-font" *ngIf="record.waitlist.amountPaid > 0">
+                                            {{record.waitlist.amountPaid |
+                                            currency:'&#8377;' }} Paid</span>
+                                    </td>
+                                    <!-- <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                            (click)="stopprop($event)">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #visitMenu="matMenu">
+                                            <button class="recent"
+                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                mat-menu-item (click)="actionClick(record)">
+                                                <i class="medicalrecord-icon"></i>
+                                                MedicalRecord
+                                            </button>
+                                            <button class="recent"
+                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                mat-menu-item (click)="actionClick(record)">
+                                                <i class="mr-rx-icon"></i>
+                                                Prescription
+                                            </button>
+                                            <button mat-menu-item (click)="actionClick(record)">
+                                                <i class="comm-history-icon"></i>
+                                                Communication history
+                                            </button>
+                                            <button *ngIf="record.waitlist.consumerNote" mat-menu-item
+                                                (click)="actionClick(record)">
+                                                <i class="customernote-icon"></i>
+                                                {{customer_label | capitalizeFirst}} note
+                                            </button>
+                                        </mat-menu>
+                                    </td> -->
+                                </ng-container>
+                                <ng-container *ngIf="source == 'customer-waitlist' && record.appointmnet">
+                                    <td class="consumer-appthistory">
+                                        <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                    </td>
+                                    <td> {{record.appointmnet.appmtDate | date: newDateFormat}}
+                                        <div> {{getSingleTime(record.appointmnet.appmtTime)}}</div>
+                                    </td>
+                                    <td> <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                            class="fa meet-icon"></i>
+                                        <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                            class="fa zoom-icon"></i>
+                                        <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                        <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                            class="fa phon-icon"></i>
+                                        <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.appointmnet.service.virtualServiceType === 'audioService'"
+                                            class="fa wtsapaud-icon"></i>
+                                        <i *ngIf="record.appointmnet.service.serviceType === 'virtualService' && record.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.appointmnet.service.virtualServiceType === 'videoService'"
+                                            class="fa wtsapvid-icon"></i>
+                                        {{record.appointmnet.service.name}}
+                                    </td>
+                                    <td>
+                                        {{waitlistModes[record.appointmnet.appointmentMode]}}
+                                    </td>
+                                    <td>
+                                        <span class="rupee-font" *ngIf="record.appointmnet.amountPaid > 0">
+                                            {{record.appointmnet.amountPaid |
+                                            currency:'&#8377;' }} Paid</span>
+                                    </td>
+                                    <!-- <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                            (click)="stopprop($event)">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #visitMenu="matMenu">
+                                            <button class="recent"
+                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                mat-menu-item (click)="actionClick(record)">
+                                                <i class="medicalrecord-icon"></i>
+                                                MedicalRecord
+                                            </button>
+                                            <button class="recent"
+                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                mat-menu-item (click)="actionClick(record)">
+                                                <i class="mr-rx-icon"></i>
+                                                Prescription
+                                            </button>
+                                            <button mat-menu-item (click)="actionClick(record)">
+                                                <i class="comm-history-icon"></i>
+                                                Communication history
+                                            </button>
+                                            <button *ngIf="record.appointmnet.consumerNote" mat-menu-item
+                                                (click)="actionClick(record)">
+                                                <i class="customernote-icon"></i>
+                                                {{customer_label | capitalizeFirst}} note
+                                            </button>
+                                        </mat-menu>
+                                    </td> -->
+                                </ng-container>
+                                <ng-container *ngIf="source == 'customer-order'">
+                                    <td class="consumer-appthistory"> <i *ngIf="record.storePickup"
+                                            class="storepickup-icon" [matTooltip]="'Store Pickup'"
+                                            aria-hidden="true"></i> <i *ngIf="record.homeDelivery" class="delivery-icon"
+                                            [matTooltip]="'Home Delivery'" aria-hidden="true"></i>
+                                    </td>
+                                    <td> {{record.orderDate | date: newDateFormat}}
+                                        <div *ngIf="record.orderNumber">Order#
+                                            {{record.orderNumber}} </div>
+                                    </td>
+                                    <td> {{record.orderStatus}}
+                                    </td>
+                                    <td>
+                                        <span *ngIf="record.storePickup">Store Pickup</span>
+                                        <span *ngIf="record.homeDelivery">Home Delivery</span>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="record.orderMode === 'WALKIN_ORDER'">
+                                            Walk in Order
+                                        </ng-container>
+                                        <ng-container *ngIf="record.orderMode === 'ONLINE_ORDER'">
+                                            Online Order</ng-container>
+                                        <ng-container *ngIf="record.orderMode === 'PHONE_ORDER'">
+                                            Phone in Order</ng-container>
+                                    </td>
+                                    <td><span class="rupee-font" *ngIf="record.totalAmountPaid > 0">
+                                            {{record.totalAmountPaid |
+                                            currency:'&#8377;' }} Paid</span> </td>
+                                    <!-- <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                            (click)="stopprop($event)">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #visitMenu="matMenu">
+
+                                            <button mat-menu-item (click)="actionClick(record)">
+                                                <i class="comm-history-icon"></i>
+                                                Communication history
+                                            </button>
+                                        </mat-menu>
+                                    </td> -->
+                                </ng-container>
+
+
+                                <ng-container *ngIf="source == 'waitlist' || source == 'appt'">
+                                    <td>
+                                        <ng-container *ngIf="source == 'waitlist'"> {{record.token}}</ng-container>
+                                        <ng-container *ngIf="source == 'appt'">{{getSingleTime(record.appmtTime)}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="source == 'waitlist'">
+                                            {{record.waitlistingFor[0].firstName}}
+                                            {{record.waitlistingFor[0].lastName}}
+                                        </ng-container>
+                                        <ng-container *ngIf="source == 'appt'">
+                                            {{record.appmtFor[0].firstName}}
+                                            {{record.appmtFor[0].lastName}}
+                                        </ng-container>
+                                    </td>
+                                    <td> 
+                                        <ng-container *ngIf="record.provider">
+                                        {{(record.provider.businessName) ? record.provider.businessName :
+                                        record.provider.firstName +
+                                        ' ' + record.provider.lastName}}
+                                    </ng-container>
+                                    </td>
+                                    <td>
+                                        {{record.service.name}}
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="source == 'waitlist'">
+                                            {{check_in_statuses[getStatusLabel(record.waitlistStatus)]}}
+                                        </ng-container>
+                                        <ng-container *ngIf="source == 'appt'">
+                                            {{check_in_statuses[getStatusLabel(record.apptStatus)]}}
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="showLinks mgn-bt-10" *ngIf="count && count > 5">
+                        <a *ngIf="!showMore" (click)="actionClick('more')">Show more</a>
+                        <a *ngIf="showMore" (click)="actionClick('less')">Show less</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -753,7 +753,7 @@
             </app-provider-inbox-list>
         </div>
     </div>
-    <div class="row" *ngIf="!showMoreHistory">
+    <div class="row mgn-up-20" *ngIf="!showMoreHistory">
         <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
             *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
             <div class="card card-custom">
@@ -780,29 +780,29 @@
                 *ngIf="historyvisitDetails.length > 0 || ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0"
                 (click)="showHistory()">History</span>
         </div>
-        <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'waitlist'" [timeType]="1"
-            [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
+        <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
+            [timeType]="1" [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
             (actionPerformed)="actionPerformed($event)" *ngIf="todayVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'waitlist'" [timeType]="2"
-            [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
+        <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
+            [timeType]="2" [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
             (actionPerformed)="actionPerformed($event)" *ngIf="futureVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'order'"
+        <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'customer-order'"
             [count]="todayorderVisitDetailsArray.length" [showMore]="showMoreorderToday" [timeType]="1"
             (actionPerformed)="actionPerformed($event)" *ngIf="todayorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'order'"
+        <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'customer-order'"
             [count]="futureorderVisitDetailsArray.length" [showMore]="showMoreorderFuture" [timeType]="2"
             (actionPerformed)="actionPerformed($event)" *ngIf="futureorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
     </div>
     <ng-container *ngIf="showMoreHistory">
-        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'waitlist'" [timeType]="3"
-            (actionPerformed)="actionPerformed($event)" *ngIf="historyvisitDetails.length > 0">
+        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
+            [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyvisitDetails.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'" [source]="'order'"
-            [timeType]="3" (actionPerformed)="actionPerformed($event)"
+        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'"
+            [source]="'customer-order'" [timeType]="3" (actionPerformed)="actionPerformed($event)"
             *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0">
         </app-records-datagrid>
     </ng-container>

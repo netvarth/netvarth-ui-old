@@ -25,7 +25,7 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
 import { BookingMedicalRecordsModule } from '../bookings/booking-detail/booking-medical-records/booking-medical-records.module';
 import { BookingPrerscriptionModule } from '../bookings/booking-detail/booking-prescriptions/booking-prescriptions.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
-import { RecordsDatagridModule } from '../records-datagrid/records-datagrid.module';
+import { RecordsDatagridModule } from '../bookings/booking-dashboard-admin/records-datagrid/records-datagrid.module';
 
 
 @NgModule({

@@ -133,6 +133,6 @@
 .details-hgt {
   height: 210px;
 }
-.records-sec {
-  padding: 15px;
+.records-sec .rece-act {
+  padding: 0 15px;
 }

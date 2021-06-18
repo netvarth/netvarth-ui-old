@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
-import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-records-datagrid',
   templateUrl: './records-datagrid.component.html',
-  styleUrls: ['./records-datagrid.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./records-datagrid.component.css']
 })
 export class RecordsDatagridComponent implements OnInit {
   @Input() records;
@@ -29,7 +31,9 @@ export class RecordsDatagridComponent implements OnInit {
     PHONE_CHECKIN: 'Phone in Token',
     ONLINE_CHECKIN: 'Online Token'
   };
-  constructor(private dateTimeProcessor: DateTimeProcessor) { }
+  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  constructor(private dateTimeProcessor: DateTimeProcessor,
+    private wordProcessor: WordProcessor) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +43,10 @@ export class RecordsDatagridComponent implements OnInit {
   }
   stopprop(event) {
     event.stopPropagation();
+  }
+  getStatusLabel(status) {
+    const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
+    return label_status;
   }
   actionClick(type, record?) {
     this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
