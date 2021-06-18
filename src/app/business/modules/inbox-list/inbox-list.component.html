@@ -8,12 +8,12 @@
 </section>
 <section>
     <!-- <div class="content comn-cls"> -->
-        <div class="col-md-12 no-padding-small" [class.details-inbox]="source">
+        <div class="col-md-12 no-padding-small" [class.details-inbox]="source" [class.details-opacity]="!loading && source && !customer">
             <div class="card p0">
                 <div class="bg-transparent" *ngIf="source">
                     <div>Messages</div>
                     <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()"
-                        aria-hidden="true"></i>
+                        aria-hidden="true" *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
@@ -246,9 +246,9 @@
                                         <div class="d-flex align-items-center justify-content-between pad-20">
                                             <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
                                                 class="form-control border-0 p-0" placeholder="Type a message *"
-                                                [(ngModel)]="message"></textarea>
+                                                [(ngModel)]="message" [disabled]="source && !customer"></textarea>
                                             <div class="">
-                                                <input #logofile type="file" accept="/*;capture=camera"
+                                                <input #logofile type="file" accept="/*;capture=camera" [disabled]="source && !customer"
                                                     style="display:none;" multiple (change)="filesSelected($event)">
                                                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
                                                         class="material-icons">attach_file</i></a>
@@ -260,7 +260,7 @@
                                                 </button>
                                                 <i *ngIf="small_device_display"
                                                     (click)="sendMessageCompleted && sendMessage()"
-                                                    class="fa fa-paper-plane" aria-hidden="true"
+                                                    class="fa fa-paper-plane pointer-cursor" aria-hidden="true"
                                                     [class.grey]="message==''"></i>
                                             </div>
                                         </div>

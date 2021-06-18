@@ -19,6 +19,7 @@ export class BookingBillComponent implements OnInit {
   bill_data: any = [];
   refund_value;
   paymentOnline;
+  loading = false;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class BookingBillComponent implements OnInit {
     }
   }
   getWaitlistBill() {
+    this.loading = true;
     let uid;
     if (this.bookingType == 'appointment') {
       uid = this.waitlist_data.uid;
@@ -58,11 +60,13 @@ export class BookingBillComponent implements OnInit {
           if (this.bill_data.amountDue < 0) {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }
+          this.loading = false;
         },
         error => {
           if (error.status === 422) {
             this.bill_data = [];
           }
+          this.loading = false;
         });
   }
   viewBillPage() {
@@ -131,5 +135,19 @@ export class BookingBillComponent implements OnInit {
         },
         () => {
         });
+  }
+  checkDisable() {
+    if (!this.loading) {
+      if (!this.pos) {
+        return true;
+      }
+      if (this.bookingType === 'checkin' && ((this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus === 'NotPaid') || this.waitlist_data.waitlistStatus === 'blocked')) {
+        return true;
+      }
+      if (this.bookingType === 'appointment' && ((this.waitlist_data.apptStatus === 'Cancelled' && this.waitlist_data.paymentStatus === 'NotPaid') || this.waitlist_data.apptStatus === 'blocked')) {
+        return true;
+      }
+    }
+    return false;
   }
 }

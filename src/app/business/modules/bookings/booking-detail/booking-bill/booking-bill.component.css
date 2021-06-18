@@ -213,3 +213,6 @@
     height: 230px;
     overflow-y: auto;
 }
+.disabledclass .card {
+    opacity: 0.5;
+}

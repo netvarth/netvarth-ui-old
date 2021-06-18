@@ -34,7 +34,7 @@
         </h5>
     </div>
 </section>
-<section>
+<!-- <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
             <div class="row">
@@ -43,12 +43,12 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
-                                    (click)="showCustomerAction()">Actions</span> &nbsp;
+                                    (click)="showCustomerAction()">Actions</span> &nbsp; -->
                                 <!-- <span class="customer-action-btn pointer-cursor" 
                                      (click)="gotoMeet()">Initiate Video Call</span><br> -->
 
 
-                                <div>{{customer_label | capitalizeFirst}} ID: <span
+                                <!-- <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
                                 <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
@@ -71,13 +71,13 @@
                                     <app-questionnaire [questionnaireList]="questionnaireList"
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>
-                                </div>
+                                </div> -->
                                 <!-- <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
                                 (click)="goMeetProvider()">Start Chat</div><br>
                                 <div class="cs-btn bt1 btn-orange txt-trans-none" style="float: right;" *ngIf="showRejoinBt"
                                 (click)="goMeetProvider()">Rejoin</div><br>
                                 <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br> -->
-                            </div>
+                            <!-- </div>
 
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
@@ -398,11 +398,6 @@
                                                                 <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
-                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                                (click)="showConsumerNote(visit)">
-                                                                <i class="customernote-icon"></i>
-                                                               Note
-                                                            </button> -->
                                                         </mat-menu>
                                                     </td>
                                                 </ng-container>
@@ -433,9 +428,6 @@
                                                         class="consumer-dash consumer-appthistory"> <i
                                                             class="delivery-icon" [matTooltip]="'Home Delivery'"
                                                             aria-hidden="true"></i> </td>
-                                                    <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
-                                                        
-                                                    </td> -->
                                                     <td> {{visit.orderDate | date: newDateFormat}}
                                                         <div *ngIf="visit.orderNumber">Order#
                                                             {{visit.orderNumber}} </div>
@@ -470,11 +462,6 @@
                                                                 <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
-                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                                (click)="showConsumerNote(visit)">
-                                                                <i class="customernote-icon"></i>
-                                                               Note
-                                                            </button> -->
                                                         </mat-menu>
                                                     </td>
                                                 </ng-container>
@@ -642,9 +629,6 @@
                                                 <td *ngIf="visit.homeDelivery"
                                                     class="consumer-dash consumer-appthistory"> <i class="delivery-icon"
                                                         [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
-                                                <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
-                                                    
-                                                </td> -->
                                                 <td> {{visit.orderDate | date: newDateFormat}}
                                                     <div *ngIf="visit.orderNumber">Order#
                                                         {{visit.orderNumber}} </div>
@@ -679,11 +663,6 @@
                                                             <i class="comm-history-icon"></i>
                                                             Communication history
                                                         </button>
-                                                        <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                            (click)="showConsumerNote(visit)">
-                                                            <i class="customernote-icon"></i>
-                                                           Note
-                                                        </button> -->
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
@@ -704,11 +683,11 @@
         </div>
     </div>
     <div class="clearfix"></div>
-</section>
+</section> -->
 
 
 <section class="content" *ngIf="viewCustomer">
-    <div class="row">
+    <div class="row" *ngIf="!showMoreHistory">
         <div class="col-lg-8">
             <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
@@ -774,15 +753,15 @@
             </app-provider-inbox-list>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="!showMoreHistory">
         <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
             *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">
+                        <h5 class="card-label">
                             More {{customer_label}} info
-                        </h3>
+                        </h5>
                     </div>
                 </div>
                 <div class="questionnaire-section">
@@ -793,24 +772,38 @@
             </div>
         </div>
     </div>
-    <div class="row records-sec">
+    <div class="row records-sec mgn-up-20" *ngIf="!showMoreHistory">
+        <div class="rece-act disp-flex"
+            *ngIf="todayVisitDetailsArray.length > 0 || futureVisitDetailsArray.length > 0 || futureorderVisitDetailsArray.length > 0 || todayorderVisitDetailsArray.length > 0 || historyvisitDetails.length > 0 || (ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0)">
+            <h5 class="no-margin">Recent activity</h5>
+            <span class="customer-action-btn pointer-cursor mgn-lt-auto"
+                *ngIf="historyvisitDetails.length > 0 || ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0"
+                (click)="showHistory()">History</span>
+        </div>
         <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'waitlist'" [timeType]="1"
-            (actionPerformed)="actionPerformed($event)">
+            [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
+            (actionPerformed)="actionPerformed($event)" *ngIf="todayVisitDetailsArray.length > 0">
         </app-records-datagrid>
         <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'waitlist'" [timeType]="2"
-            (actionPerformed)="actionPerformed($event)">
-        </app-records-datagrid>
-        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'waitlist'" [timeType]="3"
-            (actionPerformed)="actionPerformed($event)">
+            [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
+            (actionPerformed)="actionPerformed($event)" *ngIf="futureVisitDetailsArray.length > 0">
         </app-records-datagrid>
         <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'order'"
-            [timeType]="1" (actionPerformed)="actionPerformed($event)">
+            [count]="todayorderVisitDetailsArray.length" [showMore]="showMoreorderToday" [timeType]="1"
+            (actionPerformed)="actionPerformed($event)" *ngIf="todayorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
         <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'order'"
-            [timeType]="2" (actionPerformed)="actionPerformed($event)">
-        </app-records-datagrid>
-        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'" [source]="'order'" [timeType]="3"
-            (actionPerformed)="actionPerformed($event)">
+            [count]="futureorderVisitDetailsArray.length" [showMore]="showMoreorderFuture" [timeType]="2"
+            (actionPerformed)="actionPerformed($event)" *ngIf="futureorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
     </div>
+    <ng-container *ngIf="showMoreHistory">
+        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'waitlist'" [timeType]="3"
+            (actionPerformed)="actionPerformed($event)" *ngIf="historyvisitDetails.length > 0">
+        </app-records-datagrid>
+        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'" [source]="'order'"
+            [timeType]="3" (actionPerformed)="actionPerformed($event)"
+            *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0">
+        </app-records-datagrid>
+    </ng-container>
 </section>

@@ -293,7 +293,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.groupedMsgs);
     console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
-      this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      this.selectedUserMessages = (this.groupedMsgs[this.selectedCustomer]) ? this.groupedMsgs[this.selectedCustomer] : [];
       if (this.small_device_display) {
         this.showChat = true;
       }
@@ -552,7 +552,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
       dataToSend.append('message', blobpost_Data);
       const filter = {};
-      if (this.selectedUserMessages[0].providerId !== 0) {
+      if (this.selectedUserMessages[0] && this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
       }
       this.shared_service.addProvidertoConsumerNote(this.selectedUserMessages[0].accountId,

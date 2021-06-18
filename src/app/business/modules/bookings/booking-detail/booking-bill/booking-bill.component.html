@@ -1,11 +1,14 @@
-<div class="booking-bill-component" *ngIf="(bookingType == 'checkin' && waitlist_data.waitlistStatus != 'cancelled') ||
-            (bookingType == 'appointment' && waitlist_data.apptStatus != 'Cancelled')">
+<div class="booking-bill-component" [class.disabledclass]="checkDisable()">
     <div class="card billing-card">
         <div class="card-header bg-transparent">
             <div>Billing</div>
-            <i (click)="viewBillPage()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+            <i *ngIf="!checkDisable()" (click)="viewBillPage()" class="fa fa-external-link pointer-cursor"
+                aria-hidden="true"></i>
         </div>
-        <div *ngIf="bill_data">
+        <div *ngIf="loading">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+        </div>
+        <div *ngIf="!loading">
             <div class="scroll-sec">
                 <div class="card-body">
                     <div class="outer-table-responsive table-responsive">
@@ -122,10 +125,11 @@
             </div>
             <div class="card-footer bg-transparent">
                 <div class="actions">
-                    <button (click)="viewBillPage()" class="btn view-bill-btn">View Bill</button>
+                    <button (click)="viewBillPage()" class="btn view-bill-btn" [disabled]="checkDisable()">View
+                        Bill</button>
                     <button
                         *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
-                        (click)="paymentlink()" class="btn send-bill-btn">Send Bill</button>
+                        (click)="paymentlink()" class="btn send-bill-btn" [disabled]="checkDisable()">Send Bill</button>
                 </div>
             </div>
         </div>

@@ -7,19 +7,9 @@
             <div class="tableBody">
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <!-- <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Doctors Team</th>
-                                <th scope="col">Date of Operation</th>
-                                <th scope="col">Report</th>
-                                <th scope="col">Diseases</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead> -->
                         <tbody>
-                            <tr class="pointer-cursor" *ngFor="let visit of records" (click)="actionClick(visit, 'details')">
+                            <tr class="pointer-cursor" *ngFor="let visit of records"
+                                (click)="actionClick('details', visit)">
                                 <ng-container *ngIf="visit.waitlist">
                                     <td class="consumer-appthistory">
                                         <i *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
@@ -192,6 +182,10 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="showLinks mgn-bt-10" *ngIf="count > 5">
+                        <a *ngIf="!showMore" (click)="actionClick('more')">Show more</a>
+                        <a *ngIf="showMore" (click)="actionClick('less')">Show less</a>
+                    </div>
                 </div>
             </div>
         </div>

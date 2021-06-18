@@ -12,6 +12,8 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() heading;
   @Input() source;
   @Input() timeType;
+  @Input() count;
+  @Input() showMore;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -30,9 +32,6 @@ export class RecordsDatagridComponent implements OnInit {
   constructor(private dateTimeProcessor: DateTimeProcessor) { }
 
   ngOnInit(): void {
-    console.log(this.records);
-    console.log(this.source);
-    console.log(this.heading);
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -41,7 +40,7 @@ export class RecordsDatagridComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  actionClick(record, type) {
-    this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType });
+  actionClick(type, record?) {
+    this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
   }
 }

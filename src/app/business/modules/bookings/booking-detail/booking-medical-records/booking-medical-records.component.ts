@@ -16,7 +16,7 @@ export class BookingMedicalRecordsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    if ((this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
+    if (this.customerId || (this.waitlist_data && this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data && this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
       this.getPatientMedicalRecords();
     } else {
       this.loading = false;

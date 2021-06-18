@@ -276,16 +276,16 @@ export class CustomerDetailComponent implements OnInit {
     getCustomerTodayVisit() {
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {
-                this.todayVisitDetailsArray = this.todayvisitDetails = data;
-                // this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
+                this.todayVisitDetailsArray = data;
+                this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
             }
         );
     }
     getCustomerFutureVisit() {
         this.provider_services.getCustomerFutureVisit(this.customerId).subscribe(
             (data: any) => {
-                this.futureVisitDetailsArray = this.futurevisitDetails = data;
-                // this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
+                this.futureVisitDetailsArray = data;
+                this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
             }
         );
     }
@@ -303,10 +303,10 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
-                // this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
-                this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
-                // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.todayorderVisitDetailsArray = data.todayOrders;
+                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = data.futureOrders;
+                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -518,14 +518,34 @@ export class CustomerDetailComponent implements OnInit {
     }
     editCustomerDetails() {
         const navigationExtras: NavigationExtras = {
-          queryParams: { action: 'edit', id: this.customer[0].id }
+            queryParams: { action: 'edit', id: this.customer[0].id }
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
-      }
+    }
     actionPerformed(event) {
         console.log(event);
         if (event.type === 'details') {
             this.gotoCustomerDetail(event.record, event.timeType);
+        } else if (event.type === 'more') {
+            if (event.heading === 'Today') {
+                this.showMore('today');
+            } else if (event.heading === 'Future') {
+                this.showMore('future');
+            } else if (event.heading === 'Todays Order') {
+                this.showorderMore('today');
+            } else {
+                this.showorderMore('future');
+            }
+        } else if (event.type === 'less') {
+            if (event.heading === 'Today') {
+                this.showLess('today');
+            } else if (event.heading === 'Future') {
+                this.showLess('future');
+            } else if (event.heading === 'Todays Order') {
+                this.showorderLess('today');
+            } else {
+                this.showorderLess('future');
+            }
         }
     }
 }
