@@ -404,7 +404,7 @@
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="checkin.waitlistStatus == 'started' || checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn'" (click)="changeWaitlistStatus('DONE')">
+    <div class="status-box" *ngIf="checkin.waitlistStatus == 'started' || checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' && data.timetype !== 2" (click)="changeWaitlistStatus('DONE')">
         <div class="status"> Complete</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>

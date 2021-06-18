@@ -62,7 +62,8 @@
                                                         <div class="d-flex flex-column">
                                                             <a
                                                                 class="text-dark-75 text-hover-primary font-weight-bold font-size-lg">
-                                                                {{getUserName('customer', user.value)}}</a>
+                                                                {{getUserName('customer', user.value) |
+                                                                capitalizeFirst}}</a>
                                                             <span class="text-muted font-weight-bold font-size-sm">
                                                                 {{formatDateDisplay(user.value[user.value.length-1].timeStamp)}}</span>
                                                         </div>

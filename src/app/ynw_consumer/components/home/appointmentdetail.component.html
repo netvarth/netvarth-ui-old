@@ -50,8 +50,8 @@
                                                     {{appt.provider.businessName | capitalizeFirst}}
                                                 </span> -->
                                                 <span>{{provider_label | capitalizeFirst}} : </span>
-                  <span>
-                  {{appt.provider.firstName | capitalizeFirst}}&nbsp;{{appt.provider.lastName}}</span>
+                  <span> {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                    ' ' + appt.provider.lastName}}</span> 
                                             </div>
                                             <div class="mgn-up-10">
                                                 <i *ngIf="appt.service.serviceType === 'virtualService'"
