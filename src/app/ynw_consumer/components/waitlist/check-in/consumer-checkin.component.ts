@@ -30,6 +30,7 @@ import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Co
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
+import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 
 @Component({
     selector: 'app-consumer-checkin',
@@ -688,7 +689,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?) {
-        console.log(type);
+       if(type==='checkin' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
+        const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+       
+
+        });
+        emaildialogRef.afterClosed().subscribe(result => {
+            if (result!== '' && result!==undefined) {
+                this.payEmail = result;
+            }
+
+        });
+
+       }else{
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -821,6 +836,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.addWaitlistAdvancePayment(post_Data);
             }
         }
+    }
     }
     confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
