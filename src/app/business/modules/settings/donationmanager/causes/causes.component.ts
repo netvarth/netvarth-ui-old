@@ -13,7 +13,8 @@ import { DateTimeProcessor } from '../../../../../shared/services/datetime-proce
 
 @Component({
     selector: 'app-donation-causelist',
-    templateUrl: './causes.component.html'
+    templateUrl: './causes.component.html',
+    styleUrls: ['causes.component.css']
 })
 export class DonationCauseListComponent implements OnInit, OnDestroy {
     add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;

@@ -12,8 +12,8 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-details',

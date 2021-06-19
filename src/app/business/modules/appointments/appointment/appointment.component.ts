@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-appointment-checkin',
     templateUrl: './appointment.component.html',
-    styleUrls: ['../../../../../assets/css/style.bundle.css']
+    styleUrls: ['../../../../../assets/css/style.bundle.css', './appointment.component.css']
 })
 export class AppointmentComponent implements OnInit {
     appointmentSubscribtion: Subscription;

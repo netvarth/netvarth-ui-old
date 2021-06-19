@@ -2261,3 +2261,9 @@ footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
     border-left: 1px solid #f1b51c;
     padding-left: 10px;
 }
+#customAppPopup h5 {
+  padding:15px !important;
+}
+#customAppPopup button{
+  margin:15px !important;
+}

@@ -738,16 +738,12 @@
 </div>
 <div id="customAppIOSPopup"  class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="text-center">
-                &nbsp;
-                <span class="close" (click)="closeIOSAppModal()">&times;</span>
-            </h5>
-        </div>
         <div class="modal-body">
-            <h5 style="line-height: 20px;">
+            <h5 style="line-height: 20px;" class="text-center">
                 <span>"{{this.businessName}}" App can do so much more.</span>
-                 <p>Install this app on your Iphone/Ipad. Tap <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
+                 <p class="mgn-up-10">Install this app on your Iphone/Ipad. Tap <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
+                 <br/>
+                 <button class="btn" (click)="closeIOSAppModal()">Ok</button>
             </h5>
         </div>
     </div>
@@ -755,16 +751,11 @@
 </div>
 <div id="customAppPopup" #popupforCustomApp class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="text-center">&nbsp;
-                <span class="close" (click)="closeCustomAppModal()">&times;</span>
-            </h5>
-        </div>
         <div class="modal-body" *ngIf="!pwaIOShint">
             <h5 class="text-center">
                 <span>"{{this.businessName}}" App can do so much more.</span><br/>
+                <button class="btn" (click)="closeCustomAppModal()">Close</button>
                 <button id="btnInstallCustomApp" class=" btn btn-primary">Install App</button>
-                <!-- <span class="close" (click)="closeCustomAppModal()">&times;</span> -->
             </h5>
         </div>
     </div>
