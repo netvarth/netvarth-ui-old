@@ -409,7 +409,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && !this.data.teleservice) {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && !this.data.teleservice && this.appt.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService && !this.data.teleservice) {
@@ -424,7 +424,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
             this.showSendDetails = true;
         }
-        if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
+        if (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo !== 'null')) {
             this.showMsg = true;
         }
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {

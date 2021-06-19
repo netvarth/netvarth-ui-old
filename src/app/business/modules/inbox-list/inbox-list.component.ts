@@ -232,7 +232,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       );
   }
   setMessages() {
+    console.log(this.messages);
     this.inboxList = this.generateCustomInbox(this.messages);
+    console.log(this.inboxList);
     if (this.userDet.accountType === 'BRANCH') {
       const group = this.shared_functions.groupBy(this.inboxList, 'providerId');
       Object.keys(group).forEach(key => {
@@ -259,7 +261,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     this.onResize();
     if (this.selectedCustomer !== '') {
+      console.log(this.groupedMsgs);
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      console.log(this.selectedUserMessages);
       if (this.small_device_display) {
         this.showChat = true;
       }
@@ -313,7 +317,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: (senderName) ? senderName : this.customer_label,
+        accountName: (senderName && senderName.trim() !== '') ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,

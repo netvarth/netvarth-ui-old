@@ -590,7 +590,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice) {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
