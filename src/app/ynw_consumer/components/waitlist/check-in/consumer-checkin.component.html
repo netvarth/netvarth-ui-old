@@ -566,7 +566,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa fa-phone" style="font-size: 20px !important; align-self: center; padding-right: 9px;"
                                                                         *ngIf="!(sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')"></i>
-                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">Phone#</div>
+                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">&nbsp; Phone#</div>
                                                                     <!-- <b>{{countryCode}}
                                                                         {{selected_phone}}</b> -->
                                                                     <div class="codenumber">
@@ -1103,11 +1103,9 @@
                                             </div>
                                             <div class="disp-flex">
                                                 <span class="billing-head"
-                                                    >Service</span>
+                                                    style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <!-- <span
-                                                    style="display: flex !important; align-items: center !important;">&nbsp;:&nbsp;</span> -->
-                                                <span class="billing-value">
+                                                <span class="billing-value disp-flex align-items-center">
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                         <i class="fa phon-icon"
@@ -1123,7 +1121,7 @@
                                                         <i class="fa wtsapvid-icon"
                                                             *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                     </span>
-                                                    <span>{{sel_ser_det.name}}</span>
+                                                    <span class="mgn-bt-5">{{sel_ser_det.name}}</span>
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
