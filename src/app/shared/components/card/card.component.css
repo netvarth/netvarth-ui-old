@@ -360,7 +360,6 @@ font-weight: 500;
     display: table-cell;
     vertical-align: middle
 }
-
 .booking-card-user .card-img, .booking-card-user .card-img-top {
     /* border-top-left-radius: calc(0.25rem - 1px) !important;
     border-top-right-radius: calc(0.25rem - 1px) !important; */
@@ -982,3 +981,7 @@ color: red;
 .started_status_clr {
     color: green;
 }
+.d-block {
+    display: block !important;
+  }
+  

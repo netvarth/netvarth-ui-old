@@ -18,10 +18,10 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { AddressComponent } from '../order-wizard/address/address.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({

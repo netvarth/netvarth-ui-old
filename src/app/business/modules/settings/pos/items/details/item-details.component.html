@@ -142,7 +142,7 @@
                                 </div> -->
                         <!--     </div>
                         </div> -->
-                        <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                                 class="ynw-common-form-nm">
@@ -461,7 +461,7 @@
                                     <span>Images</span>
                                     <span class="h-rule"></span>
                                 </div>
-                                <div class="lbr col-sm-12 bg-white p-0">
+                                <div class="lbr col-sm-12 bg-white p-0 no-padding-small">
                                     <div class="col-md-6">
                                         <label class="form-control-label">Display Image</label>
                                         <div class="cr1">
@@ -599,10 +599,10 @@
                                     <!-- <button (click)="onCancel()" type="button"
                                         class="cs-btn bt2">{{cancel_btn_cap}}</button> -->
                                     <button type="button" *ngIf="action=='add'"
-                                        (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1" mat-button
+                                        (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1 order-save-btn" mat-button
                                         [disabled]="!amForm.valid || disableButton">save & add another</button>
                                     &nbsp;
-                                    <button type="submit" class="cs-btn bt1" mat-button
+                                    <button type="submit" class="cs-btn bt1 order-save-btn" mat-button
                                         [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
 
                                 </div>

@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProvidersignupComponent } from './providersignup.component';
 import { providersignupRoutingModule } from './providersignup.routing.module';
 import { HeaderModule } from '../../header/header.module';
-// import { MaterialModule } from '../../common/material.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
 import { SalesChannelModule } from '../../saleschannel/saleschannel.module';
 import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.module';
@@ -17,7 +16,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
        CommonModule,
        FormsModule,
        HeaderModule,
-    //    MaterialModule,
        providersignupRoutingModule,
        ReactiveFormsModule,
        FormMessageDisplayModule,

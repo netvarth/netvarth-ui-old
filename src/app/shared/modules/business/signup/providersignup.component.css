@@ -80,7 +80,9 @@ body {
   color: #222;
   background: #f8f8f8;
   font-weight: 400;
-  font-family: Poppins; }
+  font-family: Poppins; 
+  overflow-x: auto i !important;
+}
 
 .container1  {
   width: 1400px;
@@ -149,12 +151,12 @@ body {
   -o-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%); }
 
-.signup {
+/* .signup {
   margin-bottom: 150px;
 margin-top: 70px; }
 
 .signup-content {
-  padding: 25px 0; }
+  padding: 25px 0; } */
 
 .signup-form, .signup-image, .signin-form, .signin-image {
   width: 75%;
@@ -1582,4 +1584,8 @@ input[type=checkbox]:not(old):checked + label > span:before {
 
 ::ng-deep .providersignup-component .register-form .password-form .sts-msg.error {
   font-weight: 700 !important;
+}
+
+ul.sale-rep h6 {
+  margin-top: 5px !important;
 }

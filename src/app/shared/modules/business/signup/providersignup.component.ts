@@ -225,23 +225,6 @@ export class ProvidersignupComponent implements OnInit {
       );
   }
 
-  // getDomainIndex(domainname) {
-  //   for (let i = 0; i < this.business_domains.length; i++) {
-  //     if (domainname === this.business_domains[i].domain) {
-  //       return i;
-  //     }
-  //   }
-  //   return 0;
-  // }
-  // getSubDomainIndex(domainid, subdomname) {
-  //   for (let j = 0; j < this.business_domains[domainid].subDomains.length; j++) {
-  //     if (subdomname === this.business_domains[domainid].subDomains[j].subDomain) {
-  //       return j;
-  //     }
-  //   }
-  //   return 0;
-  // }
-
   createForm() {
     this.signupForm = this.fb.group({
       phonenumber: ['', Validators.compose(
@@ -359,17 +342,6 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-
-
-
-  // onReferalSubmit(sccode) {
-  //   this.scfound = false;
-  //   this.scCode = null;
-  //   if (sccode) {
-  //     this.scCode = sccode;
-  //     this.scfound = true;
-  //   }
-  // }
   submitHearus() {
     if (this.hearus === 'SalesReps') {
       if (this.scCode_Ph) {
@@ -446,7 +418,6 @@ export class ProvidersignupComponent implements OnInit {
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
         () => {
-          // this.active_step = 4;
           this.actionstarted = false;
           this.providerPwd = post_data.password;
           const login_data = {
@@ -496,7 +467,6 @@ export class ProvidersignupComponent implements OnInit {
       this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
     } else {
       this.actionstarted = true;
-      // this.joinClicked = true;
       this.resetApiErrors();
       return new Promise<void>((resolve, reject) => {
         this.shared_services.OtpSignUpProviderValidate(this.otp)
@@ -509,7 +479,6 @@ export class ProvidersignupComponent implements OnInit {
             },
             error => {
               this.actionstarted = false;
-              // this.joinClicked = false;
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
@@ -524,7 +493,6 @@ export class ProvidersignupComponent implements OnInit {
     // if (this.otp) {
     this.keyPressed();
     if (this.isValidConfirm_pw) {
-      // this.onOtpSubmit().then(data => {
       this.saveReferralInfo().then(
         () => {
           this.setPassword();
@@ -534,34 +502,19 @@ export class ProvidersignupComponent implements OnInit {
           this.api_loading = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-      // },
-      //   (error) => {
-      //     this.joinClicked = false;
-      //     this.api_loading = false;
-      //   });
     } else {
       this.joinClicked = false;
       this.api_loading = false;
     }
-    // } else {
-    //   this.joinClicked = false;
-    //   this.api_loading = false;
-    //   this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
-    // }
   }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
   resendOtp(user_details) {
-    // if (user_details.isAdmin) {
     this.signUpApiProvider(user_details, 'resend');
-    // } else {
-    //   this.signUpApiConsumer(user_details);
-    // }
   }
   clickedPackage(item) {
-    // this.selectedpackage = e;
     this.license_description = this.license_packages[item.value];
   }
   isSelectedClass(id) {
@@ -594,9 +547,6 @@ export class ProvidersignupComponent implements OnInit {
       return word;
     }
   }
-  // closePwdScreen() {
-  //   this.dialogRef.close();
-  // }
   continuetoPwd() {
     this.step = 4;
   }
@@ -612,26 +562,11 @@ export class ProvidersignupComponent implements OnInit {
       this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
-  // goBusinessClicked() {
-  //   this.dialogRef.close();
-  //   this.router.navigate(['/business']);
-  // }
-  // corporate_branch(){
-  //   this.CorporateBranch = 'co_branch';
-  // }
-  // corporate(){
-  //   this.action = true;
-  // }
-  // bank(){
-  //   this.bank_action = true;
-  // }
   showStep(changetostep) {
     this.loading_active = true;
     this.resetApiErrors();
     if (changetostep === 2) {
     }
-    // const curstep = this.active_step; // taking the current step number to a local variable
-    // this.save_setDetails(curstep, changetostep);
     if (changetostep === 1) {
       setTimeout(() => {
         if (this.document.getElementById('bnameId')) {
@@ -639,8 +574,6 @@ export class ProvidersignupComponent implements OnInit {
         }
       }, 1000);
     } else if (changetostep === 4) {
-      // this.createForm();
-      // this.setValue(this.service);
     } else if (changetostep === 2) {
       setTimeout(() => {
         if (this.document.getElementById('blatId')) {
@@ -674,7 +607,7 @@ export class ProvidersignupComponent implements OnInit {
         } else {
           let userProfile = {
             countryCode: this.selectedCountryCode,
-            primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+            primaryMobileNo: null,
             firstName: null,
             lastName: null
           };
@@ -689,41 +622,16 @@ export class ProvidersignupComponent implements OnInit {
             userProfile = {
               countryCode: this.selectedCountryCode,
               primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-              // firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
-              // lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
               firstName: this.toCamelCase(fname) || null,
               lastName: this.toCamelCase(lname) || null,
-              // licensePackage: this.signupForm.get('package_id').value || null,
             };
           }
-          // const fname = userProfile.firstName.trim();
-          // const lname = userProfile.lastName.trim();
-          // if (fname === '') {
-          //   this.snackbarService.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
-          //   if (document.getElementById('first_name')) {
-          //     document.getElementById('first_name').focus();
-          //   }
-          //   return;
-          // }
-          // if (lname === '') {
-          //   this.snackbarService.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
-          //   if (document.getElementById('last_name')) {
-          //     document.getElementById('last_name').focus();
-          //   }
-          //   return;
-          // }
           this.user_details['userProfile'] = userProfile;
           this.active_step = 1;
         }
       }
     );
   }
-  // showsubdomainstep() {
-  //   this.active_step = 2;
-  // }
-  // showotpsection() {
-  //   this.active_step = 4;
-  // }
   subdomSelection(subdomain, domain, i) {
     this.selectedSubDomain = subdomain;
     this.selectedDomain = domain;
@@ -760,7 +668,6 @@ export class ProvidersignupComponent implements OnInit {
     if (this.user_details.userProfile !== undefined) {
       this.user_details.userProfile.email = null;
     }
-    // delete this.submitdata.userProfile.email;
     this.resendOtp(this.user_details);
   }
   resetCounter(val) {
@@ -771,7 +678,6 @@ export class ProvidersignupComponent implements OnInit {
     this.doshowOTPEmailContainer();
     this.resetApiErrors();
     if (this.user_details.userProfile && this.user_details.userProfile.email) {
-      // this.email_form.get('otp_email').setValue(this.user_details.userProfile.email);
     }
     this.email_otp_req = true;
     this.showOTPEmailContainer = true;
@@ -803,17 +709,6 @@ export class ProvidersignupComponent implements OnInit {
   showDomains() {
     this.active_step = 1;
   }
-  // subDomainSelected() {
-  //   if (this.selectedDomain && this.selectedSubDomain) {
-  //     this.user_details['sector'] = this.selectedDomain.domain;
-  //     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
-  //     this.user_details['licPkgId'] = 9;
-  //     this.active_step = 2;
-  //   } else {
-  //     this.snackbarService.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
-  //     return;
-  //   }
-  // }
   handleDomainSelection() {
     if (this.claimDetails.subSector) {
       const subdomains = this.selectedDomain.subDomains.filter(subdom => subdom.subDomain === this.claimDetails.subSector.toString());
@@ -847,7 +742,6 @@ export class ProvidersignupComponent implements OnInit {
     this.active_step = 2;
   }
   gotoTerms() {
-    // window.open('business/terms', '_blank');
     this.dialog.open(TermsStaticComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

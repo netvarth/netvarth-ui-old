@@ -30,7 +30,26 @@
                                             appointment</div>
                                         <div class="mgn-up-10" *ngIf="source === 'appt-block'"> Find an existing
                                             {{customer_label}}</div>
-                                        <div class="disp-flex">
+                                            
+                                        <div class="form-group mgn-up-20">
+                                            <div class="input-group mob-container">
+                                                <input autocomplete="off"
+                                                placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
+                                                type="text" class="form-control" formControlName="search_input"
+                                                (keypress)="findCustomer(searchForm.value, $event)">
+                                            <div class="input-group-append"><button class="create_new_button cs-btn bt3"
+                                                (click)="searchCustomer(searchForm.value)">Find</button></div>
+                                            </div>
+                                            <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                                <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
+                                                    {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
+                                                <app-field-error-display style="color: #f24949 !important;"
+                                                    [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take appointment">
+                                                </app-field-error-display>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="disp-flex">
                                             <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                                 <mat-form-field>
                                                     <input matInput autocomplete="off"
@@ -45,26 +64,15 @@
                                                 Please create {{customer_label}} to take appointment">
                                                 </app-field-error-display>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                                                <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)"></i> -->
+                                            <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">>
                                                 <button class="create_new_button cs-btn bt3"
                                                     (click)="searchCustomer(searchForm.value)">Find</button>
-                                                <!-- <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
-                                                    (click)="confirmApptBlock()">Confirm</button> -->
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </form>
-                            <!-- <div class="col-md-12 no-padding" *ngIf="create_new">
-                                <hr class="wide-separator-line" />
-                            </div> -->
                             <div class="clearfix"></div>
-                            <!-- <div class="mgn-bt-20 col-md-12 no-padding-small">
-                                Don't have a mobile number? <a class="more_less" (click)="createNew('new')"> Click
-                                    here.</a>
-                            </div> -->
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
                                 <table
                                     class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">

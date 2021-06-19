@@ -24,16 +24,16 @@
         {{service_data.description | capitalizeFirst}}
       </div>
       <div class="c-ot">
-          <div class="item" *ngIf="!is_donation && showResources">
-              <span class="ttle">Number of resources</span>
-              <span > {{service_data.resoucesRequired}}
-              </span>
-            </div>
-            <div class="item" *ngIf="!is_donation && showResources">
-                <span class="ttle">Maximum bookings</span>
-                <span > {{service_data.maxBookingsAllowed}}
-                </span>
-              </div>
+        <div class="item" *ngIf="!is_donation && showResources">
+          <span class="ttle">Number of resources</span>
+          <span> {{service_data.resoucesRequired}}
+          </span>
+        </div>
+        <div class="item" *ngIf="!is_donation && showResources">
+          <span class="ttle">Maximum bookings</span>
+          <span> {{service_data.maxBookingsAllowed}}
+          </span>
+        </div>
         <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
           <span class="ttle">Department Name</span>
           <span>{{departmentName}}</span>
@@ -98,30 +98,6 @@
           <span>{{service_data.multiples}}</span>
         </div>
       </div>
-      <!-- <div class="c-ot" *ngIf="is_donation">
- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType === 'donationService' && service_data.notification === true" style="width: 70%;">
- <span class="ttle"
- >{{end_cause_notify_cap}}</span> -->
-      <!-- <span class="noti-it"
- *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-      <!-- <span class="noti-it"
- >{{end_of_service_notify[service_data.notificationType]}}</span>
- </div>
- </div> -->
-      <!-- <div class="c-ot" *ngIf="!is_donation"> -->
-      <!-- <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
- <span>{{tax_applicable_cap}}:
- <span class="noti-it" [class.yes]="service_data.taxable==true"
- [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
- 'Yes' : 'No'}}</span></span>
- </div> -->
-      <!-- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
- <span class="ttle">{{end_service_notify_cap}}</span> -->
-      <!-- <span class="noti-it"
- *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-      <!-- <span class="noti-it"
- >{{end_of_service_notify[service_data.notificationType]}}</span>
- </div> -->
       <div class="item" *ngIf="service.serviceType !== 'virtualService' && is_lvtrack_enable && service_data.livetrack">
         <span class="ttle">Live tracking </span>
         <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
@@ -131,11 +107,10 @@
         <div class="item width-100">
           <span>{{service_data.questionnaireIds.length}} questionnaire added </span>
           <a *ngFor="let id of service_data.questionnaireIds;let i=index" (click)="gotoQnr(id)">{{getQnrName(id)}}
-            <ng-container *ngIf="i < (service_data.questionnaireIds.length - 1)">, </ng-container></a>
+            <ng-container *ngIf="i < (service_data.questionnaireIds.length - 1)">, </ng-container>
+          </a>
         </div>
       </div>
-
-      <!-- </div> -->
       <div class="btm-ctrl">
         <div class="ctrl enable-disable">
           <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
@@ -183,7 +158,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
             maxlength="500"> </textarea>
         </mat-form-field>
-
         <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'description')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'description',
  {
  'required' : is_donation ? 'Please enter the cause description' : 'Please enter the service description',
@@ -192,10 +166,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
-
-     
-
-
       <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
         <mat-form-field>
           <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department"
@@ -251,7 +221,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
               <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon"></i>
               <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
-              <i *ngIf="mode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
+              <i *ngIf="mode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                aria-hidden="true"></i>
               <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
               <span class="dash">{{mode}}</span>
             </mat-option>
@@ -265,15 +236,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
         </mat-form-field>
       </div>
-      <!-- <div class="form-group"
- *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
- <mat-form-field class="example-full-width">
- <textarea matInput class="form-control" id="tooldescription"
- placeholder="Enter instructions to your {{customer_label}}" (keyup)="setCharCount($event)"
- (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
- [ngModelOptions]="{standalone: true}"> </textarea>
- </mat-form-field>
- </div> -->
       <div class="form-group"
         *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
         <mat-checkbox [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}">
@@ -290,65 +252,28 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
         <ng-container class="example-full-width">
           <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
-          <!-- <mat-form-field> -->
-          <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
- maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
- placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
           <ngb-timepicker [(ngModel)]="duration" formControlName="serviceDuration" (ngModelChange)="resetApiErrors()">
           </ngb-timepicker>
-          <!-- </mat-form-field> -->
-          <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
- [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
- {'required' : 'Please enter estimated duration.',
- 'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
- 'maxlength' : 'Only 10 digits are allowed'
- })"> </app-field-error-display> -->
         </ng-container>
       </div>
-<div class="col-md-6" *ngIf="showResources">
-      <div class="form-group" *ngIf="!is_donation">
-        <mat-form-field>
-          <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
-            placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
-        </mat-form-field>
+      <div class="col-md-6" *ngIf="showResources">
+        <div class="form-group" *ngIf="!is_donation">
+          <mat-form-field>
+            <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
+              placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+          </mat-form-field>
 
-      </div>
+        </div>
       </div>
       <div class="col-md-6" *ngIf="showResources">
-      <div class="form-group" *ngIf="!is_donation">
-        <mat-form-field>
-          <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
-            placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
-        </mat-form-field>
+        <div class="form-group" *ngIf="!is_donation">
+          <mat-form-field>
+            <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
+              placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+          </mat-form-field>
 
+        </div>
       </div>
-      </div>
-      <!-- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
- <div>
- <label style="margin-bottom: 0 !important;">{{enable_prepayment_cap}}
- <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
- (change)="changePrepayment()">
- </mat-slide-toggle>
- <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div>
- </label>
- </div>
- <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
- <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
- <mat-form-field>
- <input matInput min="0" max={{maxlimit}} type="text"
- (keyup)="isvalid($event, 'minPrePaymentAmount')" (keypress)="isNumeric($event)"
- maxlength="10" class="form-control number-ip-sm" id="prepayment_amount"
- placeholder="{{prepayment_cap}} ({{rupee_symbol}}) *"
- formControlName="minPrePaymentAmount" autocomplete="off">
- </mat-form-field>
- <app-field-error-display
- [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
- {'required' : 'Please enter prepayment amount',
- 'pattern' : 'Enter a valid amount'})">
- </app-field-error-display>
- </div>
- </ng-container>
- </div> -->
       <div class="form-group glbl-preview"
         *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
         <div>
@@ -390,32 +315,14 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  'maxlength' : 'Only 4 digits are allowed'})">
         </app-field-error-display>
       </div>
-      <!-- <div class="form-group" *ngIf="is_donation">
- <div class="form-group inline">
- <label class="col-form-label">{{end_cause_notify_cap}}</label>
- <mat-slide-toggle class="example-margin" formControlName="notification"
- (change)="changeNotification()">
- </mat-slide-toggle>
- </div>
- <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
- formControlName="notificationType">
- <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
- <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
- </mat-radio-group>
- </div> -->
-      <!-- <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
- <label class="col-form-label">Enable Live Track</label>
- <mat-slide-toggle class="example-margin" formControlName="livetrack">
- </mat-slide-toggle>
- </div> -->
- <div class="mgn-bt-20">
-    <label class="no-padding " 
-      style="font-size: 1.1rem;">
-      {{customer_label | capitalizeFirst}} Info</label>
-    <div class="settings_info" *ngIf="!is_donation">
-        Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+      <div class="mgn-bt-20">
+        <label class="no-padding " style="font-size: 1.1rem;">
+          {{customer_label | capitalizeFirst}} Info</label>
+        <div class="settings_info" *ngIf="!is_donation">
+          Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can
+          set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+        </div>
       </div>
-  </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
           style="font-size: 1.1rem;">
@@ -471,23 +378,20 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-slide-toggle>
           </div>
         </section>
-        <!-- </mat-expansion-panel>
-</mat-accordion> -->
       </div>
-      
       <div class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">
           Customization</a>
-        <!-- <div class="settings_info" *ngIf="!is_donation">
- Live tracking and more</div> -->
       </div>
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings">
         <div class="form-group box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="disp-flex">
-            <label *ngIf="!is_donation" class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
+            <label *ngIf="!is_donation" class="col-form-label">Custom field to collect additional information from your
+              {{customer_label}}s
               while booking online &nbsp;&nbsp;
             </label>
-            <label *ngIf="is_donation" class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
+            <label *ngIf="is_donation" class="col-form-label">Custom field to collect additional information from your
+              {{customer_label}}s
               while donation &nbsp;&nbsp;
             </label>
             <mat-slide-toggle class="example-margin" formControlName="consumerNoteMandatory"
@@ -498,9 +402,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             If enabled, {{customer_label}}s will have to click this button and add certain information before confirming
             their service
             booking</div>
-            <div class="settings_info" *ngIf="is_donation">
-              If enabled, {{customer_label}}s will have to click this button and add certain information before confirming
-              their donation</div>
+          <div class="settings_info" *ngIf="is_donation">
+            If enabled, {{customer_label}}s will have to click this button and add certain information before confirming
+            their donation</div>
           <div class="mgn-up-15" *ngIf="showConsumerNote">
             Button Name:
             <span *ngIf="!showEditSection">{{consumerNote}}&nbsp;
@@ -553,48 +457,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <div class="settings_info">
             Enable live track feature to know the arrival time of your {{customer_label}}</div>
         </div>
-        <!-- <section class="mgn-bt-30">
- <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
- <div class="settings_info">
- {{frm_service_price}}</div>
- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
- <mat-form-field>
- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
- id="price" maxlength="10" (keypress)="isNumeric($event)"
- (keyup)="isvalid($event, 'totalAmount')"
- placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
- autocomplete="off">
- </mat-form-field>
- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')"
- [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
- {'required' : 'Please enter price',
- 'pattern' : 'Enter a valid price',
- 'maxlength' : 'Only 10 digits are allowed'})">
- </app-field-error-display>
- </div>
- <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
- <label class="col-form-label">{{tax_applicable_cap}}</label>
- <mat-slide-toggle class="example-margin" formControlName="taxable"
- (change)="taxapplicableChange()">
- </mat-slide-toggle>
- </div>
- </section> -->
-        <!-- <div class="form-group inline" *ngIf="!is_donation">
- <label class="col-form-label">{{end_service_notify_cap}}</label>
- <mat-slide-toggle class="example-margin" formControlName="notification"
- (change)="changeNotification()">
- </mat-slide-toggle>
- </div> -->
-        <!-- <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
- formControlName="notificationType">
- <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
- <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
- </mat-radio-group> -->
-
-        <!-- </mat-expansion-panel>
-</mat-accordion> -->
       </div>
-     
       <div class="actiondiv" style="margin-top: 20px;">
         <div style="margin-bottom:30px;display: inline-flex;">
           <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
@@ -625,15 +488,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">
     <div class="mgn-bt-20 mgn-up-20">
       <div class="form-group preinfo">
-        <label class="col-form-label" *ngIf="!is_donation">Show personalized information about this service in the booking
+        <label class="col-form-label" *ngIf="!is_donation">Show personalized information about this service in the
+          booking
           window&nbsp;&nbsp;</label>
-          <label class="col-form-label" *ngIf="is_donation">Show personalized information about this donation cause.&nbsp;&nbsp;</label>
+        <label class="col-form-label" *ngIf="is_donation">Show personalized information about this donation
+          cause.&nbsp;&nbsp;</label>
         <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
         </mat-slide-toggle>
       </div>
-      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s while choosing the
+      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s
+        while choosing the
         service.</div>
-        <div class="form-level-settings" *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s while making a donation.</div>
+      <div class="form-level-settings" *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s
+        while making a donation.</div>
       <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
         <mat-form-field>
           <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="preInfoTitle"
@@ -641,9 +508,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
         <div class="infotext mgn-bt-20 mgn-up-20">
-          <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
-            [ngModelOptions]="{standalone: true}">
-          </ckeditor> -->
           <textarea [(ngModel)]="preInfoText" rows="10" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>
@@ -651,15 +515,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     <div class="clearfix"></div>
     <div class="mgn-bt-20 mgn-up-20">
       <div class="form-group postinfo">
-        <label class="col-form-label" *ngIf="!is_donation">Show personalized messages to your {{customer_label}}s upon successful booking
+        <label class="col-form-label" *ngIf="!is_donation">Show personalized messages to your {{customer_label}}s upon
+          successful booking
           confirmation.&nbsp;&nbsp;</label>
-          <label class="col-form-label" *ngIf="is_donation">Show personalized message to your {{customer_label}}s after the donation.&nbsp;&nbsp;</label>
+        <label class="col-form-label" *ngIf="is_donation">Show personalized message to your {{customer_label}}s after
+          the donation.&nbsp;&nbsp;</label>
         <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
         </mat-slide-toggle>
       </div>
-      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s after confirmation of
+      <div class="form-level-settings" *ngIf="!is_donation">These instructions will be seen by your {{customer_label}}s
+        after confirmation of
         the service.</div>
-        <div class="form-level-settings"  *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s after the donation is successfully made.</div>
+      <div class="form-level-settings" *ngIf="is_donation">These instructions will be seen by your {{customer_label}}s
+        after the donation is successfully made.</div>
       <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
         <mat-form-field>
           <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="postInfoTitle"
@@ -667,9 +535,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
         <div class="infotext mgn-bt-20 mgn-up-20">
-          <!-- <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
-            [ngModelOptions]="{standalone: true}">
-          </ckeditor> -->
           <textarea [(ngModel)]="postInfoText" rows="10" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
       </div>

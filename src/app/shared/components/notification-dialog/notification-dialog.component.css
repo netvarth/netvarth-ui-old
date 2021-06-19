@@ -13,3 +13,6 @@ button.dialog-btn {
 button .fa-window-close {
     color: #000 !important;
 }
+.mat-dialog-actions.paddingtop button{
+    padding:10px 25px 10px 25px !important;
+}
