@@ -284,10 +284,10 @@ export class UserServiceChnageComponent implements OnInit {
   setServiceDataSource(result) {
     const service_list: any = [];
     result.forEach(serviceObj => {
-      let userName = '';
+      let businessName = '';
       let languages;
       let specialization;
-      userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
+      businessName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
         languages = JSON.parse(serviceObj.preferredLanguages);
         for (var i = 0; i < languages.length; i++) {
@@ -309,7 +309,8 @@ export class UserServiceChnageComponent implements OnInit {
       service_list.push(
         {
           'id': serviceObj.id,
-          'Username': userName,
+          'businessName': businessName,
+          'gender': serviceObj.gender,
           'userType': serviceObj.userType,
           'status': serviceObj.status,
           'mobileNo': serviceObj.mobileNo,
@@ -327,7 +328,7 @@ export class UserServiceChnageComponent implements OnInit {
           'firstName': serviceObj.firstName,
           'lastName': serviceObj.lastName,
           'email': serviceObj.email || ''
-
+ 
           // serviceObj.firstName + ' ' + serviceObj.lastName;
 
 
@@ -338,9 +339,9 @@ export class UserServiceChnageComponent implements OnInit {
   updateUser() {
     let msg = '';
     if (this.selectedUser.isAvailable) {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     } else {
-      msg = this.selectedUser.Username + ' seems to be unavailable now. Assign anyway ? ';
+      msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -371,7 +372,6 @@ export class UserServiceChnageComponent implements OnInit {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               }
             );
-
         }
         else {
           const post_data = {
@@ -423,7 +423,13 @@ export class UserServiceChnageComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else {
+    } else if(user.gender === 'female'){
+      return './assets/images/unnamed.png';
+    }
+    else if(user.gender === 'male'){
+      return './assets/images/avatar5.png';
+    }
+    else{
       return './assets/images/avatar5.png';
     }
   }
@@ -608,7 +614,6 @@ export class UserServiceChnageComponent implements OnInit {
     this.doSearch();
   }
   viewContactDetails(user) {
-    console.log(user);
     this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

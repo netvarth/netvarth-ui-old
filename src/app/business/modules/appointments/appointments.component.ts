@@ -2794,6 +2794,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     age = age.split(',');
     return age[0];
   }
+  cardClicked(event) {
+    console.log(event);
+    if (event.type === 'note') {
+      this.showConsumerNote(event.waitlist);
+    } else if (event.type === 'attachment') {
+      this.openAttachmentGallery(event.waitlist);
+    } else if (event.type === 'actions') {
+      this.showCheckinActions(event.statusAction, event.waitlist);
+    }
+  }
   // setWaitlistStatusFilterForHistory() {
   //   for (const apptStatus of this.check_in_statuses_filter) {
   //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
