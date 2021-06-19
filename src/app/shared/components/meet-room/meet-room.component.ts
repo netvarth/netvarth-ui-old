@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../services/twilio-service";
 import { interval as observableInterval } from 'rxjs';
 import { MeetService } from "../../services/meet-service";
@@ -9,6 +9,8 @@ import { SnackbarService } from "../../services/snackbar.service";
 import { SubSink } from "subsink";
 import { MatDialog } from "@angular/material/dialog";
 import { AddInboxMessagesComponent } from "../add-inbox-messages/add-inbox-messages.component";
+import { Location } from "@angular/common";
+import { WordProcessor } from "../../services/word-processor.service";
 
 @Component({
     selector: 'app-meet-room',
@@ -40,6 +42,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     showEndBt: boolean;
     btndisabled = true;
     showStartBt: boolean;
+    customer_label;
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
     @ViewChild('remoteVideo') remoteVideo: ElementRef;
@@ -58,6 +61,8 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         private cd: ChangeDetectorRef,
         private dialog: MatDialog,
         private activated_route: ActivatedRoute,
+        private location: Location,
+        public wordProcessor: WordProcessor,
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
@@ -129,6 +134,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
      * Init method
      */
     ngOnInit(): void {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         const isMobile = {
@@ -180,7 +186,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                         _this.consumerReady = false;
                         _this.meetObj = null;
                         // _this.status = 'Waiting for the consumer...'
-                        _this.status = 'Waiting for Consumer';
+                        _this.status = 'Waiting for ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1);
                     }
                 }, error => {
                     _this.loading = false;
@@ -211,7 +217,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                     _this.consumerReady = false;
                     _this.meetObj = null;
                     // _this.status = 'Waiting for the consumer...'
-                    _this.status = 'Waiting for Consumer';
+                    _this.status = 'Waiting for ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1);
                 }
             }, error => {
                 _this.loading = false;
@@ -259,14 +265,13 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         //     type = 'checkin'
         // }
         if(this.checkId === true){
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    // type: 'video',
-                    id: this.Id
-                }
-            };
-            // this.location.back();
-            this.router.navigate(['provider', 'customers'], navigationExtras);
+            // const navigationExtras: NavigationExtras = {
+            //     queryParams: {
+            //         id: this.Id
+            //     }
+            // };
+            this.location.back();
+            // this.router.navigate(['provider', 'customers'], navigationExtras);
         }
        else{
         this.router.navigate(['/']);

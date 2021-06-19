@@ -23,7 +23,10 @@
   </div>
   <div class="col-md-8 mobile_disply p0">
     <div class="itemVal mgn-up-5" style="text-align: left;">
-      <h5>{{users_list.firstName | capitalizeFirst}} {{users_list.lastName | capitalizeFirst}}</h5>
+      <h5>{{(users_list.businessName) ? users_list.businessName
+        : users_list.firstName + ' ' +
+        users_list.lastName}}
+      </h5>
     </div>
     <div class="itemVal" style="text-align: left;" *ngIf="users_list.city && users_list.state"><i
         class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>{{users_list.city}},&nbsp;{{users_list.state}}
@@ -31,7 +34,6 @@
     <div class="itemVal" style="text-align: left;" *ngIf="users_list.email">{{users_list.email}}
   </div>
     <mat-grid-list cols="{{no_of_grids}}" rowHeight="100px" [gutterSize]="'30px'">
-    
       <mat-grid-tile *ngIf="users_list.mobileNo">
         <div class="disp-flex">
           <div class="flx_8">

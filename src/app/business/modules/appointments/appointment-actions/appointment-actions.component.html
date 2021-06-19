@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && changeService && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  changeService && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
             (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -222,8 +222,18 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-
-
+        <div class="action-box pointer-cursor"  (click)="gotoMeet()">
+            <div class="action-box-sub">
+                <span class="jvideo-icon"></span>
+                <div class="icon-text">Secure Video Call</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()">
+            <div class="action-box-sub">
+                <span class="phon-icon"></span>
+                <div class="icon-text">Secure Voice Call</div>
+            </div>
+        </div>
 
         <!--Added By Mani for Video Play-->
         <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
@@ -374,7 +384,7 @@
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' " (click)="changeWaitlistStatus('Completed')">
+    <div class="status-box" *ngIf="appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && data.timetype !== 2" (click)="changeWaitlistStatus('Completed')">
             <div class="status"> Complete</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
