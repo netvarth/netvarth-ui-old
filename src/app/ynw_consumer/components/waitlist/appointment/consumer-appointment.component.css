@@ -930,6 +930,9 @@ ul.bus-actions li a.lnk {
   /* margin-top: 3px !important; */
   margin-right: 5px !important;
 }
+.zoom1{
+  height: 35px;
+}
 .service-icon .fa-phone{
   color: #7a7a7a !important
 }
