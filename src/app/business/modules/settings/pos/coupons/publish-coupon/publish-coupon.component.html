@@ -24,7 +24,7 @@
                     <div class="card card-custom">
                         <div class="card-body p-0">
                             <div class="copy locd">
-                                <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                <div class="lbl col-sm-12 col-md-8 col-lg-8 no-padding-small">
                                     <div class="cl1">
                                         <div class="ot-it jcoupondetail" *ngIf="coupon">
                                             <h4>{{coupon.name | capitalizeFirst}}</h4>
@@ -67,12 +67,12 @@
                                                 </div>
                                             </div>
                                             <div class="c-ot">
-                                                <div class="item">
+                                                <div class="item days">
                                                     <span class="ttle">Applicable Days</span>
-                                                    <span *ngFor="let wday of weekdays; index as i">
-                                                        <mat-checkbox  *ngIf="i>0"  [disabled]="true"
-                                                          [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
-                                                        </mat-checkbox>&nbsp;&nbsp;
+                                                    <span class="mgn-rt-5" *ngFor="let wday of weekdays | keyvalue:keepOriginalOrder">
+                                                        <mat-checkbox  [disabled]="true"
+                                                          [checked]="check_existsinweek_array(selday_arr,wday.value) >= 0">{{wday.key}}
+                                                        </mat-checkbox>
                                                     </span>
                                                 </div>
                                                 
@@ -205,7 +205,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4 no-padding-small">
                                     <div class="cr1" *ngIf="pCouponStat">
                                       <h5>Coupon Stats</h5>
                                       <div class="chart">

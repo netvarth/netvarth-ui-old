@@ -26,6 +26,15 @@ export const projectConstantsLocal = {
     'friday',
     'saturday'
   ],
+  weekdaysShort: {
+    'Sun': 1,
+    'Mon': 2,
+    'Tue': 3,
+    'Wed': 4,
+    'Thu': 5,
+    'Fri': 6,
+    'Sat': 7
+  },
   myweekdaysSchedule: [
     '',
     'Sun',
@@ -294,9 +303,9 @@ export const projectConstantsLocal = {
   VALIDATOR_BLANK_FALSE: /^((?!\s{2,}).)*$/,
   VALIDATOR_BLANK: /^\s*$/,
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
-  VALIDATOR_NUMBERONLY: /^\d+$/, 
-  VALIDATOR_ONLYNUMBER:/^[0-9]+$/, 
-  VALIDATOR_COUNTRYCODE:/^[+]?[0-9]+$/, 
+  VALIDATOR_NUMBERONLY: /^\d+$/,
+  VALIDATOR_ONLYNUMBER: /^[0-9]+$/,
+  VALIDATOR_COUNTRYCODE: /^[+]?[0-9]+$/,
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
   VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
@@ -442,22 +451,22 @@ export const projectConstantsLocal = {
     ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
     ONLINE_CHECKIN_REQUIRED: 'Online booking required',
     CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons',
-    CONSUMER_CAN_NOT_APPLY_COUPON:'Coupon cannot be applied.',
-    PROVIDER_COUPON_NOT_APPLICABLE_SERVICE:'Provider coupon not applicable for this service',
-    PROVIDER_COUPON_NOT_APPLICABLE_USER:'Provider coupon not applicable for this user',
-    PROVIDER_COUPON_NOT_APPLICABLE_GROUP:'Provider coupon not applicable for this group',
-    PROVIDER_COUPON_NOT_APPLICABLE_ITEM:'Provider coupon not applicable for this item',
-    PROVIDER_COUPON_NOT_APPLICABLE_CATALOG:'Provider coupon not applicable for this catalog',
-    PROVIDER_COUPON_NOT_APPLICABLE_LABEL:'Provider coupon not applicable for this label',
-    PROVIDER_COUPON_NOT_APPLICABLE_BOOKING_MODE:'Provider coupon not applicable for this booking mode',
-    PROVIDER_COUPON_NOT_APPLICABLE  : 'Provider coupon not applicable on this day',
-    PROVIDER_COUPON_NOT_APPLICABLE_NOW : 'Provider coupon not applicable now',
-    JC_NOT_APPLICABLE_DAY : 'Jaldee Coupon not applicable on this day',
-    ONLY_WHEN_FITST_CHECKIN_ON_PROVIDER : 'Coupon can be applied only for first check in with this provider',
-    MINIMUM_BILL_AMT_REQUIRED : 'A minimum bill amount is required to redeem this coupon',
-    PROVIDER_COUPON_NOT_APPLICABLE_ORDER:'Provider coupon not applicable for order',
-    PROVIDER_COUPON_NOT_APPLICABLE_WAITLIST:'Provider coupon not applicable for booking',
-    PROVIDER_COUPON_NOT_APPLICABLE_APPOINTMENT:'Provider coupon not applicable for appointment',
+    CONSUMER_CAN_NOT_APPLY_COUPON: 'Coupon cannot be applied.',
+    PROVIDER_COUPON_NOT_APPLICABLE_SERVICE: 'Provider coupon not applicable for this service',
+    PROVIDER_COUPON_NOT_APPLICABLE_USER: 'Provider coupon not applicable for this user',
+    PROVIDER_COUPON_NOT_APPLICABLE_GROUP: 'Provider coupon not applicable for this group',
+    PROVIDER_COUPON_NOT_APPLICABLE_ITEM: 'Provider coupon not applicable for this item',
+    PROVIDER_COUPON_NOT_APPLICABLE_CATALOG: 'Provider coupon not applicable for this catalog',
+    PROVIDER_COUPON_NOT_APPLICABLE_LABEL: 'Provider coupon not applicable for this label',
+    PROVIDER_COUPON_NOT_APPLICABLE_BOOKING_MODE: 'Provider coupon not applicable for this booking mode',
+    PROVIDER_COUPON_NOT_APPLICABLE: 'Provider coupon not applicable on this day',
+    PROVIDER_COUPON_NOT_APPLICABLE_NOW: 'Provider coupon not applicable now',
+    JC_NOT_APPLICABLE_DAY: 'Jaldee Coupon not applicable on this day',
+    ONLY_WHEN_FITST_CHECKIN_ON_PROVIDER: 'Coupon can be applied only for first check in with this provider',
+    MINIMUM_BILL_AMT_REQUIRED: 'A minimum bill amount is required to redeem this coupon',
+    PROVIDER_COUPON_NOT_APPLICABLE_ORDER: 'Provider coupon not applicable for order',
+    PROVIDER_COUPON_NOT_APPLICABLE_WAITLIST: 'Provider coupon not applicable for booking',
+    PROVIDER_COUPON_NOT_APPLICABLE_APPOINTMENT: 'Provider coupon not applicable for appointment',
     EXCEEDS_PRO_COUP_APPLY_LIMIT: 'Coupon reached limit of usage'
   },
   CHECK_IN_STATUSES: {
@@ -578,19 +587,19 @@ export const projectConstantsLocal = {
     19: 'Jaldee_Messaging'
 
   },
-  MONTH:[
-    {value:'01',name:'Jan'},
-    {value:'02',name:'Feb'},
-    {value:'03',name:'Mar'},
-    {value:'04',name:'Apr'},
-    {value:'05',name:'May'},
-    {value:'06',name:'Jun'},
-    {value:'07',name:'Jul'},
-    {value:'08',name:'Aug'},
-    {value:'09',name:'Sep'},
-    {value:'10',name:'Oct'},
-    {value:'11',name:'Nov'},
-    {value:'12',name:'Dec'}
+  MONTH: [
+    { value: '01', name: 'Jan' },
+    { value: '02', name: 'Feb' },
+    { value: '03', name: 'Mar' },
+    { value: '04', name: 'Apr' },
+    { value: '05', name: 'May' },
+    { value: '06', name: 'Jun' },
+    { value: '07', name: 'Jul' },
+    { value: '08', name: 'Aug' },
+    { value: '09', name: 'Sep' },
+    { value: '10', name: 'Oct' },
+    { value: '11', name: 'Nov' },
+    { value: '12', name: 'Dec' }
 
   ],
   REGION_LANGUAGE: 'en-US',
@@ -918,7 +927,7 @@ export const projectConstantsLocal = {
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
-  // PATH: 'https://' + window.location.host + '/',
+// PATH: 'https://' + window.location.host + '/',
   ORDER_STATUSES_FILTER: [
     { displayName: 'Accepted', value: 'Accepted' },
     { displayName: 'Rejected', value: 'Rejected' },
@@ -968,7 +977,7 @@ export const projectConstantsLocal = {
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
   ],
-   BOOKING_STATUS_CLASS: [
+  BOOKING_STATUS_CLASS: [
     { value: 'Done', class: 'dark-green' },
     { value: 'Started', class: 'orange' },
     { value: 'Arrived', class: 'yellow' },
@@ -992,22 +1001,22 @@ export const projectConstantsLocal = {
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
     GoogleMeet: { displayName: 'Google Meet', placeHolder: 'Update Meet ID', title: 'Configure Google Meet' },
     Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' },
-    JaldeeVideo: {displayName: 'Jaldee Video', placeHolder: '', title: 'Configure Jaldee Video'}
+    JaldeeVideo: { displayName: 'Jaldee Video', placeHolder: '', title: 'Configure Jaldee Video' }
   },
   ORDER_STATUS_FILTER: [
-    { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true , clas: 'orderreceived'},
-    { displayName: 'Order Acknowledged', value: 'Order Acknowledged' , delivery: true , pickup: true , clas: 'orderacknowledged'},
-    { displayName: 'Order Confirmed', value: 'Order Confirmed', delivery: true , pickup: true , clas: 'orderconfirmed'},
-    { displayName: 'Preparing', value: 'Preparing', delivery: true , pickup: true , clas: 'orderpreparing'},
-    { displayName: 'Packing', value: 'Packing', delivery: true , pickup: true , clas: 'orderpacking'},
-    { displayName: 'Payment Required', value: 'Payment Required', delivery: true , pickup: true , clas: 'orderpaymentrequired'},
-    { displayName: 'Ready For Pickup', value: 'Ready For Pickup', delivery: false , pickup: true , clas: 'orderreadyforpickup'},
-    { displayName: 'Ready For Shipment', value: 'Ready For Shipment', delivery: true , pickup: false , clas: 'orderreadyforshipment'},
-    { displayName: 'Ready For Delivery', value: 'Ready For Delivery', delivery: true , pickup: false , clas: 'orderreadyfordelivery'},
-    { displayName: 'Completed', value: 'Completed' , delivery: true , pickup: true , clas: 'ordercompleted'},
-    { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false , clas: 'orderintransit'},
-    { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false , clas: 'ordershipped'},
-    { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true , clas: 'ordercancelled'}
+    { displayName: 'Order Received', value: 'Order Received', delivery: true, pickup: true, clas: 'orderreceived' },
+    { displayName: 'Order Acknowledged', value: 'Order Acknowledged', delivery: true, pickup: true, clas: 'orderacknowledged' },
+    { displayName: 'Order Confirmed', value: 'Order Confirmed', delivery: true, pickup: true, clas: 'orderconfirmed' },
+    { displayName: 'Preparing', value: 'Preparing', delivery: true, pickup: true, clas: 'orderpreparing' },
+    { displayName: 'Packing', value: 'Packing', delivery: true, pickup: true, clas: 'orderpacking' },
+    { displayName: 'Payment Required', value: 'Payment Required', delivery: true, pickup: true, clas: 'orderpaymentrequired' },
+    { displayName: 'Ready For Pickup', value: 'Ready For Pickup', delivery: false, pickup: true, clas: 'orderreadyforpickup' },
+    { displayName: 'Ready For Shipment', value: 'Ready For Shipment', delivery: true, pickup: false, clas: 'orderreadyforshipment' },
+    { displayName: 'Ready For Delivery', value: 'Ready For Delivery', delivery: true, pickup: false, clas: 'orderreadyfordelivery' },
+    { displayName: 'Completed', value: 'Completed', delivery: true, pickup: true, clas: 'ordercompleted' },
+    { displayName: 'In Transit', value: 'In Transit', delivery: true, pickup: false, clas: 'orderintransit' },
+    { displayName: 'Shipped', value: 'Shipped', delivery: true, pickup: false, clas: 'ordershipped' },
+    { displayName: 'Cancelled', value: 'Cancelled', delivery: true, pickup: true, clas: 'ordercancelled' }
   ],
   INBOX_MSG_TYPES: {
     CHAT: 'Chat',
@@ -1015,7 +1024,7 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
-  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };
 

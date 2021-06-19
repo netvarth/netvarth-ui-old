@@ -123,3 +123,12 @@
 .darkerred{
     color: darkred !important;
 }
+
+.mat-grid-tile .mat-grid-tile-footer {
+    bottom: 5px !important;
+}
+.count-section .mat-grid-tile-footer {
+    height: 25px;
+    padding: 5px !important;
+    text-align: center;
+}

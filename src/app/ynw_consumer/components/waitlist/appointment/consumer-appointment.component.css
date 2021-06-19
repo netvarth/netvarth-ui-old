@@ -917,11 +917,20 @@ ul.bus-actions li a.lnk {
   margin-top: -6px !important;
   margin-right: 5px !important;
 } */
-.meet-icon,.zoom-icon,.service-icon{
+.meet-icon,.service-icon{
   top: 0 !important;
   padding-right: 0 !important;
-  margin-top: 3px !important;
+  /* margin-top: 3px !important; */
   margin-right: 5px !important;
+  height: 35px;
+}
+.zoom-icon{
+  top: 0 !important;
+  padding-right: 0 !important;
+  /* margin-top: 3px !important; */
+  margin-right: 5px !important;
+}
+.zoom1{
   height: 35px;
 }
 .service-icon .fa-phone{

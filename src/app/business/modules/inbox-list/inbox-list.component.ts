@@ -254,6 +254,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
+          this.sortMessages();
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
@@ -347,7 +348,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: (senderName) ? senderName : this.customer_label,
+        accountName: (senderName && senderName.trim() !== '') ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -372,9 +373,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
-      if (message1.timeStamp < message2.timeStamp) {
+      if (message1.timeStamp > message2.timeStamp) {
         return 11;
-      } else if (message1.timeStamp > message2.timeStamp) {
+      } else if (message1.timeStamp < message2.timeStamp) {
         return -1;
       } else {
         return 0;

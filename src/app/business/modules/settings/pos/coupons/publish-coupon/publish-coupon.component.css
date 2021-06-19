@@ -17,3 +17,10 @@
 .blue-text{
     color: blue;
 }
+.mgn-rt-5 {
+    margin-right: 5px !important;
+}
+
+.days .mat-checkbox {
+    width: 60px !important;
+}

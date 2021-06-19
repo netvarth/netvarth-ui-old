@@ -63,7 +63,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   step = 1;
   maxChars = projectConstantsLocal.VALIDATOR_MAX50;
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
-  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  weekdays = projectConstantsLocal.weekdaysShort;
   bookingMode = projectConstantsLocal.BOOKING_MODE;
   maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
   selday_arr: any = [];
@@ -89,6 +89,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   customer_label = '';
   hidemeItems = true;
   maxdiscountRequired=false;
+  public keepOriginalOrder = (a, b) => a.key;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,

@@ -1364,7 +1364,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
