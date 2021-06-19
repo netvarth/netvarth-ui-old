@@ -13774,6 +13774,13 @@ color: #fff !important;
   width: 46px;
   margin-top: -14px;
 }
+.ico-voice {
+  content: url(../images/teleservice/audio.svg);
+  position: absolute;
+  padding-right: 5px;
+  width: 46px;
+  margin-top: -14px;
+}
 .ico_que {
   content: url(../images/addons/Queues-services.svg);
   position: absolute;
