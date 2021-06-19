@@ -119,9 +119,12 @@
                           <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
                           <span *ngIf="!customerDetail.gender">......</span>
                       </td>
-                      <td><label>Dob:&nbsp;</label>
+                      <td *ngIf="customerDetail.dob"><label>Dob:&nbsp;</label>
                           <span *ngIf="customerDetail.dob">{{customerDetail.dob  | date:newDateFormat}}</span>
                           <span *ngIf="!customerDetail.dob">..........</span>
+                      </td>
+                      <td *ngIf="customerDetail.age && !customerDetail.dob"><label>Age:&nbsp;</label>
+                          <span *ngIf="customerDetail.age">{{customerDetail.age}}</span>
                       </td>
                   </tr>
                   <tr>
