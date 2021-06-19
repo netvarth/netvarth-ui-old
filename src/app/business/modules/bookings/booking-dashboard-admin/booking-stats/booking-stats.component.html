@@ -3,14 +3,11 @@
         <div class="card">
             <div class="head">
                 Appointments
-                <span class="inc-dec" style="color: green !important">+3%</span>
+                <!-- <span class="inc-dec" style="color: green !important">+3%</span> -->
             </div>
             <div class="data">
-                <!-- <div class="icon" style="background-color: #6f42c1 !important;"> -->
                 <i class="icon material-icons align-middle" style="color: #6676de !important;">face</i>
-                <!-- style="color: #6f42c1 !important;" -->
-                <!-- </div> -->
-                <div class="text-val">650</div>
+                <div class="text-val">{{today_appt_count}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                 <path fill="#8e9bf3" fill-opacity="1" d="M0,32L26.7,74.7C53.3,117,107,203,160,202.7C213.3,203,267,117,320,69.3C373.3,21,427,11,
@@ -27,14 +24,12 @@
     <div class="column">
         <div class="card">
             <div class="head">
-                Operations
-                <span class="inc-dec" style="color: green !important">+8%</span>
+                {{(showToken) ? 'Tokens' : 'Check-ins'}}
+                <!-- <span class="inc-dec" style="color: green !important">+8%</span> -->
             </div>
             <div class="data">
-                <!-- <div class="icon" style="background-color: #fd7e14 !important;"> -->
                 <i class="icon material-icons align-middle" style="color: #fd7e14 !important;">content_cut</i>
-                <!-- </div> -->
-                <div class="text-val">54</div>
+                <div class="text-val">{{today_waitlist_count}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                 <path fill="#fe9e4e" fill-opacity="1" d="M0,96L15,96C30,96,60,96,90,117.3C120,139,150,181,180,218.7C210,256,240,288,270,
@@ -55,14 +50,12 @@
     <div class="column">
         <div class="card">
             <div class="head">
-                New Patients
-                <span class="inc-dec" style="color: red !important">-5%</span>
+                {{customer_label | capitalizeFirst}}s
+                <!-- <span class="inc-dec" style="color: red !important">-5%</span> -->
             </div>
             <div class="data">
-                <!-- <div class="icon" style="background-color: #198754 !important;"> -->
                 <i class="icon material-icons align-middle" style="color: #198754 !important;">person_add</i>
-                <!-- </div> -->
-                <div class="text-val">129</div>
+                <div class="text-val">{{customer_count}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                 <path fill="#53b86b" fill-opacity="1" d="M0,96L15,101.3C30,107,60,117,90,128C120,139,150,149,180,170.7C210,192,240,224,270,
@@ -79,16 +72,14 @@
             </svg>
         </div>
     </div>
-    <div class="column">
+    <!-- <div class="column">
         <div class="card">
             <div class="head">
                 Earnings
                 <span class="inc-dec" style="color: green !important">+7%</span>
             </div>
             <div class="data">
-                <!-- <div class="icon" style="background-color: #0d6efd !important;"> -->
                 <i class="icon material-icons align-middle" style="color: #0d6efd !important;">local_activity</i>
-                <!-- </div> -->
                 <div class="text-val"><i class="fa fa-inr"></i>20,125</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -105,5 +96,5 @@
                 </path>
             </svg>
         </div>
-    </div>
+    </div> -->
 </div>

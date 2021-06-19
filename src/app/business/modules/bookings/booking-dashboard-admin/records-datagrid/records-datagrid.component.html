@@ -179,8 +179,6 @@
                                         </mat-menu>
                                     </td> -->
                                 </ng-container>
-
-
                                 <ng-container *ngIf="source == 'waitlist' || source == 'appt'">
                                     <td>
                                         <ng-container *ngIf="source == 'waitlist'"> {{record.token}}</ng-container>
@@ -197,12 +195,12 @@
                                             {{record.appmtFor[0].lastName}}
                                         </ng-container>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <ng-container *ngIf="record.provider">
-                                        {{(record.provider.businessName) ? record.provider.businessName :
-                                        record.provider.firstName +
-                                        ' ' + record.provider.lastName}}
-                                    </ng-container>
+                                            {{(record.provider.businessName) ? record.provider.businessName :
+                                            record.provider.firstName +
+                                            ' ' + record.provider.lastName}}
+                                        </ng-container>
                                     </td>
                                     <td>
                                         {{record.service.name}}
@@ -216,8 +214,11 @@
                                         </ng-container>
                                     </td>
                                 </ng-container>
-
                             </tr>
+                            <div *ngIf="!loading && records.length == 0">
+                                No {{heading}}
+                            </div>
+                            <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
                         </tbody>
                     </table>
                     <div class="showLinks mgn-bt-10" *ngIf="count && count > 5">

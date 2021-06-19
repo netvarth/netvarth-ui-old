@@ -179,10 +179,9 @@
                     </div>
                 </div>
             </div> -->
-            <app-records-datagrid [records]="appointments" [source]="'appt'" [heading]="'Appointments'">
+            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'">
             </app-records-datagrid>
         </div>
-
         <div class="column doctors-column">
             <!-- <div class="card">
                 <div class="header">
@@ -311,18 +310,15 @@
                     </div>
                 </div>
             </div> -->
-            <app-records-datagrid [records]="waitlists" [source]="'waitlist'"
+            <app-records-datagrid [source]="'waitlist'"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
             </app-records-datagrid>
         </div>
     </div>
-
-    <app-records-datagrid [records]="appointments" [source]="'appt'" [heading]="'Appointments'"></app-records-datagrid>
-    <app-records-datagrid [records]="waitlists" [source]="'waitlist'"
+    <app-records-datagrid [source]="'appt'" [heading]="'Appointments'"></app-records-datagrid>
+    <app-records-datagrid [source]="'waitlist'"
         [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
     </app-records-datagrid>
-
-
     <!-- <div class="operations-row">
         <div class="column operations-column">
             <div class="card">

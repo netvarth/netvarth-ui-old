@@ -30,7 +30,7 @@ const colors: any = {
       useClass: CustomDateFormatter
     }
   ],
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css', '../../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
 })
 export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;

@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 @NgModule({
   declarations: [RecordsDatagridComponent],
@@ -13,7 +14,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatMenuModule,
     MatIconModule,
     CapitalizeFirstPipeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    LoadingSpinnerModule
   ],
   exports: [RecordsDatagridComponent]
 })

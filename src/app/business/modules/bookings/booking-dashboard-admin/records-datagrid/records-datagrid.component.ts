@@ -3,6 +3,8 @@ import { DateTimeProcessor } from '../../../../../shared/services/datetime-proce
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { projectConstants } from '../../../../../app.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-records-datagrid',
@@ -32,10 +34,19 @@ export class RecordsDatagridComponent implements OnInit {
     ONLINE_CHECKIN: 'Online Token'
   };
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  loading = false;
   constructor(private dateTimeProcessor: DateTimeProcessor,
-    private wordProcessor: WordProcessor) { }
+    private wordProcessor: WordProcessor,
+    private provider_services: ProviderServices,
+    private router: Router) { }
 
   ngOnInit(): void {
+    if (this.source == 'waitlist') {
+      this.getTodayWatilists();
+    }
+    if (this.source == 'appt') {
+      this.getTodayAppts();
+    }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -48,7 +59,41 @@ export class RecordsDatagridComponent implements OnInit {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
+  getTodayWatilists() {
+    this.loading = true;
+    const filter = {
+      'waitlistStatus-eq': 'checkedIn,arrived',
+      'from': 0,
+      'count': 10
+    };
+    this.provider_services.getTodayWaitlist(filter)
+      .subscribe(
+        (data: any) => {
+          this.records = data;
+          this.loading = false;
+        });
+  }
+  getTodayAppts() {
+    this.loading = true;
+    const filter = {
+      'apptStatus-eq': 'Confirmed,Arrived',
+      'from': 0,
+      'count': 10
+    };
+    this.provider_services.getTodayAppointments(filter)
+      .subscribe(
+        (data: any) => {
+          this.records = data;
+          this.loading = false;
+        });
+  }
   actionClick(type, record?) {
-    this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
+    if (this.source == 'waitlist' || this.source === 'appt') {
+      const uid = (this.source === 'appt') ? record.uid : record.ynwUuid;
+      const type = (this.source === 'appt') ? 'appointment' : 'checkin';
+      this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 0, type: type } });
+    } else {
+      this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
+    }
   }
 }
