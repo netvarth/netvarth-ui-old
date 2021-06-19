@@ -667,8 +667,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.action === '') {
             this.location.back();
         } else {
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
         }
     }
     handleGoBack(cstep) {

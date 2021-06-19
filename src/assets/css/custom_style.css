@@ -14284,3 +14284,6 @@ padding-left: 15px !important;
 app-showuploadfile .mat-dialog-content {
   max-height: 80vh !important;
 }
+.text-left {
+  text-align: left;
+}
