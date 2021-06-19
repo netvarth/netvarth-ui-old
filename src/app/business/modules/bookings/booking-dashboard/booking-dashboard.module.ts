@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { BookingDashboardComponent } from './booking-dashboard.component';
-import { BookingAppointmentsModule } from './booking-appointments/booking-appointments.module';
-import { BookingCheckinsModule } from './booking-checkins/booking-checkins.module';
 import { BookingFeedsModule } from './booking-feeds/booking-feeds.module';
 import { BooingQuickActionsModule } from './booking-quick-actions/booking-quick-actions.module';
 import { BookingCalendarModule } from './calendar/calendar.module';
 import { TodayBookingStatsModule } from './today-booking-stats/today-booking-stats.module';
 import { UpcomingBookingsModule } from './upcoming-bookings/upcoming-bookings.module';
+import { RecordsDatagridModule } from '../booking-dashboard-admin/records-datagrid/records-datagrid.module';
 
 
 
@@ -22,12 +21,10 @@ import { UpcomingBookingsModule } from './upcoming-bookings/upcoming-bookings.mo
     BooingQuickActionsModule,
     TodayBookingStatsModule,
     BookingFeedsModule,
-    BookingAppointmentsModule,
-    BookingCheckinsModule
+    RecordsDatagridModule
   ],
-  exports:[BookingDashboardComponent]
+  exports: [BookingDashboardComponent]
 
 })
 export class BookingDashboardModule {
 }
-

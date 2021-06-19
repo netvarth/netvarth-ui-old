@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BookingDetailComponent } from './booking-detail/booking-detail.component';
 import { BookingsComponent } from './bookings.component';
 
 const routes: Routes = [
     { path: '', component: BookingsComponent },
-    { path: ':id', loadChildren: () => import('./booking-detail/booking-detail.module').then(m => m.BookingDetailModule) }
+    { path: ':id', component: BookingDetailComponent }
 ];
 
 @NgModule({
