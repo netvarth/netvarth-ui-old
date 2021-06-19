@@ -424,13 +424,13 @@ export class UserServiceChnageComponent implements OnInit {
       const proImage = user.profilePicture;
       return proImage.url;
     } else if(user.gender ==='male'){
-      return '../../.././assets/images/Asset 1@300x.png';
+      return '../../.././assets/images/Asset1@300x.png';
   }
   else if(user.gender ==='female'){
-      return '../../.././assets/images/Asset 2@300x.png';
+      return '../../.././assets/images/Asset2@300x.png';
   }
   else{
-      return '../../.././assets/images/Asset 1@300x (1).png'; 
+      return '../../.././assets/images/Asset1@300x(1).png'; 
   }
   }
   showMoreorLess(event, index, type) {
