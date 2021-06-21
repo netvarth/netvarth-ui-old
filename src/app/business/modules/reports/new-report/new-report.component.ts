@@ -404,7 +404,7 @@ user_users;
 
   }
   setCustomerData(res) {
-    console.log(JSON.stringify(res));
+
     switch (this.report_type) {
       case 'payment': {
         if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
@@ -469,13 +469,13 @@ user_users;
         break;
       }
       case 'user':{
-        console.log(res.jaldee_customers);
-        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
+        console.log(res);
+        if (res === '' || res === undefined || res=== 'All') {
           this.user = 'All';
         } else {
-          this.user = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
-          this.user_chosen = res.customers.replace(/,\s*$/, '');
-          this.user_id = res.jaldee_customers.replace(/,\s*$/, '');
+          this.user = res.split(',').length + ' users selected';
+          this.user_chosen = res.replace(/,\s*$/, '');
+          this.user_id = res.replace(/,\s*$/, '');
 
         }
 
