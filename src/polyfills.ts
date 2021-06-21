@@ -62,7 +62,7 @@ import '@angular/localize/init';
  * Zone JS is required by Angular itself.
  */
 (window as any).global = window;
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js';  // Included with Angular CLI.
 
 
 
