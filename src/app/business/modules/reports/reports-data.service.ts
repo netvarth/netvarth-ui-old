@@ -36,6 +36,9 @@ export class ReportDataService {
   storeSelectedValues(data) {
     this.reportData.next(data);
   }
+  updatedUserDataSelection(data){
+    this.reportData.next(data);
+  }
 
   getReport() {
     return JSON.parse(this.lStorageService.getitemfromLocalStorage('report'));
