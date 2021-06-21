@@ -54,6 +54,49 @@ import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/con
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
+
+const customNotifierOptions: NotifierOptions = {
+  position: {
+		horizontal: {
+			position: 'left',
+			distance: 12
+		},
+		vertical: {
+			position: 'bottom',
+			distance: 12,
+			gap: 10
+		}
+	},
+  theme: 'material',
+  behaviour: {
+    autoHide: 5000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 4
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
+
 
 @NgModule({
     declarations: [
@@ -101,7 +144,8 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         AddProviderSchedulesModule,
         DynamicFormModule,
         JoyrideModule.forChild(),
-        InboxListModule
+        InboxListModule,
+        NotifierModule.withConfig(customNotifierOptions)
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,

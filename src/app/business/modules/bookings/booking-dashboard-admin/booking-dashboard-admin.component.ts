@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-booking-dashboard-admin',
@@ -8,7 +9,11 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 })
 export class BookingDashboardAdminComponent implements OnInit {
   waitlistMgrSettings;
-  constructor(private provider_services: ProviderServices) { }
+  private readonly notifier: NotifierService;
+  constructor(private provider_services: ProviderServices,
+    notifierService: NotifierService) {
+      this.notifier = notifierService;
+     }
 
   ngOnInit(): void {
     this.getProviderSettings();
@@ -19,4 +24,7 @@ export class BookingDashboardAdminComponent implements OnInit {
         this.waitlistMgrSettings = data;
       });
   }
+	showNotification( type: string, message: string ): void {
+		this.notifier.notify( type, message );
+	}
 }
