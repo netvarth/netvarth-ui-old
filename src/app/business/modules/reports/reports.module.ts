@@ -23,6 +23,9 @@ import { CriteriaDialogComponent } from './generated-report/criteria-dialog/crit
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { UserSelectionComponent } from './new-report/user-selection/user-selection.component';
+import { UserReportComponent } from './user-report/user-report.component';
+import { UserDetailReportComponent } from './user-report/user-detail-report/user-detail-report.component';
 
 @NgModule({
   imports: [
@@ -51,6 +54,9 @@ import { MatOptionModule } from '@angular/material/core';
     GeneratedReportComponent,
     CustomerSelectionComponent,
     CriteriaDialogComponent,
+    UserSelectionComponent,
+    UserReportComponent,
+    UserDetailReportComponent,
 
   ],
   entryComponents: [

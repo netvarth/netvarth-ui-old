@@ -7,6 +7,9 @@ import { ScheduleSelectionComponent } from './schedule-selection/schedule-select
 import { QueueSelectionComponent } from './queue-selection/queue-selection.component';
 import { GeneratedReportComponent } from './generated-report/generated-report.component';
 import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
+import { UserSelectionComponent } from './new-report/user-selection/user-selection.component';
+import { UserReportComponent } from './user-report/user-report.component';
+import { UserDetailReportComponent } from './user-report/user-detail-report/user-detail-report.component';
 
 
 
@@ -20,11 +23,15 @@ const routes: Routes = [
       {
         path: 'new-report', component: NewReportComponent
       },
+      { path: 'user-report', component: UserReportComponent},
+      { path: 'user-details', component: UserDetailReportComponent},   
+    
       { path: 'service', component: ServiceSelectionComponent },
       { path: 'schedule', component: ScheduleSelectionComponent },
       { path: 'queue', component: QueueSelectionComponent },
       { path: 'generated-report', component: GeneratedReportComponent },
       { path: 'customer', component: CustomerSelectionComponent },
+      { path: 'user', component: UserSelectionComponent },
     ]
   }
 

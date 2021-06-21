@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-reports',
@@ -30,11 +31,13 @@ export class ReportsComponent implements OnInit {
   token_criteria = [];
   donation_criteria = [];
   reprtdialogRef: any;
+  active_user: any;
   constructor(private router: Router, private report_dataService: ReportDataService,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private groupService:GroupStorageService,
     private lStorageService: LocalStorageService) {
     this.report_dataService.updateCustomers('All');
     this.report_dataService.updatedQueueDataSelection('All');
@@ -46,6 +49,7 @@ export class ReportsComponent implements OnInit {
   ngOnInit() {
     this.getProviderSettings();
     this.getCriteriaList();
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
