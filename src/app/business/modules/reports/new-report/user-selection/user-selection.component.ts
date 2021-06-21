@@ -181,7 +181,7 @@ export class UserSelectionComponent implements OnInit {
       if (this.users_selected.length === 0) {
         this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
       } else {
-        this.report_service.updatedUserDataSelection(this.users_selected);
+        this.report_service.updateCustomers(this.users_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
       }
       //
