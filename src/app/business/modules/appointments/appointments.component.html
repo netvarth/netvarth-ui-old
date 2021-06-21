@@ -580,8 +580,8 @@
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
-                            {{appt.appmtFor[0].bookingLocation.district}},
-                            {{appt.appmtFor[0].bookingLocation.state}}</div>
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
                           <div class="location">
                             <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
                             <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
@@ -1088,8 +1088,8 @@
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
-                            {{appt.appmtFor[0].bookingLocation.district}},
-                            {{appt.appmtFor[0].bookingLocation.state}}</div>
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
                           <div class="location">
                             <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
                             <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
@@ -1617,8 +1617,8 @@
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
                         <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
-                          {{appt.appmtFor[0].bookingLocation.district}},
-                          {{appt.appmtFor[0].bookingLocation.state}}</div>
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
                         <div class="location">
                           <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
                           <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
@@ -2233,8 +2233,8 @@
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
                         <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
-                          {{appt.appmtFor[0].bookingLocation.district}},
-                          {{appt.appmtFor[0].bookingLocation.state}}</div>
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
                         <div class="location">
                           <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
                           <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
