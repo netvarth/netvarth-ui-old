@@ -12,7 +12,8 @@
     "build:stats": "ng build --prod --stats-json",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "compodoc": "compodoc -p tsconfig.json",
-    "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve",
+    "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
+    "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local",
     "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --prod"
   },
   "private": true,
