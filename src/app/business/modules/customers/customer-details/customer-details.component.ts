@@ -363,9 +363,9 @@ export class CustomerDetailComponent implements OnInit {
     }
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
-            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type, type: 'checkin' } });
+            this.router.navigate(['provider', 'bookings', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type, type: 'checkin' } });
         } else if (visit.appointmnet) {
-            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type, type: 'appointment' } });
+            this.router.navigate(['provider', 'bookings', visit.appointmnet.uid], { queryParams: { timetype: time_type, type: 'appointment' } });
         } else {
             this.router.navigate(['provider', 'orders', visit.uid], { queryParams: { timetype: time_type } });
         }
