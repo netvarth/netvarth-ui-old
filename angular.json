@@ -84,6 +84,13 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": ""
@@ -96,6 +103,9 @@
           "configurations": {
             "production": {
               "browserTarget": "v7-you-never-wait:build:production"
+            },
+            "local": {
+              "browserTarget": "v7-you-never-wait:build:local"
             }
           }
         },
