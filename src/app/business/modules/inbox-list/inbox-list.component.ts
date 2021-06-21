@@ -75,6 +75,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   type = 'all';
   userHeight;
   msgHeight;
+  msgHeightTemp;
   scrollDone = false;
   qParams;
   customer_label;
@@ -88,6 +89,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() provider;
   @Input() source;
   @Input() height;
+  @ViewChild('imgsec') elementView: ElementRef;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -102,7 +104,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.qParams = params;
     });
     this.shared_functions.getMessage().subscribe((message) => {
-      console.log(message.type);
       switch (message.type) {
         case 'statuschange':
           this.getInboxMessages();
@@ -111,9 +112,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     });
   }
   ngOnChanges() {
-    this.msgHeight = 400;
     if (this.height) {
-      this.msgHeight = this.msgHeight + this.height;
+      this.msgHeight = this.msgHeightTemp + this.height;
     }
   }
   ngOnInit() {
@@ -131,14 +131,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
     if (this.customer) {
-      console.log(this.userDet.accountType);
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.customer + '=' + this.provider;
       } else {
         this.selectedCustomer = this.customer;
       }
     }
-    console.log(this.selectedCustomer);
     this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
@@ -176,18 +174,18 @@ export class InboxListComponent implements OnInit, OnDestroy {
       } else {
         this.userHeight = screenHeight - 234;
       }
-      this.msgHeight = screenHeight - 385;
+      this.msgHeight = this.msgHeightTemp = screenHeight - 385;
     } else {
       if (this.userDet && this.userDet.accountType === 'BRANCH' && this.users.length > 0 && this.userWithMsgCount > 1) {
         this.userHeight = screenHeight - 264;
       } else {
         this.userHeight = screenHeight - 208;
       }
-      this.msgHeight = screenHeight - 370;
+      this.msgHeight = this.msgHeightTemp = screenHeight - 370;
     }
     if (this.source) {
       this.small_device_display = true;
-      this.msgHeight = 400;
+      this.msgHeight = this.msgHeightTemp = 400;
       this.showChat = true;
     }
   }
@@ -291,8 +289,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountId');
     }
     this.onResize();
-    console.log(this.groupedMsgs);
-    console.log(this.selectedCustomer);
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = (this.groupedMsgs[this.selectedCustomer]) ? this.groupedMsgs[this.selectedCustomer] : [];
       if (this.small_device_display) {
@@ -443,6 +439,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
           reader.readAsDataURL(file);
         }
       }
+      setTimeout(() => {
+        this.msgHeight = this.msgHeightTemp;
+        if (this.elementView) {
+          const height = this.elementView.nativeElement.offsetHeight;
+          this.msgHeight = this.msgHeight - height;
+        }
+      }, 100);
     }
   }
   showChatSection() {
@@ -495,6 +498,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
+    setTimeout(() => {
+      this.msgHeight = this.msgHeightTemp;
+      if (this.elementView) {
+        const height = this.elementView.nativeElement.offsetHeight;
+        this.msgHeight = this.msgHeight - height;
+      }
+    }, 100);
   }
   customerSelection(msgs) {
     this.type = 'all';
