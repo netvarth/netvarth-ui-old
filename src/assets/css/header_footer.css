@@ -6,7 +6,6 @@ header.consumer .tp-1 {
     width: 100%;
     display: flex;
     position: relative;
-    /* More Options Dropdown */
 }
 .ml-auto, .mx-auto { margin-left: auto!important;}
 header.consumer .tp-1 .tp-l {
@@ -68,7 +67,6 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,11 +81,9 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #00cc96;
     color: #fff;
     text-align: center;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .65rem;
     top: -5px;
@@ -239,7 +235,6 @@ header.consumer .tp-srch .sa-lc .search_location_class {
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     position: relative;
     z-index: 2;
     font-size: 1.125em;
@@ -276,7 +271,6 @@ header.consumer .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .
     font-size: .875rem;
     padding-left: 40px;
     text-overflow: ellipsis;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     color: #222223;
@@ -313,7 +307,6 @@ header.consumer .tp-srch .sa-lc .search_location_class:focus {
 
 header.consumer .tp-srch .sa-lc:before {
     content: "\74";
-    /*background: url(../images/icon-location.svg);*/
     font-family: "custom-ynw" !important;
     width: 14px;
     height: 18px;
@@ -363,9 +356,7 @@ header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-for
     height: 50px;
     background: none;
     border-radius: 0px;
-    /*display: flex;*/
     align-items: center;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: .875rem;
@@ -416,7 +407,6 @@ header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-for
 header.consumer .tp-srch .sa-src {
     width: 100%;
     flex-shrink: 1;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -441,7 +431,6 @@ header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .ma
 header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-infix .mat-input-element, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element {
     height: 50px;
     padding: 15px;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: 0.875rem;
@@ -472,7 +461,6 @@ header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .ma
 header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
     padding-left: 15px;
     padding-top: 10px;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -576,17 +564,11 @@ header.consumer .tp-srch .plr0i #search_button .icon-search:before {
 }
 
 header.consumer .tp-srch .plr0i .cs-btn:before {
-    /*background: lighten($cc-red, 10%);*/
     background-image: -moz-radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));
-    /* FF3.6+ */
     background-image: -webkit-radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));
-    /* Chrome10+,Safari5.1+ */
     background-image: -o-radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));
-    /* Opera 11.10+ */
     background-image: -ms-radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));
-    /* IE10+ */
     background-image: radial-gradient(#f9a8a8, rgba(255, 255, 255, 0));
-    /* W3C */
 }
 
 header.consumer .tp-srch .sa-mo {
@@ -723,7 +705,6 @@ footer.itl-steps .sect1, footer.itl-steps .sect2 {
 
 footer.itl-steps .sect3 {
     background: #1c1d21;
-    /*color: $cc-mediumgray;*/
     padding: 2.75em 0;
 }
 
@@ -799,7 +780,6 @@ header.dashb .lg-opt .bnps .pro-pic {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;
@@ -864,7 +844,6 @@ header.dashb .lg-opt .bnps .mn-title .title-bn, header.dashb .lg-opt .bnps .mn-t
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     width: 100%;
 }
@@ -888,7 +867,6 @@ header.dashb .lg-opt .bnps .mn-title .title-bn, header.dashb .lg-opt .bnps .mn-t
 }
 
 header.dashb .lg-opt .bnps .mn-title .title-ps {
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 400;
@@ -905,7 +883,6 @@ header.dashb .lg-opt .bnps .inbx .ot-bx {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;
@@ -920,11 +897,9 @@ header.dashb .lg-opt .bnps .inbx .ot-bx .noti-no {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #00cc96;
     color: #fff;
     text-align: center;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .65rem;
     top: -2px;
@@ -1071,7 +1046,6 @@ header.dashb .lg-opt .userdt .usrbx {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;
@@ -1256,7 +1230,6 @@ header.dashb .mobile-menu .row .menu-outer .outer .sect2 .pro-pic {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;
@@ -1294,7 +1267,6 @@ header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-bn, he
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     width: 100%;
 }
@@ -1316,7 +1288,6 @@ header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-bn, he
 }
 
 header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-ps {
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 400;
@@ -1422,11 +1393,9 @@ footer.dashb .sect3 .spt-controls .list li .alert-count {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #00cc96;
     color: #1c1d21;
     text-align: center;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .70rem;
     top: 2px;
@@ -1522,7 +1491,6 @@ footer.dashb .stp-box .stp-header .outer .right .stp-action li .icon-minimize:be
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #222223;
 }
 
@@ -1542,7 +1510,6 @@ footer.dashb .stp-box .stp-header .outer .right .stp-action li [class^="icon-"],
     -webkit-border-radius: 25px;
     border-radius: 25px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 footer.dashb .stp-box .stp-header .outer .right .stp-action li [class^="icon-"]:before, footer.dashb .stp-box .stp-header .outer .right .stp-action li [class*=" icon-"]:before {
@@ -1696,7 +1663,6 @@ footer.dashb.show .stp-box {
 
 footer {
     color: #fff;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -1759,12 +1725,10 @@ footer .sect1 .ft-cpy .sbi-bt li a span {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #f24949;
     width: 44px;
     height: 44px;
     display: inline-block;
-    /*margin-left: 1.875em;*/
 }
 
 footer .sect1 .ft-cpy .sbi-bt li a span.smi-a, footer .sect1 .ft-cpy .sbi-bt li a span.smi-b, footer .sect1 .ft-cpy .sbi-bt li a span.smi-c {
@@ -1860,25 +1824,14 @@ footer .sect2 p {
 }
 
 .tp-pnl {
-    /*@include linear-gradient(#b5b5b5,#e0e0e0);*/
     background: #f0f0f0;
-    /* Old browsers */
     background: -moz-linear-gradient(top, #f0f0f0 0%, #e8e8e8 100%);
-    /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f0f0f0), color-stop(100%, #e8e8e8));
-    /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top, #f0f0f0 0%, #e8e8e8 100%);
-    /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, #f0f0f0 0%, #e8e8e8 100%);
-    /* Opera 11.10+ */
     background: -ms-linear-gradient(top, #f0f0f0 0%, #e8e8e8 100%);
-    /* IE10+ */
     background: linear-gradient(to bottom, #f0f0f0 0%, #e8e8e8 100%);
-    /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000', GradientType=0);
-    /* IE6-9 */
-    /*background: rgba(0,0,0,.05);*/
-    /*@include box-shadow(0, -10px, 30px, rgba(0,0,0,0.1), inset);*/
     background: #9be3ff url(../images/dash-step.svg) no-repeat scroll 0 0/cover;
 }
 
@@ -1904,11 +1857,9 @@ footer .sect2 p {
     display: flex;
     margin-left: 10px;
     background: #fff;
-    /*border: 1px solid rgba(0, 174, 242, .8);*/
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -1927,7 +1878,6 @@ footer .sect2 p {
         -webkit-border-radius: 0px;
         border-radius: 0px;
         background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
     }
 }
 
@@ -1947,18 +1897,12 @@ footer .sect2 p {
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     color: #222223;
     background: transparent;
     min-width: 0;
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
-    /*@include respond-to(ynw-575) {
-              margin: 0;
-              border-bottom: 1px solid $cc-ash;
-          }*/
 }
 
 @media only screen and (max-width: 575px) {
@@ -1978,7 +1922,6 @@ footer .sect2 p {
 
 .tp-pnl .top-mnu .top-help-icon .bt5, .tp-pnl .top-mnu .top-help-button .bt5 {
     position: relative;
-    /*margin-left: 20px;*/
 }
 
 @media only screen and (max-width: 767px) {
@@ -1988,7 +1931,6 @@ footer .sect2 p {
         -webkit-border-radius: 0px;
         border-radius: 0px;
         background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
     }
 }
 
@@ -2075,20 +2017,16 @@ footer .sect2 p {
     background: #fff;
     height: 60px;
     font-size: 1.125rem;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     color: #222223;
 }
 
 .m-nav a i {
     font-size: 1.5rem;
-    /*height: 44px;
-        width: 44px;*/
     margin-right: 5px;
     -webkit-border-radius: 60px;
     border-radius: 60px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2176,7 +2114,6 @@ footer .sect2 p {
 
 header {
     padding: 20px 0;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     background: #fff;
   }
@@ -2226,7 +2163,6 @@ header {
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -2260,7 +2196,6 @@ header {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #f24949;
     width: 20px;
     height: 20px;
@@ -2298,7 +2233,6 @@ header {
 
 .take-tour-icon {
         content: url(../images/header/tour.svg);
-        /* top: 4px; */
         position: relative;
         padding-right: 1px;
         width: 35px;

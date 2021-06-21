@@ -29,7 +29,7 @@ const routes: Routes = [
     },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/modules/business/home/phome.module').then(m => m.PhomeModule) },
-    { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
+    { path: 'home', redirectTo: '', pathMatch: 'full' },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
@@ -59,8 +59,8 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
-        // preloadingStrategy: PreloadAllModules
-    })],
+    relativeLinkResolution: 'legacy'
+})],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

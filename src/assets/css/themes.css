@@ -10,7 +10,6 @@
     height: 50px !important;
   }
   .heartfulness_theme1 { 
-    /* color: #fff !important; */
     background-image: url(../images/heartfulness/BG.jpg) !important; 
     background-repeat: no-repeat  !important; ;
     background-attachment: fixed  !important; ;
@@ -25,9 +24,6 @@
   .heartfulness_theme1.bus-page .dept-title-h4.department-title {
     text-decoration: none !important;
     padding: 12px 15px !important;
-    /* background-color: darkslategrey !important; */
-    /* color: white !important; */
-    /* font-weight: 500 !important; */
     text-transform: capitalize !important;
     font-size: 19px !important;
     color: #fff !important;
@@ -153,56 +149,6 @@ color:#fff !important;
   border: none !important;
   color: white !important;
 }
-
-/* .heartfulness_theme1.loginmainclass.popup-class,
-.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass {
-  max-width: 100% !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: white !important;
-}
-
-.heartfulness_theme1.loginmainclass.popup-class mat-dialog-container.mat-dialog-container,
-.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
-  margin: auto !important;
-  height: auto !important;
-  overflow: visible !important;
-  min-height: 300px !important;
-}
-
-.heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
-  max-width: 600px !important;
-}
-
-@media (max-width: 450px) {
-  .heartfulness_theme1.loginmainclass.popup-class {
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: white !important;
-  }
-  
-  .heartfulness_theme1.loginmainclass.popup-class mat-dialog-container.mat-dialog-container {
-    height: 100% !important;
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 650px) {
-  .heartfulness_theme1.commonpopupmainclass.popup-class.specialclass {
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: white !important;
-  }
-  
-  .heartfulness_theme1.commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
-    height: 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-}
- */
 .heartfulness_theme1.c-checkin-new .hf-double-btn-container {
   padding-bottom: 35px !important;
   justify-content: space-between !important;
