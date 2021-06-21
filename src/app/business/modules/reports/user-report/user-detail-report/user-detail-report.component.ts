@@ -54,9 +54,12 @@ export class UserDetailReportComponent implements OnInit {
   ngOnInit(): void {
   }
   redirecToReports(){
+    const filterObj={};
+    filterObj['reportType']='user';
+    filterObj['filter']= this.filterCriteria;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        filter: JSON.stringify(this.filterCriteria),
+        filter: JSON.stringify(filterObj)
     
       }
    
