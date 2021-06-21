@@ -9,8 +9,8 @@ import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from './searchfields';
-import * as locationjson from '../../../../assets/json/locations.json';
-import * as metrojson from '../../../../assets/json/metros_capital.json';
+import { locationjson } from '../../../../assets/json/locations';
+import { metrojson } from '../../../../assets/json/metros_capital';
 import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -371,6 +371,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   // loads the location details in json file to the respective array
   private loadLocationjsontoArray() {
+    console.log(locationjson);
+    console.log(metrojson);
     for (const state of locationjson['states']) {
       const objstate = { autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 4 };
       this.locationList.push(objstate);
