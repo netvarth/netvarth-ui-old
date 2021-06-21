@@ -799,7 +799,7 @@
                                                         </div> -->
                                                     <div
                                                         *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
-                                                        <div
+                                                        <!-- <div
                                                             *ngIf="search_result.fields['estimatedtime_det']['personAhead'] && search_result.fields['estimatedtime_det']['personAhead'] >= 0">
                                                             <b>{{search_result.fields['estimatedtime_det']['personAhead']}}
                                                             </b><span class="people-ahead"
@@ -809,7 +809,7 @@
                                                             <span class="people-ahead"
                                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                                 the first in line</span>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- <div class="search-services"
                                                             *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
                                                             <span class="question-header checkin-service-group">Services

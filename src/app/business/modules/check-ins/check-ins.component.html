@@ -712,8 +712,8 @@
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
-                            {{checkin.waitlistingFor[0].bookingLocation.district}},
-                            {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
+                           <span *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="checkin.waitlistingFor[0].bookingLocation.state">{{checkin.waitlistingFor[0].bookingLocation.state}}</span></div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
@@ -984,8 +984,8 @@
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                           <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
-                            {{checkin.waitlistingFor[0].bookingLocation.district}},
-                            {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
+                            <span *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="checkin.waitlistingFor[0].bookingLocation.state">{{checkin.waitlistingFor[0].bookingLocation.state}}</span></div>
                             <div class="location">
                               <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
                               <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
@@ -1540,8 +1540,8 @@
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                         <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
-                          {{checkin.waitlistingFor[0].bookingLocation.district}},
-                          {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
+                          <span *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="checkin.waitlistingFor[0].bookingLocation.state">{{checkin.waitlistingFor[0].bookingLocation.state}}</span></div>
                        
                         <div class="location">
                           <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
@@ -2252,8 +2252,8 @@
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
                         <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
-                          {{checkin.waitlistingFor[0].bookingLocation.district}},
-                          {{checkin.waitlistingFor[0].bookingLocation.state}}</div>
+                          <span *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="checkin.waitlistingFor[0].bookingLocation.state">{{checkin.waitlistingFor[0].bookingLocation.state}}</span></div>
                           <div class="location">
                             <span *ngIf="checkin.waitlistingFor[0].age">&nbsp;</span>
                             <span *ngIf="checkin.waitlistingFor[0].age">{{getAge(checkin.waitlistingFor[0].age)}} yrs</span>
