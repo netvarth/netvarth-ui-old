@@ -101,28 +101,19 @@ export class CustomerActionsComponent implements OnInit {
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
     }
-    gotoMeet() {
+    gotoSecureVideo() {
         this.closeDialog();
         const customerDetails = this.customerDetails;
         const customerId = customerDetails[0].id;
-        this.provider_services.meetReady(customerId).subscribe(data => {
-            this.meet_data = data;
-                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
-                  // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-                //     this.getMeetingStatus();
-                // });
-                const retcheckarr = this.providerMeetingUrl.split('/');
-                this.id = retcheckarr[4]
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { custId: customerId }
-                };
-                 // const path = 'meet/' + this.id ;
-                // window.open(path, '_blank');
-                this.router.navigate(['meet', this.id], navigationExtras);
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        // const phoneNum = customerDetails[0].phoneNo;
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                // phoneNum : phoneNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
     }
     startVoiceCall() {
         this.closeDialog();

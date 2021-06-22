@@ -34,6 +34,14 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && active_user == 1 && !appt.provider && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && isUserdisable"
+            (click)="assignMyself()">
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div class="icon-text">Assign Myself</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
@@ -222,7 +230,7 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <!-- <div class="action-box pointer-cursor" (click)="gotoMeet()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
@@ -233,7 +241,7 @@
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>
             </div>
-        </div> -->
+        </div>
 
         <!--Added By Mani for Video Play-->
         <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"

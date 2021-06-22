@@ -230,7 +230,7 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <!-- <div class="action-box pointer-cursor"  (click)="gotoMeet()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
@@ -241,7 +241,7 @@
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>
             </div>
-        </div> -->
+        </div>
         <!--Added By Mani for Video Play-->
         <div *ngIf="!data.multiSelection && checkin.service.serviceType === 'virtualService' && checkin.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">

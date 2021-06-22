@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from '../shared/modules/change-password/chang
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
+import { VideoCallSharedComponent } from './modules/video-call/video-call.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
       { path: 'enquiry', component: EnquiryComponent },
+      { path: 'secure-video', component: VideoCallSharedComponent },
     ]
   }
 ];

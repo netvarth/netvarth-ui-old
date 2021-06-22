@@ -419,6 +419,13 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   saveLanguages() {
+    console.log('save languages');
+    if (this.lngknown === 'yes') {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+      this.hideLanguages = true;
+      this.languageSelected = [];
+    }
+  else{
     this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
@@ -429,6 +436,7 @@ export class VirtualFieldsComponent implements OnInit {
     // let elmnt = document.getElementById("plng");
     // elmnt.scrollIntoView()
   }
+}
   cancelLanguageSelection() {
     if (this.virtualForm.get('preferredLanguage').value.length == 0) {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
@@ -794,6 +802,7 @@ console.log(isinvalid);
   }
   onChange(event) {
     this.lngknown = event.value
+    console.log(this.lngknown);
     if (this.lngknown === 'yes') {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
     }

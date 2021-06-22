@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <!-- Signin Password -->
-                <div class="form-group" id="plng">
+                <div class="form-group" id="plng" *ngIf="lngknown==='yes'">
                     <!-- <mat-form-field> -->
                     <label class="col-form-label" for="v">Select your preferred language <span
                             class="red">*</span></label>
@@ -161,10 +161,28 @@
                             style="font-size: large;"></i></span>
                 </div>
             </div>
-            <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
-                <div class="form-group" *ngIf="lngknown==='no'">
+            <div *ngIf="!hideLanguages" class="form-group">
+                    <div class="form-group" id="plng" >
+                            <!-- <mat-form-field> -->
+                            <label class="col-form-label" for="v">Select your preferred language <span
+                                    class="red">*</span></label>
+                            <br />
+                            <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
+                                formControlName="islanguage">
+                                <mat-radio-button value="yes">English</mat-radio-button>
+                                <mat-radio-button value="no">Other Languages</mat-radio-button>
+                            </mat-radio-group>
+                            <!-- </mat-form-field> -->
+                            <div style="display: flex; justify-content: space-between;">
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                    errorMsg="please choose one">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                <div class="form-group">
                     <!-- <mat-form-field> -->
-                    <label class="col-form-label" for="preferredLanguage">Choose your preferred languages
+                      
+                    <label  *ngIf="lngknown==='no'"class="col-form-label" for="preferredLanguage">Choose your preferred languages
                         <span class="red">*</span></label>
                     <!-- <mat-form-field>
                     <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
@@ -174,7 +192,7 @@
                         </mat-select>
                 </mat-form-field> -->
                     <div class="form-group">
-                        <div class="languagesouter" *ngIf="languages.length >0">
+                        <div class="languagesouter" *ngIf="languages.length >0 && lngknown==='no'">
                             <div *ngFor="let lang of languages">
                                 <mat-checkbox style="padding-left: 10px;" (change)="langSel(lang)"
                                     [checked]="checklangExists(lang)">{{lang}}</mat-checkbox>

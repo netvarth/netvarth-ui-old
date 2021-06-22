@@ -1,0 +1,173 @@
+<!-- <header class="header-color">
+    <div class="container">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="lgo col-md-3 col-xs-5 pull-left">
+                <a routerLink="/"><img class="logo" src="assets/images/home/logo-blue.png" alt="Jaldee Logo"></a>
+            </div>
+        </div>
+    </div>
+
+</header> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToPreviousPage()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </h5>
+    </div>
+</section>
+<section class="teleservicePopup">
+    <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card col-md-9 col-lg-9 col-sm-12 col-xs-12">
+                    <div class="card-body p-0">
+                        <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
+
+                            <div class="stats-item head-card">
+                                <h5 class="user-names">
+                                    {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
+                                    capitalizeFirst}}
+                                </h5>
+                                <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
+                                    <i class="fa fa-id-card-o icon"></i>
+                                    <span class="sub-texts"> Id:
+                                        {{customer[0].jaldeeId}}</span>
+                                </div>
+                                <div class="mobile-no" *ngIf="customer[0].phoneNo">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="sub-texts">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                                </div>
+                                <div class="e-mail" *ngIf="customer[0].email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="sub-texts">{{customer[0].email}}</span>
+                                </div>
+                                <div class="age-gender disp-flex">
+                                    <div class="gender" *ngIf="customer[0].gender"
+                                        style="margin-right: 40px !important;">
+                                        <i *ngIf="customer[0].gender == 'Male' || customer[0].gender == 'male'"
+                                            class="fa fa-mars icon"></i>
+                                        <i *ngIf="customer[0].gender == 'Female' || customer[0].gender == 'female'"
+                                            class="fa fa-venus icon"></i>
+                                        <span class="sub-texts">{{customer[0].gender |
+                                            capitalizeFirst}}</span>
+                                    </div>
+                                    <div class="user-age" *ngIf="customer[0].age">
+                                        <i class="fa fa-user icon"></i>
+                                        <span class="sub-texts">{{getAge(customer[0].age)}} years</span>
+                                    </div>
+                                </div>
+                                <div class="pref-language"
+                                    *ngIf="customer[0].preferredLanguage && customer[0].preferredLanguage.length > 0">
+                                    <i class="fa fa-language icon"></i>
+                                    <span class="sub-texts">{{customer[0].preferredLanguage}}</span>
+                                </div>
+                                <div class="location-place" *ngIf="customer[0].bookingLocation">
+                                    <i class="fa fa-map-marker icon"></i>
+                                    <span class="sub-texts">{{customer[0].bookingLocation.localArea}},
+                                        {{customer[0].bookingLocation.district}}</span>
+                                </div>
+                            </div>
+                            <!-- <div class="body-card col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding">
+                                <button (click)="reminder()"
+                                    class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-rt-5">
+                                    <i *ngIf="!servStarted" class="fa fa-bell fa-blk" aria-hidden="true"></i>
+                                    <i *ngIf="servStarted" class="fa fa-comments-o fa-blk" aria-hidden="true"></i>
+                                    <a class="tspace">Send {{servStarted ? 'Message' : 'Reminder'}}</a>
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <!-- <app-common-innerloading-spinner></app-common-innerloading-spinner> -->
+    </div>
+    <div class="content settings container checkin-details col-md-12">
+        <div class="card no-padding-small">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-12 ">
+                    <h1 class="tel-serv-a mgn-up-20">Choose your App for secure video call</h1>
+                </div>
+                <div class="col-md-12 ">
+                </div>
+                <div class="col-md-12 no-padding">
+                    <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small consumer-dash">
+                        <div class="grid-card">
+                            <div>
+                                <div class="card no-padding">
+                                    <mat-grid-list cols="1" rowHeight="240px" [gutterSize]="'10px'">
+                                        <mat-grid-tile>
+                                            <ng-container>
+                                                <div style="text-align: center !important;"
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                                    <br>
+                                                    <div class="disp-flex">
+                                                        <div class="flx_8 video-head">
+                                                            <span class="jvideo-icon" (click)="gotoMeet()"></span>
+                                                        </div>&nbsp;
+                                                        <div class="whatsp">
+                                                        </div>
+                                                    </div>
+                                                    <div class="disp-flex video-style">
+                                                        Jaldee Video Call
+                                                    </div>
+                                                    <!-- Icon -->
+                                                </div>
+                                            </ng-container>
+                                            <!-- Checkins -->
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small consumer-dash" *ngIf="phoneNum">
+                        <div class="grid-card">
+                            <div>
+                                <div class="card no-padding">
+                                    <mat-grid-list cols="1" rowHeight="240px" [gutterSize]="'10px'">
+                                        <mat-grid-tile>
+                                            <div
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                                <div class="disp-flex">
+                                                    <div class="flx_8 whsp-head">
+                                                        <span class="wtsapvid-icon" (click)="amReady()"></span>
+                                                        <!-- <a  href="starting"  target="_blank">
+                                                            <span class="wtsapvid-icon"></span>
+                                                          </a> -->
+                                                    </div>&nbsp;
+                                                    <div class="whatsp">
+                                                        Whatsapp # :{{phoneNum}}
+                                                    </div>
+                                                </div>
+                                                <div class="disp-flex whsp-style">
+                                                    Whatsapp Video Call
+                                                </div>
+                                                <div>
+
+                                                </div>
+                                                <div *ngIf="is_web">
+                                                    <div class="custmer-font-wght">
+                                                        <span class="custom-red"
+                                                            >
+                                                            {{notSupported}}</span><br>
+                                                    </div>
+                                                </div>
+                                                <!-- Icon -->
+                                            </div>
+                                            <!-- Checkins -->
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

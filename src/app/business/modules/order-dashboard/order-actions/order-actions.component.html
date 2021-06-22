@@ -67,6 +67,18 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!mulipleSelection">
+            <div class="action-box-sub">
+                <span class="jvideo-icon"></span>
+                <div class="icon-text">Video Call</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!mulipleSelection">
+            <div class="action-box-sub">
+                <span class="phon-icon" style="width: 50px;"></span>
+                <div class="icon-text">Voice Call</div>
+            </div>
+        </div>
         <!-- <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
