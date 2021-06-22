@@ -19,6 +19,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-header',
@@ -62,6 +63,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   locName;
   active_user;
   account_type;
+  private notifier: NotifierService;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -76,7 +78,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private titleService: Title,
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
-    private readonly joyrideService: JoyrideService) {
+    private readonly joyrideService: JoyrideService,
+     notifierService: NotifierService) {
+      this.notifier = notifierService;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -256,6 +260,13 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadHandler();
     });
+    let i = 3;
+    console.log(i);
+    while (i > 0) {
+      console.log(i);
+      this.notifier.notify('success', 'Good evening, you lovely person!');
+      i--;
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {

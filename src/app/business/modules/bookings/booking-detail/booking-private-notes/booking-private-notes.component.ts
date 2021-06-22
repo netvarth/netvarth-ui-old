@@ -3,6 +3,7 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-booking-private-notes',
@@ -35,15 +36,21 @@ export class BookingPrivateNotesComponent implements OnInit {
     ]
   };
   image_list_popup: Image[];
+  subscription: Subscription;
   constructor(private provider_services: ProviderServices,
     private sharedFunctions: SharedFunctions) {
-    this.sharedFunctions.getMessage().subscribe((message) => {
+    this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
       switch (message.type) {
         case 'addnote':
           this.getWaitlistNotes();
           break;
       }
     });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   ngOnInit(): void {
     if ((this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {

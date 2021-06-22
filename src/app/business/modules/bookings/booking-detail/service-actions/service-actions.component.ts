@@ -14,6 +14,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { CheckinActionsComponent } from '../../../check-ins/checkin-actions/checkin-actions.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { AppointmentActionsComponent } from '../../../appointments/appointment-actions/appointment-actions.component';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-service-actions',
@@ -61,6 +62,7 @@ export class ServiceActionsComponent implements OnInit {
     calc_mode;
     availableDates: any = [];
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    subscription: Subscription;
     constructor(
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -76,7 +78,7 @@ export class ServiceActionsComponent implements OnInit {
             this.bookingType = params.type;
             this.timeType = JSON.parse(params.timetype);
         });
-        this.sharedFunctions.getMessage().subscribe((message) => {
+        this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
             console.log(message.type);
             switch (message.type) {
                 case 'statuschange':
@@ -85,7 +87,11 @@ export class ServiceActionsComponent implements OnInit {
             }
         });
     }
-
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
     ngOnInit(): void {
         this.setActions();
         if (this.waitlist_data) {

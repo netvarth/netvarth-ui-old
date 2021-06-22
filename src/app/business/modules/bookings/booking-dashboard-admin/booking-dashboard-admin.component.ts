@@ -12,8 +12,8 @@ export class BookingDashboardAdminComponent implements OnInit {
   private readonly notifier: NotifierService;
   constructor(private provider_services: ProviderServices,
     notifierService: NotifierService) {
-      this.notifier = notifierService;
-     }
+    this.notifier = notifierService;
+  }
 
   ngOnInit(): void {
     this.getProviderSettings();
@@ -24,7 +24,7 @@ export class BookingDashboardAdminComponent implements OnInit {
         this.waitlistMgrSettings = data;
       });
   }
-	showNotification( type: string, message: string ): void {
-		this.notifier.notify( type, message );
-	}
+  showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);
+  }
 }

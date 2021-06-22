@@ -8,6 +8,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-booking-detail',
@@ -43,6 +44,7 @@ export class BookingDetailComponent implements OnInit {
   subdomain;
   pos;
   height;
+  subscription: Subscription;
   constructor(
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -59,7 +61,7 @@ export class BookingDetailComponent implements OnInit {
       this.bookingType = params.type;
     });
 
-    this.sharedFunctions.getMessage().subscribe((message) => {
+    this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
       console.log(message.type);
       switch (message.type) {
         case 'statuschange':
@@ -93,7 +95,11 @@ export class BookingDetailComponent implements OnInit {
     this.subdomain = this.userDet.subSector;
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   getWaitlistDetail() {
     this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
       .subscribe(

@@ -24,6 +24,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   user_id;
   loading = false;
   cronHandle: Subscription;
+  subscription: Subscription;
   messages: any = [];
   users: any = [];
   inboxCntFetched;
@@ -103,7 +104,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.activateRoute.queryParams.subscribe(params => {
       this.qParams = params;
     });
-    this.shared_functions.getMessage().subscribe((message) => {
+    this.subscription = this.shared_functions.getMessage().subscribe((message) => {
       switch (message.type) {
         case 'statuschange':
           this.getInboxMessages();
@@ -192,6 +193,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
   readConsumerMessages(consumerId, messageId, providerId) {
