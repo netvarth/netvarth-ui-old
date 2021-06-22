@@ -231,7 +231,7 @@
                         <div class="pr-3">
                           <span class="symbol-label">
                             <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
-                              (change)="selectcustomers(customer)" [disabled]="showText(customer)">
+                              (click)="stopprop($event)" (change)="selectcustomers(customer)" [disabled]="showText(customer)">
                           </span>
                         </div>
                         <div>

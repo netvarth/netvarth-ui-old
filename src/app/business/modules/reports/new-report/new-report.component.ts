@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -23,6 +23,7 @@ export class NewReportComponent implements OnInit {
   appointment_customerchosen: string;
   donation_customerchosen: string;
   payment_customerchosen: string;
+  user_chosen:string;
   customerchosen: string;
   order_customerId: any;
   order_customer: string;
@@ -120,7 +121,10 @@ export class NewReportComponent implements OnInit {
   donation_donorFirstName:string;
   donation_donorLastName:string;
   donation_donorPhoneNumber:any;
-
+user_endDate;
+user_startDate;
+user_timePeriod;
+user_users;
 
 
 
@@ -131,6 +135,8 @@ export class NewReportComponent implements OnInit {
   payment_modes;
   payment_status;
   pay_confirm_num;
+  user: string;
+  user_id: any;
 
   constructor(
     private router: Router,
@@ -158,7 +164,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod =this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -268,6 +274,15 @@ export class NewReportComponent implements OnInit {
             this.order_startDate = res.startDate;
             this.order_endDate = res.endDate;
             this.delivery_mode = res.delivery_mode;
+          }
+
+        }
+        case 'user': {
+          this.user_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.user_startDate = res.startDate;
+            this.user_endDate = res.endDate;
           }
 
         }
@@ -389,7 +404,7 @@ export class NewReportComponent implements OnInit {
 
   }
   setCustomerData(res) {
-    console.log(JSON.stringify(res));
+
     switch (this.report_type) {
       case 'payment': {
         if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
@@ -448,6 +463,20 @@ export class NewReportComponent implements OnInit {
           this.order_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.order_customerchosen = res.customers.replace(/,\s*$/, '');
           this.order_customerId = res.jaldee_customers.replace(/,\s*$/, '');
+
+        }
+
+        break;
+      }
+ 
+      case 'user': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+
 
         }
 
@@ -824,6 +853,58 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
+    else if(reportType === 'user'){
+      if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'user': this.user_id
+
+        };
+      
+        if (this.user_id === 0||this.user_id===undefined) {
+          delete this.filterparams.user;
+        }
+       
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.user_timePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.user_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.user_endDate);
+        }
+        if (this.user_timePeriod === 'LAST_THIRTY_DAYS') {
+
+          filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 30)))
+          filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
+        }
+        if (this.user_timePeriod === 'LAST_WEEK') {
+
+          filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 7)))
+          filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
+        }
+        if (this.user_timePeriod === 'TODAY') {
+          filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
+         
+        }
+        // if (this.user_timePeriod === '') {
+        //   filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
+         
+        // }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.user_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+    }
+  }
   }
 
   changeTimePeriod(event) {
@@ -848,7 +929,24 @@ export class NewReportComponent implements OnInit {
         );
     });
 
-  } redirecToReports() {
+  } 
+  generateUserReportByCriteria(payload) {
+    console.log(payload.filter);
+    return new Promise((resolve, reject) => {
+      this.provider_services.generateUserReport(payload.filter)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    });
+
+  } 
+  redirecToReports() {
     this.router.navigate(['provider', 'reports']);
   }
 
@@ -857,12 +955,25 @@ export class NewReportComponent implements OnInit {
   passPayloadForReportGeneration(payload) {
     this.btn_disabled = true;
     this.report_loading = true;
-
+    if(this.report_type==='user'){
+      this.generateUserReportByCriteria(payload).then(res => {
+      this.report_loading = false;
+      this.btn_disabled = false;
+      this.report_data_service.storeSelectedValues(res);
+      this.generateUserReport(res,payload);
+    },
+    (error) => {
+      this.report_loading = false;
+      this.btn_disabled = false;
+      this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+    });
+    }else{
     this.generateReportByCriteria(payload).then(res => {
       this.report_loading = false;
       this.btn_disabled = false;
       this.report_data_service.storeSelectedValues(res);
       this.generatedReport(res);
+        
     },
       (error) => {
         this.report_loading = false;
@@ -871,6 +982,7 @@ export class NewReportComponent implements OnInit {
       });
 
   }
+}
   goToSelectionPage(type, selected_id) {
     console.log(selected_id);
     this.setSelectedData().then(res => {
@@ -889,9 +1001,26 @@ export class NewReportComponent implements OnInit {
       if (type === 'customer') {
         this.router.navigate(['provider', 'reports', 'customer'], { queryParams: { report_type: this.report_type, data: selected_id } });
       }
+      if (type === 'user') {
+        this.router.navigate(['provider', 'reports', 'user'], { queryParams: { report_type: this.report_type, data: selected_id } });
+      }
     });
   }
 
+  generateUserReport(reportData,payload){
+    this.setSelectedData().then(res => {
+      this.lStorageService.setitemonLocalStorage('report', JSON.stringify(reportData));
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          filter: JSON.stringify(payload),
+      
+        }
+      };
+      this.router.navigate(['provider', 'reports', 'user-report'],navigationExtras);
+    },
+    );
+    
+  }
   setSelectedData() {
     let selectedValues = {};
     return new Promise((resolve) => {
@@ -948,6 +1077,15 @@ export class NewReportComponent implements OnInit {
           'dateRange': this.order_timePeriod,
           'startDate': this.order_startDate,
           'endDate': this.order_endDate
+
+
+        };
+      }
+      if (this.report_type === 'user') {
+        selectedValues = {
+          'dateRange': this.user_timePeriod,
+          'startDate': this.user_startDate,
+          'endDate': this.user_endDate
 
 
         };

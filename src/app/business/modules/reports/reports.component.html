@@ -190,6 +190,24 @@
                     </mat-accordion>
                     </div>
                 </div>
+                      <!-- Users Reports -->
+                      <div class="row" *ngIf="active_user.accountType==='BRANCH'">
+                        <div class="card p0">
+                          <mat-accordion class="report">
+                            <mat-expansion-panel  [expanded]="true">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="report_title">
+                                       Users 
+                                       <div class="width100pc" >
+                                        <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'user'}">Create New Report</a>
+                                       </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                         
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        </div>
+                    </div>
       </div>
       <div class="clearfix"></div>
   </div>

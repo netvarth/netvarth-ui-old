@@ -1,0 +1,95 @@
+<section class="">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <!-- <button type="button" class="btn default profile-back" (click)="redirecToReports()">
+          <span class="fa fa-chevron-left">&nbsp;Back</span>
+        </button>&nbsp;&nbsp;&nbsp;  -->
+        <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        User Selection
+        <!-- <i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" ></i> -->
+      </h5>
+    </div>
+  </section>
+  <section class="report">
+    <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+  
+  
+  
+        <div class="box" >
+  
+  
+          <div class="box-body table-container table-responsive mat-elevation-z8">
+            Choose users from this grid
+            <div class="spinner-container" *ngIf="user_loading$ ">
+  
+              <mat-spinner></mat-spinner>
+  
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Apply Filter" style="border-bottom:none;">
+              </mat-form-field>
+            </div>
+            <table mat-table [dataSource]="user_dataSource">
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let user">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(user) : null" [checked]="selection.isSelected(user)">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+              .
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.id}}</td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.firstName}} {{user.lastName}}</td>
+              </ng-container>
+              <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef>Role</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.userType}} </td>
+              </ng-container>
+              <ng-container matColumnDef="mobile">
+                <th mat-header-cell *matHeaderCellDef>Mobile #</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.mobileNo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.email}} </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let user">
+                  {{user.status}}</td>
+              </ng-container>
+             
+  
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+  
+            </table>
+  
+            <div class="text-center mt-5">
+              <button type="button" class="btn btn-lg default profile-back" (click)="passUserSelectedToReports();">Select </button>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  

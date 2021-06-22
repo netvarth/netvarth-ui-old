@@ -1625,6 +1625,15 @@ export class ProviderServices {
     const url = 'provider/report';
     return this.servicemeta.httpPut(url, data);
   }
+  generateUserReport(filter){
+    const url = 'provider/report/user';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  generateUserInfoReport(filter){
+    const url = 'provider/report/user/info';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  
   getJaldeeCustomer(data) {
     const url = 'consumer';
     return this.servicemeta.httpGet(url, null, data);

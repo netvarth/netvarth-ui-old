@@ -383,6 +383,7 @@ export class CustomersListComponent implements OnInit {
 
   selectcustomers(customer) {
     this.hide_msgicon = false;
+
     const custArr = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
     if (custArr.length === 0) {
       this.selectedcustomersformsg.push(customer);
